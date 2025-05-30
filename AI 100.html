@@ -1,0 +1,36 @@
+<!-- AI 100: Responsive Feishu iframe embedding -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 100 - Feishu Iframe Embed</title>
+
+<style>
+  /* 默认桌面：占视口高度的 80% */
+  .feishu-iframe {
+    width: 100%;
+    height: 80vh;  
+    border: 0;
+  }
+
+  /* 平板/小屏桌面：宽度 ≤1024px 时，降到 70vh */
+  @media screen and (max-width: 1024px) {
+    .feishu-iframe {
+      height: 70vh;
+    }
+  }
+
+  /* 手机：宽度 ≤ 768px 时，再降到 60vh */
+  @media screen and (max-width: 768px) {
+    .feishu-iframe {
+      height: 60vh;
+    }
+  }
+</style>
+
+<iframe
+  class="feishu-iframe"
+  src="https://c0uiiy15npu.feishu.cn/base/QfFBbN0r2af8xDswcivcJxUcnRf?from=from_copylin is_embed=true"
+  allowfullscreen>
+</iframe>
