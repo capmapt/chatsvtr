@@ -500,9 +500,19 @@
       }
       try {
         // TODO: 替换为真实后台API
-        await new Promise(r => setTimeout(r, 850));
-        successMsg.textContent = '提交成功，感谢您的预约！';
-        document.getElementById('waitlistForm').reset();
+    // 调用 Cloudflare Worker API
+    const res = await fetch('https://waitlist-api.liumin-gsm.workers.dev/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      successMsg.textContent = '提交成功，感谢您的预约！';
+      document.getElementById('waitlistForm').reset();
+    } else {
+      errorMsg.textContent = data.error || '提交失败，请稍后重试。';
+    }
       } catch {
         errorMsg.textContent = '提交失败，请稍后重试。';
       }
