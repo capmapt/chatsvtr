@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title data-i18n="title">硅谷科技评论</title>
-
   <style>
     *, *::before, *::after { box-sizing: border-box; }
 
@@ -14,6 +13,18 @@
       --accent-color: #FFD600;
       --bg-main: linear-gradient(135deg, #fff8e1, #ffe0b2);
       --bg-panel: #FFF;
+      --waitlist-modal-bg: rgba(0,0,0,0.18);
+      --waitlist-btn-bg: #e67600;
+      --waitlist-btn-bg-hover: #cc5f00;
+      --waitlist-btn-text: #fff;
+      --waitlist-btn-radius: 4px;
+      --waitlist-border-radius: 8px;
+      --waitlist-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      --waitlist-input-border: #ece6dd;
+      --waitlist-input-bg: #fff8e1;
+      --waitlist-input-radius: 4px;
+      --waitlist-success: #10b981;
+      --waitlist-error: #ef4444;
     }
     html { scroll-behavior: smooth; }
     body {
@@ -29,7 +40,6 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       overflow: hidden;
     }
-    /* Banner always fully visible */
     .banner-header {
       width: 100%;
       aspect-ratio: 4 / 1;
@@ -53,7 +63,6 @@
       color: #004499;
       text-decoration: underline;
     }
-
     .chat-header {
       font-size: 1.4rem; font-weight: bold; color: #000;
       margin-bottom: 10px;
@@ -64,13 +73,22 @@
       display: flex; justify-content: center; align-items: center;
     }
     .join-btn {
-      padding: .75rem 1.5rem; background: #e67600; color: #fff;
-      font-weight: bold; border: none; border-radius: 4px;
-      box-shadow: 0 4px 8px rgba(0,0,0,.2);
+      padding: .75rem 1.5rem;
+      background: var(--waitlist-btn-bg);
+      color: var(--waitlist-btn-text);
+      font-weight: bold; border: none;
+      border-radius: var(--waitlist-btn-radius);
+      box-shadow: 0 4px 8px rgba(0,0,0,.13);
       cursor: pointer; transition: .3s;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
     }
-    .join-btn:hover { background: #cc5f00; transform: scale(1.05); }
-    .join-btn:active { transform: scale(.95); }
+    .join-btn:hover {
+      background: var(--waitlist-btn-bg-hover);
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 8px 20px rgba(250,140,50,0.11);
+    }
+    .join-btn:active { transform: scale(.97); }
 
     .chat-input-area {
       display: flex; align-items: center; margin-top: 10px;
@@ -83,50 +101,89 @@
       padding: 0 16px; height: 36px; background: var(--primary-color);
       border: none; color: #fff; border-radius: 4px; cursor: pointer;
     }
-
-    /* Waitlist styles */
-    .waitlist-container {
-      max-width: 400px;
-      margin: 32px auto 0 auto;
-      background: #fff;
-      border-radius: 8px;
+    /* Waitlist Modal Styles, 优化风格与网页一致 */
+    .waitlist-modal {
+      display: none; /* 默认隐藏 */
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      background: var(--waitlist-modal-bg);
+      justify-content: center; align-items: center;
+    }
+    .waitlist-modal-content {
+      background: var(--bg-panel);
+      margin: auto;
       padding: 32px 24px 24px 24px;
-      box-shadow: 0 2px 8px rgba(30,40,60,0.1);
+      border-radius: var(--waitlist-border-radius);
+      max-width: 92vw;
+      width: 340px;
+      box-shadow: var(--waitlist-shadow);
       text-align: center;
+      position: relative;
+      border: 1.5px solid #f6d1a7;
+      animation: fadeIn 0.23s;
     }
-    .waitlist-container input[type="email"] {
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.97) translateY(10px);}
+      100% { opacity: 1; transform: scale(1) translateY(0);}
+    }
+    .waitlist-modal-close {
+      position: absolute; right: 16px; top: 12px;
+      font-size: 22px; color: #bbb; cursor: pointer;
+      font-weight: bold;
+      transition: color 0.2s;
+      z-index: 1;
+    }
+    .waitlist-modal-close:hover { color: #fa8c32; }
+    .waitlist-modal h2 {
+      margin-top: 6px; margin-bottom: 16px;
+      font-size: 1.23rem; color: #e67600;
+    }
+    .waitlist-modal input[type="email"] {
       padding: 12px;
-      width: 80%;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      margin-bottom: 16px;
+      width: 83%;
+      border: 1.2px solid var(--waitlist-input-border);
+      background: var(--waitlist-input-bg);
+      border-radius: var(--waitlist-input-radius);
+      margin-bottom: 15px;
       font-size: 16px;
+      transition: border-color 0.2s;
     }
-    .waitlist-container button {
-      background: #2563eb;
-      color: white;
+    .waitlist-modal input[type="email"]:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      background: #fffbe7;
+    }
+    .waitlist-modal button[type="submit"] {
+      background: var(--waitlist-btn-bg);
+      color: var(--waitlist-btn-text);
       padding: 12px 32px;
       border: none;
-      border-radius: 4px;
+      border-radius: var(--waitlist-btn-radius);
       cursor: pointer;
       font-size: 16px;
+      font-weight: 500;
+      margin-top: 4px;
+      box-shadow: 0 2px 8px rgba(250,140,50,0.09);
+      transition: background .2s, box-shadow .2s, transform .2s;
     }
-    .waitlist-container button:disabled {
-      background: #a5b4fc;
-      cursor: not-allowed;
+    .waitlist-modal button[type="submit"]:hover {
+      background: var(--waitlist-btn-bg-hover);
+      box-shadow: 0 8px 20px rgba(250,140,50,0.11);
+      transform: translateY(-1.5px) scale(1.03);
     }
-    .waitlist-container .message {
-      margin-top: 18px;
-      color: #10b981;
-      font-size: 15px;
+    .waitlist-modal button[type="submit"]:disabled {
+      background: #f3cba3; cursor: not-allowed;
     }
-    .waitlist-container .error {
-      color: #ef4444;
-      margin-top: 12px;
-      font-size: 15px;
+    .waitlist-modal .message {
+      margin-top: 18px; color: var(--waitlist-success); font-size: 15px;
+      min-height: 22px;
+    }
+    .waitlist-modal .error {
+      color: var(--waitlist-error); margin-top: 12px; font-size: 15px;
+      min-height: 22px;
     }
 
-    /* Sidebar / Drawer */
     .menu-toggle {
       position: fixed; top: 20px; left: 20px;
       background: none; border: none; font-size: 1.5rem;
@@ -183,8 +240,6 @@
     .sidebar-footer p {
       margin: 10px 0 0; color: #000; font-size: .9rem;
     }
-
-    /* Language toggle short style */
     .lang-toggle {
       position: fixed; top: 20px; right: 20px;
       display: flex; background: #fff; border-radius: 4px;
@@ -202,8 +257,6 @@
     .lang-toggle button:not(.active):hover {
       background: #f0f0f0;
     }
-
-    /* Main content */
     .content {
       margin-left: 0; padding: 10px 20px;
       display: flex; flex-direction: column; align-items: center;
@@ -212,6 +265,7 @@
     .content.shifted { margin-left: 260px; }
     @media(max-width:768px){
       .content.shifted { margin-left: 0; }
+      .waitlist-modal-content { width: 95vw; min-width: 0;}
     }
   </style>
 </head>
@@ -222,7 +276,6 @@
   </div>
   <button class="menu-toggle">☰</button>
   <div class="overlay active"></div>
-
   <aside class="sidebar open">
     <div class="sidebar-header">
       <img src="logo.jpg" class="sidebar-logo" alt="logo">
@@ -260,12 +313,10 @@
       <p data-i18n="sidebar_qr_text">添加好友，进群交流</p>
     </div>
   </aside>
-
   <main class="content shifted">
     <div class="wrapper">
       <div class="banner-header"></div>
     </div>
-
     <section class="notice wrapper">
       <ul>
         <li><span data-i18n="notice_1"></span> <a href="https://c0uiiy15npu.feishu.cn/share/base/form/shrcnKdKrgumC9OtjQNXiC05r8e" data-i18n="link_community" target="_blank"></a></li>
@@ -273,26 +324,13 @@
         <li><span data-i18n="notice_3"></span> <a href="https://c0uiiy15npu.feishu.cn/wiki/G0oMwUeNbiZkQBkX9iXcfMllnpe?from=from_copylink" data-i18n="link_members" target="_blank"></a></li>
       </ul>
     </section>
-
-    <!-- 加入候补名单邮箱填写区块 -->
-    <section class="waitlist-container wrapper">
-      <h2>加入候补名单</h2>
-      <form id="waitlistForm">
-        <input type="email" id="waitlistEmail" placeholder="请输入您的邮箱" required />
-        <br>
-        <button type="submit">提交</button>
-      </form>
-      <div class="message" id="waitlistSuccessMsg"></div>
-      <div class="error" id="waitlistErrorMsg"></div>
-    </section>
-
     <section class="chatbox wrapper">
       <div class="chat-header">
         Chat with <a href="https://c0uiiy15npu.feishu.cn/wiki/TB4nwFKSjiZybRkoZx7c7mBXnxd?from=from_copylink" target="_blank">SVTR.AI</a>
       </div>
       <div class="chat-history">
-        <button class="join-btn" id="joinBtn" data-i18n="join_btn"
-          onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSdO394aMH2pozX_Bx8N_swTndSLB6fSCCkSvGJQaavBBaFvfQ/viewform','_blank')">
+        <button class="join-btn" id="joinBtn" data-i18n="join_btn">
+          加入候补名单
         </button>
       </div>
       <div class="chat-input-area">
@@ -300,10 +338,22 @@
         <button type="button" data-i18n="send_btn"></button>
       </div>
     </section>
-
     <div style="text-align:center; color:#666; margin:20px 0;" data-i18n="footer_text"></div>
   </main>
-
+  <!-- 候补名单弹窗 -->
+  <div id="waitlistModal" class="waitlist-modal">
+    <div class="waitlist-modal-content">
+      <span class="waitlist-modal-close" id="waitlistClose">&times;</span>
+      <h2>加入候补名单</h2>
+      <form id="waitlistForm" autocomplete="off">
+        <input type="email" id="waitlistEmail" placeholder="请输入您的邮箱" required />
+        <br>
+        <button type="submit">提交</button>
+      </form>
+      <div class="message" id="waitlistSuccessMsg"></div>
+      <div class="error" id="waitlistErrorMsg"></div>
+    </div>
+  </div>
   <script>
     const translations = {
       'zh-CN': {
@@ -405,7 +455,6 @@
       const sidebarElement = document.querySelector('.sidebar');
       const overlayElement = document.querySelector('.overlay');
       const contentElement = document.querySelector('.content');
-
       if (sidebarElement && overlayElement && contentElement) {
         sidebarElement.classList.remove('open');
         overlayElement.classList.remove('active');
@@ -413,44 +462,51 @@
       }
     }, 2000);
 
-    // Waitlist form JS
-    const waitlistForm = document.getElementById('waitlistForm');
-    const waitlistEmail = document.getElementById('waitlistEmail');
-    const waitlistSuccessMsg = document.getElementById('waitlistSuccessMsg');
-    const waitlistErrorMsg = document.getElementById('waitlistErrorMsg');
-
-    if (waitlistForm) {
-      waitlistForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        waitlistSuccessMsg.textContent = '';
-        waitlistErrorMsg.textContent = '';
-        const email = waitlistEmail.value.trim();
-        if (!email) {
-          waitlistErrorMsg.textContent = '请输入有效的邮箱地址。';
-          return;
-        }
-
-        // TODO: 替换成你自己的后台API接口
-        // 这里只是演示前端效果
-        try {
-          // 假设用fetch提交到 /api/waitlist
-          /*
-          const res = await fetch('/api/waitlist', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email })
-          });
-          if (!res.ok) throw new Error('提交失败！');
-          */
-          // 模拟异步提交
-          await new Promise(r => setTimeout(r, 800));
-          waitlistSuccessMsg.textContent = '提交成功，感谢您的预约！';
-          waitlistForm.reset();
-        } catch (err) {
-          waitlistErrorMsg.textContent = '提交失败，请稍后重试。';
-        }
-      });
-    }
+    // 候补名单弹窗逻辑
+    document.getElementById('joinBtn').onclick = function() {
+      document.getElementById('waitlistModal').style.display = 'flex';
+      document.getElementById('waitlistEmail').focus();
+    };
+    document.getElementById('waitlistClose').onclick = function() {
+      document.getElementById('waitlistModal').style.display = 'none';
+      document.getElementById('waitlistForm').reset();
+      document.getElementById('waitlistSuccessMsg').textContent = '';
+      document.getElementById('waitlistErrorMsg').textContent = '';
+    };
+    document.getElementById('waitlistModal').addEventListener('click', function(e){
+      if(e.target === this){
+        this.style.display = 'none';
+        document.getElementById('waitlistForm').reset();
+        document.getElementById('waitlistSuccessMsg').textContent = '';
+        document.getElementById('waitlistErrorMsg').textContent = '';
+      }
+    });
+    // 表单提交逻辑
+    document.getElementById('waitlistForm').onsubmit = async function(e) {
+      e.preventDefault();
+      const email = document.getElementById('waitlistEmail').value.trim();
+      const successMsg = document.getElementById('waitlistSuccessMsg');
+      const errorMsg = document.getElementById('waitlistErrorMsg');
+      successMsg.textContent = '';
+      errorMsg.textContent = '';
+      if (!email) {
+        errorMsg.textContent = '请输入有效的邮箱地址。';
+        return;
+      }
+      // 邮箱格式简单校验
+      if (!/^[\w\-\.]+@[\w\-]+\.[\w\-\.]+$/.test(email)) {
+        errorMsg.textContent = '邮箱格式不正确。';
+        return;
+      }
+      try {
+        // TODO: 替换为真实后台API
+        await new Promise(r => setTimeout(r, 850));
+        successMsg.textContent = '提交成功，感谢您的预约！';
+        document.getElementById('waitlistForm').reset();
+      } catch {
+        errorMsg.textContent = '提交失败，请稍后重试。';
+      }
+    };
   </script>
 </body>
 </html>
