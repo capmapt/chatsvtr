@@ -84,6 +84,48 @@
       border: none; color: #fff; border-radius: 4px; cursor: pointer;
     }
 
+    /* Waitlist styles */
+    .waitlist-container {
+      max-width: 400px;
+      margin: 32px auto 0 auto;
+      background: #fff;
+      border-radius: 8px;
+      padding: 32px 24px 24px 24px;
+      box-shadow: 0 2px 8px rgba(30,40,60,0.1);
+      text-align: center;
+    }
+    .waitlist-container input[type="email"] {
+      padding: 12px;
+      width: 80%;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      font-size: 16px;
+    }
+    .waitlist-container button {
+      background: #2563eb;
+      color: white;
+      padding: 12px 32px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .waitlist-container button:disabled {
+      background: #a5b4fc;
+      cursor: not-allowed;
+    }
+    .waitlist-container .message {
+      margin-top: 18px;
+      color: #10b981;
+      font-size: 15px;
+    }
+    .waitlist-container .error {
+      color: #ef4444;
+      margin-top: 12px;
+      font-size: 15px;
+    }
+
     /* Sidebar / Drawer */
     .menu-toggle {
       position: fixed; top: 20px; left: 20px;
@@ -232,6 +274,18 @@
       </ul>
     </section>
 
+    <!-- 加入候补名单邮箱填写区块 -->
+    <section class="waitlist-container wrapper">
+      <h2>加入候补名单</h2>
+      <form id="waitlistForm">
+        <input type="email" id="waitlistEmail" placeholder="请输入您的邮箱" required />
+        <br>
+        <button type="submit">提交</button>
+      </form>
+      <div class="message" id="waitlistSuccessMsg"></div>
+      <div class="error" id="waitlistErrorMsg"></div>
+    </section>
+
     <section class="chatbox wrapper">
       <div class="chat-header">
         Chat with <a href="https://c0uiiy15npu.feishu.cn/wiki/TB4nwFKSjiZybRkoZx7c7mBXnxd?from=from_copylink" target="_blank">SVTR.AI</a>
@@ -358,6 +412,45 @@
         contentElement.classList.remove('shifted');
       }
     }, 2000);
+
+    // Waitlist form JS
+    const waitlistForm = document.getElementById('waitlistForm');
+    const waitlistEmail = document.getElementById('waitlistEmail');
+    const waitlistSuccessMsg = document.getElementById('waitlistSuccessMsg');
+    const waitlistErrorMsg = document.getElementById('waitlistErrorMsg');
+
+    if (waitlistForm) {
+      waitlistForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        waitlistSuccessMsg.textContent = '';
+        waitlistErrorMsg.textContent = '';
+        const email = waitlistEmail.value.trim();
+        if (!email) {
+          waitlistErrorMsg.textContent = '请输入有效的邮箱地址。';
+          return;
+        }
+
+        // TODO: 替换成你自己的后台API接口
+        // 这里只是演示前端效果
+        try {
+          // 假设用fetch提交到 /api/waitlist
+          /*
+          const res = await fetch('/api/waitlist', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+          if (!res.ok) throw new Error('提交失败！');
+          */
+          // 模拟异步提交
+          await new Promise(r => setTimeout(r, 800));
+          waitlistSuccessMsg.textContent = '提交成功，感谢您的预约！';
+          waitlistForm.reset();
+        } catch (err) {
+          waitlistErrorMsg.textContent = '提交失败，请稍后重试。';
+        }
+      });
+    }
   </script>
 </body>
 </html>
