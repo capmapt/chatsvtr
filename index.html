@@ -58,87 +58,56 @@
       font-size: 1.4rem; font-weight: bold; color: #000;
       margin-bottom: 10px;
     }
-<!-- 仅展示涉及候补区的部分和相关CSS调整，整体结构和其它内容保持不变 -->
-<style>
-  /* ...原有样式... */
-  .chat-history {
-    height: 200px; width: 100%; background: #fafafa;
-    border: 1px solid #ddd; border-radius: 4px;
-    display: flex; justify-content: center; align-items: center;
-    /* 移除原有样式中的多余center */
-    /* 新增: 保证内部内容垂直水平居中 */
-    flex-direction: column;
-  }
-  .waitlist-inline-area {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    justify-content: center;
-    width: 100%;
-    margin: 0 auto;
-    flex-wrap: wrap;
-    /* 让内容居中且尽量紧凑 */
-  }
-  .waitlist-inline-area input[type="email"] {
-    padding: 8px 10px;
-    border: 1.2px solid #ccc;
-    border-radius: 4px;
-    font-size: 15px;
-    width: 220px;
-    transition: border-color 0.2s;
-    text-align: left;
-    margin: 0;
-  }
-  .waitlist-inline-area .join-btn {
-    padding: .6rem 1.1rem;
-    background: #e67600; color: #fff;
-    font-weight: bold; border: none; border-radius: 4px;
-    box-shadow: 0 4px 8px rgba(0,0,0,.2);
-    cursor: pointer; transition: .3s;
-    font-size: 1rem;
-    height: 40px;
-    margin: 0;
-  }
-  .waitlist-inline-area .waitlist-message {
-    margin-left: 10px; min-width: 120px;
-    font-size: 14px;
-    color: #e67600;
-    min-height: 24px;
-  }
-  .waitlist-inline-area .waitlist-error {
-    color: #d22; 
-  }
-  .waitlist-inline-area .waitlist-success {
-    color: #229922;
-  }
-  @media (max-width: 450px) {
+    .chat-history {
+      height: 200px; width: 100%; background: #fafafa;
+      border: 1px solid #ddd; border-radius: 4px;
+      display: flex; justify-content: center; align-items: center;
+    }
+    /* 新增: 候补区样式 */
     .waitlist-inline-area {
-      flex-direction: column;
-      align-items: stretch;
+      display: flex;
+      align-items: center;
       gap: 8px;
-    }
-    .waitlist-inline-area input[type="email"], .waitlist-inline-area .join-btn {
       width: 100%;
-      min-width: 0;
+      justify-content: center;
+      flex-wrap: wrap;
     }
+    .waitlist-inline-area input[type="email"] {
+      padding: 8px 10px;
+      border: 1.2px solid #ccc;
+      border-radius: 4px;
+      font-size: 15px;
+      width: 220px;
+      transition: border-color 0.2s;
+    }
+    .waitlist-inline-area input[type="email"]:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      background: #fffbe7;
+    }
+    .waitlist-inline-area .join-btn {
+      padding: .6rem 1.1rem;
+      background: #e67600; color: #fff;
+      font-weight: bold; border: none; border-radius: 4px;
+      box-shadow: 0 4px 8px rgba(0,0,0,.2);
+      cursor: pointer; transition: .3s;
+      font-size: 1rem;
+      height: 40px;
+    }
+    .waitlist-inline-area .join-btn:hover { background: #cc5f00; transform: scale(1.05); }
+    .waitlist-inline-area .join-btn:active { transform: scale(.95); }
     .waitlist-inline-area .waitlist-message {
-      margin-left: 0;
-      margin-top: 5px;
-      min-width: 0;
-      text-align: left;
+      margin-left: 10px; min-width: 120px;
+      font-size: 14px;
+      color: #e67600;
+      min-height: 24px;
     }
-  }
-</style>
-
-<!-- ...原有结构... -->
-<div class="chat-history">
-  <form class="waitlist-inline-area" id="waitlistInlineForm" autocomplete="off" onsubmit="return false;">
-    <input type="email" id="waitlistInlineEmail" placeholder="请输入您的邮箱" required />
-    <button type="submit" class="join-btn" id="waitlistInlineBtn" data-i18n="join_btn">加入候补名单</button>
-    <span class="waitlist-message" id="waitlistInlineMsg"></span>
-  </form>
-</div>
-<!-- ...原有结构... -->
+    .waitlist-inline-area .waitlist-error {
+      color: #d22; 
+    }
+    .waitlist-inline-area .waitlist-success {
+      color: #229922;
+    }
 
     .chat-input-area {
       display: flex; align-items: center; margin-top: 10px;
