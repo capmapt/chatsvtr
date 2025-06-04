@@ -1,164 +1,202 @@
-/* ====== 左侧导航栏样式 ====== */
-.sidebar {
-  position: fixed;
-  top: 0; left: 0;
-  width: 260px;
-  height: 100vh;
-  padding: 20px;
-  box-sizing: border-box;
-  background-color: #f9f9f9;
-  overflow-y: auto;
-  border-right: 1px solid #e0e0e0;
-  font-family: "Helvetica Neue", Arial, sans-serif;
-}
+*, *::before, *::after { box-sizing: border-box; }
 
-/* 标题区域 */
-.sidebar-header h2 {
-  margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.4;
+:root {
+  --primary-color: #FA8C32;
+  --secondary-color: #FFBB33;
+  --accent-color: #FFD600;
+  --bg-main: linear-gradient(135deg, #fff8e1, #ffe0b2);
+  --bg-panel: #FFF;
 }
-.sidebar-header small {
-  font-size: 0.75rem;
-  color: #666;
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; padding: 0; min-height: 100vh;
+  background: var(--bg-main);
+  font-family: sans-serif;
+  overflow-x: hidden;
 }
-
-/* 各功能区块 */
-.sidebar-section {
-  margin-top: 2rem;
+.wrapper {
+  width: 100%; max-width: 800px;
+  margin: 10px auto;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
 }
-.sidebar-section h3 {
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-  color: #333;
+/* Banner always fully visible */
+.banner-header {
+  width: 100%;
+  aspect-ratio: 4 / 1;
+  background: url('banner.png') center/cover no-repeat;
 }
-
-/* 主列表 */
-.nav-list,
-.sub-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.notice, .chatbox {
+  background: var(--bg-panel);
+  width: 100%; max-width: 800px;
+  margin: 10px auto;
+  padding: 15px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
-.nav-list > li {
-  margin-bottom: 0.75rem;
-}
-.nav-list a {
+.notice ul { margin: 0; padding-left: 1.2em; list-style: disc; }
+.notice li { line-height: 2; }
+.notice a, .chat-header a {
+  color: #0066cc;
   text-decoration: none;
-  color: #333;
-  font-size: 0.9rem;
 }
-.nav-list a:hover {
+.notice a:hover, .chat-header a:hover {
+  color: #004499;
   text-decoration: underline;
 }
 
-/* 嵌套子列表 */
-.sub-list {
-  margin-top: 0.25rem;
-  margin-left: 1rem;
+.chat-header {
+  font-size: 1.4rem; font-weight: bold; color: #000;
+  margin-bottom: 10px;
 }
-.sub-list li {
-  margin-bottom: 0.5rem;
-}
-
-/* 加入社区链接 */
-.join-links ul li {
-  margin-bottom: 1rem;
-  font-size: 0.85rem;
-}
-.join-links a {
-  color: #1a73e8;
-  text-decoration: none;
-}
-.join-links a:hover {
-  text-decoration: underline;
-}
-
-/* ====== 候补输入区卡片居中样式 ====== */
 .chat-history {
-  min-height: 60vh;
-  width: min(420px, 90vw);
-  margin: 0 auto;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,.05);
-  padding: 32px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
+  height: 200px; width: 100%; background: #fafafa;
+  border: 1px solid #ddd; border-radius: 4px;
+  display: flex; justify-content: center; align-items: center;
 }
-
-/* ====== 表单行 ====== */
+/* 新增: 候补区样式 */
 .waitlist-inline-area {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  width: 100%;
   justify-content: center;
-  width: 100%;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
-
-/* ====== 输入框 ====== */
 .waitlist-inline-area input[type="email"] {
-  padding: 0 14px;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  font-size: 16px;
-  width: 100%;
-  max-width: 260px;
-  height: 48px;
-  line-height: 48px;
-  box-sizing: border-box;
-  transition: border-color .2s, background .2s;
+  padding: 8px 10px;
+  border: 1.2px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+  width: 220px;
+  transition: border-color 0.2s;
 }
 .waitlist-inline-area input[type="email"]:focus {
   outline: none;
-  border-color: #0057ff;
-  background: #f0f7ff;
+  border-color: var(--primary-color);
+  background: #fffbe7;
 }
-
-/* ====== 提交按钮 ====== */
 .waitlist-inline-area .join-btn {
-  padding: 0 28px;
-  background: #0057ff;
-  color: #fff;
-  font-weight: 600;
-  border: none;
-  border-radius: 6px;
-  box-shadow: 0 4px 10px rgba(0,0,0,.12);
-  cursor: pointer;
-  transition: transform .2s, filter .2s;
-  font-size: 16px;
-  height: 48px;
-  line-height: 48px;
+  padding: .6rem 1.1rem;
+  background: #e67600; color: #fff;
+  font-weight: bold; border: none; border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0,0,0,.2);
+  cursor: pointer; transition: .3s;
+  font-size: 1rem;
+  height: 40px;
 }
-.waitlist-inline-area .join-btn:hover {
-  filter: brightness(1.08);
-  transform: translateY(-2px) scale(1.04);
-}
-.waitlist-inline-area .join-btn:active {
-  transform: scale(.96);
-}
-
-/* ====== 提示信息 ====== */
+.waitlist-inline-area .join-btn:hover { background: #cc5f00; transform: scale(1.05); }
+.waitlist-inline-area .join-btn:active { transform: scale(.95); }
 .waitlist-inline-area .waitlist-message {
-  margin-left: 12px;
-  min-width: 140px;
+  margin-left: 10px; min-width: 120px;
   font-size: 14px;
-  color: #0057ff;
+  color: #e67600;
   min-height: 24px;
 }
-.waitlist-inline-area .waitlist-error { color: #d22; }
-.waitlist-inline-area .waitlist-success { color: #229922; }
+.waitlist-inline-area .waitlist-error {
+  color: #d22; 
+}
+.waitlist-inline-area .waitlist-success {
+  color: #229922;
+}
 
-/* ====== 移动端优化 ====== */
+.chat-input-area {
+  display: flex; align-items: center; margin-top: 10px;
+}
+.chat-input-area textarea {
+  flex: 1; height: 80px; padding: 8px; margin-right: 8px;
+  border: 1px solid #ccc; border-radius: 4px;
+}
+.chat-input-area button {
+  padding: 0 16px; height: 36px; background: var(--primary-color);
+  border: none; color: #fff; border-radius: 4px; cursor: pointer;
+}
+.menu-toggle {
+  position: fixed; top: 20px; left: 20px;
+  background: none; border: none; font-size: 1.5rem;
+  color: var(--primary-color); cursor: pointer; z-index: 1100;
+}
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.4);
+  opacity: 0; pointer-events: none; transition: opacity .3s;
+  z-index: 1000;
+}
+.overlay.active {
+  opacity: 1; pointer-events: auto;
+}
+.sidebar {
+  position: fixed; top: 0; left: 0; bottom: 0; width: 260px;
+  padding: 80px 20px 20px;
+  background: linear-gradient(135deg,#FFE0B2,#FFF3D6);
+  backdrop-filter: blur(8px);
+  border-right: 1px solid rgba(0,0,0,.1);
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform .3s; z-index: 1050;
+}
+.sidebar.open { transform: translateX(0); }
+.sidebar-header {
+  display: flex; align-items: center; margin-bottom: 2rem;
+}
+.sidebar-logo {
+  width: 40px; height: 40px; border-radius: 50%;
+  margin-right: 10px;
+}
+.sidebar-header h2 {
+  margin: 0; font-size: 1.5rem; font-weight: bold; color: #000;
+}
+.nav-list, .sub-list { list-style: none; margin: 0; padding: 0; }
+.nav-list li { margin-bottom: 1rem; }
+.nav-list a {
+  text-decoration: none; color: #0066cc; font-size: .95rem;
+}
+.nav-list a:hover { color: #000; }
+.sub-list { padding-left: 1rem; margin-top: .5rem; }
+.sub-list li { margin-bottom: .5rem; }
+.sub-list a { color: #000; font-size: .9rem; text-decoration: none; }
+
+.sidebar-footer {
+  margin-top: 2rem; padding: 10px;
+  border: 1px solid #000; border-radius: 4px;
+  text-align: center;
+}
+.sidebar-footer img {
+  width: 50%; height: auto; display: block; margin: 0 auto;
+}
+.sidebar-footer p {
+  margin: 10px 0 0; color: #000; font-size: .9rem;
+}
+.lang-toggle {
+  position: fixed; top: 20px; right: 20px;
+  display: flex; background: #fff; border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  z-index: 1100; overflow: hidden;
+}
+.lang-toggle button {
+  padding: 4px 8px; border: none; background: transparent;
+  color: #555; font-weight: 500; cursor: pointer;
+  transition: background .3s, color .3s;
+}
+.lang-toggle button.active {
+  background: var(--primary-color); color: #fff;
+}
+.lang-toggle button:not(.active):hover {
+  background: #f0f0f0;
+}
+.content {
+  margin-left: 0; padding: 10px 20px;
+  display: flex; flex-direction: column; align-items: center;
+  transition: margin-left .3s;
+}
+.content.shifted { margin-left: 260px; }
+
+/* ----------- 移动端优化，彻底修复输入框太窄问题 ----------- */
 @media (max-width: 600px) {
   .chat-history {
     min-height: auto;
-    padding: 24px 16px;
+    padding: 12px 4px;
   }
   .waitlist-inline-area {
     flex-direction: column !important;
@@ -170,39 +208,19 @@
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
-    box-sizing: border-box;
-    display: block;
+    box-sizing: border-box !important;
+    display: block !important;
+    font-size: 16px !important;
   }
   .waitlist-inline-area .waitlist-message {
-    margin: 6px 0 0;
-    text-align: left;
+    margin: 8px 0 0 !important;
+    text-align: left !important;
   }
 }
 
-/* ====== 深色模式 ====== */
-@media (prefers-color-scheme: dark) {
-  .sidebar {
-    background: #1e1e1e;
-    color: #f3f3f3;
-    border-right: 1px solid #333;
-  }
-  .chat-history {
-    background: #2b2b2b;
-    border-color: #444;
-    box-shadow: 0 4px 12px rgba(0,0,0,.6);
-  }
-  .waitlist-inline-area input[type="email"] {
-    background: #1e1e1e;
-    border-color: #555;
-    color: #f3f3f3;
-  }
-  .waitlist-inline-area input[type="email"]:focus {
-    background: #18264c;
-  }
-  .waitlist-inline-area .join-btn {
-    background: #336dff;
-  }
-  .waitlist-inline-area .waitlist-message {
-    color: #7aa3ff;
-  }
+/* ----------- 移除旧的窄宽度规则，防止被覆盖 ----------- */
+@media(max-width:768px){
+  .content.shifted { margin-left: 0; }
+  .waitlist-modal-content { width: 95vw; min-width: 0;}
+  /* .waitlist-inline-area input[type="email"] {width: 100px;}  -- 注释掉或移除这一行 */
 }
