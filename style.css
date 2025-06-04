@@ -170,6 +170,9 @@
   .waitlist-inline-area .join-btn {
     width: 100%;
   }
+  .waitlist-inline-area input[type="email"] {
+    max-width: none;           /* 新增：移动端取消最大宽度限制 */
+  }
   .waitlist-inline-area .waitlist-message {
     margin: 6px 0 0;
     text-align: left;
