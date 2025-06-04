@@ -213,15 +213,19 @@
   justify-content: center;
   align-items: center;
   gap: 28px;
-  margin: 30px 0 14px 0;
-  flex-wrap: wrap;
-  width: 100%;
+  margin: 0 auto 24px auto;
+  width: fit-content;
+  max-width: 100%;
+  /* 让标签组宽度自适应其内容，自然居中 */
+}
+.wrapper {
+  /* 你已有的样式，不用动 */
 }
 
 .business-tag {
   font-size: 1.5rem;
   font-weight: 800;
-  padding: 14px 38px;
+  padding: 18px 44px;
   border-radius: 32px;
   background: linear-gradient(90deg, #fff176 10%, #ffa726 90%);
   color: #333;
@@ -229,18 +233,15 @@
   box-shadow: 0 2px 18px rgba(250,140,50,0.14);
   border: none;
   text-align: center;
-  margin: 0 4px;
+  margin: 0 6px;
   cursor: pointer;
   position: relative;
   transition: 
     transform 0.20s cubic-bezier(.36,1.32,.57,1.03),
     box-shadow 0.2s,
     background 0.3s;
-  /* 微光特效 */
   box-shadow: 0 0 15px 0 #ffe08288, 0 2px 12px #fa8c3230;
 }
-
-/* 特殊渐变色可按需分配 */
 .business-tag.tag-database {
   background: linear-gradient(90deg, #ffe082 0%, #ffd54f 100%);
 }
@@ -250,7 +251,6 @@
 .business-tag.tag-camp {
   background: linear-gradient(90deg, #ffd600 0%, #ffa726 100%);
 }
-
 .business-tag:hover {
   background: linear-gradient(90deg, #fffde7 0%, #ff9800 100%);
   color: #000;
@@ -258,18 +258,17 @@
   box-shadow: 0 0 38px 6px #ffd600cc, 0 8px 28px #fa8c3240;
   animation: tag-flicker 0.7s;
 }
-
 @keyframes tag-flicker {
   0% { box-shadow: 0 0 15px 0 #ffe08288, 0 2px 12px #fa8c3230;}
   60% { box-shadow: 0 0 42px 12px #ffd600cc, 0 12px 40px #fa8c3233;}
   100% { box-shadow: 0 0 15px 0 #ffe08288, 0 2px 12px #fa8c3230;}
 }
-
 @media (max-width: 600px) {
   .business-tags {
-    gap: 12px;
-    margin: 18px 0 8px 0;
     flex-direction: column;
+    gap: 12px;
+    margin: 18px auto 8px auto;
+    width: 100%;
   }
   .business-tag {
     font-size: 1.05rem;
