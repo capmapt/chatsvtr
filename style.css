@@ -76,15 +76,14 @@
 
 /* ====== 候补输入区卡片居中样式 ====== */
 .chat-history {
-  /* 原 height → min-height，支持内容自适应 ——↓ 修改 */
   min-height: 60vh;
-  width: min(420px, 90vw);     /* 卡片宽度限制 ——↓ 新增 */
-  margin: 0 auto;              /* 居中 */
-  background: #ffffff;         /* 更清爽背景 ——↓ 修改 */
-  border: 1px solid #e5e7eb;   /* 更柔和的灰色边框 ——↓ 修改 */
-  border-radius: 12px;         /* 圆角加大 ——↓ 修改 */
-  box-shadow: 0 4px 12px rgba(0,0,0,.05);  /* 轻投影 ——↓ 新增 */
-  padding: 32px 24px;          /* 内边距 ——↓ 新增 */
+  width: min(420px, 90vw);
+  margin: 0 auto;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.05);
+  padding: 32px 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -98,46 +97,46 @@
   align-items: center;
   gap: 12px;
   justify-content: center;
-  width: 100%;                 /* 铺满卡片宽度 —— 修改 */
-  flex-wrap: nowrap;           /* 桌面端保持一行 —— 修改 */
+  width: 100%;
+  flex-wrap: nowrap;
 }
 
 /* ====== 输入框 ====== */
 .waitlist-inline-area input[type="email"] {
-  padding: 0 14px;             /* 修改 */
-  border: 1px solid #cbd5e1;   /* 修改 */
-  border-radius: 6px;          /* 与按钮一致 —— 修改 */
-  font-size: 16px;             /* 调大可读性 —— 修改 */
+  padding: 0 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 16px;
   width: 100%;
-  max-width: 260px;            /* 新增：最大宽度 */
-  height: 48px;                /* 统一高度 —— 修改 */
+  max-width: 260px;
+  height: 48px;
   line-height: 48px;
   box-sizing: border-box;
   transition: border-color .2s, background .2s;
 }
 .waitlist-inline-area input[type="email"]:focus {
   outline: none;
-  border-color: #0057ff;       /* 品牌主色 —— 修改 */
-  background: #f0f7ff;         /* 轻呼应 —— 修改 */
+  border-color: #0057ff;
+  background: #f0f7ff;
 }
 
 /* ====== 提交按钮 ====== */
 .waitlist-inline-area .join-btn {
-  padding: 0 28px;             /* 修改 */
-  background: #0057ff;         /* 品牌主色 —— 修改 */
+  padding: 0 28px;
+  background: #0057ff;
   color: #fff;
-  font-weight: 600;            /* 修改 */
+  font-weight: 600;
   border: none;
-  border-radius: 6px;          /* 修改 */
-  box-shadow: 0 4px 10px rgba(0,0,0,.12); /* 修改 */
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,.12);
   cursor: pointer;
   transition: transform .2s, filter .2s;
-  font-size: 16px;             /* 修改 */
-  height: 48px;                /* 修改 */
+  font-size: 16px;
+  height: 48px;
   line-height: 48px;
 }
 .waitlist-inline-area .join-btn:hover {
-  filter: brightness(1.08);    /* 修改 */
+  filter: brightness(1.08);
   transform: translateY(-2px) scale(1.04);
 }
 .waitlist-inline-area .join-btn:active {
@@ -146,10 +145,10 @@
 
 /* ====== 提示信息 ====== */
 .waitlist-inline-area .waitlist-message {
-  margin-left: 12px;           /* 修改 */
-  min-width: 140px;            /* 修改 */
+  margin-left: 12px;
+  min-width: 140px;
   font-size: 14px;
-  color: #0057ff;              /* 统一主色 —— 修改 */
+  color: #0057ff;
   min-height: 24px;
 }
 .waitlist-inline-area .waitlist-error { color: #d22; }
@@ -158,20 +157,20 @@
 /* ====== 移动端优化 ====== */
 @media (max-width: 450px) {
   .chat-history {
-    min-height: auto;          /* 新增 */
-    padding: 24px 16px;        /* 新增 */
+    min-height: auto;
+    padding: 24px 16px;
   }
   .waitlist-inline-area {
-    flex-direction: column;    /* 保持 */
+    flex-direction: column;
     align-items: stretch;
-    gap: 10px;                 /* 修改 */
+    gap: 10px;
   }
   .waitlist-inline-area input[type="email"],
   .waitlist-inline-area .join-btn {
     width: 100%;
   }
   .waitlist-inline-area input[type="email"] {
-    max-width: none;           /* 新增：移动端取消最大宽度限制 */
+    max-width: none; /* ←←← 关键修复，移动端去除最大宽度限制 */
   }
   .waitlist-inline-area .waitlist-message {
     margin: 6px 0 0;
