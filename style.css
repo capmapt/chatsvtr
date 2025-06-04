@@ -154,7 +154,7 @@
 .waitlist-inline-area .waitlist-error { color: #d22; }
 .waitlist-inline-area .waitlist-success { color: #229922; }
 
-/* ====== 移动端优化 ====== */
+/* ====== 移动端优化：彻底覆盖，解决输入框过窄问题 ====== */
 @media (max-width: 600px) {
   .chat-history {
     min-height: auto;
