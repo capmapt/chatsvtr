@@ -94,17 +94,17 @@
 /* ====== 表单行 ====== */
 .waitlist-inline-area {
   display: flex;
+  flex-wrap: wrap;          /* 允许换行，消息单独一行 */
   align-items: center;
   gap: 12px;
   justify-content: center;
   width: 100%;
-  flex-wrap: nowrap;
 }
 
 /* ====== 输入框 ====== */
 .waitlist-inline-area input[type="email"] {
-  flex: 1 1 auto;          /* NEW: 自动占满剩余宽度 */
-  min-width: 0;            /* NEW: 防止超出父容器 */
+  flex: 1 1 160px;          /* 自动占满剩余空间，最小 160px */
+  min-width: 0;             /* 防止超出父容器 */
   padding: 0 14px;
   border: 1px solid #cbd5e1;
   border-radius: 6px;
@@ -122,6 +122,7 @@
 
 /* ====== 提交按钮 ====== */
 .waitlist-inline-area .join-btn {
+  flex: 0 0 auto;           /* 不被压缩，保持自然宽度 */
   padding: 0 28px;
   background: #0057ff;
   color: #fff;
@@ -134,7 +135,7 @@
   font-size: 16px;
   height: 48px;
   line-height: 48px;
-  white-space: nowrap;     /* NEW: 防止按钮文本换行 */
+  white-space: nowrap;      /* 防止文本换行 */
 }
 .waitlist-inline-area .join-btn:hover {
   filter: brightness(1.08);
@@ -146,8 +147,8 @@
 
 /* ====== 提示信息 ====== */
 .waitlist-inline-area .waitlist-message {
-  margin-left: 12px;
-  min-width: 140px;
+  flex-basis: 100%;         /* 换行到下一行，避免压缩输入框 */
+  margin-top: 4px;
   font-size: 14px;
   color: #0057ff;
   min-height: 24px;
@@ -156,7 +157,7 @@
 .waitlist-inline-area .waitlist-success { color: #229922; }
 
 /* ====== 移动端优化 ====== */
-@media (max-width: 450px) {
+@media (max-width: 600px) { /* 提高阈值，更多设备触发堆叠 */
   .chat-history {
     min-height: auto;
     padding: 24px 16px;
@@ -164,16 +165,10 @@
   .waitlist-inline-area {
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
   }
   .waitlist-inline-area input[type="email"],
   .waitlist-inline-area .join-btn {
     width: 100%;
-  }
-  /* 之前的 max-width 已经移除，这里无需再次覆盖 */
-  .waitlist-inline-area .waitlist-message {
-    margin: 6px 0 0;
-    text-align: left;
   }
 }
 
