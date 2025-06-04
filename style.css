@@ -103,12 +103,12 @@
 
 /* ====== 输入框 ====== */
 .waitlist-inline-area input[type="email"] {
+  flex: 1 1 auto;          /* NEW: 自动占满剩余宽度 */
+  min-width: 0;            /* NEW: 防止超出父容器 */
   padding: 0 14px;
   border: 1px solid #cbd5e1;
   border-radius: 6px;
   font-size: 16px;
-  width: 100%;
-  max-width: 260px;
   height: 48px;
   line-height: 48px;
   box-sizing: border-box;
@@ -134,6 +134,7 @@
   font-size: 16px;
   height: 48px;
   line-height: 48px;
+  white-space: nowrap;     /* NEW: 防止按钮文本换行 */
 }
 .waitlist-inline-area .join-btn:hover {
   filter: brightness(1.08);
@@ -169,9 +170,7 @@
   .waitlist-inline-area .join-btn {
     width: 100%;
   }
-  .waitlist-inline-area input[type="email"] {
-    max-width: none; /* ←←← 关键修复，移动端去除最大宽度限制 */
-  }
+  /* 之前的 max-width 已经移除，这里无需再次覆盖 */
   .waitlist-inline-area .waitlist-message {
     margin: 6px 0 0;
     text-align: left;
