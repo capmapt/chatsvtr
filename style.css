@@ -1,226 +1,205 @@
-*, *::before, *::after { box-sizing: border-box; }
+/* ====== 左侧导航栏样式 ====== */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 260px;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  overflow-y: auto;
+  border-right: 1px solid #e0e0e0;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
 
-:root {
-  --primary-color: #FA8C32;
-  --secondary-color: #FFBB33;
-  --accent-color: #FFD600;
-  --bg-main: linear-gradient(135deg, #fff8e1, #ffe0b2);
-  --bg-panel: #FFF;
+/* 标题区域 */
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.4;
 }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0; padding: 0; min-height: 100vh;
-  background: var(--bg-main);
-  font-family: sans-serif;
-  overflow-x: hidden;
+.sidebar-header small {
+  font-size: 0.75rem;
+  color: #666;
 }
-.wrapper {
-  width: 100%; max-width: 800px;
-  margin: 10px auto;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  overflow: hidden;
+
+/* 各功能区块 */
+.sidebar-section {
+  margin-top: 2rem;
 }
-/* Banner always fully visible */
-.banner-header {
-  width: 100%;
-  aspect-ratio: 4 / 1;
-  background: url('banner.png') center/cover no-repeat;
+.sidebar-section h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #333;
 }
-.notice, .chatbox {
-  background: var(--bg-panel);
-  width: 100%; max-width: 800px;
-  margin: 10px auto;
-  padding: 15px;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+/* 主列表 */
+.nav-list,
+.sub-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-.notice ul { margin: 0; padding-left: 1.2em; list-style: disc; }
-.notice li { line-height: 2; }
-.notice a, .chat-header a {
-  color: #0066cc;
+.nav-list > li {
+  margin-bottom: 0.75rem;
+}
+.nav-list a {
   text-decoration: none;
+  color: #333;
+  font-size: 0.9rem;
 }
-.notice a:hover, .chat-header a:hover {
-  color: #004499;
+.nav-list a:hover {
   text-decoration: underline;
 }
 
-.chat-header {
-  font-size: 1.4rem; font-weight: bold; color: #000;
-  margin-bottom: 10px;
+/* 嵌套子列表 */
+.sub-list {
+  margin-top: 0.25rem;
+  margin-left: 1rem;
 }
+.sub-list li {
+  margin-bottom: 0.5rem;
+}
+
+/* 加入社区链接 */
+.join-links ul li {
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+}
+.join-links a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+.join-links a:hover {
+  text-decoration: underline;
+}
+
+/* ====== 候补输入区卡片居中样式 ====== */
 .chat-history {
-  height: 200px; width: 100%; background: #fafafa;
-  border: 1px solid #ddd; border-radius: 4px;
-  display: flex; justify-content: center; align-items: center;
+  /* 原 height → min-height，支持内容自适应 ——↓ 修改 */
+  min-height: 60vh;
+  width: min(420px, 90vw);     /* 卡片宽度限制 ——↓ 新增 */
+  margin: 0 auto;              /* 居中 */
+  background: #ffffff;         /* 更清爽背景 ——↓ 修改 */
+  border: 1px solid #e5e7eb;   /* 更柔和的灰色边框 ——↓ 修改 */
+  border-radius: 12px;         /* 圆角加大 ——↓ 修改 */
+  box-shadow: 0 4px 12px rgba(0,0,0,.05);  /* 轻投影 ——↓ 新增 */
+  padding: 32px 24px;          /* 内边距 ——↓ 新增 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
 }
-/* 新增: 候补区样式 */
+
+/* ====== 表单行 ====== */
 .waitlist-inline-area {
   display: flex;
   align-items: center;
-  gap: 8px;
-  width: 100%;
+  gap: 12px;
   justify-content: center;
-  flex-wrap: wrap;
+  width: 100%;                 /* 铺满卡片宽度 —— 修改 */
+  flex-wrap: nowrap;           /* 桌面端保持一行 —— 修改 */
 }
+
+/* ====== 输入框 ====== */
 .waitlist-inline-area input[type="email"] {
-  padding: 8px 10px;
-  border: 1.2px solid #ccc;
-  border-radius: 4px;
-  font-size: 15px;
-  width: 220px;
-  transition: border-color 0.2s;
+  padding: 0 14px;             /* 修改 */
+  border: 1px solid #cbd5e1;   /* 修改 */
+  border-radius: 6px;          /* 与按钮一致 —— 修改 */
+  font-size: 16px;             /* 调大可读性 —— 修改 */
+  width: 100%;
+  max-width: 260px;            /* 新增：最大宽度 */
+  height: 48px;                /* 统一高度 —— 修改 */
+  line-height: 48px;
+  box-sizing: border-box;
+  transition: border-color .2s, background .2s;
 }
 .waitlist-inline-area input[type="email"]:focus {
   outline: none;
-  border-color: var(--primary-color);
-  background: #fffbe7;
+  border-color: #0057ff;       /* 品牌主色 —— 修改 */
+  background: #f0f7ff;         /* 轻呼应 —— 修改 */
 }
+
+/* ====== 提交按钮 ====== */
 .waitlist-inline-area .join-btn {
-  padding: .6rem 1.1rem;
-  background: #e67600; color: #fff;
-  font-weight: bold; border: none; border-radius: 4px;
-  box-shadow: 0 4px 8px rgba(0,0,0,.2);
-  cursor: pointer; transition: .3s;
-  font-size: 1rem;
-  height: 40px;
+  padding: 0 28px;             /* 修改 */
+  background: #0057ff;         /* 品牌主色 —— 修改 */
+  color: #fff;
+  font-weight: 600;            /* 修改 */
+  border: none;
+  border-radius: 6px;          /* 修改 */
+  box-shadow: 0 4px 10px rgba(0,0,0,.12); /* 修改 */
+  cursor: pointer;
+  transition: transform .2s, filter .2s;
+  font-size: 16px;             /* 修改 */
+  height: 48px;                /* 修改 */
+  line-height: 48px;
 }
-.waitlist-inline-area .join-btn:hover { background: #cc5f00; transform: scale(1.05); }
-.waitlist-inline-area .join-btn:active { transform: scale(.95); }
+.waitlist-inline-area .join-btn:hover {
+  filter: brightness(1.08);    /* 修改 */
+  transform: translateY(-2px) scale(1.04);
+}
+.waitlist-inline-area .join-btn:active {
+  transform: scale(.96);
+}
+
+/* ====== 提示信息 ====== */
 .waitlist-inline-area .waitlist-message {
-  margin-left: 10px; min-width: 120px;
+  margin-left: 12px;           /* 修改 */
+  min-width: 140px;            /* 修改 */
   font-size: 14px;
-  color: #e67600;
+  color: #0057ff;              /* 统一主色 —— 修改 */
   min-height: 24px;
 }
-.waitlist-inline-area .waitlist-error {
-  color: #d22; 
-}
-.waitlist-inline-area .waitlist-success {
-  color: #229922;
-}
+.waitlist-inline-area .waitlist-error { color: #d22; }
+.waitlist-inline-area .waitlist-success { color: #229922; }
 
-.chat-input-area {
-  display: flex; align-items: center; margin-top: 10px;
-}
-.chat-input-area textarea {
-  flex: 1; height: 80px; padding: 8px; margin-right: 8px;
-  border: 1px solid #ccc; border-radius: 4px;
-}
-.chat-input-area button {
-  padding: 0 16px; height: 36px; background: var(--primary-color);
-  border: none; color: #fff; border-radius: 4px; cursor: pointer;
-}
-.menu-toggle {
-  position: fixed; top: 20px; left: 20px;
-  background: none; border: none; font-size: 1.5rem;
-  color: var(--primary-color); cursor: pointer; z-index: 1100;
-}
-.overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.4);
-  opacity: 0; pointer-events: none; transition: opacity .3s;
-  z-index: 1000;
-}
-.overlay.active {
-  opacity: 1; pointer-events: auto;
-}
-.sidebar {
-  position: fixed; top: 0; left: 0; bottom: 0; width: 260px;
-  padding: 80px 20px 20px;
-  background: linear-gradient(135deg,#FFE0B2,#FFF3D6);
-  backdrop-filter: blur(8px);
-  border-right: 1px solid rgba(0,0,0,.1);
-  overflow-y: auto;
-  transform: translateX(-100%);
-  transition: transform .3s; z-index: 1050;
-}
-.sidebar.open { transform: translateX(0); }
-.sidebar-header {
-  display: flex; align-items: center; margin-bottom: 2rem;
-}
-.sidebar-logo {
-  width: 40px; height: 40px; border-radius: 50%;
-  margin-right: 10px;
-}
-.sidebar-header h2 {
-  margin: 0; font-size: 1.5rem; font-weight: bold; color: #000;
-}
-.nav-list, .sub-list { list-style: none; margin: 0; padding: 0; }
-.nav-list li { margin-bottom: 1rem; }
-.nav-list a {
-  text-decoration: none; color: #0066cc; font-size: .95rem;
-}
-.nav-list a:hover { color: #000; }
-.sub-list { padding-left: 1rem; margin-top: .5rem; }
-.sub-list li { margin-bottom: .5rem; }
-.sub-list a { color: #000; font-size: .9rem; text-decoration: none; }
-
-.sidebar-footer {
-  margin-top: 2rem; padding: 10px;
-  border: 1px solid #000; border-radius: 4px;
-  text-align: center;
-}
-.sidebar-footer img {
-  width: 50%; height: auto; display: block; margin: 0 auto;
-}
-.sidebar-footer p {
-  margin: 10px 0 0; color: #000; font-size: .9rem;
-}
-.lang-toggle {
-  position: fixed; top: 20px; right: 20px;
-  display: flex; background: #fff; border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  z-index: 1100; overflow: hidden;
-}
-.lang-toggle button {
-  padding: 4px 8px; border: none; background: transparent;
-  color: #555; font-weight: 500; cursor: pointer;
-  transition: background .3s, color .3s;
-}
-.lang-toggle button.active {
-  background: var(--primary-color); color: #fff;
-}
-.lang-toggle button:not(.active):hover {
-  background: #f0f0f0;
-}
-.content {
-  margin-left: 0; padding: 10px 20px;
-  display: flex; flex-direction: column; align-items: center;
-  transition: margin-left .3s;
-}
-.content.shifted { margin-left: 260px; }
-
-/* ----------- 移动端优化，彻底修复输入框太窄问题 ----------- */
-@media (max-width: 600px) {
+/* ====== 移动端优化 ====== */
+@media (max-width: 450px) {
   .chat-history {
-    min-height: auto;
-    padding: 12px 4px;
+    min-height: auto;          /* 新增 */
+    padding: 24px 16px;        /* 新增 */
   }
   .waitlist-inline-area {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 10px !important;
+    flex-direction: column;    /* 保持 */
+    align-items: stretch;
+    gap: 10px;                 /* 修改 */
   }
   .waitlist-inline-area input[type="email"],
   .waitlist-inline-area .join-btn {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-    display: block !important;
-    font-size: 16px !important;
+    width: 100%;
   }
   .waitlist-inline-area .waitlist-message {
-    margin: 8px 0 0 !important;
-    text-align: left !important;
+    margin: 6px 0 0;
+    text-align: left;
   }
 }
 
-/* ----------- 移除旧的窄宽度规则，防止被覆盖 ----------- */
-@media(max-width:768px){
-  .content.shifted { margin-left: 0; }
-  .waitlist-modal-content { width: 95vw; min-width: 0;}
-  /* .waitlist-inline-area input[type="email"] {width: 100px;}  -- 注释掉或移除这一行 */
+/* ====== 深色模式 ====== */
+@media (prefers-color-scheme: dark) {
+  .sidebar {
+    background: #1e1e1e;
+    color: #f3f3f3;
+    border-right: 1px solid #333;
+  }
+  .chat-history {
+    background: #2b2b2b;
+    border-color: #444;
+    box-shadow: 0 4px 12px rgba(0,0,0,.6);
+  }
+  .waitlist-inline-area input[type="email"] {
+    background: #1e1e1e;
+    border-color: #555;
+    color: #f3f3f3;
+  }
+  .waitlist-inline-area input[type="email"]:focus {
+    background: #18264c;
+  }
+  .waitlist-inline-area .join-btn {
+    background: #336dff;
+  }
+  .waitlist-inline-area .waitlist-message {
+    color: #7aa3ff;
+  }
 }
