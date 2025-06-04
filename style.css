@@ -208,72 +208,73 @@
     color: #7aa3ff;
   }
 }
-/* 业务标签区域优化 */
 .business-tags {
   display: flex;
   justify-content: center;
-  gap: 32px;
-  margin: 28px 0 8px 0;
+  align-items: center;
+  gap: 28px;
+  margin: 30px 0 14px 0;
   flex-wrap: wrap;
   width: 100%;
 }
+
 .business-tag {
-  font-size: 1.35rem;
-  font-weight: 700;
-  padding: 12px 32px;
-  border-radius: 30px;
-  background: linear-gradient(90deg, #ffeb3b 30%, #ff9800 100%);
-  color: #222;
-  letter-spacing: 2px;
-  box-shadow: 0 2px 12px rgba(250,140,50,0.10);
-  transition: 
-    transform 0.25s cubic-bezier(.36,1.32,.57,1.03),
-    box-shadow 0.2s,
-    background 0.3s;
+  font-size: 1.5rem;
+  font-weight: 800;
+  padding: 14px 38px;
+  border-radius: 32px;
+  background: linear-gradient(90deg, #fff176 10%, #ffa726 90%);
+  color: #333;
+  letter-spacing: 2.5px;
+  box-shadow: 0 2px 18px rgba(250,140,50,0.14);
   border: none;
   text-align: center;
   margin: 0 4px;
-  position: relative;
-  z-index: 2;
   cursor: pointer;
-  /* 特效：微微发光 */
-  box-shadow: 0 0 12px 0 rgba(255, 193, 7, 0.18), 0 2px 12px rgba(250,140,50,0.10);
-}
-.business-tag:hover {
-  background: linear-gradient(90deg, #ffd600 15%, #ff9800 90%);
-  transform: scale(1.10) rotate(-2deg);
-  box-shadow: 0 0 28px 4px #ffd60088, 0 8px 24px rgba(250,140,50,0.18);
-  color: #000;
-  animation: tag-glow 0.7s;
-}
-@keyframes tag-glow {
-  0% { box-shadow: 0 0 12px 0 #ffd60044, 0 2px 12px rgba(250,140,50,0.10);}
-  60% { box-shadow: 0 0 32px 8px #ffd600cc, 0 12px 32px #fa8c3233;}
-  100% { box-shadow: 0 0 12px 0 #ffd60044, 0 2px 12px rgba(250,140,50,0.10);}
+  position: relative;
+  transition: 
+    transform 0.20s cubic-bezier(.36,1.32,.57,1.03),
+    box-shadow 0.2s,
+    background 0.3s;
+  /* 微光特效 */
+  box-shadow: 0 0 15px 0 #ffe08288, 0 2px 12px #fa8c3230;
 }
 
-/* 为不同业务自定义轻微色差 */
-.business-tag.tag-community {
-  background: linear-gradient(90deg, #ffe082 10%, #ffa726 90%);
-}
+/* 特殊渐变色可按需分配 */
 .business-tag.tag-database {
-  background: linear-gradient(90deg, #fff176 30%, #ffd600 100%);
+  background: linear-gradient(90deg, #ffe082 0%, #ffd54f 100%);
 }
-.business-tag.tag-incubation {
-  background: linear-gradient(90deg, #ffd54f 10%, #ffb300 90%);
+.business-tag.tag-meetup {
+  background: linear-gradient(90deg, #fff9c4 20%, #ffb300 90%);
+}
+.business-tag.tag-camp {
+  background: linear-gradient(90deg, #ffd600 0%, #ffa726 100%);
 }
 
-/* 响应式优化 */
+.business-tag:hover {
+  background: linear-gradient(90deg, #fffde7 0%, #ff9800 100%);
+  color: #000;
+  transform: scale(1.08) rotate(-2deg);
+  box-shadow: 0 0 38px 6px #ffd600cc, 0 8px 28px #fa8c3240;
+  animation: tag-flicker 0.7s;
+}
+
+@keyframes tag-flicker {
+  0% { box-shadow: 0 0 15px 0 #ffe08288, 0 2px 12px #fa8c3230;}
+  60% { box-shadow: 0 0 42px 12px #ffd600cc, 0 12px 40px #fa8c3233;}
+  100% { box-shadow: 0 0 15px 0 #ffe08288, 0 2px 12px #fa8c3230;}
+}
+
 @media (max-width: 600px) {
   .business-tags {
-    gap: 14px;
-    margin: 18px 0 6px 0;
+    gap: 12px;
+    margin: 18px 0 8px 0;
+    flex-direction: column;
   }
   .business-tag {
     font-size: 1.05rem;
-    padding: 10px 0;
-    min-width: 60vw;
-    display: block;
+    padding: 12px 0;
+    min-width: 70vw;
     margin: 0 auto;
   }
 }
