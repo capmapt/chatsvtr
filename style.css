@@ -91,22 +91,24 @@
   box-sizing: border-box;
 }
 
-/* ====== 表单行（改为纵向两行，适配所有设备） ====== */
+/* ====== 表单行 ====== */
 .waitlist-inline-area {
   display: flex;
-  flex-direction: column;   /* 始终纵向 */
-  align-items: stretch;
+  align-items: center;
   gap: 12px;
+  justify-content: center;
   width: 100%;
+  flex-wrap: nowrap;
 }
 
 /* ====== 输入框 ====== */
 .waitlist-inline-area input[type="email"] {
-  width: 100%;             /* 占满整行 */
   padding: 0 14px;
   border: 1px solid #cbd5e1;
   border-radius: 6px;
   font-size: 16px;
+  width: 100%;
+  max-width: 260px;
   height: 48px;
   line-height: 48px;
   box-sizing: border-box;
@@ -120,9 +122,8 @@
 
 /* ====== 提交按钮 ====== */
 .waitlist-inline-area .join-btn {
-  width: 100%;             /* 单独一行并全宽 */
   padding: 0 28px;
-  background: #ff8000;
+  background: #0057ff;
   color: #fff;
   font-weight: 600;
   border: none;
@@ -144,13 +145,39 @@
 
 /* ====== 提示信息 ====== */
 .waitlist-inline-area .waitlist-message {
-  margin-top: 4px;
+  margin-left: 12px;
+  min-width: 140px;
   font-size: 14px;
   color: #0057ff;
   min-height: 24px;
 }
 .waitlist-inline-area .waitlist-error { color: #d22; }
 .waitlist-inline-area .waitlist-success { color: #229922; }
+
+/* ====== 移动端优化 ====== */
+@media (max-width: 600px) {
+  .chat-history {
+    min-height: auto;
+    padding: 24px 16px;
+  }
+  .waitlist-inline-area {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+  .waitlist-inline-area input[type="email"],
+  .waitlist-inline-area .join-btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+    display: block;
+  }
+  .waitlist-inline-area .waitlist-message {
+    margin: 6px 0 0;
+    text-align: left;
+  }
+}
 
 /* ====== 深色模式 ====== */
 @media (prefers-color-scheme: dark) {
@@ -173,7 +200,7 @@
     background: #18264c;
   }
   .waitlist-inline-area .join-btn {
-    background: #ff9933;
+    background: #336dff;
   }
   .waitlist-inline-area .waitlist-message {
     color: #7aa3ff;
