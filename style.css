@@ -94,17 +94,17 @@
 /* ====== 表单行 ====== */
 .waitlist-inline-area {
   display: flex;
-  flex-wrap: wrap;          /* 允许换行，消息单独一行 */
   align-items: center;
   gap: 12px;
   justify-content: center;
   width: 100%;
+  flex-wrap: nowrap;        /* 保持同一行，移动端再纵排 */
 }
 
 /* ====== 输入框 ====== */
 .waitlist-inline-area input[type="email"] {
-  flex: 1 1 160px;          /* 自动占满剩余空间，最小 160px */
-  min-width: 0;             /* 防止超出父容器 */
+  flex: 1 1 auto;          /* 自动占满剩余空间 */
+  min-width: 0;            /* 防止超出父容器 */
   padding: 0 14px;
   border: 1px solid #cbd5e1;
   border-radius: 6px;
@@ -122,9 +122,9 @@
 
 /* ====== 提交按钮 ====== */
 .waitlist-inline-area .join-btn {
-  flex: 0 0 auto;           /* 不被压缩，保持自然宽度 */
+  flex: 0 0 auto;          /* 不被压缩，保持自然宽度 */
   padding: 0 28px;
-  background: #0057ff;
+  background: #ff8000;     /* 与截图一致的橙色 */
   color: #fff;
   font-weight: 600;
   border: none;
@@ -135,7 +135,7 @@
   font-size: 16px;
   height: 48px;
   line-height: 48px;
-  white-space: nowrap;      /* 防止文本换行 */
+  white-space: nowrap;     /* 防止文本换行 */
 }
 .waitlist-inline-area .join-btn:hover {
   filter: brightness(1.08);
@@ -147,7 +147,7 @@
 
 /* ====== 提示信息 ====== */
 .waitlist-inline-area .waitlist-message {
-  flex-basis: 100%;         /* 换行到下一行，避免压缩输入框 */
+  flex-basis: 100%;        /* 单独一行，避免挤压输入框 */
   margin-top: 4px;
   font-size: 14px;
   color: #0057ff;
@@ -156,19 +156,20 @@
 .waitlist-inline-area .waitlist-error { color: #d22; }
 .waitlist-inline-area .waitlist-success { color: #229922; }
 
-/* ====== 移动端优化 ====== */
-@media (max-width: 600px) { /* 提高阈值，更多设备触发堆叠 */
+/* ====== 移动端优化：<= 768px 自动纵向堆叠 ====== */
+@media (max-width: 768px) {
   .chat-history {
     min-height: auto;
     padding: 24px 16px;
   }
   .waitlist-inline-area {
-    flex-direction: column;
+    flex-direction: column;   /* 纵向堆叠 */
     align-items: stretch;
   }
   .waitlist-inline-area input[type="email"],
   .waitlist-inline-area .join-btn {
-    width: 100%;
+    width: 100% !important;  /* 占满整行，彻底消除输入框过窄 */
+    max-width: none !important;
   }
 }
 
@@ -193,7 +194,7 @@
     background: #18264c;
   }
   .waitlist-inline-area .join-btn {
-    background: #336dff;
+    background: #ff9933;     /* 深色下稍亮 */
   }
   .waitlist-inline-area .waitlist-message {
     color: #7aa3ff;
