@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title data-i18n="title">硅谷科技评论</title>
+  <!-- 建议后续补充 description、OG/Favicons 等 -->
 
   <style>
     *, *::before, *::after { box-sizing: border-box; }
-
     :root {
       --primary-color: #FA8C32;
       --secondary-color: #FFBB33;
@@ -22,6 +22,11 @@
       font-family: sans-serif;
       overflow-x: hidden;
     }
+    header {
+      position: relative;
+      width: 100%;
+      z-index: 1200;
+    }
     .wrapper {
       width: 100%; max-width: 800px;
       margin: 10px auto;
@@ -29,7 +34,6 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       overflow: hidden;
     }
-    /* Banner always fully visible */
     .banner-header {
       width: 100%;
       aspect-ratio: 4 / 1;
@@ -63,7 +67,6 @@
       border: 1px solid #ddd; border-radius: 4px;
       display: flex; justify-content: center; align-items: center;
     }
-    /* 新增: 候补区样式 */
     .waitlist-inline-area {
       display: flex;
       align-items: center;
@@ -203,11 +206,8 @@
       .waitlist-modal-content { width: 95vw; min-width: 0;}
       .waitlist-inline-area input[type="email"] {width: 100px;}
     }
-  </style>
-  <style>
-    ...（你原来的 CSS 内容）
 
-    /* 这里粘贴 business-tags 的 CSS */
+    /* business-tags 样式 */
     .business-tags {
       display: flex;
       justify-content: center;
@@ -274,15 +274,18 @@
   </style>
 </head>
 <body>
-  <div class="lang-toggle">
-    <button id="btnZh" class="active">中</button>
-    <button id="btnEn">Eng</button>
-  </div>
-  <button class="menu-toggle">☰</button>
+  <header>
+    <div class="lang-toggle">
+      <button id="btnZh" class="active">中</button>
+      <button id="btnEn">Eng</button>
+    </div>
+    <button class="menu-toggle" aria-label="打开/关闭菜单">☰</button>
+    <div class="banner-header" role="banner" aria-label="首页横幅"></div>
+  </header>
   <div class="overlay active"></div>
-  <aside class="sidebar open">
+  <aside class="sidebar open" role="navigation" aria-label="主导航">
     <div class="sidebar-header">
-      <img src="logo.jpg" class="sidebar-logo" alt="logo">
+      <img src="logo.jpg" class="sidebar-logo" alt="SVTR.AI logo">
       <h2 data-i18n="sidebar_title">硅谷科技评论</h2>
     </div>
     <nav>
@@ -313,19 +316,18 @@
       </ul>
     </nav>
     <div class="sidebar-footer">
-      <img src="凯瑞.jpg" alt="QR Code">
+      <img src="凯瑞.jpg" alt="添加好友二维码">
       <p data-i18n="sidebar_qr_text">添加好友，进群交流</p>
     </div>
   </aside>
   <main class="content shifted">
-    <div class="wrapper">
-      <div class="banner-header"></div>
-  <div class="business-tags">
-    <span class="business-tag tag-database">AI创投库</span>
-    <span class="business-tag tag-meetup">AI创投会</span>
-    <span class="business-tag tag-camp">AI创投营</span>
-  </div>
-</div>
+    <section class="wrapper">
+      <div class="business-tags">
+        <span class="business-tag tag-database">AI创投库</span>
+        <span class="business-tag tag-meetup">AI创投会</span>
+        <span class="business-tag tag-camp">AI创投营</span>
+      </div>
+    </section>
     <section class="notice wrapper">
       <ul>
         <li><span data-i18n="notice_1"></span> <a href="https://c0uiiy15npu.feishu.cn/share/base/form/shrcnKdKrgumC9OtjQNXiC05r8e" data-i18n="link_community" target="_blank"></a></li>
@@ -333,39 +335,41 @@
         <li><span data-i18n="notice_3"></span> <a href="https://c0uiiy15npu.feishu.cn/wiki/G0oMwUeNbiZkQBkX9iXcfMllnpe?from=from_copylink" data-i18n="link_members" target="_blank"></a></li>
       </ul>
     </section>
- <section class="wrapper">
-<iframe
-   id="sheetContainer"
-   src="https://c0uiiy15npu.feishu.cn/wiki/V2JnwfmvtiBUTdkc32rcQrXWn4g"
-   frameborder="0"
-   loading="lazy"
-   style="width:100%; height:600px;"
-   allowfullscreen          <!-- HTML5 标准属性 -->
-   allow="fullscreen"       <!-- 新的 allow 语法 -->
-   webkitallowfullscreen    <!-- Safari 前缀 -->
-   mozallowfullscreen       <!-- Firefox 前缀 -->
- ></iframe>
+    <section class="wrapper">
+      <iframe
+        id="sheetContainer"
+        src="https://c0uiiy15npu.feishu.cn/wiki/V2JnwfmvtiBUTdkc32rcQrXWn4g"
+        frameborder="0"
+        loading="lazy"
+        style="width:100%; height:600px;"
+        allowfullscreen
+        webkitallowfullscreen
+        mozallowfullscreen
+      ></iframe>
+    </section>
     <section class="chatbox wrapper">
       <div class="chat-header">
         Chat with <a href="https://c0uiiy15npu.feishu.cn/wiki/TB4nwFKSjiZybRkoZx7c7mBXnxd?from=from_copylink" target="_blank">SVTR.AI</a>
       </div>
       <div class="chat-history">
-<form class="waitlist-inline-area" id="waitlistInlineForm" autocomplete="off" onsubmit="return false;">
- <input type="email" id="waitlistInlineEmail" 
-       placeholder="请输入您的邮箱" 
-       required 
-       data-i18n-placeholder="email_placeholder" />
-  <button type="submit" class="join-btn" id="waitlistInlineBtn" data-i18n="join_btn">加入候补名单</button>
-  <span class="waitlist-message" id="waitlistInlineMsg"></span>
-</form>
+        <form class="waitlist-inline-area" id="waitlistInlineForm" autocomplete="off" onsubmit="return false;">
+          <input type="email" id="waitlistInlineEmail" 
+            placeholder="请输入您的邮箱" 
+            required 
+            data-i18n-placeholder="email_placeholder" />
+          <button type="submit" class="join-btn" id="waitlistInlineBtn" data-i18n="join_btn">加入候补名单</button>
+          <span class="waitlist-message" id="waitlistInlineMsg"></span>
+        </form>
       </div>
       <div class="chat-input-area">
         <textarea placeholder="" data-i18n-placeholder="input_placeholder"></textarea>
         <button type="button" data-i18n="send_btn"></button>
       </div>
     </section>
-    <div style="text-align:center; color:#666; margin:20px 0;" data-i18n="footer_text"></div>
   </main>
+  <footer>
+    <div style="text-align:center; color:#666; margin:20px 0;" data-i18n="footer_text"></div>
+  </footer>
   <script>
     const translations = {
       'zh-CN': {
@@ -439,6 +443,8 @@
       });
       document.getElementById('btnZh').classList.toggle('active', lang === 'zh-CN');
       document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+      // 同步title
+      document.title = translations[lang].title;
     }
 
     document.getElementById('btnZh').addEventListener('click', () => updateLanguage('zh-CN'));
