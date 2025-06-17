@@ -344,3 +344,35 @@
 .stat-link:hover {
   color: var(--primary-color, #FA8C32);
 }
+/* 基本：输入框+按钮同行时，让输入框撑满剩余空间 */
+.waitlist-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.waitlist-form input {
+  flex: 1;
+  /* 取消任何固定宽度 */
+  width: auto !important;
+  /* 扩大点击面积 */
+  padding: 12px 16px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+.waitlist-form button {
+  flex-shrink: 0;
+  padding: 12px 20px;
+  font-size: 16px;
+}
+
+/* 手机小屏进一步优化：改成上下排列，满宽度 */
+@media (max-width: 600px) {
+  .waitlist-form {
+    flex-direction: column;
+  }
+  .waitlist-form input,
+  .waitlist-form button {
+    width: 100% !important;
+    margin: 4px 0;
+  }
+}
