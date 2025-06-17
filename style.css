@@ -313,3 +313,34 @@
   color: #fa8c32;
   transform: scale(1.07);
 }
+/* —— 统计数字横排样式 —— */
+.stat-list {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.stat-item {
+  text-align: center;
+  max-width: 200px;
+}
+.stat-count {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color, #FA8C32);
+  line-height: 1;
+}
+.stat-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+  text-decoration: none;
+  transition: color .2s;
+}
+.stat-link:hover {
+  color: var(--primary-color, #FA8C32);
+}
