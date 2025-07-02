@@ -376,3 +376,11 @@
     margin: 4px 0;
   }
 }
+/* —— 覆盖 HuggingFace ChatUI 的 CSS 变量 —— */
+iframe#svtrChatFrame {
+  /* 主色、背景、圆角等都继承自上面的自定义变量 */
+  --hf-chat-accent: var(--primary-color);  /* 发送按钮 & 高亮 */
+  --hf-chat-bg:     #FFFDF7;               /* 聊天窗口背景色 */
+  --hf-chat-radius: 12px;                  /* 卡片圆角 */
+  --hf-chat-font-body: "Noto Sans SC", sans-serif;   /* 正文字体 */
+}
