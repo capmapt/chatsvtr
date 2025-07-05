@@ -366,13 +366,15 @@
   </h2>
 
   <!-- 真正的聊天框来自 Cloudflare Worker /chat/ -->
- <iframe
-  id="svtrChatFrame"
-  src="https://llm-chat-app-template.liumin-gsm.workers.dev/chat/"
-  title="SVTR AI Chat"
-  style="width:100%;min-height:640px;border:none;border-radius:12px"
-  allow="clipboard-read; clipboard-write"
-></iframe>
+<section class="chatbox wrapper">
+  <h2 class="chat-header">Chat with <a href="https://svtr.ai" target="_blank">SVTR.AI</a></h2>
+  <iframe
+    id="svtrChatFrame"
+    src="https://llm-chat-app-template.liumin-gsm.workers.dev/chat/"
+    title="SVTR AI Chat"
+    style="width:100%;min-height:640px;border:none;border-radius:12px"
+    allow="clipboard-read; clipboard-write"
+  ></iframe>
 </section>
 <!-- Chatbox END -->
   </main>
