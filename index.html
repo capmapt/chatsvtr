@@ -271,55 +271,51 @@
         margin: 0 auto;
       }
     }
-    <!-- 在 index.html 的 <style> 标签末尾，</style> 之前添加 -->
-<style>
-  /* 现有的CSS代码... */
-  
-  /* ===== 新增：减少Chat区域空白 ===== */
-  /* 减少Chat区域上方空白 */
-  .chatbox {
-    margin: 10px auto 15px auto !important; /* 减少上边距 */
-  }
 
-  /* 减少统计区域下方空白 */
-  .stats-container {
-    margin-bottom: 15px !important; /* 减少下边距 */
-  }
-
-  /* 整体容器间距优化 */
-  .wrapper {
-    margin: 5px auto !important; /* 减少容器间距 */
-  }
-
-  /* 减少业务标签的下边距 */
-  .business-tags {
-    margin: 20px 0 10px 0 !important; /* 减少下边距 */
-  }
-
-  /* 移动端进一步优化 */
-  @media (max-width: 600px) {
+    /* ===== 新增：减少Chat区域空白 ===== */
+    /* 减少Chat区域上方空白 */
     .chatbox {
-      margin: 8px auto 10px auto !important;
+      margin: 5px auto 15px auto !important; /* 减少上边距 */
     }
-    
+
+    /* 减少统计区域下方空白 */
     .stats-container {
-      margin-bottom: 10px !important;
+      margin-bottom: 10px !important; /* 减少下边距 */
     }
-    
+
+    /* 整体容器间距优化 */
+    .wrapper {
+      margin: 5px auto !important; /* 减少容器间距 */
+    }
+
+    /* 减少业务标签的下边距 */
     .business-tags {
-      margin: 15px 0 8px 0 !important;
+      margin: 20px 0 10px 0 !important; /* 减少下边距 */
     }
-  }
-</style>
+
+    /* 移动端进一步优化 */
+    @media (max-width: 600px) {
+      .chatbox {
+        margin: 5px auto 10px auto !important;
+      }
+      
+      .stats-container {
+        margin-bottom: 8px !important;
+      }
+      
+      .business-tags {
+        margin: 15px 0 8px 0 !important;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
     <div class="lang-toggle">
-  <button id="btnZh" class="active">中文</button>
-  <span class="divider">|</span>
-  <button id="btnEn">English</button>
-</div>
+      <button id="btnZh" class="active">中文</button>
+      <span class="divider">|</span>
+      <button id="btnEn">English</button>
+    </div>
     <button class="menu-toggle" aria-label="打开/关闭菜单">☰</button>
   </header>
   <div class="overlay active"></div>
@@ -368,29 +364,31 @@
         <span class="business-tag tag-meetup">AI创投会</span>
         <span class="business-tag tag-camp">AI创投营</span>
       </div>
-  <!-- 🚀 统计卡片 START -->
-<!-- 统计卡片部件 -->
-<iframe src="./stats-widget.html"
-        loading="lazy"
-        style="width:100%;max-width:800px;height:400px;
-               border:none;overflow:hidden;border-radius:12px;">
-</iframe>
-
-<!-- 🚀 统计卡片 END -->
+    </section>
+    
+    <!-- 🚀 统计卡片 START -->
+    <!-- 统计卡片部件 -->
+    <iframe src="./stats-widget.html"
+            loading="lazy"
+            style="width:100%;max-width:800px;height:400px;
+                   border:none;overflow:hidden;border-radius:12px;">
+    </iframe>
+    <!-- 🚀 统计卡片 END -->
+    
     <!-- Chatbox BEGIN -->
-<section class="chatbox wrapper">
-  <h2 class="chat-header">
-    Chat with <a href="https://svtr.ai" target="_blank">SVTR.AI</a>
-  </h2>
-  <iframe
-  id="svtrChatFrame"
-  src="https://chat.svtrglobal.com"
-  title="SVTR AI Chat"
-  style="width:100%;min-height:640px;border:none;border-radius:12px"
-  allow="clipboard-read; clipboard-write"
-></iframe>
-</section>
-<!-- Chatbox END -->
+    <section class="chatbox wrapper">
+      <h2 class="chat-header">
+        Chat with <a href="https://svtr.ai" target="_blank">SVTR.AI</a>
+      </h2>
+      <iframe
+        id="svtrChatFrame"
+        src="https://chat.svtrglobal.com"
+        title="SVTR AI Chat"
+        style="width:100%;min-height:640px;border:none;border-radius:12px"
+        allow="clipboard-read; clipboard-write">
+      </iframe>
+    </section>
+    <!-- Chatbox END -->
   </main>
   <footer>
     <div style="text-align:center; color:#666; margin:20px 0;" data-i18n="footer_text"></div>
@@ -510,41 +508,43 @@
     const waitlistInlineForm = document.getElementById('waitlistInlineForm');
     const waitlistInlineEmail = document.getElementById('waitlistInlineEmail');
     const waitlistInlineMsg = document.getElementById('waitlistInlineMsg');
-    waitlistInlineForm.onsubmit = async function(e) {
-      e.preventDefault();
-      waitlistInlineMsg.textContent = '';
-      waitlistInlineMsg.className = 'waitlist-message';
-      const email = waitlistInlineEmail.value.trim();
-      if (!email) {
-        waitlistInlineMsg.textContent = '请输入有效的邮箱地址。';
-        waitlistInlineMsg.classList.add('waitlist-error');
-        return;
-      }
-      if (!/^[\w\-\.]+@[\w\-]+\.[\w\-\.]+$/.test(email)) {
-        waitlistInlineMsg.textContent = '邮箱格式不正确。';
-        waitlistInlineMsg.classList.add('waitlist-error');
-        return;
-      }
-      try {
-        const res = await fetch('https://waitlist-api.liumin-gsm.workers.dev/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email })
-        });
-        const data = await res.json();
-        if (data.ok) {
-          waitlistInlineMsg.textContent = '提交成功，感谢您的预约！';
-          waitlistInlineMsg.classList.add('waitlist-success');
-          waitlistInlineForm.reset();
-        } else {
-          waitlistInlineMsg.textContent = data.error || '提交失败，请稍后重试。';
+    if (waitlistInlineForm) {
+      waitlistInlineForm.onsubmit = async function(e) {
+        e.preventDefault();
+        waitlistInlineMsg.textContent = '';
+        waitlistInlineMsg.className = 'waitlist-message';
+        const email = waitlistInlineEmail.value.trim();
+        if (!email) {
+          waitlistInlineMsg.textContent = '请输入有效的邮箱地址。';
+          waitlistInlineMsg.classList.add('waitlist-error');
+          return;
+        }
+        if (!/^[\w\-\.]+@[\w\-]+\.[\w\-\.]+$/.test(email)) {
+          waitlistInlineMsg.textContent = '邮箱格式不正确。';
+          waitlistInlineMsg.classList.add('waitlist-error');
+          return;
+        }
+        try {
+          const res = await fetch('https://waitlist-api.liumin-gsm.workers.dev/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+          const data = await res.json();
+          if (data.ok) {
+            waitlistInlineMsg.textContent = '提交成功，感谢您的预约！';
+            waitlistInlineMsg.classList.add('waitlist-success');
+            waitlistInlineForm.reset();
+          } else {
+            waitlistInlineMsg.textContent = data.error || '提交失败，请稍后重试。';
+            waitlistInlineMsg.classList.add('waitlist-error');
+          }
+        } catch {
+          waitlistInlineMsg.textContent = '提交失败，请稍后重试。';
           waitlistInlineMsg.classList.add('waitlist-error');
         }
-      } catch {
-        waitlistInlineMsg.textContent = '提交失败，请稍后重试。';
-        waitlistInlineMsg.classList.add('waitlist-error');
-      }
-    };
+      };
+    }
 
   </script>
 </body>
