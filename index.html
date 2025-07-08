@@ -307,7 +307,49 @@
         margin: 15px 0 8px 0 !important;
       }
     }
+    /* 🎯 强制覆盖所有间距 - 放在CSS最末尾 */
+.wrapper {
+  margin: 5px auto !important;
+}
+
+.business-tags {
+  margin: 15px 0 8px 0 !important;
+}
+
+/* 统计iframe容器优化 */
+iframe[src*="stats-widget"] {
+  height: 240px !important;
+  margin: 0 auto 8px auto !important;
+  display: block !important;
+}
+
+.chatbox {
+  margin: 8px auto 15px auto !important;
+  padding: 15px !important;
+}
+
+/* 移动端进一步压缩 */
+@media (max-width: 600px) {
+  .wrapper {
+    margin: 3px auto !important;
+  }
+  
+  .business-tags {
+    margin: 12px 0 6px 0 !important;
+  }
+  
+  iframe[src*="stats-widget"] {
+    height: 200px !important;
+    margin: 0 auto 6px auto !important;
+  }
+  
+  .chatbox {
+    margin: 6px auto 10px auto !important;
+    padding: 12px !important;
+  }
+}
   </style>
+  
 </head>
 <body>
   <header>
