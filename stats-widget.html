@@ -9,46 +9,129 @@
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;font-family:Arial,"Microsoft YaHei",sans-serif;}
 
-/* ---------- CHANGE #1 ----------
-   删掉 flex-center，交给 margin:auto 控制居中 */
 body{background:transparent;}
 
-/* ---------- CHANGE #2 ----------
-   ① 恢复 max-width，让宽度跟上方标签行一致
-   ② 去掉左右 10px padding，保证列起始位置完全对齐
-----------------------------------*/
+/* 🎯 关键修改：缩小卡片，添加padding避免滚动条 */
 .stats-container{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:20px;
-  max-width:960px;        /* ← 你上面标签行如果用 800px 就写 800，同宽即可 */
+  gap:12px;                    /* 从20px减少到12px */
+  max-width:760px;             /* 从960px减少到760px */
   width:100%;
-  margin:0 auto;          /* 居中 */
-  /* padding:0 10px; ← 已删除 */
-  margin-bottom: 10px; /* 尝试一个值, 比如30px, 然后根据效果调整大小 */
+  margin:0 auto;
+  padding:0 15px;              /* 添加左右padding */
+  margin-bottom: 8px;
 }
 
-/* 下面这些都是原来就有的 —— 未改动 */
-.stat-card{position:relative;text-align:center;background:#fff;padding:32px 24px;border-radius:18px;text-decoration:none;color:inherit;box-shadow:0 10px 24px rgba(0,0,0,.06);transition:.3s;}
-.stat-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,0,0,.10);}
-.stat-card.members{border-top:4px solid #6c5ce7}.stat-card.companies{border-top:4px solid #0984e3}.stat-card.vip{border-top:4px solid #00b894}
-.stat-icon{font-size:3rem;margin-bottom:14px}.members .stat-icon{color:#6c5ce7}.companies .stat-icon{color:#0984e3}.vip .stat-icon{color:#00b894}
-.stat-number{font-size:2.4rem;font-weight:700;color:#2d3436;margin-bottom:8px}
-.stat-label{font-size:1.05rem;color:#636e72;margin-bottom:14px}
-.progress-bar{height:6px;background:#ddd;border-radius:3px;overflow:hidden;margin-bottom:12px}
+/* 🎯 缩小卡片内部padding和字体 */
+.stat-card{
+  position:relative;
+  text-align:center;
+  background:#fff;
+  padding:20px 16px;           /* 从32px 24px 减少到 20px 16px */
+  border-radius:12px;          /* 从18px减少到12px */
+  text-decoration:none;
+  color:inherit;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);  /* 稍微减少阴影 */
+  transition:.3s;
+}
+
+.stat-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.10);}
+.stat-card.members{border-top:3px solid #6c5ce7}   /* 从4px减少到3px */
+.stat-card.companies{border-top:3px solid #0984e3}
+.stat-card.vip{border-top:3px solid #00b894}
+
+.stat-icon{
+  font-size:2.2rem;            /* 从3rem减少到2.2rem */
+  margin-bottom:10px;          /* 从14px减少到10px */
+}
+.members .stat-icon{color:#6c5ce7}
+.companies .stat-icon{color:#0984e3}
+.vip .stat-icon{color:#00b894}
+
+.stat-number{
+  font-size:1.8rem;            /* 从2.4rem减少到1.8rem */
+  font-weight:700;
+  color:#2d3436;
+  margin-bottom:6px;           /* 从8px减少到6px */
+}
+
+.stat-label{
+  font-size:0.9rem;            /* 从1.05rem减少到0.9rem */
+  color:#636e72;
+  margin-bottom:10px;          /* 从14px减少到10px */
+}
+
+.progress-bar{
+  height:4px;                  /* 从6px减少到4px */
+  background:#ddd;
+  border-radius:2px;
+  overflow:hidden;
+  margin-bottom:8px;           /* 从12px减少到8px */
+}
+
 .progress-fill{height:100%;width:0;transition:width 1s}
 .members .progress-fill{background:linear-gradient(45deg,#6c5ce7,#a29bfe)}
 .companies .progress-fill{background:linear-gradient(45deg,#0984e3,#74b9ff)}
 .vip .progress-fill{background:linear-gradient(45deg,#00b894,#55efc4)}
-.live-indicator{position:absolute;top:14px;right:14px;font-size:.75rem;color:#00b894;display:flex;align-items:center;gap:4px}
-.live-dot{width:7px;height:7px;border-radius:50%;background:#00b894;animation:blink 1s infinite}@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:.35}}
-.growth-indicator{font-size:.8rem;color:#00b894;font-weight:500;display:flex;justify-content:center;gap:4px}
-.increase-animation{animation:flash .5s}@keyframes flash{0%{transform:scale(1)}50%{transform:scale(1.12)}100%{transform:scale(1)}}
 
-/* ---------- CHANGE #3 ----------
-   小屏断点也删掉左右 padding，保持真正满宽单列  */
+.live-indicator{
+  position:absolute;
+  top:10px;                    /* 从14px减少到10px */
+  right:10px;                  /* 从14px减少到10px */
+  font-size:.7rem;             /* 从.75rem减少到.7rem */
+  color:#00b894;
+  display:flex;
+  align-items:center;
+  gap:3px;                     /* 从4px减少到3px */
+}
+
+.live-dot{
+  width:6px;                   /* 从7px减少到6px */
+  height:6px;
+  border-radius:50%;
+  background:#00b894;
+  animation:blink 1s infinite
+}
+
+@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:.35}}
+
+.growth-indicator{
+  font-size:.75rem;            /* 从.8rem减少到.75rem */
+  color:#00b894;
+  font-weight:500;
+  display:flex;
+  justify-content:center;
+  gap:3px;                     /* 从4px减少到3px */
+}
+
+.increase-animation{animation:flash .5s}
+@keyframes flash{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+
+/* 🎯 移动端进一步优化 */
 @media(max-width:540px){
-  .stats-container{grid-template-columns:1fr;gap:16px}
+  .stats-container{
+    grid-template-columns:1fr;
+    gap:10px;                  /* 进一步减少gap */
+    padding:0 10px;            /* 减少移动端padding */
+  }
+  
+  .stat-card{
+    padding:16px 12px;         /* 移动端进一步缩小padding */
+  }
+  
+  .stat-number{
+    font-size:1.6rem;          /* 移动端稍微减小 */
+  }
+  
+  .stat-label{
+    font-size:0.85rem;
+  }
+}
+
+/* 🎯 确保不会有横向滚动 */
+html, body {
+  overflow-x: hidden;
 }
 </style>
 </head>
