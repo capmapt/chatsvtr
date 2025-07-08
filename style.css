@@ -313,36 +313,50 @@
   color: #fa8c32;
   transform: scale(1.07);
 }
-/* —— 统计数字横排样式 —— */
-.stat-list {
+/* ====== Stat Cards 样式 ====== */
+.stat-cards {
   display: flex;
-  justify-content: space-around;
+  gap: 16px;
+  justify-content: space-between;
+  margin: 24px 0;
+}
+
+.stat-card {
+  /* 把整个卡片当链接用 */
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.stat-item {
-  text-align: center;
-  max-width: 200px;
-}
-.stat-count {
-  display: block;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--primary-color, #FA8C32);
-  line-height: 1;
-}
-.stat-link {
-  display: inline-block;
-  margin-top: 0.5rem;
-  font-size: 1rem;
-  color: #333;
   text-decoration: none;
-  transition: color .2s;
+  color: inherit;
+
+  /* 背景、圆角、阴影 */
+  background: var(--bg-panel);
+  border-radius: 8px;
+  padding: 16px 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: transform .2s, box-shadow .2s;
 }
-.stat-link:hover {
-  color: var(--primary-color, #FA8C32);
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.stat-card-icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  color: var(--primary-color);
+}
+
+.stat-card-count {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.stat-card-label {
+  font-size: 0.95rem;
+  color: #555;
 }
 /* 基本：输入框+按钮同行时，让输入框撑满剩余空间 */
 .waitlist-form {
