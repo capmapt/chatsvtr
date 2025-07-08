@@ -8,17 +8,14 @@
 /* === 样式只作用于本文件，不会污染父页面 === */
 html,body{margin:0;padding:0;font-family:Arial,"Microsoft YaHei",sans-serif;}
 body{background:transparent;display:flex;justify-content:center;}
-.stats-container{
-  display: grid;                            /* <--- ✅ 已添加此行以启用网格布局 */
-  grid-template-columns: repeat(3, 1fr);    /* 固定 3 列 */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   padding: 0 10px;
-  max-width: 800px;
+  /* max-width: 800px;  <-- 删除或注释掉此行 */
   width: 100%;
   margin: 0 auto;
-}
-.stat-card{
-  padding: 24px 18px;
 }
 .stat-card{position:relative;text-align:center;background:#fff;padding:32px 24px;border-radius:18px;text-decoration:none;color:inherit;box-shadow:0 10px 24px rgba(0,0,0,.06);transition:.3s;}
 .stat-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,0,0,.10);}
