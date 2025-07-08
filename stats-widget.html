@@ -8,19 +8,17 @@
 /* === 样式只作用于本文件，不会污染父页面 === */
 html,body{margin:0;padding:0;font-family:Arial,"Microsoft YaHei",sans-serif;}
 body{background:transparent;display:flex;justify-content:center;}
-/* ① 让容器固定三列 + 收窄 gap/内边距 */
 .stats-container{
-  grid-template-columns: repeat(3, 1fr);   /* 固定 3 列 */
-  gap: 20px;                                /* ↓ 24 → 20 */
-  padding: 0 10px;                          /* ↓ 12 → 10  (左右各 10) */
+  display: grid;                            /* <--- ✅ 已添加此行以启用网格布局 */
+  grid-template-columns: repeat(3, 1fr);    /* 固定 3 列 */
+  gap: 20px;
+  padding: 0 10px;
   max-width: 800px;
   width: 100%;
   margin: 0 auto;
 }
-
-/* ② 卡片稍微瘦一点 */
 .stat-card{
-  padding: 24px 18px;                       /* ↓ 32 → 24  /  20 → 18 */
+  padding: 24px 18px;
 }
 .stat-card{position:relative;text-align:center;background:#fff;padding:32px 24px;border-radius:18px;text-decoration:none;color:inherit;box-shadow:0 10px 24px rgba(0,0,0,.06);transition:.3s;}
 .stat-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,0,0,.10);}
@@ -42,7 +40,6 @@ body{background:transparent;display:flex;justify-content:center;}
 </head>
 <body>
 <div class="stats-container">
-  <!-- 社区成员 -->
   <a class="stat-card members" href="https://c0uiiy15npu.feishu.cn/share/base/form/shrcnKdKrgumC9OtjQNXiC05r8e" target="_blank">
     <div class="live-indicator"><div class="live-dot"></div><span>实时</span></div>
     <div class="stat-icon" aria-label="社区成员">👥</div>
@@ -52,7 +49,6 @@ body{background:transparent;display:flex;justify-content:center;}
     <div class="growth-indicator">↗ <span id="members-growth">+25/小时</span></div>
   </a>
 
-  <!-- 创业公司与投资机构 -->
   <a class="stat-card companies" href="https://c0uiiy15npu.feishu.cn/share/base/form/shrcnxRAVSwtEHD40UUUg1086Gf" target="_blank">
     <div class="live-indicator"><div class="live-dot"></div><span>实时</span></div>
     <div class="stat-icon" aria-label="创业公司与投资机构">🏢</div>
@@ -62,7 +58,6 @@ body{background:transparent;display:flex;justify-content:center;}
     <div class="growth-indicator">↗ <span id="companies-growth">+8/小时</span></div>
   </a>
 
-  <!-- 权益会员 -->
   <a class="stat-card vip" href="https://c0uiiy15npu.feishu.cn/wiki/G0oMwUeNbiZkQBkX9iXcfMllnpe?from=from_copylink" target="_blank">
     <div class="live-indicator"><div class="live-dot"></div><span>实时</span></div>
     <div class="stat-icon" aria-label="权益会员">💎</div>
