@@ -271,6 +271,46 @@
         margin: 0 auto;
       }
     }
+    <!-- 在 index.html 的 <style> 标签末尾，</style> 之前添加 -->
+<style>
+  /* 现有的CSS代码... */
+  
+  /* ===== 新增：减少Chat区域空白 ===== */
+  /* 减少Chat区域上方空白 */
+  .chatbox {
+    margin: 10px auto 15px auto !important; /* 减少上边距 */
+  }
+
+  /* 减少统计区域下方空白 */
+  .stats-container {
+    margin-bottom: 15px !important; /* 减少下边距 */
+  }
+
+  /* 整体容器间距优化 */
+  .wrapper {
+    margin: 5px auto !important; /* 减少容器间距 */
+  }
+
+  /* 减少业务标签的下边距 */
+  .business-tags {
+    margin: 20px 0 10px 0 !important; /* 减少下边距 */
+  }
+
+  /* 移动端进一步优化 */
+  @media (max-width: 600px) {
+    .chatbox {
+      margin: 8px auto 10px auto !important;
+    }
+    
+    .stats-container {
+      margin-bottom: 10px !important;
+    }
+    
+    .business-tags {
+      margin: 15px 0 8px 0 !important;
+    }
+  }
+</style>
   </style>
 </head>
 <body>
