@@ -8,7 +8,18 @@
 /* === 样式只作用于本文件，不会污染父页面 === */
 html,body{margin:0;padding:0;font-family:Arial,"Microsoft YaHei",sans-serif;}
 body{background:transparent;display:flex;justify-content:center;}
-.stats-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin:0 auto;padding:20px;max-width:800px;width:100%;}
+.stats-container{
+  /* 固定三列，而不是 auto-fit */
+  grid-template-columns: repeat(3, 1fr);
+
+  /* 卡片之间留 24px，外边距减到 12px，避免宽度超出 */
+  gap: 24px;
+  padding: 12px;          /* ← 原来是 20px 或 0 */
+
+  margin: 0 auto;
+  max-width: 800px;       /* 保留 */
+  width: 100%;
+}
 .stat-card{position:relative;text-align:center;background:#fff;padding:32px 24px;border-radius:18px;text-decoration:none;color:inherit;box-shadow:0 10px 24px rgba(0,0,0,.06);transition:.3s;}
 .stat-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,0,0,.10);}
 .stat-card.members{border-top:4px solid #6c5ce7}.stat-card.companies{border-top:4px solid #0984e3}.stat-card.vip{border-top:4px solid #00b894}
