@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>SVTR Stats Widget</title>
+<style>
+/* === 样式只作用于本文件，不会污染父页面 === */
+html,body{margin:0;padding:0;font-family:Arial,"Microsoft YaHei",sans-serif;}
+body{background:transparent;display:flex;justify-content:center;}
+.stats-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin:0 auto;padding:20px;max-width:800px;width:100%;}
+.stat-card{position:relative;text-align:center;background:#fff;padding:32px 24px;border-radius:18px;text-decoration:none;color:inherit;box-shadow:0 10px 24px rgba(0,0,0,.06);transition:.3s;}
+.stat-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,0,0,.10);}
+.stat-card.members{border-top:4px solid #6c5ce7}.stat-card.companies{border-top:4px solid #0984e3}.stat-card.vip{border-top:4px solid #00b894}
+.stat-icon{font-size:3rem;margin-bottom:14px}.members .stat-icon{color:#6c5ce7}.companies .stat-icon{color:#0984e3}.vip .stat-icon{color:#00b894}
+.stat-number{font-size:2.4rem;font-weight:700;color:#2d3436;margin-bottom:8px}
+.stat-label{font-size:1.05rem;color:#636e72;margin-bottom:14px}
+.progress-bar{height:6px;background:#ddd;border-radius:3px;overflow:hidden;margin-bottom:12px}
+.progress-fill{height:100%;width:0;transition:width 1s}
+.members .progress-fill{background:linear-gradient(45deg,#6c5ce7,#a29bfe)}
+.companies .progress-fill{background:linear-gradient(45deg,#0984e3,#74b9ff)}
+.vip .progress-fill{background:linear-gradient(45deg,#00b894,#55efc4)}
+.live-indicator{position:absolute;top:14px;right:14px;font-size:.75rem;color:#00b894;display:flex;align-items:center;gap:4px}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#00b894;animation:blink 1s infinite}@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:.35}}
+.growth-indicator{font-size:.8rem;color:#00b894;font-weight:500;display:flex;justify-content:center;gap:4px}
+.increase-animation{animation:flash .5s}@keyframes flash{0%{transform:scale(1)}50%{transform:scale(1.12)}100%{transform:scale(1)}}
+@media(max-width:540px){.stats-container{grid-template-columns:1fr;padding:16px}}
+</style>
+</head>
+<body>
+<div class="stats-container">
+  <!-- 社区成员 -->
+  <a class="stat-card members" href="https://c0uiiy15npu.feishu.cn/share/base/form/shrcnKdKrgumC9OtjQNXiC05r8e" target="_blank">
+    <div class="live-indicator"><div class="live-dot"></div><span>实时</span></div>
+    <div class="stat-icon" aria-label="社区成员">👥</div>
+    <div class="stat-number" id="members-count">121,884</div>
+    <div class="stat-label">社区成员</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
+    <div class="growth-indicator">↗ <span id="members-growth">+25/小时</span></div>
+  </a>
+
+  <!-- 创业公司与投资机构 -->
+  <a class="stat-card companies" href="https://c0uiiy15npu.feishu.cn/share/base/form/shrcnxRAVSwtEHD40UUUg1086Gf" target="_blank">
+    <div class="live-indicator"><div class="live-dot"></div><span>实时</span></div>
+    <div class="stat-icon" aria-label="创业公司与投资机构">🏢</div>
+    <div class="stat-number" id="companies-count">10,761</div>
+    <div class="stat-label">创业公司与投资机构</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:68%"></div></div>
+    <div class="growth-indicator">↗ <span id="companies-growth">+8/小时</span></div>
+  </a>
+
+  <!-- 权益会员 -->
+  <a class="stat-card vip" href="https://c0uiiy15npu.feishu.cn/wiki/G0oMwUeNbiZkQBkX9iXcfMllnpe?from=from_copylink" target="_blank">
+    <div class="live-indicator"><div class="live-dot"></div><span>实时</span></div>
+    <div class="stat-icon" aria-label="权益会员">💎</div>
+    <div class="stat-number" id="vip-count">1,102</div>
+    <div class="stat-label">权益会员</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:42%"></div></div>
+    <div class="growth-indicator">↗ <span id="vip-growth">+3/小时</span></div>
+  </a>
+</div>
+
+<script>
+/* === 自包含脚本：纯前端模拟增长 === */
+const stats={
+  members:{c:121884,g:25,m:150000},
+  companies:{c:10761,g:8,m:20000},
+  vip:{c:1102,g:3,m:2000}
+};
+function $(id){return document.getElementById(id)}
+function paint(){
+  members_count.textContent = stats.members.c.toLocaleString()
+  companies_count.textContent = stats.companies.c.toLocaleString()
+  vip_count.textContent = stats.vip.c.toLocaleString()
+  members_growth.textContent = `+${stats.members.g}/小时`
+  companies_growth.textContent = `+${stats.companies.g}/小时`
+  vip_growth.textContent = `+${stats.vip.g}/小时`
+  updateBars()
+}
+function flash(el){el.classList.add('increase-animation');setTimeout(()=>el.classList.remove('increase-animation'),500)}
+function updateBars(){
+  document.querySelector('.members .progress-fill').style.width = Math.min(stats.members.c/stats.members.m*100,100)+'%'
+  document.querySelector('.companies .progress-fill').style.width = Math.min(stats.companies.c/stats.companies.m*100,100)+'%'
+  document.querySelector('.vip .progress-fill').style.width = Math.min(stats.vip.c/stats.vip.m*100,100)+'%'
+}
+function loop(){
+  Object.entries(stats).forEach(([k,v])=>{
+    if(Math.random()<.5){v.c+=Math.ceil(v.g*(0.7+Math.random()*0.6));flash($(k+'-count'))}
+  });paint()
+}
+paint();setInterval(loop,60000);
+</script>
+</body>
+</html>
