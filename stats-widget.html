@@ -8,17 +8,19 @@
 /* === 样式只作用于本文件，不会污染父页面 === */
 html,body{margin:0;padding:0;font-family:Arial,"Microsoft YaHei",sans-serif;}
 body{background:transparent;display:flex;justify-content:center;}
+/* ① 让容器固定三列 + 收窄 gap/内边距 */
 .stats-container{
-  /* 固定三列，而不是 auto-fit */
-  grid-template-columns: repeat(3, 1fr);
-
-  /* 卡片之间留 24px，外边距减到 12px，避免宽度超出 */
-  gap: 24px;
-  padding: 12px;          /* ← 原来是 20px 或 0 */
-
-  margin: 0 auto;
-  max-width: 800px;       /* 保留 */
+  grid-template-columns: repeat(3, 1fr);   /* 固定 3 列 */
+  gap: 20px;                                /* ↓ 24 → 20 */
+  padding: 0 10px;                          /* ↓ 12 → 10  (左右各 10) */
+  max-width: 800px;
   width: 100%;
+  margin: 0 auto;
+}
+
+/* ② 卡片稍微瘦一点 */
+.stat-card{
+  padding: 24px 18px;                       /* ↓ 32 → 24  /  20 → 18 */
 }
 .stat-card{position:relative;text-align:center;background:#fff;padding:32px 24px;border-radius:18px;text-decoration:none;color:inherit;box-shadow:0 10px 24px rgba(0,0,0,.06);transition:.3s;}
 .stat-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,0,0,.10);}
