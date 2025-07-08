@@ -313,45 +313,39 @@
   color: #fa8c32;
   transform: scale(1.07);
 }
-/* ====== Stat Cards 横排样式 ====== */
-.stat-cards{
-  display:flex;
-  flex-direction:row;          /* 强制横向 */
-  justify-content:space-between;
-  align-items:center;
-  gap:16px;
-  flex-wrap:nowrap;            /* 不换行 */
-  margin:24px 0;
-}
-.stat-card{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  text-decoration:none;
-  color:inherit;
+<!-- 🚀 统计卡片 START -->
+<section class="stats-container wrapper">
+  <!-- 社区成员 -->
+  <a class="stat-card members" href="https://c0uiiy15npu.feishu.cn/share/base/form/shrcnKdKrgumC9OtjQNXiC05r8e" target="_blank">
+    <div class="live-indicator"><div class="live-dot"></div><span>实时</span></div>
+    <div class="stat-icon" aria-label="社区成员">👥</div>
+    <div class="stat-number"  id="members-count">121,884</div>
+    <div class="stat-label"    data-i18n="link_community">社区成员</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
+    <div class="growth-indicator">↗ <span class="growth-rate">+<span id="members-growth">25</span>/小时</span></div>
+  </a>
 
-  flex:1 1 0;
-  max-width:calc((100% - 32px)/3);
+  <!-- 创业公司与投资机构 -->
+  <a class="stat-card companies" href="https://c0uiiy15npu.feishu.cn/share/base/form/shrcnxRAVSwtEHD40UUUg1086Gf" target="_blank">
+    <div class="live-indicator"><div class="live-dot"></div><span>实时</span></div>
+    <div class="stat-icon" aria-label="创业公司与投资机构">🏢</div>
+    <div class="stat-number"  id="companies-count">10,761</div>
+    <div class="stat-label"    data-i18n="link_alliance">创业公司与投资机构</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:68%"></div></div>
+    <div class="growth-indicator">↗ <span class="growth-rate">+<span id="companies-growth">8</span>/小时</span></div>
+  </a>
 
-  background:var(--bg-panel);
-  border-radius:8px;
-  padding:16px 12px;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-  transition:transform .2s,box-shadow .2s;
-}
-.stat-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 4px 16px rgba(0,0,0,.12);
-}
-.stat-card-icon{font-size:2rem;margin-bottom:8px;color:var(--primary-color);}
-.stat-card-count{font-size:1.5rem;font-weight:700;margin-bottom:4px;}
-.stat-card-label{font-size:.95rem;color:#555;}
-
-/* ≤600 px 时改为纵排 */
-@media(max-width:600px){
-  .stat-cards{flex-direction:column;}
-  .stat-card{max-width:100%;}
-}
+  <!-- 权益会员 -->
+  <a class="stat-card vip" href="https://c0uiiy15npu.feishu.cn/wiki/G0oMwUeNbiZkQBkX9iXcfMllnpe?from=from_copylink" target="_blank">
+    <div class="live-indicator"><div class="live-dot"></div><span>实时</span></div>
+    <div class="stat-icon" aria-label="权益会员">💎</div>
+    <div class="stat-number"  id="vip-count">1,102</div>
+    <div class="stat-label"    data-i18n="link_members">权益会员</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:42%"></div></div>
+    <div class="growth-indicator">↗ <span class="growth-rate">+<span id="vip-growth">3</span>/小时</span></div>
+  </a>
+</section>
+<!-- 🚀 统计卡片 END -->
 
 /* 基本：输入框+按钮同行时，让输入框撑满剩余空间 */
 .waitlist-form {
