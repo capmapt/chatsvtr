@@ -14,17 +14,17 @@
       <span class="divider">|</span>
       <button id="btnEn">English</button>
     </div>
-    <button class="menu-toggle" aria-label="打开/关闭菜单">☰</button>
+    <button class="menu-toggle" aria-label="打开/关闭菜单" data-i18n-attr-aria-label="menu_toggle_aria_label">☰</button>
   </header>
   <div class="overlay active"></div>
   <aside class="sidebar open" role="navigation" aria-label="主导航">
     <div class="sidebar-header">
-      <img src="logo.jpg" class="sidebar-logo" alt="SVTR.AI logo">
+      <img src="logo.jpg" class="sidebar-logo" alt="SVTR.AI logo" data-i18n-attr-alt="logo_alt_text">
       <h2 data-i18n="sidebar_title">硅谷科技评论</h2>
     </div>
     <nav>
       <ul class="nav-list">
-        <li><a href="AI 100.html">AI 100</a></li>
+        <li><a href="AI 100.html" data-i18n="nav_ai100">AI 100</a></li>
         <li>
           <a href="https://c0uiiy15npu.feishu.cn/wiki/DI9Hw8v8tiZF2Xk13KDcDI8Bn1b?from=from_copylink" data-i18n="nav_ranking" target="_blank">AI创投榜</a>
           <ul class="sub-list">
@@ -50,7 +50,7 @@
       </ul>
     </nav>
     <div class="sidebar-footer">
-      <img src="凯瑞.jpg" alt="添加好友二维码">
+      <img src="凯瑞.jpg" alt="添加好友二维码" data-i18n-attr-alt="qr_alt_text">
       <p data-i18n="sidebar_qr_text">添加好友，进群交流</p>
     </div>
   </aside>
@@ -58,9 +58,9 @@
     <section class="wrapper">
       <div class="banner-header" role="banner" aria-label="首页横幅"></div>
       <div class="business-tags">
-        <span class="business-tag tag-database">AI创投库</span>
-        <span class="business-tag tag-meetup">AI创投会</span>
-        <span class="business-tag tag-camp">AI创投营</span>
+        <span class="business-tag tag-database" data-i18n="tag_database_text">AI创投库</span>
+        <span class="business-tag tag-meetup" data-i18n="tag_meetup_text">AI创投会</span>
+        <span class="business-tag tag-camp" data-i18n="tag_camp_text">AI创投营</span>
       </div>
     </section>
     
@@ -73,7 +73,7 @@
     
     <!-- Chatbox BEGIN -->
     <section class="chatbox wrapper">
-      <h2 class="chat-header">
+      <h2 class="chat-header" data-i18n="chat_header">
         Chat with <a href="https://svtr.ai" target="_blank">SVTR.AI</a>
       </h2>
       <iframe
@@ -113,7 +113,13 @@
         link_alliance: '创业公司与投资机构',
         notice_3: '1K+',
         link_members: '权益会员',
-        chat_header: 'Chat with SVTR.AI',
+        chat_header: '与 <a href="https://svtr.ai" target="_blank">SVTR.AI</a> 对话',
+        tag_database_text: 'AI创投库',
+        tag_meetup_text: 'AI创投会',
+        tag_camp_text: 'AI创投营',
+        menu_toggle_aria_label: '打开/关闭菜单',
+        logo_alt_text: 'SVTR.AI 商标',
+        qr_alt_text: '添加好友二维码',
         join_btn: '加入候补名单',
         input_placeholder: '请输入你的问题...',
         send_btn: '发送',
@@ -141,7 +147,13 @@
         link_alliance: 'Ecosystem Alliance',
         notice_3: 'If you are a Member, please visit SVTR.AI',
         link_members: 'Exclusive Members Area',
-        chat_header: 'Chat with SVTR.AI',
+        chat_header: 'Chat with <a href="https://svtr.ai" target="_blank">SVTR.AI</a>',
+        tag_database_text: 'AI DB',
+        tag_meetup_text: 'AI Meetup',
+        tag_camp_text: 'AI Camp',
+        menu_toggle_aria_label: 'Open/Close menu',
+        logo_alt_text: 'SVTR.AI Logo',
+        qr_alt_text: 'Add friend QR code',
         join_btn: 'Join the Waitlist',
         email_placeholder: 'Enter your email',
         input_placeholder: 'Type your question...',
@@ -152,14 +164,36 @@
 
     function updateLanguage(lang) {
       document.documentElement.lang = lang;
+      const keysForInnerHTML = ['chat_header']; // Add other keys here if they also contain HTML
+
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        el.textContent = translations[lang][key] || el.textContent;
+        const translation = translations[lang][key] || el.textContent; // Fallback to current text
+        if (keysForInnerHTML.includes(key)) {
+          el.innerHTML = translation;
+        } else {
+          el.textContent = translation;
+        }
       });
+
       document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
         const key = el.getAttribute('data-i18n-placeholder');
         el.placeholder = translations[lang][key] || el.placeholder;
       });
+
+      // More generic way to handle translatable attributes
+      document.querySelectorAll('*').forEach(el => {
+        for (const attr of el.attributes) {
+          if (attr.name.startsWith('data-i18n-attr-')) {
+            const targetAttr = attr.name.substring('data-i18n-attr-'.length);
+            const translationKey = attr.value;
+            if (translations[lang][translationKey]) {
+              el.setAttribute(targetAttr, translations[lang][translationKey]);
+            }
+          }
+        }
+      });
+
       document.getElementById('btnZh').classList.toggle('active', lang === 'zh-CN');
       document.getElementById('btnEn').classList.toggle('active', lang === 'en');
       // 同步title
@@ -169,79 +203,14 @@
     document.getElementById('btnZh').addEventListener('click', () => updateLanguage('zh-CN'));
     document.getElementById('btnEn').addEventListener('click', () => updateLanguage('en'));
 
-    const toggle = document.querySelector('.menu-toggle');
-    const sidebar = document.querySelector('.sidebar');
-    const overlay = document.querySelector('.overlay');
-    const content = document.querySelector('.content');
-
-    toggle.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
-      overlay.classList.toggle('active');
-      content.classList.toggle('shifted');
-    });
-    overlay.addEventListener('click', () => {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('active');
-      content.classList.remove('shifted');
-    });
+    // Sidebar toggle logic is now in main.js
 
     // initialize
     updateLanguage('zh-CN');
 
-    // Automatically close sidebar after 2 seconds
-    setTimeout(() => {
-      const sidebarElement = document.querySelector('.sidebar');
-      const overlayElement = document.querySelector('.overlay');
-      const contentElement = document.querySelector('.content');
-      if (sidebarElement && overlayElement && contentElement) {
-        sidebarElement.classList.remove('open');
-        overlayElement.classList.remove('active');
-        contentElement.classList.remove('shifted');
-      }
-    }, 2000);
+    // Automatically close sidebar logic is now in main.js
 
-    // 新增：候补名单一键提交逻辑
-    const waitlistInlineForm = document.getElementById('waitlistInlineForm');
-    const waitlistInlineEmail = document.getElementById('waitlistInlineEmail');
-    const waitlistInlineMsg = document.getElementById('waitlistInlineMsg');
-    if (waitlistInlineForm) {
-      waitlistInlineForm.onsubmit = async function(e) {
-        e.preventDefault();
-        waitlistInlineMsg.textContent = '';
-        waitlistInlineMsg.className = 'waitlist-message';
-        const email = waitlistInlineEmail.value.trim();
-        if (!email) {
-          waitlistInlineMsg.textContent = '请输入有效的邮箱地址。';
-          waitlistInlineMsg.classList.add('waitlist-error');
-          return;
-        }
-        if (!/^[\w\-\.]+@[\w\-]+\.[\w\-\.]+$/.test(email)) {
-          waitlistInlineMsg.textContent = '邮箱格式不正确。';
-          waitlistInlineMsg.classList.add('waitlist-error');
-          return;
-        }
-        try {
-          const res = await fetch('https://waitlist-api.liumin-gsm.workers.dev/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email })
-          });
-          const data = await res.json();
-          if (data.ok) {
-            waitlistInlineMsg.textContent = '提交成功，感谢您的预约！';
-            waitlistInlineMsg.classList.add('waitlist-success');
-            waitlistInlineForm.reset();
-          } else {
-            waitlistInlineMsg.textContent = data.error || '提交失败，请稍后重试。';
-            waitlistInlineMsg.classList.add('waitlist-error');
-          }
-        } catch {
-          waitlistInlineMsg.textContent = '提交失败，请稍后重试。';
-          waitlistInlineMsg.classList.add('waitlist-error');
-        }
-      };
-    }
-
+    // Waitlist script removed as corresponding HTML elements (waitlistInlineForm, etc.) were not found.
   </script>
 </body>
 </html>
