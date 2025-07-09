@@ -5,338 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title data-i18n="title">硅谷科技评论</title>
   <!-- 建议后续补充 description、OG/Favicons 等 -->
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; }
-    :root {
-      --primary-color: #FA8C32;
-      --secondary-color: #FFBB33;
-      --accent-color: #FFD600;
-      --bg-main: linear-gradient(135deg, #fff8e1, #ffe0b2);
-      --bg-panel: #FFF;
-    }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0; padding: 0; min-height: 100vh;
-      background: var(--bg-main);
-      font-family: sans-serif;
-      overflow-x: hidden;
-    }
-    header {
-      position: relative;
-      width: 100%;
-      z-index: 1200;
-    }
-    .wrapper {
-      width: 100%; max-width: 800px;
-      margin: 10px auto;
-      border-radius: 6px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      overflow: hidden;
-    }
-    .banner-header {
-      width: 100%;
-      aspect-ratio: 4 / 1;
-      background: url('banner.png') center/cover no-repeat;
-    }
-    .notice, .chatbox {
-      background: var(--bg-panel);
-      width: 100%; max-width: 800px;
-      margin: 10px auto;
-      padding: 15px;
-      border-radius: 6px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .notice ul { margin: 0; padding-left: 1.2em; list-style: disc; }
-    .notice li { line-height: 2; }
-    .notice a, .chat-header a {
-      color: #0066cc;
-      text-decoration: none;
-    }
-    .notice a:hover, .chat-header a:hover {
-      color: #004499;
-      text-decoration: underline;
-    }
-
-    .chat-header {
-      font-size: 1.4rem; font-weight: bold; color: #000;
-      margin-bottom: 10px;
-    }
-    .chat-history {
-      height: 200px; width: 100%; background: #fafafa;
-      border: 1px solid #ddd; border-radius: 4px;
-      display: flex; justify-content: center; align-items: center;
-    }
-    .waitlist-inline-area {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      width: 100%;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .waitlist-inline-area input[type="email"] {
-      padding: 8px 10px;
-      border: 1.2px solid #ccc;
-      border-radius: 4px;
-      font-size: 15px;
-      width: 220px;
-      transition: border-color 0.2s;
-    }
-    .waitlist-inline-area input[type="email"]:focus {
-      outline: none;
-      border-color: var(--primary-color);
-      background: #fffbe7;
-    }
-    .waitlist-inline-area .join-btn {
-      padding: .6rem 1.1rem;
-      background: #e67600; color: #fff;
-      font-weight: bold; border: none; border-radius: 4px;
-      box-shadow: 0 4px 8px rgba(0,0,0,.2);
-      cursor: pointer; transition: .3s;
-      font-size: 1rem;
-      height: 40px;
-    }
-    .waitlist-inline-area .join-btn:hover { background: #cc5f00; transform: scale(1.05); }
-    .waitlist-inline-area .join-btn:active { transform: scale(.95); }
-    .waitlist-inline-area .waitlist-message {
-      margin-left: 10px; min-width: 120px;
-      font-size: 14px;
-      color: #e67600;
-      min-height: 24px;
-    }
-    .waitlist-inline-area .waitlist-error {
-      color: #d22; 
-    }
-    .waitlist-inline-area .waitlist-success {
-      color: #229922;
-    }
-    .chat-input-area {
-      display: flex; align-items: center; margin-top: 10px;
-    }
-    .chat-input-area textarea {
-      flex: 1; height: 80px; padding: 8px; margin-right: 8px;
-      border: 1px solid #ccc; border-radius: 4px;
-    }
-    .chat-input-area button {
-      padding: 0 16px; height: 36px; background: var(--primary-color);
-      border: none; color: #fff; border-radius: 4px; cursor: pointer;
-    }
-    .menu-toggle {
-      position: fixed; top: 20px; left: 20px;
-      background: none; border: none; font-size: 1.5rem;
-      color: var(--primary-color); cursor: pointer; z-index: 1100;
-    }
-    .overlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.4);
-      opacity: 0; pointer-events: none; transition: opacity .3s;
-      z-index: 1000;
-    }
-    .overlay.active {
-      opacity: 1; pointer-events: auto;
-    }
-    .sidebar {
-      position: fixed; top: 0; left: 0; bottom: 0; width: 260px;
-      padding: 80px 20px 20px;
-      background: linear-gradient(135deg,#FFE0B2,#FFF3D6);
-      backdrop-filter: blur(8px);
-      border-right: 1px solid rgba(0,0,0,.1);
-      overflow-y: auto;
-      transform: translateX(-100%);
-      transition: transform .3s; z-index: 1050;
-    }
-    .sidebar.open { transform: translateX(0); }
-    .sidebar-header {
-      display: flex; align-items: center; margin-bottom: 2rem;
-    }
-    .sidebar-logo {
-      width: 40px; height: 40px; border-radius: 50%;
-      margin-right: 10px;
-    }
-    .sidebar-header h2 {
-      margin: 0; font-size: 1.5rem; font-weight: bold; color: #000;
-    }
-    .nav-list, .sub-list { list-style: none; margin: 0; padding: 0; }
-    .nav-list li { margin-bottom: 1rem; }
-    .nav-list a {
-      text-decoration: none; color: #0066cc; font-size: .95rem;
-    }
-    .nav-list a:hover { color: #000; }
-    .sub-list { padding-left: 1rem; margin-top: .5rem; }
-    .sub-list li { margin-bottom: .5rem; }
-    .sub-list a { color: #000; font-size: .9rem; text-decoration: none; }
-
-    .sidebar-footer {
-      margin-top: 2rem; padding: 10px;
-      border: 1px solid #000; border-radius: 4px;
-      text-align: center;
-    }
-    .sidebar-footer img {
-      width: 50%; height: auto; display: block; margin: 0 auto;
-    }
-    .sidebar-footer p {
-      margin: 10px 0 0; color: #000; font-size: .9rem;
-    }
-    .lang-toggle {
-      position: fixed; top: 20px; right: 20px;
-      display: flex; background: #fff; border-radius: 4px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-      z-index: 1100; overflow: hidden;
-    }
-    .lang-toggle button {
-      padding: 4px 8px; border: none; background: transparent;
-      color: #555; font-weight: 500; cursor: pointer;
-      transition: background .3s, color .3s;
-    }
-    .lang-toggle button.active {
-      background: var(--primary-color); color: #fff;
-    }
-    .lang-toggle button:not(.active):hover {
-      background: #f0f0f0;
-    }
-    .content {
-      margin-left: 0; padding: 10px 20px;
-      display: flex; flex-direction: column; align-items: center;
-      transition: margin-left .3s;
-    }
-    .content.shifted { margin-left: 260px; }
-    @media(max-width:768px){
-      .content.shifted { margin-left: 0; }
-      .waitlist-modal-content { width: 95vw; min-width: 0;}
-      .waitlist-inline-area input[type="email"] {width: 100px;}
-    }
-
-    /* business-tags 样式 */
-    .business-tags {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 28px;
-      margin: 30px 0 14px 0;
-      flex-wrap: wrap;
-      width: 100%;
-    }
-    .business-tag {
-      font-size: 1.5rem;
-      font-weight: 800;
-      padding: 14px 38px;
-      border-radius: 32px;
-      background: linear-gradient(90deg, #fff176 10%, #ffa726 90%);
-      color: #333;
-      letter-spacing: 2.5px;
-      box-shadow: 0 2px 18px rgba(250,140,50,0.14);
-      border: none;
-      text-align: center;
-      margin: 0 4px;
-      cursor: pointer;
-      position: relative;
-      transition: 
-        transform 0.20s cubic-bezier(.36,1.32,.57,1.03),
-        box-shadow 0.2s,
-        background 0.3s;
-      box-shadow: 0 0 15px 0 #ffe08288, 0 2px 12px #fa8c3230;
-    }
-    .business-tag.tag-database {
-      background: linear-gradient(90deg, #ffe082 0%, #ffd54f 100%);
-    }
-    .business-tag.tag-meetup {
-      background: linear-gradient(90deg, #fff9c4 20%, #ffb300 90%);
-    }
-    .business-tag.tag-camp {
-      background: linear-gradient(90deg, #ffd600 0%, #ffa726 100%);
-    }
-    .business-tag:hover {
-      background: linear-gradient(90deg, #fffde7 0%, #ff9800 100%);
-      color: #000;
-      transform: scale(1.08) rotate(-2deg);
-      box-shadow: 0 0 38px 6px #ffd600cc, 0 8px 28px #fa8c3240;
-      animation: tag-flicker 0.7s;
-    }
-    @keyframes tag-flicker {
-      0% { box-shadow: 0 0 15px 0 #ffe08288, 0 2px 12px #fa8c3230;}
-      60% { box-shadow: 0 0 42px 12px #ffd600cc, 0 12px 40px #fa8c3233;}
-      100% { box-shadow: 0 0 15px 0 #ffe08288, 0 2px 12px #fa8c3230;}
-    }
-    @media (max-width: 600px) {
-      .business-tags {
-        gap: 12px;
-        margin: 18px 0 8px 0;
-        flex-direction: column;
-      }
-      .business-tag {
-        font-size: 1.05rem;
-        padding: 12px 0;
-        min-width: 70vw;
-        margin: 0 auto;
-      }
-    }
-
-    /* ===== 新增：减少Chat区域空白 ===== */
-/* --- 优化后的布局间距 --- */
-
-/* 为统计和聊天iframe创建一个统一的容器样式 */
-.widget-container {
-    /* 使用 max-width 来限制最大宽度，并用 margin: auto 居中 */
-    max-width: 800px; 
-    width: 100%;
-    margin: 10px auto; /* 统一上下间距为 10px */
-    display: block; /* 确保iframe表现为块级元素，使其可以居中 */
-}
-
-/* 具体到每个iframe的样式 */
-iframe[src*="stats-widget"] {
-    height: 200px; /* 默认高度 */
-    border: none;
-    border-radius: 12px;
-}
-
-iframe[src*="chat.svtrglobal.com"] {
-    min-height: 640px;
-    border: none;
-    border-radius: 12px;
-}
-
-/* 顶部 Banner 容器 */
-.wrapper {
-    max-width: 800px;
-    width: 100%;
-    margin: 10px auto; /* 统一上下间距 */
-    border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    overflow: hidden;
-}
-
-/* 业务标签区域的间距 */
-.business-tags {
-    margin: 20px 0 10px 0; /* 调整上下外边距 */
-}
-
-.chatbox {
-    padding: 15px;
-}
-
-/* --- 移动端间距优化 --- */
-@media (max-width: 600px) {
-    .widget-container, .wrapper {
-        margin-top: 8px;
-        margin-bottom: 8px;
-    }
-
-    .business-tags {
-        margin: 15px 0 8px 0;
-    }
-    
-    iframe[src*="stats-widget"] {
-        /* 在 stats-widget.html 内部已经有响应式，这里可以不用改高度 */
-    }
-
-    .chatbox {
-        padding: 12px;
-    }
-}
-  </style>
-  
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
@@ -345,17 +14,17 @@ iframe[src*="chat.svtrglobal.com"] {
       <span class="divider">|</span>
       <button id="btnEn">English</button>
     </div>
-    <button class="menu-toggle" aria-label="打开/关闭菜单">☰</button>
+    <button class="menu-toggle" aria-label="打开/关闭菜单" data-i18n-attr-aria-label="menu_toggle_aria_label">☰</button>
   </header>
   <div class="overlay active"></div>
   <aside class="sidebar open" role="navigation" aria-label="主导航">
     <div class="sidebar-header">
-      <img src="logo.jpg" class="sidebar-logo" alt="SVTR.AI logo">
+      <img src="logo.jpg" class="sidebar-logo" alt="SVTR.AI logo" data-i18n-attr-alt="logo_alt_text">
       <h2 data-i18n="sidebar_title">硅谷科技评论</h2>
     </div>
     <nav>
       <ul class="nav-list">
-        <li><a href="AI 100.html">AI 100</a></li>
+        <li><a href="AI 100.html" data-i18n="nav_ai100">AI 100</a></li>
         <li>
           <a href="https://c0uiiy15npu.feishu.cn/wiki/DI9Hw8v8tiZF2Xk13KDcDI8Bn1b?from=from_copylink" data-i18n="nav_ranking" target="_blank">AI创投榜</a>
           <ul class="sub-list">
@@ -381,7 +50,7 @@ iframe[src*="chat.svtrglobal.com"] {
       </ul>
     </nav>
     <div class="sidebar-footer">
-      <img src="凯瑞.jpg" alt="添加好友二维码">
+      <img src="凯瑞.jpg" alt="添加好友二维码" data-i18n-attr-alt="qr_alt_text">
       <p data-i18n="sidebar_qr_text">添加好友，进群交流</p>
     </div>
   </aside>
@@ -389,37 +58,36 @@ iframe[src*="chat.svtrglobal.com"] {
     <section class="wrapper">
       <div class="banner-header" role="banner" aria-label="首页横幅"></div>
       <div class="business-tags">
-        <span class="business-tag tag-database">AI创投库</span>
-        <span class="business-tag tag-meetup">AI创投会</span>
-        <span class="business-tag tag-camp">AI创投营</span>
+        <span class="business-tag tag-database" data-i18n="tag_database_text">AI创投库</span>
+        <span class="business-tag tag-meetup" data-i18n="tag_meetup_text">AI创投会</span>
+        <span class="business-tag tag-camp" data-i18n="tag_camp_text">AI创投营</span>
       </div>
     </section>
     
   <!-- 🚀 统计卡片 START -->
 <iframe src="./stats-widget.html"
         loading="lazy"
-        style="width:100%;max-width:800px;height:320px;
-               border:none;overflow:hidden;border-radius:12px;">
+        class="stats-widget-iframe">
 </iframe>
 <!-- 🚀 统计卡片 END -->
     
     <!-- Chatbox BEGIN -->
     <section class="chatbox wrapper">
-      <h2 class="chat-header">
+      <h2 class="chat-header" data-i18n="chat_header">
         Chat with <a href="https://svtr.ai" target="_blank">SVTR.AI</a>
       </h2>
       <iframe
         id="svtrChatFrame"
         src="https://chat.svtrglobal.com"
         title="SVTR AI Chat"
-        style="width:100%;min-height:640px;border:none;border-radius:12px"
+        class="chat-iframe"
         allow="clipboard-read; clipboard-write">
       </iframe>
     </section>
     <!-- Chatbox END -->
   </main>
   <footer>
-    <div style="text-align:center; color:#666; margin:20px 0;" data-i18n="footer_text"></div>
+    <div class="footer-text-container" data-i18n="footer_text"></div>
   </footer>
   <script>
     const translations = {
@@ -445,7 +113,13 @@ iframe[src*="chat.svtrglobal.com"] {
         link_alliance: '创业公司与投资机构',
         notice_3: '1K+',
         link_members: '权益会员',
-        chat_header: 'Chat with SVTR.AI',
+        chat_header: '与 <a href="https://svtr.ai" target="_blank">SVTR.AI</a> 对话',
+        tag_database_text: 'AI创投库',
+        tag_meetup_text: 'AI创投会',
+        tag_camp_text: 'AI创投营',
+        menu_toggle_aria_label: '打开/关闭菜单',
+        logo_alt_text: 'SVTR.AI 商标',
+        qr_alt_text: '添加好友二维码',
         join_btn: '加入候补名单',
         input_placeholder: '请输入你的问题...',
         send_btn: '发送',
@@ -473,7 +147,13 @@ iframe[src*="chat.svtrglobal.com"] {
         link_alliance: 'Ecosystem Alliance',
         notice_3: 'If you are a Member, please visit SVTR.AI',
         link_members: 'Exclusive Members Area',
-        chat_header: 'Chat with SVTR.AI',
+        chat_header: 'Chat with <a href="https://svtr.ai" target="_blank">SVTR.AI</a>',
+        tag_database_text: 'AI DB',
+        tag_meetup_text: 'AI Meetup',
+        tag_camp_text: 'AI Camp',
+        menu_toggle_aria_label: 'Open/Close menu',
+        logo_alt_text: 'SVTR.AI Logo',
+        qr_alt_text: 'Add friend QR code',
         join_btn: 'Join the Waitlist',
         email_placeholder: 'Enter your email',
         input_placeholder: 'Type your question...',
@@ -484,14 +164,36 @@ iframe[src*="chat.svtrglobal.com"] {
 
     function updateLanguage(lang) {
       document.documentElement.lang = lang;
+      const keysForInnerHTML = ['chat_header']; // Add other keys here if they also contain HTML
+
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        el.textContent = translations[lang][key] || el.textContent;
+        const translation = translations[lang][key] || el.textContent; // Fallback to current text
+        if (keysForInnerHTML.includes(key)) {
+          el.innerHTML = translation;
+        } else {
+          el.textContent = translation;
+        }
       });
+
       document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
         const key = el.getAttribute('data-i18n-placeholder');
         el.placeholder = translations[lang][key] || el.placeholder;
       });
+
+      // More generic way to handle translatable attributes
+      document.querySelectorAll('*').forEach(el => {
+        for (const attr of el.attributes) {
+          if (attr.name.startsWith('data-i18n-attr-')) {
+            const targetAttr = attr.name.substring('data-i18n-attr-'.length);
+            const translationKey = attr.value;
+            if (translations[lang][translationKey]) {
+              el.setAttribute(targetAttr, translations[lang][translationKey]);
+            }
+          }
+        }
+      });
+
       document.getElementById('btnZh').classList.toggle('active', lang === 'zh-CN');
       document.getElementById('btnEn').classList.toggle('active', lang === 'en');
       // 同步title
@@ -501,79 +203,14 @@ iframe[src*="chat.svtrglobal.com"] {
     document.getElementById('btnZh').addEventListener('click', () => updateLanguage('zh-CN'));
     document.getElementById('btnEn').addEventListener('click', () => updateLanguage('en'));
 
-    const toggle = document.querySelector('.menu-toggle');
-    const sidebar = document.querySelector('.sidebar');
-    const overlay = document.querySelector('.overlay');
-    const content = document.querySelector('.content');
-
-    toggle.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
-      overlay.classList.toggle('active');
-      content.classList.toggle('shifted');
-    });
-    overlay.addEventListener('click', () => {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('active');
-      content.classList.remove('shifted');
-    });
+    // Sidebar toggle logic is now in main.js
 
     // initialize
     updateLanguage('zh-CN');
 
-    // Automatically close sidebar after 2 seconds
-    setTimeout(() => {
-      const sidebarElement = document.querySelector('.sidebar');
-      const overlayElement = document.querySelector('.overlay');
-      const contentElement = document.querySelector('.content');
-      if (sidebarElement && overlayElement && contentElement) {
-        sidebarElement.classList.remove('open');
-        overlayElement.classList.remove('active');
-        contentElement.classList.remove('shifted');
-      }
-    }, 2000);
+    // Automatically close sidebar logic is now in main.js
 
-    // 新增：候补名单一键提交逻辑
-    const waitlistInlineForm = document.getElementById('waitlistInlineForm');
-    const waitlistInlineEmail = document.getElementById('waitlistInlineEmail');
-    const waitlistInlineMsg = document.getElementById('waitlistInlineMsg');
-    if (waitlistInlineForm) {
-      waitlistInlineForm.onsubmit = async function(e) {
-        e.preventDefault();
-        waitlistInlineMsg.textContent = '';
-        waitlistInlineMsg.className = 'waitlist-message';
-        const email = waitlistInlineEmail.value.trim();
-        if (!email) {
-          waitlistInlineMsg.textContent = '请输入有效的邮箱地址。';
-          waitlistInlineMsg.classList.add('waitlist-error');
-          return;
-        }
-        if (!/^[\w\-\.]+@[\w\-]+\.[\w\-\.]+$/.test(email)) {
-          waitlistInlineMsg.textContent = '邮箱格式不正确。';
-          waitlistInlineMsg.classList.add('waitlist-error');
-          return;
-        }
-        try {
-          const res = await fetch('https://waitlist-api.liumin-gsm.workers.dev/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email })
-          });
-          const data = await res.json();
-          if (data.ok) {
-            waitlistInlineMsg.textContent = '提交成功，感谢您的预约！';
-            waitlistInlineMsg.classList.add('waitlist-success');
-            waitlistInlineForm.reset();
-          } else {
-            waitlistInlineMsg.textContent = data.error || '提交失败，请稍后重试。';
-            waitlistInlineMsg.classList.add('waitlist-error');
-          }
-        } catch {
-          waitlistInlineMsg.textContent = '提交失败，请稍后重试。';
-          waitlistInlineMsg.classList.add('waitlist-error');
-        }
-      };
-    }
-
+    // Waitlist script removed as corresponding HTML elements (waitlistInlineForm, etc.) were not found.
   </script>
 </body>
 </html>
