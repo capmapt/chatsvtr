@@ -16,10 +16,10 @@ body{background:transparent;}
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:20px;
-  max-width:800px;             /* 与主页面 wrapper 保持一致 */
-  width:100%;
-  margin:0 auto;
-  padding:0 20px;              /* 添加适当的左右内边距 */
+  max-width:760px;  /* 稍微减小宽度，给边距留空间 */
+  width:calc(100% - 40px);  /* 减去左右padding */
+  margin:20px auto;  /* 添加上下边距 */
+  padding:0 20px;
 }
 
 /* 保持卡片样式不变 */
