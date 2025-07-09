@@ -185,6 +185,10 @@ header {
   transition: margin-left .3s;
 }
 .content.shifted { margin-left: 260px; }
+@media (max-width:768px) {
+  .content.shifted { margin-left: 0; }
+  .waitlist-modal-content { width: 95vw; min-width: 0; }
+}
 
 /* Business Tags */
 .business-tags {
@@ -250,42 +254,6 @@ header {
     min-width: 70vw;
     margin: 0 auto;
   }
-}
-.lang-toggle {
-  display: flex;
-  background: #fff;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  z-index: 1100;
-  overflow: hidden;
-  align-items: center;
-}
-.lang-toggle .divider {
-  color: #ccc;
-  font-size: 1.1rem;
-  margin: 0 3px;
-  user-select: none;
-}
-.lang-toggle button {
-  padding: 4px 12px;
-  border: none;
-  background: transparent;
-  color: #555;
-  font-weight: 500;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background .3s, color .3s, transform .25s;
-}
-.lang-toggle button.active {
-  background: var(--primary-color);
-  color: #fff;
-  transform: scale(1.10);
-  box-shadow: 0 0 8px #fa8c32a0;
-}
-.lang-toggle button:not(.active):hover {
-  background: #f0f0f0;
-  color: #fa8c32;
-  transform: scale(1.07);
 }
 <!-- 🚀 统计卡片 START -->
 <section class="stats-container wrapper">
@@ -362,53 +330,6 @@ iframe#svtrChatFrame {
   --hf-chat-font-body: "Noto Sans SC", sans-serif;   /* 正文字体 */
 }
 
-/* Styles moved from index.html */
-*, *::before, *::after { box-sizing: border-box; }
-:root {
-  --primary-color: #FA8C32;
-  --secondary-color: #FFBB33;
-  --accent-color: #FFD600;
-  --bg-main: linear-gradient(135deg, #fff8e1, #ffe0b2);
-  --bg-panel: #FFF;
-}
-html { scroll-behavior: smooth; }
-body {
-  margin: 0; padding: 0; min-height: 100vh;
-  background: var(--bg-main);
-  font-family: sans-serif;
-  overflow-x: hidden;
-}
-header {
-  position: relative;
-  width: 100%;
-  z-index: 1200;
-}
-/* .wrapper is already defined above, ensure consistency or merge */
-/* .banner-header is new */
-.banner-header {
-  width: 100%;
-  aspect-ratio: 4 / 1;
-  background: url('banner.png') center/cover no-repeat;
-}
-/* .notice, .chatbox - .chatbox might be defined or similar styles exist */
-.notice, .chatbox {
-  background: var(--bg-panel);
-  width: 100%; max-width: 800px;
-  margin: 10px auto;
-  padding: 15px;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.notice ul { margin: 0; padding-left: 1.2em; list-style: disc; }
-.notice li { line-height: 2; }
-.notice a, .chat-header a {
-  color: #0066cc;
-  text-decoration: none;
-}
-.notice a:hover, .chat-header a:hover {
-  color: #004499;
-  text-decoration: underline;
-}
 
 .chat-header {
   font-size: 1.4rem; font-weight: bold; color: #000;
@@ -427,34 +348,6 @@ header {
 .chat-input-area button {
   padding: 0 16px; height: 36px; background: var(--primary-color);
   border: none; color: #fff; border-radius: 4px; cursor: pointer;
-}
-.menu-toggle {
-  position: fixed; top: 20px; left: 20px;
-  background: none; border: none; font-size: 1.5rem;
-  color: var(--primary-color); cursor: pointer; z-index: 1100;
-}
-.overlay {
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.4);
-  opacity: 0; pointer-events: none; transition: opacity .3s;
-  z-index: 1000;
-}
-.overlay.active {
-  opacity: 1; pointer-events: auto;
-}
-/* .sidebar and its children are already defined, ensure consistency or merge */
-/* .lang-toggle and its children are already defined, ensure consistency or merge */
-.content {
-  margin-left: 0; padding: 10px 20px;
-  display: flex; flex-direction: column; align-items: center;
-  transition: margin-left .3s;
-}
-.content.shifted { margin-left: 260px; }
-@media(max-width:768px){
-  .content.shifted { margin-left: 0; }
-  /* .waitlist-modal-content might be new or part of existing .waitlist-inline-area responsive styles */
-  .waitlist-modal-content { width: 95vw; min-width: 0;}
-  /* .waitlist-inline-area input[type="email"] has responsive styles, ensure consistency */
 }
 
 /* .business-tags and its children are already defined, ensure consistency or merge */
