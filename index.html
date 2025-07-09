@@ -273,88 +273,67 @@
     }
 
     /* ===== 新增：减少Chat区域空白 ===== */
-    /* 减少Chat区域上方空白 */
-    .chatbox {
-      margin: 5px auto 15px auto !important; /* 减少上边距 */
-    }
+/* --- 优化后的布局间距 --- */
 
-    /* 减少统计区域下方空白 */
-    .stats-container {
-      margin-bottom: 10px !important; /* 减少下边距 */
-    }
+/* 为统计和聊天iframe创建一个统一的容器样式 */
+.widget-container {
+    /* 使用 max-width 来限制最大宽度，并用 margin: auto 居中 */
+    max-width: 800px; 
+    width: 100%;
+    margin: 10px auto; /* 统一上下间距为 10px */
+    display: block; /* 确保iframe表现为块级元素，使其可以居中 */
+}
 
-    /* 整体容器间距优化 */
-    .wrapper {
-      margin: 5px auto !important; /* 减少容器间距 */
-    }
+/* 具体到每个iframe的样式 */
+iframe[src*="stats-widget"] {
+    height: 200px; /* 默认高度 */
+    border: none;
+    border-radius: 12px;
+}
 
-    /* 减少业务标签的下边距 */
-    .business-tags {
-      margin: 20px 0 10px 0 !important; /* 减少下边距 */
-    }
+iframe[src*="chat.svtrglobal.com"] {
+    min-height: 640px;
+    border: none;
+    border-radius: 12px;
+}
 
-    /* 移动端进一步优化 */
-    @media (max-width: 600px) {
-      .chatbox {
-        margin: 5px auto 10px auto !important;
-      }
-      
-      .stats-container {
-        margin-bottom: 8px !important;
-      }
-      
-      .business-tags {
-        margin: 15px 0 8px 0 !important;
-      }
-    }
-    /* 🎯 强制覆盖所有间距 - 放在CSS最末尾 */
+/* 顶部 Banner 容器 */
 .wrapper {
-  margin: 5px auto !important;
+    max-width: 800px;
+    width: 100%;
+    margin: 10px auto; /* 统一上下间距 */
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
 }
 
+/* 业务标签区域的间距 */
 .business-tags {
-  margin: 15px 0 8px 0 !important;
-}
-
-/* 统计iframe容器优化 */
-iframe[src*="stats-widget"] {
-  height: 280px !important;
-  margin: 0 auto 8px auto !important;
-  display: block !important;
+    margin: 20px 0 10px 0; /* 调整上下外边距 */
 }
 
 .chatbox {
-  margin: 8px auto 15px auto !important;
-  padding: 15px !important;
+    padding: 15px;
 }
 
-/* 移动端进一步压缩 */
+/* --- 移动端间距优化 --- */
 @media (max-width: 600px) {
-  .wrapper {
-    margin: 3px auto !important;
-  }
-  
-  .business-tags {
-    margin: 12px 0 6px 0 !important;
-  }
-  
-  iframe[src*="stats-widget"] {
-    height: 200px !important;
-    margin: 0 auto 6px auto !important;
-  }
-  
-  .chatbox {
-    margin: 6px auto 10px auto !important;
-    padding: 12px !important;
-  }
-}
-/* 🎯 适中间距 */
-iframe[src*="stats-widget"] {
-  margin: 0 auto 10px auto !important;  /* 10px间距 */
-}
+    .widget-container, .wrapper {
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
 
-.chatbox {
-  margin: 10px auto 15px auto !important;  /* 10px间距 */
+    .business-tags {
+        margin: 15px 0 8px 0;
+    }
+    
+    iframe[src*="stats-widget"] {
+        /* 在 stats-widget.html 内部已经有响应式，这里可以不用改高度 */
+    }
+
+    .chatbox {
+        padding: 12px;
+    }
 }
   </style>
   
