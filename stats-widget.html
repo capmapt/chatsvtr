@@ -7,9 +7,16 @@
 <style>
 /* === 样式只作用于本文件，不会污染父页面 === */
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;font-family:Arial,"Microsoft YaHei",sans-serif;overflow:hidden}
+html,body{
+  margin:0;
+  padding:0;
+  font-family:Arial,"Microsoft YaHei",sans-serif;
+  overflow:hidden;
+  height:100%;
+}
 
-body{background:transparent;}
+
+body{background:transparent;display:flex;align-items:center;justify-content:center;height:100%;}
 
 /* 🎯 关键修改：确保三列一行，无滚动条 */
 .stats-container{
@@ -112,8 +119,8 @@ body{background:transparent;}
 /* 移除响应式列数变更，保持三列一行 */
     /* 确保body高度自适应内容 */
 body {
-  height: auto;
-  min-height: 0;
+  height: 100%;
+  min-height: 100%;
 }
 </style>
 </head>
