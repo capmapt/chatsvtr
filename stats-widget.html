@@ -4,29 +4,40 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>SVTR Stats Widget</title>
+
 <style>
-/* === 样式只作用于本文件，不会污染父页面 === */
-*{box-sizing:border-box}
-html,body{
-  margin:0;
-  padding:0;
-  font-family:Arial,"Microsoft YaHei",sans-serif;
-  overflow:hidden;
-  height:100%;
+/* === 样式仅作用于本文件，不会污染父页面 === */
+* {
+  box-sizing: border-box;
 }
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, "Microsoft YaHei", sans-serif;
+  overflow: hidden;
+  height: 100%;
+}
 
-body{background:transparent;display:flex;align-items:center;justify-content:center;height:100%;}
+body {
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+</style>
+
 
 /* 🎯 关键修改：确保三列一行，无滚动条 */
 .stats-container{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:20px;
-  max-width:760px;  /* 稍微减小宽度，给边距留空间 */
-  width:calc(100% - 40px);  /* 减去左右padding */
-  margin:20px auto;  /* 添加上下边距 */
-  padding:0 20px;
+  width:100%;
+  margin:20px 0;
+  padding:0;
 }
 
 /* 保持卡片样式不变 */
@@ -115,13 +126,14 @@ body{background:transparent;display:flex;align-items:center;justify-content:cent
 .increase-animation{animation:flash .5s}
 @keyframes flash{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
 
-/* 🎯 移动端优化 */
-/* 移除响应式列数变更，保持三列一行 */
-    /* 确保body高度自适应内容 */
+/* 🚀 移动端优化 */
+/* 移动的响应式列数变量，保持三列一行 */
+/* 确保 body 高度自适应内容 */
 body {
   height: 100%;
   min-height: 100%;
 }
+
 </style>
 </head>
 
