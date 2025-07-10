@@ -400,6 +400,12 @@ iframe[src*="chat.svtrglobal.com"] {
   border-radius: 12px;
 }
 
+.stats-wrapper {
+  background: var(--bg-panel);
+  border-left: 1px solid rgba(0,0,0,0.1);
+  border-right: 1px solid rgba(0,0,0,0.1);
+}
+
 .chat-iframe {
   width: 100%;
   min-height: 640px;
