@@ -124,15 +124,16 @@ body{background:transparent;display:flex;align-items:center;justify-content:cent
   .stat-card {
     padding: 20px 16px;
   }
-  html,body {
+html,body {
     height: auto;
     overflow-y: auto;
-  }
-  body {
-    display: block;
-    align-items: flex-start;
-  }
 }
+
+body {
+    display: flex;          /* 用 flex 而不是 block */
+    align-items: flex-start;
+}
+
 /* 确保body高度自适应内容 */
 body {
   height: 100%;
