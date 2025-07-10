@@ -7,7 +7,7 @@
 <style>
 /* === 样式只作用于本文件，不会污染父页面 === */
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;font-family:Arial,"Microsoft YaHei",sans-serif;}
+html,body{margin:0;padding:0;font-family:Arial,"Microsoft YaHei",sans-serif;overflow:hidden}
 
 body{background:transparent;}
 
@@ -109,34 +109,7 @@ body{background:transparent;}
 @keyframes flash{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
 
 /* 🎯 移动端优化 */
-@media(max-width:640px){
-  .stats-container{
-    grid-template-columns:1fr;
-    gap:12px;
-    padding:0 15px;            /* 移动端添加左右padding */
-  }
-  
-  .stat-card{
-    padding:20px 16px;
-  }
-  
-  .stat-number{
-    font-size:1.8rem;
-  }
-  
-  .stat-label{
-    font-size:0.9rem;
-  }
-}
-
-/* 🎯 平板设备优化 (两列布局) */
-@media(min-width:641px) and (max-width:900px){
-  .stats-container{
-    grid-template-columns:repeat(2,1fr);
-    gap:16px;
-    padding:0 20px;
-  }
-}
+/* 移除响应式列数变更，保持三列一行 */
     /* 确保body高度自适应内容 */
 body {
   height: auto;
