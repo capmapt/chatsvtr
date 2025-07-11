@@ -199,6 +199,11 @@
       document.getElementById('btnEn').classList.toggle('active', lang === 'en');
       // 同步title
       document.title = translations[lang].title;
+
+      const widget = document.querySelector('.stats-widget-iframe');
+      if (widget && widget.contentWindow) {
+        widget.contentWindow.postMessage({type: 'setLang', lang}, '*');
+      }
     }
 
     document.getElementById('btnZh').addEventListener('click', () => updateLanguage('zh-CN'));
