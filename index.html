@@ -199,6 +199,20 @@
       document.getElementById('btnEn').classList.toggle('active', lang === 'en');
       // 同步title
       document.title = translations[lang].title;
+
+      const widget = document.querySelector('.stats-widget-iframe');
+      if (widget && widget.contentWindow) {
+        widget.contentWindow.postMessage({ type: 'setLang', lang }, '*');
+      }
+    }
+
+    const statsWidget = document.querySelector('.stats-widget-iframe');
+    if (statsWidget) {
+      statsWidget.addEventListener('load', () => {
+        if (statsWidget.contentWindow) {
+          statsWidget.contentWindow.postMessage({ type: 'setLang', lang: document.documentElement.lang }, '*');
+        }
+      });
     }
 
     document.getElementById('btnZh').addEventListener('click', () => updateLanguage('zh-CN'));

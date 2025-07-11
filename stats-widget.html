@@ -145,28 +145,28 @@ body {
 <body>
 <div class="stats-container">
   <a class="stat-card members" href="https://c0uiiy15npu.feishu.cn/share/base/form/shrcnKdKrgumC9OtjQNXiC05r8e" target="_blank">
-    <div class="live-indicator"><div class="live-dot"></div><span>实时</span></div>
+    <div class="live-indicator"><div class="live-dot"></div><span class="live-text">实时</span></div>
     <div class="stat-icon" aria-label="社区成员">👥</div>
     <div class="stat-number" id="members-count">121,884</div>
-    <div class="stat-label">社区成员</div>
+    <div class="stat-label" id="members-label">社区成员</div>
     <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
     <div class="growth-indicator">↗ <span id="members-growth">+25/小时</span></div>
   </a>
 
   <a class="stat-card companies" href="https://c0uiiy15npu.feishu.cn/share/base/form/shrcnxRAVSwtEHD40UUUg1086Gf" target="_blank">
-    <div class="live-indicator"><div class="live-dot"></div><span>实时</span></div>
+    <div class="live-indicator"><div class="live-dot"></div><span class="live-text">实时</span></div>
     <div class="stat-icon" aria-label="创业公司与投资机构">🏢</div>
     <div class="stat-number" id="companies-count">10,761</div>
-    <div class="stat-label">创业公司与投资机构</div>
+    <div class="stat-label" id="companies-label">创业公司与投资机构</div>
     <div class="progress-bar"><div class="progress-fill" style="width:68%"></div></div>
     <div class="growth-indicator">↗ <span id="companies-growth">+8/小时</span></div>
   </a>
 
   <a class="stat-card vip" href="https://c0uiiy15npu.feishu.cn/wiki/G0oMwUeNbiZkQBkX9iXcfMllnpe?from=from_copylink" target="_blank">
-    <div class="live-indicator"><div class="live-dot"></div><span>实时</span></div>
+    <div class="live-indicator"><div class="live-dot"></div><span class="live-text">实时</span></div>
     <div class="stat-icon" aria-label="权益会员">💎</div>
     <div class="stat-number" id="vip-count">1,102</div>
-    <div class="stat-label">权益会员</div>
+    <div class="stat-label" id="vip-label">权益会员</div>
     <div class="progress-bar"><div class="progress-fill" style="width:42%"></div></div>
     <div class="growth-indicator">↗ <span id="vip-growth">+3/小时</span></div>
   </a>
@@ -174,20 +174,50 @@ body {
 
 <script>
 /* === 自包含脚本：纯前端模拟增长 === */
+const translations = {
+  'zh-CN': {
+    members: '社区成员',
+    companies: '创业公司与投资机构',
+    vip: '权益会员',
+    live: '实时',
+    perHour: '/小时'
+  },
+  'en': {
+    members: 'Community Members',
+    companies: 'Startups & Investors',
+    vip: 'VIP Members',
+    live: 'Live',
+    perHour: '/hour'
+  }
+};
+
+let currentLang = 'zh-CN';
+
 const stats={
   members:{c:121884,g:25,m:150000},
   companies:{c:10761,g:8,m:20000},
   vip:{c:1102,g:3,m:2000}
 };
 function $(id){return document.getElementById(id)}
+function updateLang(lang){
+  currentLang = translations[lang] ? lang : 'zh-CN';
+  const t = translations[currentLang];
+  $("members-label").textContent = t.members;
+  $("companies-label").textContent = t.companies;
+  $("vip-label").textContent = t.vip;
+  document.querySelectorAll('.live-text').forEach(el => el.textContent = t.live);
+  paint();
+}
+
 function paint(){
-  members_count.textContent = stats.members.c.toLocaleString()
-  companies_count.textContent = stats.companies.c.toLocaleString()
-  vip_count.textContent = stats.vip.c.toLocaleString()
-  members_growth.textContent = `+${stats.members.g}/小时`
-  companies_growth.textContent = `+${stats.companies.g}/小时`
-  vip_growth.textContent = `+${stats.vip.g}/小时`
-  updateBars()
+  members_count.textContent = stats.members.c.toLocaleString();
+  companies_count.textContent = stats.companies.c.toLocaleString();
+  vip_count.textContent = stats.vip.c.toLocaleString();
+  const t = translations[currentLang];
+  members_growth.textContent = `+${stats.members.g}${t.perHour}`;
+  companies_growth.textContent = `+${stats.companies.g}${t.perHour}`;
+  vip_growth.textContent = `+${stats.vip.g}${t.perHour}`;
+  updateBars();
 }
 function flash(el){el.classList.add('increase-animation');setTimeout(()=>el.classList.remove('increase-animation'),500)}
 function updateBars(){
@@ -200,7 +230,18 @@ function loop(){
     if(Math.random()<.5){v.c+=Math.ceil(v.g*(0.7+Math.random()*0.6));flash($(k+'-count'))}
   });paint()
 }
-paint();setInterval(loop,60000);
+updateLang(currentLang);
+try {
+  const langFromParent = parent.document.documentElement.lang;
+  if (langFromParent) updateLang(langFromParent);
+} catch(e) {}
+setInterval(loop,60000);
+
+window.addEventListener('message', e => {
+  if (e.data && e.data.type === 'setLang') {
+    updateLang(e.data.lang);
+  }
+});
 </script>
 </body>
 </html>
