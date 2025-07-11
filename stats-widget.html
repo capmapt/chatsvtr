@@ -145,62 +145,109 @@ body {
 <body>
 <div class="stats-container">
   <a class="stat-card members" href="https://c0uiiy15npu.feishu.cn/share/base/form/shrcnKdKrgumC9OtjQNXiC05r8e" target="_blank">
-    <div class="live-indicator"><div class="live-dot"></div><span>实时</span></div>
-    <div class="stat-icon" aria-label="社区成员">👥</div>
+    <div class="live-indicator"><div class="live-dot"></div><span data-i18n="realtime">实时</span></div>
+    <div class="stat-icon" aria-label="社区成员" data-i18n-attr-aria-label="members_label">👥</div>
     <div class="stat-number" id="members-count">121,884</div>
-    <div class="stat-label">社区成员</div>
+    <div class="stat-label" data-i18n="members_label">社区成员</div>
     <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
     <div class="growth-indicator">↗ <span id="members-growth">+25/小时</span></div>
   </a>
 
   <a class="stat-card companies" href="https://c0uiiy15npu.feishu.cn/share/base/form/shrcnxRAVSwtEHD40UUUg1086Gf" target="_blank">
-    <div class="live-indicator"><div class="live-dot"></div><span>实时</span></div>
-    <div class="stat-icon" aria-label="创业公司与投资机构">🏢</div>
+    <div class="live-indicator"><div class="live-dot"></div><span data-i18n="realtime">实时</span></div>
+    <div class="stat-icon" aria-label="创业公司与投资机构" data-i18n-attr-aria-label="companies_label">🏢</div>
     <div class="stat-number" id="companies-count">10,761</div>
-    <div class="stat-label">创业公司与投资机构</div>
+    <div class="stat-label" data-i18n="companies_label">创业公司与投资机构</div>
     <div class="progress-bar"><div class="progress-fill" style="width:68%"></div></div>
     <div class="growth-indicator">↗ <span id="companies-growth">+8/小时</span></div>
   </a>
 
   <a class="stat-card vip" href="https://c0uiiy15npu.feishu.cn/wiki/G0oMwUeNbiZkQBkX9iXcfMllnpe?from=from_copylink" target="_blank">
-    <div class="live-indicator"><div class="live-dot"></div><span>实时</span></div>
-    <div class="stat-icon" aria-label="权益会员">💎</div>
+    <div class="live-indicator"><div class="live-dot"></div><span data-i18n="realtime">实时</span></div>
+    <div class="stat-icon" aria-label="权益会员" data-i18n-attr-aria-label="vip_label">💎</div>
     <div class="stat-number" id="vip-count">1,102</div>
-    <div class="stat-label">权益会员</div>
+    <div class="stat-label" data-i18n="vip_label">权益会员</div>
     <div class="progress-bar"><div class="progress-fill" style="width:42%"></div></div>
     <div class="growth-indicator">↗ <span id="vip-growth">+3/小时</span></div>
   </a>
 </div>
 
 <script>
-/* === 自包含脚本：纯前端模拟增长 === */
+/* === 自包含脚本：纯前端模拟增长与国际化 === */
 const stats={
   members:{c:121884,g:25,m:150000},
   companies:{c:10761,g:8,m:20000},
   vip:{c:1102,g:3,m:2000}
 };
+
+const translations={
+  'zh-CN':{
+    realtime:'实时',
+    members_label:'社区成员',
+    companies_label:'创业公司与投资机构',
+    vip_label:'权益会员',
+    per_hour:'/小时'
+  },
+  'en':{
+    realtime:'Live',
+    members_label:'Community Members',
+    companies_label:'Startups & Investors',
+    vip_label:'VIP Members',
+    per_hour:'/hr'
+  }
+};
+
+let currentLang='zh-CN';
+
 function $(id){return document.getElementById(id)}
+
+function updateLang(lang){
+  currentLang=translations[lang]?lang:'zh-CN';
+  document.documentElement.lang=currentLang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key=el.getAttribute('data-i18n');
+    if(translations[currentLang][key]) el.textContent=translations[currentLang][key];
+  });
+  document.querySelectorAll('[data-i18n-attr-aria-label]').forEach(el=>{
+    const key=el.getAttribute('data-i18n-attr-aria-label');
+    if(translations[currentLang][key]) el.setAttribute('aria-label',translations[currentLang][key]);
+  });
+  paint();
+}
+
 function paint(){
-  members_count.textContent = stats.members.c.toLocaleString()
-  companies_count.textContent = stats.companies.c.toLocaleString()
-  vip_count.textContent = stats.vip.c.toLocaleString()
-  members_growth.textContent = `+${stats.members.g}/小时`
-  companies_growth.textContent = `+${stats.companies.g}/小时`
-  vip_growth.textContent = `+${stats.vip.g}/小时`
-  updateBars()
+  members_count.textContent=stats.members.c.toLocaleString();
+  companies_count.textContent=stats.companies.c.toLocaleString();
+  vip_count.textContent=stats.vip.c.toLocaleString();
+  members_growth.textContent=`+${stats.members.g}${translations[currentLang].per_hour}`;
+  companies_growth.textContent=`+${stats.companies.g}${translations[currentLang].per_hour}`;
+  vip_growth.textContent=`+${stats.vip.g}${translations[currentLang].per_hour}`;
+  updateBars();
 }
+
 function flash(el){el.classList.add('increase-animation');setTimeout(()=>el.classList.remove('increase-animation'),500)}
+
 function updateBars(){
-  document.querySelector('.members .progress-fill').style.width = Math.min(stats.members.c/stats.members.m*100,100)+'%'
-  document.querySelector('.companies .progress-fill').style.width = Math.min(stats.companies.c/stats.companies.m*100,100)+'%'
-  document.querySelector('.vip .progress-fill').style.width = Math.min(stats.vip.c/stats.vip.m*100,100)+'%'
+  document.querySelector('.members .progress-fill').style.width=Math.min(stats.members.c/stats.members.m*100,100)+'%';
+  document.querySelector('.companies .progress-fill').style.width=Math.min(stats.companies.c/stats.companies.m*100,100)+'%';
+  document.querySelector('.vip .progress-fill').style.width=Math.min(stats.vip.c/stats.vip.m*100,100)+'%';
 }
+
 function loop(){
   Object.entries(stats).forEach(([k,v])=>{
     if(Math.random()<.5){v.c+=Math.ceil(v.g*(0.7+Math.random()*0.6));flash($(k+'-count'))}
-  });paint()
+  });paint();
 }
-paint();setInterval(loop,60000);
+
+let parentLang='zh-CN';
+try{parentLang=window.parent.document.documentElement.lang||parentLang}catch(e){}
+updateLang(parentLang);
+
+window.addEventListener('message',e=>{
+  if(e.data&&e.data.type==='setLang')updateLang(e.data.lang);
+});
+
+setInterval(loop,60000);
 </script>
 </body>
 </html>
