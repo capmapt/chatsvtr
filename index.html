@@ -206,6 +206,15 @@
       }
     }
 
+    const statsWidget = document.querySelector('.stats-widget-iframe');
+    if (statsWidget) {
+      statsWidget.addEventListener('load', () => {
+        if (statsWidget.contentWindow) {
+          statsWidget.contentWindow.postMessage({ type: 'setLang', lang: document.documentElement.lang }, '*');
+        }
+      });
+    }
+
     document.getElementById('btnZh').addEventListener('click', () => updateLanguage('zh-CN'));
     document.getElementById('btnEn').addEventListener('click', () => updateLanguage('en'));
 
