@@ -209,6 +209,7 @@ header {
   background: linear-gradient(90deg, #fff176 10%, #ffa726 90%);
   color: #333;
   letter-spacing: 2.5px;
+  white-space: nowrap;
   border: none;
   text-align: center;
   margin: 0; /* Align with grid gap */
@@ -255,6 +256,7 @@ header {
     padding: 12px 0;
     min-width: 70vw;
     margin: 0 auto;
+    white-space: nowrap;
   }
 }
 <!-- 🚀 统计卡片 START -->
