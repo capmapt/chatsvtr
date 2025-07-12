@@ -163,6 +163,8 @@
       }
     };
 
+    const statsIframe = document.querySelector('.stats-widget-iframe');
+
     function updateLanguage(lang) {
       document.documentElement.lang = lang;
       const keysForInnerHTML = ['chat_header']; // Add other keys here if they also contain HTML
@@ -199,6 +201,10 @@
       document.getElementById('btnEn').classList.toggle('active', lang === 'en');
       // 同步title
       document.title = translations[lang].title;
+
+      if (statsIframe && statsIframe.contentWindow) {
+        statsIframe.contentWindow.postMessage({ type: 'setLang', lang }, '*');
+      }
     }
 
     document.getElementById('btnZh').addEventListener('click', () => updateLanguage('zh-CN'));
