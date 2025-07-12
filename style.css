@@ -209,6 +209,8 @@ header {
   background: linear-gradient(90deg, #fff176 10%, #ffa726 90%);
   color: #333;
   letter-spacing: 2.5px;
+  white-space: nowrap;
+  width: 100%;
   border: none;
   text-align: center;
   margin: 0; /* Align with grid gap */
@@ -253,8 +255,8 @@ header {
   .business-tag {
     font-size: 1.05rem;
     padding: 12px 0;
-    min-width: 70vw;
-    margin: 0 auto;
+    width: 100%;
+    margin: 0;
   }
 }
 <!-- 🚀 统计卡片 START -->
