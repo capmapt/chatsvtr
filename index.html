@@ -10,12 +10,12 @@
   <title data-i18n="title">硅谷科技评论</title>
   <meta name="description" content="SVTR.AI - 硅谷科技评论，专注AI创投领域的社区门户网站，提供AI创投榜、AI创投库、AI创投会等服务">
   <meta name="keywords" content="AI创投,硅谷科技,SVTR.AI,人工智能投资,创业公司,投资机构">
-  <link rel="preload" href="style.css" as="style">
-  <link rel="stylesheet" href="style.css">
+  <link rel="preload" href="assets/css/style.css" as="style">
+  <link rel="stylesheet" href="assets/css/style.css">
   
   <!-- Preload critical images -->
-  <link rel="preload" href="banner.png" as="image">
-  <link rel="preload" href="logo.jpg" as="image">
+  <link rel="preload" href="assets/images/banner.png" as="image">
+  <link rel="preload" href="assets/images/logo.jpg" as="image">
 </head>
 <body>
   <header>
@@ -29,12 +29,12 @@
   <div class="overlay active"></div>
   <aside class="sidebar open" role="navigation" aria-label="主导航">
     <div class="sidebar-header">
-      <img src="logo.jpg" class="sidebar-logo" alt="SVTR.AI logo" data-i18n-attr-alt="logo_alt_text" loading="lazy">
+      <img src="assets/images/logo.jpg" class="sidebar-logo" alt="SVTR.AI logo" data-i18n-attr-alt="logo_alt_text" loading="lazy">
       <h2 data-i18n="sidebar_title">硅谷科技评论</h2>
     </div>
     <nav>
       <ul class="nav-list">
-        <li><a href="AI 100.html" data-i18n="nav_ai100">AI 100</a></li>
+        <li><a href="pages/ai-100.html" data-i18n="nav_ai100">AI 100</a></li>
         <li>
           <a href="https://c0uiiy15npu.feishu.cn/wiki/DI9Hw8v8tiZF2Xk13KDcDI8Bn1b?from=from_copylink" data-i18n="nav_ranking" target="_blank">AI创投榜</a>
           <ul class="sub-list">
@@ -60,7 +60,7 @@
       </ul>
     </nav>
     <div class="sidebar-footer">
-      <img src="凯瑞.jpg" alt="添加好友二维码" data-i18n-attr-alt="qr_alt_text" loading="lazy">
+      <img src="assets/images/qr-code.jpg" alt="添加好友二维码" data-i18n-attr-alt="qr_alt_text" loading="lazy">
       <p data-i18n="sidebar_qr_text">添加好友，进群交流</p>
     </div>
   </aside>
@@ -76,7 +76,7 @@
     
   <!-- 🚀 统计卡片 START -->
   <section class="stats-wrapper wrapper">
-    <iframe src="./stats-widget.html"
+    <iframe src="./pages/stats-widget.html"
             loading="lazy"
             class="stats-widget-iframe"></iframe>
   </section>
@@ -230,6 +230,6 @@
 
     // Waitlist script removed as corresponding HTML elements (waitlistInlineForm, etc.) were not found.
   </script>
-  <script src="main.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
 </body>
 </html>

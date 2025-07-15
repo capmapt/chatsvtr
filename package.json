@@ -1,0 +1,35 @@
+{
+  "name": "svtr-chatsvtr",
+  "version": "1.0.0",
+  "description": "SVTR.AI - 硅谷科技评论，专注AI创投领域的社区门户网站",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 3000",
+    "build": "echo 'Static site, no build required'",
+    "test": "echo 'No tests specified'",
+    "deploy": "netlify deploy --prod"
+  },
+  "keywords": [
+    "AI",
+    "创投",
+    "硅谷科技",
+    "SVTR.AI",
+    "人工智能投资",
+    "创业公司",
+    "投资机构"
+  ],
+  "author": "SVTR.AI",
+  "license": "MIT",
+  "homepage": "https://svtr.ai",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/capmapt/chatsvtr.git"
+  },
+  "bugs": {
+    "url": "https://github.com/capmapt/chatsvtr/issues"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}

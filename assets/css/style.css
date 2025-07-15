@@ -31,7 +31,7 @@ header {
 .banner-header {
   width: 100%;
   aspect-ratio: 4 / 1;
-  background: url('banner.png') center/cover no-repeat;
+  background: url('../images/banner.png') center/cover no-repeat;
   background-size: cover;
   background-position: center;
   will-change: transform;
