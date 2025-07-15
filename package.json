@@ -6,9 +6,13 @@
   "scripts": {
     "start": "python3 -m http.server 8000",
     "dev": "python3 -m http.server 3000",
+    "preview": "echo '🔍 Starting preview server...' && python3 -m http.server 8080",
     "build": "echo 'Static site, no build required'",
     "test": "echo 'No tests specified'",
-    "deploy": "netlify deploy --prod"
+    "deploy": "netlify deploy --prod",
+    "deploy:staging": "netlify deploy --dir=. --alias=staging",
+    "backup": "git tag backup-$(date +%Y%m%d-%H%M%S)",
+    "rollback": "node scripts/rollback.js"
   },
   "keywords": [
     "AI",
