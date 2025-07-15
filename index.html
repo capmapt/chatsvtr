@@ -2,10 +2,20 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="theme-color" content="#FA8C32"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <title data-i18n="title">硅谷科技评论</title>
-  <!-- 建议后续补充 description、OG/Favicons 等 -->
+  <meta name="description" content="SVTR.AI - 硅谷科技评论，专注AI创投领域的社区门户网站，提供AI创投榜、AI创投库、AI创投会等服务">
+  <meta name="keywords" content="AI创投,硅谷科技,SVTR.AI,人工智能投资,创业公司,投资机构">
+  <link rel="preload" href="style.css" as="style">
   <link rel="stylesheet" href="style.css">
+  
+  <!-- Preload critical images -->
+  <link rel="preload" href="banner.png" as="image">
+  <link rel="preload" href="logo.jpg" as="image">
 </head>
 <body>
   <header>
@@ -19,7 +29,7 @@
   <div class="overlay active"></div>
   <aside class="sidebar open" role="navigation" aria-label="主导航">
     <div class="sidebar-header">
-      <img src="logo.jpg" class="sidebar-logo" alt="SVTR.AI logo" data-i18n-attr-alt="logo_alt_text">
+      <img src="logo.jpg" class="sidebar-logo" alt="SVTR.AI logo" data-i18n-attr-alt="logo_alt_text" loading="lazy">
       <h2 data-i18n="sidebar_title">硅谷科技评论</h2>
     </div>
     <nav>
@@ -50,7 +60,7 @@
       </ul>
     </nav>
     <div class="sidebar-footer">
-      <img src="凯瑞.jpg" alt="添加好友二维码" data-i18n-attr-alt="qr_alt_text">
+      <img src="凯瑞.jpg" alt="添加好友二维码" data-i18n-attr-alt="qr_alt_text" loading="lazy">
       <p data-i18n="sidebar_qr_text">添加好友，进群交流</p>
     </div>
   </aside>
@@ -82,6 +92,7 @@
         src="https://chat.svtrglobal.com"
         title="SVTR AI Chat"
         class="chat-iframe"
+        loading="lazy"
         allow="clipboard-read; clipboard-write">
       </iframe>
     </section>
@@ -90,7 +101,7 @@
   <footer>
     <div class="footer-text-container" data-i18n="footer_text"></div>
   </footer>
-  <script>
+  <script defer>
     const translations = {
       'zh-CN': {
         title: '硅谷科技评论',
@@ -219,6 +230,6 @@
 
     // Waitlist script removed as corresponding HTML elements (waitlistInlineForm, etc.) were not found.
   </script>
-  <script src="main.js"></script>
+  <script src="main.js" defer></script>
 </body>
 </html>
