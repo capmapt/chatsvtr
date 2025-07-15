@@ -208,13 +208,13 @@ function updateLang(lang){
 }
 
 function paint(){
-  members_count.textContent=stats.members.c.toLocaleString();
-  companies_count.textContent=stats.companies.c.toLocaleString();
-  vip_count.textContent=stats.vip.c.toLocaleString();
+  $('members-count').textContent=stats.members.c.toLocaleString();
+  $('companies-count').textContent=stats.companies.c.toLocaleString();
+  $('vip-count').textContent=stats.vip.c.toLocaleString();
   const per=translations[currentLang].perHour;
-  members_growth.textContent=`+${stats.members.g}${per}`;
-  companies_growth.textContent=`+${stats.companies.g}${per}`;
-  vip_growth.textContent=`+${stats.vip.g}${per}`;
+  $('members-growth').textContent=`+${stats.members.g}${per}`;
+  $('companies-growth').textContent=`+${stats.companies.g}${per}`;
+  $('vip-growth').textContent=`+${stats.vip.g}${per}`;
   updateBars();
 }
 
