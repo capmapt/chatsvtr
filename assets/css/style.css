@@ -69,11 +69,19 @@ header {
   width: 100%;
   aspect-ratio: 4 / 1;
   background: linear-gradient(135deg, #ffa726 0%, #ff9800 50%, #f57c00 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 8s ease-in-out infinite;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .banner-content {
@@ -86,61 +94,31 @@ header {
   height: 100%;
 }
 
-/* Atom Animation */
-.banner-atom-icon {
+/* Banner Logo */
+.banner-logo {
   position: relative;
-  width: 140px;
-  height: 140px;
+  width: 120px;
+  height: 120px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.atom-orbit {
-  position: absolute;
-  border: 3px solid #1976d2;
+.banner-logo img {
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  animation: rotate 20s linear infinite;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-.orbit-1 {
-  width: 140px;
-  height: 140px;
-  top: 0;
-  left: 0;
-  animation-duration: 20s;
+.banner-logo:hover img {
+  transform: scale(1.05) rotate(5deg);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
-.orbit-2 {
-  width: 110px;
-  height: 110px;
-  top: 15px;
-  left: 15px;
-  animation-duration: 15s;
-  animation-direction: reverse;
-}
-
-.orbit-3 {
-  width: 80px;
-  height: 80px;
-  top: 30px;
-  left: 30px;
-  animation-duration: 10s;
-}
-
-.atom-nucleus {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  background: #1976d2;
-  border-radius: 50%;
-  top: 62px;
-  left: 62px;
-  box-shadow: 0 0 12px rgba(25, 118, 210, 0.6);
-}
-
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
 
 /* Banner Text */
 .banner-text {
@@ -148,31 +126,41 @@ header {
   text-align: center;
   color: var(--text-primary);
   max-width: 600px;
+  animation: fade-in-up 1s ease-out;
+}
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .banner-title {
   font-size: 1.9rem;
   font-weight: bold;
-  margin: 0 0 12px 0;
-  line-height: 1.1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin: 0 0 8px 0;
+  line-height: 1.2;
+  color: #000;
 }
 
 .banner-subtitle {
-  font-size: 2.2rem;
+  font-size: 2.6rem;
   font-weight: 600;
-  margin: 0 0 20px 0;
+  margin: 0 0 16px 0;
   line-height: 1.1;
-  white-space: nowrap;
+  color: #000;
 }
 
 .banner-tagline {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 500;
-  line-height: 1.2;
-  white-space: nowrap;
+  line-height: 1.3;
+  color: #000;
 }
 
 .tagline-spacing {
@@ -587,49 +575,28 @@ header {
     padding: 20px;
   }
   
-  .banner-atom-icon {
-    width: 100px;
-    height: 100px;
-  }
-  
-  .orbit-1 {
-    width: 100px;
-    height: 100px;
-  }
-  
-  .orbit-2 {
+  .banner-logo {
     width: 80px;
     height: 80px;
-    top: 10px;
-    left: 10px;
   }
   
-  .orbit-3 {
-    width: 60px;
-    height: 60px;
-    top: 20px;
-    left: 20px;
-  }
-  
-  .atom-nucleus {
-    width: 12px;
-    height: 12px;
-    top: 44px;
-    left: 44px;
+  .banner-logo img {
+    width: 70px;
+    height: 70px;
   }
   
   .banner-title {
     font-size: 1.8rem;
-    white-space: normal;
+    margin: 0 0 6px 0;
   }
   
   .banner-subtitle {
-    font-size: 1.4rem;
+    font-size: 2.0rem;
+    margin: 0 0 12px 0;
   }
   
   .banner-tagline {
-    font-size: 0.9rem;
-    white-space: normal;
+    font-size: 1.0rem;
   }
 
   /* Business Tags */
