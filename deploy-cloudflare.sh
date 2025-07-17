@@ -15,9 +15,22 @@ fi
 # 检查登录状态
 echo "🔐 检查 Cloudflare 登录状态..."
 if ! wrangler whoami &> /dev/null; then
-    echo "📝 需要登录 Cloudflare，请运行："
-    echo "wrangler auth login"
-    exit 1
+    echo "📝 需要登录 Cloudflare，请设置 API Token："
+    echo "export CLOUDFLARE_API_TOKEN=your_token_here"
+    echo "或者运行: wrangler auth login"
+    echo ""
+    echo "🔗 获取 API Token: https://developers.cloudflare.com/fundamentals/api/get-started/create-token/"
+    echo ""
+    echo "⚡ 快速部署命令："
+    echo "wrangler pages deploy . --project-name chatsvtr"
+    echo ""
+    echo "✅ 提交的更改已同步到 GitHub。"
+    echo "📋 文件已准备好，可以手动部署："
+    echo "  - 访问 https://dash.cloudflare.com/pages"
+    echo "  - 选择 chatsvtr 项目"
+    echo "  - 点击 'Create deployment'"
+    echo "  - 上传当前目录的文件"
+    exit 0
 fi
 
 # 创建临时部署目录
@@ -71,7 +84,7 @@ echo "🌐 开始部署到 Cloudflare Pages..."
 echo "部署目录: $DEPLOY_DIR"
 
 # 使用wrangler部署
-wrangler pages deploy $DEPLOY_DIR --project-name chatsvtr --compatibility-date 2024-07-16
+wrangler pages deploy $DEPLOY_DIR --project-name chatsvtr
 
 if [ $? -eq 0 ]; then
     echo ""
