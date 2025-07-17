@@ -173,6 +173,14 @@ header {
   cursor: default;
 }
 
+/* English title optimization for two-line display */
+.banner-title[data-lang="en"] {
+  font-size: 2.4rem;
+  line-height: 1.2;
+  margin: 0 0 12px 0;
+  text-align: center;
+}
+
 .banner-subtitle {
   display: none;
 }
@@ -625,6 +633,13 @@ header {
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
   }
   
+  .banner-title[data-lang="en"] {
+    font-size: 1.6rem;
+    line-height: 1.2;
+    margin: 0 0 8px 0;
+    text-align: center;
+  }
+  
   .banner-tagline {
     font-size: 0.9rem;
     gap: 15px;
@@ -730,6 +745,13 @@ header {
     margin: 0 0 6px 0;
   }
   
+  .banner-title[data-lang="en"] {
+    font-size: 1.4rem;
+    line-height: 1.2;
+    margin: 0 0 6px 0;
+    text-align: center;
+  }
+  
   .banner-tagline {
     font-size: 0.85rem;
     gap: 12px;
@@ -791,6 +813,13 @@ header {
     color: #000;
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
     margin: 0 0 6px 0;
+  }
+  
+  .banner-title[data-lang="en"] {
+    font-size: 1.2rem;
+    line-height: 1.2;
+    margin: 0 0 6px 0;
+    text-align: center;
   }
   
   .banner-tagline {

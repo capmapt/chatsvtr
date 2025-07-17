@@ -54,7 +54,7 @@ const translations = {
     nav_camp: 'AI Camp',
     nav_about: 'About',
     sidebar_qr_text: 'Scan QR to join chat',
-    banner_title: 'Silicon Valley Technology Review',
+    banner_title: 'Silicon Valley<br>Technology Review',
     banner_subtitle: 'SVTR.AI',
     banner_tagline_left: 'Global Frontier‑Tech',
     banner_tagline_right: 'Venture Incubation',

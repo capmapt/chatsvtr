@@ -2,7 +2,7 @@
 class I18n {
   constructor() {
     this.currentLang = 'zh-CN';
-    this.keysForInnerHTML = ['chat_header']; // Keys that contain HTML
+    this.keysForInnerHTML = ['chat_header', 'banner_title']; // Keys that contain HTML
     this.init();
   }
 
@@ -40,6 +40,11 @@ class I18n {
         el.innerHTML = translation;
       } else {
         el.textContent = translation;
+      }
+      
+      // Add data-lang attribute for banner title to enable responsive styling
+      if (key === 'banner_title') {
+        el.setAttribute('data-lang', lang);
       }
     });
 
