@@ -11,6 +11,7 @@
     "test": "echo 'No tests specified'",
     "deploy": "netlify deploy --prod",
     "deploy:staging": "netlify deploy --dir=. --alias=staging",
+    "deploy:cloudflare": "./deploy-cloudflare.sh",
     "backup": "git tag backup-$(date +%Y%m%d-%H%M%S)",
     "rollback": "node scripts/rollback.js"
   },
