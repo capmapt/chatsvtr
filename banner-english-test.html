@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Banner Text Optimization Test</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="banner-header">
+        <div class="banner-content">
+          <div class="banner-logo">
+            <img src="assets/images/logo.jpg" alt="SVTR.AI Logo">
+          </div>
+          <div class="banner-text">
+            <h1 class="banner-title" data-i18n="banner_title" data-lang="en">Silicon Valley<br>Technology Review</h1>
+            <div class="banner-tagline">
+              <span data-i18n="banner_tagline_left">Global Frontier‑Tech</span>
+              <span class="separator">•</span>
+              <span data-i18n="banner_tagline_right">Venture Incubation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+    <main class="content">
+      <h2>English Banner Text Optimization Test</h2>
+      <p>This test page verifies that the English banner text displays properly in two lines with precise line breaks: Line 1 "Silicon Valley", Line 2 "Technology Review".</p>
+      
+      <h3>Test Scenarios:</h3>
+      <ul>
+        <li><strong>Desktop (>768px):</strong> 2.4rem font size, fixed two-line layout</li>
+        <li><strong>Tablet (≤768px):</strong> 1.6rem font size, fixed two-line layout</li>
+        <li><strong>Mobile (≤600px):</strong> 1.4rem font size, fixed two-line layout</li>
+        <li><strong>Small Mobile (≤480px):</strong> 1.2rem font size, fixed two-line layout</li>
+      </ul>
+      
+      <h3>Expected Results:</h3>
+      <ul>
+        <li>Line 1: "Silicon Valley" (always)</li>
+        <li>Line 2: "Technology Review" (always)</li>
+        <li>Text should remain centered and readable</li>
+        <li>Consistent line breaks across all screen sizes</li>
+      </ul>
+      
+      <p><strong>Note:</strong> Resize your browser window to test different screen sizes.</p>
+    </main>
+  </div>
+  
+  <script src="assets/js/translations.js"></script>
+  <script src="assets/js/i18n.js"></script>
+</body>
+</html>
