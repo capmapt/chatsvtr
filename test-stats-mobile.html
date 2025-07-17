@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stats Widget 移动端测试</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+    
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+    
+    .test-container {
+      max-width: 400px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    /* 模拟真实手机尺寸测试 */
+    @media (max-width: 480px) {
+      .test-container {
+        max-width: 100%;
+        margin: 0;
+        padding: 10px;
+        border-radius: 0;
+      }
+      
+      .stats-iframe {
+        height: 190px;
+      }
+    }
+    
+    /* 极小屏幕优化 */
+    @media (max-width: 375px) {
+      .stats-iframe {
+        height: 170px;
+      }
+    }
+    
+    .test-info {
+      background: #e3f2fd;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border-left: 4px solid #2196f3;
+    }
+    
+    .test-info h3 {
+      margin-top: 0;
+      color: #1976d2;
+    }
+    
+    .iframe-container {
+      width: 100%;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .stats-iframe {
+      width: 100%;
+      height: 220px;
+      border: none;
+      display: block;
+      overflow: hidden;
+    }
+    
+    .instructions {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    
+    .instructions h4 {
+      margin-top: 0;
+      color: #333;
+    }
+    
+    .instructions ul {
+      margin-bottom: 0;
+    }
+    
+    .instructions li {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📱 Stats Widget 移动端测试</h1>
+  
+  <div class="test-container">
+    <div class="test-info">
+      <h3>🎯 优化目标</h3>
+      <p>在移动端直接显示三个统计栏目，不使用滑动条</p>
+    </div>
+    
+    <div class="iframe-container">
+      <iframe 
+        src="./pages/stats-widget.html" 
+        class="stats-iframe"
+        title="Stats Widget">
+      </iframe>
+    </div>
+    
+    <div class="instructions">
+      <h4>📋 测试检查点</h4>
+      <ul>
+        <li>✅ 三个卡片应该垂直排列</li>
+        <li>✅ 每个卡片应该完整显示</li>
+        <li>✅ 不应该出现横向滚动条</li>
+        <li>✅ 卡片之间间距合适</li>
+        <li>✅ 文字大小适中，易读</li>
+        <li>✅ 动画效果正常</li>
+      </ul>
+    </div>
+  </div>
+  
+  <script>
+    // 添加一些调试信息
+    console.log('屏幕宽度:', window.innerWidth);
+    console.log('屏幕高度:', window.innerHeight);
+    console.log('设备像素比:', window.devicePixelRatio);
+    
+    // 监听窗口大小变化
+    window.addEventListener('resize', () => {
+      console.log('窗口调整为:', window.innerWidth, 'x', window.innerHeight);
+    });
+  </script>
+</body>
+</html>
