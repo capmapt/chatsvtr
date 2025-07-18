@@ -299,3 +299,316 @@
   }
 
 })();
+
+// === 用户登录系统 ===
+(function() {
+  'use strict';
+
+  class AuthSystem {
+    constructor() {
+      this.currentUser = null;
+      this.isLoggedIn = false;
+      this.init();
+    }
+
+    init() {
+      this.bindEvents();
+      this.checkAuthState();
+      this.initChatbox();
+    }
+
+    bindEvents() {
+      // 登录按钮事件
+      const loginBtn = document.getElementById('loginBtn');
+      const startChatBtn = document.getElementById('startChatBtn');
+      if (loginBtn) loginBtn.addEventListener('click', () => this.showLoginModal());
+      if (startChatBtn) startChatBtn.addEventListener('click', () => this.showLoginModal());
+
+      // 注销按钮事件
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) logoutBtn.addEventListener('click', () => this.logout());
+
+      // 模态框事件
+      const closeBtn = document.getElementById('closeLoginModal');
+      const overlay = document.getElementById('loginOverlay');
+      if (closeBtn) closeBtn.addEventListener('click', () => this.hideLoginModal());
+      if (overlay) {
+        overlay.addEventListener('click', (e) => {
+          if (e.target === overlay) this.hideLoginModal();
+        });
+      }
+
+      // 社交登录事件
+      const wechatBtn = document.getElementById('wechatLogin');
+      const githubBtn = document.getElementById('githubLogin');
+      if (wechatBtn) wechatBtn.addEventListener('click', () => this.socialLogin('wechat'));
+      if (githubBtn) githubBtn.addEventListener('click', () => this.socialLogin('github'));
+
+      // 邮箱登录表单
+      const emailForm = document.getElementById('emailLoginForm');
+      if (emailForm) {
+        emailForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          this.emailLogin();
+        });
+      }
+
+      // ESC键关闭模态框
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') this.hideLoginModal();
+      });
+    }
+
+    checkAuthState() {
+      // 检查localStorage中的登录状态
+      const savedUser = localStorage.getItem('svtr_user');
+      if (savedUser) {
+        try {
+          this.currentUser = JSON.parse(savedUser);
+          this.isLoggedIn = true;
+          this.updateUI();
+        } catch (e) {
+          localStorage.removeItem('svtr_user');
+        }
+      }
+    }
+
+    showLoginModal() {
+      const overlay = document.getElementById('loginOverlay');
+      if (overlay) {
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        // 聚焦到第一个输入框
+        setTimeout(() => {
+          const firstInput = overlay.querySelector('input');
+          if (firstInput) firstInput.focus();
+        }, 300);
+      }
+    }
+
+    hideLoginModal() {
+      const overlay = document.getElementById('loginOverlay');
+      if (overlay) {
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+
+    async socialLogin(provider) {
+      // 显示加载状态
+      this.showLoading(`正在连接${provider === 'wechat' ? '微信' : 'GitHub'}...`);
+
+      try {
+        // 模拟社交登录流程
+        await this.mockSocialAuth(provider);
+      } catch (error) {
+        this.showError('登录失败，请重试');
+      }
+    }
+
+    async mockSocialAuth(provider) {
+      // 模拟API调用延迟
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // 模拟成功登录
+      const mockUsers = {
+        wechat: {
+          id: 'wx_' + Date.now(),
+          name: 'AI创投爱好者',
+          avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=wechat',
+          provider: 'wechat',
+          badge: '社区成员'
+        },
+        github: {
+          id: 'gh_' + Date.now(),
+          name: 'TechInvestor',
+          avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=github',
+          provider: 'github',
+          badge: '开发者会员'
+        }
+      };
+
+      this.currentUser = mockUsers[provider];
+      this.isLoggedIn = true;
+      
+      // 保存到localStorage
+      localStorage.setItem('svtr_user', JSON.stringify(this.currentUser));
+      
+      this.hideLoginModal();
+      this.updateUI();
+      this.showSuccess(`欢迎回来，${this.currentUser.name}！`);
+    }
+
+    async emailLogin() {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+
+      if (!email || !password) {
+        this.showError('请填写完整的登录信息');
+        return;
+      }
+
+      this.showLoading('正在验证账户...');
+
+      try {
+        // 模拟邮箱登录
+        await this.mockEmailAuth(email, password);
+      } catch (error) {
+        this.showError('邮箱或密码错误，请重试');
+      }
+    }
+
+    async mockEmailAuth(email, password) {
+      // 模拟API调用
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // 简单的验证逻辑（生产环境中应该调用真实API）
+      if (email.includes('@') && password.length >= 6) {
+        this.currentUser = {
+          id: 'email_' + Date.now(),
+          name: email.split('@')[0],
+          avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`,
+          provider: 'email',
+          badge: '注册会员'
+        };
+        this.isLoggedIn = true;
+        
+        localStorage.setItem('svtr_user', JSON.stringify(this.currentUser));
+        
+        this.hideLoginModal();
+        this.updateUI();
+        this.showSuccess(`欢迎回来，${this.currentUser.name}！`);
+      } else {
+        throw new Error('Invalid credentials');
+      }
+    }
+
+    logout() {
+      this.currentUser = null;
+      this.isLoggedIn = false;
+      localStorage.removeItem('svtr_user');
+      
+      this.updateUI();
+      this.showSuccess('已安全注销');
+    }
+
+    updateUI() {
+      const loginPrompt = document.getElementById('loginPrompt');
+      const userLoggedIn = document.getElementById('userLoggedIn');
+      const chatFrame = document.getElementById('svtrChatFrame');
+      const chatPlaceholder = document.getElementById('chatPlaceholder');
+
+      if (this.isLoggedIn && this.currentUser) {
+        // 显示已登录状态
+        if (loginPrompt) loginPrompt.style.display = 'none';
+        if (userLoggedIn) userLoggedIn.style.display = 'flex';
+
+        // 更新用户信息
+        const userName = document.getElementById('userName');
+        const userAvatar = document.getElementById('userAvatar');
+        const userBadge = document.getElementById('userBadge');
+        
+        if (userName) userName.textContent = this.currentUser.name;
+        if (userAvatar) userAvatar.src = this.currentUser.avatar;
+        if (userBadge) userBadge.textContent = this.currentUser.badge;
+
+        // 显示聊天界面
+        if (chatFrame) {
+          chatFrame.src = 'https://chat.svtrglobal.com';
+          chatFrame.style.display = 'block';
+        }
+        if (chatPlaceholder) chatPlaceholder.style.display = 'none';
+      } else {
+        // 显示未登录状态
+        if (loginPrompt) loginPrompt.style.display = 'flex';
+        if (userLoggedIn) userLoggedIn.style.display = 'none';
+
+        // 隐藏聊天界面
+        if (chatFrame) {
+          chatFrame.src = 'about:blank';
+          chatFrame.style.display = 'none';
+        }
+        if (chatPlaceholder) chatPlaceholder.style.display = 'flex';
+      }
+    }
+
+    initChatbox() {
+      // 初始化聊天界面状态
+      this.updateUI();
+    }
+
+    showLoading(message) {
+      // 简单的加载提示（可以用更精美的组件替换）
+      this.showNotification(message, 'loading');
+    }
+
+    showSuccess(message) {
+      this.showNotification(message, 'success');
+    }
+
+    showError(message) {
+      this.showNotification(message, 'error');
+    }
+
+    showNotification(message, type = 'info') {
+      // 创建通知元素
+      const notification = document.createElement('div');
+      notification.className = `auth-notification auth-notification--${type}`;
+      notification.textContent = message;
+      
+      // 添加样式
+      Object.assign(notification.style, {
+        position: 'fixed',
+        top: '20px',
+        right: '20px',
+        background: type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#6366f1',
+        color: 'white',
+        padding: '12px 20px',
+        borderRadius: '8px',
+        boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+        zIndex: '10000',
+        fontSize: '14px',
+        fontWeight: '500',
+        maxWidth: '300px',
+        wordWrap: 'break-word',
+        animation: 'slideInRight 0.3s ease-out'
+      });
+
+      document.body.appendChild(notification);
+
+      // 自动移除
+      setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease-out';
+        setTimeout(() => {
+          if (notification.parentNode) {
+            notification.parentNode.removeChild(notification);
+          }
+        }, 300);
+      }, type === 'loading' ? 5000 : 3000);
+    }
+  }
+
+  // 初始化认证系统
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      window.authSystem = new AuthSystem();
+    });
+  } else {
+    window.authSystem = new AuthSystem();
+  }
+
+  // 添加通知动画CSS
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOutRight {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+  `;
+  document.head.appendChild(style);
+
+})();

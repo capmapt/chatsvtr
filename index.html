@@ -100,14 +100,99 @@
       <h2 class="chat-header" data-i18n="chat_header">
         Chat with <a href="https://svtr.ai" target="_blank">SVTR.AI</a>
       </h2>
-      <iframe
-        id="svtrChatFrame"
-        src="https://chat.svtrglobal.com"
-        title="SVTR AI Chat"
-        class="chat-iframe"
-        loading="lazy"
-        allow="clipboard-read; clipboard-write">
-      </iframe>
+      
+      <!-- 用户状态栏 -->
+      <div class="user-status-bar" id="userStatusBar">
+        <!-- 未登录状态 -->
+        <div class="login-prompt" id="loginPrompt">
+          <div class="user-info">
+            <span class="user-icon">👤</span>
+            <span data-i18n="login_required">登录后即可使用AI对话功能</span>
+          </div>
+          <button class="login-btn" id="loginBtn" data-i18n="login">登录</button>
+        </div>
+        
+        <!-- 已登录状态 -->
+        <div class="user-logged-in" id="userLoggedIn" style="display: none;">
+          <div class="user-info">
+            <img class="user-avatar" id="userAvatar" src="" alt="User Avatar">
+            <span class="user-name" id="userName"></span>
+            <span class="user-badge" id="userBadge" data-i18n="community_member">社区成员</span>
+          </div>
+          <button class="logout-btn" id="logoutBtn" data-i18n="logout">注销</button>
+        </div>
+      </div>
+
+      <!-- Chatbox容器 -->
+      <div class="chat-container" id="chatContainer">
+        <!-- 登录遮罩层 -->
+        <div class="login-overlay" id="loginOverlay">
+          <div class="login-modal">
+            <div class="modal-header">
+              <h3 data-i18n="welcome_title">欢迎加入硅谷科技评论</h3>
+              <button class="close-btn" id="closeLoginModal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+              <p class="login-subtitle" data-i18n="login_subtitle">选择您偏好的登录方式</p>
+              
+              <!-- 社交登录按钮 -->
+              <div class="social-login">
+                <button class="social-btn wechat-btn" id="wechatLogin">
+                  <span class="social-icon">💬</span>
+                  <span data-i18n="wechat_login">微信登录</span>
+                </button>
+                
+                <button class="social-btn github-btn" id="githubLogin">
+                  <span class="social-icon">🐙</span>
+                  <span data-i18n="github_login">GitHub登录</span>
+                </button>
+              </div>
+              
+              <div class="divider">
+                <span data-i18n="or">或</span>
+              </div>
+              
+              <!-- 邮箱登录表单 -->
+              <form class="email-login-form" id="emailLoginForm">
+                <div class="form-group">
+                  <input type="email" id="loginEmail" placeholder="邮箱地址" data-i18n-placeholder="email_placeholder" required>
+                </div>
+                <div class="form-group">
+                  <input type="password" id="loginPassword" placeholder="密码" data-i18n-placeholder="password_placeholder" required>
+                </div>
+                <button type="submit" class="submit-btn" data-i18n="email_login">邮箱登录</button>
+              </form>
+              
+              <div class="auth-links">
+                <a href="#" id="showRegister" data-i18n="no_account">还没有账号？立即注册</a>
+                <a href="#" id="forgotPassword" data-i18n="forgot_password">忘记密码？</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- AI聊天iframe -->
+        <iframe
+          id="svtrChatFrame"
+          src="about:blank"
+          title="SVTR AI Chat"
+          class="chat-iframe"
+          loading="lazy"
+          allow="clipboard-read; clipboard-write"
+          style="display: none;">
+        </iframe>
+        
+        <!-- 登录提示 -->
+        <div class="chat-placeholder" id="chatPlaceholder">
+          <div class="placeholder-content">
+            <div class="ai-icon">🤖</div>
+            <h3 data-i18n="ai_chat_title">SVTR AI 智能助手</h3>
+            <p data-i18n="ai_chat_desc">获取AI创投领域的专业insights和实时资讯</p>
+            <button class="start-chat-btn" id="startChatBtn" data-i18n="start_chat">开始对话</button>
+          </div>
+        </div>
+      </div>
     </section>
     <!-- Chatbox END -->
   </main>
