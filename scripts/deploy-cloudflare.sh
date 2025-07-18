@@ -33,30 +33,17 @@ if ! wrangler whoami &> /dev/null; then
     exit 0
 fi
 
-# 创建临时部署目录
-echo "📦 准备部署文件..."
-DEPLOY_DIR="dist"
-rm -rf $DEPLOY_DIR
-mkdir -p $DEPLOY_DIR
-
-# 复制需要部署的文件
-echo "📋 复制静态资源..."
-cp index.html $DEPLOY_DIR/
-cp favicon.ico $DEPLOY_DIR/
-cp -r assets/ $DEPLOY_DIR/assets/
-cp -r pages/ $DEPLOY_DIR/pages/
-
 # 检查关键文件
 echo "✅ 验证关键文件..."
 REQUIRED_FILES=(
-    "$DEPLOY_DIR/index.html"
-    "$DEPLOY_DIR/assets/css/style.css"
-    "$DEPLOY_DIR/assets/js/main.js"
-    "$DEPLOY_DIR/assets/js/translations.js"
-    "$DEPLOY_DIR/assets/js/i18n.js"
-    "$DEPLOY_DIR/assets/images/logo.jpg"
-    "$DEPLOY_DIR/assets/images/banner.png"
-    "$DEPLOY_DIR/assets/images/qr-code.jpg"
+    "index.html"
+    "assets/css/style.css"
+    "assets/js/main.js"
+    "assets/js/translations.js"
+    "assets/js/i18n.js"
+    "assets/images/logo.jpg"
+    "assets/images/banner.png"
+    "assets/images/qr-code.jpg"
 )
 
 for file in "${REQUIRED_FILES[@]}"; do
@@ -71,20 +58,18 @@ echo "✅ 所有关键文件检查通过"
 # 显示部署信息
 echo ""
 echo "📊 部署统计："
-echo "  - HTML文件: $(find $DEPLOY_DIR -name "*.html" | wc -l)"
-echo "  - CSS文件: $(find $DEPLOY_DIR -name "*.css" | wc -l)"
-echo "  - JS文件: $(find $DEPLOY_DIR -name "*.js" | wc -l)"
-echo "  - 图片文件: $(find $DEPLOY_DIR -name "*.jpg" -o -name "*.png" -o -name "*.gif" | wc -l)"
-echo "  - 总文件数: $(find $DEPLOY_DIR -type f | wc -l)"
-echo "  - 总大小: $(du -sh $DEPLOY_DIR | cut -f1)"
+echo "  - HTML文件: $(find . -name "*.html" -not -path "./node_modules/*" -not -path "./temp/*" | wc -l)"
+echo "  - CSS文件: $(find . -name "*.css" -not -path "./node_modules/*" -not -path "./temp/*" | wc -l)"
+echo "  - JS文件: $(find . -name "*.js" -not -path "./node_modules/*" -not -path "./temp/*" -not -path "./config/*" -not -path "./scripts/*" | wc -l)"
+echo "  - 图片文件: $(find . -name "*.jpg" -o -name "*.png" -o -name "*.gif" | grep -v node_modules | wc -l)"
 
 # 部署到 Cloudflare Pages
 echo ""
 echo "🌐 开始部署到 Cloudflare Pages..."
-echo "部署目录: $DEPLOY_DIR"
+echo "部署目录: 根目录"
 
-# 使用wrangler部署
-wrangler pages deploy $DEPLOY_DIR --project-name chatsvtr
+# 使用wrangler部署根目录
+wrangler pages deploy . --project-name chatsvtr
 
 if [ $? -eq 0 ]; then
     echo ""
@@ -111,8 +96,7 @@ else
     exit 1
 fi
 
-# 清理临时文件
-echo "🧹 清理临时文件..."
-rm -rf $DEPLOY_DIR
+# 无需清理临时文件，直接部署src目录
+echo "🧹 部署完成，无需清理临时文件"
 
 echo "✅ 部署完成！"

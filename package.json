@@ -15,9 +15,9 @@
     "test:e2e:ui": "playwright test --ui",
     "lint": "eslint assets/js/*.js --ignore-pattern '*backup*' --cache",
     "lint:fix": "eslint assets/js/*.js --fix --ignore-pattern '*backup*' --cache",
-    "format": "prettier --write assets/js/*.js assets/css/*.css *.html",
+    "format": "prettier --write assets/js/*.js assets/css/*.css *.html pages/*.html",
     "validate:html": "html-validate index.html pages/ai-100.html pages/stats-widget.html pages/test-mobile.html",
-    "deploy:cloudflare": "./deploy-cloudflare.sh",
+    "deploy:cloudflare": "./scripts/deploy-cloudflare.sh",
     "backup": "git tag backup-$(date +%Y%m%d-%H%M%S)",
     "rollback": "node scripts/rollback.js"
   },
