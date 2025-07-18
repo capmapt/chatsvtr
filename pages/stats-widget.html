@@ -5,22 +5,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>SVTR Stats Widget</title>
 <style>
-/* === 样式只作用于本文件，不会污染父页面 === */
-*{box-sizing:border-box}
+/* === 优化的统一基础样式 === */
+*{box-sizing:border-box;margin:0;padding:0}
 html,body{
-  margin:0;
-  padding:0;
   font-family:Arial,"Microsoft YaHei",sans-serif;
-  overflow-x:hidden;
-  overflow-y:hidden;
-  height:auto;
-  min-height:auto;
+  overflow:hidden;
+  height:100vh;
   width:100%;
-  box-sizing:border-box;
+  background:transparent;
 }
-
-
-body{background:transparent;display:flex;align-items:center;justify-content:center;height:100vh;min-height:100vh;padding:0;margin:0;overflow:hidden;}
+body{display:flex;align-items:center;justify-content:center;}
 
 /* 🎯 统一布局：消除滚动条 */
 .stats-container{
@@ -78,6 +72,7 @@ body{background:transparent;display:flex;align-items:center;justify-content:cent
   word-wrap:break-word;
   overflow-wrap:break-word;
   hyphens:auto;
+  text-overflow:ellipsis;
 }
 
 .progress-bar{
@@ -128,221 +123,44 @@ body{background:transparent;display:flex;align-items:center;justify-content:cent
 .increase-animation{animation:flash .5s}
 @keyframes flash{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
 
-/* 🎯 移动端优化 - 三列紧凑布局 */
+/* 🎯 移动端优化 - 精简响应式 */
 @media (max-width: 768px) {
-  html, body {
-    height: auto;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    height: 100vh;
-    padding: 2px;
-    box-sizing: border-box;
-  }
-
-  .stats-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 3px;
-    width: 100%;
-    max-width: 100vw;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  .stat-card {
-    padding: 6px 3px;
-    margin: 0;
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-    overflow: hidden;
-    border-radius: 6px;
-    font-size: 0.8rem;
-  }
-  
-  .stat-icon {
-    font-size: 1.2rem;
-    margin-bottom: 3px;
-  }
-  
-  .stat-number {
-    font-size: 0.9rem;
-    margin-bottom: 2px;
-    font-weight: 600;
-    line-height: 1;
-  }
-  
-  .stat-label {
-    font-size: 0.65rem;
-    margin-bottom: 3px;
-    line-height: 1.1;
-    word-break: break-word;
-    hyphens: auto;
-  }
-  
-  .progress-bar {
-    height: 2px;
-    margin-bottom: 3px;
-  }
-  
-  .growth-indicator {
-    font-size: 0.6rem;
-    margin-bottom: 0;
-  }
-  
-  .live-indicator {
-    font-size: 0.5rem;
-    top: 4px;
-    right: 4px;
-  }
-  
-  .live-dot {
-    width: 4px;
-    height: 4px;
-  }
+  body{padding:2px}
+  .stats-container{gap:3px;padding:0}
+  .stat-card{padding:6px 3px;border-radius:6px;font-size:0.8rem}
+  .stat-icon{font-size:1.2rem;margin-bottom:3px}
+  .stat-number{font-size:0.9rem;margin-bottom:2px;font-weight:600;line-height:1}
+  .stat-label{font-size:0.65rem;margin-bottom:3px;line-height:1.1}
+  .progress-bar{height:2px;margin-bottom:3px}
+  .growth-indicator{font-size:0.6rem}
+  .live-indicator{font-size:0.5rem;top:4px;right:4px}
+  .live-dot{width:4px;height:4px}
 }
 
-/* 🎯 小屏幕优化 - 保持三列布局 */
 @media (max-width: 480px) {
-  body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    height: 100vh;
-    padding: 1px;
-    box-sizing: border-box;
-  }
-  
-  .stats-container {
-    gap: 2px;
-    width: 100%;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  .stat-card {
-    padding: 5px 2px;
-    border-radius: 4px;
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-  }
-  
-  .stat-icon {
-    font-size: 1rem;
-    margin-bottom: 2px;
-  }
-  
-  .stat-number {
-    font-size: 0.8rem;
-    margin-bottom: 1px;
-    font-weight: 600;
-    line-height: 1;
-  }
-  
-  .stat-label {
-    font-size: 0.6rem;
-    margin-bottom: 2px;
-    line-height: 1;
-    word-break: break-word;
-  }
-  
-  .progress-bar {
-    height: 2px;
-    margin-bottom: 2px;
-  }
-  
-  .growth-indicator {
-    font-size: 0.55rem;
-    margin-bottom: 0;
-  }
-  
-  .live-indicator {
-    font-size: 0.45rem;
-    top: 3px;
-    right: 3px;
-  }
-  
-  .live-dot {
-    width: 3px;
-    height: 3px;
-  }
+  body{padding:1px}
+  .stats-container{gap:2px}
+  .stat-card{padding:5px 2px;border-radius:4px}
+  .stat-icon{font-size:1rem;margin-bottom:2px}
+  .stat-number{font-size:0.8rem;margin-bottom:1px}
+  .stat-label{font-size:0.6rem;margin-bottom:2px;line-height:1}
+  .progress-bar{height:2px;margin-bottom:2px}
+  .growth-indicator{font-size:0.55rem}
+  .live-indicator{font-size:0.45rem;top:3px;right:3px}
+  .live-dot{width:3px;height:3px}
 }
 
-/* 🎯 极小屏幕优化 - 超紧凑三列布局 */
 @media (max-width: 375px) {
-  body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    height: 100vh;
-    padding: 1px;
-    box-sizing: border-box;
-  }
-  
-  .stats-container {
-    gap: 1px;
-    padding: 0;
-  }
-  
-  .stat-card {
-    padding: 4px 1px;
-    border-radius: 3px;
-  }
-  
-  .stat-icon {
-    font-size: 0.9rem;
-    margin-bottom: 1px;
-  }
-  
-  .stat-number {
-    font-size: 0.7rem;
-    margin-bottom: 1px;
-    font-weight: 600;
-    line-height: 1;
-  }
-  
-  .stat-label {
-    font-size: 0.5rem;
-    margin-bottom: 1px;
-    line-height: 1;
-    word-break: break-word;
-  }
-  
-  .progress-bar {
-    height: 1px;
-    margin-bottom: 1px;
-  }
-  
-  .growth-indicator {
-    font-size: 0.45rem;
-    margin-bottom: 0;
-  }
-  
-  .live-indicator {
-    font-size: 0.4rem;
-    top: 2px;
-    right: 2px;
-  }
-  
-  .live-dot {
-    width: 3px;
-    height: 3px;
-  }
+  body{padding:1px}
+  .stats-container{gap:1px}
+  .stat-card{padding:4px 1px;border-radius:3px}
+  .stat-icon{font-size:0.9rem;margin-bottom:1px}
+  .stat-number{font-size:0.7rem;margin-bottom:1px}
+  .stat-label{font-size:0.5rem;margin-bottom:1px;line-height:1}
+  .progress-bar{height:1px;margin-bottom:1px}
+  .growth-indicator{font-size:0.45rem}
+  .live-indicator{font-size:0.4rem;top:2px;right:2px}
+  .live-dot{width:3px;height:3px}
 }
 </style>
 </head>
@@ -376,97 +194,117 @@ body{background:transparent;display:flex;align-items:center;justify-content:cent
     <div class="growth-indicator">↗ <span id="vip-growth">+3/小时</span></div>
   </a>
 </div><script>
-/* === 自包含脚本：纯前端模拟增长 === */
-const stats={
-  members:{c:121884,g:25,m:150000},
-  companies:{c:10761,g:8,m:20000},
-  vip:{c:1102,g:3,m:2000}
-};
-
+/* === 优化的高性能脚本 === */
+const stats={members:{c:121884,g:25,m:150000},companies:{c:10761,g:8,m:20000},vip:{c:1102,g:3,m:2000}};
 const translations={
-  'zh-CN':{
-    live:'实时',members:'个人会员',companies:'企业会员',vip:'权益会员',perHour:'/小时'
-  },
-  'en':{
-    live:'Live',members:'Individual Members',companies:'Corporate Members',vip:'VIP Members',perHour:'/hour'
-  }
+  'zh-CN':{live:'实时',members:'个人会员',companies:'企业会员',vip:'权益会员',perHour:'/小时'},
+  'en':{live:'Live',members:'Individual Members',companies:'Corporate Members',vip:'VIP Members',perHour:'/hour'}
 };
-let currentLang='zh-CN';
+let currentLang='zh-CN',elements={},intervalId;
 
-function $(id){return document.getElementById(id)}
+// 缓存DOM元素
+function cacheElements(){
+  elements={
+    membersCount:document.getElementById('members-count'),
+    companiesCount:document.getElementById('companies-count'),
+    vipCount:document.getElementById('vip-count'),
+    membersGrowth:document.getElementById('members-growth'),
+    companiesGrowth:document.getElementById('companies-growth'),
+    vipGrowth:document.getElementById('vip-growth'),
+    progressFills:document.querySelectorAll('.progress-fill'),
+    liveSpans:document.querySelectorAll('.live-indicator span'),
+    labels:document.querySelectorAll('.stat-label'),
+    icons:document.querySelectorAll('.stat-icon')
+  };
+}
 
 function updateLang(lang){
-  if(!translations[lang]) lang='zh-CN';
+  if(!translations[lang])lang='zh-CN';
   currentLang=lang;
   document.documentElement.lang=lang;
   const t=translations[lang];
-  document.querySelectorAll('.live-indicator span').forEach(el=>el.textContent=t.live);
-  document.querySelector('.members .stat-label').textContent=t.members;
-  document.querySelector('.members .stat-icon').setAttribute('aria-label',t.members);
-  document.querySelector('.companies .stat-label').textContent=t.companies;
-  document.querySelector('.companies .stat-icon').setAttribute('aria-label',t.companies);
-  document.querySelector('.vip .stat-label').textContent=t.vip;
-  document.querySelector('.vip .stat-icon').setAttribute('aria-label',t.vip);
+  elements.liveSpans.forEach(el=>el.textContent=t.live);
+  elements.labels[0].textContent=t.members;
+  elements.labels[1].textContent=t.companies;
+  elements.labels[2].textContent=t.vip;
+  elements.icons[0].setAttribute('aria-label',t.members);
+  elements.icons[1].setAttribute('aria-label',t.companies);
+  elements.icons[2].setAttribute('aria-label',t.vip);
   paint();
 }
 
 function paint(){
-  $('members-count').textContent=stats.members.c.toLocaleString();
-  $('companies-count').textContent=stats.companies.c.toLocaleString();
-  $('vip-count').textContent=stats.vip.c.toLocaleString();
-  const per=translations[currentLang].perHour;
-  $('members-growth').textContent=`+${stats.members.g}${per}`;
-  $('companies-growth').textContent=`+${stats.companies.g}${per}`;
-  $('vip-growth').textContent=`+${stats.vip.g}${per}`;
+  const t=translations[currentLang];
+  elements.membersCount.textContent=stats.members.c.toLocaleString();
+  elements.companiesCount.textContent=stats.companies.c.toLocaleString();
+  elements.vipCount.textContent=stats.vip.c.toLocaleString();
+  elements.membersGrowth.textContent=`+${stats.members.g}${t.perHour}`;
+  elements.companiesGrowth.textContent=`+${stats.companies.g}${t.perHour}`;
+  elements.vipGrowth.textContent=`+${stats.vip.g}${t.perHour}`;
   updateBars();
 }
 
 function flash(el){el.classList.add('increase-animation');setTimeout(()=>el.classList.remove('increase-animation'),500)}
 
 function updateBars(){
-  // 进度条反映增长活跃度：增长率越高，进度条越满
-  const maxGrowthRate = Math.max(stats.members.g, stats.companies.g, stats.vip.g);
-  document.querySelector('.members .progress-fill').style.width=Math.min(stats.members.g/maxGrowthRate*100,100)+'%';
-  document.querySelector('.companies .progress-fill').style.width=Math.min(stats.companies.g/maxGrowthRate*100,100)+'%';
-  document.querySelector('.vip .progress-fill').style.width=Math.min(stats.vip.g/maxGrowthRate*100,100)+'%';
+  const maxGrowthRate=Math.max(stats.members.g,stats.companies.g,stats.vip.g);
+  const rates=[stats.members.g,stats.companies.g,stats.vip.g];
+  elements.progressFills.forEach((fill,i)=>fill.style.width=Math.min(rates[i]/maxGrowthRate*100,100)+'%');
 }
 
+// 智能增长算法
 function loop(){
-  Object.entries(stats).forEach(([k,v])=>{
-    if(Math.random()<.5){v.c+=Math.ceil(v.g*(0.7+Math.random()*0.6));flash($(k+'-count'))}
-  });paint();
-}
-
-window.addEventListener('message',e=>{
-  if(e.data&&e.data.type==='setLang')updateLang(e.data.lang);
-});
-
-const params=new URLSearchParams(location.search);
-updateLang(params.get('lang')||'zh-CN');
-setInterval(loop,60000);
-
-// 自动调整iframe高度 - 针对手机端优化空白
-function adjustIframeHeight() {
-  const container = document.querySelector('.stats-container');
-  if (container) {
-    const containerHeight = container.scrollHeight;
-    const bodyPadding = parseInt(getComputedStyle(document.body).padding) * 2;
+  const counters=[elements.membersCount,elements.companiesCount,elements.vipCount];
+  const now=Date.now();
+  const isActive=document.visibilityState==='visible';
+  
+  if(!isActive)return; // 页面不可见时暂停更新
+  
+  Object.entries(stats).forEach(([k,v],i)=>{
+    // 基于时间的动态概率，避免过于频繁
+    const timeFactor=Math.sin(now/30000)*0.3+0.7; // 30秒周期
+    const probability=0.3*timeFactor;
     
-    // 手机端减少多余空白，桌面端保持原样
-    const isMobile = window.innerWidth <= 768;
-    if (isMobile) {
-      // 手机端：精确计算，减少空白
-      const finalHeight = containerHeight + bodyPadding + 8;
-      window.parent.postMessage({ type: 'adjustHeight', height: finalHeight }, '*');
-    } else {
-      // 桌面端：保持原有逻辑
-      const finalHeight = containerHeight + bodyPadding + 20;
-      window.parent.postMessage({ type: 'adjustHeight', height: Math.max(finalHeight, 120) }, '*');
+    if(Math.random()<probability){
+      const increment=Math.ceil(v.g*(0.8+Math.random()*0.4));
+      v.c=Math.min(v.c+increment,v.m); // 不超过最大值
+      flash(counters[i]);
     }
-  }
+  });
+  paint();
 }
 
-// 页面加载完成后调整高度
-window.addEventListener('load', adjustIframeHeight);
-// 窗口大小改变时重新调整
-window.addEventListener('resize', adjustIframeHeight);</script></body></html>
+// 初始化和清理
+function init(){
+  cacheElements();
+  const params=new URLSearchParams(location.search);
+  updateLang(params.get('lang')||'zh-CN');
+  intervalId=setInterval(loop,60000);
+  adjustIframeHeight();
+}
+
+function cleanup(){
+  if(intervalId){clearInterval(intervalId);intervalId=null;}
+}
+
+// 优化的iframe高度调整
+function adjustIframeHeight(){
+  const container=document.querySelector('.stats-container');
+  if(!container)return;
+  const containerHeight=container.scrollHeight;
+  const bodyPadding=parseInt(getComputedStyle(document.body).padding)*2;
+  const isMobile=window.innerWidth<=768;
+  const finalHeight=containerHeight+bodyPadding+(isMobile?8:20);
+  window.parent.postMessage({type:'adjustHeight',height:Math.max(finalHeight,isMobile?80:120)},'*');
+}
+
+// 事件监听
+window.addEventListener('message',e=>{
+  if(e.data?.type==='setLang')updateLang(e.data.lang);
+});
+window.addEventListener('load',init);
+window.addEventListener('resize',adjustIframeHeight);
+window.addEventListener('beforeunload',cleanup);
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible')paint(); // 重新获得焦点时刷新
+});</script></body></html>
