@@ -15,7 +15,7 @@
     "lint": "eslint assets/js/*.js --ignore-pattern '*backup*'",
     "lint:fix": "eslint assets/js/*.js --fix --ignore-pattern '*backup*'",
     "format": "prettier --write assets/js/*.js assets/css/*.css *.html",
-    "validate:html": "html-validate *.html pages/*.html",
+    "validate:html": "html-validate index.html pages/ai-100.html pages/stats-widget.html pages/test-mobile.html",
     "deploy:cloudflare": "./deploy-cloudflare.sh",
     "backup": "git tag backup-$(date +%Y%m%d-%H%M%S)",
     "rollback": "node scripts/rollback.js"

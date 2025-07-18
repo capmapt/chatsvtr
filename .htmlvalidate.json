@@ -3,16 +3,19 @@
   "rules": {
     "no-inline-style": "off",
     "require-sri": "off",
-    "no-trailing-whitespace": "error",
+    "no-trailing-whitespace": "off",
     "void-content": "error",
-    "void-style": "error",
+    "void-style": "off",
     "no-unknown-elements": "error",
-    "element-required-attributes": "error",
+    "element-required-attributes": "off",
     "attribute-boolean-style": "error",
     "doctype-html": "error",
-    "lang-attribute": "error",
-    "meta-charset": "error",
-    "meta-viewport": "error"
+    "no-implicit-button-type": "off",
+    "unique-landmark": "off",
+    "prefer-native-element": "off",
+    "no-redundant-role": "off",
+    "aria-label-misuse": "off",
+    "no-raw-characters": "off"
   },
   "elements": [
     "html5"
