@@ -11,7 +11,7 @@ class I18n {
     this.btnZh = document.getElementById('btnZh');
     this.btnEn = document.getElementById('btnEn');
     this.statsIframe = document.querySelector('.stats-widget-iframe');
-    
+
     // Add event listeners
     if (this.btnZh && this.btnEn) {
       this.btnZh.addEventListener('click', () => this.updateLanguage('zh-CN'));
@@ -35,13 +35,13 @@ class I18n {
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       const translation = translations[lang][key] || el.textContent;
-      
+
       if (this.keysForInnerHTML.includes(key)) {
         el.innerHTML = translation;
       } else {
         el.textContent = translation;
       }
-      
+
       // Add data-lang attribute for banner title to enable responsive styling
       if (key === 'banner_title') {
         el.setAttribute('data-lang', lang);

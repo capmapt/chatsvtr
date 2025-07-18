@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>高度调试工具</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+    }
+    
+    .debug-panel {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .debug-panel h3 {
+      margin-top: 0;
+      color: #333;
+    }
+    
+    .measurement-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .measure-item {
+      background: #f8f9fa;
+      padding: 10px;
+      border-radius: 4px;
+      border-left: 4px solid #007bff;
+    }
+    
+    .measure-item strong {
+      color: #007bff;
+    }
+    
+    .iframe-test {
+      border: 3px solid #dc3545;
+      border-radius: 8px;
+      margin: 20px 0;
+      position: relative;
+    }
+    
+    .iframe-test::before {
+      content: attr(data-label);
+      position: absolute;
+      top: -30px;
+      left: 0;
+      background: #dc3545;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+    .test-iframe {
+      width: 100%;
+      border: none;
+      display: block;
+    }
+    
+    .height-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin: 15px 0;
+    }
+    
+    .height-controls button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      background: #28a745;
+      color: white;
+    }
+    
+    .height-controls button:hover {
+      background: #218838;
+    }
+    
+    .optimal-height {
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      border-radius: 4px;
+      padding: 15px;
+      margin: 15px 0;
+    }
+    
+    .optimal-height h4 {
+      margin-top: 0;
+      color: #155724;
+    }
+    
+    .scrollbar-indicator {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+    .scrollbar-indicator.no-scroll {
+      background: #d4edda;
+      color: #155724;
+    }
+    
+    .scrollbar-indicator.has-scroll {
+      background: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+  <div class="debug-panel">
+    <h3>🔍 Stats Widget 高度调试工具</h3>
+    
+    <div class="measurement-grid" id="measurements">
+      <div class="measure-item">
+        <strong>容器宽度:</strong> <span id="container-width">--</span>px
+      </div>
+      <div class="measure-item">
+        <strong>内容高度:</strong> <span id="content-height">--</span>px
+      </div>
+      <div class="measure-item">
+        <strong>滚动高度:</strong> <span id="scroll-height">--</span>px
+      </div>
+      <div class="measure-item">
+        <strong>可视高度:</strong> <span id="client-height">--</span>px
+      </div>
+      <div class="measure-item">
+        <strong>body padding:</strong> <span id="body-padding">--</span>px
+      </div>
+      <div class="measure-item">
+        <strong>卡片数量:</strong> <span id="card-count">--</span>个
+      </div>
+      <div class="measure-item">
+        <strong>卡片平均高度:</strong> <span id="card-height">--</span>px
+      </div>
+      <div class="measure-item">
+        <strong>间距总和:</strong> <span id="gap-total">--</span>px
+      </div>
+    </div>
+    
+    <div class="height-controls">
+      <button onclick="measureHeight()">🔄 重新测量</button>
+      <button onclick="calculateOptimal()">📐 计算最优高度</button>
+      <button onclick="testDifferentSizes()">📱 测试不同尺寸</button>
+    </div>
+    
+    <div class="optimal-height" id="optimal-result" style="display: none;">
+      <h4>📊 最优高度建议</h4>
+      <div id="optimal-content"></div>
+    </div>
+  </div>
+  
+  <div class="debug-panel">
+    <h3>📱 移动端尺寸测试</h3>
+    
+    <div class="iframe-test" data-label="375px (iPhone)" style="width: 375px;">
+      <div class="scrollbar-indicator" id="indicator-375">检测中...</div>
+      <iframe src="./pages/stats-widget.html" class="test-iframe" id="iframe-375" style="height: 350px;"></iframe>
+    </div>
+    
+    <div class="iframe-test" data-label="360px (Android)" style="width: 360px;">
+      <div class="scrollbar-indicator" id="indicator-360">检测中...</div>
+      <iframe src="./pages/stats-widget.html" class="test-iframe" id="iframe-360" style="height: 350px;"></iframe>
+    </div>
+    
+    <div class="iframe-test" data-label="320px (小屏)" style="width: 320px;">
+      <div class="scrollbar-indicator" id="indicator-320">检测中...</div>
+      <iframe src="./pages/stats-widget.html" class="test-iframe" id="iframe-320" style="height: 290px;"></iframe>
+    </div>
+  </div>
+  
+  <script>
+    let measurements = {};
+    
+    function measureHeight() {
+      const iframe = document.getElementById('iframe-375');
+      
+      setTimeout(() => {
+        try {
+          const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+          const container = iframeDoc.querySelector('.stats-container');
+          const body = iframeDoc.body;
+          const cards = iframeDoc.querySelectorAll('.stat-card');
+          
+          measurements.containerWidth = container.offsetWidth;
+          measurements.contentHeight = body.offsetHeight;
+          measurements.scrollHeight = body.scrollHeight;
+          measurements.clientHeight = body.clientHeight;
+          
+          // 计算body padding
+          const bodyStyle = window.getComputedStyle(body);
+          const paddingTop = parseFloat(bodyStyle.paddingTop);
+          const paddingBottom = parseFloat(bodyStyle.paddingBottom);
+          measurements.bodyPadding = paddingTop + paddingBottom;
+          
+          // 计算卡片高度
+          measurements.cardCount = cards.length;
+          let totalCardHeight = 0;
+          cards.forEach(card => {
+            totalCardHeight += card.offsetHeight;
+          });
+          measurements.cardHeight = totalCardHeight / cards.length;
+          
+          // 计算间距
+          const containerStyle = window.getComputedStyle(container);
+          const gap = parseFloat(containerStyle.gap || containerStyle.gridGap || '0');
+          measurements.gapTotal = gap * (cards.length - 1);
+          
+          updateMeasurements();
+        } catch (e) {
+          console.error('测量失败:', e);
+        }
+      }, 1000);
+    }
+    
+    function updateMeasurements() {
+      document.getElementById('container-width').textContent = measurements.containerWidth || '--';
+      document.getElementById('content-height').textContent = measurements.contentHeight || '--';
+      document.getElementById('scroll-height').textContent = measurements.scrollHeight || '--';
+      document.getElementById('client-height').textContent = measurements.clientHeight || '--';
+      document.getElementById('body-padding').textContent = measurements.bodyPadding || '--';
+      document.getElementById('card-count').textContent = measurements.cardCount || '--';
+      document.getElementById('card-height').textContent = Math.round(measurements.cardHeight) || '--';
+      document.getElementById('gap-total').textContent = measurements.gapTotal || '--';
+    }
+    
+    function calculateOptimal() {
+      if (!measurements.contentHeight) {
+        alert('请先点击"重新测量"按钮');
+        return;
+      }
+      
+      const optimalHeight = measurements.scrollHeight + 10; // 加10px缓冲
+      const resultDiv = document.getElementById('optimal-result');
+      const contentDiv = document.getElementById('optimal-content');
+      
+      contentDiv.innerHTML = `
+        <p><strong>当前iframe高度:</strong> ${measurements.clientHeight}px</p>
+        <p><strong>实际内容高度:</strong> ${measurements.scrollHeight}px</p>
+        <p><strong>建议iframe高度:</strong> ${optimalHeight}px</p>
+        <p><strong>差异:</strong> ${optimalHeight - measurements.clientHeight}px</p>
+        <div style="margin-top: 15px; padding: 10px; background: #fff3cd; border-radius: 4px;">
+          <strong>CSS建议:</strong><br>
+          <code>768px断点: height: ${optimalHeight}px;</code><br>
+          <code>480px断点: height: ${Math.round(optimalHeight * 0.85)}px;</code>
+        </div>
+      `;
+      
+      resultDiv.style.display = 'block';
+    }
+    
+    function checkScrollbars(iframeId, indicatorId) {
+      const iframe = document.getElementById(iframeId);
+      const indicator = document.getElementById(indicatorId);
+      
+      try {
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        const hasVerticalScroll = iframeDoc.documentElement.scrollHeight > iframeDoc.documentElement.clientHeight;
+        const hasHorizontalScroll = iframeDoc.documentElement.scrollWidth > iframeDoc.documentElement.clientWidth;
+        
+        if (hasVerticalScroll || hasHorizontalScroll) {
+          indicator.textContent = `❌ 有滚动条 (V:${hasVerticalScroll ? '是' : '否'} H:${hasHorizontalScroll ? '是' : '否'})`;
+          indicator.className = 'scrollbar-indicator has-scroll';
+        } else {
+          indicator.textContent = '✅ 无滚动条';
+          indicator.className = 'scrollbar-indicator no-scroll';
+        }
+      } catch (e) {
+        indicator.textContent = '❓ 检测失败';
+        indicator.className = 'scrollbar-indicator';
+      }
+    }
+    
+    function testDifferentSizes() {
+      const sizes = ['375', '360', '320'];
+      sizes.forEach(size => {
+        checkScrollbars(`iframe-${size}`, `indicator-${size}`);
+      });
+    }
+    
+    // 初始化
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        measureHeight();
+        testDifferentSizes();
+      }, 1500);
+      
+      // 定期检查
+      setInterval(testDifferentSizes, 3000);
+    });
+  </script>
+</body>
+</html>

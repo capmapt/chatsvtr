@@ -8,9 +8,15 @@
     "dev": "python3 -m http.server 3000",
     "preview": "echo '🔍 Starting preview server...' && python3 -m http.server 8080",
     "build": "echo 'Static site, no build required'",
-    "test": "echo 'No tests specified'",
-    "deploy": "netlify deploy --prod",
-    "deploy:staging": "netlify deploy --dir=. --alias=staging",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch",
+    "test:e2e": "playwright test --project=chromium",
+    "test:e2e:full": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "lint": "eslint assets/js/*.js --ignore-pattern '*backup*' --cache",
+    "lint:fix": "eslint assets/js/*.js --fix --ignore-pattern '*backup*' --cache",
+    "format": "prettier --write assets/js/*.js assets/css/*.css *.html",
+    "validate:html": "html-validate index.html pages/ai-100.html pages/stats-widget.html pages/test-mobile.html",
     "deploy:cloudflare": "./deploy-cloudflare.sh",
     "backup": "git tag backup-$(date +%Y%m%d-%H%M%S)",
     "rollback": "node scripts/rollback.js"
@@ -35,6 +41,16 @@
     "url": "https://github.com/capmapt/chatsvtr/issues"
   },
   "devDependencies": {
-    "netlify-cli": "^17.0.0"
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/dom": "^9.3.3",
+    "playwright": "^1.40.0",
+    "@playwright/test": "^1.40.0",
+    "eslint": "^8.55.0",
+    "prettier": "^3.1.0",
+    "html-validate": "^8.7.4",
+    "babel-jest": "^29.7.0",
+    "@babel/preset-env": "^7.23.0"
   }
 }
