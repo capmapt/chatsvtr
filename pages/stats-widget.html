@@ -83,7 +83,7 @@ body{display:flex;align-items:center;justify-content:center;}
   margin-bottom:10px;
 }
 
-.progress-fill{height:100%;width:0;transform:scaleX(0);transform-origin:left;transition:transform 1s ease-out;border-radius:3px}
+.progress-fill{height:100%;width:100%;transform-origin:left;transition:transform 1s ease-out;border-radius:3px}
 .members .progress-fill{background:linear-gradient(45deg,#ff6b6b,#ff8e53);box-shadow:0 0 8px rgba(255,107,107,0.3)}
 .companies .progress-fill{background:linear-gradient(45deg,#4285f4,#64b5f6);box-shadow:0 0 6px rgba(66,133,244,0.3)}
 .vip .progress-fill{background:linear-gradient(45deg,#26de81,#20bf6b);box-shadow:0 0 4px rgba(38,222,129,0.3)}
@@ -174,7 +174,7 @@ body{display:flex;align-items:center;justify-content:center;}
     <div class="content">
       <div class="stat-number" id="members-count">121,884</div>
       <div class="stat-label" data-i18n="members">社区成员</div>
-      <div class="progress-bar"><div class="progress-fill" style="transform:scaleX(1.0)"></div></div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
       <div class="growth-indicator">↗ <span id="members-growth">+25/小时</span></div>
     </div>
   </a>
@@ -185,7 +185,7 @@ body{display:flex;align-items:center;justify-content:center;}
     <div class="content">
       <div class="stat-number" id="companies-count">10,761</div>
       <div class="stat-label" data-i18n="companies">创业公司与投资机构</div>
-      <div class="progress-bar"><div class="progress-fill" style="transform:scaleX(0.32)"></div></div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
       <div class="growth-indicator">↗ <span id="companies-growth">+8/小时</span></div>
     </div>
   </a>
@@ -196,7 +196,7 @@ body{display:flex;align-items:center;justify-content:center;}
     <div class="content">
       <div class="stat-number" id="vip-count">1,102</div>
       <div class="stat-label" data-i18n="vip">权益会员</div>
-      <div class="progress-bar"><div class="progress-fill" style="transform:scaleX(0.12)"></div></div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
       <div class="growth-indicator">↗ <span id="vip-growth">+3/小时</span></div>
     </div>
   </a>
@@ -256,13 +256,10 @@ function paint(){
 function flash(el){el.classList.add('increase-animation');setTimeout(()=>el.classList.remove('increase-animation'),500)}
 
 function updateBars(){
-  const maxGrowthRate=Math.max(stats.members.g,stats.companies.g,stats.vip.g);
-  const rates=[stats.members.g,stats.companies.g,stats.vip.g];
+  // 基于实际增速数据设置进度条长度 [+25, +8, +3]
+  const growthScales = [1.0, 0.32, 0.12]; // 25:8:3 的比例
   elements.progressFills.forEach((fill,i)=>{
-    const scale=Math.min(rates[i]/maxGrowthRate,1);
-    // 确保最小显示12%，最高增速显示100%
-    const displayScale=Math.max(scale,0.12);
-    fill.style.transform=`scaleX(${displayScale})`;
+    fill.style.transform=`scaleX(${growthScales[i]})`;
   });
 }
 
