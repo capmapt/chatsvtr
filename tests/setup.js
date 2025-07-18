@@ -1,5 +1,5 @@
 // Jest setup for DOM testing
-import '@testing-library/jest-dom';
+require('@testing-library/jest-dom');
 
 // Mock global objects that might be used in the application
 global.console = {

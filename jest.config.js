@@ -13,7 +13,12 @@ module.exports = {
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
-  transform: {},
+  transform: {
+    '^.+\\.js$': 'babel-jest'
+  },
+  transformIgnorePatterns: [
+    'node_modules/(?!(@testing-library)/)'
+  ],
   moduleFileExtensions: ['js', 'json'],
   testTimeout: 10000
 };
