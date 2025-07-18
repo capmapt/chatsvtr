@@ -721,7 +721,7 @@ header {
 
   /* Stats and Chat */
   .stats-widget-iframe {
-    height: 165px; /* 移动端优化：超紧凑布局消除底部空白 */
+    height: 280px; /* 移动端优化：适配可读字体大小 */
     border-radius: 8px;
   }
   
@@ -856,7 +856,7 @@ header {
 
   /* Stats and Chat */
   .stats-widget-iframe {
-    height: 125px; /* 小屏幕优化高度 */
+    height: 240px; /* 小屏幕优化高度 */
     border-radius: 6px;
   }
   
@@ -869,7 +869,7 @@ header {
 /* 超小屏幕 (max-width: 480px) - 针对真实手机尺寸 */
 @media (max-width: 480px) {
   .stats-widget-iframe {
-    height: 105px; /* 超小屏幕优化：极度紧凑布局 */
+    height: 200px; /* 超小屏幕优化：保持可读性 */
     border-radius: 4px;
   }
 }

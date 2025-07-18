@@ -130,7 +130,7 @@ body{background:transparent;display:flex;align-items:center;justify-content:cent
 .increase-animation{animation:flash .5s}
 @keyframes flash{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
 
-/* 🎯 移动端优化 - 完全消除滚动条 */
+/* 🎯 移动端优化 - 保持可读性 */
 @media (max-width: 768px) {
   html, body {
     height: auto;
@@ -148,177 +148,177 @@ body{background:transparent;display:flex;align-items:center;justify-content:cent
     justify-content: unset;
     min-height: auto;
     height: auto;
-    padding: 2px;
+    padding: 8px;
     box-sizing: border-box;
   }
 
   .stats-container {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2px;
+    gap: 8px;
     width: 100%;
     margin: 0;
-    padding: 2px;
+    padding: 0;
     box-sizing: border-box;
   }
   
   .stat-card {
-    padding: 4px 3px;
+    padding: 12px 8px;
     margin: 0;
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
     overflow: hidden;
-    border-radius: 4px;
+    border-radius: 8px;
   }
   
   .stat-icon {
-    font-size: 0.9rem;
-    margin-bottom: 1px;
+    font-size: 1.5rem;
+    margin-bottom: 4px;
   }
   
   .stat-number {
-    font-size: 0.8rem;
-    margin-bottom: 0;
+    font-size: 1.2rem;
+    margin-bottom: 2px;
     font-weight: 600;
   }
   
   .stat-label {
-    font-size: 0.55rem;
-    margin-bottom: 1px;
-    line-height: 1;
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+    line-height: 1.2;
   }
   
   .progress-bar {
-    height: 1px;
-    margin-bottom: 1px;
+    height: 3px;
+    margin-bottom: 4px;
   }
   
   .growth-indicator {
-    font-size: 0.45rem;
+    font-size: 0.7rem;
     margin-bottom: 0;
   }
   
   .live-indicator {
-    font-size: 0.35rem;
-    top: 2px;
-    right: 2px;
+    font-size: 0.6rem;
+    top: 6px;
+    right: 6px;
   }
 }
 
-/* 🎯 超小屏幕优化 - 针对真实手机尺寸 */
+/* 🎯 小屏幕优化 - 保持可读性 */
 @media (max-width: 480px) {
   body {
-    padding: 1px;
+    padding: 6px;
     box-sizing: border-box;
   }
   
   .stats-container {
-    gap: 1px;
+    gap: 6px;
     width: 100%;
-    padding: 1px;
+    padding: 0;
     box-sizing: border-box;
   }
   
   .stat-card {
-    padding: 3px 2px;
-    border-radius: 3px;
+    padding: 10px 6px;
+    border-radius: 6px;
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
   }
   
   .stat-icon {
-    font-size: 0.7rem;
-    margin-bottom: 0;
+    font-size: 1.3rem;
+    margin-bottom: 3px;
   }
   
   .stat-number {
-    font-size: 0.65rem;
-    margin-bottom: 0;
+    font-size: 1rem;
+    margin-bottom: 2px;
     font-weight: 600;
   }
   
   .stat-label {
-    font-size: 0.45rem;
-    margin-bottom: 0;
-    line-height: 0.9;
+    font-size: 0.75rem;
+    margin-bottom: 3px;
+    line-height: 1.1;
   }
   
   .progress-bar {
-    height: 1px;
-    margin-bottom: 1px;
+    height: 2px;
+    margin-bottom: 3px;
   }
   
   .growth-indicator {
-    font-size: 0.35rem;
+    font-size: 0.65rem;
     margin-bottom: 0;
   }
   
   .live-indicator {
-    font-size: 0.3rem;
-    top: 1px;
-    right: 1px;
+    font-size: 0.5rem;
+    top: 4px;
+    right: 4px;
+  }
+  
+  .live-dot {
+    width: 5px;
+    height: 5px;
+  }
+}
+
+/* 🎯 极小屏幕优化 - 保持最小可读性 */
+@media (max-width: 375px) {
+  body {
+    padding: 4px;
+  }
+  
+  .stats-container {
+    gap: 4px;
+    padding: 0;
+  }
+  
+  .stat-card {
+    padding: 8px 4px;
+    border-radius: 4px;
+  }
+  
+  .stat-icon {
+    font-size: 1.1rem;
+    margin-bottom: 2px;
+  }
+  
+  .stat-number {
+    font-size: 0.9rem;
+    margin-bottom: 1px;
+    font-weight: 600;
+  }
+  
+  .stat-label {
+    font-size: 0.65rem;
+    margin-bottom: 2px;
+    line-height: 1;
+  }
+  
+  .progress-bar {
+    height: 2px;
+    margin-bottom: 2px;
+  }
+  
+  .growth-indicator {
+    font-size: 0.55rem;
+    margin-bottom: 0;
+  }
+  
+  .live-indicator {
+    font-size: 0.45rem;
+    top: 2px;
+    right: 2px;
   }
   
   .live-dot {
     width: 4px;
     height: 4px;
-  }
-}
-
-/* 🎯 极小屏幕优化 - 针对iPhone SE等设备 */
-@media (max-width: 375px) {
-  body {
-    padding: 1px;
-  }
-  
-  .stats-container {
-    gap: 1px;
-    padding: 1px;
-  }
-  
-  .stat-card {
-    padding: 2px 1px;
-    border-radius: 2px;
-  }
-  
-  .stat-icon {
-    font-size: 0.6rem;
-    margin-bottom: 0;
-  }
-  
-  .stat-number {
-    font-size: 0.55rem;
-    margin-bottom: 0;
-    font-weight: 600;
-  }
-  
-  .stat-label {
-    font-size: 0.4rem;
-    margin-bottom: 0;
-    line-height: 0.8;
-  }
-  
-  .progress-bar {
-    height: 1px;
-    margin-bottom: 0;
-  }
-  
-  .growth-indicator {
-    font-size: 0.3rem;
-    margin-bottom: 0;
-  }
-  
-  .live-indicator {
-    font-size: 0.25rem;
-    top: 0;
-    right: 0;
-  }
-  
-  .live-dot {
-    width: 2px;
-    height: 2px;
   }
 }
 </style>
