@@ -22,7 +22,7 @@ if ! wrangler whoami &> /dev/null; then
     echo "🔗 获取 API Token: https://developers.cloudflare.com/fundamentals/api/get-started/create-token/"
     echo ""
     echo "⚡ 快速部署命令："
-    echo "wrangler pages deploy src --project-name chatsvtr"
+    echo "wrangler pages deploy . --project-name chatsvtr"
     echo ""
     echo "✅ 提交的更改已同步到 GitHub。"
     echo "📋 文件已准备好，可以手动部署："
@@ -36,14 +36,14 @@ fi
 # 检查关键文件
 echo "✅ 验证关键文件..."
 REQUIRED_FILES=(
-    "src/index.html"
-    "src/assets/css/style.css"
-    "src/assets/js/main.js"
-    "src/assets/js/translations.js"
-    "src/assets/js/i18n.js"
-    "src/assets/images/logo.jpg"
-    "src/assets/images/banner.png"
-    "src/assets/images/qr-code.jpg"
+    "index.html"
+    "assets/css/style.css"
+    "assets/js/main.js"
+    "assets/js/translations.js"
+    "assets/js/i18n.js"
+    "assets/images/logo.jpg"
+    "assets/images/banner.png"
+    "assets/images/qr-code.jpg"
 )
 
 for file in "${REQUIRED_FILES[@]}"; do
@@ -58,20 +58,18 @@ echo "✅ 所有关键文件检查通过"
 # 显示部署信息
 echo ""
 echo "📊 部署统计："
-echo "  - HTML文件: $(find src -name "*.html" | wc -l)"
-echo "  - CSS文件: $(find src -name "*.css" | wc -l)"
-echo "  - JS文件: $(find src -name "*.js" | wc -l)"
-echo "  - 图片文件: $(find src -name "*.jpg" -o -name "*.png" -o -name "*.gif" | wc -l)"
-echo "  - 总文件数: $(find src -type f | wc -l)"
-echo "  - 总大小: $(du -sh src | cut -f1)"
+echo "  - HTML文件: $(find . -name "*.html" -not -path "./node_modules/*" -not -path "./temp/*" | wc -l)"
+echo "  - CSS文件: $(find . -name "*.css" -not -path "./node_modules/*" -not -path "./temp/*" | wc -l)"
+echo "  - JS文件: $(find . -name "*.js" -not -path "./node_modules/*" -not -path "./temp/*" -not -path "./config/*" -not -path "./scripts/*" | wc -l)"
+echo "  - 图片文件: $(find . -name "*.jpg" -o -name "*.png" -o -name "*.gif" | grep -v node_modules | wc -l)"
 
 # 部署到 Cloudflare Pages
 echo ""
 echo "🌐 开始部署到 Cloudflare Pages..."
-echo "部署目录: src"
+echo "部署目录: 根目录"
 
-# 使用wrangler部署，直接部署src目录
-wrangler pages deploy src --project-name chatsvtr
+# 使用wrangler部署根目录
+wrangler pages deploy . --project-name chatsvtr
 
 if [ $? -eq 0 ]; then
     echo ""
