@@ -1,0 +1,13 @@
+# 将以下内容添加到 ~/.zshrc 文件末尾
+
+# SVTR.AI 项目快捷方式
+alias svtr='cd /home/lium/chatsvtr && source dev-start.sh'
+alias svtr-dev='cd /home/lium/chatsvtr && npm run dev'
+alias svtr-preview='cd /home/lium/chatsvtr && npm run preview'
+alias svtr-deploy='cd /home/lium/chatsvtr && ./quick-deploy.sh'
+alias svtr-commit='cd /home/lium/chatsvtr && ./dev-commit.sh'
+
+# 自动进入项目目录（可选）
+# cd /home/lium/chatsvtr
+
+echo "✅ 请将上述内容添加到 ~/.zshrc 文件中，然后运行 source ~/.zshrc"

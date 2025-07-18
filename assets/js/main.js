@@ -28,7 +28,7 @@
     init() {
       this.cacheDOMElements();
       this.initializeSidebar();
-      this.initializeStats();
+      this.startStatsUpdates();
       this.setupEventListeners();
     }
 
@@ -115,7 +115,7 @@
         sidebar.classList.remove('open');
         overlay.classList.remove('active');
         content.classList.remove('shifted');
-        
+
         // Return focus to toggle button if it's not already focused
         if (toggle && document.activeElement !== toggle) {
           toggle.focus();
@@ -127,7 +127,7 @@
       return this.domElements.sidebar?.classList.contains('open') || false;
     }
 
-    initializeStats() {
+    startStatsUpdates() {
       if (!this.hasStatsElements) {
         return;
       }
@@ -147,7 +147,9 @@
     }
 
     paintStats() {
-      if (!this.hasStatsElements) return;
+      if (!this.hasStatsElements) {
+        return;
+      }
 
       const { stats } = this.domElements;
       stats.members_count.textContent = this.formatNumber(this.stats.members.count);
@@ -178,7 +180,7 @@
             1,
             Math.floor(stat.growth * (1 + Math.random() * 0.6 - 0.3))
           );
-          
+
           stat.count += increment;
           stat.last = now;
           hasUpdates = true;
@@ -205,7 +207,7 @@
       Object.entries(this.stats).forEach(([key, stat]) => {
         const percentage = Math.min((stat.count / stat.max) * 100, 100);
         const progressBarFill = document.querySelector(`.${key} .progress-fill`);
-        
+
         if (progressBarFill) {
           progressBarFill.style.width = `${percentage}%`;
         }
@@ -217,7 +219,7 @@
         const keys = Object.keys(this.stats);
         const randomKey = keys[Math.floor(Math.random() * keys.length)];
         const increment = Math.floor(Math.random() * 5 + 1);
-        
+
         this.stats[randomKey].count += increment;
         this.flashElement(`${randomKey}-count`);
         this.paintStats();

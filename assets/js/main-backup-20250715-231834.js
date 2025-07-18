@@ -27,7 +27,7 @@
     }
 
     const isMobile = window.innerWidth <= 768;
-    let isFirstVisit = !localStorage.getItem('sidebarAutoClosed');
+    const isFirstVisit = !localStorage.getItem('sidebarAutoClosed');
 
     // For testing: uncomment to simulate first visit
     // localStorage.removeItem('sidebarAutoClosed'); isFirstVisit = true;
@@ -56,13 +56,15 @@
       members_growth && companies_growth && vip_growth;
 
     if (statsElementsPresent) {
-      let stats = {
+      const stats = {
         members: { count: 121884, growth: 25, last: Date.now() },
         companies: { count: 10761, growth: 8, last: Date.now() },
         vip: { count: 1102, growth: 3, last: Date.now() }
       };
 
-      function fmt(n) { return n.toLocaleString(); }
+      function fmt(n) {
+        return n.toLocaleString();
+      }
 
       function paint() {
         members_count.textContent = fmt(stats.members.count);
@@ -91,11 +93,12 @@
             );
             v.count += inc;
             v.last = now;
-            if (Math.random() < 0.2)
+            if (Math.random() < 0.2) {
               v.growth = Math.max(
                 1,
                 Math.floor(v.growth * (1 + Math.random() * 0.4 - 0.2))
               );
+            }
             flash(k + '-count');
           }
         });

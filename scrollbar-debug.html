@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>滚动条调试</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+    }
+    
+    .debug-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .test-section {
+      margin-bottom: 30px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+    }
+    
+    .test-section h3 {
+      margin-top: 0;
+      color: #333;
+    }
+    
+    .iframe-container {
+      position: relative;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #f9f9f9;
+    }
+    
+    .test-iframe {
+      width: 100%;
+      height: 320px;
+      border: none;
+      display: block;
+    }
+    
+    .debug-info {
+      margin-top: 10px;
+      padding: 10px;
+      background: #e3f2fd;
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: monospace;
+    }
+    
+    .debug-info span {
+      display: inline-block;
+      margin-right: 15px;
+    }
+    
+    .status-ok {
+      color: #4caf50;
+      font-weight: bold;
+    }
+    
+    .status-error {
+      color: #f44336;
+      font-weight: bold;
+    }
+    
+    .mobile-test {
+      background: #ffe0b2;
+      border-color: #ff9800;
+    }
+    
+    .mobile-test .test-iframe {
+      height: 390px;
+    }
+    
+    @media (max-width: 768px) {
+      .mobile-test .test-iframe {
+        height: 350px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .mobile-test .test-iframe {
+        height: 290px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="debug-container">
+    <h1>🔍 滚动条调试测试</h1>
+    
+    <div class="test-section">
+      <h3>🖥️ 桌面端测试 (320px高度)</h3>
+      <div class="iframe-container">
+        <iframe src="./pages/stats-widget.html" class="test-iframe" id="desktop-iframe"></iframe>
+      </div>
+      <div class="debug-info" id="desktop-debug">
+        <span>容器宽度: <span id="desktop-width">--</span>px</span>
+        <span>滚动状态: <span id="desktop-scroll">--</span></span>
+      </div>
+    </div>
+    
+    <div class="test-section mobile-test">
+      <h3>📱 移动端测试 (响应式高度)</h3>
+      <div class="iframe-container">
+        <iframe src="./pages/stats-widget.html" class="test-iframe" id="mobile-iframe"></iframe>
+      </div>
+      <div class="debug-info" id="mobile-debug">
+        <span>容器宽度: <span id="mobile-width">--</span>px</span>
+        <span>滚动状态: <span id="mobile-scroll">--</span></span>
+      </div>
+    </div>
+    
+    <div class="test-section">
+      <h3>📏 手动宽度测试</h3>
+      <div>
+        <label>测试宽度: <input type="range" id="width-slider" min="300" max="800" value="400" step="5"></label>
+        <span id="width-value">400px</span>
+        <button onclick="testCriticalWidths()">测试关键宽度</button>
+      </div>
+      <div class="iframe-container" id="manual-container" style="width: 400px; margin: 10px 0;">
+        <iframe src="./pages/stats-widget.html" class="test-iframe" id="manual-iframe" style="height: 350px;"></iframe>
+      </div>
+      <div class="debug-info" id="manual-debug">
+        <span>实际宽度: <span id="manual-width">--</span>px</span>
+        <span>滚动状态: <span id="manual-scroll">--</span></span>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    function checkScrollbars(iframe, debugElement) {
+      try {
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        const hasHorizontalScroll = iframeDoc.documentElement.scrollWidth > iframeDoc.documentElement.clientWidth;
+        const hasVerticalScroll = iframeDoc.documentElement.scrollHeight > iframeDoc.documentElement.clientHeight;
+        
+        const widthSpan = debugElement.querySelector('span:nth-child(1) span');
+        const scrollSpan = debugElement.querySelector('span:nth-child(2) span');
+        
+        widthSpan.textContent = iframeDoc.documentElement.clientWidth;
+        
+        if (hasHorizontalScroll || hasVerticalScroll) {
+          scrollSpan.textContent = `❌ 有滚动条 (H:${hasHorizontalScroll} V:${hasVerticalScroll})`;
+          scrollSpan.className = 'status-error';
+        } else {
+          scrollSpan.textContent = '✅ 无滚动条';
+          scrollSpan.className = 'status-ok';
+        }
+      } catch (e) {
+        console.error('检查滚动条时出错:', e);
+      }
+    }
+    
+    // 等待iframe加载完成
+    document.addEventListener('DOMContentLoaded', function() {
+      const desktopIframe = document.getElementById('desktop-iframe');
+      const mobileIframe = document.getElementById('mobile-iframe');
+      const manualIframe = document.getElementById('manual-iframe');
+      
+      const desktopDebug = document.getElementById('desktop-debug');
+      const mobileDebug = document.getElementById('mobile-debug');
+      const manualDebug = document.getElementById('manual-debug');
+      
+      setTimeout(() => {
+        checkScrollbars(desktopIframe, desktopDebug);
+        checkScrollbars(mobileIframe, mobileDebug);
+        checkScrollbars(manualIframe, manualDebug);
+      }, 1000);
+      
+      // 宽度滑块
+      const widthSlider = document.getElementById('width-slider');
+      const widthValue = document.getElementById('width-value');
+      const manualContainer = document.getElementById('manual-container');
+      
+      widthSlider.addEventListener('input', function() {
+        const width = this.value;
+        widthValue.textContent = width + 'px';
+        manualContainer.style.width = width + 'px';
+        
+        setTimeout(() => {
+          checkScrollbars(manualIframe, manualDebug);
+        }, 100);
+      });
+      
+      // 定期检查
+      setInterval(() => {
+        checkScrollbars(desktopIframe, desktopDebug);
+        checkScrollbars(mobileIframe, mobileDebug);
+        checkScrollbars(manualIframe, manualDebug);
+      }, 3000);
+    });
+    
+    // 测试关键宽度
+    function testCriticalWidths() {
+      const criticalWidths = [350, 375, 400, 450, 480, 600, 768, 770];
+      const widthSlider = document.getElementById('width-slider');
+      const widthValue = document.getElementById('width-value');
+      const manualContainer = document.getElementById('manual-container');
+      const manualIframe = document.getElementById('manual-iframe');
+      const manualDebug = document.getElementById('manual-debug');
+      
+      let index = 0;
+      
+      function testNext() {
+        if (index < criticalWidths.length) {
+          const width = criticalWidths[index];
+          widthSlider.value = width;
+          widthValue.textContent = width + 'px';
+          manualContainer.style.width = width + 'px';
+          
+          setTimeout(() => {
+            checkScrollbars(manualIframe, manualDebug);
+            index++;
+            setTimeout(testNext, 1000);
+          }, 100);
+        }
+      }
+      
+      testNext();
+    });
+  </script>
+</body>
+</html>
