@@ -83,7 +83,7 @@ body{display:flex;align-items:center;justify-content:center;}
   margin-bottom:10px;
 }
 
-.progress-fill{height:100%;width:0;transition:width 1s}
+.progress-fill{height:100%;width:0;transform:scaleX(0);transform-origin:left;transition:transform 1s ease-out}
 .members .progress-fill{background:linear-gradient(45deg,#6c5ce7,#a29bfe)}
 .companies .progress-fill{background:linear-gradient(45deg,#0984e3,#74b9ff)}
 .vip .progress-fill{background:linear-gradient(45deg,#00b894,#55efc4)}
@@ -123,43 +123,44 @@ body{display:flex;align-items:center;justify-content:center;}
 .increase-animation{animation:flash .5s}
 @keyframes flash{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
 
-/* 🎯 移动端优化 - 精简响应式 */
+/* 🎯 优化移动端响应式 - 渐进式布局 */
 @media (max-width: 768px) {
   body{padding:2px}
-  .stats-container{gap:3px;padding:0}
-  .stat-card{padding:6px 3px;border-radius:6px;font-size:0.8rem}
-  .stat-icon{font-size:1.2rem;margin-bottom:3px}
-  .stat-number{font-size:0.9rem;margin-bottom:2px;font-weight:600;line-height:1}
-  .stat-label{font-size:0.65rem;margin-bottom:3px;line-height:1.1}
-  .progress-bar{height:2px;margin-bottom:3px}
-  .growth-indicator{font-size:0.6rem}
-  .live-indicator{font-size:0.5rem;top:4px;right:4px}
+  .stats-container{gap:4px;padding:2px;grid-template-columns:1fr} /* 垂直布局 */
+  .stat-card{padding:8px 6px;border-radius:8px;font-size:0.85rem;display:flex;align-items:center;text-align:left}
+  .stat-card .content{flex:1}
+  .stat-icon{font-size:1.5rem;margin-bottom:0;margin-right:12px;flex-shrink:0}
+  .stat-number{font-size:1rem;margin-bottom:2px;font-weight:600;line-height:1}
+  .stat-label{font-size:0.7rem;margin-bottom:4px;line-height:1.2}
+  .progress-bar{height:3px;margin-bottom:4px}
+  .growth-indicator{font-size:0.65rem}
+  .live-indicator{font-size:0.55rem;top:6px;right:6px}
   .live-dot{width:4px;height:4px}
 }
 
 @media (max-width: 480px) {
   body{padding:1px}
-  .stats-container{gap:2px}
-  .stat-card{padding:5px 2px;border-radius:4px}
-  .stat-icon{font-size:1rem;margin-bottom:2px}
-  .stat-number{font-size:0.8rem;margin-bottom:1px}
-  .stat-label{font-size:0.6rem;margin-bottom:2px;line-height:1}
-  .progress-bar{height:2px;margin-bottom:2px}
-  .growth-indicator{font-size:0.55rem}
-  .live-indicator{font-size:0.45rem;top:3px;right:3px}
+  .stats-container{gap:3px}
+  .stat-card{padding:6px 4px;border-radius:6px}
+  .stat-icon{font-size:1.3rem;margin-right:10px}
+  .stat-number{font-size:0.9rem;margin-bottom:1px}
+  .stat-label{font-size:0.65rem;margin-bottom:3px;line-height:1.1}
+  .progress-bar{height:2px;margin-bottom:3px}
+  .growth-indicator{font-size:0.6rem}
+  .live-indicator{font-size:0.5rem;top:4px;right:4px}
   .live-dot{width:3px;height:3px}
 }
 
 @media (max-width: 375px) {
   body{padding:1px}
-  .stats-container{gap:1px}
-  .stat-card{padding:4px 1px;border-radius:3px}
-  .stat-icon{font-size:0.9rem;margin-bottom:1px}
-  .stat-number{font-size:0.7rem;margin-bottom:1px}
-  .stat-label{font-size:0.5rem;margin-bottom:1px;line-height:1}
-  .progress-bar{height:1px;margin-bottom:1px}
-  .growth-indicator{font-size:0.45rem}
-  .live-indicator{font-size:0.4rem;top:2px;right:2px}
+  .stats-container{gap:2px}
+  .stat-card{padding:5px 3px;border-radius:4px}
+  .stat-icon{font-size:1.1rem;margin-right:8px}
+  .stat-number{font-size:0.8rem;margin-bottom:1px}
+  .stat-label{font-size:0.6rem;margin-bottom:2px;line-height:1}
+  .progress-bar{height:2px;margin-bottom:2px}
+  .growth-indicator{font-size:0.55rem}
+  .live-indicator{font-size:0.45rem;top:3px;right:3px}
   .live-dot{width:3px;height:3px}
 }
 </style>
@@ -170,28 +171,34 @@ body{display:flex;align-items:center;justify-content:center;}
   <a class="stat-card members" href="https://c0uiiy15npu.feishu.cn/share/base/form/shrcnKdKrgumC9OtjQNXiC05r8e" target="_blank">
     <div class="live-indicator"><div class="live-dot"></div><span data-i18n="live">实时</span></div>
     <div class="stat-icon" aria-label="社区成员">👥</div>
-    <div class="stat-number" id="members-count">121,884</div>
-    <div class="stat-label" data-i18n="members">社区成员</div>
-    <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
-    <div class="growth-indicator">↗ <span id="members-growth">+25/小时</span></div>
+    <div class="content">
+      <div class="stat-number" id="members-count">121,884</div>
+      <div class="stat-label" data-i18n="members">社区成员</div>
+      <div class="progress-bar"><div class="progress-fill" style="transform:scaleX(0.85)"></div></div>
+      <div class="growth-indicator">↗ <span id="members-growth">+25/小时</span></div>
+    </div>
   </a>
 
   <a class="stat-card companies" href="https://c0uiiy15npu.feishu.cn/share/base/form/shrcnxRAVSwtEHD40UUUg1086Gf" target="_blank">
     <div class="live-indicator"><div class="live-dot"></div><span data-i18n="live">实时</span></div>
     <div class="stat-icon" aria-label="创业公司与投资机构">🏢</div>
-    <div class="stat-number" id="companies-count">10,761</div>
-    <div class="stat-label" data-i18n="companies">创业公司与投资机构</div>
-    <div class="progress-bar"><div class="progress-fill" style="width:68%"></div></div>
-    <div class="growth-indicator">↗ <span id="companies-growth">+8/小时</span></div>
+    <div class="content">
+      <div class="stat-number" id="companies-count">10,761</div>
+      <div class="stat-label" data-i18n="companies">创业公司与投资机构</div>
+      <div class="progress-bar"><div class="progress-fill" style="transform:scaleX(0.68)"></div></div>
+      <div class="growth-indicator">↗ <span id="companies-growth">+8/小时</span></div>
+    </div>
   </a>
 
   <a class="stat-card vip" href="https://c0uiiy15npu.feishu.cn/wiki/G0oMwUeNbiZkQBkX9iXcfMllnpe?from=from_copylink" target="_blank">
     <div class="live-indicator"><div class="live-dot"></div><span data-i18n="live">实时</span></div>
     <div class="stat-icon" aria-label="权益会员">💎</div>
-    <div class="stat-number" id="vip-count">1,102</div>
-    <div class="stat-label" data-i18n="vip">权益会员</div>
-    <div class="progress-bar"><div class="progress-fill" style="width:42%"></div></div>
-    <div class="growth-indicator">↗ <span id="vip-growth">+3/小时</span></div>
+    <div class="content">
+      <div class="stat-number" id="vip-count">1,102</div>
+      <div class="stat-label" data-i18n="vip">权益会员</div>
+      <div class="progress-bar"><div class="progress-fill" style="transform:scaleX(0.42)"></div></div>
+      <div class="growth-indicator">↗ <span id="vip-growth">+3/小时</span></div>
+    </div>
   </a>
 </div><script>
 /* === 优化的高性能脚本 === */
@@ -202,9 +209,10 @@ const translations={
 };
 let currentLang='zh-CN',elements={},intervalId;
 
-// 缓存DOM元素
+// 增强的DOM元素缓存
 function cacheElements(){
   elements={
+    statsContainer:document.querySelector('.stats-container'),
     membersCount:document.getElementById('members-count'),
     companiesCount:document.getElementById('companies-count'),
     vipCount:document.getElementById('vip-count'),
@@ -214,7 +222,8 @@ function cacheElements(){
     progressFills:document.querySelectorAll('.progress-fill'),
     liveSpans:document.querySelectorAll('.live-indicator span'),
     labels:document.querySelectorAll('.stat-label'),
-    icons:document.querySelectorAll('.stat-icon')
+    icons:document.querySelectorAll('.stat-icon'),
+    cards:document.querySelectorAll('.stat-card')
   };
 }
 
@@ -249,29 +258,40 @@ function flash(el){el.classList.add('increase-animation');setTimeout(()=>el.clas
 function updateBars(){
   const maxGrowthRate=Math.max(stats.members.g,stats.companies.g,stats.vip.g);
   const rates=[stats.members.g,stats.companies.g,stats.vip.g];
-  elements.progressFills.forEach((fill,i)=>fill.style.width=Math.min(rates[i]/maxGrowthRate*100,100)+'%');
+  elements.progressFills.forEach((fill,i)=>{
+    const scale=Math.min(rates[i]/maxGrowthRate,1);
+    fill.style.transform=`scaleX(${scale})`;
+  });
 }
 
-// 智能增长算法
+// 优化的智能增长算法
+let lastUpdateTime=0;
 function loop(){
-  const counters=[elements.membersCount,elements.companiesCount,elements.vipCount];
   const now=Date.now();
   const isActive=document.visibilityState==='visible';
   
-  if(!isActive)return; // 页面不可见时暂停更新
+  if(!isActive)return;
+  
+  // 节流：至少间隔1秒更新
+  if(now-lastUpdateTime<1000)return;
+  lastUpdateTime=now;
+  
+  const counters=[elements.membersCount,elements.companiesCount,elements.vipCount];
+  let hasUpdate=false;
   
   Object.entries(stats).forEach(([k,v],i)=>{
-    // 基于时间的动态概率，避免过于频繁
-    const timeFactor=Math.sin(now/30000)*0.3+0.7; // 30秒周期
-    const probability=0.3*timeFactor;
+    const timeFactor=Math.sin(now/30000)*0.3+0.7;
+    const probability=0.25*timeFactor; // 降低更新频率
     
     if(Math.random()<probability){
       const increment=Math.ceil(v.g*(0.8+Math.random()*0.4));
-      v.c=Math.min(v.c+increment,v.m); // 不超过最大值
+      v.c=Math.min(v.c+increment,v.m);
       flash(counters[i]);
+      hasUpdate=true;
     }
   });
-  paint();
+  
+  if(hasUpdate)paint();
 }
 
 // 初始化和清理
@@ -279,7 +299,7 @@ function init(){
   cacheElements();
   const params=new URLSearchParams(location.search);
   updateLang(params.get('lang')||'zh-CN');
-  intervalId=setInterval(loop,60000);
+  intervalId=setInterval(loop,5000); // 5秒检查一次，内部有节流控制
   adjustIframeHeight();
 }
 
@@ -287,24 +307,36 @@ function cleanup(){
   if(intervalId){clearInterval(intervalId);intervalId=null;}
 }
 
-// 优化的iframe高度调整
+// 优化的iframe高度调整（增加缓存）
+let cachedHeight=0;
 function adjustIframeHeight(){
-  const container=document.querySelector('.stats-container');
+  const container=elements.statsContainer||document.querySelector('.stats-container');
   if(!container)return;
+  
   const containerHeight=container.scrollHeight;
   const bodyPadding=parseInt(getComputedStyle(document.body).padding)*2;
   const isMobile=window.innerWidth<=768;
   const finalHeight=containerHeight+bodyPadding+(isMobile?8:20);
-  window.parent.postMessage({type:'adjustHeight',height:Math.max(finalHeight,isMobile?80:120)},'*');
+  const calculatedHeight=Math.max(finalHeight,isMobile?80:120);
+  
+  // 避免重复发送相同高度
+  if(cachedHeight===calculatedHeight)return;
+  cachedHeight=calculatedHeight;
+  
+  window.parent.postMessage({type:'adjustHeight',height:calculatedHeight},'*');
 }
 
-// 事件监听
-window.addEventListener('message',e=>{
-  if(e.data?.type==='setLang')updateLang(e.data.lang);
-});
-window.addEventListener('load',init);
-window.addEventListener('resize',adjustIframeHeight);
-window.addEventListener('beforeunload',cleanup);
-document.addEventListener('visibilitychange',()=>{
-  if(document.visibilityState==='visible')paint(); // 重新获得焦点时刷新
+// 优化的事件监听器
+const eventHandlers={
+  message:e=>{if(e.data?.type==='setLang')updateLang(e.data.lang);},
+  load:init,
+  resize:adjustIframeHeight,
+  beforeunload:cleanup,
+  visibilitychange:()=>{if(document.visibilityState==='visible')paint();}
+};
+
+// 统一事件绑定
+Object.entries(eventHandlers).forEach(([event,handler])=>{
+  const target=event==='load'||event==='resize'||event==='beforeunload'||event==='message'?window:document;
+  target.addEventListener(event,handler,{passive:true});
 });</script></body></html>
