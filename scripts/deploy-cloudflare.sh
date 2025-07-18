@@ -22,7 +22,7 @@ if ! wrangler whoami &> /dev/null; then
     echo "🔗 获取 API Token: https://developers.cloudflare.com/fundamentals/api/get-started/create-token/"
     echo ""
     echo "⚡ 快速部署命令："
-    echo "wrangler pages deploy . --project-name chatsvtr"
+    echo "wrangler pages deploy src --project-name chatsvtr"
     echo ""
     echo "✅ 提交的更改已同步到 GitHub。"
     echo "📋 文件已准备好，可以手动部署："
@@ -33,30 +33,17 @@ if ! wrangler whoami &> /dev/null; then
     exit 0
 fi
 
-# 创建临时部署目录
-echo "📦 准备部署文件..."
-DEPLOY_DIR="dist"
-rm -rf $DEPLOY_DIR
-mkdir -p $DEPLOY_DIR
-
-# 复制需要部署的文件
-echo "📋 复制静态资源..."
-cp index.html $DEPLOY_DIR/
-cp favicon.ico $DEPLOY_DIR/
-cp -r assets/ $DEPLOY_DIR/assets/
-cp -r pages/ $DEPLOY_DIR/pages/
-
 # 检查关键文件
 echo "✅ 验证关键文件..."
 REQUIRED_FILES=(
-    "$DEPLOY_DIR/index.html"
-    "$DEPLOY_DIR/assets/css/style.css"
-    "$DEPLOY_DIR/assets/js/main.js"
-    "$DEPLOY_DIR/assets/js/translations.js"
-    "$DEPLOY_DIR/assets/js/i18n.js"
-    "$DEPLOY_DIR/assets/images/logo.jpg"
-    "$DEPLOY_DIR/assets/images/banner.png"
-    "$DEPLOY_DIR/assets/images/qr-code.jpg"
+    "src/index.html"
+    "src/assets/css/style.css"
+    "src/assets/js/main.js"
+    "src/assets/js/translations.js"
+    "src/assets/js/i18n.js"
+    "src/assets/images/logo.jpg"
+    "src/assets/images/banner.png"
+    "src/assets/images/qr-code.jpg"
 )
 
 for file in "${REQUIRED_FILES[@]}"; do
@@ -71,20 +58,20 @@ echo "✅ 所有关键文件检查通过"
 # 显示部署信息
 echo ""
 echo "📊 部署统计："
-echo "  - HTML文件: $(find $DEPLOY_DIR -name "*.html" | wc -l)"
-echo "  - CSS文件: $(find $DEPLOY_DIR -name "*.css" | wc -l)"
-echo "  - JS文件: $(find $DEPLOY_DIR -name "*.js" | wc -l)"
-echo "  - 图片文件: $(find $DEPLOY_DIR -name "*.jpg" -o -name "*.png" -o -name "*.gif" | wc -l)"
-echo "  - 总文件数: $(find $DEPLOY_DIR -type f | wc -l)"
-echo "  - 总大小: $(du -sh $DEPLOY_DIR | cut -f1)"
+echo "  - HTML文件: $(find src -name "*.html" | wc -l)"
+echo "  - CSS文件: $(find src -name "*.css" | wc -l)"
+echo "  - JS文件: $(find src -name "*.js" | wc -l)"
+echo "  - 图片文件: $(find src -name "*.jpg" -o -name "*.png" -o -name "*.gif" | wc -l)"
+echo "  - 总文件数: $(find src -type f | wc -l)"
+echo "  - 总大小: $(du -sh src | cut -f1)"
 
 # 部署到 Cloudflare Pages
 echo ""
 echo "🌐 开始部署到 Cloudflare Pages..."
-echo "部署目录: $DEPLOY_DIR"
+echo "部署目录: src"
 
-# 使用wrangler部署
-wrangler pages deploy $DEPLOY_DIR --project-name chatsvtr
+# 使用wrangler部署，直接部署src目录
+wrangler pages deploy src --project-name chatsvtr
 
 if [ $? -eq 0 ]; then
     echo ""
@@ -111,8 +98,7 @@ else
     exit 1
 fi
 
-# 清理临时文件
-echo "🧹 清理临时文件..."
-rm -rf $DEPLOY_DIR
+# 无需清理临时文件，直接部署src目录
+echo "🧹 部署完成，无需清理临时文件"
 
 echo "✅ 部署完成！"
