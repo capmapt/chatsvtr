@@ -83,7 +83,7 @@ body{display:flex;align-items:center;justify-content:center;}
   margin-bottom:10px;
 }
 
-.progress-fill{height:100%;width:100%;transform-origin:left;transition:transform 1s ease-out;border-radius:3px}
+.progress-fill{height:100%;width:100%;transform-origin:left;transition:transform 1.5s ease-out;border-radius:3px;transform:scaleX(0)}
 .members .progress-fill{background:linear-gradient(45deg,#ff6b6b,#ff8e53);box-shadow:0 0 8px rgba(255,107,107,0.3)}
 .companies .progress-fill{background:linear-gradient(45deg,#4285f4,#64b5f6);box-shadow:0 0 6px rgba(66,133,244,0.3)}
 .vip .progress-fill{background:linear-gradient(45deg,#26de81,#20bf6b);box-shadow:0 0 4px rgba(38,222,129,0.3)}
@@ -263,6 +263,21 @@ function updateBars(){
   });
 }
 
+function animateBarsOnLoad(){
+  // 页面加载时从0开始增长到目标值
+  const growthScales = [1.0, 0.32, 0.12]; // 25:8:3 的比例
+  elements.progressFills.forEach((fill,i)=>{
+    // 确保初始状态为0
+    fill.style.transform='scaleX(0)';
+    // 使用 requestAnimationFrame 确保初始状态渲染后再开始动画
+    requestAnimationFrame(()=>{
+      setTimeout(()=>{
+        fill.style.transform=`scaleX(${growthScales[i]})`;
+      }, 200 + i * 150); // 错开动画时间，产生依次增长的效果
+    });
+  });
+}
+
 // 优化的智能增长算法
 let lastUpdateTime=0;
 function loop(){
@@ -298,6 +313,8 @@ function init(){
   cacheElements();
   const params=new URLSearchParams(location.search);
   updateLang(params.get('lang')||'zh-CN');
+  // 启动进度条增长动画
+  animateBarsOnLoad();
   intervalId=setInterval(loop,5000); // 5秒检查一次，内部有节流控制
   adjustIframeHeight();
 }
