@@ -19,7 +19,15 @@
     "validate:html": "html-validate index.html pages/ai-100.html pages/stats-widget.html",
     "deploy:cloudflare": "./scripts/deploy-cloudflare.sh",
     "backup": "git tag backup-$(date +%Y%m%d-%H%M%S)",
-    "rollback": "node scripts/rollback.js"
+    "rollback": "node scripts/rollback.js",
+    "dev:snapshot": "./scripts/dev-snapshot.sh",
+    "dev:rollback": "./scripts/dev-rollback.sh",
+    "dev:push": "./scripts/dev-push.sh",
+    "dev:start": "./scripts/dev-start.sh",
+    "预览": "./scripts/smart-preview.sh",
+    "推送": "./scripts/smart-push.sh",
+    "回滚": "./scripts/dev-rollback.sh",
+    "快照": "./scripts/dev-snapshot.sh"
   },
   "keywords": [
     "AI",
