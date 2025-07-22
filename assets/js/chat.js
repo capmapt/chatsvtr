@@ -31,7 +31,80 @@ class SVTRChat {
 
   getTranslation(key) {
     const lang = this.getCurrentLang();
-    return translations[lang] ? translations[lang][key] : key;
+    
+    // Fallback translations if translations object is not available
+    if (typeof translations === 'undefined') {
+      return this.getFallbackTranslation(key, lang);
+    }
+    
+    return translations[lang] ? translations[lang][key] : this.getFallbackTranslation(key, lang);
+  }
+
+  getFallbackTranslation(key, lang) {
+    const fallbackTranslations = {
+      'zh-CN': {
+        'chat_input_placeholder': '问我关于AI创投的任何问题...',
+        'chat_welcome_title': '您好！我是SVTR.AI助手，专注于AI创投生态系统分析。',
+        'chat_welcome_content': `我可以为您提供：
+• 最新AI创投市场动态
+• 投资机构和初创公司分析  
+• 行业趋势和技术评估
+• 专业投资建议
+
+请问您想了解什么？`,
+        'chat_user_name': '您',
+        'chat_ai_name': 'SVTR.AI',
+        'chat_thinking': '正在分析',
+        'chat_share_btn': '分享',
+        'chat_clear_btn': '清空'
+      },
+      'en': {
+        'chat_input_placeholder': 'Ask me anything about AI venture capital...',
+        'chat_welcome_title': 'Hello! I\'m SVTR.AI assistant, specializing in AI venture capital ecosystem analysis.',
+        'chat_welcome_content': `I can provide you with:
+• Latest AI VC market dynamics
+• Investment firms and startup analysis
+• Industry trends and technology assessments  
+• Professional investment insights
+
+What would you like to know?`,
+        'chat_user_name': 'You',
+        'chat_ai_name': 'SVTR.AI',
+        'chat_thinking': 'Analyzing',
+        'chat_share_btn': 'Share',
+        'chat_clear_btn': 'Clear'
+      }
+    };
+    
+    return fallbackTranslations[lang] ? fallbackTranslations[lang][key] : key;
+  }
+
+  getDemoResponse(userMessage) {
+    const lang = this.getCurrentLang();
+    
+    if (lang === 'en') {
+      return `🤖 **Demo Mode**: AI service is being configured...
+
+Regarding "${userMessage}" - AI VC Analysis:
+
+**Market Insights**:
+• AI venture capital sector experiencing rapid growth
+• Specialization and vertical applications becoming investment focus  
+• Data and algorithmic advantages are core competitive strengths
+
+*💡 Full functionality will be available after deployment!*`;
+    } else {
+      return `🤖 **演示模式**：AI服务正在配置中...
+
+关于"${userMessage}"的AI创投分析：
+
+**市场洞察**：
+• AI创投领域正经历快速发展
+• 专业化和垂直应用成为投资重点
+• 数据和算法优势是核心竞争力
+
+*💡 完整功能将在部署后可用！*`;
+    }
   }
 
   init() {
@@ -200,7 +273,8 @@ class SVTRChat {
       });
 
       if (!response.ok) {
-        throw new Error('网络请求失败');
+        const errorMsg = this.getCurrentLang() === 'en' ? 'Network request failed' : '网络请求失败';
+        throw new Error(errorMsg);
       }
 
       // 处理流式响应
@@ -277,16 +351,7 @@ class SVTRChat {
       this.removeLoadingMessage(loadingMessage);
       
       // 如果API失败，显示演示响应
-      const demoMessage = `🤖 **演示模式**：AI服务正在配置中...
-
-关于"${message}"的AI创投分析：
-
-**市场洞察**：
-• AI创投领域正经历快速发展
-• 专业化和垂直应用成为投资重点
-• 数据和算法优势是核心竞争力
-
-*💡 完整功能将在部署后可用！*`;
+      const demoMessage = this.getDemoResponse(message);
 
       const assistantMessage = {
         role: 'assistant',
@@ -486,6 +551,14 @@ document.addEventListener('DOMContentLoaded', function() {
   // 检查是否存在聊天容器
   const chatContainer = document.getElementById('svtr-chat-container');
   if (chatContainer) {
-    window.svtrChat = new SVTRChat('svtr-chat-container');
+    // 等待翻译文件加载完成
+    if (typeof translations !== 'undefined') {
+      window.svtrChat = new SVTRChat('svtr-chat-container');
+    } else {
+      // 如果翻译文件还未加载，稍后重试
+      setTimeout(() => {
+        window.svtrChat = new SVTRChat('svtr-chat-container');
+      }, 100);
+    }
   }
 });
