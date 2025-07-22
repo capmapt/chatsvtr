@@ -86,6 +86,9 @@ class I18n {
         console.warn('Could not communicate with stats iframe:', e);
       }
     }
+
+    // Dispatch language change event for other components
+    document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
   }
 
   getCurrentLanguage() {

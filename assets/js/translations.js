@@ -4,6 +4,8 @@ const translations = {
     title: '硅谷科技评论',
     sidebar_title: '硅谷科技评论',
     nav_ai100: 'AI 100',
+    nav_ai_weekly: 'AI周报',
+    nav_trading_picks: '交易精选',
     nav_ranking: 'AI创投榜',
     sub_financing: '融资概览',
     sub_industries: '赛道概览',
@@ -39,12 +41,29 @@ const translations = {
     join_btn: '加入候补名单',
     input_placeholder: '请输入你的问题...',
     send_btn: '发送',
-    footer_text: '© 2025 SVTR.AI. All rights reserved.'
+    footer_text: '© 2025 SVTR.AI. All rights reserved.',
+    // Chat bot translations
+    chat_input_placeholder: '问我关于AI创投的任何问题...',
+    chat_welcome_title: '您好！我是SVTR.AI助手，专注于AI创投生态系统分析。',
+    chat_welcome_content: `我可以为您提供：
+• 最新AI创投市场动态
+• 投资机构和初创公司分析  
+• 行业趋势和技术评估
+• 专业投资建议
+
+请问您想了解什么？`,
+    chat_user_name: '您',
+    chat_ai_name: 'SVTR.AI',
+    chat_thinking: '正在分析',
+    chat_share_btn: '分享',
+    chat_clear_btn: '清空'
   },
   'en': {
     title: 'SVTR.AI',
     sidebar_title: 'SVTR.AI',
     nav_ai100: 'AI 100',
+    nav_ai_weekly: 'AI Weekly',
+    nav_trading_picks: 'Trading Picks',
     nav_ranking: 'AI Ranking',
     sub_financing: 'Financing',
     sub_industries: 'Industries',
@@ -81,7 +100,22 @@ const translations = {
     email_placeholder: 'Enter your email',
     input_placeholder: 'Type your question...',
     send_btn: 'Send',
-    footer_text: '© 2025 SVTR.AI. All rights reserved.'
+    footer_text: '© 2025 SVTR.AI. All rights reserved.',
+    // Chat bot translations
+    chat_input_placeholder: 'Ask me anything about AI venture capital...',
+    chat_welcome_title: 'Hello! I\'m SVTR.AI assistant, specializing in AI venture capital ecosystem analysis.',
+    chat_welcome_content: `I can provide you with:
+• Latest AI VC market dynamics
+• Investment firms and startup analysis
+• Industry trends and technology assessments  
+• Professional investment insights
+
+What would you like to know?`,
+    chat_user_name: 'You',
+    chat_ai_name: 'SVTR.AI',
+    chat_thinking: 'Analyzing',
+    chat_share_btn: 'Share',
+    chat_clear_btn: 'Clear'
   }
 };
 
