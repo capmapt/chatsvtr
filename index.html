@@ -34,6 +34,8 @@
     </div>
     <nav>
       <ul class="nav-list">
+        <li><a href="pages/ai-weekly.html" data-i18n="nav_ai_weekly">AI周报</a></li>
+        <li><a href="pages/trading-picks.html" data-i18n="nav_trading_picks">交易精选</a></li>
         <li><a href="pages/ai-100.html" data-i18n="nav_ai100">AI 100</a></li>
         <li>
           <a href="https://c0uiiy15npu.feishu.cn/wiki/DI9Hw8v8tiZF2Xk13KDcDI8Bn1b?from=from_copylink" data-i18n="nav_ranking" target="_blank">AI创投榜</a>
@@ -128,21 +130,16 @@
   </section>
   <!-- 🚀 统计卡片 END -->
     
-    <!-- Chatbox BEGIN -->
+    <!-- Native Chat BEGIN -->
     <section class="chatbox wrapper">
       <h2 class="chat-header" data-i18n="chat_header">
         Chat with <a href="https://svtr.ai" target="_blank">SVTR.AI</a>
       </h2>
-      <iframe
-        id="svtrChatFrame"
-        src="https://chat.svtrglobal.com"
-        title="SVTR AI Chat"
-        class="chat-iframe"
-        loading="lazy"
-        allow="clipboard-read; clipboard-write">
-      </iframe>
+      <div id="svtr-chat-container" class="native-chat-container">
+        <!-- 原生聊天组件将在这里加载 -->
+      </div>
     </section>
-    <!-- Chatbox END -->
+    <!-- Native Chat END -->
   </main>
   <footer>
     <div class="footer-text-container" data-i18n="footer_text"></div>
@@ -154,5 +151,8 @@
   <script src="assets/js/translations.js"></script>
   <script src="assets/js/i18n.js" defer></script>
   <script src="assets/js/main-optimized.js" defer></script>
+  <!-- Native Chat Component -->
+  <link rel="stylesheet" href="assets/css/chat.css">
+  <script src="assets/js/chat.js" defer></script>
 </body>
 </html>

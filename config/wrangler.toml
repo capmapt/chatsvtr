@@ -3,6 +3,10 @@ name = "chatsvtr"
 compatibility_date = "2024-07-16"
 pages_build_output_dir = "."
 
+# Cloudflare Workers AI 配置
+[ai]
+binding = "AI"
+
 # 静态资源缓存
 [[headers]]
 for = "/assets/*"
