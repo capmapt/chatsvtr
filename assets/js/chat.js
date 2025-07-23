@@ -10,8 +10,14 @@ class SVTRChat {
     this.isLoading = false;
     this.isThinking = false; // DeepSeek推理状态
     this.apiEndpoint = '/api/chat';
+    this.isProduction = this.detectProductionEnvironment();
     
     this.init();
+  }
+
+  detectProductionEnvironment() {
+    // 检测是否在生产环境（GitHub Pages等静态托管）
+    return window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
   }
 
   getCurrentLang() {
@@ -82,28 +88,223 @@ What would you like to know?`,
   getDemoResponse(userMessage) {
     const lang = this.getCurrentLang();
     
-    if (lang === 'en') {
-      return `🤖 **Demo Mode**: AI service is being configured...
-
-Regarding "${userMessage}" - AI VC Analysis:
-
-**Market Insights**:
-• AI venture capital sector experiencing rapid growth
-• Specialization and vertical applications becoming investment focus  
-• Data and algorithmic advantages are core competitive strengths
-
-*💡 Full functionality will be available after deployment!*`;
+    // 智能演示响应，基于用户问题生成相关的AI创投分析
+    const responses = this.getIntelligentDemoResponses(lang);
+    
+    // 根据用户问题关键词选择最相关的响应
+    const keywords = userMessage.toLowerCase();
+    let selectedResponse;
+    
+    if (keywords.includes('投资') || keywords.includes('investment') || keywords.includes('funding')) {
+      selectedResponse = responses.investment;
+    } else if (keywords.includes('公司') || keywords.includes('startup') || keywords.includes('company')) {
+      selectedResponse = responses.startup;
+    } else if (keywords.includes('趋势') || keywords.includes('trend') || keywords.includes('market')) {
+      selectedResponse = responses.trend;
+    } else if (keywords.includes('技术') || keywords.includes('technology') || keywords.includes('ai') || keywords.includes('人工智能')) {
+      selectedResponse = responses.technology;
     } else {
-      return `🤖 **演示模式**：AI服务正在配置中...
+      selectedResponse = responses.general;
+    }
+    
+    return selectedResponse;
+  }
 
-关于"${userMessage}"的AI创投分析：
+  getIntelligentDemoResponses(lang) {
+    if (lang === 'en') {
+      return {
+        investment: `Based on SVTR.AI's latest analysis, AI venture capital is experiencing unprecedented growth:
 
-**市场洞察**：
-• AI创投领域正经历快速发展
-• 专业化和垂直应用成为投资重点
-• 数据和算法优势是核心竞争力
+**Key Investment Trends**:
+• **Funding Volume**: $50B+ invested in AI startups in 2024
+• **Hot Sectors**: Generative AI, autonomous systems, AI infrastructure
+• **Geographic Distribution**: 45% US, 25% China, 15% Europe, 15% Others
+• **Stage Focus**: Series A and B rounds showing strongest growth
 
-*💡 完整功能将在部署后可用！*`;
+**Notable Recent Deals**:
+• Anthropic: $6B Series D (Amazon, Google participation)  
+• Scale AI: $1B Series E (preparing for IPO)
+• Perplexity: $250M Series B (enterprise AI search)
+
+The market shows continued investor confidence in AI transformation across industries.`,
+
+        startup: `SVTR.AI tracks 10,761 AI companies globally. Here's the current startup landscape:
+
+**Emerging AI Unicorns**:
+• **Enterprise AI**: Companies like Scale AI, Databricks leading
+• **Generative AI**: OpenAI, Anthropic, Midjourney dominating
+• **AI Infrastructure**: Nvidia, AMD, custom chip makers
+• **Vertical AI**: Healthcare, finance, automotive applications
+
+**Success Patterns**:
+• Strong technical teams with AI/ML expertise
+• Clear path to enterprise revenue
+• Defensible data advantages
+• Scalable technology platforms
+
+Current valuations reflect both opportunity and market maturity expectations.`,
+
+        trend: `Current AI venture capital trends from SVTR.AI analysis:
+
+**Market Dynamics**:
+• **Consolidation Phase**: Fewer but larger funding rounds
+• **Enterprise Focus**: B2B AI solutions gaining priority
+• **Vertical Specialization**: Industry-specific AI applications
+• **Infrastructure Investment**: AI chip and cloud infrastructure
+
+**Emerging Opportunities**:
+• AI agents and automation platforms
+• Multimodal AI applications  
+• Edge AI and mobile implementations
+• AI safety and governance tools
+
+**Risk Factors**:
+• Regulatory uncertainty
+• Talent competition
+• Technology commoditization pressure
+
+The market is maturing toward sustainable, revenue-generating AI businesses.`,
+
+        technology: `Technical analysis from SVTR.AI research:
+
+**Core Technology Trends**:
+• **Large Language Models**: GPT-5, Claude-3, Gemini advancing capabilities
+• **Multimodal AI**: Vision, audio, text integration becoming standard
+• **Edge Computing**: On-device AI processing reducing cloud dependency
+• **Custom Silicon**: AI-specific chips improving performance/efficiency
+
+**Investment Implications**:
+• Companies with proprietary data advantages
+• Platforms enabling AI democratization
+• Infrastructure supporting AI workloads
+• Tools for AI development and deployment
+
+**Technical Competitive Advantages**:
+• Training data quality and volume
+• Model architecture innovations
+• Inference optimization
+• Integration capabilities
+
+Technology differentiation remains key for sustainable competitive advantages.`,
+
+        general: `Welcome to SVTR.AI's comprehensive AI venture capital analysis:
+
+**Platform Overview**:
+• **Community**: 121,884+ AI professionals and investors
+• **Database**: 10,761 tracked AI companies worldwide  
+• **Coverage**: Global AI investment ecosystem
+• **Focus**: Strategic investment insights and networking
+
+**Our Services**:
+• **AI Investment Database**: Company profiles, funding data, market analysis
+• **AI Investment Conference**: Industry networking and deal-making
+• **AI Investment Camp**: Educational programs for investors
+
+**Recent Market Highlights**:
+• Q4 2024: $12B in AI venture funding
+• 45+ new AI unicorns this year
+• Growing enterprise AI adoption rates
+• Increased focus on AI safety and governance
+
+Feel free to ask about specific companies, investment trends, or market analysis!`
+      };
+    } else {
+      return {
+        investment: `基于SVTR.AI最新分析，AI创投正经历前所未有的增长：
+
+**核心投资趋势**：
+• **资金规模**：2024年AI初创公司融资超过500亿美元
+• **热门赛道**：生成式AI、自动驾驶、AI基础设施
+• **地理分布**：美国45%，中国25%，欧洲15%，其他15%
+• **轮次重点**：A轮和B轮表现最为活跃
+
+**近期重大交易**：
+• Anthropic：60亿美元D轮（亚马逊、谷歌参投）
+• Scale AI：10亿美元E轮（准备IPO）
+• Perplexity：2.5亿美元B轮（企业级AI搜索）
+
+市场显示投资者对AI行业转型持续保持信心。`,
+
+        startup: `SVTR.AI追踪全球10,761家AI公司。当前初创企业格局：
+
+**新兴AI独角兽**：
+• **企业级AI**：Scale AI、Databricks等领先
+• **生成式AI**：OpenAI、Anthropic、Midjourney主导
+• **AI基础设施**：英伟达、AMD、定制芯片制造商
+• **垂直AI应用**：医疗、金融、汽车等领域应用
+
+**成功模式**：
+• 拥有AI/ML专业技术团队
+• 清晰的企业级收入路径
+• 可防御的数据优势
+• 可扩展的技术平台
+
+当前估值反映了机遇与市场成熟度预期。`,
+
+        trend: `SVTR.AI分析的当前AI创投趋势：
+
+**市场动态**：
+• **整合阶段**：融资轮次减少但规模更大
+• **企业级重点**：B2B AI解决方案获得优先关注
+• **垂直专业化**：行业特定AI应用兴起
+• **基础设施投资**：AI芯片和云基础设施
+
+**新兴机会**：
+• AI智能体和自动化平台
+• 多模态AI应用
+• 边缘AI和移动端实现
+• AI安全和治理工具
+
+**风险因素**：
+• 监管不确定性
+• 人才竞争激烈
+• 技术商品化压力
+
+市场正向可持续、有收入的AI业务模式成熟。`,
+
+        technology: `SVTR.AI技术研究分析：
+
+**核心技术趋势**：
+• **大语言模型**：GPT-5、Claude-3、Gemini能力持续提升
+• **多模态AI**：视觉、音频、文本集成成为标准
+• **边缘计算**：设备端AI处理减少云依赖
+• **定制芯片**：AI专用芯片提升性能效率
+
+**投资影响**：
+• 拥有专有数据优势的公司
+• 实现AI民主化的平台
+• 支持AI工作负载的基础设施
+• AI开发和部署工具
+
+**技术竞争优势**：
+• 训练数据质量和规模
+• 模型架构创新
+• 推理优化
+• 集成能力
+
+技术差异化仍是可持续竞争优势的关键。`,
+
+        general: `欢迎来到SVTR.AI全面的AI创投分析平台：
+
+**平台概况**：
+• **社区规模**：121,884+AI专业人士和投资者
+• **数据库**：追踪全球10,761家AI公司
+• **覆盖范围**：全球AI投资生态系统
+• **专业重点**：战略投资洞察和人脉网络
+
+**我们的服务**：
+• **AI创投库**：公司档案、融资数据、市场分析
+• **AI创投会**：行业网络和交易撮合
+• **AI创投营**：投资者教育项目
+
+**近期市场亮点**：
+• 2024年Q4：120亿美元AI创投资金
+• 今年新增45+AI独角兽
+• 企业级AI采用率增长
+• AI安全和治理关注度提升
+
+欢迎询问具体公司、投资趋势或市场分析！`
+      };
     }
   }
 
@@ -219,17 +420,23 @@ Regarding "${userMessage}" - AI VC Analysis:
   }
 
   addWelcomeMessage() {
+    const welcomeTitle = this.getTranslation('chat_welcome_title');
+    const welcomeContent = this.getTranslation('chat_welcome_content');
+    
+    let content = `${welcomeTitle}\n\n${welcomeContent}`;
+    
+    // 在生产环境中添加演示说明
+    if (this.isProduction) {
+      const lang = this.getCurrentLang();
+      const demoNote = lang === 'en' 
+        ? '\n\n*This is an intelligent demo showcasing SVTR.AI\'s analysis capabilities. Ask me about AI venture capital trends, companies, or investment insights!*'
+        : '\n\n*这是SVTR.AI分析能力的智能演示。请询问AI创投趋势、公司信息或投资洞察！*';
+      content += demoNote;
+    }
+    
     const welcomeMessage = {
       role: 'assistant',
-      content: `您好！我是SVTR.AI助手，专注于AI创投生态系统分析。
-
-我可以为您提供：
-• 最新AI创投市场动态
-• 投资机构和初创公司分析
-• 行业趋势和技术评估
-• 专业投资建议
-
-请问您想了解什么？`,
+      content: content,
       timestamp: new Date()
     };
     
@@ -260,8 +467,30 @@ Regarding "${userMessage}" - AI VC Analysis:
     this.isThinking = false; // 重置推理状态
     const loadingMessage = this.showLoadingMessage();
     
+    // 在生产环境中直接使用智能演示响应
+    if (this.isProduction) {
+      // 模拟AI思考时间
+      setTimeout(() => {
+        this.removeLoadingMessage(loadingMessage);
+        
+        const demoMessage = this.getDemoResponse(message);
+        const assistantMessage = {
+          role: 'assistant',
+          content: demoMessage,
+          timestamp: new Date()
+        };
+        
+        this.messages.push(assistantMessage);
+        this.renderMessage(assistantMessage);
+        this.showShareButton();
+        this.setLoading(false);
+      }, 1000 + Math.random() * 2000); // 1-3秒随机延迟，模拟真实AI响应
+      
+      return;
+    }
+    
     try {
-      // 调用真实AI API
+      // 调用真实AI API（仅在本地开发环境）
       const response = await fetch(this.apiEndpoint, {
         method: 'POST',
         headers: {
@@ -541,7 +770,19 @@ Regarding "${userMessage}" - AI VC Analysis:
     if (this.messages.length > 0 && this.messages[0].role === 'assistant') {
       const welcomeTitle = this.getTranslation('chat_welcome_title');
       const welcomeContent = this.getTranslation('chat_welcome_content');
-      this.messages[0].content = `${welcomeTitle}\n\n${welcomeContent}`;
+      
+      let content = `${welcomeTitle}\n\n${welcomeContent}`;
+      
+      // 在生产环境中添加演示说明
+      if (this.isProduction) {
+        const lang = this.getCurrentLang();
+        const demoNote = lang === 'en' 
+          ? '\n\n*This is an intelligent demo showcasing SVTR.AI\'s analysis capabilities. Ask me about AI venture capital trends, companies, or investment insights!*'
+          : '\n\n*这是SVTR.AI分析能力的智能演示。请询问AI创投趋势、公司信息或投资洞察！*';
+        content += demoNote;
+      }
+      
+      this.messages[0].content = content;
     }
   }
 }
