@@ -10,11 +10,13 @@
   <title data-i18n="title">硅谷科技评论</title>
   <meta name="description" content="SVTR.AI - 硅谷科技评论，专注AI创投领域的社区门户网站，提供AI创投榜、AI创投库、AI创投会等服务">
   <meta name="keywords" content="AI创投,硅谷科技,SVTR.AI,人工智能投资,创业公司,投资机构">
-  <link rel="preload" href="assets/css/style.css" as="style">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="preload" href="assets/css/style-optimized.css" as="style">
+  <link rel="stylesheet" href="assets/css/style-optimized.css">
   
-  <!-- Preload critical images -->
+  <!-- Preload critical images (WebP with fallback) -->
+  <link rel="preload" href="assets/images/banner.webp" as="image" type="image/webp">
   <link rel="preload" href="assets/images/banner.png" as="image">
+  <link rel="preload" href="assets/images/logo.webp" as="image" type="image/webp">
   <link rel="preload" href="assets/images/logo.jpg" as="image">
 </head>
 <body>
@@ -29,7 +31,10 @@
   <div class="overlay active"></div>
   <aside class="sidebar open" role="navigation" aria-label="主导航">
     <div class="sidebar-header">
-      <img src="assets/images/logo.jpg" class="sidebar-logo" alt="SVTR.AI logo" data-i18n-attr-alt="logo_alt_text" loading="lazy">
+      <picture>
+        <source srcset="assets/images/logo.webp" type="image/webp">
+        <img src="assets/images/logo.jpg" class="sidebar-logo" alt="SVTR.AI logo" data-i18n-attr-alt="logo_alt_text" loading="lazy">
+      </picture>
       <h2 data-i18n="sidebar_title">硅谷科技评论</h2>
     </div>
     <nav>
@@ -76,7 +81,10 @@
           <div class="qr-title" data-i18n="sidebar_qr_title">扫码加群</div>
         </div>
         <div class="qr-image-wrapper">
-          <img src="assets/images/qr-code.jpg" alt="添加好友二维码" data-i18n-attr-alt="qr_alt_text" loading="lazy">
+          <picture>
+            <source srcset="assets/images/qr-code.webp" type="image/webp">
+            <img src="assets/images/qr-code.jpg" alt="添加好友二维码" data-i18n-attr-alt="qr_alt_text" loading="lazy">
+          </picture>
           <div class="qr-overlay">
             <div class="scan-line"></div>
           </div>
@@ -104,7 +112,10 @@
       <div class="banner-header" role="banner" aria-label="首页横幅">
         <div class="banner-content">
           <div class="banner-logo">
-            <img src="assets/images/logo.jpg" alt="SVTR.AI logo" loading="lazy">
+            <picture>
+              <source srcset="assets/images/logo.webp" type="image/webp">
+              <img src="assets/images/logo.jpg" alt="SVTR.AI logo" loading="lazy">
+            </picture>
           </div>
           <div class="banner-text">
             <h1 class="banner-title" data-i18n="banner_title">硅谷科技评论</h1>
@@ -149,10 +160,10 @@
   
   <!-- Load translations and scripts -->
   <script src="assets/js/translations.js"></script>
-  <script src="assets/js/i18n.js" defer></script>
+  <script src="assets/js/i18n-optimized.js" defer></script>
   <script src="assets/js/main-optimized.js" defer></script>
   <!-- Native Chat Component -->
-  <link rel="stylesheet" href="assets/css/chat.css">
-  <script src="assets/js/chat.js" defer></script>
+  <link rel="stylesheet" href="assets/css/chat-optimized.css">
+  <script src="assets/js/chat-optimized.js" defer></script>
 </body>
 </html>
