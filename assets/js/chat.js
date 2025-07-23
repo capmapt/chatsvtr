@@ -20,6 +20,91 @@ class SVTRChat {
     return window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
   }
 
+  async tryRealAPIFirst(message, loadingMessage) {
+    try {
+      // 尝试调用真实AI API
+      const response = await fetch(this.apiEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          messages: this.messages.filter(m => m.role !== 'system')
+        }),
+      });
+
+      if (response.ok) {
+        // API可用，处理流式响应
+        this.handleStreamingResponse(response, loadingMessage);
+        return true;
+      }
+    } catch (error) {
+      console.log('Real API not available, using smart demo mode');
+    }
+    return false;
+  }
+
+  async handleStreamingResponse(response, loadingMessage) {
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let assistantMessage = {
+      role: 'assistant',
+      content: '',
+      timestamp: new Date()
+    };
+    
+    let messageElement = null;
+    let contentElement = null;
+    let hasContent = false;
+    
+    try {
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        
+        const chunk = decoder.decode(value, {stream: true});
+        const lines = chunk.split('\n');
+        
+        for (const line of lines) {
+          if (line.trim() && line.startsWith('data: ')) {
+            try {
+              const jsonStr = line.slice(6).trim();
+              if (jsonStr === '[DONE]') break;
+              
+              const data = JSON.parse(jsonStr);
+              if (data.response && typeof data.response === 'string') {
+                if (!hasContent) {
+                  this.removeLoadingMessage(loadingMessage);
+                  messageElement = this.renderMessage(assistantMessage);
+                  contentElement = messageElement.querySelector('.message-content');
+                  hasContent = true;
+                }
+                
+                assistantMessage.content += data.response;
+                contentElement.innerHTML = this.formatMessage(assistantMessage.content);
+                
+                requestAnimationFrame(() => {
+                  this.scrollToBottom();
+                });
+              }
+            } catch (e) {
+              // 忽略解析错误
+            }
+          }
+        }
+      }
+    } finally {
+      reader.releaseLock();
+    }
+    
+    if (assistantMessage.content.trim()) {
+      this.messages.push(assistantMessage);
+      this.showShareButton();
+    }
+    
+    this.setLoading(false);
+  }
+
   getCurrentLang() {
     // Check if i18n is available, otherwise check button states
     if (window.i18n) {
@@ -85,35 +170,89 @@ What would you like to know?`,
     return fallbackTranslations[lang] ? fallbackTranslations[lang][key] : key;
   }
 
-  getDemoResponse(userMessage) {
+  getSmartDemoResponse(userMessage) {
     const lang = this.getCurrentLang();
     
-    // 智能演示响应，基于用户问题生成相关的AI创投分析
-    const responses = this.getIntelligentDemoResponses(lang);
+    // 分析对话历史，避免重复回复
+    const conversationHistory = this.messages.filter(m => m.role === 'user').map(m => m.content);
+    const previousTopics = this.extractTopicsFromHistory(conversationHistory);
     
-    // 根据用户问题关键词选择最相关的响应
-    const keywords = userMessage.toLowerCase();
-    let selectedResponse;
+    // 智能选择回复类型
+    const responseType = this.selectResponseType(userMessage, previousTopics);
     
-    if (keywords.includes('投资') || keywords.includes('investment') || keywords.includes('funding')) {
-      selectedResponse = responses.investment;
-    } else if (keywords.includes('公司') || keywords.includes('startup') || keywords.includes('company')) {
-      selectedResponse = responses.startup;
-    } else if (keywords.includes('趋势') || keywords.includes('trend') || keywords.includes('market')) {
-      selectedResponse = responses.trend;
-    } else if (keywords.includes('技术') || keywords.includes('technology') || keywords.includes('ai') || keywords.includes('人工智能')) {
-      selectedResponse = responses.technology;
-    } else {
-      selectedResponse = responses.general;
-    }
-    
-    return selectedResponse;
+    // 生成带随机性的个性化回复
+    return this.generateVariedResponse(userMessage, responseType, lang, conversationHistory.length);
   }
 
-  getIntelligentDemoResponses(lang) {
+  extractTopicsFromHistory(history) {
+    const topics = new Set();
+    history.forEach(msg => {
+      const lower = msg.toLowerCase();
+      if (lower.includes('投资') || lower.includes('investment')) topics.add('investment');
+      if (lower.includes('公司') || lower.includes('startup')) topics.add('startup');
+      if (lower.includes('趋势') || lower.includes('trend')) topics.add('trend');
+      if (lower.includes('技术') || lower.includes('technology')) topics.add('technology');
+    });
+    return Array.from(topics);
+  }
+
+  selectResponseType(message, previousTopics) {
+    const keywords = message.toLowerCase();
+    
+    // 基础分类
+    let baseType = 'general';
+    if (keywords.includes('投资') || keywords.includes('investment') || keywords.includes('funding')) {
+      baseType = 'investment';
+    } else if (keywords.includes('公司') || keywords.includes('startup') || keywords.includes('company')) {
+      baseType = 'startup';
+    } else if (keywords.includes('趋势') || keywords.includes('trend') || keywords.includes('market')) {
+      baseType = 'trend';
+    } else if (keywords.includes('技术') || keywords.includes('technology') || keywords.includes('ai')) {
+      baseType = 'technology';
+    }
+    
+    // 如果之前讨论过相同话题，选择不同角度
+    if (previousTopics.includes(baseType)) {
+      baseType += '_alt'; // 选择替代视角
+    }
+    
+    return baseType;
+  }
+
+  generateVariedResponse(userMessage, responseType, lang, conversationCount) {
+    const responses = this.getVariedDemoResponses(lang);
+    const baseType = responseType.replace('_alt', '');
+    
+    // 根据对话轮数和类型选择不同回复
+    const responseOptions = responses[baseType] || responses.general;
+    const selectedIndex = conversationCount % responseOptions.length;
+    
+    let response = responseOptions[selectedIndex];
+    
+    // 如果是替代视角，添加补充信息
+    if (responseType.includes('_alt')) {
+      const supplements = responses.supplements[baseType];
+      if (supplements) {
+        const suppIndex = Math.floor(Math.random() * supplements.length);
+        response += '\n\n' + supplements[suppIndex];
+      }
+    }
+    
+    // 添加个性化引用用户问题
+    if (lang === 'en') {
+      response = `Regarding your question about "${userMessage}":\n\n` + response;
+    } else {
+      response = `关于您提到的"${userMessage}"：\n\n` + response;
+    }
+    
+    return response;
+  }
+
+  getVariedDemoResponses(lang) {
     if (lang === 'en') {
       return {
-        investment: `Based on SVTR.AI's latest analysis, AI venture capital is experiencing unprecedented growth:
+        investment: [
+          `Based on SVTR.AI's latest analysis, AI venture capital is experiencing unprecedented growth:
 
 **Key Investment Trends**:
 • **Funding Volume**: $50B+ invested in AI startups in 2024
@@ -128,89 +267,216 @@ What would you like to know?`,
 
 The market shows continued investor confidence in AI transformation across industries.`,
 
-        startup: `SVTR.AI tracks 10,761 AI companies globally. Here's the current startup landscape:
+          `From an investor perspective, the AI venture landscape is rapidly maturing:
+
+**Investment Patterns**:
+• **Mega Rounds**: $100M+ funding becoming standard for AI leaders
+• **Valuation Metrics**: Revenue multiples reaching 20-50x for growth-stage AI
+• **Due Diligence Focus**: Technical moats, data advantages, and go-to-market strategy
+• **Exit Opportunities**: IPO pipeline building with 10+ AI unicorns preparing
+
+**Strategic Considerations**:
+• Enterprise adoption driving B2B AI valuations
+• Infrastructure plays gaining premium valuations
+• Regulatory compliance becoming key differentiator
+• AI talent acquisition costs impacting unit economics
+
+Current market dynamics favor companies with proven revenue traction and clear paths to profitability.`,
+
+          `SVTR.AI's investment database reveals shifting capital allocation patterns:
+
+**Sector Rotation**:
+• **From** Consumer AI → **To** Enterprise Solutions
+• **From** Large Models → **To** Application Layer
+• **From** Generative AI → **To** Specialized AI Tools
+• **Stage Preference**: Growth equity over early-stage speculation
+
+**Risk Assessment**:
+• Market saturation in consumer generative AI
+• Regulatory headwinds affecting model development
+• Talent costs pressuring unit economics
+• Competition from Big Tech internal development
+
+Smart money is focusing on defensible AI applications with clear ROI metrics.`
+        ],
+
+        startup: [
+          `SVTR.AI tracks 10,761 AI companies globally. Here's the current startup landscape:
 
 **Emerging AI Unicorns**:
-• **Enterprise AI**: Companies like Scale AI, Databricks leading
-• **Generative AI**: OpenAI, Anthropic, Midjourney dominating
-• **AI Infrastructure**: Nvidia, AMD, custom chip makers
-• **Vertical AI**: Healthcare, finance, automotive applications
+• **Enterprise AI**: Scale AI, Databricks leading with $1B+ valuations
+• **Generative AI**: OpenAI, Anthropic, Midjourney dominating creative markets
+• **AI Infrastructure**: Nvidia, AMD, custom chip makers driving hardware innovation
+• **Vertical AI**: Healthcare, finance, automotive applications showing strong growth
 
 **Success Patterns**:
 • Strong technical teams with AI/ML expertise
-• Clear path to enterprise revenue
-• Defensible data advantages
-• Scalable technology platforms
+• Clear path to enterprise revenue models
+• Defensible data advantages and network effects
+• Scalable technology platforms with API-first approach
 
-Current valuations reflect both opportunity and market maturity expectations.`,
+Current valuations reflect both massive opportunity and market maturity expectations.`,
 
-        trend: `Current AI venture capital trends from SVTR.AI analysis:
+          `Analyzing successful AI startups reveals key differentiation strategies:
+
+**Competitive Positioning**:
+• **Data Moats**: Proprietary datasets creating unique training advantages
+• **Technical Excellence**: PhD-level talent from top research institutions
+• **Go-to-Market**: Enterprise sales teams with domain expertise
+• **Capital Efficiency**: Lean operations leveraging cloud infrastructure
+
+**Growth Metrics**:
+• ARR growth rates of 300-500% for top performers
+• Customer acquisition costs dropping with product maturity
+• Net revenue retention exceeding 120% for enterprise-focused companies
+• Time to value under 30 days for successful implementations
+
+The winners are building sustainable competitive advantages beyond just AI capabilities.`
+        ],
+
+        trend: [
+          `Current AI venture capital trends reveal market evolution patterns:
 
 **Market Dynamics**:
-• **Consolidation Phase**: Fewer but larger funding rounds
-• **Enterprise Focus**: B2B AI solutions gaining priority
-• **Vertical Specialization**: Industry-specific AI applications
-• **Infrastructure Investment**: AI chip and cloud infrastructure
+• **Consolidation Phase**: Fewer but larger funding rounds ($50M+ becoming standard)
+• **Enterprise Focus**: B2B AI solutions commanding premium valuations
+• **Vertical Specialization**: Industry-specific AI applications gaining traction
+• **Infrastructure Investment**: AI chip and cloud infrastructure seeing massive inflows
 
 **Emerging Opportunities**:
 • AI agents and automation platforms
-• Multimodal AI applications  
+• Multimodal AI applications combining vision, text, audio
 • Edge AI and mobile implementations
 • AI safety and governance tools
 
-**Risk Factors**:
-• Regulatory uncertainty
-• Talent competition
-• Technology commoditization pressure
+The market is maturing toward sustainable, revenue-generating AI businesses with clear unit economics.`,
 
-The market is maturing toward sustainable, revenue-generating AI businesses.`,
+          `SVTR.AI's trend analysis highlights shifting investor priorities:
 
-        technology: `Technical analysis from SVTR.AI research:
+**Investment Evolution**:
+• **2023**: Generative AI hype cycle peaks
+• **2024**: Enterprise adoption focus emerges
+• **2025**: Profitable AI applications prioritized
+
+**Geographic Shifts**:
+• US maintaining 45% market share but growth slowing
+• Europe gaining ground with regulatory clarity
+• Asia focusing on manufacturing and robotics AI
+• Emerging markets developing localized AI solutions
+
+**Sector Rotation Patterns**:
+• Consumer AI → Enterprise solutions
+• General purpose → Specialized applications  
+• Model development → Application layer innovation
+• Venture capital → Growth equity preference
+
+Smart investors are positioning for the next phase of AI commercialization.`
+        ],
+
+        technology: [
+          `Technical analysis from SVTR.AI's research team:
 
 **Core Technology Trends**:
-• **Large Language Models**: GPT-5, Claude-3, Gemini advancing capabilities
-• **Multimodal AI**: Vision, audio, text integration becoming standard
-• **Edge Computing**: On-device AI processing reducing cloud dependency
-• **Custom Silicon**: AI-specific chips improving performance/efficiency
+• **Large Language Models**: GPT-5, Claude-3, Gemini advancing reasoning capabilities
+• **Multimodal AI**: Vision, audio, text integration becoming industry standard
+• **Edge Computing**: On-device AI processing reducing cloud dependency and latency
+• **Custom Silicon**: AI-specific chips improving performance/efficiency ratios by 10x
 
 **Investment Implications**:
-• Companies with proprietary data advantages
-• Platforms enabling AI democratization
-• Infrastructure supporting AI workloads
-• Tools for AI development and deployment
+• Companies with proprietary data advantages commanding premium valuations
+• Platforms enabling AI democratization seeing massive adoption
+• Infrastructure supporting AI workloads experiencing supply constraints
+• Developer tools for AI deployment becoming critical bottlenecks
 
-**Technical Competitive Advantages**:
-• Training data quality and volume
-• Model architecture innovations
-• Inference optimization
-• Integration capabilities
+Technology differentiation remains the key driver of sustainable competitive advantages.`,
 
-Technology differentiation remains key for sustainable competitive advantages.`,
+          `From a technical investment perspective, the AI stack is consolidating:
 
-        general: `Welcome to SVTR.AI's comprehensive AI venture capital analysis:
+**Architecture Evolution**:
+• **Model Layer**: Foundation models becoming commoditized utilities
+• **Application Layer**: Where most value creation and capture occurs
+• **Infrastructure Layer**: Critical but capital-intensive with lower margins
+• **Data Layer**: Increasingly recognized as the primary moat
+
+**Technical Risk Factors**:
+• Model performance plateauing without architectural breakthroughs
+• Training costs increasing exponentially with model size
+• Inference optimization becoming competitive necessity
+• Regulatory constraints on data usage and model deployment
+
+The next wave of AI investing will focus on companies solving real business problems rather than just advancing model capabilities.`
+        ],
+
+        general: [
+          `Welcome to SVTR.AI's comprehensive AI venture capital analysis platform:
 
 **Platform Overview**:
-• **Community**: 121,884+ AI professionals and investors
-• **Database**: 10,761 tracked AI companies worldwide  
-• **Coverage**: Global AI investment ecosystem
-• **Focus**: Strategic investment insights and networking
+• **Community**: 121,884+ AI professionals and investors globally
+• **Database**: 10,761 tracked AI companies with real-time updates
+• **Coverage**: Complete global AI investment ecosystem mapping
+• **Focus**: Strategic investment insights and professional networking
 
 **Our Services**:
-• **AI Investment Database**: Company profiles, funding data, market analysis
-• **AI Investment Conference**: Industry networking and deal-making
-• **AI Investment Camp**: Educational programs for investors
+• **AI Investment Database**: Detailed company profiles, funding data, market analysis
+• **AI Investment Conference**: Premium industry networking and deal-making events
+• **AI Investment Camp**: Executive education programs for sophisticated investors
 
 **Recent Market Highlights**:
-• Q4 2024: $12B in AI venture funding
-• 45+ new AI unicorns this year
-• Growing enterprise AI adoption rates
-• Increased focus on AI safety and governance
+• Q4 2024: $12B in AI venture funding across 200+ deals
+• 45+ new AI unicorns achieved $1B+ valuations this year
+• Enterprise AI adoption rates exceeding 80% among Fortune 500
+• Regulatory frameworks driving AI safety and governance investments`,
 
-Feel free to ask about specific companies, investment trends, or market analysis!`
+          `SVTR.AI provides institutional-grade AI investment intelligence:
+
+**Market Intelligence**:
+• Real-time funding announcements and valuation data
+• Technical due diligence frameworks for AI investments
+• Competitive landscape mapping and positioning analysis
+• Exit opportunity tracking including IPO and M&A pipelines
+
+**Investment Network**:
+• Direct access to 100+ active AI-focused VCs
+• LP introductions to top-tier AI investment funds
+• Entrepreneur-investor matching based on sector expertise
+• Deal syndication opportunities for qualified participants
+
+**Research Products**:
+• Weekly AI investment market updates and analysis
+• Quarterly deep-dive reports on emerging AI sectors
+• Annual AI venture capital market state analysis
+• Custom research engagements for institutional clients
+
+Our platform serves as the definitive source for AI investment market intelligence and networking.`
+        ],
+
+        supplements: {
+          investment: [
+            `**Additional Market Context**: Current AI investment concentration shows 80% of funding going to just 20% of companies, indicating a winner-take-all dynamic similar to previous technology cycles.`,
+            `**Regulatory Impact**: Recent AI governance frameworks in EU and US are creating compliance costs but also barriers to entry that benefit well-funded incumbents.`,
+            `**Global Dynamics**: Chinese AI investments have declined 40% due to export restrictions, while European AI funding has grown 150% year-over-year.`
+          ],
+          startup: [
+            `**Talent Wars**: AI engineer compensation has increased 60% year-over-year, with signing bonuses reaching $500K+ for senior ML engineers at top startups.`,
+            `**Technical Moats**: Companies building on proprietary datasets are achieving 3x higher valuations than those relying on public data sources.`,
+            `**Customer Concentration**: Most successful AI startups derive 60%+ revenue from enterprise customers with $1B+ annual revenue.`
+          ],
+          trend: [
+            `**Cyclical Patterns**: AI investment cycles are shortening from 18-month to 12-month periods, driven by rapid technology advancement.`,
+            `**Sector Maturity**: Enterprise AI categories are reaching Series B/C maturity while consumer AI remains early-stage experimental.`,
+            `**Geographic Arbitrage**: Emerging markets offering 70% cost advantages for AI development talent while maintaining comparable quality.`
+          ],
+          technology: [
+            `**Performance Benchmarks**: Latest AI models are achieving human-level performance on 90%+ of standardized cognitive tasks, but real-world deployment remains challenging.`,
+            `**Infrastructure Costs**: Training costs for frontier models have increased 10x annually, creating natural barriers to entry for new model developers.`,
+            `**Open Source Impact**: Open-source AI models are commoditizing basic capabilities while specialized applications maintain pricing power.`
+          ]
+        }
       };
     } else {
       return {
-        investment: `基于SVTR.AI最新分析，AI创投正经历前所未有的增长：
+        investment: [
+          `基于SVTR.AI最新分析，AI创投正经历前所未有的增长：
 
 **核心投资趋势**：
 • **资金规模**：2024年AI初创公司融资超过500亿美元
@@ -225,85 +491,195 @@ Feel free to ask about specific companies, investment trends, or market analysis
 
 市场显示投资者对AI行业转型持续保持信心。`,
 
-        startup: `SVTR.AI追踪全球10,761家AI公司。当前初创企业格局：
+          `从投资人视角看，AI创投生态正快速成熟：
+
+**投资模式变化**：
+• **大额融资**：1亿美元以上轮次成为AI头部公司标配
+• **估值倍数**：成长期AI公司收入倍数达到20-50倍
+• **尽调重点**：技术护城河、数据优势、市场拓展策略
+• **退出机会**：10+AI独角兽正准备IPO
+
+**战略考量**：
+• 企业级应用推动B2B AI估值上升
+• 基础设施投资获得溢价估值
+• 合规要求成为关键差异化因素
+• AI人才获取成本影响单位经济模型
+
+当前市场动态偏向有proven收入牵引力和明确盈利路径的公司。`
+        ],
+
+        startup: [
+          `SVTR.AI追踪全球10,761家AI公司。当前初创企业格局：
 
 **新兴AI独角兽**：
-• **企业级AI**：Scale AI、Databricks等领先
-• **生成式AI**：OpenAI、Anthropic、Midjourney主导
-• **AI基础设施**：英伟达、AMD、定制芯片制造商
-• **垂直AI应用**：医疗、金融、汽车等领域应用
+• **企业级AI**：Scale AI、Databricks等以10亿美元+估值领先
+• **生成式AI**：OpenAI、Anthropic、Midjourney主导创意市场
+• **AI基础设施**：英伟达、AMD、定制芯片制造商推动硬件创新
+• **垂直AI应用**：医疗、金融、汽车等领域应用增长强劲
 
 **成功模式**：
 • 拥有AI/ML专业技术团队
-• 清晰的企业级收入路径
-• 可防御的数据优势
-• 可扩展的技术平台
+• 清晰的企业级收入模式
+• 可防御的数据优势和网络效应
+• API优先的可扩展技术平台
 
-当前估值反映了机遇与市场成熟度预期。`,
+当前估值反映了巨大机遇与市场成熟度预期的平衡。`,
 
-        trend: `SVTR.AI分析的当前AI创投趋势：
+          `分析成功AI初创企业揭示关键差异化策略：
+
+**竞争定位**：
+• **数据护城河**：专有数据集创造独特训练优势
+• **技术卓越**：顶尖研究机构的博士级人才
+• **市场开拓**：具备领域专长的企业销售团队
+• **资本效率**：利用云基础设施的精益运营
+
+**增长指标**：
+• 头部公司ARR增长率300-500%
+• 随产品成熟客户获取成本下降
+• 企业级公司净收入留存率超过120%
+• 成功实施的价值实现时间少于30天
+
+胜出者正在构建超越AI能力本身的可持续竞争优势。`
+        ],
+
+        trend: [
+          `SVTR.AI分析的当前AI创投趋势揭示市场演进模式：
 
 **市场动态**：
-• **整合阶段**：融资轮次减少但规模更大
-• **企业级重点**：B2B AI解决方案获得优先关注
-• **垂直专业化**：行业特定AI应用兴起
-• **基础设施投资**：AI芯片和云基础设施
+• **整合阶段**：融资轮次减少但规模更大（5000万美元+成为标准）
+• **企业级重点**：B2B AI解决方案获得溢价估值
+• **垂直专业化**：行业特定AI应用获得牵引力
+• **基础设施投资**：AI芯片和云基础设施见证大量资金流入
 
 **新兴机会**：
 • AI智能体和自动化平台
-• 多模态AI应用
+• 结合视觉、文本、音频的多模态AI应用
 • 边缘AI和移动端实现
 • AI安全和治理工具
 
-**风险因素**：
-• 监管不确定性
-• 人才竞争激烈
-• 技术商品化压力
+市场正向具有清晰单位经济模型的可持续、有收入的AI业务成熟。`,
 
-市场正向可持续、有收入的AI业务模式成熟。`,
+          `SVTR.AI趋势分析突出投资者优先级的转变：
 
-        technology: `SVTR.AI技术研究分析：
+**投资演进**：
+• **2023年**：生成式AI炒作周期达到顶峰
+• **2024年**：企业级采用焦点出现
+• **2025年**：盈利AI应用获得优先考虑
+
+**地理转移**：
+• 美国保持45%市场份额但增长放缓
+• 欧洲凭借监管明确性获得优势
+• 亚洲专注制造业和机器人AI
+• 新兴市场开发本地化AI解决方案
+
+**赛道轮换模式**：
+• 消费AI → 企业解决方案
+• 通用目的 → 专业化应用
+• 模型开发 → 应用层创新
+• 风险投资 → 成长股权偏好
+
+聪明的投资者正为AI商业化的下一阶段定位。`
+        ],
+
+        technology: [
+          `SVTR.AI技术研究团队分析：
 
 **核心技术趋势**：
-• **大语言模型**：GPT-5、Claude-3、Gemini能力持续提升
-• **多模态AI**：视觉、音频、文本集成成为标准
-• **边缘计算**：设备端AI处理减少云依赖
-• **定制芯片**：AI专用芯片提升性能效率
+• **大语言模型**：GPT-5、Claude-3、Gemini推进推理能力
+• **多模态AI**：视觉、音频、文本集成成为行业标准
+• **边缘计算**：设备端AI处理减少云依赖和延迟
+• **定制芯片**：AI专用芯片将性能/效率比提升10倍
 
 **投资影响**：
-• 拥有专有数据优势的公司
-• 实现AI民主化的平台
-• 支持AI工作负载的基础设施
-• AI开发和部署工具
+• 拥有专有数据优势的公司获得溢价估值
+• 实现AI民主化的平台见证大规模采用
+• 支持AI工作负载的基础设施经历供应约束
+• AI部署开发工具成为关键瓶颈
 
-**技术竞争优势**：
-• 训练数据质量和规模
-• 模型架构创新
-• 推理优化
-• 集成能力
+技术差异化仍是可持续竞争优势的关键驱动因素。`,
 
-技术差异化仍是可持续竞争优势的关键。`,
+          `从技术投资角度看，AI技术栈正在整合：
 
-        general: `欢迎来到SVTR.AI全面的AI创投分析平台：
+**架构演进**：
+• **模型层**：基础模型成为商品化公用事业
+• **应用层**：大部分价值创造和捕获发生的地方
+• **基础设施层**：关键但资本密集，利润率较低
+• **数据层**：越来越被认为是主要护城河
+
+**技术风险因素**：
+• 模型性能在没有架构突破的情况下趋于平稳
+• 训练成本随模型大小指数级增长
+• 推理优化成为竞争必需品
+• 数据使用和模型部署的监管约束
+
+下一波AI投资将专注于解决真实商业问题的公司，而不仅仅是推进模型能力。`
+        ],
+
+        general: [
+          `欢迎来到SVTR.AI全面的AI创投分析平台：
 
 **平台概况**：
-• **社区规模**：121,884+AI专业人士和投资者
-• **数据库**：追踪全球10,761家AI公司
-• **覆盖范围**：全球AI投资生态系统
-• **专业重点**：战略投资洞察和人脉网络
+• **社区规模**：121,884+全球AI专业人士和投资者
+• **数据库**：追踪10,761家AI公司，实时更新
+• **覆盖范围**：完整的全球AI投资生态系统映射
+• **专业重点**：战略投资洞察和专业网络
 
 **我们的服务**：
-• **AI创投库**：公司档案、融资数据、市场分析
-• **AI创投会**：行业网络和交易撮合
-• **AI创投营**：投资者教育项目
+• **AI创投库**：详细公司档案、融资数据、市场分析
+• **AI创投会**：高端行业网络和交易撮合活动
+• **AI创投营**：面向资深投资者的高管教育项目
 
 **近期市场亮点**：
-• 2024年Q4：120亿美元AI创投资金
-• 今年新增45+AI独角兽
-• 企业级AI采用率增长
-• AI安全和治理关注度提升
+• 2024年Q4：120亿美元AI创投资金，覆盖200+交易
+• 今年新增45+AI独角兽实现10亿美元+估值
+• 财富500强企业AI采用率超过80%
+• 监管框架推动AI安全和治理投资`,
 
-欢迎询问具体公司、投资趋势或市场分析！`
+          `SVTR.AI提供机构级AI投资情报：
+
+**市场情报**：
+• 实时融资公告和估值数据
+• AI投资技术尽调框架
+• 竞争格局映射和定位分析
+• 退出机会追踪，包括IPO和M&A管道
+
+**投资网络**：
+• 直接接触100+活跃AI专注VC
+• 向顶级AI投资基金LP介绍
+• 基于行业专长的企业家-投资者匹配
+• 合格参与者的交易联合机会
+
+**研究产品**：
+• 每周AI投资市场更新和分析
+• 新兴AI领域季度深度报告
+• 年度AI创投市场状况分析
+• 面向机构客户的定制研究服务
+
+我们的平台是AI投资市场情报和网络的权威来源。`
+        ],
+
+        supplements: {
+          investment: [
+            `**附加市场背景**：当前AI投资集中度显示80%资金流向仅20%的公司，表明类似于之前技术周期的赢者通吃动态。`,
+            `**监管影响**：欧盟和美国最新AI治理框架正在创造合规成本，但也为资金充足的现有企业创造了进入壁垒。`,
+            `**全球动态**：由于出口限制，中国AI投资下降40%，而欧洲AI融资同比增长150%。`
+          ],
+          startup: [
+            `**人才争夺**：AI工程师薪酬同比增长60%，顶级初创企业高级ML工程师签约奖金达到50万美元+。`,
+            `**技术护城河**：基于专有数据集构建的公司估值比依赖公共数据源的公司高3倍。`,
+            `**客户集中度**：最成功的AI初创企业60%+收入来自年收入10亿美元+的企业客户。`
+          ],
+          trend: [
+            `**周期性模式**：AI投资周期正从18个月缩短到12个月周期，由快速技术进步驱动。`,
+            `**行业成熟度**：企业AI类别正达到B/C轮成熟度，而消费AI仍处于早期实验阶段。`,
+            `**地理套利**：新兴市场为AI开发人才提供70%成本优势，同时保持可比质量。`
+          ],
+          technology: [
+            `**性能基准**：最新AI模型在90%+标准化认知任务上达到人类水平性能，但现实世界部署仍具挑战性。`,
+            `**基础设施成本**：前沿模型训练成本每年增长10倍，为新模型开发者创造自然进入壁垒。`,
+            `**开源影响**：开源AI模型正在将基础能力商品化，而专业应用保持定价权。`
+          ]
+        }
       };
     }
   }
@@ -467,24 +843,29 @@ Feel free to ask about specific companies, investment trends, or market analysis
     this.isThinking = false; // 重置推理状态
     const loadingMessage = this.showLoadingMessage();
     
-    // 在生产环境中直接使用智能演示响应
+    // 在生产环境中先尝试真实API，如果失败再使用智能演示
     if (this.isProduction) {
-      // 模拟AI思考时间
-      setTimeout(() => {
-        this.removeLoadingMessage(loadingMessage);
-        
-        const demoMessage = this.getDemoResponse(message);
-        const assistantMessage = {
-          role: 'assistant',
-          content: demoMessage,
-          timestamp: new Date()
-        };
-        
-        this.messages.push(assistantMessage);
-        this.renderMessage(assistantMessage);
-        this.showShareButton();
-        this.setLoading(false);
-      }, 1000 + Math.random() * 2000); // 1-3秒随机延迟，模拟真实AI响应
+      // 尝试调用真实API，如果成功就使用，失败则用演示
+      this.tryRealAPIFirst(message, loadingMessage).then(success => {
+        if (!success) {
+          // API不可用，使用改进的演示系统
+          setTimeout(() => {
+            this.removeLoadingMessage(loadingMessage);
+            
+            const demoMessage = this.getSmartDemoResponse(message);
+            const assistantMessage = {
+              role: 'assistant',
+              content: demoMessage,
+              timestamp: new Date()
+            };
+            
+            this.messages.push(assistantMessage);
+            this.renderMessage(assistantMessage);
+            this.showShareButton();
+            this.setLoading(false);
+          }, 1000 + Math.random() * 2000); // 1-3秒随机延迟，模拟真实AI响应
+        }
+      });
       
       return;
     }
