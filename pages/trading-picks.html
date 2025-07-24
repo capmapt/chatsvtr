@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>交易精选 - SVTR.AI</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 40px;
+    }
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 15px 25px;
+      border-radius: 20px;
+      color: white;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+    .stat-number {
+      font-size: 1.8rem;
+      font-weight: bold;
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+    .companies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+    .company-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .company-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    }
+    .company-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+    .company-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    .company-sector {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .company-stage {
+      background: #f8f9fa;
+      color: #666;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      margin-top: 5px;
+    }
+    .company-description {
+      color: #666;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .funding-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8f9fa;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    .funding-amount {
+      font-weight: 600;
+      color: #333;
+      font-size: 1.1rem;
+    }
+    .funding-date {
+      color: #666;
+      font-size: 0.9rem;
+    }
+    .investors-section {
+      margin-bottom: 15px;
+    }
+    .investors-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 8px;
+    }
+    .investors-list {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .investor-tag {
+      background: #e3f2fd;
+      color: #1976d2;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+    .analysis-points {
+      margin-top: 15px;
+    }
+    .analysis-title {
+      font-weight: 500;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .analysis-point {
+      background: #f0f8ff;
+      padding: 8px 12px;
+      margin: 6px 0;
+      border-radius: 6px;
+      border-left: 3px solid #667eea;
+      font-size: 0.9rem;
+      color: #333;
+    }
+    .company-website {
+      display: inline-block;
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 10px;
+      transition: color 0.2s ease;
+    }
+    .company-website:hover {
+      color: #764ba2;
+    }
+    .tags-section {
+      margin-top: 15px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      background: rgba(102, 126, 234, 0.1);
+      color: #667eea;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+    .loading {
+      text-align: center;
+      color: white;
+      padding: 50px;
+    }
+    .loading-spinner {
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid white;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .back-link {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      padding: 10px 15px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      z-index: 100;
+    }
+    .back-link:hover {
+      background: white;
+      transform: translateY(-2px);
+    }
+    @media screen and (max-width: 768px) {
+      .container { padding: 10px; }
+      .header h1 { font-size: 2rem; }
+      .companies-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .company-card { padding: 20px; }
+      .stats-bar { gap: 15px; }
+      .funding-info { flex-direction: column; gap: 5px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <a href="../index.html" class="back-link">← 返回首页</a>
+  
+  <div class="container">
+    <div class="header">
+      <h1>交易精选</h1>
+      <p>精选优质创业公司与投资机会分析</p>
+    </div>
+    
+    <div id="loading" class="loading">
+      <div class="loading-spinner"></div>
+      <p>正在加载精选公司...</p>
+    </div>
+    
+    <div id="content" style="display: none;">
+      <div id="stats" class="stats-bar">
+        <!-- 统计信息将通过JavaScript动态加载 -->
+      </div>
+      <div id="companies" class="companies-grid">
+        <!-- 公司卡片将通过JavaScript动态加载 -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function loadTradingData() {
+      try {
+        const response = await fetch('../assets/data/trading-picks.json');
+        const data = await response.json();
+        
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+        
+        renderStats(data.meta);
+        renderCompanies(data.companies);
+      } catch (error) {
+        console.error('加载数据失败:', error);
+        document.getElementById('loading').innerHTML = '<p>加载失败，请刷新重试</p>';
+      }
+    }
+    
+    function renderStats(meta) {
+      const statsElement = document.getElementById('stats');
+      
+      // 计算统计数据
+      const totalCompanies = meta.totalCompanies || 0;
+      const lastUpdated = new Date(meta.lastUpdated).toLocaleDateString('zh-CN');
+      
+      statsElement.innerHTML = `
+        <div class="stat-item">
+          <span class="stat-number">${totalCompanies}</span>
+          <span class="stat-label">精选公司</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">实时</span>
+          <span class="stat-label">数据更新</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">${lastUpdated}</span>
+          <span class="stat-label">最后更新</span>
+        </div>
+      `;
+    }
+    
+    function renderCompanies(companies) {
+      const companiesElement = document.getElementById('companies');
+      
+      if (!companies || companies.length === 0) {
+        companiesElement.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; color: white; padding: 50px;">
+            <h3>暂无数据</h3>
+            <p>精选公司数据正在整理中，敬请期待...</p>
+          </div>
+        `;
+        return;
+      }
+      
+      let html = '';
+      companies.forEach(company => {
+        html += `
+          <div class="company-card">
+            <div class="company-header">
+              <div>
+                <div class="company-name">${company.name}</div>
+                <div class="company-sector">${company.sector}</div>
+                <div class="company-stage">${company.stage}</div>
+              </div>
+            </div>
+            
+            <p class="company-description">${company.description}</p>
+            
+            <div class="funding-info">
+              <span class="funding-amount">${company.fundingAmount}</span>
+              <span class="funding-date">${company.lastFundingDate}</span>
+            </div>
+            
+            ${company.investors && company.investors.length > 0 ? `
+              <div class="investors-section">
+                <div class="investors-label">投资机构:</div>
+                <div class="investors-list">
+                  ${company.investors.map(investor => `<span class="investor-tag">${investor}</span>`).join('')}
+                </div>
+              </div>
+            ` : ''}
+            
+            ${company.analysisPoints && company.analysisPoints.length > 0 ? `
+              <div class="analysis-points">
+                <div class="analysis-title">分析要点:</div>
+                ${company.analysisPoints.map(point => `<div class="analysis-point">${point}</div>`).join('')}
+              </div>
+            ` : ''}
+            
+            ${company.website ? `<a href="${company.website}" target="_blank" class="company-website">🔗 访问官网</a>` : ''}
+            
+            ${company.tags && company.tags.length > 0 ? `
+              <div class="tags-section">
+                ${company.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      });
+      
+      companiesElement.innerHTML = html;
+    }
+    
+    // 页面加载完成后获取数据
+    document.addEventListener('DOMContentLoaded', loadTradingData);
+  </script>
+</body>
+</html>

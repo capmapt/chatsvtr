@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI模型调用测试</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-area {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #007bff;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        #results {
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            min-height: 200px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 SVTR.AI 模型调用测试</h1>
+        <p>测试聊天API是否真的在调用Cloudflare AI模型</p>
+
+        <div class="test-area">
+            <h3>测试问题</h3>
+            <p>我们将发送以下问题来测试AI模型的响应质量：</p>
+            <ul>
+                <li><strong>简单测试</strong>：Anthropic的投资情况如何？</li>
+                <li><strong>专业测试</strong>：详细分析OpenAI的商业模式和竞争优势</li>
+                <li><strong>数据测试</strong>：Scale AI准备IPO了吗？给出具体数据</li>
+            </ul>
+            
+            <button onclick="testSimple()">测试1: 简单问题</button>
+            <button onclick="testProfessional()">测试2: 专业分析</button>
+            <button onclick="testData()">测试3: 数据查询</button>
+            <button onclick="clearResults()">清除结果</button>
+        </div>
+
+        <div id="status" class="status info">
+            准备测试...
+        </div>
+
+        <div id="results">点击上方按钮开始测试</div>
+    </div>
+
+    <script>
+        let currentTest = 0;
+
+        function updateStatus(message, type = 'info') {
+            const status = document.getElementById('status');
+            status.className = `status ${type}`;
+            status.textContent = message;
+        }
+
+        function appendResults(text) {
+            const results = document.getElementById('results');
+            results.textContent += text;
+            results.scrollTop = results.scrollHeight;
+        }
+
+        function clearResults() {
+            document.getElementById('results').textContent = '';
+            updateStatus('已清除结果，准备新测试');
+        }
+
+        async function testAPI(question, testName) {
+            currentTest++;
+            const testId = currentTest;
+            
+            updateStatus(`正在执行${testName}...`, 'info');
+            appendResults(`\n=== ${testName} (测试 #${testId}) ===\n`);
+            appendResults(`问题: ${question}\n`);
+            appendResults(`时间: ${new Date().toLocaleTimeString()}\n`);
+            appendResults(`状态: 发送请求...\n\n`);
+
+            try {
+                const startTime = Date.now();
+                
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        messages: [
+                            { role: 'user', content: question }
+                        ]
+                    })
+                });
+
+                appendResults(`响应状态: ${response.status}\n`);
+                appendResults(`响应头: ${response.headers.get('content-type')}\n\n`);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                if (response.headers.get('content-type')?.includes('text/event-stream')) {
+                    appendResults('AI回复:\n---\n');
+                    
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    let fullResponse = '';
+                    let hasRealContent = false;
+
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+
+                        const chunk = decoder.decode(value);
+                        const lines = chunk.split('\n');
+
+                        for (const line of lines) {
+                            if (line.startsWith('data: ') && !line.includes('[DONE]')) {
+                                try {
+                                    const data = JSON.parse(line.slice(6));
+                                    let content = '';
+                                    
+                                    if (data.response) {
+                                        content = data.response;
+                                    } else if (data.delta?.content) {
+                                        content = data.delta.content;
+                                    }
+                                    
+                                    if (content) {
+                                        appendResults(content);
+                                        fullResponse += content;
+                                        hasRealContent = true;
+                                    }
+                                } catch (e) {
+                                    // 忽略解析错误
+                                }
+                            }
+                        }
+                    }
+
+                    const endTime = Date.now();
+                    const duration = endTime - startTime;
+
+                    appendResults(`\n---\n`);
+                    appendResults(`响应时间: ${duration}ms\n`);
+                    appendResults(`响应长度: ${fullResponse.length} 字符\n`);
+
+                    // 分析响应质量
+                    const hasSpecificData = fullResponse.includes('亿美元') || 
+                                          fullResponse.includes('估值') || 
+                                          fullResponse.includes('融资');
+                    
+                    const hasAIAnalysis = fullResponse.includes('分析') || 
+                                        fullResponse.includes('建议') ||
+                                        fullResponse.includes('评估') ||
+                                        fullResponse.includes('观察');
+
+                    const hasRAGInfo = fullResponse.includes('基于SVTR知识库') ||
+                                      fullResponse.includes('飞书知识库') ||
+                                      fullResponse.includes('置信度');
+
+                    appendResults(`\n质量分析:\n`);
+                    appendResults(`- 包含具体数据: ${hasSpecificData ? '✅' : '❌'}\n`);
+                    appendResults(`- 具备专业分析: ${hasAIAnalysis ? '✅' : '❌'}\n`);
+                    appendResults(`- 显示RAG来源: ${hasRAGInfo ? '✅' : '❌'}\n`);
+                    appendResults(`- 响应长度充分: ${fullResponse.length > 200 ? '✅' : '❌'}\n`);
+
+                    if (hasSpecificData && hasAIAnalysis && fullResponse.length > 200) {
+                        updateStatus(`${testName} 成功 - AI模型正常工作！`, 'success');
+                        appendResults(`\n结论: ✅ 确认这是真正的AI模型响应！\n`);
+                    } else if (fullResponse.length < 50 || fullResponse.includes('演示')) {
+                        updateStatus(`${testName} 可疑 - 可能是演示模式`, 'warning');
+                        appendResults(`\n结论: ⚠️ 响应可能来自演示模式，非真正AI模型\n`);
+                    } else {
+                        updateStatus(`${testName} 部分成功 - 需要进一步验证`, 'warning');
+                        appendResults(`\n结论: 🤔 响应质量一般，可能是基础AI模型\n`);
+                    }
+
+                } else {
+                    const data = await response.json();
+                    appendResults('JSON响应:\n');
+                    appendResults(JSON.stringify(data, null, 2));
+                    
+                    if (data.error || data.fallback) {
+                        updateStatus(`${testName} 失败 - 系统回退到演示模式`, 'error');
+                        appendResults(`\n结论: ❌ 未调用AI模型，使用了演示响应\n`);
+                    }
+                }
+
+            } catch (error) {
+                updateStatus(`${testName} 错误: ${error.message}`, 'error');
+                appendResults(`\n错误: ${error.message}\n`);
+            }
+
+            appendResults(`\n${'='.repeat(60)}\n`);
+        }
+
+        function testSimple() {
+            testAPI('Anthropic的投资情况如何？', '简单测试');
+        }
+
+        function testProfessional() {
+            testAPI('详细分析OpenAI的商业模式和竞争优势，包括收入结构、技术护城河和面临的挑战', '专业分析测试');
+        }
+
+        function testData() {
+            testAPI('Scale AI准备IPO了吗？给出具体的融资数据、估值和时间计划', '数据查询测试');
+        }
+    </script>
+</body>
+</html>

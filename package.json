@@ -37,7 +37,14 @@
     "optimize:assets": "node scripts/minify-assets.js",
     "optimize:gzip": "node scripts/create-gzip-files.js",
     "optimize:all": "npm run optimize:images && npm run optimize:assets && npm run optimize:gzip",
-    "optimize:summary": "node scripts/optimization-summary.js"
+    "optimize:summary": "node scripts/optimization-summary.js",
+    "rag:sync": "node scripts/rag-data-sync.js",
+    "rag:build": "node scripts/rag-vectorize.js",
+    "rag:test": "node scripts/rag-test.js",
+    "rag:deploy": "node scripts/deploy-rag.js",
+    "rag:setup": "npm run rag:sync && npm run rag:build && npm run rag:test",
+    "rag:test-hybrid": "node scripts/test-hybrid-rag.js",
+    "chat:test": "npm run rag:test-hybrid"
   },
   "keywords": [
     "AI",

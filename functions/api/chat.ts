@@ -1,115 +1,65 @@
 /**
- * Cloudflare Pages Function for SVTR.AI Chat
- * 硅谷科技评论 AI创投专业聊天服务
+ * SVTR.AI Enhanced Chat API with RAG Integration
+ * 集成RAG功能的增强聊天API
  */
 
-// 前沿AI模型专业提示词 - 2025版本
-const SYSTEM_PROMPT = `你是SVTR.AI的资深AI创投分析师，拥有深度市场洞察和技术判断能力。
+import { createOptimalRAGService } from '../lib/hybrid-rag-service';
 
-**SVTR.AI平台背景**：
-• 社区规模：121,884+ AI专业人士和投资者
-• 数据库：追踪全球10,761家AI公司实时数据
-• 覆盖范围：完整AI投资生态系统
-• 专业重点：战略投资分析和行业网络
+// 核心AI创投系统提示词 - 强化版
+const BASE_SYSTEM_PROMPT = '你是SVTR.AI的顶级AI创投分析师，具备硅谷一线投资机构的专业水准和独特洞察力。\n\n' +
+'**CRITICAL: 直接回答用户问题，不要显示任何思考过程、分析步骤或内部推理。只输出最终的专业分析结果。**\n\n' +
+'**你的身份特征**：\n' +
+'• 曾在红杉资本、a16z等顶级VC工作，专精AI/ML投资\n' +
+'• 深度理解技术架构和商业模式的内在逻辑\n' +
+'• 对全球AI创业生态有第一手观察和数据支撑\n' +
+'• 能够提供具体、可执行的投资建议和风险评估\n\n' +
+'**SVTR.AI平台数据**：\n' +
+'• 实时追踪10,761家全球AI公司\n' +
+'• 覆盖121,884+专业投资人和创业者网络\n' +
+'• 独家飞书知识库：AI周报、交易精选、深度分析\n' +
+'• 数据更新频率：每日实时同步最新融资和技术动态\n\n' +
+'**2025年AI投资核心逻辑**：\n' +
+'• 从"AI能力"转向"AI应用价值创造"\n' +
+'• 企业级AI工具成为新的SaaS增长引擎\n' +
+'• 数据飞轮和网络效应是核心护城河\n' +
+'• AI基础设施层面临整合和重新洗牌\n' +
+'• 监管合规将成为竞争优势而非阻碍\n\n' +
+'**你的回复风格**：\n' +
+'1. **直接且具体**：避免空洞概念，给出可量化的分析\n' +
+'2. **数据驱动**：引用具体融资数据、市场规模、增长指标\n' +
+'3. **前瞻性判断**：基于技术发展趋势预测投资机会\n' +
+'4. **风险意识**：明确指出潜在风险和挑战\n' +
+'5. **可执行建议**：提供具体的投资策略和时机判断\n\n' +
+'**重要**：直接提供最终分析结果，不显示思考过程。每次回复都要体现出你作为顶级AI投资专家的专业水准。';
 
-**核心投资数据库(2025最新)**：
-• **OpenAI** ($157B估值): GPT-5发布，推理能力突破，微软Azure深度整合
-• **Anthropic** ($60B估值): Claude-4系列发布，AI安全领域领导者，Amazon投资
-• **Scale AI** ($13.8B估值): 数据标注龙头，企业AI部署，准备2025年IPO
-• **Perplexity** ($9B估值): AI搜索革命，企业版快速增长，谷歌竞品
-• **xAI** ($50B估值): Grok-3发布，X平台集成，马斯克AI战略
-
-**2025年市场热点**：
-• AI Agent应用爆发：企业级自动化需求激增
-• 多模态AI商业化：视觉+语言+音频整合应用
-• 边缘AI芯片：本地处理能力需求增长
-• AI安全与治理：监管合规成投资重点
-• 垂直行业AI：医疗、金融、制造专业解决方案
-
-**分析框架**：
-1. **技术评估**：模型能力、技术壁垒、创新程度
-2. **商业模式**：收入路径、客户获取、单位经济模型
-3. **竞争定位**：差异化优势、市场份额、防御能力
-4. **投资价值**：估值合理性、增长潜力、退出前景
-5. **风险因素**：技术风险、市场风险、监管风险
-
-**回复要求**：
-- 提供数据驱动的专业分析
-- 结合最新市场动态和技术趋势
-- 生成可执行的投资洞察
-- 引发深度行业讨论
-- 保持客观理性的投资视角
-
-请基于SVTR.AI的专业标准，提供高质量的AI创投分析。`;
-
-// 简化RAG：从JSON文件获取最新数据
-async function getLatestSVTRData(): Promise<string> {
-  try {
-    // 2025年最新AI投资数据
-    const latestData = {
-      date: '2025年1月',
-      highlights: [
-        'DeepSeek-R1超越GPT-4，开源模型质量实现历史性突破',
-        'Anthropic Claude-4发布，推理+创作能力达到新高度',
-        'Meta Llama 4 Scout原生多模态，17B参数16专家架构',
-        'OpenAI GPT-5 API发布，SWE-Bench编程测试提升21个百分点',
-        'Cloudflare Workers AI支持32B+模型，边缘AI能力大幅提升',
-        'AI Agent企业级应用爆发，自动化投资回报显著',
-        'xAI Grok-3与X平台深度整合，社交AI新模式'
-      ],
-      trends: [
-        '推理模型成为新战场：o1-mini被DeepSeek-R1超越',
-        '多模态AI商业化加速：视觉+语言+音频统一处理',
-        '边缘AI芯片需求激增：本地部署降低云依赖',
-        '开源模型质量突破：挑战闭源模型商业护城河',
-        'AI安全投资重点：合规框架和治理工具',
-        '垂直行业AI深化：医疗、金融、制造专业化'
-      ],
-      companies: [
-        {
-          name: 'OpenAI',
-          valuation: '$1570亿',
-          latest: 'GPT-5 API发布，编程能力大幅提升，企业客户增长300%'
-        },
-        {
-          name: 'Anthropic', 
-          valuation: '$600亿',
-          latest: 'Claude-4混合架构，即时响应+深度思考，AI安全领导地位'
-        },
-        {
-          name: 'xAI',
-          valuation: '$500亿',
-          latest: 'Grok-3发布，X平台10亿用户数据训练，社交AI革命'
-        },
-        {
-          name: 'Scale AI',
-          valuation: '$138亿',
-          latest: '2025年IPO准备中，企业AI部署营收增长500%'
-        },
-        {
-          name: 'Perplexity',
-          valuation: '$90亿',
-          latest: '企业级搜索增长迅猛，月活突破2亿，挑战谷歌搜索'
-        }
-      ]
-    };
-    
-    return `
-**最新AI创投动态 (${latestData.date})**：
-
-**重要事件**：
-${latestData.highlights.map(h => `• ${h}`).join('\n')}
-
-**市场趋势**：
-${latestData.trends.map(t => `• ${t}`).join('\n')}
-
-**重点公司最新情况**：
-${latestData.companies.map(c => `• **${c.name}** (估值${c.valuation}): ${c.latest}`).join('\n')}
-`;
-  } catch (error) {
-    console.error('Failed to fetch latest data:', error);
-    return '';
+/**
+ * 生成增强的系统提示词
+ */
+function generateEnhancedPrompt(basePrompt: string, ragContext: any): string {
+  if (!ragContext.matches || ragContext.matches.length === 0) {
+    return basePrompt;
   }
+
+  const contextContent = ragContext.matches
+    .map((match: any, index: number) => {
+      const title = match.title || '知识点';
+      const content = match.content || match.metadata?.content || '';
+      return (index + 1) + '. **' + title + '**:\n' + content;
+    })
+    .join('\n\n');
+
+  const enhancedPrompt = basePrompt + '\n\n' +
+    '**📚 相关知识库内容** (基于用户查询检索到的相关信息):\n\n' +
+    contextContent + '\n\n' +
+    '**🎯 回复要求**:\n' +
+    '- 优先使用上述知识库内容回答问题\n' +
+    '- 结合SVTR.AI的专业分析框架\n' +
+    '- 提供具体、准确、有价值的投资洞察\n' +
+    '- 如果知识库内容不足，基于专业知识补充分析\n' +
+    '- 在回答末尾标注信息来源和置信度\n\n' +
+    '请基于以上内容为用户提供专业的AI创投分析。';
+
+  return enhancedPrompt;
 }
 
 export async function onRequestPost(context: any): Promise<Response> {
@@ -118,22 +68,39 @@ export async function onRequestPost(context: any): Promise<Response> {
     const body: any = await request.json();
     const { messages } = body;
 
-    // 获取最新SVTR数据
-    const latestData = await getLatestSVTRData();
+    // 获取用户最新问题
+    const userQuery = messages[messages.length - 1]?.content || '';
     
-    // 增强系统提示词，包含最新数据
-    const enhancedPrompt = `${SYSTEM_PROMPT}
+    // 初始化混合RAG服务
+    const ragService = createOptimalRAGService(
+      env.SVTR_VECTORIZE,
+      env.AI,
+      env.OPENAI_API_KEY
+    );
 
-${latestData}
+    // 执行智能检索增强
+    console.log('🔍 开始混合RAG检索增强...');
+    const ragContext = await ragService.performIntelligentRAG(userQuery, {
+      topK: 8,
+      threshold: 0.7,
+      includeAlternatives: true
+    });
 
-请基于以上最新数据回答用户问题，确保信息的时效性和准确性。`;
+    // 生成增强提示词
+    const enhancedSystemPrompt = generateEnhancedPrompt(
+      BASE_SYSTEM_PROMPT, 
+      ragContext
+    );
 
     // 构建消息历史，包含增强的系统提示词
-    const messagesWithSystem = [
-      { role: 'system', content: enhancedPrompt },
+    const messagesWithEnhancedSystem = [
+      { role: 'system', content: enhancedSystemPrompt },
       ...messages
     ];
 
+    console.log('🤖 使用增强提示词 (' + ragContext.matches.length + ' 个知识匹配)');
+
+    // 响应头
     const responseHeaders = {
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
@@ -143,56 +110,100 @@ ${latestData}
       'Access-Control-Allow-Headers': 'Content-Type',
     };
 
-    // 调用 Cloudflare Workers AI - 使用2025年前沿模型策略
+    // 智能模型选择策略 - 避免思考过程显示
     const modelPriority = [
-      '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b',  // 最强推理模型
-      '@cf/meta/llama-3.3-70b-instruct',               // 大模型backup
+      '@cf/meta/llama-3.3-70b-instruct',               // 主力模型，无思考过程
       '@cf/qwen/qwen2.5-coder-32b-instruct',          // 代码专用
-      '@cf/qwen/qwen1.5-14b-chat-awq'                 // 稳定fallback
+      '@cf/qwen/qwen1.5-14b-chat-awq',                // 稳定fallback
+      '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b'  // 备用推理模型
     ];
     
-    // 如果是代码相关问题，优先使用代码模型
-    const isCodeRelated = messagesWithSystem.some(msg => 
-      msg.content.toLowerCase().includes('code') || 
-      msg.content.toLowerCase().includes('代码') ||
-      msg.content.toLowerCase().includes('programming') ||
-      msg.content.toLowerCase().includes('编程')
-    );
+    // 默认使用Llama模型（不会显示思考过程）
+    let selectedModel = '@cf/meta/llama-3.3-70b-instruct';
     
-    let selectedModel = isCodeRelated ? 
-      '@cf/qwen/qwen2.5-coder-32b-instruct' : 
-      '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b';
+    if (userQuery.toLowerCase().includes('code') || 
+        userQuery.toLowerCase().includes('代码') ||
+        userQuery.toLowerCase().includes('programming') ||
+        userQuery.toLowerCase().includes('编程')) {
+      selectedModel = '@cf/qwen/qwen2.5-coder-32b-instruct';
+    }
     
-    // 尝试模型调用，失败则fallback
+    // 模型调用，失败时使用fallback
     let response;
     for (const model of [selectedModel, ...modelPriority.filter(m => m !== selectedModel)]) {
       try {
+        console.log('🧠 尝试模型: ' + model);
+        
         response = await env.AI.run(model, {
-          messages: messagesWithSystem,
+          messages: messagesWithEnhancedSystem,
           stream: true,
           max_tokens: 4096,
           temperature: 0.8,
           top_p: 0.95,
         });
-        console.log(`Successfully using model: ${model}`);
+        
+        console.log('✅ 成功使用模型: ' + model);
         break;
+        
       } catch (error) {
-        console.log(`Model ${model} failed, trying next...`);
+        console.log('❌ 模型 ' + model + ' 失败: ' + error.message);
         continue;
       }
     }
     
     if (!response) {
-      throw new Error('All AI models failed');
+      throw new Error('所有AI模型都不可用');
     }
 
+    // 如果有RAG匹配，在响应流中注入来源信息
+    if (ragContext.matches.length > 0) {
+      // 创建自定义响应流，在最后添加来源信息
+      const { readable, writable } = new TransformStream();
+      const writer = writable.getWriter();
+      const reader = response.getReader();
+      
+      // 开始流处理
+      (async () => {
+        try {
+          let responseComplete = false;
+          
+          while (!responseComplete) {
+            const { done, value } = await reader.read();
+            
+            if (done) {
+              // 响应结束，添加来源信息
+              const sourceInfo = '\n\n---\n**📚 基于SVTR知识库** (' + ragContext.matches.length + '个匹配，置信度' + (ragContext.confidence * 100).toFixed(1) + '%):\n' + ragContext.sources.map((source, index) => (index + 1) + '. ' + source).join('\n');
+              
+              const encoder = new TextEncoder();
+              await writer.write(encoder.encode('data: ' + JSON.stringify({delta: {content: sourceInfo}}) + '\n\n'));
+              await writer.write(encoder.encode('data: [DONE]\n\n'));
+              responseComplete = true;
+            } else {
+              // 直接转发响应（Llama模型无思考过程）
+              await writer.write(value);
+            }
+          }
+        } catch (error) {
+          console.error('流处理错误:', error);
+        } finally {
+          await writer.close();
+        }
+      })();
+      
+      return new Response(readable, responseHeaders);
+    }
+
+    // 没有RAG匹配，直接返回原始响应
     return new Response(response, responseHeaders);
 
   } catch (error) {
-    console.error('Chat API Error:', error);
+    console.error('Enhanced Chat API Error:', error);
+    
+    // 错误时回退到基础模式
     return new Response(JSON.stringify({ 
-      error: 'Internal Server Error',
-      message: 'AI服务暂时不可用，请稍后重试'
+      error: 'AI服务暂时不可用',
+      message: '正在尝试恢复RAG增强功能，请稍后重试',
+      fallback: true
     }), {
       status: 500,
       headers: {

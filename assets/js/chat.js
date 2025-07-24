@@ -11,6 +11,7 @@ class SVTRChat {
     this.isThinking = false; // DeepSeek推理状态
     this.apiEndpoint = '/api/chat';
     this.isProduction = this.detectProductionEnvironment();
+    this.quotaWarningShown = false; // 配额警告显示标志
     
     this.init();
   }
@@ -173,79 +174,96 @@ What would you like to know?`,
   getSmartDemoResponse(userMessage) {
     const lang = this.getCurrentLang();
     
-    // 分析对话历史，避免重复回复
-    const conversationHistory = this.messages.filter(m => m.role === 'user').map(m => m.content);
-    const previousTopics = this.extractTopicsFromHistory(conversationHistory);
+    // 改进的响应匹配逻辑：基于语义相关性而非简单关键词
+    const responseType = this.matchResponseBySemantic(userMessage, lang);
     
-    // 智能选择回复类型
-    const responseType = this.selectResponseType(userMessage, previousTopics);
-    
-    // 生成带随机性的个性化回复
-    return this.generateVariedResponse(userMessage, responseType, lang, conversationHistory.length);
+    // 获取最相关的演示回复
+    return this.getRelevantDemoResponse(userMessage, responseType, lang);
   }
 
-  extractTopicsFromHistory(history) {
-    const topics = new Set();
-    history.forEach(msg => {
-      const lower = msg.toLowerCase();
-      if (lower.includes('投资') || lower.includes('investment')) topics.add('investment');
-      if (lower.includes('公司') || lower.includes('startup')) topics.add('startup');
-      if (lower.includes('趋势') || lower.includes('trend')) topics.add('trend');
-      if (lower.includes('技术') || lower.includes('technology')) topics.add('technology');
-    });
-    return Array.from(topics);
-  }
-
-  selectResponseType(message, previousTopics) {
-    const keywords = message.toLowerCase();
+  matchResponseBySemantic(userMessage, lang) {
+    const message = userMessage.toLowerCase();
     
-    // 基础分类
-    let baseType = 'general';
-    if (keywords.includes('投资') || keywords.includes('investment') || keywords.includes('funding')) {
-      baseType = 'investment';
-    } else if (keywords.includes('公司') || keywords.includes('startup') || keywords.includes('company')) {
-      baseType = 'startup';
-    } else if (keywords.includes('趋势') || keywords.includes('trend') || keywords.includes('market')) {
-      baseType = 'trend';
-    } else if (keywords.includes('技术') || keywords.includes('technology') || keywords.includes('ai')) {
-      baseType = 'technology';
-    }
-    
-    // 如果之前讨论过相同话题，选择不同角度
-    if (previousTopics.includes(baseType)) {
-      baseType += '_alt'; // 选择替代视角
-    }
-    
-    return baseType;
-  }
-
-  generateVariedResponse(userMessage, responseType, lang, conversationCount) {
-    const responses = this.getVariedDemoResponses(lang);
-    const baseType = responseType.replace('_alt', '');
-    
-    // 根据对话轮数和类型选择不同回复
-    const responseOptions = responses[baseType] || responses.general;
-    const selectedIndex = conversationCount % responseOptions.length;
-    
-    let response = responseOptions[selectedIndex];
-    
-    // 如果是替代视角，添加补充信息
-    if (responseType.includes('_alt')) {
-      const supplements = responses.supplements[baseType];
-      if (supplements) {
-        const suppIndex = Math.floor(Math.random() * supplements.length);
-        response += '\n\n' + supplements[suppIndex];
+    // 定义更精确的语义匹配规则
+    const semanticPatterns = {
+      investment: {
+        zh: ['投资', '融资', '资金', '轮次', '估值', '基金', 'vc', '投资人', '投资机构', '资本'],
+        en: ['investment', 'funding', 'capital', 'round', 'valuation', 'fund', 'investor', 'vc', 'venture']
+      },
+      startup: {
+        zh: ['公司', '初创', '创业', '企业', '团队', '独角兽', '项目', '商业模式'],
+        en: ['startup', 'company', 'business', 'team', 'unicorn', 'entrepreneur', 'venture', 'firm']
+      },
+      trend: {
+        zh: ['趋势', '市场', '发展', '前景', '预测', '未来', '行业', '报告', '分析'],
+        en: ['trend', 'market', 'forecast', 'future', 'analysis', 'industry', 'outlook', 'prediction']
+      },
+      technology: {
+        zh: ['技术', '科技', 'ai', '人工智能', '算法', '模型', '数据', '平台', '工具'],
+        en: ['technology', 'tech', 'ai', 'artificial intelligence', 'algorithm', 'model', 'data', 'platform']
       }
-    }
+    };
     
-    // 添加个性化引用用户问题
-    if (lang === 'en') {
-      response = `Regarding your question about "${userMessage}":\n\n` + response;
+    // 计算每个类型的匹配分数
+    let bestMatch = 'general';
+    let highestScore = 0;
+    
+    Object.keys(semanticPatterns).forEach(type => {
+      const patterns = semanticPatterns[type];
+      const relevantPatterns = lang === 'en' ? patterns.en : [...patterns.zh, ...patterns.en];
+      
+      let score = 0;
+      relevantPatterns.forEach(pattern => {
+        if (message.includes(pattern)) {
+          // 根据匹配词的重要性给不同权重
+          if (pattern.length > 4) score += 3; // 长词匹配权重更高
+          else if (pattern.length > 2) score += 2;
+          else score += 1;
+        }
+      });
+      
+      if (score > highestScore) {
+        highestScore = score;
+        bestMatch = type;
+      }
+    });
+    
+    return bestMatch;
+  }
+
+  getRelevantDemoResponse(userMessage, responseType, lang) {
+    const responses = this.getVariedDemoResponses(lang);
+    const responseOptions = responses[responseType] || responses.general;
+    
+    // 基于消息内容选择最相关的回复（而非轮数）
+    let selectedResponse;
+    if (responseOptions.length === 1) {
+      selectedResponse = responseOptions[0];
     } else {
-      response = `关于您提到的"${userMessage}"：\n\n` + response;
+      // 根据消息的特定特征选择更相关的回复
+      const messageHash = this.hashString(userMessage) % responseOptions.length;
+      selectedResponse = responseOptions[messageHash];
     }
     
-    return response;
+    // 简化个性化处理，只在确实相关时引用用户问题
+    if (responseType !== 'general') {
+      const intro = lang === 'en' 
+        ? `Based on your question about AI venture capital:\n\n`
+        : `关于您的AI创投问题：\n\n`;
+      return intro + selectedResponse;
+    }
+    
+    return selectedResponse;
+  }
+
+  hashString(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // Convert to 32bit integer
+    }
+    return Math.abs(hash);
   }
 
   getVariedDemoResponses(lang) {
@@ -826,6 +844,11 @@ Our platform serves as the definitive source for AI investment market intelligen
     
     if (!message || this.isLoading) return;
     
+    // 在生产环境中显示配额状态
+    if (this.isProduction) {
+      this.updateQuotaStatus();
+    }
+    
     // 添加用户消息
     const userMessage = {
       role: 'user', 
@@ -960,8 +983,8 @@ Our platform serves as the definitive source for AI investment market intelligen
     } catch (error) {
       this.removeLoadingMessage(loadingMessage);
       
-      // 如果API失败，显示演示响应
-      const demoMessage = this.getDemoResponse(message);
+      // 如果API失败，显示智能演示响应
+      const demoMessage = this.getSmartDemoResponse(message);
 
       const assistantMessage = {
         role: 'assistant',
@@ -1164,6 +1187,39 @@ Our platform serves as the definitive source for AI investment market intelligen
       }
       
       this.messages[0].content = content;
+    }
+  }
+
+  async updateQuotaStatus() {
+    try {
+      const response = await fetch('/api/quota-status');
+      if (response.ok) {
+        const quotaData = await response.json();
+        this.displayQuotaInfo(quotaData);
+      }
+    } catch (error) {
+      console.log('无法获取配额状态:', error);
+    }
+  }
+
+  displayQuotaInfo(quotaData) {
+    // 在聊天界面显示配额信息（如果配额紧张）
+    if (quotaData.quotas.daily.percentage > 80 || quotaData.quotas.monthly.percentage > 80) {
+      const quotaWarning = {
+        role: 'system',
+        content: `⚡ **免费额度提醒**：
+• 日使用量：${quotaData.quotas.daily.used}/${quotaData.quotas.daily.limit} (${quotaData.quotas.daily.percentage}%)
+• 月使用量：${quotaData.quotas.monthly.used}/${quotaData.quotas.monthly.limit} (${quotaData.quotas.monthly.percentage}%)
+
+${quotaData.message}${quotaData.upgradeHint ? '\n\n' + quotaData.upgradeHint : ''}`,
+        timestamp: new Date()
+      };
+      
+      // 只显示一次配额警告
+      if (!this.quotaWarningShown) {
+        this.renderMessage(quotaWarning);
+        this.quotaWarningShown = true;
+      }
     }
   }
 }

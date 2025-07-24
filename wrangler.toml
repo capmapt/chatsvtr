@@ -35,5 +35,9 @@ for = "*.jpg"
 [headers.values]
 "Cache-Control" = "public, max-age=31536000, immutable"
 
+[[vectorize]]
+binding = "SVTR_VECTORIZE"
+index_name = "svtr-knowledge-base"
+
 [ai]
 binding = "AI"
