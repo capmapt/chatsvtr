@@ -157,10 +157,12 @@ export async function onRequestPost(context: any): Promise<Response> {
 
     // 如果有RAG匹配，在响应流中注入来源信息
     if (ragContext.matches.length > 0) {
-      // 创建自定义响应流，在最后添加来源信息
+      // 创建自定义响应流，转换为标准流式格式
       const { readable, writable } = new TransformStream();
       const writer = writable.getWriter();
       const reader = response.getReader();
+      const decoder = new TextDecoder();
+      const encoder = new TextEncoder();
       
       // 开始流处理
       (async () => {
@@ -174,13 +176,36 @@ export async function onRequestPost(context: any): Promise<Response> {
               // 响应结束，添加来源信息
               const sourceInfo = '\n\n---\n**📚 基于SVTR知识库** (' + ragContext.matches.length + '个匹配，置信度' + (ragContext.confidence * 100).toFixed(1) + '%):\n' + ragContext.sources.map((source, index) => (index + 1) + '. ' + source).join('\n');
               
-              const encoder = new TextEncoder();
               await writer.write(encoder.encode('data: ' + JSON.stringify({delta: {content: sourceInfo}}) + '\n\n'));
               await writer.write(encoder.encode('data: [DONE]\n\n'));
               responseComplete = true;
             } else {
-              // 直接转发响应（Llama模型无思考过程）
-              await writer.write(value);
+              // 解析Cloudflare AI响应并转换为标准格式
+              const chunk = decoder.decode(value);
+              const lines = chunk.split('\n');
+              
+              for (const line of lines) {
+                if (line.startsWith('data: ') && !line.includes('[DONE]')) {
+                  try {
+                    const data = JSON.parse(line.slice(6));
+                    if (data.response) {
+                      // 转换为标准delta格式
+                      const standardFormat = JSON.stringify({
+                        delta: { content: data.response }
+                      });
+                      await writer.write(encoder.encode('data: ' + standardFormat + '\n\n'));
+                    }
+                  } catch (e) {
+                    // 如果解析失败，直接转发原始数据
+                    await writer.write(value);
+                  }
+                } else if (line.includes('[DONE]')) {
+                  // 不要转发原始的[DONE]，我们会在最后添加
+                  continue;
+                } else if (line.trim()) {
+                  await writer.write(encoder.encode(line + '\n'));
+                }
+              }
             }
           }
         } catch (error) {
@@ -193,8 +218,56 @@ export async function onRequestPost(context: any): Promise<Response> {
       return new Response(readable, responseHeaders);
     }
 
-    // 没有RAG匹配，直接返回原始响应
-    return new Response(response, responseHeaders);
+    // 没有RAG匹配，转换为标准格式后返回
+    const { readable, writable } = new TransformStream();
+    const writer = writable.getWriter();
+    const reader = response.getReader();
+    const decoder = new TextDecoder();
+    const encoder = new TextEncoder();
+    
+    // 转换响应格式
+    (async () => {
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          
+          if (done) {
+            await writer.write(encoder.encode('data: [DONE]\n\n'));
+            break;
+          }
+          
+          // 解析Cloudflare AI响应并转换为标准格式
+          const chunk = decoder.decode(value);
+          const lines = chunk.split('\n');
+          
+          for (const line of lines) {
+            if (line.startsWith('data: ') && !line.includes('[DONE]')) {
+              try {
+                const data = JSON.parse(line.slice(6));
+                if (data.response) {
+                  // 转换为标准delta格式
+                  const standardFormat = JSON.stringify({
+                    delta: { content: data.response }
+                  });
+                  await writer.write(encoder.encode('data: ' + standardFormat + '\n\n'));
+                }
+              } catch (e) {
+                // 如果解析失败，直接转发原始数据
+                await writer.write(value);
+              }
+            } else if (!line.includes('[DONE]') && line.trim()) {
+              await writer.write(encoder.encode(line + '\n'));
+            }
+          }
+        }
+      } catch (error) {
+        console.error('流格式转换错误:', error);
+      } finally {
+        await writer.close();
+      }
+    })();
+    
+    return new Response(readable, responseHeaders);
 
   } catch (error) {
     console.error('Enhanced Chat API Error:', error);
