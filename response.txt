@@ -1,0 +1,80 @@
+data: {"delta":{"content":"未"}}
+
+data: {"delta":{"content":"明确"}}
+
+data: {"delta":{"content":"具体"}}
+
+data: {"delta":{"content":"问题"}}
+
+data: {"delta":{"content":"，请"}}
+
+data: {"delta":{"content":"提供"}}
+
+data: {"delta":{"content":"详细"}}
+
+data: {"delta":{"content":"的投资"}}
+
+data: {"delta":{"content":"咨询"}}
+
+data: {"delta":{"content":"内容"}}
+
+data: {"delta":{"content":"。"}}
+
+data: {"delta":{"content":"例如"}}
+
+data: {"delta":{"content":"，"}}
+
+data: {"delta":{"content":"您"}}
+
+data: {"delta":{"content":"想"}}
+
+data: {"delta":{"content":"了解"}}
+
+data: {"delta":{"content":"哪个"}}
+
+data: {"delta":{"content":"公司的"}}
+
+data: {"delta":{"content":"分析"}}
+
+data: {"delta":{"content":"，"}}
+
+data: {"delta":{"content":"还是"}}
+
+data: {"delta":{"content":"想"}}
+
+data: {"delta":{"content":"探讨"}}
+
+data: {"delta":{"content":"某个"}}
+
+data: {"delta":{"content":"行业的"}}
+
+data: {"delta":{"content":"投资"}}
+
+data: {"delta":{"content":"机会"}}
+
+data: {"delta":{"content":"？"}}
+
+data: {"delta":{"content":"请"}}
+
+data: {"delta":{"content":"提供更多"}}
+
+data: {"delta":{"content":"细节"}}
+
+data: {"delta":{"content":"以便"}}
+
+data: {"delta":{"content":"于"}}
+
+data: {"delta":{"content":"我"}}
+
+data: {"delta":{"content":"进行"}}
+
+data: {"delta":{"content":"准确"}}
+
+data: {"delta":{"content":"分析"}}
+
+data: {"delta":{"content":"。"}}
+
+data: {"delta":{"content":"\n\n---\n**📚 基于SVTR知识库** (5个匹配，置信度88.0%):\n1. AI周报第115期\n2. Anthropic公司分析\n3. Scale AI公司分析\n4. OpenAI公司分析\n5. Adept公司分析"}}
+
+data: [DONE]
+

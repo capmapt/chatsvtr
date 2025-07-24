@@ -325,7 +325,10 @@
                     })
                 });
                 
-                if (response.ok && response.headers.get('content-type')?.includes('text/event-stream')) {
+                if (response.ok) {
+                    // 检查是否为流式响应
+                    const contentType = response.headers.get('content-type') || '';
+                    console.log('Response Content-Type:', contentType);
                     results.textContent = `问题: ${question}\n\n🤖 AI回复:\n`;
                     
                     const reader = response.body.getReader();

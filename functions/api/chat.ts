@@ -100,15 +100,16 @@ export async function onRequestPost(context: any): Promise<Response> {
 
     console.log('🤖 使用增强提示词 (' + ragContext.matches.length + ' 个知识匹配)');
 
-    // 响应头
-    const responseHeaders = {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
+    // 响应头 - 确保流式响应格式
+    const responseHeaders = new Headers({
+      'Content-Type': 'text/event-stream; charset=utf-8',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
       'Connection': 'keep-alive',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    };
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      'X-Accel-Buffering': 'no',
+    });
 
     // 智能模型选择策略 - 避免思考过程显示
     const modelPriority = [
