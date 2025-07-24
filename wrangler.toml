@@ -1,5 +1,6 @@
 name = "chatsvtr"
 compatibility_date = "2024-07-16"
+pages_build_output_dir = "."
 
 # Enable Gzip/Brotli compression for all text-based assets
 [[headers]]
@@ -37,7 +38,7 @@ for = "*.jpg"
 
 [[vectorize]]
 binding = "SVTR_VECTORIZE"
-index_name = "svtr-knowledge-base"
+index_name = "autorag-svtr-knowledge-base-ai"
 
 [ai]
 binding = "AI"
