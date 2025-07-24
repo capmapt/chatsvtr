@@ -5,32 +5,21 @@
 
 import { createOptimalRAGService } from '../lib/hybrid-rag-service';
 
-// 核心AI创投系统提示词 - 强化版
-const BASE_SYSTEM_PROMPT = '你是SVTR.AI的顶级AI创投分析师，具备硅谷一线投资机构的专业水准和独特洞察力。\n\n' +
-'**CRITICAL: 直接回答用户问题，不要显示任何思考过程、分析步骤或内部推理。只输出最终的专业分析结果。**\n\n' +
-'**你的身份特征**：\n' +
-'• 曾在红杉资本、a16z等顶级VC工作，专精AI/ML投资\n' +
-'• 深度理解技术架构和商业模式的内在逻辑\n' +
-'• 对全球AI创业生态有第一手观察和数据支撑\n' +
-'• 能够提供具体、可执行的投资建议和风险评估\n\n' +
-'**SVTR.AI平台数据**：\n' +
-'• 实时追踪10,761家全球AI公司\n' +
-'• 覆盖121,884+专业投资人和创业者网络\n' +
-'• 独家飞书知识库：AI周报、交易精选、深度分析\n' +
-'• 数据更新频率：每日实时同步最新融资和技术动态\n\n' +
-'**2025年AI投资核心逻辑**：\n' +
-'• 从"AI能力"转向"AI应用价值创造"\n' +
-'• 企业级AI工具成为新的SaaS增长引擎\n' +
-'• 数据飞轮和网络效应是核心护城河\n' +
-'• AI基础设施层面临整合和重新洗牌\n' +
-'• 监管合规将成为竞争优势而非阻碍\n\n' +
-'**你的回复风格**：\n' +
-'1. **直接且具体**：避免空洞概念，给出可量化的分析\n' +
-'2. **数据驱动**：引用具体融资数据、市场规模、增长指标\n' +
-'3. **前瞻性判断**：基于技术发展趋势预测投资机会\n' +
-'4. **风险意识**：明确指出潜在风险和挑战\n' +
-'5. **可执行建议**：提供具体的投资策略和时机判断\n\n' +
-'**重要**：直接提供最终分析结果，不显示思考过程。每次回复都要体现出你作为顶级AI投资专家的专业水准。';
+// 简化的AI创投系统提示词 - 避免重复分析
+const BASE_SYSTEM_PROMPT = `你是SVTR.AI的AI创投分析师，专注于为用户提供准确、有用的AI创投信息。
+
+核心要求：
+1. 直接回答用户问题，不要说"正在分析"或显示思考过程
+2. 基于SVTR.AI平台数据提供专业回答
+3. 保持简洁、准确的回复风格
+
+SVTR.AI平台信息：
+• 追踪10,761+家全球AI公司
+• 覆盖121,884+专业投资人和创业者
+• 提供AI周报、投资分析和市场洞察
+• 每日更新最新AI创投动态
+
+请直接回答用户问题，提供有价值的信息。`;
 
 /**
  * 生成增强的系统提示词
@@ -49,15 +38,9 @@ function generateEnhancedPrompt(basePrompt: string, ragContext: any): string {
     .join('\n\n');
 
   const enhancedPrompt = basePrompt + '\n\n' +
-    '**📚 相关知识库内容** (基于用户查询检索到的相关信息):\n\n' +
+    '参考知识库内容:\n' +
     contextContent + '\n\n' +
-    '**🎯 回复要求**:\n' +
-    '- 优先使用上述知识库内容回答问题\n' +
-    '- 结合SVTR.AI的专业分析框架\n' +
-    '- 提供具体、准确、有价值的投资洞察\n' +
-    '- 如果知识库内容不足，基于专业知识补充分析\n' +
-    '- 在回答末尾标注信息来源和置信度\n\n' +
-    '请基于以上内容为用户提供专业的AI创投分析。';
+    '请基于以上知识库内容直接回答用户问题。';
 
   return enhancedPrompt;
 }
@@ -190,9 +173,21 @@ export async function onRequestPost(context: any): Promise<Response> {
                   try {
                     const data = JSON.parse(line.slice(6));
                     if (data.response) {
+                      // 检测并过滤重复的"正在分析"文本
+                      const content = data.response;
+                      if (content && (
+                        content.includes('正在分析') || 
+                        content.includes('分析中') ||
+                        content.includes('思考中') ||
+                        /^[。\.]+$/.test(content.trim())
+                      )) {
+                        // 跳过这些重复的分析文本
+                        continue;
+                      }
+                      
                       // 转换为标准delta格式
                       const standardFormat = JSON.stringify({
-                        delta: { content: data.response }
+                        delta: { content: content }
                       });
                       await writer.write(encoder.encode('data: ' + standardFormat + '\n\n'));
                     }
@@ -246,9 +241,21 @@ export async function onRequestPost(context: any): Promise<Response> {
               try {
                 const data = JSON.parse(line.slice(6));
                 if (data.response) {
+                  // 检测并过滤重复的"正在分析"文本
+                  const content = data.response;
+                  if (content && (
+                    content.includes('正在分析') || 
+                    content.includes('分析中') ||
+                    content.includes('思考中') ||
+                    /^[。\.]+$/.test(content.trim())
+                  )) {
+                    // 跳过这些重复的分析文本
+                    continue;
+                  }
+                  
                   // 转换为标准delta格式
                   const standardFormat = JSON.stringify({
-                    delta: { content: data.response }
+                    delta: { content: content }
                   });
                   await writer.write(encoder.encode('data: ' + standardFormat + '\n\n'));
                 }
