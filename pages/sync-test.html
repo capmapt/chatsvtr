@@ -359,7 +359,10 @@
                     
                     updateStatus('AI回复完成！基于SVTR飞书知识库的专业回答', 'success');
                 } else {
-                    throw new Error(`HTTP ${response.status}`);
+                    // 尝试读取错误响应内容
+                    const errorText = await response.text();
+                    console.log('Error response:', errorText);
+                    throw new Error(`HTTP ${response.status}: ${errorText.substring(0, 100)}`);
                 }
                 
             } catch (error) {
