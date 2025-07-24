@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVTR.AI 知识库同步状态</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .status-card { background: white; border-radius: 8px; padding: 20px; margin: 15px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .status-good { border-left: 4px solid #28a745; }
+        .status-warning { border-left: 4px solid #ffc107; }
+        .status-error { border-left: 4px solid #dc3545; }
+        .metric { display: inline-block; margin: 10px 20px 10px 0; }
+        .metric-value { font-size: 2em; font-weight: bold; color: #007bff; }
+        .metric-label { color: #666; font-size: 0.9em; }
+        .sync-log { background: #f8f9fa; padding: 15px; border-radius: 4px; font-family: monospace; font-size: 0.9em; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>🚀 SVTR.AI 知识库同步状态</h1>
+    
+    <div class="status-card status-good">
+        <h3>📊 同步数据概览</h3>
+        <div class="metric">
+            <div class="metric-value" id="totalDocs">-</div>
+            <div class="metric-label">总文档数</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value" id="weeklyIssues">-</div>
+            <div class="metric-label">AI周报期数</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value" id="companies">-</div>
+            <div class="metric-label">公司数据</div>
+        </div>
+        <div class="metric">
+            <div class="metric-value" id="lastSync">-</div>
+            <div class="metric-label">上次同步</div>
+        </div>
+    </div>
+    
+    <div class="status-card">
+        <h3>🔄 同步控制</h3>
+        <button onclick="triggerSync('daily')">每日同步</button>
+        <button onclick="triggerSync('full')">全量同步</button>
+        <button onclick="checkStatus()">检查状态</button>
+        <button onclick="viewLogs()">查看日志</button>
+    </div>
+    
+    <div class="status-card">
+        <h3>📝 同步日志</h3>
+        <div class="sync-log" id="syncLog">
+            正在加载同步状态...
+        </div>
+    </div>
+    
+    <script>
+        // 同步状态监控脚本
+        async function loadSyncStatus() {
+            try {
+                const response = await fetch('/api/sync-status');
+                const data = await response.json();
+                
+                document.getElementById('totalDocs').textContent = data.totalDocs || 0;
+                document.getElementById('weeklyIssues').textContent = data.weeklyIssues || 0;
+                document.getElementById('companies').textContent = data.companies || 0;
+                document.getElementById('lastSync').textContent = data.lastSync || '未知';
+                
+                const logElement = document.getElementById('syncLog');
+                logElement.textContent = data.logs || '暂无日志';
+                
+            } catch (error) {
+                console.error('加载同步状态失败:', error);
+                document.getElementById('syncLog').textContent = '加载状态失败: ' + error.message;
+            }
+        }
+        
+        async function triggerSync(type) {
+            try {
+                const response = await fetch('/api/trigger-sync', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type })
+                });
+                
+                const result = await response.json();
+                alert(result.success ? '同步已触发' : '同步触发失败: ' + result.error);
+                
+                if (result.success) {
+                    setTimeout(loadSyncStatus, 3000); // 3秒后刷新状态
+                }
+                
+            } catch (error) {
+                alert('触发同步失败: ' + error.message);
+            }
+        }
+        
+        function checkStatus() {
+            loadSyncStatus();
+        }
+        
+        function viewLogs() {
+            window.open('/admin/sync-logs', '_blank');
+        }
+        
+        // 页面加载时获取状态
+        loadSyncStatus();
+        
+        // 每30秒自动刷新状态
+        setInterval(loadSyncStatus, 30000);
+    </script>
+</body>
+</html>

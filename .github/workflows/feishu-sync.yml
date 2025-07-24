@@ -1,0 +1,123 @@
+# SVTR.AI飞书知识库自动同步工作流
+# 美西时间每天晚上12:00自动同步
+
+name: SVTR知识库自动同步
+on:
+  schedule:
+    # 美西时间12:00 AM = UTC 8:00 AM (考虑PST时区)
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+    inputs:
+      sync_type:
+        description: '同步类型'
+        required: true
+        default: 'daily'
+        type: choice
+        options:
+          - daily
+          - full
+          - test
+  repository_dispatch:
+    types:
+      - feishu-update
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout代码
+        uses: actions/checkout@v4
+        
+      - name: 设置Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: 缓存依赖
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+            
+      - name: 安装依赖
+        run: npm ci
+        
+      - name: 每日自动同步 (美西时间12:00 AM)
+        if: github.event_name == 'schedule'
+        run: node scripts/improved-feishu-sync.js svtrai2025
+        env:
+          FEISHU_APP_ID: cli_a8e2014cbe7d9013
+          FEISHU_APP_SECRET: tysHBj6njxwafO92dwO1DdttVvqvesf0
+          
+      - name: 手动触发同步
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          if [ "${{ github.event.inputs.sync_type }}" = "full" ]; then
+            echo "执行全量同步..."
+            node scripts/improved-feishu-sync.js svtrai2025
+          elif [ "${{ github.event.inputs.sync_type }}" = "test" ]; then
+            echo "执行测试同步..."
+            node scripts/enhanced-rag-sync.js
+          else
+            echo "执行每日同步..."
+            node scripts/improved-feishu-sync.js svtrai2025
+          fi
+        env:
+          FEISHU_APP_ID: cli_a8e2014cbe7d9013
+          FEISHU_APP_SECRET: tysHBj6njxwafO92dwO1DdttVvqvesf0
+          
+      - name: Webhook触发同步
+        if: github.event_name == 'repository_dispatch'
+        run: node scripts/improved-feishu-sync.js svtrai2025
+        env:
+          FEISHU_APP_ID: cli_a8e2014cbe7d9013
+          FEISHU_APP_SECRET: tysHBj6njxwafO92dwO1DdttVvqvesf0
+          
+      - name: 检查同步结果
+        run: |
+          echo "🔍 检查同步结果..."
+          if [ -f "assets/data/rag/improved-feishu-knowledge-base.json" ]; then
+            echo "✅ 知识库文件存在"
+            echo "📊 文件大小: $(wc -c < assets/data/rag/improved-feishu-knowledge-base.json) 字节"
+            echo "📝 文档数量: $(jq '.summary.totalDocuments' assets/data/rag/improved-feishu-knowledge-base.json)"
+            echo "📅 最后更新: $(jq -r '.summary.lastUpdated' assets/data/rag/improved-feishu-knowledge-base.json)"
+          else
+            echo "❌ 知识库文件不存在"
+            exit 1
+          fi
+          
+      - name: 提交更新到仓库
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "SVTR Auto Sync"
+          git add assets/data/rag/
+          
+          if git diff --staged --quiet; then
+            echo "📝 没有检测到数据变化"
+          else
+            echo "📝 检测到数据更新，提交到仓库..."
+            COMMIT_TIME=$(TZ='America/Los_Angeles' date '+%Y-%m-%d %I:%M %p PST')
+            git commit -m "auto: 同步SVTR飞书知识库 - $COMMIT_TIME
+
+            🤖 自动同步报告:
+            - 同步时间: $COMMIT_TIME (美西时间)
+            - 触发方式: ${{ github.event_name }}
+            - 工作流: GitHub Actions
+            
+            📊 Generated with SVTR.AI AutoSync"
+            git push
+            echo "✅ 成功提交数据更新"
+          fi
+          
+      - name: 同步状态通知
+        if: always()
+        run: |
+          if [ $? -eq 0 ]; then
+            echo "🎉 SVTR飞书知识库同步成功完成！"
+            echo "⏰ 下次同步时间: 美西时间明天晚上12:00"
+          else
+            echo "❌ 同步过程中出现错误"
+            echo "🔧 请检查日志并手动修复"
+          fi

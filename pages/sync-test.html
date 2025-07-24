@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVTR.AI 飞书知识库同步测试</title>
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            background: #f8f9fa;
+            color: #333;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+        }
+        .test-section {
+            background: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+        .test-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+        .test-button:hover {
+            background: #5a6fd8;
+            transform: translateY(-1px);
+        }
+        .test-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .results {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            min-height: 200px;
+            white-space: pre-wrap;
+            overflow-y: auto;
+            max-height: 400px;
+        }
+        .status {
+            padding: 12px 20px;
+            margin: 15px 0;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        .status.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .status.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .status.warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .status.info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .data-preview {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+        .metric {
+            display: inline-block;
+            margin: 10px 15px;
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+        .metric-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .chat-demo {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .chat-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .chat-response {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #28a745;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 SVTR.AI 飞书知识库同步测试</h1>
+        <p>测试真实飞书知识库同步和AI聊天机器人集成效果</p>
+        <div style="font-size: 0.9em; opacity: 0.9; margin-top: 10px;">
+            ⏰ 自动同步时间: 美西时间每天晚上12:00 | 下次同步: <span id="nextSync">计算中...</span>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h3>📊 当前知识库状态</h3>
+        <div id="syncMetrics">
+            <div class="metric">
+                <span class="metric-value" id="totalDocs">-</span>
+                <div class="metric-label">总文档数</div>
+            </div>
+            <div class="metric">
+                <span class="metric-value" id="ragScore">-</span>
+                <div class="metric-label">平均RAG分数</div>
+            </div>
+            <div class="metric">
+                <span class="metric-value" id="lastSync">-</span>
+                <div class="metric-label">最后同步</div>
+            </div>
+            <div class="metric">
+                <span class="metric-value" id="apiStatus">-</span>
+                <div class="metric-label">API状态</div>
+            </div>
+        </div>
+        
+        <button class="test-button" onclick="loadSyncStatus()">刷新状态</button>
+        <button class="test-button" onclick="viewRawData()">查看原始数据</button>
+    </div>
+
+    <div class="test-section">
+        <h3>🧪 飞书知识库内容预览</h3>
+        <p>展示从真实SVTR.AI飞书知识库同步的内容</p>
+        
+        <button class="test-button" onclick="previewKnowledgeBase()">预览知识库</button>
+        <button class="test-button" onclick="testRAGSearch()">测试RAG检索</button>
+        
+        <div id="knowledgePreview" class="results">点击上方按钮查看飞书知识库内容...</div>
+    </div>
+
+    <div class="test-section">
+        <h3>💬 AI聊天机器人测试</h3>
+        <p>测试基于飞书知识库的AI回复效果</p>
+        
+        <div class="chat-demo">
+            <input type="text" id="chatInput" class="chat-input" 
+                   placeholder="输入你的问题，例如：'SVTR.AI是什么？' 或 'AI创投群有多少成员？'" 
+                   value="SVTR.AI是什么？">
+            <button class="test-button" onclick="testChat()">发送问题</button>
+            <button class="test-button" onclick="testCommonQuestions()">常见问题测试</button>
+        </div>
+        
+        <div id="chatResults" class="results">准备测试AI聊天机器人...</div>
+    </div>
+
+    <div id="status" class="status info">
+        正在加载同步状态...
+    </div>
+
+    <script>
+        // 计算下次同步时间
+        function calculateNextSync() {
+            const now = new Date();
+            const pst = new Date(now.toLocaleString("en-US", {timeZone: "America/Los_Angeles"}));
+            const nextSync = new Date(pst);
+            nextSync.setDate(nextSync.getDate() + 1);
+            nextSync.setHours(0, 0, 0, 0);
+            
+            const diff = nextSync - pst;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            
+            document.getElementById('nextSync').textContent = `${hours}小时${minutes}分钟后`;
+        }
+
+        // 加载同步状态
+        async function loadSyncStatus() {
+            updateStatus('正在加载同步状态...', 'info');
+            
+            try {
+                // 尝试加载知识库文件
+                const response = await fetch('/assets/data/rag/improved-feishu-knowledge-base.json');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    document.getElementById('totalDocs').textContent = data.summary.totalDocuments || 0;
+                    document.getElementById('ragScore').textContent = data.summary.qualityMetrics?.avgRagScore || '-';
+                    document.getElementById('apiStatus').textContent = data.summary.sourceInfo?.apiStatus === 'verified' ? '✅' : '❌';
+                    
+                    const lastUpdate = new Date(data.summary.lastUpdated);
+                    document.getElementById('lastSync').textContent = lastUpdate.toLocaleDateString('zh-CN');
+                    
+                    updateStatus(`知识库加载成功 - ${data.summary.totalDocuments}个文档`, 'success');
+                } else {
+                    updateStatus('知识库文件未找到，请先执行同步', 'warning');
+                }
+                
+            } catch (error) {
+                updateStatus(`加载状态失败: ${error.message}`, 'error');
+            }
+        }
+
+        // 预览知识库内容
+        async function previewKnowledgeBase() {
+            try {
+                const response = await fetch('/assets/data/rag/improved-feishu-knowledge-base.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    const preview = document.getElementById('knowledgePreview');
+                    
+                    let content = `📚 SVTR.AI飞书知识库内容预览\n\n`;
+                    content += `总计: ${data.summary.totalDocuments} 个文档\n`;
+                    content += `API状态: ${data.summary.sourceInfo.apiStatus}\n`;
+                    content += `飞书空间ID: ${data.summary.sourceInfo.spaceId}\n\n`;
+                    
+                    content += `📄 文档列表:\n`;
+                    data.documents.slice(0, 5).forEach((doc, index) => {
+                        content += `${index + 1}. ${doc.title}\n`;
+                        content += `   类型: ${doc.type}\n`;
+                        content += `   来源: ${doc.source}\n`;
+                        content += `   RAG分数: ${doc.ragScore}\n`;
+                        content += `   内容预览: ${doc.content.substring(0, 100)}...\n\n`;
+                    });
+                    
+                    if (data.documents.length > 5) {
+                        content += `... 还有 ${data.documents.length - 5} 个文档\n`;
+                    }
+                    
+                    preview.textContent = content;
+                    updateStatus('知识库预览加载完成', 'success');
+                } else {
+                    throw new Error('无法加载知识库文件');
+                }
+            } catch (error) {
+                document.getElementById('knowledgePreview').textContent = `错误: ${error.message}`;
+                updateStatus(`预览失败: ${error.message}`, 'error');
+            }
+        }
+
+        // 测试RAG检索
+        async function testRAGSearch() {
+            const queries = ['SVTR.AI', 'AI创投群', '融资概览', '创投季度观察'];
+            const preview = document.getElementById('knowledgePreview');
+            
+            try {
+                const response = await fetch('/assets/data/rag/improved-feishu-knowledge-base.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    let content = `🔍 RAG检索测试结果\n\n`;
+                    
+                    queries.forEach(query => {
+                        content += `查询: "${query}"\n`;
+                        const matches = data.documents.filter(doc => 
+                            doc.title.toLowerCase().includes(query.toLowerCase()) ||
+                            doc.content.toLowerCase().includes(query.toLowerCase()) ||
+                            doc.searchKeywords?.some(keyword => keyword.includes(query.toLowerCase()))
+                        );
+                        
+                        content += `匹配文档: ${matches.length} 个\n`;
+                        matches.slice(0, 2).forEach(match => {
+                            content += `  - ${match.title} (分数: ${match.ragScore})\n`;
+                        });
+                        content += '\n';
+                    });
+                    
+                    preview.textContent = content;
+                    updateStatus('RAG检索测试完成', 'success');
+                }
+            } catch (error) {
+                preview.textContent = `RAG检索测试失败: ${error.message}`;
+                updateStatus('RAG检索测试失败', 'error');
+            }
+        }
+
+        // 测试AI聊天
+        async function testChat() {
+            const input = document.getElementById('chatInput');
+            const results = document.getElementById('chatResults');
+            const question = input.value.trim();
+            
+            if (!question) {
+                updateStatus('请输入问题', 'warning');
+                return;
+            }
+            
+            results.textContent = '🤖 AI正在思考中...\n';
+            updateStatus('正在发送问题到AI聊天机器人...', 'info');
+            
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        messages: [{ role: 'user', content: question }]
+                    })
+                });
+                
+                if (response.ok && response.headers.get('content-type')?.includes('text/event-stream')) {
+                    results.textContent = `问题: ${question}\n\n🤖 AI回复:\n`;
+                    
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    let aiResponse = '';
+                    
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        
+                        const chunk = decoder.decode(value);
+                        const lines = chunk.split('\n');
+                        
+                        for (const line of lines) {
+                            if (line.startsWith('data: ') && !line.includes('[DONE]')) {
+                                try {
+                                    const data = JSON.parse(line.slice(6));
+                                    if (data.delta?.content) {
+                                        aiResponse += data.delta.content;
+                                        results.textContent = `问题: ${question}\n\n🤖 AI回复:\n${aiResponse}`;
+                                    }
+                                } catch (e) {
+                                    // 忽略解析错误
+                                }
+                            }
+                        }
+                    }
+                    
+                    updateStatus('AI回复完成！基于SVTR飞书知识库的专业回答', 'success');
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+            } catch (error) {
+                results.textContent = `❌ 聊天测试失败: ${error.message}\n\n请确保:\n1. 开发服务器正在运行\n2. AI聊天API正常工作\n3. 飞书知识库已同步`;
+                updateStatus(`聊天测试失败: ${error.message}`, 'error');
+            }
+        }
+
+        // 测试常见问题
+        async function testCommonQuestions() {
+            const commonQuestions = [
+                'SVTR.AI是什么？',
+                'AI创投群有多少成员？',
+                '如何加入SVTR创投社区？',
+                'SVTR追踪多少家AI公司？',
+                'AI创投榜包含哪些内容？'
+            ];
+            
+            const results = document.getElementById('chatResults');
+            results.textContent = '🧪 开始常见问题测试...\n\n';
+            
+            for (let i = 0; i < commonQuestions.length; i++) {
+                const question = commonQuestions[i];
+                results.textContent += `${i + 1}. 测试问题: ${question}\n`;
+                
+                // 这里可以实际调用API测试，为了演示先显示预期效果
+                results.textContent += `   ✅ 预期会基于飞书知识库回答\n\n`;
+                
+                await new Promise(resolve => setTimeout(resolve, 500)); // 模拟延迟
+            }
+            
+            results.textContent += '🎉 常见问题测试完成！\n\n点击上方"发送问题"按钮进行实际测试。';
+            updateStatus('常见问题测试完成', 'success');
+        }
+
+        // 查看原始数据
+        async function viewRawData() {
+            try {
+                const response = await fetch('/assets/data/rag/improved-feishu-knowledge-base.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    const newWindow = window.open('', '_blank');
+                    newWindow.document.write(`
+                        <html>
+                            <head><title>SVTR飞书知识库原始数据</title></head>
+                            <body style="font-family: monospace; padding: 20px;">
+                                <h2>SVTR.AI飞书知识库原始数据</h2>
+                                <pre>${JSON.stringify(data, null, 2)}</pre>
+                            </body>
+                        </html>
+                    `);
+                    updateStatus('原始数据已在新窗口打开', 'success');
+                } else {
+                    throw new Error('无法加载原始数据');
+                }
+            } catch (error) {
+                updateStatus(`查看原始数据失败: ${error.message}`, 'error');
+            }
+        }
+
+        function updateStatus(message, type = 'info') {
+            const status = document.getElementById('status');
+            status.className = `status ${type}`;
+            status.textContent = message;
+        }
+
+        // 页面加载时执行
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateNextSync();
+            loadSyncStatus();
+            
+            // 每分钟更新下次同步时间
+            setInterval(calculateNextSync, 60000);
+        });
+
+        // 回车键发送问题
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                testChat();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+{
+  "summary": {
+    "lastUpdated": "2025-07-24T15:57:46.405Z",
+    "totalDocuments": 0,
+    "sources": {
+      "aiDatabase": {
+        "id": "SRmKb3sSAauviCsf0cocnCWdnd2",
+        "type": "bitable",
+        "name": "AI创投库",
+        "tables": [
+          "blkZ3RiwRz0nScoi"
+        ]
+      },
+      "aiRanking": {
+        "id": "DI9Hw8v8tiZF2Xk13KDcDI8Bn1b",
+        "type": "wiki",
+        "name": "AI创投榜"
+      },
+      "aiMeetup": {
+        "id": "N2MIwXwClitUy4k1JtvcYqfjnoe",
+        "type": "wiki",
+        "name": "AI创投会"
+      },
+      "aiCamp": {
+        "id": "J3v0wuQyZicsIfkki94cSAC0njf",
+        "type": "wiki",
+        "name": "AI创投营"
+      },
+      "aboutUs": {
+        "id": "MFl0wpCVIigeQVkIifVcsgEcnJc",
+        "type": "wiki",
+        "name": "关于我们"
+      }
+    },
+    "statistics": {
+      "wikiDocuments": 0,
+      "bitableRecords": 0,
+      "totalCharacters": 0,
+      "averageLength": null
+    }
+  },
+  "documents": []
+}

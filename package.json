@@ -44,7 +44,11 @@
     "rag:deploy": "node scripts/deploy-rag.js",
     "rag:setup": "npm run rag:sync && npm run rag:build && npm run rag:test",
     "rag:test-hybrid": "node scripts/test-hybrid-rag.js",
-    "chat:test": "npm run rag:test-hybrid"
+    "chat:test": "npm run rag:test-hybrid",
+    "sync:daily": "node scripts/improved-feishu-sync.js svtrai2025",
+    "sync:full": "node scripts/improved-feishu-sync.js svtrai2025",
+    "sync:webhook": "node scripts/improved-feishu-sync.js svtrai2025",
+    "sync:test": "node scripts/improved-feishu-sync.js svtrai2025"
   },
   "keywords": [
     "AI",
