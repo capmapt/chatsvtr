@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>原始响应测试</title>
+    <style>
+        body { font-family: monospace; padding: 20px; }
+        #output { 
+            border: 1px solid #333; 
+            padding: 10px; 
+            background: #f0f0f0; 
+            white-space: pre-wrap; 
+            min-height: 300px;
+        }
+        button { 
+            background: #333; 
+            color: white; 
+            border: none; 
+            padding: 10px 15px; 
+            cursor: pointer; 
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>🔍 原始响应测试</h2>
+    <p>这会显示API的完整原始响应</p>
+    
+    <button onclick="testRaw()">测试原始响应</button>
+    <button onclick="clearOutput()">清空</button>
+    
+    <div id="output">点击按钮开始...</div>
+
+    <script>
+        async function testRaw() {
+            const output = document.getElementById('output');
+            output.textContent = '正在发送请求...\n';
+            
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        messages: [{ role: 'user', content: '测试' }]
+                    })
+                });
+                
+                output.textContent += `状态: ${response.status}\n`;
+                output.textContent += `头部:\n`;
+                for (const [k, v] of response.headers) {
+                    output.textContent += `  ${k}: ${v}\n`;
+                }
+                output.textContent += '\n原始响应:\n';
+                
+                if (response.body) {
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        
+                        const chunk = decoder.decode(value);
+                        output.textContent += chunk;
+                    }
+                } else {
+                    const text = await response.text();
+                    output.textContent += text;
+                }
+                
+                output.textContent += '\n\n--- 结束 ---';
+                
+            } catch (error) {
+                output.textContent += `\n错误: ${error.message}`;
+            }
+        }
+        
+        function clearOutput() {
+            document.getElementById('output').textContent = '点击按钮开始...';
+        }
+    </script>
+</body>
+</html>
