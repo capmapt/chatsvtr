@@ -1,42 +1,43 @@
-// Jest setup for DOM testing
-require('@testing-library/jest-dom');
+// Vitest setup for DOM testing
+import '@testing-library/jest-dom';
+import { vi, afterEach } from 'vitest';
 
 // Mock global objects that might be used in the application
 global.console = {
   ...console,
-  warn: jest.fn(),
-  error: jest.fn(),
+  warn: vi.fn(),
+  error: vi.fn(),
 };
 
 // Mock matchMedia for responsive tests
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: jest.fn().mockImplementation(query => ({
+  value: vi.fn().mockImplementation(query => ({
     matches: false,
     media: query,
     onchange: null,
-    addListener: jest.fn(), // deprecated
-    removeListener: jest.fn(), // deprecated
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
+    addListener: vi.fn(), // deprecated
+    removeListener: vi.fn(), // deprecated
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
   })),
 });
 
 // Mock localStorage
 const localStorageMock = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  removeItem: jest.fn(),
-  clear: jest.fn(),
+  getItem: vi.fn(),
+  setItem: vi.fn(),
+  removeItem: vi.fn(),
+  clear: vi.fn(),
 };
 global.localStorage = localStorageMock;
 
 // Mock fetch for API calls
-global.fetch = jest.fn();
+global.fetch = vi.fn();
 
 // Clean up after each test
 afterEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
   document.body.innerHTML = '';
 });

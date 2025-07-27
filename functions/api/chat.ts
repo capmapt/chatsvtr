@@ -4,14 +4,47 @@
  */
 
 import { createOptimalRAGService } from '../lib/hybrid-rag-service';
+import { UsageMonitor } from './usage-monitor';
+import { SmartCache } from '../lib/smart-cache';
+
+/**
+ * 智能内容过滤函数 - 提升用户体验
+ */
+function shouldFilterContent(content: string): boolean {
+  const trimmed = content.trim();
+  
+  // 过滤空内容或只有标点符号的内容
+  if (!trimmed || /^[。\.，,！!？?；;：:\s]*$/.test(trimmed)) {
+    return true;
+  }
+  
+  // 过滤重复的分析提示词
+  const analysisPatterns = [
+    '正在分析', '分析中', '思考中', '正在思考',
+    'analyzing', 'thinking', 'processing',
+    '让我来分析', '我正在', '我在分析'
+  ];
+  
+  const hasAnalysisPattern = analysisPatterns.some(pattern => 
+    trimmed.toLowerCase().includes(pattern.toLowerCase())
+  );
+  
+  // 如果只包含分析词且长度很短，则过滤
+  if (hasAnalysisPattern && trimmed.length < 20) {
+    return true;
+  }
+  
+  return false;
+}
 
 // 简化的AI创投系统提示词 - 避免重复分析
 const BASE_SYSTEM_PROMPT = `你是SVTR.AI的AI创投分析师，专注于为用户提供准确、有用的AI创投信息。
 
 核心要求：
-1. 直接回答用户问题，不要说"正在分析"或显示思考过程
-2. 基于SVTR.AI平台数据提供专业回答
-3. 保持简洁、准确的回复风格
+1. 只能基于提供的知识库内容回答问题
+2. 如果知识库中没有相关信息，明确告知"根据现有知识库信息，我无法提供该问题的准确答案"
+3. 绝对不允许编造或猜测信息，特别是人名、公司创始人等具体事实
+4. 直接回答用户问题，不要说"正在分析"或显示思考过程
 
 SVTR.AI平台信息：
 • 追踪10,761+家全球AI公司
@@ -19,7 +52,7 @@ SVTR.AI平台信息：
 • 提供AI周报、投资分析和市场洞察
 • 每日更新最新AI创投动态
 
-请直接回答用户问题，提供有价值的信息。`;
+请严格基于知识库内容回答，确保信息准确性。`;
 
 /**
  * 生成增强的系统提示词
@@ -45,6 +78,9 @@ function generateEnhancedPrompt(basePrompt: string, ragContext: any): string {
   return enhancedPrompt;
 }
 
+// 全局实例化 - 提升性能
+const globalSmartCache = new SmartCache();
+
 export async function onRequestPost(context: any): Promise<Response> {
   try {
     const { request, env } = context;
@@ -54,14 +90,56 @@ export async function onRequestPost(context: any): Promise<Response> {
     // 获取用户最新问题
     const userQuery = messages[messages.length - 1]?.content || '';
     
-    // 初始化混合RAG服务
+    // 1. 智能缓存检查 - 优先级最高
+    const cachedResponse = await globalSmartCache.getResponse(userQuery);
+    if (cachedResponse) {
+      console.log('⚡ 返回缓存回复，跳过RAG和AI推理');
+      
+      return new Response(JSON.stringify({
+        cached: true,
+        sources: cachedResponse.sources,
+        response: cachedResponse.response,
+        hitCount: cachedResponse.hitCount
+      }), {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'X-Cache-Status': 'HIT'
+        }
+      });
+    }
+    
+    // 初始化使用监控
+    const usageMonitor = new UsageMonitor(context);
+    const estimatedTokens = usageMonitor.estimateTokens(userQuery);
+    
+    // 检查免费额度
+    const quotaCheck = await usageMonitor.checkQuota(estimatedTokens);
+    if (!quotaCheck.allowed) {
+      return new Response(JSON.stringify({
+        error: '免费额度已用完',
+        message: quotaCheck.reason,
+        fallback: true
+      }), {
+        status: 429,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        }
+      });
+    }
+    
+    // 初始化RAG服务 - 纯Cloudflare AI免费方案 + KV存储
     const ragService = createOptimalRAGService(
       env.SVTR_VECTORIZE,
       env.AI,
-      env.OPENAI_API_KEY
+      undefined, // 不使用OpenAI，避免费用
+      env.SVTR_KV // 添加KV存储支持
     );
 
-    // 执行智能检索增强
+    // 移除事实核查器，简化流程
+
+    // 2. 执行智能检索增强
     console.log('🔍 开始混合RAG检索增强...');
     const ragContext = await ragService.performIntelligentRAG(userQuery, {
       topK: 8,
@@ -94,39 +172,69 @@ export async function onRequestPost(context: any): Promise<Response> {
       'X-Accel-Buffering': 'no',
     });
 
-    // 智能模型选择策略 - 避免思考过程显示
-    const modelPriority = [
-      '@cf/meta/llama-3.3-70b-instruct',               // 主力模型，无思考过程
-      '@cf/qwen/qwen2.5-coder-32b-instruct',          // 代码专用
-      '@cf/qwen/qwen1.5-14b-chat-awq',                // 稳定fallback
-      '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b'  // 备用推理模型
-    ];
+    // Cloudflare AI 中文优化模型配置
+    const modelConfig = {
+      '@cf/meta/llama-3.1-70b-instruct': {
+        priority: 1,
+        capabilities: ['chinese', 'general', 'analysis', 'investment'],
+        maxTokens: 4096,
+        temperature: 0.7,
+        costLevel: 'medium'
+      },
+      '@cf/meta/llama-3.1-8b-instruct': {
+        priority: 2,
+        capabilities: ['chinese', 'fallback', 'basic'],
+        maxTokens: 2048,
+        temperature: 0.7,
+        costLevel: 'low'
+      }
+    };
     
-    // 默认使用Llama模型（不会显示思考过程）
-    let selectedModel = '@cf/meta/llama-3.3-70b-instruct';
-    
-    if (userQuery.toLowerCase().includes('code') || 
-        userQuery.toLowerCase().includes('代码') ||
-        userQuery.toLowerCase().includes('programming') ||
-        userQuery.toLowerCase().includes('编程')) {
-      selectedModel = '@cf/qwen/qwen2.5-coder-32b-instruct';
+    // 优化的模型选择 - 中文友好策略
+    function selectOptimalModel(query: string, ragMatches: number): string {
+      // 检测中文内容
+      const hasChinese = /[\u4e00-\u9fa5]/.test(query);
+      
+      // 所有中文问题优先使用70B模型，确保中文输出质量
+      if (hasChinese) {
+        return '@cf/meta/llama-3.1-70b-instruct';
+      }
+      
+      // 复杂英文问题或有RAG匹配的问题
+      if (query.length > 50 || ragMatches > 2) {
+        return '@cf/meta/llama-3.1-70b-instruct';
+      }
+      
+      // 简单问题使用8B模型
+      return '@cf/meta/llama-3.1-8b-instruct';
     }
+    
+    const selectedModel = selectOptimalModel(userQuery, ragContext.matches.length);
+    const config = modelConfig[selectedModel] || modelConfig['@cf/meta/llama-3.1-70b-instruct'];
     
     // 模型调用，失败时使用fallback
     let response;
-    for (const model of [selectedModel, ...modelPriority.filter(m => m !== selectedModel)]) {
+    const fallbackModels = Object.keys(modelConfig).filter(m => m !== selectedModel);
+    
+    for (const model of [selectedModel, ...fallbackModels]) {
       try {
-        console.log('🧠 尝试模型: ' + model);
+        const currentConfig = modelConfig[model] || config;
+        console.log('🧠 尝试模型: ' + model + ' (maxTokens: ' + currentConfig.maxTokens + ')');
         
         response = await env.AI.run(model, {
           messages: messagesWithEnhancedSystem,
           stream: true,
-          max_tokens: 4096,
-          temperature: 0.8,
+          max_tokens: currentConfig.maxTokens,
+          temperature: currentConfig.temperature,
           top_p: 0.95,
         });
         
         console.log('✅ 成功使用模型: ' + model);
+        
+        // 记录实际使用量
+        const actualTokens = currentConfig.maxTokens; // 保守估算
+        await usageMonitor.recordUsage(actualTokens);
+        
         break;
         
       } catch (error) {
@@ -139,137 +247,104 @@ export async function onRequestPost(context: any): Promise<Response> {
       throw new Error('所有AI模型都不可用');
     }
 
-    // 如果有RAG匹配，在响应流中注入来源信息
-    if (ragContext.matches.length > 0) {
-      // 创建自定义响应流，转换为标准流式格式
-      const { readable, writable } = new TransformStream();
-      const writer = writable.getWriter();
-      const reader = response.getReader();
-      const decoder = new TextDecoder();
-      const encoder = new TextEncoder();
-      
-      // 开始流处理
-      (async () => {
-        try {
-          let responseComplete = false;
-          
-          while (!responseComplete) {
-            const { done, value } = await reader.read();
-            
-            if (done) {
-              // 响应结束，添加来源信息
-              const sourceInfo = '\n\n---\n**📚 基于SVTR知识库** (' + ragContext.matches.length + '个匹配，置信度' + (ragContext.confidence * 100).toFixed(1) + '%):\n' + ragContext.sources.map((source, index) => (index + 1) + '. ' + source).join('\n');
-              
-              await writer.write(encoder.encode('data: ' + JSON.stringify({delta: {content: sourceInfo}}) + '\n\n'));
-              await writer.write(encoder.encode('data: [DONE]\n\n'));
-              responseComplete = true;
-            } else {
-              // 解析Cloudflare AI响应并转换为标准格式
-              const chunk = decoder.decode(value);
-              const lines = chunk.split('\n');
-              
-              for (const line of lines) {
-                if (line.startsWith('data: ') && !line.includes('[DONE]')) {
-                  try {
-                    const data = JSON.parse(line.slice(6));
-                    if (data.response) {
-                      // 检测并过滤重复的"正在分析"文本
-                      const content = data.response;
-                      if (content && (
-                        content.includes('正在分析') || 
-                        content.includes('分析中') ||
-                        content.includes('思考中') ||
-                        /^[。\.]+$/.test(content.trim())
-                      )) {
-                        // 跳过这些重复的分析文本
-                        continue;
-                      }
-                      
-                      // 转换为标准delta格式
-                      const standardFormat = JSON.stringify({
-                        delta: { content: content }
-                      });
-                      await writer.write(encoder.encode('data: ' + standardFormat + '\n\n'));
-                    }
-                  } catch (e) {
-                    // 如果解析失败，直接转发原始数据
-                    await writer.write(value);
-                  }
-                } else if (line.includes('[DONE]')) {
-                  // 不要转发原始的[DONE]，我们会在最后添加
-                  continue;
-                } else if (line.trim()) {
-                  await writer.write(encoder.encode(line + '\n'));
-                }
-              }
-            }
-          }
-        } catch (error) {
-          console.error('流处理错误:', error);
-        } finally {
-          await writer.close();
-        }
-      })();
-      
-      return new Response(readable, responseHeaders);
-    }
-
-    // 没有RAG匹配，转换为标准格式后返回
+    // 3. 增强的响应流处理：事实核查 + 缓存
     const { readable, writable } = new TransformStream();
     const writer = writable.getWriter();
     const reader = response.getReader();
     const decoder = new TextDecoder();
     const encoder = new TextEncoder();
     
-    // 转换响应格式
+    // 收集完整响应用于事实核查和缓存
+    let fullResponse = '';
+    
+    // 优化的流处理 - 集成事实核查
     (async () => {
       try {
-        while (true) {
+        let responseComplete = false;
+        let buffer = '';
+        
+        while (!responseComplete) {
           const { done, value } = await reader.read();
           
           if (done) {
-            await writer.write(encoder.encode('data: [DONE]\n\n'));
-            break;
-          }
-          
-          // 解析Cloudflare AI响应并转换为标准格式
-          const chunk = decoder.decode(value);
-          const lines = chunk.split('\n');
-          
-          for (const line of lines) {
-            if (line.startsWith('data: ') && !line.includes('[DONE]')) {
-              try {
-                const data = JSON.parse(line.slice(6));
-                if (data.response) {
-                  // 检测并过滤重复的"正在分析"文本
-                  const content = data.response;
-                  if (content && (
-                    content.includes('正在分析') || 
-                    content.includes('分析中') ||
-                    content.includes('思考中') ||
-                    /^[。\.]+$/.test(content.trim())
-                  )) {
-                    // 跳过这些重复的分析文本
-                    continue;
+            // 处理剩余缓冲区内容
+            if (buffer.trim()) {
+              const lines = buffer.split('\n');
+              for (const line of lines) {
+                if (line.startsWith('data: ') && !line.includes('[DONE]')) {
+                  try {
+                    const data = JSON.parse(line.slice(6));
+                    if (data.response) {
+                      const content = data.response;
+                      if (content && !shouldFilterContent(content)) {
+                        fullResponse += content;
+                        const standardFormat = JSON.stringify({
+                          delta: { content: content }
+                        });
+                        await writer.write(encoder.encode('data: ' + standardFormat + '\n\n'));
+                      }
+                    }
+                  } catch (e) {
+                    // 忽略解析错误
                   }
-                  
-                  // 转换为标准delta格式
-                  const standardFormat = JSON.stringify({
-                    delta: { content: content }
-                  });
-                  await writer.write(encoder.encode('data: ' + standardFormat + '\n\n'));
                 }
-              } catch (e) {
-                // 如果解析失败，直接转发原始数据
-                await writer.write(value);
               }
-            } else if (!line.includes('[DONE]') && line.trim()) {
-              await writer.write(encoder.encode(line + '\n'));
+            }
+            
+            // 4. 缓存高质量回复（简化版本）
+            if (ragContext.matches.length > 0) {
+              await globalSmartCache.cacheResponse(
+                userQuery,
+                ragContext,
+                fullResponse,
+                0.8, // 固定置信度
+                ragContext.sources
+              );
+              console.log('📦 回复已缓存');
+            }
+            
+            // 添加来源信息（移除置信度评分）
+            const sourceInfo = ragContext.matches.length > 0 ? 
+              '\n\n---\n**📚 基于SVTR知识库** (' + ragContext.matches.length + '个匹配):\n' + 
+              ragContext.sources.slice(0, 3).map((source, index) => (index + 1) + '. ' + source).join('\n') : 
+              '';
+            
+            await writer.write(encoder.encode('data: ' + JSON.stringify({delta: {content: sourceInfo}}) + '\n\n'));
+            await writer.write(encoder.encode('data: [DONE]\n\n'));
+            responseComplete = true;
+            
+          } else {
+            // 优化的中文字符处理
+            const chunk = decoder.decode(value, { stream: true });
+            buffer += chunk;
+            
+            // 按行处理，保留最后一个不完整的行
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || '';
+            
+            for (const line of lines) {
+              if (line.startsWith('data: ') && !line.includes('[DONE]')) {
+                try {
+                  const data = JSON.parse(line.slice(6));
+                  if (data.response) {
+                    const content = data.response;
+                    if (content && !shouldFilterContent(content)) {
+                      fullResponse += content;
+                      const standardFormat = JSON.stringify({
+                        delta: { content: content }
+                      });
+                      await writer.write(encoder.encode('data: ' + standardFormat + '\n\n'));
+                    }
+                  }
+                } catch (e) {
+                  // 忽略解析错误，继续处理
+                }
+              }
             }
           }
         }
       } catch (error) {
-        console.error('流格式转换错误:', error);
+        console.error('增强流处理错误:', error);
       } finally {
         await writer.close();
       }

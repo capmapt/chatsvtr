@@ -76,15 +76,24 @@ test.describe('Navigation', () => {
     const sidebar = page.locator('.sidebar');
     const menuToggle = page.locator('.menu-toggle');
     
-    // Open sidebar first
-    await menuToggle.click();
+    // Sidebar starts as open, close it first then open again
+    await menuToggle.click(); // Close
+    await page.waitForTimeout(300);
+    await menuToggle.click(); // Open
+    await page.waitForTimeout(300);
     
-    // Click overlay to close
+    // Verify sidebar is open
+    await expect(sidebar).toHaveClass(/open/);
+    
+    // Click overlay to close (use force to bypass iframe interference)
     if (await overlay.isVisible()) {
-      await overlay.click();
+      await overlay.click({ force: true });
     }
     
-    // Sidebar state should change
-    await expect(sidebar).toBeVisible();
+    // Wait a bit for animation
+    await page.waitForTimeout(500);
+    
+    // Sidebar should no longer have 'open' class
+    await expect(sidebar).not.toHaveClass(/open/);
   });
 });

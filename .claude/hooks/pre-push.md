@@ -1,0 +1,1 @@
+use the e2e-tester sub agent to run tests before pushing

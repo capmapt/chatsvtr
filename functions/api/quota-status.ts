@@ -3,43 +3,43 @@
  * 返回用户当前的配额使用情况
  */
 
-import { createFreeTierManager } from '../lib/free-tier-manager';
+import { UsageMonitor } from './usage-monitor';
 
 export async function onRequestGet(context: any): Promise<Response> {
   try {
-    const { env } = context;
-    
-    // 初始化免费额度管理器
-    const freeTierManager = createFreeTierManager(env.SVTR_KV);
+    const usageMonitor = new UsageMonitor(context);
     
     // 获取配额信息
-    const quotaInfo = await freeTierManager.getQuotaInfo();
-    const quotaCheck = await freeTierManager.checkQuota();
+    const quotaInfo = await usageMonitor.getQuotaInfo();
+    const quotaCheck = await usageMonitor.checkQuota();
     
+    // 生成用户友好的消息
+    let message = '✅ Cloudflare AI免费额度充足，零费用运行';
+    let upgradeHint = '';
+    
+    if (quotaInfo.daily.percentage > 80) {
+      message = '⚠️ 今日免费额度使用较多，请适度使用';
+    }
+    
+    if (quotaInfo.monthly.percentage > 80) {
+      message = '🚨 本月免费额度即将用完，请控制使用频率';
+      upgradeHint = '💡 提示：下月额度将自动重置，继续零费用使用';
+    }
+    
+    if (!quotaCheck.allowed) {
+      message = '❌ 免费额度已用完，已切换到演示模式';
+      upgradeHint = '💡 明日或下月额度将自动重置，继续零费用体验';
+    }
+
     const statusData = {
       status: quotaCheck.allowed ? 'active' : 'exceeded',
-      quotas: {
-        daily: {
-          used: quotaInfo.daily.used,
-          limit: quotaInfo.daily.limit,
-          remaining: quotaInfo.daily.remaining,
-          percentage: Math.round((quotaInfo.daily.used / quotaInfo.daily.limit) * 100),
-          resetTime: quotaInfo.daily.resetTime
-        },
-        monthly: {
-          used: quotaInfo.monthly.used,
-          limit: quotaInfo.monthly.limit,
-          remaining: quotaInfo.monthly.remaining,
-          percentage: Math.round((quotaInfo.monthly.used / quotaInfo.monthly.limit) * 100),
-          resetTime: quotaInfo.monthly.resetTime
-        }
+      quotas: quotaInfo,
+      message,
+      upgradeHint,
+      costSavings: {
+        estimatedCost: 0,
+        description: '使用Cloudflare AI免费额度，完全零费用运行'
       },
-      message: quotaCheck.allowed 
-        ? '✅ 免费额度充足，享受SVTR.AI专业分析'
-        : `⚠️ ${quotaCheck.reason}`,
-      upgradeHint: !quotaCheck.allowed 
-        ? '💎 配置自己的Cloudflare Workers AI密钥可获得更大免费额度！'
-        : null,
       timestamp: new Date().toISOString()
     };
     

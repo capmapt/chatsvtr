@@ -8,6 +8,9 @@ module.exports = {
   extends: [
     'eslint:recommended'
   ],
+  plugins: [
+    'tailwindcss'
+  ],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module'
@@ -24,7 +27,24 @@ module.exports = {
     'quotes': ['error', 'single'],
     'semi': ['error', 'always'],
     'no-trailing-spaces': 'error',
-    'eol-last': 'error'
+    'eol-last': 'error',
+    // Tailwind CSS 类顺序规则
+    'tailwindcss/classnames-order': 'error',
+    'tailwindcss/enforces-negative-arbitrary-values': 'error',
+    'tailwindcss/enforces-shorthand': 'error',
+    'tailwindcss/no-contradicting-classname': 'error'
+  },
+  settings: {
+    tailwindcss: {
+      config: './tailwind.config.js',
+      cssFiles: [
+        '**/*.css',
+        '!**/node_modules',
+        '!**/.*',
+        '!**/dist',
+        '!**/build'
+      ]
+    }
   },
   globals: {
     // Define global variables used in the project

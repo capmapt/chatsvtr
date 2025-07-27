@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVTR.AI Chatbot 优化版演示</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .demo-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .demo-header {
+            background: linear-gradient(135deg, #2196F3 0%, #21CBF3 100%);
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+        
+        .demo-header h1 {
+            margin: 0 0 8px 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .demo-header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .performance-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 16px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e1e5e9;
+            font-size: 12px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-weight: bold;
+            color: #2196F3;
+            display: block;
+            font-size: 16px;
+        }
+        
+        .stat-label {
+            color: #666;
+            margin-top: 4px;
+        }
+        
+        #svtr-chat-container {
+            height: 600px;
+        }
+        
+        .svtr-chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .svtr-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #fafafa;
+        }
+        
+        .svtr-message {
+            margin-bottom: 16px;
+            max-width: 85%;
+        }
+        
+        .svtr-message.user {
+            margin-left: auto;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .message-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .svtr-message.user .message-avatar {
+            background: #2196F3;
+        }
+        
+        .svtr-message.assistant .message-avatar {
+            background: #4CAF50;
+        }
+        
+        .message-content {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            line-height: 1.5;
+        }
+        
+        .svtr-message.user .message-content {
+            background: #2196F3;
+            color: white;
+        }
+        
+        .loading-dots {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+        }
+        
+        .loading-text {
+            font-style: italic;
+        }
+        
+        .animated-dots span {
+            animation: pulse 1.5s infinite;
+        }
+        
+        .animated-dots span:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        
+        .animated-dots span:nth-child(3) {
+            animation-delay: 1s;
+        }
+        
+        @keyframes pulse {
+            0%, 60%, 100% { opacity: 0; }
+            30% { opacity: 1; }
+        }
+        
+        .loading-progress {
+            width: 100%;
+            height: 2px;
+            background: #eee;
+            border-radius: 1px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #2196F3, #21CBF3);
+            animation: progress 2s infinite;
+            border-radius: 1px;
+        }
+        
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+        
+        .svtr-chat-input-area {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e1e5e9;
+        }
+        
+        .svtr-chat-input-container {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+        
+        #svtr-chat-input {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 12px 16px;
+            font-size: 14px;
+            line-height: 1.4;
+            resize: none;
+            outline: none;
+            font-family: inherit;
+        }
+        
+        #svtr-chat-input:focus {
+            border-color: #2196F3;
+            box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+        }
+        
+        .svtr-chat-send-btn {
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 50%;
+            background: #2196F3;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.2s;
+        }
+        
+        .svtr-chat-send-btn:hover {
+            background: #1976D2;
+            transform: scale(1.05);
+        }
+        
+        .svtr-chat-send-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .svtr-chat-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            justify-content: center;
+        }
+        
+        .svtr-action-btn {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            background: white;
+            color: #666;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        
+        .svtr-action-btn:hover {
+            border-color: #2196F3;
+            color: #2196F3;
+        }
+        
+        .rag-sources {
+            margin-top: 16px;
+            padding: 12px;
+            background: rgba(33, 150, 243, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #2196F3;
+        }
+        
+        .rag-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            color: #2196F3;
+            margin-bottom: 8px;
+        }
+        
+        .rag-list {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .highlight-metric {
+            background: rgba(255, 193, 7, 0.2);
+            color: #e65100;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .error-retry-btn {
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .error-retry-btn:hover {
+            background: #d32f2f;
+        }
+        
+        .demo-tips {
+            padding: 16px;
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            margin: 16px 20px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        
+        .demo-tips h4 {
+            margin: 0 0 8px 0;
+            color: #1976D2;
+        }
+        
+        .demo-tips ul {
+            margin: 8px 0 0 0;
+            padding-left: 20px;
+        }
+        
+        .demo-tips li {
+            margin-bottom: 4px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>🚀 SVTR.AI Chatbot 优化版</h1>
+            <p>体验优化后的流式响应、智能错误恢复、RAG检索和性能监控</p>
+        </div>
+        
+        <div class="performance-stats">
+            <div class="stat-item">
+                <span class="stat-value" id="avg-response-time">0ms</span>
+                <div class="stat-label">平均响应时间</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="success-rate">100%</span>
+                <div class="stat-label">成功率</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="total-interactions">0</span>
+                <div class="stat-label">总交互次数</div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value" id="retry-rate">0%</span>
+                <div class="stat-label">重试率</div>
+            </div>
+        </div>
+        
+        <div class="demo-tips">
+            <h4>🎯 优化亮点体验</h4>
+            <ul>
+                <li><strong>流式响应优化</strong>：中文字符处理无断裂，30ms节流更新</li>
+                <li><strong>智能错误恢复</strong>：自动识别错误类型，指数退避重试</li>
+                <li><strong>RAG检索增强</strong>：知识源可视化，关键数据高亮</li>
+                <li><strong>性能监控</strong>：实时统计响应时间、成功率等指标</li>
+            </ul>
+        </div>
+        
+        <div id="svtr-chat-container"></div>
+    </div>
+
+    <!-- 加载优化后的聊天组件 -->
+    <script src="assets/js/translations.js"></script>
+    <script src="assets/js/chat-optimized.js"></script>
+    
+    <script>
+        // 初始化聊天组件
+        window.svtrChat = new SVTRChat('svtr-chat-container');
+        
+        // 性能统计更新
+        function updatePerformanceStats() {
+            if (window.svtrChat && window.svtrChat.getPerformanceStats) {
+                const stats = window.svtrChat.getPerformanceStats();
+                document.getElementById('avg-response-time').textContent = stats.averageResponseTime + 'ms';
+                document.getElementById('success-rate').textContent = Math.round(stats.successRate || 100) + '%';
+                document.getElementById('total-interactions').textContent = stats.totalInteractions;
+                document.getElementById('retry-rate').textContent = Math.round(stats.retryRate || 0) + '%';
+            }
+        }
+        
+        // 每2秒更新一次统计
+        setInterval(updatePerformanceStats, 2000);
+        
+        // 添加一些演示快捷问题
+        setTimeout(() => {
+            const inputArea = document.querySelector('.svtr-chat-input-area');
+            const quickQuestions = document.createElement('div');
+            quickQuestions.innerHTML = `
+                <div style="margin-bottom: 12px; font-size: 12px; color: #666;">
+                    💡 试试这些问题：
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button class="demo-question-btn" data-question="Anthropic的投资情况如何？">Anthropic分析</button>
+                    <button class="demo-question-btn" data-question="AI创投市场趋势">市场趋势</button>
+                    <button class="demo-question-btn" data-question="Scale AI公司分析">Scale AI</button>
+                    <button class="demo-question-btn" data-question="企业级AI投资机会">企业级AI</button>
+                </div>
+            `;
+            quickQuestions.style.cssText = 'margin-bottom: 16px;';
+            inputArea.insertBefore(quickQuestions, inputArea.firstChild);
+            
+            // 添加快捷问题样式
+            const style = document.createElement('style');
+            style.textContent = `
+                .demo-question-btn {
+                    padding: 6px 12px;
+                    border: 1px solid #2196F3;
+                    border-radius: 16px;
+                    background: white;
+                    color: #2196F3;
+                    cursor: pointer;
+                    font-size: 11px;
+                    transition: all 0.2s;
+                }
+                .demo-question-btn:hover {
+                    background: #2196F3;
+                    color: white;
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // 绑定快捷问题点击事件
+            document.querySelectorAll('.demo-question-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const question = btn.getAttribute('data-question');
+                    const input = document.getElementById('svtr-chat-input');
+                    input.value = question;
+                    input.focus();
+                    
+                    // 触发发送
+                    if (window.svtrChat && window.svtrChat.sendMessage) {
+                        window.svtrChat.sendMessage();
+                    }
+                });
+            });
+        }, 1000);
+    </script>
+</body>
+</html>

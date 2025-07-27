@@ -1,0 +1,1 @@
+use the style-checker sub agent to lint staged files

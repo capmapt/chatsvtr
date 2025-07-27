@@ -13,13 +13,15 @@ interface HybridRAGConfig {
 export class HybridRAGService {
   private config: HybridRAGConfig;
   private vectorize: any;
-  private ai: any;
+  private ai: any;  
   private openaiApiKey?: string;
+  private kvNamespace: any;
 
-  constructor(vectorize: any, ai: any, openaiApiKey?: string) {
+  constructor(vectorize: any, ai: any, openaiApiKey?: string, kvNamespace?: any) {
     this.vectorize = vectorize;
     this.ai = ai;
     this.openaiApiKey = openaiApiKey;
+    this.kvNamespace = kvNamespace;
     
     // 智能配置：根据可用资源自动选择策略
     this.config = {
@@ -324,138 +326,36 @@ export class HybridRAGService {
   }
 
   /**
-   * 获取存储的文档（从飞书同步数据）
+   * 获取存储的文档（从KV存储读取，带fallback）
    */
   private async getStoredDocuments() {
     try {
-      // 尝试从多个数据源读取
-      const documents = [];
-      
-      // 1. AI周报数据
-      try {
-        const weeklyData = await this.loadWeeklyData();
-        documents.push(...weeklyData);
-      } catch (e) { console.log('周报数据读取失败:', e.message); }
-      
-      // 2. 交易精选数据
-      try {
-        const tradingData = await this.loadTradingData();
-        documents.push(...tradingData);
-      } catch (e) { console.log('交易数据读取失败:', e.message); }
-      
-      // 3. 预设知识库
-      documents.push(...this.getDefaultKnowledgeBase());
-      
-      return documents;
+      // 优先从KV存储读取（支持自动同步）
+      if (this.kvNamespace) {
+        const kvData = await this.kvNamespace.get('feishu-knowledge-base', 'json');
+        if (kvData && kvData.documents) {
+          console.log('✅ 从KV存储读取飞书知识库，文档数量:', kvData.documents.length);
+          return kvData.documents;
+        }
+      }
+
+      // Fallback: 从静态文件读取
+      const response = await fetch('/assets/data/rag/improved-feishu-knowledge-base.json');
+      if (response.ok) {
+        const feishuData = await response.json();
+        console.log('✅ 从静态文件读取飞书知识库，文档数量:', feishuData.documents?.length || 0);
+        return feishuData.documents || [];
+      } else {
+        console.log('⚠️ 飞书知识库HTTP响应失败:', response.status);
+      }
     } catch (error) {
-      console.log('获取文档失败，使用默认知识库');
-      return this.getDefaultKnowledgeBase();
+      console.log('⚠️ 读取飞书知识库失败:', error.message);
     }
+
+    console.log('⚠️ 飞书知识库读取失败，返回空数组');
+    return [];
   }
 
-  /**
-   * 加载AI周报数据
-   */
-  private async loadWeeklyData() {
-    // 这里应该从实际的数据文件或API读取
-    // 暂时返回模拟数据
-    return [
-      {
-        id: 'weekly-115',
-        content: `AI周报第115期：2024年AI创投市场出现显著变化，企业级AI应用获得更多投资关注。主要趋势包括：1）从消费AI转向企业解决方案；2）基础设施投资持续增长；3）AI安全和治理工具需求上升。重点公司：Anthropic获得60亿美元D轮融资，Scale AI准备IPO，Perplexity企业级搜索获得2.5亿美元B轮。市场数据：2024年Q4企业级AI工具融资额达到78亿美元，同比增长156%。投资热点：AI Agent、多模态AI、边缘计算、数据基础设施。`,
-        title: 'AI周报第115期',
-        type: 'weekly',
-        source: '飞书知识库',
-        keywords: ['AI创投', '企业级AI', '投资趋势', 'Anthropic', 'Scale AI', 'Perplexity', '78亿美元', 'AI Agent']
-      },
-      {
-        id: 'weekly-114', 
-        content: `AI周报第114期：生成式AI市场趋于成熟，投资者更关注商业模式和盈利能力。关键观察：1）模型公司估值回归理性；2）应用层创新加速；3）数据护城河价值凸显。投资亮点：多模态AI应用获得重点关注，边缘AI部署需求增长，AI基础设施持续升温。具体数据：OpenAI ARR突破34亿美元，Anthropic月活用户增长300%，AI基础设施类公司平均估值倍数从60x降至25x。`,
-        title: 'AI周报第114期',
-        type: 'weekly',
-        source: '飞书知识库',
-        keywords: ['生成式AI', '商业模式', '多模态AI', '边缘AI', '数据护城河', 'OpenAI', '34亿美元ARR']
-      },
-      {
-        id: 'weekly-116',
-        content: `AI周报第116期：2025年AI创投新趋势浮现，Agent应用成为最大投资风口。核心观察：1）AI Agent市场预计2025年达到250亿美元；2）企业级Agent部署率提升至45%；3）垂直领域Agent专业化趋势明显。重点交易：Adept获得3.5亿美元B轮，Cognition AI估值20亿美元，多家Agent初创公司完成大额融资。技术突破：多Agent协作、工具调用优化、长期记忆管理成为核心竞争力。`,
-        title: 'AI周报第116期',
-        type: 'weekly', 
-        source: '飞书知识库',
-        keywords: ['AI Agent', '250亿美元', 'Adept', 'Cognition AI', '3.5亿美元', '20亿美元', '多Agent协作']
-      }
-    ];
-  }
-
-  /**
-   * 加载交易精选数据
-   */
-  private async loadTradingData() {
-    return [
-      {
-        id: 'company-anthropic',
-        content: `Anthropic：AI安全领域的领军企业，专注于开发安全、有用、无害的AI系统。融资情况：2024年完成60亿美元D轮融资，亚马逊和谷歌参投，估值达到180亿美元。技术优势：Constitutional AI技术，Claude系列模型在安全性和实用性方面表现突出。商业数据：2024年ARR达到8.5亿美元，企业客户增长500%，API调用量月增长率35%。市场地位：与OpenAI形成双雄对峙，在企业级AI服务市场占据重要位置。投资价值：预计2025年IPO，目标估值300-400亿美元。`,
-        title: 'Anthropic公司分析',
-        type: 'company',
-        source: 'AI创投库',
-        keywords: ['Anthropic', 'AI安全', 'Claude', 'Constitutional AI', '60亿美元', 'D轮融资', '8.5亿美元ARR', '300亿美元估值']
-      },
-      {
-        id: 'company-scale-ai',
-        content: `Scale AI：AI数据基础设施的独角兽企业，为自动驾驶、机器人、国防等领域提供高质量训练数据。融资情况：2021年E轮融资10亿美元，估值73亿美元，正准备IPO。商业模式：数据标注、模型评估、AI部署平台，服务涵盖整个AI开发周期。财务数据：2024年收入超过7.5亿美元，毛利率65%，客户留存率95%。客户基础：特斯拉、丰田、美国国防部等高端客户，收入增长强劲。IPO计划：预计2025年Q2上市，目标估值150-200亿美元。`,
-        title: 'Scale AI公司分析', 
-        type: 'company',
-        source: 'AI创投库',
-        keywords: ['Scale AI', '数据基础设施', 'IPO', '自动驾驶', '10亿美元', 'E轮融资', '7.5亿美元收入', '150亿美元估值']
-      },
-      {
-        id: 'company-openai',
-        content: `OpenAI：全球领先的AGI研究与应用公司，ChatGPT和GPT系列模型的创造者。融资情况：2024年完成65亿美元融资，估值1570亿美元，成为全球估值最高的AI公司。商业成绩：年收入突破40亿美元，ChatGPT Plus付费用户超过1000万，API收入占比45%。技术护城河：大规模预训练、RLHF优化、多模态能力领先。竞争态势：面临Anthropic、Google、Meta等强劲竞争，但在消费级AI应用保持领先。投资风险：监管压力增大，计算成本持续上升，技术人才竞争激烈。`,
-        title: 'OpenAI公司分析',
-        type: 'company', 
-        source: 'AI创投库',
-        keywords: ['OpenAI', 'ChatGPT', 'AGI', '65亿美元', '1570亿美元估值', '40亿美元收入', '1000万付费用户']
-      },
-      {
-        id: 'company-adept',
-        content: `Adept：专注于AI Agent的先锋企业，致力于打造能够与人类协作完成复杂任务的智能代理。融资情况：2024年完成3.5亿美元B轮融资，Greylock Partners领投，估值达到25亿美元。技术优势：Action Transformer模型，能够理解用户意图并自动执行复杂的软件操作。商业策略：面向企业级市场，提供定制化AI Agent解决方案。市场前景：AI Agent市场预计2025年达到250亿美元，Adept有望占据重要份额。投资亮点：团队来自OpenAI和Google DeepMind，技术实力雄厚。`,
-        title: 'Adept公司分析',
-        type: 'company',
-        source: 'AI创投库', 
-        keywords: ['Adept', 'AI Agent', '3.5亿美元', 'B轮融资', '25亿美元估值', 'Action Transformer', '250亿美元市场']
-      }
-    ];
-  }
-
-  /**
-   * 获取默认知识库
-   */
-  private getDefaultKnowledgeBase() {
-    return [
-      {
-        id: 'kb-investment-trends',
-        content: `2024年AI投资趋势分析：全球AI创投市场呈现分化趋势，企业级应用成为投资重点。
-        资金流向：B2B AI解决方案获得60%的投资份额，消费级AI应用投资下降30%。
-        地理分布：美国保持45%市场份额，中国25%，欧洲15%，其他地区15%。
-        轮次分布：A轮和B轮最为活跃，种子轮投资趋于谨慎，C轮及以后重点关注收入增长。`,
-        title: 'AI投资趋势分析',
-        type: 'analysis',
-        source: 'SVTR知识库',
-        keywords: ['投资趋势', 'B2B AI', '企业级应用', '地理分布', '轮次分析']
-      },
-      {
-        id: 'kb-startup-success',
-        content: `AI初创企业成功要素研究：基于SVTR.AI追踪的10761家AI公司数据分析。
-        技术要素：拥有PhD级别技术团队的公司成功率高出3倍，专有数据优势是关键护城河。
-        商业要素：清晰的企业级收入模式、合理的客户获取成本、强大的销售执行能力。
-        资本要素：适度的融资节奏、明确的里程碑设定、投资人的战略价值贡献。`,
-        title: 'AI初创企业成功要素',
-        type: 'research',
-        source: 'SVTR知识库', 
-        keywords: ['初创企业', '成功要素', 'PhD团队', '专有数据', '企业级收入']
-      }
-    ];
-  }
 
   /**
    * OpenAI Embedding实现
@@ -540,6 +440,6 @@ export class HybridRAGService {
 /**
  * 工厂函数：创建最适合的RAG服务
  */
-export function createOptimalRAGService(vectorize: any, ai: any, openaiApiKey?: string) {
-  return new HybridRAGService(vectorize, ai, openaiApiKey);
+export function createOptimalRAGService(vectorize: any, ai: any, openaiApiKey?: string, kvNamespace?: any) {
+  return new HybridRAGService(vectorize, ai, openaiApiKey, kvNamespace);
 }
