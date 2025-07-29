@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- 主页 -->
+  <url>
+    <loc>https://svtr.ai/</loc>
+    <lastmod>2025-01-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://svtr.ai/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://svtr.ai/?lang=en" />
+    <image:image>
+      <image:loc>https://svtr.ai/assets/images/banner.webp</image:loc>
+      <image:title>SVTR.AI - AI创投生态系统分析平台</image:title>
+      <image:caption>专业的AI创投数据分析和市场洞察平台</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- AI周报页面 -->
+  <url>
+    <loc>https://svtr.ai/pages/ai-weekly.html</loc>
+    <lastmod>2025-01-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://svtr.ai/pages/ai-weekly.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://svtr.ai/pages/ai-weekly.html?lang=en" />
+  </url>
+  
+  <!-- 交易精选页面 -->
+  <url>
+    <loc>https://svtr.ai/pages/trading-picks.html</loc>
+    <lastmod>2025-01-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://svtr.ai/pages/trading-picks.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://svtr.ai/pages/trading-picks.html?lang=en" />
+  </url>
+  
+  <!-- AI 100页面 -->
+  <url>
+    <loc>https://svtr.ai/pages/ai-100.html</loc>
+    <lastmod>2025-01-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://svtr.ai/pages/ai-100.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://svtr.ai/pages/ai-100.html?lang=en" />
+  </url>
+  
+  <!-- 统计组件页面 -->
+  <url>
+    <loc>https://svtr.ai/pages/stats-widget.html</loc>
+    <lastmod>2025-01-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- 同步仪表板页面 -->
+  <url>
+    <loc>https://svtr.ai/pages/sync-dashboard.html</loc>
+    <lastmod>2025-01-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+</urlset>

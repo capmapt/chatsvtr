@@ -30,6 +30,9 @@ class I18n {
 
     this.currentLang = lang;
     document.documentElement.lang = lang;
+    
+    // 更新SEO meta标签
+    this.updateSEOMetaTags(lang);
 
     // Update text content
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -89,6 +92,49 @@ class I18n {
 
     // Dispatch language change event for other components
     document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
+  }
+  
+  updateSEOMetaTags(lang) {
+    const t = translations[lang];
+    if (!t) return;
+    
+    // 更新页面标题
+    if (t.title) {
+      document.title = t.title;
+      const titleMeta = document.querySelector('title[data-i18n="title"]');
+      if (titleMeta) titleMeta.textContent = t.title;
+    }
+    
+    // 更新description
+    if (t.description) {
+      let descMeta = document.querySelector('meta[name="description"]');
+      if (descMeta) descMeta.setAttribute('content', t.description);
+    }
+    
+    // 更新keywords
+    if (t.keywords) {
+      let keywordsMeta = document.querySelector('meta[name="keywords"]');
+      if (keywordsMeta) keywordsMeta.setAttribute('content', t.keywords);
+    }
+    
+    // 更新Open Graph标签
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+    const twitterDesc = document.querySelector('meta[name="twitter:description"]');
+    
+    if (ogTitle && t.title) ogTitle.setAttribute('content', t.title);
+    if (ogDesc && t.description) ogDesc.setAttribute('content', t.description);
+    if (twitterTitle && t.title) twitterTitle.setAttribute('content', t.title);
+    if (twitterDesc && t.description) twitterDesc.setAttribute('content', t.description);
+    
+    // 更新hreflang
+    const canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (canonicalLink) {
+      const baseUrl = 'https://svtr.ai/';
+      const langParam = lang === 'zh-CN' ? '' : '?lang=en';
+      canonicalLink.setAttribute('href', baseUrl + langParam);
+    }
   }
 
   getCurrentLanguage() {

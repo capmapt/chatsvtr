@@ -1,0 +1,41 @@
+{
+  "timestamp": "2025-07-29T06:14:27.045Z",
+  "summary": {
+    "totalScore": 100,
+    "totalIssues": 12,
+    "totalRecommendations": 16
+  },
+  "issues": [
+    "⚠️ index.html: 描述过短 (75字符，建议120-160字符)",
+    "⚠️ ai-weekly.html: 标题过短 (14字符，建议30-60字符)",
+    "❌ ai-weekly.html: 缺少meta description",
+    "⚠️ trading-picks.html: 标题过短 (14字符，建议30-60字符)",
+    "❌ trading-picks.html: 缺少meta description",
+    "⚠️ ai-100.html: 标题过短 (28字符，建议30-60字符)",
+    "❌ ai-100.html: 缺少meta description",
+    "⚠️ stats-widget.html: 标题过短 (17字符，建议30-60字符)",
+    "❌ stats-widget.html: 缺少meta description",
+    "❌ stats-widget.html: 缺少H1标题",
+    "⚠️ sync-dashboard.html: 标题过短 (15字符，建议30-60字符)",
+    "❌ sync-dashboard.html: 缺少meta description"
+  ],
+  "recommendations": [
+    "✅ index.html: 使用了8个WebP图片，有利于性能",
+    "💡 index.html: 7个外部链接建议添加rel属性",
+    "✅ index.html: 包含1个结构化数据",
+    "✅ index.html: 使用了优化压缩的资源",
+    "💡 ai-weekly.html: 建议添加JSON-LD结构化数据",
+    "💡 ai-weekly.html: 建议添加Open Graph标签",
+    "💡 trading-picks.html: 建议添加JSON-LD结构化数据",
+    "💡 trading-picks.html: 建议添加Open Graph标签",
+    "💡 ai-100.html: 1个外部链接建议添加rel属性",
+    "💡 ai-100.html: 建议添加JSON-LD结构化数据",
+    "💡 ai-100.html: 建议添加Open Graph标签",
+    "💡 stats-widget.html: 3个外部链接建议添加rel属性",
+    "💡 stats-widget.html: 建议添加JSON-LD结构化数据",
+    "💡 stats-widget.html: 建议添加Open Graph标签",
+    "💡 sync-dashboard.html: 建议添加JSON-LD结构化数据",
+    "💡 sync-dashboard.html: 建议添加Open Graph标签"
+  ],
+  "grading": "🏆 优秀"
+}

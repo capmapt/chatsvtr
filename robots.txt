@@ -1,0 +1,45 @@
+# SVTR.AI Robots.txt
+# AI创投生态系统专业分析平台
+
+User-agent: *
+Allow: /
+
+# 允许搜索引擎访问重要页面
+Allow: /pages/
+Allow: /assets/css/
+Allow: /assets/js/
+Allow: /assets/images/
+
+# 禁止访问的目录和文件
+Disallow: /functions/
+Disallow: /node_modules/
+Disallow: /coverage/
+Disallow: /playwright-report/
+Disallow: /.git/
+Disallow: /scripts/
+Disallow: /tests/
+Disallow: /*.map$
+Disallow: /demo-*.html
+Disallow: /*test*.html
+Disallow: /quick-test.html
+Disallow: /safe-test.html
+
+# 特定爬虫优化
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 3
+
+# 站点地图位置
+Sitemap: https://svtr.ai/sitemap.xml
+
+# 缓存信息
+# Last-Modified: 2025-01-29
+# AI创投数据更新频率：每日更新
