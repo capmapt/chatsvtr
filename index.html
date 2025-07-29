@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
   <meta name="format-detection" content="telephone=no"/>
   <meta name="theme-color" content="#FA8C32"/>
+  
+  <!-- 安全策略配置 -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://c0uiiy15npu.feishu.cn; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https:; frame-ancestors 'self'; object-src 'none'; base-uri 'self'"/>
+  <meta http-equiv="X-Content-Type-Options" content="nosniff"/>
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin"/>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <title data-i18n="title">硅谷科技评论</title>
@@ -157,6 +163,16 @@
   </footer>
   <!-- Skip to main content link for accessibility -->
   <a href="#main-content" class="skip-link">跳转到主要内容</a>
+  
+  <!-- Load security utilities first -->
+  <script src="assets/js/security-utils.js"></script>
+  
+  <!-- Load performance optimization -->
+  <script src="assets/js/image-optimizer.js"></script>
+  <script src="assets/js/cache-manager.js"></script>
+  
+  <!-- Load UX enhancements -->
+  <script src="assets/js/ux-enhancer.js"></script>
   
   <!-- Load translations and scripts -->
   <script src="assets/js/translations.js"></script>
