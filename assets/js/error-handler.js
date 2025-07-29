@@ -63,6 +63,11 @@ class ErrorHandler {
       return;
     }
 
+    // 过滤外部资源网络错误
+    if (this.isNetworkError(errorInfo)) {
+      return;
+    }
+
     // 记录有效错误
     this.logError(errorInfo);
   }
@@ -95,6 +100,21 @@ class ErrorHandler {
   isCSSPreloadWarning(errorInfo) {
     const message = errorInfo.message || '';
     return message.includes('preloaded using link preload but not used');
+  }
+
+  isNetworkError(errorInfo) {
+    const message = errorInfo.message || '';
+    const networkErrorPatterns = [
+      'Failed to fetch',
+      'CORS policy',
+      'Access-Control-Allow-Origin',
+      'net::ERR_FAILED',
+      'feishu.cn',
+      'lark.com',
+      'discord.com'
+    ];
+    
+    return networkErrorPatterns.some(pattern => message.includes(pattern));
   }
 
   logError(errorInfo) {

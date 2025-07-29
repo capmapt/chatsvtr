@@ -577,7 +577,15 @@ class UXEnhancer {
   }
 
   handleError(title, message, type = 'error') {
-    console.error(`${title}:`, message);
+    // 过滤外部资源的网络错误
+    if (this.shouldIgnoreNetworkError(message)) {
+      return;
+    }
+    
+    // 只在开发环境显示错误详情
+    if (!window.SVTRErrorHandler?.isProduction()) {
+      console.error(`${title}:`, message);
+    }
     
     // 添加到错误队列
     this.errorQueue.push({
@@ -589,6 +597,22 @@ class UXEnhancer {
     
     // 显示错误
     this.displayNextError();
+  }
+
+  // 检查是否应该忽略网络错误
+  shouldIgnoreNetworkError(message) {
+    const messageStr = String(message);
+    const ignoredPatterns = [
+      'feishu.cn',
+      'lark.com',
+      'discord.com',
+      'Failed to fetch',
+      'CORS policy',
+      'Access-Control-Allow-Origin',
+      'net::ERR_FAILED'
+    ];
+    
+    return ignoredPatterns.some(pattern => messageStr.includes(pattern));
   }
 
   handleResourceError(element) {

@@ -220,8 +220,43 @@ class CacheManager {
     }
   }
 
+  // 检查是否为外部URL
+  isExternalUrl(url) {
+    try {
+      const urlObj = new URL(url, window.location.origin);
+      const currentHost = window.location.hostname;
+      
+      // 外部域名列表（不进行预取）
+      const externalDomains = [
+        'feishu.cn',
+        'lark.com',
+        'discord.com',
+        'github.com',
+        'google.com',
+        'twitter.com',
+        'linkedin.com'
+      ];
+      
+      // 如果是相对URL或同域名，允许预取
+      if (urlObj.hostname === currentHost || urlObj.hostname === '') {
+        return false;
+      }
+      
+      // 检查是否为已知的外部域名
+      return externalDomains.some(domain => urlObj.hostname.includes(domain));
+    } catch {
+      // URL解析失败，认为是外部链接
+      return true;
+    }
+  }
+
   async prefetchResource(url) {
     if (this.prefetchQueue.has(url)) return;
+    
+    // 🚫 不预取外部链接，避免CORS问题
+    if (this.isExternalUrl(url)) {
+      return;
+    }
     
     try {
       // 检查是否已缓存
@@ -234,7 +269,9 @@ class CacheManager {
       const size = parseInt(head.headers.get('content-length') || '0');
       
       if (size > this.options.maxPrefetchSize) {
-        console.log('资源太大，跳过预取:', url);
+        if (!window.SVTRErrorHandler?.isProduction()) {
+          console.log('资源太大，跳过预取:', url);
+        }
         return;
       }
       
@@ -252,11 +289,16 @@ class CacheManager {
         });
         
         this.analytics.prefetches++;
-        console.log('预取成功:', url);
+        if (!window.SVTRErrorHandler?.isProduction()) {
+          console.log('预取成功:', url);
+        }
       }
       
     } catch (error) {
-      console.log('预取失败:', url, error);
+      // 不在生产环境显示预取失败错误，避免控制台污染
+      if (!window.SVTRErrorHandler?.isProduction()) {
+        console.log('预取失败:', url, error);
+      }
     } finally {
       this.prefetchQueue.delete(url);
     }
