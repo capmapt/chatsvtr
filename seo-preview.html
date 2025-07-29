@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVTR.AI SEO优化预览</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+    .title { font-size: 24px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; }
+    .subtitle { font-size: 16px; color: #666; margin-bottom: 20px; }
+    .meta-tag { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 6px; padding: 12px; margin-bottom: 8px; font-family: monospace; font-size: 14px; }
+    .meta-tag .tag-name { color: #d73a49; font-weight: 600; }
+    .meta-tag .attr-name { color: #6f42c1; }
+    .meta-tag .attr-value { color: #032f62; }
+    .preview-box { border: 2px solid #ddd; border-radius: 8px; padding: 16px; margin-top: 12px; }
+    .google-preview { font-family: arial, sans-serif; }
+    .google-title { color: #1a0dab; font-size: 20px; text-decoration: none; font-weight: normal; margin-bottom: 4px; display: block; }
+    .google-url { color: #006621; font-size: 14px; margin-bottom: 4px; }
+    .google-desc { color: #545454; font-size: 14px; line-height: 1.4; }
+    .social-preview { border: 1px solid #ddd; border-radius: 8px; overflow: hidden; max-width: 500px; }
+    .social-image { width: 100%; height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; font-weight: bold; }
+    .social-content { padding: 16px; }
+    .social-title { font-weight: 600; font-size: 16px; margin-bottom: 8px; color: #1d2129; }
+    .social-desc { color: #606770; font-size: 14px; line-height: 1.3; }
+    .social-domain { color: #90949c; font-size: 12px; text-transform: uppercase; margin-top: 8px; }
+    .schema-preview { background: #f8f9fa; border-left: 4px solid #007bff; padding: 16px; font-family: monospace; font-size: 12px; white-space: pre-wrap; max-height: 300px; overflow-y: auto; }
+    .tabs { display: flex; border-bottom: 1px solid #ddd; margin-bottom: 20px; }
+    .tab { padding: 12px 24px; cursor: pointer; border: none; background: none; font-size: 14px; font-weight: 500; }
+    .tab.active { border-bottom: 2px solid #007bff; color: #007bff; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .score-badge { background: #28a745; color: white; padding: 6px 12px; border-radius: 20px; font-size: 14px; font-weight: 600; display: inline-block; margin-bottom: 16px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="title">🚀 SVTR.AI SEO优化预览</div>
+      <div class="subtitle">查看页面在搜索引擎和社交媒体中的显示效果</div>
+      <div class="score-badge">SEO评分: 100/100 🏆</div>
+    </div>
+
+    <div class="card">
+      <div class="tabs">
+        <button class="tab active" onclick="showTab('google')">Google搜索预览</button>
+        <button class="tab" onclick="showTab('facebook')">Facebook分享预览</button>
+        <button class="tab" onclick="showTab('twitter')">Twitter卡片预览</button>
+        <button class="tab" onclick="showTab('schema')">结构化数据</button>
+      </div>
+
+      <div id="google" class="tab-content active">
+        <div class="title">Google搜索结果预览</div>
+        <div class="preview-box google-preview">
+          <a href="#" class="google-title">SVTR.AI - 硅谷科技评论 | AI创投生态系统专业分析平台</a>
+          <div class="google-url">https://svtr.ai › AI创投生态系统</div>
+          <div class="google-desc">SVTR.AI是专业的AI创投生态分析平台，追踪10,761+家全球AI公司和121,884+投资人，提供AI周报、投资分析、市场洞察和实时创投数据。专注于人工智能投资、创业公司分析...</div>
+        </div>
+        
+        <div style="margin-top: 20px;">
+          <strong>关键Meta标签：</strong>
+          <div class="meta-tag">
+            <span class="tag-name">&lt;title&gt;</span>SVTR.AI - 硅谷科技评论 | AI创投生态系统专业分析平台<span class="tag-name">&lt;/title&gt;</span>
+          </div>
+          <div class="meta-tag">
+            <span class="tag-name">&lt;meta</span> <span class="attr-name">name</span>=<span class="attr-value">"description"</span> <span class="attr-name">content</span>=<span class="attr-value">"SVTR.AI是专业的AI创投生态分析平台，追踪10,761+家全球AI公司和121,884+投资人..."</span><span class="tag-name">&gt;</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="facebook" class="tab-content">
+        <div class="title">Facebook分享预览</div>
+        <div class="preview-box">
+          <div class="social-preview">
+            <div class="social-image">SVTR.AI</div>
+            <div class="social-content">
+              <div class="social-title">SVTR.AI - 全球AI创投生态系统专业分析平台</div>
+              <div class="social-desc">追踪10,761+家全球AI公司和121,884+投资人，提供专业AI创投分析、实时市场数据和投资洞察。</div>
+              <div class="social-domain">SVTR.AI</div>
+            </div>
+          </div>
+        </div>
+        
+        <div style="margin-top: 20px;">
+          <strong>Open Graph标签：</strong>
+          <div class="meta-tag">
+            <span class="tag-name">&lt;meta</span> <span class="attr-name">property</span>=<span class="attr-value">"og:title"</span> <span class="attr-name">content</span>=<span class="attr-value">"SVTR.AI - 全球AI创投生态系统专业分析平台"</span><span class="tag-name">&gt;</span>
+          </div>
+          <div class="meta-tag">
+            <span class="tag-name">&lt;meta</span> <span class="attr-name">property</span>=<span class="attr-value">"og:image"</span> <span class="attr-name">content</span>=<span class="attr-value">"https://svtr.ai/assets/images/og-banner.webp"</span><span class="tag-name">&gt;</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="twitter" class="tab-content">
+        <div class="title">Twitter卡片预览</div>
+        <div class="preview-box">
+          <div class="social-preview">
+            <div class="social-image">SVTR.AI</div>
+            <div class="social-content">
+              <div class="social-title">SVTR.AI - 全球AI创投生态系统专业分析平台</div>
+              <div class="social-desc">追踪10,761+家全球AI公司和121,884+投资人，提供专业AI创投分析、实时市场数据和投资洞察。</div>
+              <div class="social-domain">@SVTR_AI</div>
+            </div>
+          </div>
+        </div>
+        
+        <div style="margin-top: 20px;">
+          <strong>Twitter Card标签：</strong>
+          <div class="meta-tag">
+            <span class="tag-name">&lt;meta</span> <span class="attr-name">name</span>=<span class="attr-value">"twitter:card"</span> <span class="attr-name">content</span>=<span class="attr-value">"summary_large_image"</span><span class="tag-name">&gt;</span>
+          </div>
+          <div class="meta-tag">
+            <span class="tag-name">&lt;meta</span> <span class="attr-name">name</span>=<span class="attr-value">"twitter:image"</span> <span class="attr-name">content</span>=<span class="attr-value">"https://svtr.ai/assets/images/twitter-banner.webp"</span><span class="tag-name">&gt;</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="schema" class="tab-content">
+        <div class="title">结构化数据预览</div>
+        <div class="schema-preview">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://svtr.ai/#organization",
+      "name": "SVTR.AI",
+      "alternateName": "硅谷科技评论",
+      "url": "https://svtr.ai",
+      "description": "专业的AI创投生态系统分析平台，追踪10,761+家全球AI公司和121,884+投资人",
+      "foundingDate": "2024",
+      "industry": "AI创投分析",
+      "sameAs": [
+        "https://linkedin.com/company/svtr-ai",
+        "https://twitter.com/SVTR_AI"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://svtr.ai/#website",
+      "name": "SVTR.AI - AI创投生态系统专业分析平台",
+      "inLanguage": ["zh-CN", "en-US"],
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://svtr.ai/search?q={search_term_string}"
+      }
+    }
+  ]
+}</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="title">📊 SEO优化成果</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
+        <div style="background: #e8f5e8; padding: 16px; border-radius: 8px;">
+          <div style="font-size: 18px; font-weight: 600; color: #2d5a2d;">✅ 页面元数据</div>
+          <div style="color: #5a5a5a; margin-top: 4px;">完整title、description、keywords</div>
+        </div>
+        <div style="background: #e8f0ff; padding: 16px; border-radius: 8px;">
+          <div style="font-size: 18px; font-weight: 600; color: #1e40af;">🏢 结构化数据</div>
+          <div style="color: #5a5a5a; margin-top: 4px;">JSON-LD Organization schema</div>
+        </div>
+        <div style="background: #fff3e0; padding: 16px; border-radius: 8px;">
+          <div style="font-size: 18px; font-weight: 600; color: #bf5a00;">📱 社交媒体</div>
+          <div style="color: #5a5a5a; margin-top: 4px;">Open Graph + Twitter Cards</div>
+        </div>
+        <div style="background: #f0f0ff; padding: 16px; border-radius: 8px;">
+          <div style="font-size: 18px; font-weight: 600; color: #5d1a8b;">🌐 多语言支持</div>
+          <div style="color: #5a5a5a; margin-top: 4px;">hreflang + 动态meta标签</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showTab(tabName) {
+      // Hide all tab contents
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Remove active class from all tabs
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Show selected tab content
+      document.getElementById(tabName).classList.add('active');
+      
+      // Add active class to clicked tab
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>
