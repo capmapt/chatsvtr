@@ -24,9 +24,15 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
     steps:
       - name: Checkout代码
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
         
       - name: 设置Node.js
         uses: actions/setup-node@v4
@@ -44,9 +50,41 @@ jobs:
       - name: 安装依赖
         run: npm ci
         
+      - name: 验证同步脚本和环境
+        run: |
+          echo "🔍 验证同步环境..."
+          
+          # 检查脚本文件存在
+          if [ ! -f "scripts/improved-feishu-sync.js" ]; then
+            echo "❌ 同步脚本不存在: scripts/improved-feishu-sync.js"
+            exit 1
+          fi
+          
+          # 检查目标目录存在
+          mkdir -p assets/data/rag/
+          
+          # 验证Node.js和npm工作正常
+          node --version
+          npm --version
+          
+          # 测试脚本语法
+          node -c scripts/improved-feishu-sync.js || {
+            echo "❌ 同步脚本语法错误"
+            exit 1
+          }
+          
+          echo "✅ 环境验证完成"
+        
       - name: 每日自动同步 (美西时间12:00 AM)
         if: github.event_name == 'schedule'
-        run: node scripts/improved-feishu-sync.js svtrai2025
+        run: |
+          echo "🚀 开始飞书知识库同步..."
+          node scripts/improved-feishu-sync.js svtrai2025 || {
+            echo "❌ 飞书同步脚本执行失败"
+            echo "🔍 检查飞书API连接和权限设置"
+            exit 1
+          }
+          echo "✅ 飞书同步脚本执行完成"
         env:
           FEISHU_APP_ID: cli_a8e2014cbe7d9013
           FEISHU_APP_SECRET: tysHBj6njxwafO92dwO1DdttVvqvesf0
@@ -90,15 +128,26 @@ jobs:
           
       - name: 提交更新到仓库
         run: |
+          # 配置Git用户信息
           git config --local user.email "action@github.com"
           git config --local user.name "SVTR Auto Sync"
-          git add assets/data/rag/
           
+          # 同步远程最新更改避免冲突
+          echo "🔄 同步远程更改..."
+          git fetch origin main
+          git rebase origin/main || echo "⚠️ 无需rebase或rebase失败"
+          
+          # 添加更改文件
+          git add assets/data/rag/ || echo "⚠️ 没有RAG数据文件需要添加"
+          
+          # 检查是否有更改需要提交
           if git diff --staged --quiet; then
-            echo "📝 没有检测到数据变化"
+            echo "📝 没有检测到数据变化，跳过提交"
           else
-            echo "📝 检测到数据更新，提交到仓库..."
+            echo "📝 检测到数据更新，准备提交..."
             COMMIT_TIME=$(TZ='America/Los_Angeles' date '+%Y-%m-%d %I:%M %p PST')
+            
+            # 创建提交
             git commit -m "auto: 同步SVTR飞书知识库 - $COMMIT_TIME
 
             🤖 自动同步报告:
@@ -106,9 +155,30 @@ jobs:
             - 触发方式: ${{ github.event_name }}
             - 工作流: GitHub Actions
             
-            📊 Generated with SVTR.AI AutoSync"
-            git push
-            echo "✅ 成功提交数据更新"
+            📊 Generated with SVTR.AI AutoSync" || {
+              echo "❌ 提交失败"
+              exit 1
+            }
+            
+            # 推送更改，如果失败则重试
+            echo "📤 推送到远程仓库..."
+            for i in {1..3}; do
+              if git push; then
+                echo "✅ 成功提交数据更新 (尝试 $i/3)"
+                break
+              else
+                echo "⚠️ 推送失败，尝试 $i/3"
+                if [ $i -eq 3 ]; then
+                  echo "❌ 推送失败，已重试3次"
+                  exit 128
+                fi
+                git fetch origin main
+                git rebase origin/main || {
+                  echo "❌ Rebase失败，需要手动解决冲突"
+                  exit 128
+                }
+              fi
+            done
           fi
           
       - name: 同步状态通知
