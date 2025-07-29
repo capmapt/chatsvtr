@@ -893,6 +893,26 @@ Our platform serves as the definitive source for AI investment market intelligen
       return;
     }
     
+    // 本地开发环境：直接使用演示模式，避免API请求错误
+    console.log('本地开发环境，使用演示模式');
+    setTimeout(() => {
+      this.removeLoadingMessage(loadingMessage);
+      
+      const demoMessage = this.getSmartDemoResponse(message);
+      const assistantMessage = {
+        role: 'assistant',
+        content: demoMessage,
+        timestamp: new Date()
+      };
+      
+      this.messages.push(assistantMessage);
+      this.renderMessage(assistantMessage);
+      this.showShareButton();
+      this.setLoading(false);
+    }, 800 + Math.random() * 1200); // 0.8-2秒随机延迟
+    
+    return;
+    
     try {
       // 调用真实AI API（仅在本地开发环境）
       const response = await fetch(this.apiEndpoint, {

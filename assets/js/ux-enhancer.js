@@ -557,10 +557,23 @@ class UXEnhancer {
         
         return response;
       } catch (error) {
+        // 检查是否为本地开发环境的API请求
+        const url = args[0];
+        if (typeof url === 'string' && url.includes('/api/') && this.isLocalDevelopment()) {
+          console.log('本地开发环境，跳过API错误处理:', url);
+          throw error; // 直接抛出错误，不进行重试
+        }
+        
         this.handleNetworkError(args[0], error);
         throw error;
       }
     };
+  }
+
+  isLocalDevelopment() {
+    return window.location.hostname === 'localhost' || 
+           window.location.hostname === '127.0.0.1' ||
+           window.location.hostname === '0.0.0.0';
   }
 
   handleError(title, message, type = 'error') {
