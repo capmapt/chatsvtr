@@ -164,85 +164,30 @@
   }
 }
 
-/* 🌐 多语言社群入口设计 */
+/* 🌐 多语言社群入口设计 - 双二维码支持 */
 
-/* 中文界面：显示二维码 */
-.qr-container[data-lang="zh-CN"] .qr-image-wrapper,
-.qr-container[data-lang="zh-CN"] .qr-overlay {
-  display: block;
-}
-
-.qr-container[data-lang="zh-CN"] .discord-join-button {
+/* 默认状态：所有QR码隐藏 */
+.wechat-qr,
+.discord-qr {
   display: none;
 }
 
-/* 英文界面：显示Discord按钮 */
-.qr-container[data-lang="en"] .qr-image-wrapper,
-.qr-container[data-lang="en"] .qr-overlay {
-  display: none;
-}
-
-.qr-container[data-lang="en"] .discord-join-button {
+/* 中文界面：只显示微信二维码（基于html[lang]属性） */
+html[lang="zh-CN"] .wechat-qr {
   display: block;
 }
 
-/* Discord加入按钮 - 英文界面专用 */
-.discord-join-button {
-  display: none; /* 默认隐藏，英文界面显示 */
-  width: 100%;
-  margin: 16px auto 18px;
-  padding: 16px 20px;
-  background: linear-gradient(135deg, #5865F2 0%, #7289DA 100%);
-  border: none;
-  border-radius: 12px;
-  color: white;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 
-    0 8px 24px rgba(88, 101, 242, 0.3),
-    0 4px 12px rgba(0, 0, 0, 0.1);
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+html[lang="zh-CN"] .discord-qr {
+  display: none;
 }
 
-.discord-join-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.6s ease;
+/* 英文界面：只显示Discord二维码（基于html[lang]属性） */
+html[lang="en"] .wechat-qr {
+  display: none;
 }
 
-.discord-join-button:hover::before {
-  left: 100%;
-}
-
-.discord-join-button:hover {
-  background: linear-gradient(135deg, #4752C4 0%, #5B6CD4 100%);
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 
-    0 12px 32px rgba(88, 101, 242, 0.4),
-    0 6px 16px rgba(0, 0, 0, 0.15);
-}
-
-.discord-join-button:active {
-  transform: translateY(0) scale(1.01);
-}
-
-.discord-join-button svg {
-  width: 24px;
-  height: 24px;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+html[lang="en"] .discord-qr {
+  display: block;
 }
 
 /* 移除原有的按钮区域 */
