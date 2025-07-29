@@ -54,7 +54,9 @@ class CacheManager {
     // 设置存储监控
     this.monitorStorage();
     
-    console.log('缓存管理器初始化完成');
+    if (!window.SVTRErrorHandler?.isProduction()) {
+      console.log('缓存管理器初始化完成');
+    }
   }
 
   checkStorageSupport() {
@@ -90,7 +92,9 @@ class CacheManager {
       // 检查Service Worker文件是否存在
       const swResponse = await fetch('/sw.js', { method: 'HEAD' });
       if (!swResponse.ok) {
-        console.log('Service Worker文件不存在，跳过注册');
+        if (!window.SVTRErrorHandler?.isProduction()) {
+          console.log('Service Worker文件不存在，跳过注册');
+        }
         return;
       }
 
@@ -100,11 +104,15 @@ class CacheManager {
         updateViaCache: 'none'
       });
       
-      console.log('Service Worker注册成功:', registration);
+      if (!window.SVTRErrorHandler?.isProduction()) {
+        console.log('Service Worker注册成功:', registration);
+      }
       
       // 监听更新
       registration.addEventListener('updatefound', () => {
-        console.log('Service Worker有更新');
+        if (!window.SVTRErrorHandler?.isProduction()) {
+          console.log('Service Worker有更新');
+        }
         const newWorker = registration.installing;
         
         newWorker.addEventListener('statechange', () => {
@@ -117,12 +125,16 @@ class CacheManager {
 
       // 监听Service Worker控制变化
       navigator.serviceWorker.addEventListener('controllerchange', () => {
-        console.log('Service Worker控制权已切换');
+        if (!window.SVTRErrorHandler?.isProduction()) {
+          console.log('Service Worker控制权已切换');
+        }
         window.location.reload();
       });
 
     } catch (error) {
-      console.log('Service Worker注册失败，继续使用其他缓存策略:', error.message);
+      if (!window.SVTRErrorHandler?.isProduction()) {
+        console.log('Service Worker注册失败，继续使用其他缓存策略:', error.message);
+      }
     }
   }
 

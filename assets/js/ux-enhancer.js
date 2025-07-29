@@ -991,7 +991,9 @@ class UXEnhancer {
 
   initializeComplexFeatures() {
     // 初始化非关键的复杂功能
-    console.log('初始化延迟加载的功能');
+    if (!window.SVTRErrorHandler?.isProduction()) {
+      console.log('初始化延迟加载的功能');
+    }
   }
 
   setupMemoryCleanup() {
