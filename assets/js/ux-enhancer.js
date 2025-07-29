@@ -548,6 +548,16 @@ class UXEnhancer {
     // 拦截fetch请求
     const originalFetch = window.fetch;
     window.fetch = async (...args) => {
+      const url = args[0];
+      
+      // 🚫 直接阻止对外部资源的fetch请求
+      if (typeof url === 'string' && this.isExternalResource(url)) {
+        if (!window.SVTRErrorHandler?.isProduction()) {
+          console.log('🚫 阻止外部资源fetch请求:', url);
+        }
+        throw new Error('External resource fetch blocked to prevent CORS errors');
+      }
+      
       try {
         const response = await originalFetch(...args);
         
@@ -558,13 +568,17 @@ class UXEnhancer {
         return response;
       } catch (error) {
         // 检查是否为本地开发环境的API请求
-        const url = args[0];
         if (typeof url === 'string' && url.includes('/api/') && this.isLocalDevelopment()) {
           console.log('本地开发环境，跳过API错误处理:', url);
           throw error; // 直接抛出错误，不进行重试
         }
         
-        this.handleNetworkError(args[0], error);
+        // 如果是外部资源错误，不进行重试处理
+        if (this.shouldIgnoreNetworkError(error.message) || this.isExternalResource(url)) {
+          throw error;
+        }
+        
+        this.handleNetworkError(url, error);
         throw error;
       }
     };
@@ -613,6 +627,28 @@ class UXEnhancer {
     ];
     
     return ignoredPatterns.some(pattern => messageStr.includes(pattern));
+  }
+
+  // 检查是否为外部资源
+  isExternalResource(url) {
+    if (!url || typeof url !== 'string') return false;
+    
+    try {
+      // 直接字符串检查，更可靠
+      const externalDomains = [
+        'feishu.cn',
+        'lark.com', 
+        'discord.com',
+        'github.com',
+        'google.com',
+        'twitter.com',
+        'linkedin.com'
+      ];
+      
+      return externalDomains.some(domain => url.includes(domain));
+    } catch {
+      return false;
+    }
   }
 
   handleResourceError(element) {

@@ -147,10 +147,15 @@ class CacheManager {
   setupIntelligentPrefetch() {
     let prefetchTimer = null;
     
-    // 鼠标悬停预取
+    // 鼠标悬停预取 - 只预取内部链接
     document.addEventListener('mouseover', (event) => {
       const link = event.target.closest('a[href]');
       if (!link) return;
+      
+      // 🚫 跳过外部链接，避免CORS错误
+      if (this.isExternalUrl(link.href)) {
+        return;
+      }
       
       clearTimeout(prefetchTimer);
       prefetchTimer = setTimeout(() => {
@@ -171,9 +176,9 @@ class CacheManager {
     // 分析用户点击模式
     const clickPatterns = this.getClickPatterns();
     
-    // 预取可能访问的页面
+    // 预取可能访问的页面 - 只预取内部链接
     clickPatterns.forEach(pattern => {
-      if (pattern.probability > 0.7) {
+      if (pattern.probability > 0.7 && !this.isExternalUrl(pattern.url)) {
         this.prefetchResource(pattern.url);
       }
     });
@@ -253,8 +258,20 @@ class CacheManager {
   async prefetchResource(url) {
     if (this.prefetchQueue.has(url)) return;
     
-    // 🚫 不预取外部链接，避免CORS问题
+    // 🚫 强制检查：不预取任何包含飞书域名的链接
+    if (url.includes('feishu.cn') || url.includes('lark.com') || 
+        url.includes('discord.com') || url.includes('github.com')) {
+      if (!window.SVTRErrorHandler?.isProduction()) {
+        console.log('🚫 跳过外部链接预取:', url);
+      }
+      return;
+    }
+    
+    // 🚫 双重检查：使用原有的外部URL检测
     if (this.isExternalUrl(url)) {
+      if (!window.SVTRErrorHandler?.isProduction()) {
+        console.log('🚫 isExternalUrl检测到外部链接:', url);
+      }
       return;
     }
     
