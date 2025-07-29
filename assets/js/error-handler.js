@@ -73,14 +73,22 @@ class ErrorHandler {
       'Could not establish connection',
       'Receiving end does not exist',
       'Extension context invalidated',
-      'chrome-extension://'
+      'chrome-extension://',
+      'content_script',
+      'inject_script',
+      'background.js'
     ];
 
     const message = errorInfo.message || '';
     const filename = errorInfo.filename || '';
+    const stack = errorInfo.error?.stack || '';
+    const reason = errorInfo.reason?.toString() || '';
+    
+    // 检查多个可能包含扩展信息的字段
+    const textToCheck = [message, filename, stack, reason].join(' ');
     
     return knownExtensionErrors.some(pattern => 
-      message.includes(pattern) || filename.includes(pattern)
+      textToCheck.toLowerCase().includes(pattern.toLowerCase())
     );
   }
 
@@ -140,6 +148,59 @@ class ErrorHandler {
     this.errorQueue = [];
   }
 }
+
+// 立即执行的错误捕获（在所有其他代码之前）
+(function() {
+  'use strict';
+  
+  // 立即捕获Promise rejection错误
+  window.addEventListener('unhandledrejection', function(event) {
+    const errorText = event.reason?.toString() || '';
+    const stack = event.reason?.stack || '';
+    
+    // 检查是否为Chrome扩展错误
+    const extensionPatterns = [
+      'all-frames.js',
+      'Could not establish connection',
+      'Receiving end does not exist',
+      'Extension context invalidated',
+      'chrome-extension://'
+    ];
+    
+    const isExtensionError = extensionPatterns.some(pattern => 
+      errorText.includes(pattern) || stack.includes(pattern)
+    );
+    
+    if (isExtensionError) {
+      // 静默处理扩展错误
+      event.preventDefault();
+      return;
+    }
+  }, true);
+  
+  // 立即捕获JavaScript错误
+  window.addEventListener('error', function(event) {
+    const message = event.message || '';
+    const filename = event.filename || '';
+    
+    const extensionPatterns = [
+      'all-frames.js',
+      'Could not establish connection',
+      'chrome-extension://',
+      'content_script'
+    ];
+    
+    const isExtensionError = extensionPatterns.some(pattern => 
+      message.includes(pattern) || filename.includes(pattern)
+    );
+    
+    if (isExtensionError) {
+      // 静默处理扩展错误
+      event.preventDefault();
+      return;
+    }
+  }, true);
+})();
 
 // 全局初始化错误处理器
 if (typeof window !== 'undefined') {
