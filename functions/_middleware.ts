@@ -30,11 +30,11 @@ export const onRequest: PagesFunction<Env> = async (context) => {
   // CSP策略
   const cspPolicy = [
     "default-src 'self' https:",
-    "script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://c0uiiy15npu.feishu.cn",
+    "script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://c0uiiy15npu.feishu.cn https://static.cloudflareinsights.com https://*.cloudflareinsights.com",
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "img-src 'self' data: https:",
     "font-src 'self' https://fonts.gstatic.com",
-    "connect-src 'self' https:",
+    "connect-src 'self' https: https://cloudflareinsights.com https://*.cloudflareinsights.com",
     "frame-src 'self' https://c0uiiy15npu.feishu.cn",
     "frame-ancestors 'self'",
     "object-src 'none'",
