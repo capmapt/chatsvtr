@@ -185,9 +185,9 @@ export async function onRequestPost(context: any): Promise<Response> {
                         continue;
                       }
                       
-                      // 转换为标准delta格式
+                      // 转换为前端期望的格式
                       const standardFormat = JSON.stringify({
-                        delta: { content: content }
+                        response: content
                       });
                       await writer.write(encoder.encode('data: ' + standardFormat + '\n\n'));
                     }
@@ -253,9 +253,9 @@ export async function onRequestPost(context: any): Promise<Response> {
                     continue;
                   }
                   
-                  // 转换为标准delta格式
+                  // 转换为前端期望的格式
                   const standardFormat = JSON.stringify({
-                    delta: { content: content }
+                    response: content
                   });
                   await writer.write(encoder.encode('data: ' + standardFormat + '\n\n'));
                 }
