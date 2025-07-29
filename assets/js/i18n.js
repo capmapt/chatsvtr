@@ -81,6 +81,9 @@ class I18n {
     // Update document title
     document.title = translations[lang].title;
 
+    // 🌐 多语言社群入口切换逻辑
+    this.updateCommunityEntrance(lang);
+
     // Notify iframe of language change
     if (this.statsIframe && this.statsIframe.contentWindow) {
       try {
@@ -135,6 +138,24 @@ class I18n {
       const langParam = lang === 'zh-CN' ? '' : '?lang=en';
       canonicalLink.setAttribute('href', baseUrl + langParam);
     }
+  }
+
+  // 🌐 多语言社群入口切换逻辑
+  updateCommunityEntrance(lang) {
+    const qrContainer = document.querySelector('.qr-container');
+    if (!qrContainer) return;
+
+    // 为容器添加语言属性，用于CSS选择器
+    qrContainer.setAttribute('data-lang', lang);
+    
+    // 确保所有子元素也有正确的语言属性
+    const qrImageWrapper = qrContainer.querySelector('.qr-image-wrapper');
+    const qrOverlay = qrContainer.querySelector('.qr-overlay');
+    const discordButton = qrContainer.querySelector('.discord-join-button');
+    
+    if (qrImageWrapper) qrImageWrapper.setAttribute('data-lang', lang);
+    if (qrOverlay) qrOverlay.setAttribute('data-lang', lang);
+    if (discordButton) discordButton.setAttribute('data-lang', lang);
   }
 
   getCurrentLanguage() {

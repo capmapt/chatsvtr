@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌐 多语言社群入口预览 - SVTR.AI</title>
+  <link rel="stylesheet" href="assets/css/style-optimized.css">
+  <link rel="stylesheet" href="assets/css/sidebar-optimized.css">
+  <script src="assets/js/translations.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <style>
+    body { 
+      margin: 0; 
+      padding: 0; 
+      background: linear-gradient(135deg, #fff8e1, #ffe0b2);
+      font-family: "Helvetica Neue", Arial, sans-serif;
+    }
+    .demo-header {
+      background: linear-gradient(135deg, #FA8C32, #FFB74D);
+      color: white;
+      padding: 30px;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(250, 140, 50, 0.3);
+    }
+    .demo-content {
+      margin-left: 280px;
+      padding: 30px;
+    }
+    .feature-demo {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+    .feature-list {
+      background: linear-gradient(135deg, rgba(250, 140, 50, 0.1), rgba(255, 243, 214, 0.8));
+      padding: 25px;
+      border-radius: 12px;
+      border-left: 4px solid #FA8C32;
+    }
+    .feature-list h3 {
+      color: #FA8C32;
+      margin-top: 0;
+      font-size: 1.3rem;
+    }
+    .feature-list li {
+      margin-bottom: 12px;
+      color: #4A3429;
+      line-height: 1.6;
+    }
+    .lang-demo-buttons {
+      display: flex;
+      gap: 15px;
+      margin: 20px 0;
+      justify-content: center;
+    }
+    .demo-btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+    .demo-btn.zh {
+      background: #FA8C32;
+      color: white;
+    }
+    .demo-btn.en {
+      background: #5865F2;
+      color: white;
+    }
+    .demo-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+    .explanation {
+      background: rgba(88, 101, 242, 0.1);
+      border: 1px solid rgba(88, 101, 242, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 语言切换按钮 -->
+  <div class="lang-toggle">
+    <button id="btnZh" class="active">中文</button>
+    <span class="divider">|</span>
+    <button id="btnEn">English</button>
+  </div>
+
+  <div class="demo-header">
+    <h1>🌐 多语言智能社群入口</h1>
+    <p data-i18n="demo_subtitle">根据用户语言偏好智能显示最合适的社群入口</p>
+  </div>
+
+  <!-- 优化后的Sidebar演示 -->
+  <aside class="sidebar open" role="navigation" aria-label="主导航">
+    <div class="sidebar-header">
+      <picture>
+        <source srcset="assets/images/logo.webp" type="image/webp">
+        <img src="assets/images/logo.jpg" class="sidebar-logo" alt="SVTR.AI logo" loading="lazy">
+      </picture>
+      <h2 data-i18n="sidebar_title">硅谷科技评论</h2>
+    </div>
+    <nav>
+      <ul class="nav-list">
+        <li><a href="pages/trading-picks.html" data-i18n="nav_trading_picks">AI交易</a></li>
+        <li><a href="pages/ai-weekly.html" data-i18n="nav_ai_weekly">AI周报</a></li>
+        <li><a href="pages/ai-100.html" data-i18n="nav_ai100">AI 100</a></li>
+        <li><a href="#" data-i18n="nav_ranking">AI创投榜</a></li>
+        <li><a href="#" data-i18n="nav_database">AI创投库</a></li>
+        <li><a href="#" data-i18n="nav_group">AI创投群</a></li>
+        <li><a href="#" data-i18n="nav_meetup">AI创投会</a></li>
+        <li><a href="#" data-i18n="nav_camp">AI创投营</a></li>
+        <li><a href="#" data-i18n="nav_about">关于我们</a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="qr-container">
+        <div class="qr-header">
+          <div class="qr-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 12l2 2 4-4"/>
+              <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"/>
+              <path d="M3 12c1 0-3-1-3-3s2-3-3-3-3 1-3 3 2 3 3 3"/>
+              <path d="M12 21c0-1 1-3 3-3s3 2 3 3-1 3-3 3-3-2-3-3"/>
+              <path d="M12 3c0 1-1 3-3 3s-3-2-3-3 1-3 3-3 3 2 3 3"/>
+            </svg>
+          </div>
+          <div class="qr-title" data-i18n="sidebar_qr_title">扫码加群</div>
+        </div>
+        <div class="qr-image-wrapper">
+          <picture>
+            <source srcset="assets/images/qr-code.webp" type="image/webp">
+            <img src="assets/images/qr-code.jpg" alt="添加好友二维码" data-i18n-attr-alt="qr_alt_text" loading="lazy">
+          </picture>
+          <div class="qr-overlay">
+            <div class="scan-line"></div>
+          </div>
+        </div>
+        <button class="discord-join-button" onclick="window.open('https://discord.com/invite/rv9T4kKCEK', '_blank')" data-i18n="discord_join_button">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.120.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.360.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.30z"/>
+            <path d="M8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+          </svg>
+          Join Discord Community
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="demo-content">
+    <div class="feature-demo">
+      <h2>🎯 设计理念</h2>
+      <p data-i18n="design_concept">基于用户语言偏好和使用习惯，智能展示最合适的社群入口方式：</p>
+      
+      <div class="lang-demo-buttons">
+        <button class="demo-btn zh" onclick="document.getElementById('btnZh').click()">
+          🇨🇳 中文用户体验
+        </button>
+        <button class="demo-btn en" onclick="document.getElementById('btnEn').click()">
+          🇺🇸 English User Experience
+        </button>
+      </div>
+
+      <div class="explanation">
+        <p><strong data-i18n="current_mode">当前模式</strong>: <span id="current-lang-display">中文界面</span></p>
+        <p><strong data-i18n="community_entrance">社群入口</strong>: <span id="current-entrance-display">微信扫码添加好友</span></p>
+      </div>
+    </div>
+
+    <div class="feature-list">
+      <h3>✨ 功能特点</h3>
+      <ul data-i18n="feature_list">
+        <li>🇨🇳 <strong>中文界面</strong>：显示微信二维码，符合中文用户扫码加好友的习惯</li>
+        <li>🇺🇸 <strong>英文界面</strong>：显示Discord加入按钮，符合国际用户的社群参与习惯</li>
+        <li>🎨 <strong>视觉统一</strong>：无论哪种模式，都保持SVTR.AI暖色调品牌风格</li>
+        <li>📱 <strong>响应式设计</strong>：移动端和桌面端完美适配</li>
+        <li>⚡ <strong>即时切换</strong>：语言切换时社群入口自动更新</li>
+        <li>🚀 <strong>用户体验优化</strong>：去除冗余选项，每种语言显示最合适的社群入口</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // 添加翻译内容
+    if (typeof translations !== 'undefined') {
+      translations['zh-CN'].demo_subtitle = '根据用户语言偏好智能显示最合适的社群入口';
+      translations['zh-CN'].design_concept = '基于用户语言偏好和使用习惯，智能展示最合适的社群入口方式：';
+      translations['zh-CN'].current_mode = '当前模式';
+      translations['zh-CN'].community_entrance = '社群入口';
+      
+      translations['en'].demo_subtitle = 'Intelligently display the most suitable community entrance based on user language preference';
+      translations['en'].design_concept = 'Based on user language preference and usage habits, intelligently display the most suitable community entrance:';
+      translations['en'].current_mode = 'Current Mode';
+      translations['en'].community_entrance = 'Community Entrance';
+    }
+
+    // 监听语言变化事件
+    document.addEventListener('languageChanged', (event) => {
+      const lang = event.detail.lang;
+      const langDisplay = document.getElementById('current-lang-display');
+      const entranceDisplay = document.getElementById('current-entrance-display');
+      
+      if (lang === 'zh-CN') {
+        langDisplay.textContent = '中文界面';
+        entranceDisplay.textContent = '微信扫码添加好友';
+      } else {
+        langDisplay.textContent = 'English Interface';
+        entranceDisplay.textContent = 'Discord Join Button';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+/* 🎨 Sidebar QR Container 优化样式 */
+
+/* 重新设计QR容器，与sidebar整体风格保持一致 */
+.qr-container {
+  /* 使用与sidebar相同的暖色调渐变 */
+  background: linear-gradient(135deg, 
+    rgba(255, 224, 178, 0.95) 0%, 
+    rgba(255, 243, 214, 0.9) 50%,
+    rgba(250, 140, 50, 0.1) 100%
+  );
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 24px;
+  box-shadow: 
+    0 8px 32px rgba(250, 140, 50, 0.15),
+    0 4px 16px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(250, 140, 50, 0.2);
+  transition: all 0.3s ease;
+}
+
+.qr-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 48px rgba(250, 140, 50, 0.25),
+    0 6px 24px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* QR容器装饰性背景图案 */
+.qr-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at 30% 30%, 
+    rgba(250, 140, 50, 0.08) 0%, 
+    transparent 40%
+  );
+  animation: subtle-rotate 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes subtle-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* QR标题区域 */
+.qr-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.qr-icon {
+  color: #FA8C32;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: rgba(250, 140, 50, 0.15);
+  border-radius: 8px;
+  border: 1px solid rgba(250, 140, 50, 0.3);
+  box-shadow: 0 2px 8px rgba(250, 140, 50, 0.2);
+}
+
+.qr-title {
+  color: #4A3429;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.3px;
+}
+
+/* QR图片容器 */
+.qr-image-wrapper {
+  position: relative;
+  display: inline-block;
+  margin: 16px auto 18px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.98);
+  padding: 8px;
+  box-shadow: 
+    0 8px 24px rgba(250, 140, 50, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(250, 140, 50, 0.15);
+  transition: all 0.3s ease;
+}
+
+.qr-image-wrapper:hover {
+  transform: scale(1.03);
+  box-shadow: 
+    0 12px 32px rgba(250, 140, 50, 0.3),
+    0 6px 16px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.qr-image-wrapper img {
+  width: 110px;
+  height: 110px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+/* 扫描动画 */
+.qr-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.scan-line {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  height: 2px;
+  background: linear-gradient(
+    90deg, 
+    transparent,
+    rgba(250, 140, 50, 0.6),
+    rgba(255, 187, 51, 0.8),
+    rgba(250, 140, 50, 0.6),
+    transparent
+  );
+  border-radius: 1px;
+  animation: elegant-scan 2.5s ease-in-out infinite;
+}
+
+@keyframes elegant-scan {
+  0%, 100% {
+    top: 8px;
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.6;
+  }
+  50% {
+    top: 50%;
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+  80% {
+    opacity: 0.6;
+  }
+}
+
+/* 🌐 多语言社群入口设计 */
+
+/* 中文界面：显示二维码 */
+.qr-container[data-lang="zh-CN"] .qr-image-wrapper,
+.qr-container[data-lang="zh-CN"] .qr-overlay {
+  display: block;
+}
+
+.qr-container[data-lang="zh-CN"] .discord-join-button {
+  display: none;
+}
+
+/* 英文界面：显示Discord按钮 */
+.qr-container[data-lang="en"] .qr-image-wrapper,
+.qr-container[data-lang="en"] .qr-overlay {
+  display: none;
+}
+
+.qr-container[data-lang="en"] .discord-join-button {
+  display: block;
+}
+
+/* Discord加入按钮 - 英文界面专用 */
+.discord-join-button {
+  display: none; /* 默认隐藏，英文界面显示 */
+  width: 100%;
+  margin: 16px auto 18px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #5865F2 0%, #7289DA 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 8px 24px rgba(88, 101, 242, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.discord-join-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.discord-join-button:hover::before {
+  left: 100%;
+}
+
+.discord-join-button:hover {
+  background: linear-gradient(135deg, #4752C4 0%, #5B6CD4 100%);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 
+    0 12px 32px rgba(88, 101, 242, 0.4),
+    0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.discord-join-button:active {
+  transform: translateY(0) scale(1.01);
+}
+
+.discord-join-button svg {
+  width: 24px;
+  height: 24px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+}
+
+/* 移除原有的按钮区域 */
+.qr-actions {
+  display: none;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .qr-container {
+    padding: 18px;
+    margin-top: 20px;
+    border-radius: 14px;
+  }
+  
+  .qr-image-wrapper img {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .qr-button {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .qr-button svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .qr-container {
+    padding: 16px;
+    margin-top: 18px;
+    border-radius: 12px;
+  }
+  
+  .qr-image-wrapper img {
+    width: 90px;
+    height: 90px;
+  }
+  
+  .qr-actions {
+    gap: 10px;
+  }
+  
+  .qr-button {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+/* 🎨 Sidebar导航链接优化 - 统一颜色方案 */
+
+/* 主导航链接 */
+.nav-list a {
+  color: #4A3429;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  display: block;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.nav-list a:hover {
+  color: #FA8C32;
+  background: rgba(250, 140, 50, 0.1);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(250, 140, 50, 0.15);
+}
+
+.nav-list a:active {
+  transform: translateX(2px);
+}
+
+/* 子导航链接 */
+.sub-list a {
+  color: #6B7280;
+  font-weight: 400;
+  padding: 6px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  position: relative;
+  display: block;
+  font-size: 0.85rem;
+}
+
+.sub-list a:hover {
+  color: #FA8C32;
+  background: rgba(250, 140, 50, 0.08);
+  transform: translateX(2px);
+}
+
+/* Sidebar标题优化 */
+.sidebar-header h2 {
+  color: #4A3429;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.6);
+  font-weight: 800;
+}
+
+/* Sidebar logo边框优化 */
+.sidebar-logo {
+  border: 2px solid rgba(250, 140, 50, 0.2);
+  box-shadow: 0 2px 8px rgba(250, 140, 50, 0.15);
+  transition: all 0.3s ease;
+}
+
+.sidebar-logo:hover {
+  border-color: rgba(250, 140, 50, 0.4);
+  box-shadow: 0 4px 16px rgba(250, 140, 50, 0.25);
+  transform: scale(1.05);
+}
