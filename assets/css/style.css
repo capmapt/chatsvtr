@@ -531,6 +531,32 @@ header {
   height: 16px;
 }
 
+/* 🌐 多语言社群入口设计 - 双二维码支持 */
+
+/* 默认状态：所有QR码隐藏 */
+.wechat-qr,
+.discord-qr {
+  display: none;
+}
+
+/* 中文界面：只显示微信二维码（基于html[lang]属性） */
+html[lang="zh-CN"] .wechat-qr {
+  display: block;
+}
+
+html[lang="zh-CN"] .discord-qr {
+  display: none;
+}
+
+/* 英文界面：只显示Discord二维码（基于html[lang]属性） */
+html[lang="en"] .wechat-qr {
+  display: none;
+}
+
+html[lang="en"] .discord-qr {
+  display: block;
+}
+
 /* Menu Toggle */
 .menu-toggle {
   position: fixed; 
