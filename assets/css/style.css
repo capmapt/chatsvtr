@@ -648,8 +648,15 @@ html[lang="en"] .discord-qr {
   transition: margin-left var(--transition-fast);
 }
 
-.content.shifted { 
-  margin-left: 260px; 
+/* 桌面端：侧边栏和内容区域并排显示 */
+@media (min-width: 769px) {
+  .content.shifted {
+    margin-left: 260px; /* 为侧边栏留出空间 */
+  }
+  
+  .sidebar.open ~ .content {
+    margin-left: 260px; /* 侧边栏打开时推动内容区域 */
+  }
 }
 
 /* Notice and Chat */
@@ -878,7 +885,12 @@ html[lang="en"] .discord-qr {
   }
   
   .content.shifted { 
-    margin-left: 0; 
+    margin-left: 0; /* 移动端强制不使用边距偏移 */
+  }
+  
+  /* 移动端侧边栏打开时内容区域不偏移，依靠遮罩层交互 */
+  .sidebar.open ~ .content {
+    margin-left: 0;
   }
 
   /* Stats and Chat */

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>移动端侧边栏宽度测试</title>
+    <link rel="stylesheet" href="assets/css/style-optimized.css">
+    <link rel="stylesheet" href="assets/css/sidebar-optimized.css">
+    <style>
+        .test-info {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 2000;
+        }
+        
+        .content-area {
+            margin-left: 0;
+            padding: 20px;
+            background: #f5f5f5;
+            min-height: 100vh;
+            transition: margin-left 0.3s ease;
+        }
+        
+        .sidebar.open ~ .content-area {
+            margin-left: 260px;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar.open ~ .content-area { margin-left: 240px; }
+        }
+        @media (max-width: 599px) {
+            .sidebar.open ~ .content-area { margin-left: 220px; }
+        }
+        @media (max-width: 480px) {
+            .sidebar.open ~ .content-area { margin-left: 200px; }
+        }
+        @media (max-width: 360px) {
+            .sidebar.open ~ .content-area { margin-left: 180px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-info">
+        <div>屏幕宽度: <span id="screen-width">-</span>px</div>
+        <div>侧边栏占比: <span id="sidebar-ratio">-</span>%</div>
+        <div>内容区占比: <span id="content-ratio">-</span>%</div>
+    </div>
+
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    
+    <div class="overlay" onclick="closeSidebar()"></div>
+    
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="assets/images/logo.webp" alt="SVTR Logo" class="sidebar-logo">
+            <div>
+                <h2>硅谷科技评论</h2>
+                <small>AI创投生态平台</small>
+            </div>
+        </div>
+        
+        <div class="sidebar-section">
+            <h3>核心产品</h3>
+            <ul class="nav-list">
+                <li><a href="#ai-100">AI 100</a></li>
+                <li><a href="#ai-weekly">AI周报</a></li>
+                <li><a href="#trading-picks">交易精选</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <div class="qr-container">
+                <div class="qr-header">
+                    <div class="qr-icon">📱</div>
+                    <div class="qr-title">加入社群</div>
+                </div>
+                <div class="qr-image-wrapper wechat-qr">
+                    <img src="assets/images/wechat-qr.webp" alt="微信群二维码">
+                    <div class="qr-overlay">
+                        <div class="scan-line"></div>
+                    </div>
+                </div>
+                <div class="qr-image-wrapper discord-qr">
+                    <img src="assets/images/discord-qr.webp" alt="Discord社群二维码">
+                    <div class="qr-overlay">
+                        <div class="scan-line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="content-area">
+        <h1>移动端侧边栏宽度测试</h1>
+        <p>调整浏览器宽度测试不同屏幕尺寸下的侧边栏表现：</p>
+        
+        <h3>测试断点</h3>
+        <ul>
+            <li><strong>桌面端</strong> (>768px): 260px 侧边栏</li>
+            <li><strong>平板端</strong> (≤768px): 240px 侧边栏 (31%)</li>
+            <li><strong>大屏手机</strong> (≤599px): 220px 侧边栏 (46%)</li>
+            <li><strong>小屏手机</strong> (≤480px): 200px 侧边栏 (53%)</li>
+            <li><strong>极小屏幕</strong> (≤360px): 180px 侧边栏 (56%)</li>
+        </ul>
+        
+        <h3>优化效果</h3>
+        <p>相比之前的配置，新的宽度设置显著改善了移动端用户体验，保证内容区域有足够的显示空间。</p>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.overlay');
+            
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+            updateStats();
+        }
+        
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.overlay');
+            
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            updateStats();
+        }
+        
+        function updateStats() {
+            const screenWidth = window.innerWidth;
+            document.getElementById('screen-width').textContent = screenWidth;
+            
+            let sidebarWidth;
+            if (screenWidth <= 360) sidebarWidth = 180;
+            else if (screenWidth <= 480) sidebarWidth = 200;
+            else if (screenWidth <= 599) sidebarWidth = 220;
+            else if (screenWidth <= 768) sidebarWidth = 240;
+            else sidebarWidth = 260;
+            
+            const sidebarRatio = ((sidebarWidth / screenWidth) * 100).toFixed(1);
+            const contentRatio = (100 - sidebarRatio).toFixed(1);
+            
+            document.getElementById('sidebar-ratio').textContent = sidebarRatio;
+            document.getElementById('content-ratio').textContent = contentRatio;
+        }
+        
+        // 初始化和窗口大小变化时更新
+        window.addEventListener('resize', updateStats);
+        updateStats();
+    </script>
+</body>
+</html>

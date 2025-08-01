@@ -439,10 +439,10 @@ html[lang="en"] .discord-qr {
    📱 响应式设计 - 移动端适配
    ===================================================== */
 
-/* 移动端和平板 (max-width: 768px) */
+/* 平板端 (768px 以下) */
 @media (max-width: 768px) {
   .sidebar {
-    width: 280px;
+    width: 240px; /* 减少40px，占31% */
     padding: 70px 16px 16px;
   }
   
@@ -480,11 +480,27 @@ html[lang="en"] .discord-qr {
   }
 }
 
-/* 小屏幕移动端 (max-width: 480px) */
+/* 大屏手机端 (480px-599px) */
+@media (max-width: 599px) {
+  .sidebar {
+    width: 220px; /* 占46% iPhone等 */
+    padding: 65px 12px 12px;
+  }
+}
+
+/* 小屏手机端 (480px 以下) */
 @media (max-width: 480px) {
   .sidebar {
-    width: 300px;
-    padding: 65px 14px 14px;
+    width: 200px; /* 占53% 小安卓机 */
+    padding: 60px 10px 10px;
+  }
+}
+
+/* 极小屏幕 (360px 以下) */
+@media (max-width: 360px) {
+  .sidebar {
+    width: 180px; /* 占56% 老旧设备 */
+    padding: 55px 8px 8px;
   }
 
   .qr-container {

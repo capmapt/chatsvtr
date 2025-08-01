@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>侧边栏并排显示测试</title>
+    <link rel="stylesheet" href="assets/css/style-optimized.css">
+    <link rel="stylesheet" href="assets/css/sidebar-optimized.css">
+    <style>
+        .test-controls {
+            position: fixed;
+            top: 70px;
+            right: 10px;
+            background: rgba(255,255,255,0.9);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 2000;
+            font-size: 14px;
+        }
+        
+        .test-controls h4 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        
+        .test-controls button {
+            display: block;
+            width: 100%;
+            margin: 5px 0;
+            padding: 8px 12px;
+            background: #FA8C32;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .test-controls button:hover {
+            background: #e67c1c;
+        }
+        
+        .status-info {
+            background: rgba(0,0,0,0.1);
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-size: 11px;
+        }
+        
+        .content-demo {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+        
+        .layout-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 2000;
+        }
+        
+        /* 桌面端布局指示器 */
+        @media (min-width: 769px) {
+            .layout-indicator::before {
+                content: "🖥️ 桌面端：";
+            }
+        }
+        
+        /* 移动端布局指示器 */
+        @media (max-width: 768px) {
+            .layout-indicator::before {
+                content: "📱 移动端：";
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-controls">
+        <h4>布局测试控制</h4>
+        <button onclick="toggleSidebar()">切换侧边栏</button>
+        <button onclick="closeSidebar()">关闭侧边栏</button>
+        <button onclick="simulateResize('desktop')">模拟桌面端</button>
+        <button onclick="simulateResize('tablet')">模拟平板</button>
+        <button onclick="simulateResize('mobile')">模拟手机</button>
+        
+        <div class="status-info">
+            <div>屏幕宽度: <span id="screen-width">-</span>px</div>
+            <div>侧边栏状态: <span id="sidebar-status">关闭</span></div>
+            <div>内容边距: <span id="content-margin">-</span>px</div>
+        </div>
+    </div>
+
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    
+    <div class="overlay" onclick="closeSidebar()"></div>
+    
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="assets/images/logo.webp" alt="SVTR Logo" class="sidebar-logo">
+            <div>
+                <h2>硅谷科技评论</h2>
+                <small>AI创投生态平台</small>
+            </div>
+        </div>
+        
+        <div class="sidebar-section">
+            <h3>核心产品</h3>
+            <ul class="nav-list">
+                <li><a href="#ai-100">AI 100</a></li>
+                <li><a href="#ai-weekly">AI周报</a></li>
+                <li><a href="#trading-picks">交易精选</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-section">
+            <h3>社区服务</h3>
+            <ul class="nav-list">
+                <li><a href="#community">AI创投会</a></li>
+                <li><a href="#camp">AI创投营</a></li>
+            </ul>
+        </div>
+        
+        <div class="sidebar-footer">
+            <div class="qr-container">
+                <div class="qr-header">
+                    <div class="qr-icon">📱</div>
+                    <div class="qr-title">加入社群</div>
+                </div>
+                <div class="qr-image-wrapper wechat-qr">
+                    <img src="assets/images/wechat-qr.webp" alt="微信群二维码">
+                    <div class="qr-overlay">
+                        <div class="scan-line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <main id="main-content" class="content shifted" role="main">
+        <div class="wrapper">
+            <header class="banner-header" role="banner">
+                <div class="banner-content">
+                    <div class="banner-logo">
+                        <img src="assets/images/logo.webp" alt="SVTR.AI logo">
+                    </div>
+                    <div class="banner-text">
+                        <h1 class="banner-title">侧边栏布局测试</h1>
+                        <p class="banner-tagline">测试桌面端并排显示，移动端遮罩层交互</p>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="content-demo">
+                <h2>✅ 预期效果</h2>
+                <h3>🖥️ 桌面端 (≥769px)</h3>
+                <ul>
+                    <li><strong>侧边栏关闭</strong>：内容区域占满全屏</li>
+                    <li><strong>侧边栏打开</strong>：侧边栏和内容区域并排显示，内容区域右移260px</li>
+                    <li><strong>无遮罩层</strong>：可以同时操作侧边栏和内容区域</li>
+                </ul>
+                
+                <h3>📱 移动端 (≤768px)</h3>
+                <ul>
+                    <li><strong>侧边栏关闭</strong>：内容区域占满全屏</li>
+                    <li><strong>侧边栏打开</strong>：侧边栏覆盖在内容上，显示半透明遮罩层</li>
+                    <li><strong>遮罩层交互</strong>：点击遮罩层关闭侧边栏</li>
+                </ul>
+            </div>
+            
+            <div class="content-demo">
+                <h2>🧪 测试内容</h2>
+                <p>这里是主要内容区域。在桌面端，当侧边栏打开时，这个区域应该向右移动，与侧边栏并排显示。</p>
+                <p>在移动端，当侧边栏打开时，这个区域应该保持原位，被半透明遮罩层覆盖。</p>
+                
+                <div style="height: 200px; background: linear-gradient(45deg, #FA8C32, #FFBB33); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; font-weight: bold;">
+                    内容展示区域
+                </div>
+                
+                <p>请通过上方的测试控制按钮，或者调整浏览器窗口大小来测试不同屏幕尺寸的布局效果。</p>
+            </div>
+        </div>
+    </main>
+    
+    <div class="layout-indicator">
+        <span id="layout-mode">并排显示模式</span>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.overlay');
+            
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('active');
+            updateStatus();
+        }
+        
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.overlay');
+            
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            updateStatus();
+        }
+        
+        function simulateResize(size) {
+            const testSizes = {
+                'desktop': '1200px',
+                'tablet': '768px', 
+                'mobile': '375px'
+            };
+            
+            if (testSizes[size]) {
+                document.body.style.width = testSizes[size];
+                // 触发resize事件
+                window.dispatchEvent(new Event('resize'));
+                updateStatus();
+            }
+        }
+        
+        function updateStatus() {
+            const screenWidth = window.innerWidth;
+            const sidebar = document.getElementById('sidebar');
+            const content = document.querySelector('.content');
+            const isOpen = sidebar.classList.contains('open');
+            const contentStyle = window.getComputedStyle(content);
+            const marginLeft = parseInt(contentStyle.marginLeft) || 0;
+            
+            document.getElementById('screen-width').textContent = screenWidth;
+            document.getElementById('sidebar-status').textContent = isOpen ? '打开' : '关闭';
+            document.getElementById('content-margin').textContent = marginLeft;
+            
+            // 更新布局模式指示器
+            const layoutMode = document.getElementById('layout-mode');
+            if (screenWidth >= 769) {
+                layoutMode.textContent = isOpen ? '并排显示' : '内容全屏';
+            } else {
+                layoutMode.textContent = isOpen ? '遮罩层覆盖' : '内容全屏';
+            }
+        }
+        
+        // 监听窗口大小变化
+        window.addEventListener('resize', updateStatus);
+        
+        // 页面加载时初始化状态
+        document.addEventListener('DOMContentLoaded', updateStatus);
+        
+        // 定期更新状态
+        setInterval(updateStatus, 1000);
+    </script>
+</body>
+</html>
