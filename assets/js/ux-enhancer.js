@@ -320,7 +320,7 @@ class UXEnhancer {
     
     // 长按复制文本
     if (element.textContent && element.textContent.length > 10) {
-      this.showTextActions(element, position);
+      this.showContextMenu(element, position);
     }
   }
 
