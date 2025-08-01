@@ -442,8 +442,8 @@ html[lang="en"] .discord-qr {
 /* 平板端 (768px 以下) */
 @media (max-width: 768px) {
   .sidebar {
-    width: 240px; /* 减少40px，占31% */
-    padding: 70px 16px 16px;
+    width: 220px; /* 进一步减少20px，占29% */
+    padding: 70px 14px 14px;
   }
   
   .sidebar-header h2 {
@@ -475,32 +475,32 @@ html[lang="en"] .discord-qr {
   }
   
   .qr-image-wrapper img {
-    width: 100px;
-    height: 100px;
+    width: 85px;  /* 适应更小侧边栏 */
+    height: 85px;
   }
 }
 
 /* 大屏手机端 (480px-599px) */
 @media (max-width: 599px) {
   .sidebar {
-    width: 220px; /* 占46% iPhone等 */
-    padding: 65px 12px 12px;
+    width: 200px; /* 减少到40% iPhone等 */
+    padding: 65px 10px 10px;
   }
 }
 
 /* 小屏手机端 (480px 以下) */
 @media (max-width: 480px) {
   .sidebar {
-    width: 200px; /* 占53% 小安卓机 */
-    padding: 60px 10px 10px;
+    width: 180px; /* 减少到45% 小安卓机 */
+    padding: 60px 8px 8px;
   }
 }
 
 /* 极小屏幕 (360px 以下) */
 @media (max-width: 360px) {
   .sidebar {
-    width: 180px; /* 占56% 老旧设备 */
-    padding: 55px 8px 8px;
+    width: 160px; /* 减少到44% 老旧设备 */
+    padding: 55px 6px 6px;
   }
 
   .qr-container {
@@ -510,8 +510,8 @@ html[lang="en"] .discord-qr {
   }
   
   .qr-image-wrapper img {
-    width: 90px;
-    height: 90px;
+    width: 75px;  /* 适应极小屏幕 */
+    height: 75px;
   }
 }
 

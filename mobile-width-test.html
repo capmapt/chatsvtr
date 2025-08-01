@@ -100,13 +100,13 @@
         <h1>移动端侧边栏宽度测试</h1>
         <p>调整浏览器宽度测试不同屏幕尺寸下的侧边栏表现：</p>
         
-        <h3>测试断点</h3>
+        <h3>优化后断点</h3>
         <ul>
-            <li><strong>桌面端</strong> (>768px): 260px 侧边栏</li>
-            <li><strong>平板端</strong> (≤768px): 240px 侧边栏 (31%)</li>
-            <li><strong>大屏手机</strong> (≤599px): 220px 侧边栏 (46%)</li>
-            <li><strong>小屏手机</strong> (≤480px): 200px 侧边栏 (53%)</li>
-            <li><strong>极小屏幕</strong> (≤360px): 180px 侧边栏 (56%)</li>
+            <li><strong>桌面端</strong> (>768px): 260px 侧边栏 (保持不变)</li>
+            <li><strong>平板端</strong> (≤768px): 220px 侧边栏 (29% ✅)</li>
+            <li><strong>大屏手机</strong> (≤599px): 200px 侧边栏 (40% ✅)</li>
+            <li><strong>小屏手机</strong> (≤480px): 180px 侧边栏 (45% ✅)</li>
+            <li><strong>极小屏幕</strong> (≤360px): 160px 侧边栏 (44% ✅)</li>
         </ul>
         
         <h3>优化效果</h3>
@@ -137,10 +137,10 @@
             document.getElementById('screen-width').textContent = screenWidth;
             
             let sidebarWidth;
-            if (screenWidth <= 360) sidebarWidth = 180;
-            else if (screenWidth <= 480) sidebarWidth = 200;
-            else if (screenWidth <= 599) sidebarWidth = 220;
-            else if (screenWidth <= 768) sidebarWidth = 240;
+            if (screenWidth <= 360) sidebarWidth = 160;      // 优化后
+            else if (screenWidth <= 480) sidebarWidth = 180; // 优化后
+            else if (screenWidth <= 599) sidebarWidth = 200; // 优化后
+            else if (screenWidth <= 768) sidebarWidth = 220; // 优化后
             else sidebarWidth = 260;
             
             const sidebarRatio = ((sidebarWidth / screenWidth) * 100).toFixed(1);
