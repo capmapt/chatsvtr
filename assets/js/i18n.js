@@ -94,7 +94,16 @@ class I18n {
     }
 
     // Dispatch language change event for other components
-    document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
+    document.dispatchEvent(new CustomEvent('languageChanged', { 
+      detail: { 
+        lang, 
+        language: lang, // 为QR管理器提供兼容性
+        previousLang: this.previousLang || 'zh-CN'
+      } 
+    }));
+    
+    // 保存之前的语言供下次切换使用
+    this.previousLang = lang;
   }
   
   updateSEOMetaTags(lang) {
