@@ -1,0 +1,352 @@
+/**
+ * 移动端Banner布局优化
+ * 解决按钮占比过大问题，提升视觉平衡
+ */
+
+/* 移动端header区域重新设计 */
+@media (max-width: 768px) {
+  /* 增加banner高度，减少按钮相对占比 */
+  .banner-header {
+    aspect-ratio: 2.5/1 !important; /* 从3/1调整到2.5/1，增加高度 */
+    min-height: 160px !important; /* 从140px增加到160px */
+    position: relative;
+  }
+  
+  /* 优化按钮布局和尺寸 */
+  .menu-toggle {
+    top: 16px !important;
+    left: 16px !important;
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 18px !important;
+    padding: 8px !important;
+    border-radius: 6px !important;
+    background: rgba(250, 140, 50, 0.15) !important;
+    backdrop-filter: blur(8px) !important;
+    box-shadow: 0 2px 8px rgba(250, 140, 50, 0.2) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  
+  .lang-toggle {
+    top: 16px !important;
+    right: 16px !important;
+    scale: 0.9 !important; /* 轻微缩小 */
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(8px) !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15) !important;
+    border-radius: 6px !important;
+  }
+  
+  .lang-toggle button {
+    padding: 6px 10px !important;
+    font-size: 13px !important;
+    min-height: 32px !important;
+    font-weight: 600 !important;
+  }
+  
+  /* 优化banner内容布局 */
+  .banner-content {
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding: 20px 16px !important;
+    justify-content: center !important;
+  }
+  
+  .banner-logo {
+    width: 60px !important;
+    height: 60px !important;
+    margin-bottom: 8px !important;
+  }
+  
+  .banner-logo img {
+    width: 50px !important;
+    height: 50px !important;
+  }
+  
+  .banner-text {
+    text-align: center !important;
+    max-width: 100% !important;
+  }
+  
+  .banner-title {
+    font-size: 1.8rem !important;
+    margin: 0 0 8px !important;
+    line-height: 1.2 !important;
+  }
+  
+  .banner-tagline {
+    font-size: 0.9rem !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+  
+  /* 业务标签区域优化 */
+  .business-tags {
+    gap: 12px !important;
+    margin: 16px auto 8px !important;
+    padding: 0 16px !important;
+  }
+  
+  .business-tag {
+    font-size: 1.1rem !important;
+    padding: 14px 24px !important;
+    letter-spacing: 1.5px !important;
+    border-radius: 20px !important;
+  }
+}
+
+/* 更小屏幕的额外优化 */
+@media (max-width: 480px) {
+  .banner-header {
+    aspect-ratio: 2.2/1 !important;
+    min-height: 140px !important;
+  }
+  
+  .menu-toggle {
+    width: 34px !important;
+    height: 34px !important;
+    top: 14px !important;
+    left: 14px !important;
+    font-size: 16px !important;
+  }
+  
+  .lang-toggle {
+    top: 14px !important;
+    right: 14px !important;
+    scale: 0.85 !important;
+  }
+  
+  .lang-toggle button {
+    padding: 5px 8px !important;
+    font-size: 12px !important;
+    min-height: 28px !important;
+  }
+  
+  .banner-content {
+    padding: 16px 12px !important;
+    gap: 8px !important;
+  }
+  
+  .banner-logo {
+    width: 50px !important;
+    height: 50px !important;
+    margin-bottom: 4px !important;
+  }
+  
+  .banner-logo img {
+    width: 42px !important;
+    height: 42px !important;
+  }
+  
+  .banner-title {
+    font-size: 1.5rem !important;
+    margin: 0 0 6px !important;
+  }
+  
+  .banner-tagline {
+    font-size: 0.8rem !important;
+    gap: 8px !important;
+  }
+  
+  .business-tags {
+    margin: 12px auto 6px !important;
+    padding: 0 12px !important;
+  }
+}
+
+/* 超小屏幕优化 */
+@media (max-width: 360px) {
+  .banner-header {
+    aspect-ratio: 2/1 !important;
+    min-height: 120px !important;
+  }
+  
+  .menu-toggle {
+    width: 32px !important;
+    height: 32px !important;
+    top: 12px !important;
+    left: 12px !important;
+    font-size: 15px !important;
+  }
+  
+  .lang-toggle {
+    top: 12px !important;
+    right: 12px !important;
+    scale: 0.8 !important;
+  }
+  
+  .lang-toggle button {
+    padding: 4px 6px !important;
+    font-size: 11px !important;
+    min-height: 26px !important;
+  }
+  
+  .banner-content {
+    padding: 12px 8px !important;
+    gap: 6px !important;
+  }
+  
+  .banner-logo {
+    width: 45px !important;
+    height: 45px !important;
+  }
+  
+  .banner-logo img {
+    width: 38px !important;
+    height: 38px !important;
+  }
+  
+  .banner-title {
+    font-size: 1.3rem !important;
+    margin: 0 0 4px !important;
+  }
+  
+  .banner-tagline {
+    font-size: 0.75rem !important;
+    gap: 6px !important;
+  }
+}
+
+/* 横屏模式特殊处理 */
+@media (max-width: 768px) and (orientation: landscape) {
+  .banner-header {
+    aspect-ratio: 4/1 !important;
+    min-height: 100px !important;
+  }
+  
+  .banner-content {
+    flex-direction: row !important;
+    gap: 20px !important;
+    padding: 16px !important;
+  }
+  
+  .banner-logo {
+    width: 50px !important;
+    height: 50px !important;
+    margin-bottom: 0 !important;
+  }
+  
+  .banner-logo img {
+    width: 42px !important;
+    height: 42px !important;
+  }
+  
+  .banner-text {
+    text-align: left !important;
+  }
+  
+  .banner-title {
+    font-size: 1.4rem !important;
+    margin: 0 0 4px !important;
+  }
+  
+  .banner-tagline {
+    font-size: 0.8rem !important;
+    gap: 12px !important;
+  }
+  
+  .menu-toggle {
+    width: 30px !important;
+    height: 30px !important;
+    top: 10px !important;
+    left: 10px !important;
+    font-size: 14px !important;
+  }
+  
+  .lang-toggle {
+    top: 10px !important;
+    right: 10px !important;
+    scale: 0.8 !important;
+  }
+}
+
+/* 按钮hover状态优化 */
+@media (max-width: 768px) {
+  .menu-toggle:hover {
+    background: rgba(250, 140, 50, 0.25) !important;
+    transform: scale(1.05) !important;
+  }
+  
+  .lang-toggle button:hover {
+    background: rgba(250, 140, 50, 0.1) !important;
+  }
+  
+  .lang-toggle button.active {
+    background: var(--primary-color) !important;
+    color: #fff !important;
+    transform: none !important;
+  }
+}
+
+/* 提升按钮的可访问性 */
+@media (max-width: 768px) {
+  .menu-toggle:focus {
+    outline: 2px solid var(--primary-color) !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 4px rgba(250, 140, 50, 0.1) !important;
+  }
+  
+  .lang-toggle button:focus {
+    outline: 2px solid var(--primary-color) !important;
+    outline-offset: 1px !important;
+  }
+}
+
+/* 暗色模式适配 */
+@media (max-width: 768px) and (prefers-color-scheme: dark) {
+  .menu-toggle {
+    background: rgba(250, 140, 50, 0.2) !important;
+    color: #fff !important;
+  }
+  
+  .lang-toggle {
+    background: rgba(30, 30, 30, 0.95) !important;
+    border: 1px solid rgba(250, 140, 50, 0.3) !important;
+  }
+  
+  .lang-toggle button {
+    color: #e0e0e0 !important;
+  }
+  
+  .lang-toggle button:hover {
+    background: rgba(250, 140, 50, 0.15) !important;
+    color: #fff !important;
+  }
+}
+
+/* 减少动画的用户偏好支持 */
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+  .menu-toggle,
+  .lang-toggle button,
+  .banner-logo img {
+    transition: none !important;
+  }
+  
+  .menu-toggle:hover {
+    transform: none !important;
+  }
+}
+
+/* 高对比度模式支持 */
+@media (max-width: 768px) and (prefers-contrast: high) {
+  .menu-toggle {
+    border: 2px solid var(--primary-color) !important;
+    background: rgba(250, 140, 50, 0.3) !important;
+  }
+  
+  .lang-toggle {
+    border: 2px solid var(--primary-color) !important;
+  }
+  
+  .lang-toggle button {
+    border: 1px solid transparent !important;
+  }
+  
+  .lang-toggle button:hover,
+  .lang-toggle button.active {
+    border-color: var(--primary-color) !important;
+  }
+}

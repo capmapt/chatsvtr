@@ -1,3 +1,7 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 # Claude Project Memory (chatsvtr)
 
 ## 项目背景 (Project Background)
@@ -88,8 +92,8 @@ chatsvtr/
 ### 核心构建命令
 ```bash
 # 开发环境
-npm run start              # 启动本地服务器（Python HTTP Server）
-npm run dev               # 启动Wrangler开发服务器
+npm run start              # 启动本地服务器（Python HTTP Server, 端口8000）
+npm run dev               # 启动Wrangler开发服务器（端口3000）
 npm run preview           # 预览模式（端口8080）
 
 # 构建和优化
@@ -101,8 +105,14 @@ npm run optimize:gzip     # Gzip压缩
 
 # 测试
 npm run test              # Jest单元测试
-npm run test:e2e         # Playwright E2E测试
+npm run test:watch        # Jest watch模式
+npm run test:e2e         # Playwright E2E测试（chromium only）
+npm run test:e2e:full    # Playwright全浏览器测试
+npm run test:e2e:ui      # Playwright UI模式
 npm run lint             # ESLint代码检查
+npm run lint:fix         # ESLint自动修复
+npm run format           # Prettier代码格式化
+npm run validate:html    # HTML验证
 
 # 部署
 npm run deploy:cloudflare # Cloudflare部署
@@ -135,10 +145,14 @@ npm run deploy:cloudflare # Cloudflare部署
 
 ### 同步命令
 ```bash
-npm run sync              # 全量同步飞书数据
+npm run sync              # 基础同步飞书数据
 npm run sync:weekly       # 仅同步AI周报
 npm run sync:trading      # 仅同步交易精选
-npm run sync:daily        # 日常同步任务
+npm run sync:daily        # 日常同步任务（使用improved-feishu-sync.js）
+npm run sync:full         # 完整同步（使用improved-feishu-sync.js）
+npm run sync:webhook      # Webhook触发同步
+npm run sync:test         # 同步功能测试
+npm run update            # 手动更新（manual-update.js）
 ```
 
 ## AI与RAG系统 (AI & RAG Integration)
@@ -159,8 +173,10 @@ npm run sync:daily        # 日常同步任务
 npm run rag:sync          # 同步RAG数据源
 npm run rag:build         # 构建向量数据库
 npm run rag:test          # 测试RAG功能
-npm run rag:setup         # 完整RAG环境设置
-npm run chat:test         # 测试聊天功能
+npm run rag:deploy        # 部署RAG服务
+npm run rag:setup         # 完整RAG环境设置（sync + build + test）
+npm run rag:test-hybrid   # 测试混合RAG功能
+npm run chat:test         # 测试聊天功能（等同于rag:test-hybrid）
 ```
 
 ### 聊天系统特性
@@ -174,16 +190,17 @@ npm run chat:test         # 测试聊天功能
 ### 日常开发命令
 ```bash
 # 快速开发（推荐中文别名）
-npm run 预览              # 启动预览服务器
-npm run 推送              # 智能推送到生产环境
-npm run 回滚              # 版本回退
-npm run 快照              # 创建开发快照
+npm run 预览              # 启动预览服务器（smart-preview.sh）
+npm run 推送              # 智能推送到生产环境（smart-push.sh）
+npm run 回滚              # 版本回退（dev-rollback.sh）
+npm run 快照              # 创建开发快照（dev-snapshot.sh）
 
 # 对应英文命令
-npm run preview
-npm run dev:push
-npm run dev:rollback  
-npm run dev:snapshot
+npm run preview          # 预览服务器（端口8080）
+npm run dev:push         # 开发推送脚本
+npm run dev:rollback     # 开发回滚脚本
+npm run dev:snapshot     # 开发快照脚本
+npm run dev:start        # 开发启动脚本
 ```
 
 ### 版本管理
@@ -281,6 +298,10 @@ npm install
 npm run test -- --testNamePattern="chat"
 # 调试模式
 npm run test:watch
+# E2E测试特定spec
+npm run test:e2e -- tests/e2e/homepage.spec.js
+# E2E测试UI模式（调试）
+npm run test:e2e:ui
 ```
 
 #### 5. 部署问题
@@ -549,6 +570,9 @@ npm run 回滚            # 中文别名：版本回退
 3. **中文友好**：命令和文档都有中文支持
 4. **AI增强**：RAG系统是核心竞争力，需持续优化
 5. **商业目标**：技术服务于AI创投生态系统建设
+6. **双文件系统**：每个核心文件都有优化版本（如main.js和main-optimized.js）
+7. **Gzip压缩**：所有静态资源都有.gz版本用于生产部署
+8. **WebP图片**：所有图片转换为WebP格式，保留原版本作为fallback
 
 ## Memory Log
 - `2025-01-29`: 完成ChatSVTR codebase全面分析，更新CLAUDE.md包含完整架构文档

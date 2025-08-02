@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes,viewport-fit=cover"/>
   <meta name="format-detection" content="telephone=no"/>
   <meta name="theme-color" content="#FA8C32"/>
   
@@ -81,12 +81,22 @@
   <!-- 加载完整错误处理器 -->
   <script src="assets/js/error-handler.js"></script>
   
+    <!-- Critical CSS内联 -->
+  <style>*,::after,::before{box-sizing:border-box}:root{--primary-color:#FA8C32;--secondary-color:#FFBB33;--accent-color:#FFD600;--bg-main:linear-gradient(135deg, #fff8e1, #ffe0b2);--bg-panel:#FFF;--text-primary:#000;--text-secondary:#666;--text-link:#0066cc;--text-link-hover:#004499;--border-color:rgba(0,0,0,0.1);--shadow-light:0 4px 12px rgba(0,0,0,0.1);--transition-fast:0.3s;--border-radius:6px;--border-radius-large:12px}html{scroll-behavior:smooth}body{margin:0;padding:0;min-height:100vh;background:var(--bg-main);font-family:"Helvetica Neue",Arial,sans-serif;overflow-x:hidden}header{position:relative;width:100%;z-index:1200}.banner-header{width:100%;aspect-ratio:4/1;background:#ffe0b2;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-bottom:3px solid var(--primary-color)}.banner-content{display:flex;align-items:center;justify-content:center;gap:40px;max-width:1000px;width:100%;height:100%}.banner-logo{position:relative;width:120px;height:120px;flex-shrink:0;display:flex;align-items:center;justify-content:center}.banner-logo img{width:100px;height:100px;border-radius:50%;object-fit:cover;box-shadow:0 4px 20px rgba(250,140,50,.4),0 2px 10px rgba(0,0,0,.1);border:3px solid rgba(255,255,255,.8)}.banner-title{font-size:3rem;font-weight:700;margin:0 0 12px;line-height:1.3;color:#000;text-shadow:1px 1px 2px rgba(255,255,255,.8)}.banner-tagline{font-size:1.4rem;font-weight:400;line-height:1.4;color:#4a3429;text-shadow:1px 1px 2px rgba(255,255,255,.7);margin:0;letter-spacing:.5px;display:flex;align-items:center;gap:20px;justify-content:center}.business-tags{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:20px auto 10px;width:calc(100% - 40px);max-width:760px;padding:0 20px;justify-items:center}.business-tag{font-size:1.5rem;font-weight:800;padding:18px 44px;border-radius:32px;background:linear-gradient(90deg,#fff176 10%,#ffa726 90%);color:#333;letter-spacing:2.5px;white-space:nowrap;width:100%;border:none;text-align:center;margin:0;cursor:pointer;position:relative;box-shadow:0 0 15px 0 #ffe08288,0 2px 12px #fa8c3230}.menu-toggle{position:fixed;top:20px;left:20px;background:0 0;border:none;font-size:1.5rem;color:var(--primary-color);cursor:pointer;z-index:1100;padding:8px;border-radius:4px}.lang-toggle{position:fixed;top:20px;right:20px;display:flex;background:#fff;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:1100;overflow:hidden;align-items:center}.lang-toggle button{padding:4px 8px;border:none;background:0 0;color:#555;font-weight:500;cursor:pointer;font-size:1rem}.lang-toggle button.active{background:var(--primary-color);color:#fff}.wrapper{width:100%;max-width:800px;margin:10px auto;border-radius:var(--border-radius);box-shadow:var(--shadow-light);overflow:hidden}.content{margin-left:0;padding:10px 20px;display:flex;flex-direction:column;align-items:center}@media (max-width:768px){.wrapper{margin:5px auto}.banner-header{aspect-ratio:2.5/1;min-height:160px}.banner-content{flex-direction:column;gap:12px;padding:20px 16px}.banner-logo{width:60px;height:60px;margin-bottom:8px}.banner-logo img{width:50px;height:50px}.banner-title{font-size:1.8rem;margin:0 0 8px}.banner-tagline{font-size:.9rem;gap:12px}.business-tags{gap:12px;margin:16px auto 8px;padding:0 16px}.business-tag{font-size:1.1rem;padding:14px 24px;letter-spacing:1.5px}.menu-toggle{top:16px;left:16px;width:36px;height:36px;font-size:18px;padding:8px;background:rgba(250,140,50,0.15);backdrop-filter:blur(8px)}.lang-toggle{top:16px;right:16px;scale:0.9;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px)}.lang-toggle button{padding:6px 10px;font-size:13px;min-height:32px}.content{padding:8px 12px}}@media (max-width:480px){.wrapper{margin:3px auto}.banner-header{aspect-ratio:5/1;min-height:100px}.banner-content{gap:4px;padding:8px}.banner-logo{width:40px;height:40px}.banner-logo img{width:32px;height:32px}.banner-title{font-size:1.2rem;margin:0 0 2px}.banner-tagline{font-size:.7rem;gap:6px}.business-tags{display:flex;flex-direction:column;gap:8px;margin:10px auto 4px;width:100%;padding:0}.business-tag{font-size:1.05rem;padding:12px 0;width:100%;margin:0}.content{padding:6px 10px}}</style>
+  
+  <!-- 异步加载完整CSS -->
   <link rel="preload" href="assets/css/style-optimized.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="assets/css/style-optimized.css"></noscript>
+  
+  
   <link rel="stylesheet" href="assets/css/sidebar-optimized.css">
+  <link rel="stylesheet" href="assets/css/sidebar-resizable.css">
+  <link rel="stylesheet" href="assets/css/touch-optimized.css">
+  <link rel="stylesheet" href="assets/css/mobile-banner-fix.css">
   
   <!-- Preload critical images (WebP preferred) -->
+  <link rel="preload" href="assets/images/banner.avif" as="image" type="image/avif">
   <link rel="preload" href="assets/images/banner.webp" as="image" type="image/webp">
+  <link rel="preload" href="assets/images/logo.avif" as="image" type="image/avif">
   <link rel="preload" href="assets/images/logo.webp" as="image" type="image/webp">
   
   <!-- JSON-LD结构化数据 -->
@@ -201,6 +211,7 @@
   <aside class="sidebar open" role="navigation" aria-label="主导航">
     <div class="sidebar-header">
       <picture>
+        <source srcset="assets/images/logo.avif" type="image/avif">
         <source srcset="assets/images/logo.webp" type="image/webp">
         <img src="assets/images/logo.jpg" class="sidebar-logo" alt="SVTR.AI logo" data-i18n-attr-alt="logo_alt_text" loading="lazy">
       </picture>
@@ -252,9 +263,10 @@
         <!-- 微信二维码 - 中文界面显示 -->
         <div class="qr-image-wrapper wechat-qr">
           <picture>
-            <source srcset="assets/images/qr-code.webp" type="image/webp">
-            <img src="assets/images/qr-code.jpg" alt="添加好友二维码" data-i18n-attr-alt="qr_alt_text" loading="lazy">
-          </picture>
+        <source srcset="assets/images/qr-code.avif" type="image/avif">
+        <source srcset="assets/images/qr-code.webp" type="image/webp">
+        <img src="assets/images/qr-code.jpg" alt="添加好友二维码" data-i18n-attr-alt="qr_alt_text" loading="lazy">
+      </picture>
           <div class="qr-overlay">
             <div class="scan-line"></div>
           </div>
@@ -263,9 +275,10 @@
         <!-- Discord二维码 - 英文界面显示 -->
         <div class="qr-image-wrapper discord-qr">
           <picture>
-            <source srcset="assets/images/discord-qr-code.webp" type="image/webp">
-            <img src="assets/images/discord-qr-code.png" alt="Discord Community QR Code" data-i18n-attr-alt="discord_qr_alt_text" loading="lazy">
-          </picture>
+        <source srcset="assets/images/discord-qr-code.avif" type="image/avif">
+        <source srcset="assets/images/discord-qr-code.webp" type="image/webp">
+        <img src="assets/images/discord-qr-code.png" alt="Discord Community QR Code" data-i18n-attr-alt="discord_qr_alt_text" loading="lazy">
+      </picture>
           <div class="qr-overlay">
             <div class="scan-line"></div>
           </div>
@@ -279,9 +292,10 @@
         <div class="banner-content">
           <div class="banner-logo">
             <picture>
-              <source srcset="assets/images/logo.webp" type="image/webp">
-              <img src="assets/images/logo.jpg" alt="SVTR.AI logo" loading="lazy">
-            </picture>
+        <source srcset="assets/images/logo.avif" type="image/avif">
+        <source srcset="assets/images/logo.webp" type="image/webp">
+        <img src="assets/images/logo.jpg" alt="SVTR.AI logo" loading="lazy">
+      </picture>
           </div>
           <div class="banner-text">
             <h1 class="banner-title" data-i18n="banner_title">硅谷科技评论</h1>
@@ -337,6 +351,13 @@
   <!-- UX增强器暂时禁用，避免移动端兼容性问题 -->
   <!-- <script src="assets/js/ux-enhancer.js"></script> -->
   
+  <!-- 移动端触摸优化 -->
+  <script src="assets/js/touch-enhancer.js"></script>
+  
+  <!-- 侧边栏宽度调整功能 -->
+  <script src="assets/js/sidebar-resizer.js"></script>
+  <script src="assets/js/sidebar-integration.js"></script>
+  
   <!-- Load translations and scripts -->
   <script src="assets/js/translations.js"></script>
   <script src="assets/js/sidebar-qr-manager-optimized.js" defer></script>
@@ -345,5 +366,25 @@
   <!-- Native Chat Component -->
   <link rel="stylesheet" href="assets/css/chat-optimized.css">
   <script src="assets/js/chat-optimized.js" defer></script>
+  
+  <!-- Service Worker 注册 -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('[SW] 注册成功:', registration.scope);
+            
+            // 检查更新
+            registration.addEventListener('updatefound', () => {
+              console.log('[SW] 发现更新');
+            });
+          })
+          .catch((error) => {
+            console.log('[SW] 注册失败:', error);
+          });
+      });
+    }
+  </script>
 </body>
 </html>

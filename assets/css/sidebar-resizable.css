@@ -1,0 +1,393 @@
+/**
+ * 侧边栏可调整宽度增强样式
+ * 基于原有sidebar-optimized.css，添加拖拽调整功能支持
+ */
+
+/* 
+ * 重要说明：该文件扩展了原有的侧边栏样式，使其支持动态宽度调整
+ * 同时保持原有的响应式设计和移动端兼容性
+ */
+
+/* 桌面端侧边栏增强 - 支持动态宽度 */
+@media (min-width: 769px) {
+  .sidebar {
+    /* 移除固定宽度，允许JavaScript动态设置 */
+    width: var(--sidebar-width, 240px);
+    min-width: 200px;
+    max-width: 500px;
+    /* 保持原有的 position: fixed，不要改为relative */
+  }
+  
+  /* 确保JavaScript设置的内联样式优先级最高 */
+  .sidebar[style*="width"] {
+    width: var(--sidebar-width, 240px) !important;
+  }
+  
+  /* 覆盖原始CSS中的固定宽度设置 */
+  .sidebar {
+    width: var(--sidebar-width, 240px) !important;
+  }
+  
+  /* 隐藏侧边栏滚动条 */
+  .sidebar {
+    /* 隐藏滚动条但保持滚动功能 */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+  }
+  
+  /* 隐藏WebKit滚动条 */
+  .sidebar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* 优化侧边栏内容布局，避免溢出 */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+  
+  /* 确保导航区域可以适应剩余空间 */
+  .sidebar nav {
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  /* 侧边栏底部区域不要太占空间 */
+  .sidebar-footer {
+    flex-shrink: 0;
+  }
+  
+  /* QR容器进一步优化 */
+  .qr-container {
+    margin-top: 16px !important;
+    padding: 16px !important;
+  }
+  
+  .qr-image-wrapper img {
+    width: 90px !important;
+    height: 90px !important;
+  }
+  
+  /* 内容区域自适应侧边栏宽度 - 仅在桌面端 */
+  .content.shifted {
+    margin-left: var(--sidebar-width, 240px);
+    transition: margin-left 0.3s ease;
+  }
+  
+  /* 确保内容区域始终从顶部开始 */
+  .content {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    position: relative;
+    top: 0;
+  }
+  
+  /* 调整时的平滑过渡 */
+  .sidebar-resizing .sidebar {
+    transition: none; /* 调整时禁用过渡效果 */
+  }
+  
+  .sidebar-resizing .content.shifted {
+    transition: none; /* 调整时禁用过渡效果 */
+  }
+  
+  /* 拖拽手柄样式增强 */
+  .sidebar-resize-handle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 6px;
+    background: transparent;
+    cursor: col-resize;
+    z-index: 1060;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+  }
+  
+  .sidebar-resize-handle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 40px;
+    background: transparent;
+    border-radius: 1px;
+    transition: all 0.2s ease;
+  }
+  
+  .sidebar-resize-handle:hover {
+    background: rgba(250, 140, 50, 0.1);
+    width: 8px;
+  }
+  
+  .sidebar-resize-handle:hover::before {
+    background: rgba(250, 140, 50, 0.6);
+    height: 60px;
+  }
+  
+  .sidebar-resize-handle.active {
+    background: rgba(250, 140, 50, 0.2);
+    width: 8px;
+  }
+  
+  .sidebar-resize-handle.active::before {
+    background: var(--primary-color);
+    height: 80px;
+  }
+  
+  /* 拖拽图标增强 */
+  .resize-handle-icon {
+    opacity: 0;
+    color: var(--primary-color);
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 6px;
+    padding: 6px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+    pointer-events: none;
+    transform: scale(0.8);
+  }
+  
+  .sidebar-resize-handle:hover .resize-handle-icon,
+  .sidebar-resize-handle.active .resize-handle-icon,
+  .sidebar-resize-handle:focus .resize-handle-icon {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  /* 拖拽提示文字 */
+  .sidebar-resize-handle::after {
+    content: '拖拽调整宽度';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 1070;
+  }
+  
+  .sidebar-resize-handle:hover::after {
+    opacity: 1;
+  }
+}
+
+/* 调整状态下的全局样式 */
+.sidebar-resizing {
+  cursor: col-resize !important;
+}
+
+.sidebar-resizing * {
+  cursor: col-resize !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+}
+
+.sidebar-resizing .sidebar {
+  box-shadow: 0 0 20px rgba(250, 140, 50, 0.3);
+}
+
+/* 宽度变化动画 */
+.sidebar:not(.sidebar-resizing) {
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.content.shifted:not(.sidebar-resizing *) {
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 焦点和无障碍支持 */
+.sidebar-resize-handle:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  background: rgba(250, 140, 50, 0.15);
+}
+
+.sidebar-resize-handle[aria-pressed="true"] {
+  background: rgba(250, 140, 50, 0.25);
+}
+
+/* 高对比度模式支持 */
+@media (prefers-contrast: high) {
+  .sidebar-resize-handle {
+    border-right: 2px solid var(--primary-color);
+  }
+  
+  .sidebar-resize-handle:hover,
+  .sidebar-resize-handle.active {
+    background: rgba(250, 140, 50, 0.3);
+    border-right-width: 3px;
+  }
+  
+  .resize-handle-icon {
+    background: white;
+    border: 2px solid var(--primary-color);
+  }
+  
+  .sidebar-resize-handle::after {
+    background: var(--primary-color);
+    color: white;
+    border: 1px solid white;
+  }
+}
+
+/* 减少动画偏好支持 */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-resize-handle,
+  .resize-handle-icon,
+  .sidebar,
+  .sidebar.open ~ .content {
+    transition: none !important;
+  }
+  
+  .sidebar-resize-handle::before {
+    transition: none;
+  }
+}
+
+/* 暗色模式适配 */
+@media (prefers-color-scheme: dark) {
+  .sidebar-resize-handle:hover {
+    background: rgba(250, 140, 50, 0.15);
+  }
+  
+  .sidebar-resize-handle.active {
+    background: rgba(250, 140, 50, 0.25);
+  }
+  
+  .sidebar-resize-handle:hover::before,
+  .sidebar-resize-handle.active::before {
+    background: #fa8c32;
+  }
+  
+  .resize-handle-icon {
+    background: rgba(30, 30, 30, 0.95);
+    color: #fa8c32;
+    box-shadow: 0 2px 12px rgba(250, 140, 50, 0.2);
+  }
+  
+  .sidebar-resize-handle::after {
+    background: rgba(30, 30, 30, 0.9);
+    color: #fa8c32;
+    border: 1px solid rgba(250, 140, 50, 0.3);
+  }
+}
+
+/* 覆盖原始CSS中不同屏幕尺寸的固定宽度设置 */
+@media (min-width: 1200px) {
+  .sidebar {
+    width: var(--sidebar-width, 280px) !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+  .sidebar {
+    width: var(--sidebar-width, 240px) !important;
+  }
+}
+
+/* 移动端完全禁用调整功能 */
+@media (max-width: 768px) {
+  .sidebar-resize-handle {
+    display: none !important;
+  }
+  
+  .sidebar {
+    /* 移动端恢复固定宽度 */
+    width: 200px !important;
+    min-width: unset !important;
+    max-width: unset !important;
+  }
+  
+  /* 移动端响应式宽度保持不变 */
+  @media (max-width: 600px) and (min-width: 481px) {
+    .sidebar {
+      width: 180px !important;
+    }
+  }
+  
+  @media (max-width: 480px) and (min-width: 376px) {
+    .sidebar {
+      width: 160px !important;
+    }
+  }
+  
+  @media (max-width: 375px) and (min-width: 361px) {
+    .sidebar {
+      width: 140px !important;
+    }
+  }
+  
+  @media (max-width: 360px) {
+    .sidebar {
+      width: 120px !important;
+    }
+  }
+}
+
+/* 宽度指示器（可选，用于调试） */
+.sidebar-width-indicator {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  z-index: 1070;
+}
+
+.sidebar-resizing .sidebar-width-indicator {
+  opacity: 1;
+}
+
+/* 兼容性增强 */
+.sidebar[style*="width"] {
+  /* 确保JavaScript设置的内联样式优先级 */
+  width: var(--sidebar-width) !important;
+}
+
+/* 过渡状态优化 */
+.sidebar-width-transition {
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+.sidebar-width-transition ~ .content {
+  transition: margin-left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+/* 最小和最大宽度视觉提示 */
+.sidebar[data-at-min-width="true"] .sidebar-resize-handle::after {
+  content: '已达最小宽度';
+}
+
+.sidebar[data-at-max-width="true"] .sidebar-resize-handle::after {
+  content: '已达最大宽度';
+}
+
+/* 双击重置提示 */
+.sidebar-resize-handle[title*="双击"]::after {
+  content: '拖拽调整 / 双击重置';
+}

@@ -1,0 +1,295 @@
+/**
+ * 移动端触摸体验优化
+ * 提升移动设备交互质量
+ */
+
+/* 触摸目标尺寸优化 - 符合iOS和Android规范 */
+.nav-list a,
+.business-tag,
+.lang-toggle button,
+.menu-toggle,
+.svtr-chat-send-btn,
+.svtr-action-btn {
+  min-height: 44px; /* iOS推荐最小触摸区域 */
+  min-width: 44px;
+  touch-action: manipulation; /* 禁用双击缩放，提升点击响应 */
+}
+
+/* 增强触摸反馈 */
+.business-tag,
+.nav-list a,
+.lang-toggle button {
+  -webkit-tap-highlight-color: rgba(250, 140, 50, 0.2);
+  tap-highlight-color: rgba(250, 140, 50, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 触摸波纹效果 */
+.business-tag::before,
+.nav-list a::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(250, 140, 50, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.business-tag:active::before,
+.nav-list a:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* 确保内容在波纹效果之上 */
+.business-tag > *,
+.nav-list a > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 移动端滚动优化 */
+.sidebar,
+.svtr-chat-messages,
+body {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* 改进移动端侧边栏交互 */
+@media (max-width: 768px) {
+  .sidebar {
+    touch-action: pan-y; /* 只允许垂直滚动 */
+  }
+  
+  .overlay {
+    touch-action: none; /* 防止背景滚动 */
+  }
+  
+  /* 增大移动端触摸目标 */
+  .nav-list a {
+    padding: 12px 16px;
+    margin: 4px 0;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    font-size: 16px; /* 提升可读性 */
+  }
+  
+  .sub-list a {
+    padding: 10px 20px;
+    margin: 2px 0;
+    border-radius: 6px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* 移动端按钮优化 */
+  .menu-toggle {
+    padding: 12px;
+    border-radius: 8px;
+    background: rgba(250, 140, 50, 0.1);
+    backdrop-filter: blur(10px);
+  }
+  
+  .lang-toggle button {
+    padding: 8px 12px;
+    font-size: 14px;
+    min-height: 36px;
+  }
+  
+  /* 业务标签移动端优化 */
+  .business-tag {
+    padding: 16px 24px;
+    margin: 8px 0;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+  }
+  
+  .business-tag:active {
+    transform: scale(0.98);
+    background: linear-gradient(90deg, #ffcc02 0%, #ff9800 100%);
+  }
+}
+
+/* 聊天界面移动端优化 */
+@media (max-width: 768px) {
+  .svtr-chat-container {
+    border-radius: 0;
+    height: 100vh;
+    max-height: none;
+  }
+  
+  #svtr-chat-input {
+    font-size: 16px; /* 防止iOS Safari缩放 */
+    padding: 14px 50px 14px 16px;
+    border-radius: 12px;
+    line-height: 1.4;
+  }
+  
+  .svtr-chat-send-btn {
+    width: 40px;
+    height: 40px;
+    right: 6px;
+    bottom: 6px;
+  }
+  
+  .svtr-action-btn {
+    padding: 8px 16px;
+    min-height: 36px;
+    font-size: 14px;
+    border-radius: 18px;
+    margin: 4px;
+  }
+  
+  /* 消息气泡触摸优化 */
+  .svtr-message {
+    padding: 16px 20px;
+    margin: 8px 0;
+    border-radius: 16px;
+    position: relative;
+  }
+  
+  /* 长按复制提示 */
+  .svtr-message:active {
+    background-color: rgba(250, 140, 50, 0.1);
+  }
+}
+
+/* 特殊交互优化 */
+.qr-image-wrapper {
+  touch-action: pinch-zoom; /* 允许二维码缩放 */
+}
+
+/* 防止意外选择文本 */
+.business-tag,
+.nav-list a,
+.menu-toggle,
+.lang-toggle button {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* 改进表单输入体验 */
+@media (max-width: 768px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px; /* 防止iOS Safari自动缩放 */
+    border-radius: 8px;
+    padding: 12px 16px;
+  }
+  
+  /* 聚焦状态优化 */
+  input:focus,
+  textarea:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(250, 140, 50, 0.1);
+  }
+}
+
+/* 手势导航适配 */
+@supports (padding: max(0px)) {
+  @media (max-width: 768px) {
+    .content {
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
+    
+    .svtr-chat-input-area {
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
+    
+    .sidebar {
+      padding-bottom: max(20px, env(safe-area-inset-bottom));
+    }
+  }
+}
+
+/* 横屏模式优化 */
+@media (max-width: 768px) and (orientation: landscape) {
+  .banner-header {
+    min-height: 80px;
+    aspect-ratio: 8/1;
+  }
+  
+  .business-tags {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 12px auto;
+  }
+  
+  .business-tag {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+  
+  .svtr-chat-container {
+    height: calc(100vh - 60px);
+  }
+}
+
+/* 高对比度模式支持 */
+@media (prefers-contrast: high) {
+  .business-tag,
+  .nav-list a,
+  .lang-toggle button {
+    border: 2px solid var(--primary-color);
+  }
+  
+  .business-tag:hover,
+  .nav-list a:hover {
+    border-color: var(--text-primary);
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+}
+
+/* 减少动画首选项支持 */
+@media (prefers-reduced-motion: reduce) {
+  .business-tag::before,
+  .nav-list a::before {
+    transition: none;
+  }
+  
+  .business-tag:active::before,
+  .nav-list a:active::before {
+    display: none;
+  }
+  
+  .business-tag:active,
+  .nav-list a:active {
+    background-color: rgba(250, 140, 50, 0.2);
+  }
+}
+
+/* 暗色模式触摸优化 */
+@media (prefers-color-scheme: dark) {
+  .business-tag::before,
+  .nav-list a::before {
+    background: rgba(250, 140, 50, 0.4);
+  }
+  
+  .menu-toggle {
+    background: rgba(250, 140, 50, 0.15);
+  }
+  
+  .nav-list a:active,
+  .business-tag:active {
+    background: rgba(250, 140, 50, 0.25);
+  }
+}

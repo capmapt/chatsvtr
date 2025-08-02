@@ -283,7 +283,7 @@ header {
   top: 0; 
   left: 0; 
   bottom: 0; 
-  width: 260px;
+  width: 240px; /* 优化：从260px减少到240px，提升桌面端比例 */
   padding: 80px 20px 20px;
   background: linear-gradient(135deg, #FFE0B2, #FFF3D6);
   backdrop-filter: blur(8px);
@@ -649,13 +649,20 @@ html[lang="en"] .discord-qr {
 }
 
 /* 桌面端：侧边栏和内容区域并排显示 */
-@media (min-width: 769px) {
-  .content.shifted {
-    margin-left: 260px; /* 为侧边栏留出空间 */
+@media (min-width: 1200px) {
+  .sidebar {
+    width: 280px; /* 大屏幕：适当增宽提升体验 */
   }
-  
+  .content.shifted,
   .sidebar.open ~ .content {
-    margin-left: 260px; /* 侧边栏打开时推动内容区域 */
+    margin-left: 280px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+  .content.shifted,
+  .sidebar.open ~ .content {
+    margin-left: 240px; /* 中等桌面：优化比例 */
   }
 }
 
@@ -783,7 +790,18 @@ html[lang="en"] .discord-qr {
   }
 }
 
-/* Mobile and tablet (max-width: 768px) */
+/* 平板横屏优化：更好的比例平衡 */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar {
+    width: 200px; /* 平板横屏：协调的26%占比 */
+  }
+  .sidebar.open ~ .content {
+    margin-left: 200px;
+    width: calc(100% - 200px);
+  }
+}
+
+/* 平板和移动端：ChatGPT模式并排显示 */
 @media (max-width: 768px) {
   /* Banner */
   .banner-header {
@@ -841,7 +859,7 @@ html[lang="en"] .discord-qr {
 
   /* Sidebar */
   .sidebar {
-    width: 280px;
+    width: 200px; /* 平板端：优化为200px，更协调的比例 */
     padding: 70px 16px 16px;
   }
   
@@ -888,20 +906,32 @@ html[lang="en"] .discord-qr {
     margin-left: 0; /* 移动端强制不使用边距偏移 */
   }
   
-  /* 移动端侧边栏打开时内容区域不偏移，依靠遮罩层交互 */
+  /* 平板端ChatGPT模式：侧边栏和内容并排显示 */
   .sidebar.open ~ .content {
-    margin-left: 0;
+    margin-left: 200px; /* 调整为新的侧边栏宽度 */
+    width: calc(100% - 200px);
   }
 
   /* Stats and Chat */
   .stats-widget-iframe {
-    height: 280px; /* 移动端优化：适配可读字体大小 */
+    height: 280px;
     border-radius: 8px;
   }
   
   .chat-iframe {
     min-height: 500px;
     border-radius: 8px;
+  }
+}
+
+/* 大屏手机优化 (481px-600px) */
+@media (max-width: 600px) and (min-width: 481px) {
+  .sidebar {
+    width: 180px; /* 大屏手机：37.5%占比，保持可用性 */
+  }
+  .sidebar.open ~ .content {
+    margin-left: 180px;
+    width: calc(100% - 180px);
   }
 }
 
@@ -972,6 +1002,18 @@ html[lang="en"] .discord-qr {
   }
 }
 
+/* 标准手机 (376px-480px) */
+@media (max-width: 480px) and (min-width: 376px) {
+  .sidebar {
+    width: 160px; /* 标准手机：42.7%占比，黄金比例 */
+    padding: 65px 12px 12px;
+  }
+  .sidebar.open ~ .content {
+    margin-left: 160px;
+    width: calc(100% - 160px);
+  }
+}
+
 /* Extra small mobile (max-width: 480px) */
 @media (max-width: 480px) {
   /* Banner */
@@ -1017,12 +1059,6 @@ html[lang="en"] .discord-qr {
     gap: 6px;
   }
 
-  /* Sidebar */
-  .sidebar {
-    width: 300px;
-    padding: 65px 14px 14px;
-  }
-
   /* Content */
   .content {
     padding: 6px 10px;
@@ -1030,7 +1066,7 @@ html[lang="en"] .discord-qr {
 
   /* Stats and Chat */
   .stats-widget-iframe {
-    height: 240px; /* 小屏幕优化高度 */
+    height: 240px;
     border-radius: 6px;
   }
   
@@ -1040,10 +1076,18 @@ html[lang="en"] .discord-qr {
   }
 }
 
-/* 超小屏幕 (max-width: 480px) - 针对真实手机尺寸 */
-@media (max-width: 480px) {
+/* 小屏手机 (max-width: 375px) */
+@media (max-width: 375px) {
+  .sidebar {
+    width: 140px; /* 小屏手机：38.9%占比，减少压迫感 */
+    padding: 60px 10px 10px;
+  }
+  .sidebar.open ~ .content {
+    margin-left: 140px;
+    width: calc(100% - 140px);
+  }
   .stats-widget-iframe {
-    height: 200px; /* 超小屏幕优化：保持可读性 */
+    height: 200px;
     border-radius: 4px;
   }
 }

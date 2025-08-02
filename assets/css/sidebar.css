@@ -12,7 +12,7 @@
   top: 0; 
   left: 0; 
   bottom: 0; 
-  width: 260px;
+  width: 240px; /* 优化：从260px减少到240px，提升桌面端比例 */
   padding: 80px 20px 20px;
   background: linear-gradient(135deg, #FFE0B2, #FFF3D6);
   backdrop-filter: blur(8px);
@@ -418,32 +418,53 @@ html[lang="en"] .discord-qr {
   outline-offset: 2px;
 }
 
-/* Overlay遮罩层 */
+/* 遮罩层 - 仅在极小屏幕使用 */
 .overlay {
   position: fixed; 
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.2); /* 减少遮罩深度 */
   opacity: 0; 
   pointer-events: none; 
   transition: opacity var(--transition-fast);
   z-index: 1000;
-  backdrop-filter: blur(2px);
+  /* 移除模糊效果 backdrop-filter: blur(2px); */
 }
 
+/* 默认情况下禁用遮罩层 */
 .overlay.active {
-  opacity: 1; 
-  pointer-events: auto;
+  opacity: 0; 
+  pointer-events: none;
 }
 
 /* =====================================================
    📱 响应式设计 - 移动端适配
    ===================================================== */
 
-/* 平板端 (768px 以下) */
+/* 大屏幕桌面端优化 (≥1200px) */
+@media (min-width: 1200px) {
+  .sidebar {
+    width: 280px; /* 大屏幕：适当增宽提升体验 */
+  }
+}
+
+/* 平板横屏优化 (769px-1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar {
+    width: 200px; /* 平板横屏：协调的26%占比 */
+  }
+}
+
+/* 平板端 (768px 以下) - ChatGPT模式并排显示 */
 @media (max-width: 768px) {
   .sidebar {
-    width: 220px; /* 进一步减少20px，占29% */
+    width: 200px; /* 平板端：优化为200px，更协调的比例 */
     padding: 70px 14px 14px;
+  }
+  
+  /* 平板端也使用并排显示，无遮罩层 */
+  .sidebar.open ~ .content {
+    margin-left: 200px; /* 调整为新的侧边栏宽度 */
+    width: calc(100% - 200px);
   }
   
   .sidebar-header h2 {
@@ -480,38 +501,80 @@ html[lang="en"] .discord-qr {
   }
 }
 
-/* 大屏手机端 (480px-599px) */
-@media (max-width: 599px) {
+/* 大屏手机端 (481px-600px) - 优化版本 */
+@media (max-width: 600px) and (min-width: 481px) {
   .sidebar {
-    width: 200px; /* 减少到40% iPhone等 */
+    width: 180px; /* 大屏手机：37.5%占比，保持可用性 */
     padding: 65px 10px 10px;
   }
-}
-
-/* 小屏手机端 (480px 以下) */
-@media (max-width: 480px) {
-  .sidebar {
-    width: 180px; /* 减少到45% 小安卓机 */
-    padding: 60px 8px 8px;
+  
+  .sidebar.open ~ .content {
+    margin-left: 180px;
+    width: calc(100% - 180px);
   }
 }
 
-/* 极小屏幕 (360px 以下) */
+/* 标准手机端 (376px-480px) - 黄金比例 */
+@media (max-width: 480px) and (min-width: 376px) {
+  .sidebar {
+    width: 160px; /* 标准手机：42.7%占比，黄金比例 */
+    padding: 60px 8px 8px;
+  }
+  
+  .sidebar.open ~ .content {
+    margin-left: 160px;
+    width: calc(100% - 160px);
+  }
+}
+
+/* 小屏手机端 (max-width: 375px) - 减少压迫感 */
+@media (max-width: 375px) and (min-width: 361px) {
+  .sidebar {
+    width: 140px; /* 小屏手机：38.9%占比，减少压迫感 */
+    padding: 55px 6px 6px;
+  }
+  
+  .sidebar.open ~ .content {
+    margin-left: 140px;
+    width: calc(100% - 140px);
+  }
+}
+
+/* 极小屏幕 (360px 以下) - 保留轻量遮罩层 */
 @media (max-width: 360px) {
   .sidebar {
-    width: 160px; /* 减少到44% 老旧设备 */
-    padding: 55px 6px 6px;
+    width: 120px; /* 极小屏幕：进一步减小，33.3%占比 */
+    padding: 50px 4px 4px;
+  }
+  
+  /* 极小屏幕使用轻量遮罩层 */
+  .overlay.active {
+    opacity: 0.3; /* 轻量遮罩 */
+    pointer-events: auto;
+  }
+  
+  .sidebar.open ~ .content {
+    margin-left: 0; /* 极小屏幕保持覆盖模式 */
   }
 
   .qr-container {
-    padding: 16px;
-    margin-top: 18px;
-    border-radius: 12px;
+    padding: 14px;
+    margin-top: 16px;
+    border-radius: 10px;
   }
   
   .qr-image-wrapper img {
-    width: 75px;  /* 适应极小屏幕 */
-    height: 75px;
+    width: 65px; /* 适应极小屏幕 */
+    height: 65px;
+  }
+  
+  .sidebar-header h2 {
+    font-size: 1.1rem; /* 减小标题字体 */
+  }
+  
+  .nav-list a {
+    font-size: 0.85rem; /* 减小导航字体 */
+    padding: 6px 4px;
   }
 }
 

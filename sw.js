@@ -1,66 +1,126 @@
 /**
  * SVTR.AI Service Worker
- * 提供缓存管理和离线支持
+ * 智能缓存策略，提升性能和离线体验
  */
 
-const CACHE_NAME = 'svtr-cache-v1';
-const STATIC_ASSETS = [
+const CACHE_NAME = 'svtr-ai-v1.2.0';
+const STATIC_CACHE = 'svtr-static-v1.2.0';
+const DYNAMIC_CACHE = 'svtr-dynamic-v1.2.0';
+const API_CACHE = 'svtr-api-v1.2.0';
+
+// 需要预缓存的核心资源（包含AVIF支持）
+const CORE_ASSETS = [
   '/',
   '/index.html',
   '/assets/css/style-optimized.css',
+  '/assets/css/sidebar-optimized.css',
   '/assets/css/chat-optimized.css',
-  '/assets/js/security-utils.js',
-  '/assets/js/image-optimizer.js',
-  '/assets/js/cache-manager.js',
-  '/assets/js/ux-enhancer.js',
-  '/assets/js/translations.js',
-  '/assets/js/i18n-optimized.js',
   '/assets/js/main-optimized.js',
   '/assets/js/chat-optimized.js',
+  '/assets/js/i18n-optimized.js',
+  '/assets/js/translations.js',
+  '/assets/js/sidebar-qr-manager-optimized.js',
+  '/assets/images/logo.avif',
   '/assets/images/logo.webp',
   '/assets/images/logo.jpg',
+  '/assets/images/banner.avif',
+  '/assets/images/banner.webp',
+  '/assets/images/qr-code.avif',
   '/assets/images/qr-code.webp',
-  '/assets/images/qr-code.jpg'
+  '/assets/images/qr-code.jpg',
+  '/assets/images/discord-qr-code.avif',
+  '/assets/images/discord-qr-code.webp',
+  '/assets/images/discord-qr-code.png'
 ];
 
-// 安装事件
+// 缓存策略配置
+const CACHE_STRATEGIES = {
+  // 静态资源：缓存优先
+  static: {
+    patterns: [
+      /\.(?:js|css|jpg|jpeg|png|webp|avif|svg|woff2|woff|ttf)$/,
+      /\/assets\//
+    ],
+    strategy: 'cacheFirst',
+    maxAge: 30 * 24 * 60 * 60 * 1000 // 30天
+  },
+  
+  // HTML页面：网络优先，缓存备用
+  pages: {
+    patterns: [
+      /\.html$/,
+      /\/$/,
+      /\/pages\//
+    ],
+    strategy: 'networkFirst',
+    maxAge: 24 * 60 * 60 * 1000 // 1天
+  },
+  
+  // API请求：网络优先，短期缓存
+  api: {
+    patterns: [
+      /\/api\//,
+      /\/functions\//
+    ],
+    strategy: 'networkFirst',
+    maxAge: 5 * 60 * 1000 // 5分钟
+  },
+  
+  // 外部资源：缓存优先
+  external: {
+    patterns: [
+      /^https:\/\/fonts\./,
+      /^https:\/\/cdn\./,
+      /^https:\/\/.*\.googleapis\.com/
+    ],
+    strategy: 'cacheFirst',
+    maxAge: 7 * 24 * 60 * 60 * 1000 // 7天
+  }
+};
+
+// Service Worker安装事件
 self.addEventListener('install', (event) => {
-  console.log('Service Worker 安装中...');
+  console.log('[SW] 安装中...');
   
   event.waitUntil(
-    caches.open(CACHE_NAME)
+    caches.open(STATIC_CACHE)
       .then((cache) => {
-        console.log('预缓存静态资源');
-        return cache.addAll(STATIC_ASSETS.filter(url => url !== '/'));
+        console.log('[SW] 预缓存核心资源');
+        return cache.addAll(CORE_ASSETS.map(url => new Request(url, {cache: 'no-cache'})));
+      })
+      .then(() => {
+        console.log('[SW] 核心资源缓存完成');
+        return self.skipWaiting(); // 立即激活新的SW
       })
       .catch((error) => {
-        console.log('预缓存失败，继续安装:', error);
+        console.error('[SW] 预缓存失败:', error);
       })
   );
-  
-  // 强制激活新的Service Worker
-  self.skipWaiting();
 });
 
-// 激活事件
+// Service Worker激活事件
 self.addEventListener('activate', (event) => {
-  console.log('Service Worker 激活中...');
+  console.log('[SW] 激活中...');
   
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('删除旧缓存:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
+    Promise.all([
+      // 清理旧缓存
+      caches.keys().then((cacheNames) => {
+        return Promise.all(
+          cacheNames.map((cacheName) => {
+            if (cacheName !== STATIC_CACHE && 
+                cacheName !== DYNAMIC_CACHE && 
+                cacheName !== API_CACHE) {
+              console.log('[SW] 删除旧缓存:', cacheName);
+              return caches.delete(cacheName);
+            }
+          })
+        );
+      }),
+      // 立即控制所有客户端
+      self.clients.claim()
+    ])
   );
-  
-  // 立即控制所有客户端
-  self.clients.claim();
 });
 
 // 网络请求拦截
@@ -68,91 +128,190 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
   
-  // 只处理同源请求
-  if (url.origin !== self.location.origin) {
+  // 跳过non-GET请求
+  if (request.method !== 'GET') {
     return;
   }
   
-  // API请求：网络优先策略
-  if (url.pathname.startsWith('/api/')) {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          // 成功的API响应不缓存（数据实时性）
-          return response;
-        })
-        .catch(() => {
-          // API请求失败时返回离线响应
-          return new Response(
-            JSON.stringify({
-              error: '网络连接失败，请检查网络后重试',
-              offline: true
-            }),
-            {
-              status: 503,
-              headers: { 'Content-Type': 'application/json' }
-            }
-          );
-        })
-    );
+  // 跳过Chrome扩展请求
+  if (url.protocol === 'chrome-extension:') {
     return;
   }
   
-  // 静态资源：缓存优先策略
-  if (request.method === 'GET') {
-    event.respondWith(
-      caches.match(request)
-        .then((cachedResponse) => {
-          if (cachedResponse) {
-            // 有缓存，在后台更新
-            fetch(request)
-              .then((response) => {
-                if (response.status === 200) {
-                  const responseClone = response.clone();
-                  caches.open(CACHE_NAME)
-                    .then((cache) => {
-                      cache.put(request, responseClone);
-                    });
-                }
-              })
-              .catch(() => {
-                // 后台更新失败，忽略
-              });
-            
-            return cachedResponse;
-          }
-          
-          // 无缓存，发起网络请求
-          return fetch(request)
-            .then((response) => {
-              if (response.status === 200 && isStaticAsset(request.url)) {
-                const responseClone = response.clone();
-                caches.open(CACHE_NAME)
-                  .then((cache) => {
-                    cache.put(request, responseClone);
-                  });
-              }
-              return response;
-            })
-            .catch(() => {
-              // 网络请求失败，返回离线页面
-              if (request.destination === 'document') {
-                return caches.match('/index.html')
-                  .then((response) => response || createOfflinePage());
-              }
-              
-              // 其他资源失败
-              throw new Error('网络不可用');
-            });
-        })
-    );
-  }
+  // 确定缓存策略
+  const strategy = determineStrategy(request.url);
+  
+  event.respondWith(
+    handleRequest(request, strategy)
+      .catch((error) => {
+        console.error('[SW] 请求处理失败:', error);
+        return fetch(request);
+      })
+  );
 });
 
-// 判断是否为静态资源
-function isStaticAsset(url) {
-  const staticExtensions = ['.css', '.js', '.png', '.jpg', '.jpeg', '.webp', '.svg', '.ico'];
-  return staticExtensions.some(ext => url.includes(ext));
+// 确定请求的缓存策略
+function determineStrategy(url) {
+  for (const [name, config] of Object.entries(CACHE_STRATEGIES)) {
+    for (const pattern of config.patterns) {
+      if (pattern.test(url)) {
+        return { name, ...config };
+      }
+    }
+  }
+  
+  // 默认策略：网络优先
+  return {
+    name: 'default',
+    strategy: 'networkFirst',
+    maxAge: 60 * 60 * 1000 // 1小时
+  };
+}
+
+// 处理请求的核心逻辑
+async function handleRequest(request, strategy) {
+  switch (strategy.strategy) {
+    case 'cacheFirst':
+      return cacheFirst(request, strategy);
+    case 'networkFirst':
+      return networkFirst(request, strategy);
+    case 'staleWhileRevalidate':
+      return staleWhileRevalidate(request, strategy);
+    default:
+      return networkFirst(request, strategy);
+  }
+}
+
+// 缓存优先策略
+async function cacheFirst(request, strategy) {
+  const cacheName = getCacheName(strategy.name);
+  const cachedResponse = await caches.match(request);
+  
+  if (cachedResponse && !isExpired(cachedResponse, strategy.maxAge)) {
+    return cachedResponse;
+  }
+  
+  try {
+    const networkResponse = await fetch(request);
+    
+    if (networkResponse.ok) {
+      const cache = await caches.open(cacheName);
+      const responseToCache = networkResponse.clone();
+      
+      // 添加时间戳
+      const response = new Response(responseToCache.body, {
+        status: responseToCache.status,
+        statusText: responseToCache.statusText,
+        headers: {
+          ...Object.fromEntries(responseToCache.headers.entries()),
+          'sw-cache-time': Date.now().toString()
+        }
+      });
+      
+      cache.put(request, response);
+    }
+    
+    return networkResponse;
+  } catch (error) {
+    // 网络失败，返回缓存（如果有）
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+    throw error;
+  }
+}
+
+// 网络优先策略
+async function networkFirst(request, strategy) {
+  const cacheName = getCacheName(strategy.name);
+  
+  try {
+    const networkResponse = await fetch(request);
+    
+    if (networkResponse.ok) {
+      const cache = await caches.open(cacheName);
+      const responseToCache = networkResponse.clone();
+      
+      // 添加时间戳并缓存
+      const response = new Response(responseToCache.body, {
+        status: responseToCache.status,
+        statusText: responseToCache.statusText,
+        headers: {
+          ...Object.fromEntries(responseToCache.headers.entries()),
+          'sw-cache-time': Date.now().toString()
+        }
+      });
+      
+      cache.put(request, response);
+    }
+    
+    return networkResponse;
+  } catch (error) {
+    // 网络失败，尝试从缓存获取
+    const cachedResponse = await caches.match(request);
+    
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+    
+    // 如果是页面请求且无缓存，返回离线页面
+    if (request.destination === 'document') {
+      return createOfflinePage();
+    }
+    
+    throw error;
+  }
+}
+
+// 陈旧内容重新验证策略
+async function staleWhileRevalidate(request, strategy) {
+  const cacheName = getCacheName(strategy.name);
+  const cachedResponse = await caches.match(request);
+  
+  // 异步更新缓存
+  const networkPromise = fetch(request).then((networkResponse) => {
+    if (networkResponse.ok) {
+      const cache = caches.open(cacheName);
+      cache.then((c) => {
+        const responseToCache = networkResponse.clone();
+        const response = new Response(responseToCache.body, {
+          status: responseToCache.status,
+          statusText: responseToCache.statusText,
+          headers: {
+            ...Object.fromEntries(responseToCache.headers.entries()),
+            'sw-cache-time': Date.now().toString()
+          }
+        });
+        c.put(request, response);
+      });
+    }
+    return networkResponse;
+  });
+  
+  // 立即返回缓存，如果有的话
+  return cachedResponse || networkPromise;
+}
+
+// 获取对应的缓存名称
+function getCacheName(strategyName) {
+  switch (strategyName) {
+    case 'static':
+    case 'external':
+      return STATIC_CACHE;
+    case 'api':
+      return API_CACHE;
+    default:
+      return DYNAMIC_CACHE;
+  }
+}
+
+// 检查缓存是否过期
+function isExpired(response, maxAge) {
+  const cacheTime = response.headers.get('sw-cache-time');
+  if (!cacheTime) return false;
+  
+  const age = Date.now() - parseInt(cacheTime);
+  return age > maxAge;
 }
 
 // 创建离线页面
@@ -229,7 +388,12 @@ function createOfflinePage() {
   });
 }
 
-// 消息处理
+// 处理错误和离线状态
+self.addEventListener('error', (event) => {
+  console.error('[SW] 错误:', event.error);
+});
+
+// 监听消息（用于缓存管理）
 self.addEventListener('message', (event) => {
   const { type, payload } = event.data;
   
@@ -238,19 +402,45 @@ self.addEventListener('message', (event) => {
       self.skipWaiting();
       break;
       
-    case 'GET_CACHE_STATUS':
-      caches.keys().then((cacheNames) => {
-        event.ports[0].postMessage({
-          caches: cacheNames,
-          currentCache: CACHE_NAME
-        });
+    case 'GET_CACHE_INFO':
+      getCacheInfo().then((info) => {
+        event.ports[0].postMessage({ type: 'CACHE_INFO', payload: info });
       });
       break;
       
     case 'CLEAR_CACHE':
-      caches.delete(CACHE_NAME).then(() => {
-        event.ports[0].postMessage({ success: true });
+      clearCache(payload?.cacheName).then(() => {
+        event.ports[0].postMessage({ type: 'CACHE_CLEARED' });
       });
       break;
   }
 });
+
+// 获取缓存信息
+async function getCacheInfo() {
+  const cacheNames = await caches.keys();
+  const info = {};
+  
+  for (const cacheName of cacheNames) {
+    const cache = await caches.open(cacheName);
+    const requests = await cache.keys();
+    info[cacheName] = {
+      size: requests.length,
+      requests: requests.map(req => req.url)
+    };
+  }
+  
+  return info;
+}
+
+// 清理指定缓存
+async function clearCache(cacheName) {
+  if (cacheName) {
+    return caches.delete(cacheName);
+  } else {
+    const cacheNames = await caches.keys();
+    return Promise.all(cacheNames.map(name => caches.delete(name)));
+  }
+}
+
+console.log('[SW] Service Worker已加载');

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>侧边栏宽度调整测试</title>
+  <style>
+    /* 基础样式 */
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; background: #f5f5f5; }
+    
+    /* 侧边栏样式 */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: var(--sidebar-width, 240px);
+      background: linear-gradient(135deg, #ffe0b2, #fff3d6);
+      border-right: 1px solid #ddd;
+      padding: 20px;
+      transform: translateX(0);
+      transition: width 0.3s ease;
+      z-index: 1000;
+      overflow-y: auto;
+      
+      /* 隐藏滚动条 */
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+    }
+    
+    /* 隐藏WebKit滚动条 */
+    .sidebar::-webkit-scrollbar {
+      display: none;
+    }
+    
+    /* 拖拽手柄 */
+    .sidebar-resize-handle {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 6px;
+      background: transparent;
+      cursor: col-resize;
+      z-index: 1010;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    
+    .sidebar-resize-handle:hover {
+      background: rgba(250, 140, 50, 0.2);
+      width: 8px;
+    }
+    
+    .sidebar-resize-handle::before {
+      content: '';
+      width: 2px;
+      height: 40px;
+      background: transparent;
+      border-radius: 1px;
+      transition: all 0.2s ease;
+    }
+    
+    .sidebar-resize-handle:hover::before {
+      background: rgba(250, 140, 50, 0.8);
+      height: 60px;
+    }
+    
+    .sidebar-resize-handle.active {
+      background: rgba(250, 140, 50, 0.3);
+      width: 8px;
+    }
+    
+    .sidebar-resize-handle.active::before {
+      background: #fa8c32;
+      height: 80px;
+    }
+    
+    /* 内容区域 */
+    .content {
+      margin-left: var(--sidebar-width, 240px);
+      padding: 20px;
+      transition: margin-left 0.3s ease;
+      min-height: 100vh;
+      background: white;
+    }
+    
+    /* 调整时禁用过渡 */
+    .resizing .sidebar,
+    .resizing .content {
+      transition: none !important;
+    }
+    
+    /* 测试UI */
+    .test-controls {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    
+    .test-btn {
+      padding: 10px 16px;
+      background: #fa8c32;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    .test-btn:hover {
+      background: #e67e22;
+    }
+    
+    .width-display {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 6px;
+      font-family: monospace;
+      margin: 15px 0;
+      border-left: 4px solid #fa8c32;
+    }
+    
+    .sidebar-content {
+      color: #4a3429;
+    }
+    
+    /* 移动端隐藏拖拽功能 */
+    @media (max-width: 768px) {
+      .sidebar-resize-handle {
+        display: none !important;
+      }
+      
+      .sidebar {
+        width: 200px !important;
+      }
+      
+      .content {
+        margin-left: 200px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="sidebar-content">
+      <h2>侧边栏测试</h2>
+      <p>这是一个可调整宽度的侧边栏。</p>
+      <ul>
+        <li>导航项目 1</li>
+        <li>导航项目 2</li>
+        <li>导航项目 3</li>
+      </ul>
+      <p>在右边缘拖拽调整宽度</p>
+    </div>
+    <div class="sidebar-resize-handle" title="拖拽调整宽度"></div>
+  </aside>
+  
+  <main class="content">
+    <h1>🔧 侧边栏宽度调整测试</h1>
+    
+    <div class="width-display" id="width-info">
+      当前侧边栏宽度: 240px
+    </div>
+    
+    <h3>测试说明：</h3>
+    <ul>
+      <li><strong>拖拽调整</strong>：将鼠标悬停在侧边栏右边缘，出现橙色高亮后拖拽调整宽度</li>
+      <li><strong>宽度范围</strong>：200px - 500px</li>
+      <li><strong>视觉反馈</strong>：拖拽时会显示实时宽度变化</li>
+      <li><strong>移动端</strong>：在手机/平板上拖拽功能被禁用</li>
+    </ul>
+    
+    <div class="test-controls">
+      <button class="test-btn" onclick="setWidth(300)">设置 300px</button>
+      <button class="test-btn" onclick="setWidth(400)">设置 400px</button>
+      <button class="test-btn" onclick="setWidth(240)">重置默认</button>
+      <button class="test-btn" onclick="getCurrentWidth()">获取当前宽度</button>
+    </div>
+    
+    <h3>拖拽状态：</h3>
+    <div id="drag-status">等待拖拽...</div>
+  </main>
+
+  <script>
+    class SidebarResizer {
+      constructor() {
+        this.isResizing = false;
+        this.startX = 0;
+        this.startWidth = 0;
+        this.minWidth = 200;
+        this.maxWidth = 500;
+        this.defaultWidth = 240;
+        
+        this.sidebar = document.querySelector('.sidebar');
+        this.content = document.querySelector('.content');
+        this.handle = document.querySelector('.sidebar-resize-handle');
+        
+        this.init();
+      }
+      
+      init() {
+        if (!this.handle || window.innerWidth <= 768) return;
+        
+        // 鼠标事件
+        this.handle.addEventListener('mousedown', this.handleMouseDown.bind(this));
+        document.addEventListener('mousemove', this.handleMouseMove.bind(this));
+        document.addEventListener('mouseup', this.handleMouseUp.bind(this));
+        
+        // 初始化宽度显示
+        this.updateWidthDisplay();
+      }
+      
+      handleMouseDown(e) {
+        e.preventDefault();
+        this.isResizing = true;
+        this.startX = e.clientX;
+        this.startWidth = parseInt(getComputedStyle(this.sidebar).width);
+        
+        document.body.classList.add('resizing');
+        this.handle.classList.add('active');
+        document.body.style.cursor = 'col-resize';
+        document.getElementById('drag-status').textContent = '正在拖拽调整...';
+      }
+      
+      handleMouseMove(e) {
+        if (!this.isResizing) return;
+        
+        e.preventDefault();
+        const deltaX = e.clientX - this.startX;
+        const newWidth = Math.max(this.minWidth, Math.min(this.maxWidth, this.startWidth + deltaX));
+        
+        this.setSidebarWidth(newWidth);
+        this.updateWidthDisplay();
+      }
+      
+  handleMouseUp(e) {
+        if (!this.isResizing) return;
+        
+        this.isResizing = false;
+        document.body.classList.remove('resizing');
+        this.handle.classList.remove('active');
+        document.body.style.cursor = '';
+        document.getElementById('drag-status').textContent = '拖拽完成！';
+        
+        // 保存宽度
+        const currentWidth = parseInt(getComputedStyle(this.sidebar).width);
+        localStorage.setItem('sidebar-width', currentWidth.toString());
+      }
+      
+      setSidebarWidth(width) {
+        document.documentElement.style.setProperty('--sidebar-width', `${width}px`);
+      }
+      
+      updateWidthDisplay() {
+        const currentWidth = parseInt(getComputedStyle(this.sidebar).width);
+        document.getElementById('width-info').textContent = `当前侧边栏宽度: ${currentWidth}px`;
+      }
+      
+      setWidth(width) {
+        this.setSidebarWidth(width);
+        this.updateWidthDisplay();
+        localStorage.setItem('sidebar-width', width.toString());
+      }
+      
+      getCurrentWidth() {
+        const width = parseInt(getComputedStyle(this.sidebar).width);
+        alert(`当前侧边栏宽度: ${width}px`);
+        return width;
+      }
+    }
+    
+    // 全局函数供按钮调用
+    let resizer;
+    
+    function setWidth(width) {
+      if (resizer) {
+        resizer.setWidth(width);
+      }
+    }
+    
+    function getCurrentWidth() {
+      if (resizer) {
+        return resizer.getCurrentWidth();
+      }
+    }
+    
+    // 页面加载完成后初始化
+    document.addEventListener('DOMContentLoaded', () => {
+      resizer = new SidebarResizer();
+      
+      // 恢复保存的宽度
+      const savedWidth = localStorage.getItem('sidebar-width');
+      if (savedWidth && savedWidth >= 200 && savedWidth <= 500) {
+        resizer.setWidth(parseInt(savedWidth));
+      }
+    });
+    
+    // 窗口大小变化时更新显示
+    window.addEventListener('resize', () => {
+      if (resizer) {
+        setTimeout(() => resizer.updateWidthDisplay(), 100);
+      }
+    });
+  </script>
+</body>
+</html>
