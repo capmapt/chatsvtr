@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI日报助手 - ChatSVTR</title>
+    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+    <meta name="description" content="快速生成专业的AI创投日报，提升内容制作效率">
+    <style>
+        :root {
+            --primary-color: #FA8C32;
+            --secondary-color: #FFBB33;
+            --bg-main: linear-gradient(135deg, #fff8e1, #ffe0b2);
+            --bg-panel: #FFF;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --border-color: #ddd;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --radius: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px 20px 20px 260px; /* 为sidebar留出240px+20px空间 */
+            background: var(--bg-main);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            position: relative;
+            z-index: 1100; /* 高于sidebar的z-index: 1050 */
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1100;
+            background: var(--bg-main);
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: var(--bg-panel);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .header h1 {
+            margin: 0 0 0.5rem;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            margin: 0;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .input-panel, .output-panel {
+            background: var(--bg-panel);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .panel-title {
+            margin: 0 0 1.5rem;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background: #e67e22;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--text-secondary);
+        }
+
+        .btn-secondary:hover {
+            background: #555;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .output-text {
+            background: #f8f9fa;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            min-height: 300px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .news-item {
+            background: #f8f9fa;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .news-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-item-title {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .template-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .template-btn {
+            background: white;
+            border: 2px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .template-btn:hover, .template-btn.active {
+            border-color: var(--primary-color);
+            background: rgba(250, 140, 50, 0.1);
+        }
+
+        .stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            background: #28a745;
+            color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .message.show {
+            transform: translateX(0);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 12px 20px 212px; /* 适应移动端sidebar宽度200px+12px */
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 0 10px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 20px 8px 20px 188px; /* 适应sidebar宽度180px+8px */
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 6px 20px 166px; /* 适应sidebar宽度160px+6px */
+            }
+        }
+
+        @media (max-width: 375px) {
+            body {
+                padding: 20px 4px 20px 144px; /* 适应sidebar宽度140px+4px */
+            }
+        }
+
+        @media (max-width: 360px) {
+            body {
+                padding: 10px; /* 超小屏幕时，sidebar可能被overlay覆盖 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <h1>🤖 AI日报助手</h1>
+            <p>智能解析AI创投信息，自动生成专业新闻报道</p>
+        </div>
+
+        <div class="main-content">
+            <!-- 输入面板 -->
+            <div class="input-panel">
+                <h2 class="panel-title">
+                    🎯 智能解析
+                </h2>
+
+                <!-- 输入区域 -->
+                <div class="form-group">
+                    <label for="rawInput">输入AI创投信息</label>
+                    <textarea id="rawInput" 
+                        placeholder="示例输入：
+
+• OpenAI完成100亿美元C轮融资
+• 字节跳动投资AI芯片公司壁仞科技
+• DeepMind发布新版本大模型
+• 小鹏汽车
+• 特斯拉FSD
+• Anthropic Claude
+
+支持：
+✓ 完整新闻描述
+✓ 简单公司+事件
+✓ 仅公司名称
+✓ 多条信息（每行一条）"
+                        style="min-height: 200px;"></textarea>
+                </div>
+
+                <!-- 快速示例 -->
+                <div class="form-group">
+                    <label>快速示例</label>
+                    <div class="template-buttons">
+                        <button class="template-btn" onclick="setExample('funding')">融资示例</button>
+                        <button class="template-btn" onclick="setExample('company')">公司示例</button>
+                        <button class="template-btn" onclick="setExample('multiple')">多条示例</button>
+                        <button class="template-btn" onclick="clearInput()">清空</button>
+                    </div>
+                </div>
+
+                <!-- 选项设置 -->
+                <div class="form-group">
+                    <label>生成选项</label>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0;">
+                            <input type="checkbox" id="addBackground" checked>
+                            <span>添加公司背景</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0;">
+                            <input type="checkbox" id="addAnalysis" checked>
+                            <span>市场分析</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0;">
+                            <input type="checkbox" id="addImplications" checked>
+                            <span>行业影响</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button type="button" class="btn" onclick="generateNews()" id="generateBtn">
+                        🤖 智能生成新闻
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="clearAll()">
+                        🔄 重置所有
+                    </button>
+                </div>
+
+                <!-- 处理状态 -->
+                <div id="processingStatus" style="display: none; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <div class="spinner" style="width: 16px; height: 16px; border: 2px solid #ddd; border-top: 2px solid var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                        <span id="statusText">正在分析输入内容...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 输出面板 -->
+            <div class="output-panel">
+                <h2 class="panel-title">
+                    📰 生成的新闻报道
+                    <span style="margin-left: auto; font-size: 0.9rem; font-weight: normal;">
+                        <span id="newsCount">待生成</span>
+                    </span>
+                </h2>
+
+                <div id="output" class="output-text">输入AI创投信息，点击"智能生成新闻"开始创作专业报道...
+
+💡 支持的输入格式：
+• 详细描述：OpenAI完成100亿美元C轮融资，投资方包括微软等
+• 简单信息：字节跳动投资壁仞科技  
+• 仅公司名：小鹏汽车、特斯拉
+• 多条信息：每行一条，自动解析
+
+AI助手将为您：
+✓ 解析关键信息
+✓ 补充公司背景
+✓ 添加市场分析
+✓ 生成专业报道</div>
+
+                <div class="action-buttons">
+                    <button class="btn" onclick="copyToClipboard()">
+                        📋 复制到剪贴板
+                    </button>
+                    <button class="btn btn-secondary" onclick="editAndRegenerate()">
+                        ✏️ 修改重生成
+                    </button>
+                    <button class="btn btn-secondary" onclick="exportAsFile()">
+                        💾 导出文件
+                    </button>
+                </div>
+
+                <div class="stats">
+                    <span>字数：<span id="wordCount">0</span></span>
+                    <span>预计阅读：<span id="readTime">0</span>分钟</span>
+                    <span>生成质量：<span id="qualityScore">-</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 消息提示 -->
+    <div id="message" class="message"></div>
+
+    <script>
+        // 全局变量
+        let generatedNews = '';
+        let processingState = false;
+
+        // 示例数据
+        const examples = {
+            funding: 'OpenAI完成100亿美元C轮融资，投资方包括微软、红杉资本',
+            company: '小鹏汽车\n特斯拉FSD\nAnthropicClaude',
+            multiple: `壁仞科技获得字节跳动投资
+DeepMind发布新版本大模型
+百度文心一言升级
+商汤科技与华为合作`
+        };
+
+        // 设置示例
+        function setExample(type) {
+            const input = document.getElementById('rawInput');
+            input.value = examples[type] || '';
+            input.focus();
+        }
+
+        // 清空输入
+        function clearInput() {
+            document.getElementById('rawInput').value = '';
+            document.getElementById('rawInput').focus();
+        }
+
+        // 智能生成新闻
+        async function generateNews() {
+            const rawInput = document.getElementById('rawInput').value.trim();
+            
+            if (!rawInput) {
+                showMessage('请输入AI创投信息', 'error');
+                return;
+            }
+
+            if (processingState) {
+                showMessage('正在处理中，请稍候...', 'warning');
+                return;
+            }
+
+            setProcessingState(true);
+            
+            try {
+                const options = {
+                    addBackground: document.getElementById('addBackground').checked,
+                    addAnalysis: document.getElementById('addAnalysis').checked,
+                    addImplications: document.getElementById('addImplications').checked
+                };
+
+                updateStatus('正在分析输入内容...');
+                
+                // 模拟AI处理过程
+                const parsedInfo = await parseInput(rawInput);
+                
+                updateStatus('正在生成新闻报道...');
+                
+                const newsArticle = await generateNewsArticle(parsedInfo, options);
+                
+                updateStatus('完成！');
+                
+                displayGeneratedNews(newsArticle);
+                updateStats(newsArticle);
+                
+                showMessage('新闻报道生成成功！', 'success');
+                
+            } catch (error) {
+                console.error('生成失败:', error);
+                showMessage('生成失败: ' + error.message, 'error');
+            } finally {
+                setProcessingState(false);
+            }
+        }
+
+        // 解析输入内容
+        async function parseInput(input) {
+            await new Promise(resolve => setTimeout(resolve, 1000)); // 模拟处理时间
+            
+            const lines = input.split('\n').filter(line => line.trim());
+            const parsedItems = [];
+
+            for (const line of lines) {
+                const item = await parseLineToNewsItem(line.trim());
+                if (item) {
+                    parsedItems.push(item);
+                }
+            }
+
+            return parsedItems;
+        }
+
+        // 解析单行内容
+        async function parseLineToNewsItem(line) {
+            // 智能解析逻辑（这里用简化版本，实际可以调用AI API）
+            const item = {
+                originalText: line,
+                company: '',
+                amount: '',
+                round: '',
+                investors: '',
+                event: '',
+                sector: '',
+                confidence: 0.8
+            };
+
+            // 提取公司名
+            const companyPatterns = [
+                /^([^完成获得收购发布宣布]+)(?=完成|获得|收购|发布|宣布)/,
+                /^([A-Za-z\u4e00-\u9fa5]+)/
+            ];
+            
+            for (const pattern of companyPatterns) {
+                const match = line.match(pattern);
+                if (match) {
+                    item.company = match[1].trim();
+                    break;
+                }
+            }
+
+            // 提取金额
+            const amountMatch = line.match(/(\d+(?:\.\d+)?(?:万|千万|亿)?(?:美元|人民币|元))/);
+            if (amountMatch) {
+                item.amount = amountMatch[1];
+            }
+
+            // 提取轮次
+            const roundMatch = line.match(/(种子轮|Pre-A轮|A轮|B轮|C轮|D轮|战略投资|IPO)/);
+            if (roundMatch) {
+                item.round = roundMatch[1];
+            }
+
+            // 提取投资方
+            const investorMatch = line.match(/投资方?[:：]?([^，。]+)/);
+            if (investorMatch) {
+                item.investors = investorMatch[1].trim();
+            }
+
+            // 确定事件类型
+            if (line.includes('完成') || line.includes('获得') || line.includes('融资')) {
+                item.event = '融资';
+            } else if (line.includes('收购')) {
+                item.event = '收购';
+            } else if (line.includes('发布') || line.includes('推出')) {
+                item.event = '产品发布';
+            } else if (line.includes('合作')) {
+                item.event = '合作';
+            } else {
+                item.event = '动态';
+            }
+
+            return item;
+        }
+
+        // 生成新闻文章
+        async function generateNewsArticle(parsedItems, options) {
+            await new Promise(resolve => setTimeout(resolve, 1500)); // 模拟AI生成时间
+            
+            const now = new Date();
+            const date = now.toLocaleDateString('zh-CN');
+            
+            let article = `# AI创投日报 - ${date}\n\n## 今日要闻\n\n`;
+            
+            for (let i = 0; i < parsedItems.length; i++) {
+                const item = parsedItems[i];
+                article += await generateSingleNews(item, options, i + 1);
+                if (i < parsedItems.length - 1) {
+                    article += '\n---\n\n';
+                }
+            }
+
+            article += `\n\n---\n*生成时间：${now.toLocaleTimeString('zh-CN')}*\n*来源：ChatSVTR AI日报助手*`;
+            
+            return article;
+        }
+
+        // 生成单条新闻
+        async function generateSingleNews(item, options, index) {
+            let news = `### ${index}. ${item.company}`;
+            
+            if (item.event && item.amount) {
+                news += `${item.event}${item.amount}`;
+                if (item.round) {
+                    news += `${item.round}`;
+                }
+            } else if (item.event) {
+                news += `${item.event}`;
+            }
+            
+            news += '\n\n';
+
+            // 事件描述
+            if (item.amount || item.round || item.investors) {
+                news += '**融资详情**\n';
+                if (item.amount) news += `- 融资金额：${item.amount}\n`;
+                if (item.round) news += `- 轮次：${item.round}\n`;
+                if (item.investors) news += `- 投资方：${item.investors}\n`;
+                news += '\n';
+            }
+
+            // 公司背景（模拟AI生成）
+            if (options.addBackground) {
+                news += '**公司背景**\n';
+                news += `${item.company}是一家专注于人工智能技术的创新企业，致力于通过先进的AI技术推动行业数字化转型。公司在${item.sector || '人工智能'}领域具有深厚的技术积累和丰富的应用经验。\n\n`;
+            }
+
+            // 市场分析（模拟AI生成）
+            if (options.addAnalysis) {
+                news += '**市场分析**\n';
+                news += `当前AI行业正处于快速发展阶段，随着技术不断成熟和应用场景的拓展，市场对AI解决方案的需求持续增长。${item.company}此次${item.event}反映了投资者对AI行业长期发展前景的信心。\n\n`;
+            }
+
+            // 行业影响（模拟AI生成）
+            if (options.addImplications) {
+                news += '**行业影响**\n';
+                news += `这一动态将进一步推动AI行业的创新发展，为相关产业链上下游企业带来新的合作机遇，同时也为行业标准化和规模化发展提供了有益借鉴。\n\n`;
+            }
+
+            return news;
+        }
+
+        // 显示生成的新闻
+        function displayGeneratedNews(article) {
+            generatedNews = article;
+            document.getElementById('output').textContent = article;
+            document.getElementById('newsCount').textContent = '已生成';
+        }
+
+        // 更新统计信息
+        function updateStats(article) {
+            const wordCount = article.length;
+            const readTime = Math.ceil(wordCount / 200);
+            const qualityScore = calculateQualityScore(article);
+            
+            document.getElementById('wordCount').textContent = wordCount;
+            document.getElementById('readTime').textContent = readTime;
+            document.getElementById('qualityScore').textContent = qualityScore + '/100';
+        }
+
+        // 计算质量评分（简化版）
+        function calculateQualityScore(article) {
+            let score = 60; // 基础分
+            
+            if (article.includes('融资详情')) score += 10;
+            if (article.includes('公司背景')) score += 10;
+            if (article.includes('市场分析')) score += 10;
+            if (article.includes('行业影响')) score += 10;
+            
+            return Math.min(score, 100);
+        }
+
+        // 设置处理状态
+        function setProcessingState(processing) {
+            processingState = processing;
+            const button = document.getElementById('generateBtn');
+            const status = document.getElementById('processingStatus');
+            
+            if (processing) {
+                button.disabled = true;
+                button.textContent = '🤖 生成中...';
+                status.style.display = 'block';
+            } else {
+                button.disabled = false;
+                button.textContent = '🤖 智能生成新闻';
+                status.style.display = 'none';
+            }
+        }
+
+        // 更新状态文本
+        function updateStatus(text) {
+            document.getElementById('statusText').textContent = text;
+        }
+
+        // 复制到剪贴板
+        async function copyToClipboard() {
+            if (!generatedNews) {
+                showMessage('请先生成新闻内容', 'error');
+                return;
+            }
+
+            try {
+                await navigator.clipboard.writeText(generatedNews);
+                showMessage('已复制到剪贴板！可直接粘贴到飞书或其他平台', 'success');
+            } catch (err) {
+                // 降级方案
+                const textArea = document.createElement('textarea');
+                textArea.value = generatedNews;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showMessage('已复制到剪贴板！', 'success');
+            }
+        }
+
+        // 修改重生成
+        function editAndRegenerate() {
+            if (!generatedNews) {
+                showMessage('请先生成新闻内容', 'error');
+                return;
+            }
+            
+            const currentInput = document.getElementById('rawInput').value;
+            const newInput = prompt('请修改输入内容：', currentInput);
+            
+            if (newInput && newInput !== currentInput) {
+                document.getElementById('rawInput').value = newInput;
+                generateNews();
+            }
+        }
+
+        // 导出为文件
+        function exportAsFile() {
+            if (!generatedNews) {
+                showMessage('请先生成新闻内容', 'error');
+                return;
+            }
+
+            const blob = new Blob([generatedNews], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `AI创投新闻_${new Date().toLocaleDateString('zh-CN').replace(/\//g, '')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showMessage('文件已下载', 'success');
+        }
+
+        // 清空所有
+        function clearAll() {
+            document.getElementById('rawInput').value = '';
+            generatedNews = '';
+            document.getElementById('output').textContent = `输入AI创投信息，点击"智能生成新闻"开始创作专业报道...
+
+💡 支持的输入格式：
+• 详细描述：OpenAI完成100亿美元C轮融资，投资方包括微软等
+• 简单信息：字节跳动投资壁仞科技  
+• 仅公司名：小鹏汽车、特斯拉
+• 多条信息：每行一条，自动解析
+
+AI助手将为您：
+✓ 解析关键信息
+✓ 补充公司背景
+✓ 添加市场分析
+✓ 生成专业报道`;
+            
+            document.getElementById('newsCount').textContent = '待生成';
+            document.getElementById('wordCount').textContent = '0';
+            document.getElementById('readTime').textContent = '0';
+            document.getElementById('qualityScore').textContent = '-';
+            
+            showMessage('已重置所有内容', 'success');
+        }
+
+        // 显示消息
+        function showMessage(text, type = 'success') {
+            const message = document.getElementById('message');
+            message.textContent = text;
+            message.className = `message ${type}`;
+            message.classList.add('show');
+            
+            setTimeout(() => {
+                message.classList.remove('show');
+            }, 3000);
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🤖 AI日报助手（智能版）已启动');
+            
+            // 绑定回车键快捷生成
+            document.getElementById('rawInput').addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    e.preventDefault();
+                    generateNews();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
