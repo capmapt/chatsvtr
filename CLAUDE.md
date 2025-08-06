@@ -95,6 +95,7 @@ chatsvtr/
 npm run start              # 启动本地服务器（Python HTTP Server, 端口8000）
 npm run dev               # 启动Wrangler开发服务器（端口3000）
 npm run preview           # 预览模式（端口8080）
+npm run dev:static        # 静态服务器（端口3000）
 
 # 构建和优化
 npm run build             # TypeScript编译
@@ -574,7 +575,38 @@ npm run 回滚            # 中文别名：版本回退
 7. **Gzip压缩**：所有静态资源都有.gz版本用于生产部署
 8. **WebP图片**：所有图片转换为WebP格式，保留原版本作为fallback
 
+## 特定测试命令 (Specific Testing Commands)
+
+### 运行单个测试文件
+```bash
+# Jest单元测试
+npm run test -- tests/unit/chat.test.js
+npm run test -- --testNamePattern="chat"
+
+# Playwright E2E测试
+npm run test:e2e -- tests/e2e/homepage.spec.js
+npm run test:e2e -- --grep "chat functionality"
+
+# 调试特定测试
+npm run test:watch -- --testNamePattern="rag"
+npm run test:e2e:ui -- tests/e2e/chat.spec.js
+```
+
+### 测试覆盖率和报告
+```bash
+# 生成覆盖率报告
+npm run test -- --coverage
+
+# 详细测试输出
+npm run test -- --verbose
+
+# 在特定浏览器中测试
+npm run test:e2e -- --project=firefox
+npm run test:e2e -- --project=webkit
+```
+
 ## Memory Log
 - `2025-01-29`: 完成ChatSVTR codebase全面分析，更新CLAUDE.md包含完整架构文档
 - `Phase 1 Completed`: 用户体验核心优化完成，包括RAG系统、性能优化、测试框架
 - `Key Achievement`: 37.9KB资源优化，Lighthouse 90+分性能评分
+- `2025-08-06`: 增强CLAUDE.md测试命令部分，添加单个测试运行指南
