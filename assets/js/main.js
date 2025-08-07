@@ -82,6 +82,15 @@
       const isMobile = window.innerWidth <= 768;
       const isFirstVisit = !localStorage.getItem('sidebarAutoClosed');
 
+      // PC端：保持侧边栏打开状态，显示完整导航
+      if (!isMobile) {
+        if (!this.isSidebarOpen()) {
+          this.openSidebar();
+        }
+        return;
+      }
+
+      // 移动端：自动关闭侧边栏节省屏幕空间
       if (this.isSidebarOpen() && (isMobile || isFirstVisit)) {
         setTimeout(() => {
           this.closeSidebar();

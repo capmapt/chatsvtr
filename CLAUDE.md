@@ -135,26 +135,57 @@ npm run deploy:cloudflare # Cloudflare部署
 
 ## 数据同步系统 (Data Synchronization)
 
+### 智能同步架构 (2025年8月升级)
+- **智能策略**：`scripts/smart-sync-strategy.js` - 自动分析数据质量，智能选择同步策略
+- **完整管理器**：`scripts/complete-sync-manager.js` - 带备份验证的完整同步流程
+- **增强版核心**：`scripts/enhanced-feishu-sync-v2.js` - 252个完整节点，6级深度递归获取
+- **质量验证**：`scripts/quick-sync-test.js` - 快速数据质量检查和RAG测试
+
 ### 飞书API集成
-- **核心脚本**：`scripts/improved-feishu-sync.js`
-- **配置信息**：
+- **应用信息**：
   - App ID: `cli_a8e2014cbe7d9013`
   - Space ID: `7321328173944340484`
-  - 同步密码：`svtrai2025`
-- **同步内容**：AI周报、交易精选数据、知识库内容
-- **数据存储**：`assets/data/` 目录下的JSON文件
+  - API版本：V2 Enhanced (支持完整递归内容获取)
+- **同步覆盖**：
+  - ✅ 252个完整节点内容 (6级层级深度)
+  - ✅ AI创投库全部数据表格和文档
+  - ✅ AI创投会所有活动记录和分享内容  
+  - ✅ AI创投营项目信息和孵化内容
+  - ✅ 会员专区权益和服务详情
+  - ✅ 研究报告、市场分析、公司深度调研
+- **数据存储**：`assets/data/rag/enhanced-feishu-full-content.json`
 
-### 同步命令
+### 同步命令体系
 ```bash
-npm run sync              # 基础同步飞书数据
-npm run sync:weekly       # 仅同步AI周报
-npm run sync:trading      # 仅同步交易精选
-npm run sync:daily        # 日常同步任务（使用improved-feishu-sync.js）
-npm run sync:full         # 完整同步（使用improved-feishu-sync.js）
+# 智能同步（推荐）- 自动选择最优策略
+npm run sync              # 智能同步策略，自动判断是否需要重新同步
+npm run sync:smart        # 同上，智能分析数据质量后执行相应操作
+
+# 完整同步管理
+npm run sync:complete     # 完整同步管理器（备份+同步+验证+报告）
+npm run sync:enhanced     # 增强版直接同步（252个节点完整获取）
+
+# 数据质量检查
+npm run sync:test         # 快速数据质量检查和RAG系统测试
+npm run sync:verify       # 同上，验证现有数据是否满足要求
+
+# 日常和定时任务
+npm run sync:daily        # 日常定时同步
+npm run sync:full         # 完整同步（兜底）
 npm run sync:webhook      # Webhook触发同步
-npm run sync:test         # 同步功能测试
-npm run update            # 手动更新（manual-update.js）
+npm run update            # 手动更新触发智能同步
+
+# RAG系统集成
+npm run rag:sync          # RAG系统数据同步（使用智能策略）
+npm run rag:setup         # 完整RAG环境设置（sync + build + test）
+npm run chat:test         # 聊天功能测试（验证RAG集成）
 ```
+
+### 数据质量保证
+- **自动质量检查**：节点数量≥200，内容覆盖率≥60%，平均长度≥800字符
+- **智能决策**：根据数据年龄、质量评分自动选择同步策略
+- **备份机制**：同步前自动备份现有数据，失败时可自动回滚
+- **验证报告**：每次同步后生成质量报告和下次同步建议
 
 ## AI与RAG系统 (AI & RAG Integration)
 

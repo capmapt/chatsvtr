@@ -470,14 +470,19 @@ export class HybridRAGService {
   }
 
   /**
-   * 加载飞书知识库数据
+   * 加载飞书知识库数据 - 优先使用完整同步数据
    */
   private async loadFeishuKnowledgeBase() {
     try {
-      // 优先读取真实内容数据
-      let response = await fetch('/assets/data/rag/real-feishu-content.json').catch(() => null);
+      // 第一优先级：完整增强版同步数据
+      let response = await fetch('/assets/data/rag/enhanced-feishu-full-content.json').catch(() => null);
       
-      // 如果真实内容不可用，回退到改进的知识库
+      // 第二优先级：真实内容数据
+      if (!response || !response.ok) {
+        response = await fetch('/assets/data/rag/real-feishu-content.json').catch(() => null);
+      }
+      
+      // 第三优先级：改进的知识库（向后兼容）
       if (!response || !response.ok) {
         response = await fetch('/assets/data/rag/improved-feishu-knowledge-base.json');
       }
@@ -489,8 +494,35 @@ export class HybridRAGService {
       const data = await response.json();
       const documents = [];
       
+      // 处理增强版完整同步数据格式（最高优先级）
+      if (data.nodes && Array.isArray(data.nodes) && data.summary?.apiVersion === 'v2_enhanced') {
+        console.log('✅ 使用增强版完整同步数据 (V2)');
+        console.log(`📊 节点数量: ${data.nodes.length}, 平均内容长度: ${data.summary.avgContentLength}字符`);
+        
+        data.nodes.forEach(node => {
+          // 只处理有实际内容的节点
+          if (node.content && node.content.trim().length > 20) {
+            documents.push({
+              id: node.id,
+              content: node.content,
+              title: node.title,
+              type: node.type || 'wiki_node',
+              source: node.source || 'SVTR飞书知识库',
+              keywords: node.searchKeywords || [],
+              ragScore: node.ragScore || 0,
+              verified: true, // 增强版数据已验证
+              lastUpdated: node.lastUpdated,
+              level: node.level || 0,
+              nodeToken: node.nodeToken,
+              contentLength: node.contentLength || 0,
+              docType: node.docType || node.objType,
+              semanticTags: node.semanticTags || []
+            });
+          }
+        });
+      }
       // 处理真实内容格式
-      if (data.documents && Array.isArray(data.documents) && data.summary?.syncMethod === 'real_content_api') {
+      else if (data.documents && Array.isArray(data.documents) && data.summary?.syncMethod === 'real_content_api') {
         console.log('✅ 使用真实飞书API内容');
         data.documents.forEach(doc => {
           documents.push({
@@ -506,7 +538,7 @@ export class HybridRAGService {
           });
         });
       } 
-      // 处理改进知识库格式（兼容性）
+      // 处理改进知识库格式（向后兼容）
       else if (data.documents && Array.isArray(data.documents)) {
         console.log('⚠️ 使用备用知识库内容');
         data.documents.forEach(doc => {

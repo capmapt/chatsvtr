@@ -284,15 +284,38 @@ header {
   left: 0; 
   bottom: 0; 
   width: 240px; /* 优化：从260px减少到240px，提升桌面端比例 */
-  padding: 80px 20px 20px;
+  padding: 80px 20px 30px; /* 增加底部padding确保内容不被截断 */
   background: linear-gradient(135deg, #FFE0B2, #FFF3D6);
   backdrop-filter: blur(8px);
   border-right: 1px solid var(--border-color);
   overflow-y: auto;
+  overflow-x: hidden; /* 防止水平滚动 */
   transform: translateX(-100%);
   transition: transform var(--transition-fast);
   z-index: 1050;
   font-family: "Helvetica Neue", Arial, sans-serif;
+  /* 确保滚动条样式 */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(250, 140, 50, 0.3) transparent;
+}
+
+/* WebKit浏览器滚动条样式 */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(250, 140, 50, 0.3);
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(250, 140, 50, 0.5);
 }
 
 .sidebar.open { 
