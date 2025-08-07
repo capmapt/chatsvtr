@@ -17,8 +17,13 @@ class SVTRChat {
   }
 
   detectProductionEnvironment() {
-    // 检测是否在生产环境（GitHub Pages等静态托管）
-    return window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+    // 检测是否在生产环境
+    // Wrangler开发环境（localhost:3000）也支持真实AI API
+    const isWranglerDev = window.location.hostname === 'localhost' && window.location.port === '3000';
+    const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+    
+    // Wrangler开发环境或真正的生产环境都使用真实API
+    return isProduction || isWranglerDev;
   }
 
   async tryRealAPIFirst(message, loadingMessage) {

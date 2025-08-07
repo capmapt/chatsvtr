@@ -164,9 +164,10 @@ npm run update            # 手动更新（manual-update.js）
   1. 向量检索（Cloudflare Vectorize + OpenAI embedding）
   2. 关键词搜索（基于飞书知识库）
   3. 语义模式匹配（fallback机制）
-- **AI模型支持**：
-  - 优先：Cloudflare Workers AI
-  - 备用：OpenAI API
+- **AI模型支持**（2025年8月更新）：
+  - 主力：OpenAI GPT-OSS-120B（117B参数开源模型）
+  - 轻量级：OpenAI GPT-OSS-20B（21B参数开源模型）
+  - 备用：Meta Llama 3.3、Qwen 2.5、DeepSeek R1
   - 智能演示：本地语义匹配
 
 ### RAG数据管理
@@ -610,3 +611,4 @@ npm run test:e2e -- --project=webkit
 - `Phase 1 Completed`: 用户体验核心优化完成，包括RAG系统、性能优化、测试框架
 - `Key Achievement`: 37.9KB资源优化，Lighthouse 90+分性能评分
 - `2025-08-06`: 增强CLAUDE.md测试命令部分，添加单个测试运行指南
+- `2025-08-07`: 🚀 升级AI模型架构 - 优先使用OpenAI GPT-OSS开源模型（120B/20B），提升推理和代码处理能力

@@ -5,7 +5,7 @@
 
 import { createOptimalRAGService } from '../lib/hybrid-rag-service';
 
-// 简化的AI创投系统提示词 - 避免重复分析
+// AI创投系统提示词 - 使用OpenAI开源模型优化
 const BASE_SYSTEM_PROMPT = `你是SVTR.AI的AI创投分析师，专注于为用户提供准确、有用的AI创投信息。
 
 核心要求：
@@ -19,7 +19,7 @@ SVTR.AI平台信息：
 • 提供AI周报、投资分析和市场洞察
 • 每日更新最新AI创投动态
 
-请直接回答用户问题，提供有价值的信息。`;
+当前使用OpenAI GPT-OSS开源模型，具备强大的推理和分析能力。请直接回答用户问题，提供有价值的信息。`;
 
 /**
  * 生成增强的系统提示词
@@ -94,22 +94,47 @@ export async function onRequestPost(context: any): Promise<Response> {
       'X-Accel-Buffering': 'no',
     });
 
-    // 智能模型选择策略 - 避免思考过程显示
+    // 智能模型选择策略 - 优先使用OpenAI开源模型
     const modelPriority = [
-      '@cf/meta/llama-3.3-70b-instruct',               // 主力模型，无思考过程
-      '@cf/qwen/qwen2.5-coder-32b-instruct',          // 代码专用
-      '@cf/qwen/qwen1.5-14b-chat-awq',                // 稳定fallback
-      '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b'  // 备用推理模型
+      '@cf/openai/gpt-oss-120b',                      // OpenAI最新开源大模型 (117B参数)
+      '@cf/openai/gpt-oss-20b',                       // OpenAI轻量级开源模型 (21B参数)
+      '@cf/meta/llama-3.3-70b-instruct',              // Meta Llama备用模型
+      '@cf/qwen/qwen2.5-coder-32b-instruct',          // 代码专用模型
+      '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b', // DeepSeek推理模型
+      '@cf/qwen/qwen1.5-14b-chat-awq'                 // 稳定fallback
     ];
     
-    // 默认使用Llama模型（不会显示思考过程）
-    let selectedModel = '@cf/meta/llama-3.3-70b-instruct';
+    // 默认使用OpenAI GPT-OSS 120B模型
+    let selectedModel = '@cf/openai/gpt-oss-120b';
     
-    if (userQuery.toLowerCase().includes('code') || 
-        userQuery.toLowerCase().includes('代码') ||
-        userQuery.toLowerCase().includes('programming') ||
-        userQuery.toLowerCase().includes('编程')) {
-      selectedModel = '@cf/qwen/qwen2.5-coder-32b-instruct';
+    // 智能模型选择逻辑 - 按优先级判断
+    const isCodeRelated = userQuery.toLowerCase().includes('code') || 
+                         userQuery.toLowerCase().includes('代码') ||
+                         userQuery.toLowerCase().includes('programming') ||
+                         userQuery.toLowerCase().includes('编程');
+    
+    const isComplexQuery = userQuery.includes('复杂') || 
+                          userQuery.includes('详细') ||
+                          userQuery.includes('分析') ||
+                          userQuery.length > 50;
+    
+    const isSimpleQuery = userQuery.length < 30 && 
+                         !isComplexQuery && 
+                         !isCodeRelated &&
+                         !userQuery.includes('投资') &&
+                         !userQuery.includes('融资') &&
+                         !userQuery.includes('公司');
+    
+    if (isCodeRelated) {
+      selectedModel = '@cf/openai/gpt-oss-120b';
+      console.log('🔧 检测到代码相关问题，使用OpenAI大模型');
+    } else if (isSimpleQuery) {
+      selectedModel = '@cf/openai/gpt-oss-20b';
+      console.log('💡 简单问题，使用OpenAI轻量级模型优化响应速度');
+    } else {
+      // 默认使用OpenAI大模型处理AI创投相关复杂问题
+      selectedModel = '@cf/openai/gpt-oss-120b';
+      console.log('🚀 使用OpenAI大模型处理专业问题');
     }
     
     // 模型调用，失败时使用fallback
@@ -118,13 +143,41 @@ export async function onRequestPost(context: any): Promise<Response> {
       try {
         console.log('🧠 尝试模型: ' + model);
         
-        response = await env.AI.run(model, {
-          messages: messagesWithEnhancedSystem,
-          stream: true,
-          max_tokens: 4096,
-          temperature: 0.8,
-          top_p: 0.95,
-        });
+        console.log('📋 调用参数准备中...');
+        
+        // OpenAI GPT-OSS模型使用不同的API格式
+        if (model.includes('@cf/openai/gpt-oss')) {
+          console.log('🔄 使用OpenAI专用格式');
+          
+          // 提取系统消息作为instructions
+          const systemMessage = messagesWithEnhancedSystem.find(m => m.role === 'system');
+          const conversationMessages = messagesWithEnhancedSystem.filter(m => m.role !== 'system');
+          
+          // OpenAI模型使用input参数，支持消息数组格式
+          response = await env.AI.run(model, {
+            instructions: systemMessage ? systemMessage.content : BASE_SYSTEM_PROMPT,
+            input: conversationMessages, // 直接传递消息数组
+            stream: true,
+            max_tokens: 4096,
+            temperature: 0.8
+          });
+          
+          console.log('✅ OpenAI格式调用完成');
+          
+        } else {
+          console.log('🔄 使用标准messages格式');
+          
+          // 其他模型使用标准messages格式
+          response = await env.AI.run(model, {
+            messages: messagesWithEnhancedSystem,
+            stream: true,
+            max_tokens: 4096,
+            temperature: 0.8,
+            top_p: 0.95,
+          });
+          
+          console.log('✅ 标准格式调用完成');
+        }
         
         console.log('✅ 成功使用模型: ' + model);
         break;

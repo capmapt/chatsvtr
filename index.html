@@ -379,11 +379,15 @@
   <script src="assets/js/main-optimized.js" defer></script>
   <!-- Native Chat Component -->
   <link rel="stylesheet" href="assets/css/chat-optimized.css">
-  <script src="assets/js/chat-optimized.js" defer></script>
+  <script src="assets/js/chat-optimized.js?v=20250807-openai" defer></script>
   
   <!-- Service Worker 注册 -->
   <script>
-    if ('serviceWorker' in navigator) {
+    // 在开发环境禁用Service Worker以避免缓存问题
+    const isLocalDev = window.location.hostname === 'localhost' && window.location.port === '3000';
+    
+    if ('serviceWorker' in navigator && !isLocalDev) {
+      // 只在生产环境启用Service Worker
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
           .then((registration) => {
@@ -398,6 +402,18 @@
             console.log('[SW] 注册失败:', error);
           });
       });
+    } else if (isLocalDev) {
+      console.log('[SW] 开发环境已禁用Service Worker');
+      
+      // 在开发环境清理已存在的Service Worker
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          registrations.forEach(registration => {
+            console.log('[SW] 清理开发环境Service Worker:', registration.scope);
+            registration.unregister();
+          });
+        });
+      }
     }
   </script>
 </body>
