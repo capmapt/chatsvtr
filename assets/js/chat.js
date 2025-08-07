@@ -1,5 +1,5 @@
 /**
- * SVTR.AI Native Chat Component
+ * SVTR Native Chat Component
  * 硅谷科技评论原生聊天组件
  */
 
@@ -141,7 +141,7 @@ class SVTRChat {
     const fallbackTranslations = {
       'zh-CN': {
         'chat_input_placeholder': '问我关于AI创投的任何问题...',
-        'chat_welcome_title': '您好！我是SVTR.AI助手，专注于AI创投生态系统分析。',
+        'chat_welcome_title': '您好！我是凯瑞(Kerry)，SVTR的AI助手，专注于AI创投生态系统分析。',
         'chat_welcome_content': `我可以为您提供：
 • 最新AI创投市场动态
 • 投资机构和初创公司分析  
@@ -150,14 +150,14 @@ class SVTRChat {
 
 请问您想了解什么？`,
         'chat_user_name': '您',
-        'chat_ai_name': 'SVTR.AI',
+        'chat_ai_name': '凯瑞 (Kerry)',
         'chat_thinking': '正在分析',
         'chat_share_btn': '分享',
         'chat_clear_btn': '清空'
       },
       'en': {
         'chat_input_placeholder': 'Ask me anything about AI venture capital...',
-        'chat_welcome_title': 'Hello! I\'m SVTR.AI assistant, specializing in AI venture capital ecosystem analysis.',
+        'chat_welcome_title': 'Hello! I\'m Kerry, SVTR assistant, specializing in AI venture capital ecosystem analysis.',
         'chat_welcome_content': `I can provide you with:
 • Latest AI VC market dynamics
 • Investment firms and startup analysis
@@ -166,7 +166,7 @@ class SVTRChat {
 
 What would you like to know?`,
         'chat_user_name': 'You',
-        'chat_ai_name': 'SVTR.AI',
+        'chat_ai_name': 'Kerry',
         'chat_thinking': 'Analyzing',
         'chat_share_btn': 'Share',
         'chat_clear_btn': 'Clear'
@@ -275,7 +275,7 @@ What would you like to know?`,
     if (lang === 'en') {
       return {
         investment: [
-          `Based on SVTR.AI's latest analysis, AI venture capital is experiencing unprecedented growth:
+          `Based on SVTR's latest analysis, AI venture capital is experiencing unprecedented growth:
 
 **Key Investment Trends**:
 • **Funding Volume**: $50B+ invested in AI startups in 2024
@@ -306,7 +306,7 @@ The market shows continued investor confidence in AI transformation across indus
 
 Current market dynamics favor companies with proven revenue traction and clear paths to profitability.`,
 
-          `SVTR.AI's investment database reveals shifting capital allocation patterns:
+          `SVTR's investment database reveals shifting capital allocation patterns:
 
 **Sector Rotation**:
 • **From** Consumer AI → **To** Enterprise Solutions
@@ -324,7 +324,7 @@ Smart money is focusing on defensible AI applications with clear ROI metrics.`
         ],
 
         startup: [
-          `SVTR.AI tracks 10,761 AI companies globally. Here's the current startup landscape:
+          `SVTR tracks 10,761 AI companies globally. Here's the current startup landscape:
 
 **Emerging AI Unicorns**:
 • **Enterprise AI**: Scale AI, Databricks leading with $1B+ valuations
@@ -374,7 +374,7 @@ The winners are building sustainable competitive advantages beyond just AI capab
 
 The market is maturing toward sustainable, revenue-generating AI businesses with clear unit economics.`,
 
-          `SVTR.AI's trend analysis highlights shifting investor priorities:
+          `SVTR's trend analysis highlights shifting investor priorities:
 
 **Investment Evolution**:
 • **2023**: Generative AI hype cycle peaks
@@ -397,7 +397,7 @@ Smart investors are positioning for the next phase of AI commercialization.`
         ],
 
         technology: [
-          `Technical analysis from SVTR.AI's research team:
+          `Technical analysis from SVTR's research team:
 
 **Core Technology Trends**:
 • **Large Language Models**: GPT-5, Claude-3, Gemini advancing reasoning capabilities
@@ -431,7 +431,7 @@ The next wave of AI investing will focus on companies solving real business prob
         ],
 
         general: [
-          `Welcome to SVTR.AI's comprehensive AI venture capital analysis platform:
+          `Welcome to SVTR's comprehensive AI venture capital analysis platform:
 
 **Platform Overview**:
 • **Community**: 121,884+ AI professionals and investors globally
@@ -450,7 +450,7 @@ The next wave of AI investing will focus on companies solving real business prob
 • Enterprise AI adoption rates exceeding 80% among Fortune 500
 • Regulatory frameworks driving AI safety and governance investments`,
 
-          `SVTR.AI provides institutional-grade AI investment intelligence:
+          `SVTR provides institutional-grade AI investment intelligence:
 
 **Market Intelligence**:
 • Real-time funding announcements and valuation data
@@ -499,7 +499,7 @@ Our platform serves as the definitive source for AI investment market intelligen
     } else {
       return {
         investment: [
-          `基于SVTR.AI最新分析，AI创投正经历前所未有的增长：
+          `基于SVTR最新分析，AI创投正经历前所未有的增长：
 
 **核心投资趋势**：
 • **资金规模**：2024年AI初创公司融资超过500亿美元
@@ -532,7 +532,7 @@ Our platform serves as the definitive source for AI investment market intelligen
         ],
 
         startup: [
-          `SVTR.AI追踪全球10,761家AI公司。当前初创企业格局：
+          `SVTR追踪全球10,761家AI公司。当前初创企业格局：
 
 **新兴AI独角兽**：
 • **企业级AI**：Scale AI、Databricks等以10亿美元+估值领先
@@ -566,7 +566,7 @@ Our platform serves as the definitive source for AI investment market intelligen
         ],
 
         trend: [
-          `SVTR.AI分析的当前AI创投趋势揭示市场演进模式：
+          `SVTR分析的当前AI创投趋势揭示市场演进模式：
 
 **市场动态**：
 • **整合阶段**：融资轮次减少但规模更大（5000万美元+成为标准）
@@ -582,7 +582,7 @@ Our platform serves as the definitive source for AI investment market intelligen
 
 市场正向具有清晰单位经济模型的可持续、有收入的AI业务成熟。`,
 
-          `SVTR.AI趋势分析突出投资者优先级的转变：
+          `SVTR趋势分析突出投资者优先级的转变：
 
 **投资演进**：
 • **2023年**：生成式AI炒作周期达到顶峰
@@ -605,7 +605,7 @@ Our platform serves as the definitive source for AI investment market intelligen
         ],
 
         technology: [
-          `SVTR.AI技术研究团队分析：
+          `SVTR技术研究团队分析：
 
 **核心技术趋势**：
 • **大语言模型**：GPT-5、Claude-3、Gemini推进推理能力
@@ -639,7 +639,7 @@ Our platform serves as the definitive source for AI investment market intelligen
         ],
 
         general: [
-          `欢迎来到SVTR.AI全面的AI创投分析平台：
+          `欢迎来到SVTR全面的AI创投分析平台：
 
 **平台概况**：
 • **社区规模**：121,884+全球AI专业人士和投资者
@@ -658,7 +658,7 @@ Our platform serves as the definitive source for AI investment market intelligen
 • 财富500强企业AI采用率超过80%
 • 监管框架推动AI安全和治理投资`,
 
-          `SVTR.AI提供机构级AI投资情报：
+          `SVTR提供机构级AI投资情报：
 
 **市场情报**：
 • 实时融资公告和估值数据
@@ -828,8 +828,8 @@ Our platform serves as the definitive source for AI investment market intelligen
     if (this.isProduction) {
       const lang = this.getCurrentLang();
       const demoNote = lang === 'en' 
-        ? '\n\n*This is an intelligent demo showcasing SVTR.AI\'s analysis capabilities. Ask me about AI venture capital trends, companies, or investment insights!*'
-        : '\n\n*这是SVTR.AI分析能力的智能演示。请询问AI创投趋势、公司信息或投资洞察！*';
+        ? '\n\n*This is an intelligent demo showcasing SVTR\'s analysis capabilities. Ask me about AI venture capital trends, companies, or investment insights!*'
+        : '\n\n*这是SVTR分析能力的智能演示。请询问AI创投趋势、公司信息或投资洞察！*';
       content += demoNote;
     }
     
@@ -863,8 +863,9 @@ Our platform serves as the definitive source for AI investment market intelligen
     this.messages.push(userMessage);
     this.renderMessage(userMessage);
     
-    // 清空输入框
+    // 清空输入框并重置高度
     input.value = '';
+    input.style.height = '44px'; // 重置textarea高度
     
     // 显示加载状态
     this.setLoading(true);
@@ -1033,7 +1034,7 @@ Our platform serves as the definitive source for AI investment market intelligen
     
     const isUser = message.role === 'user';
     const avatarText = isUser ? 'U' : 'AI';
-    const name = isUser ? '您' : 'SVTR.AI';
+    const name = isUser ? '您' : '凯瑞 (Kerry)';
     
     messageElement.innerHTML = `
       <div class="message-header">
@@ -1120,6 +1121,12 @@ Our platform serves as the definitive source for AI investment market intelligen
       sendBtn.innerHTML = '<span class="loading-spinner">⟳</span>';
     } else {
       sendBtn.innerHTML = '<span class="send-icon">↑</span>';
+      // 加载完成后自动重新聚焦输入框，提升用户体验
+      setTimeout(() => {
+        if (input && !input.disabled) {
+          input.focus();
+        }
+      }, 100); // 延迟100ms确保DOM完全更新
     }
   }
 
@@ -1137,7 +1144,7 @@ Our platform serves as the definitive source for AI investment market intelligen
     
     if (!lastUserMessage || !lastAssistantMessage) return;
     
-    const shareContent = `💡 来自SVTR.AI的AI创投洞察：
+    const shareContent = `💡 来自SVTR的AI创投洞察：
 
 🔍 问题：${lastUserMessage.content}
 
@@ -1145,7 +1152,7 @@ Our platform serves as the definitive source for AI investment market intelligen
 
 --
 生成于 ${new Date().toLocaleString('zh-CN')}
-来源：SVTR.AI (https://svtr.ai)`;
+来源：SVTR (https://svtr.ai)`;
 
     // 复制到剪贴板
     navigator.clipboard.writeText(shareContent).then(() => {
@@ -1206,8 +1213,8 @@ Our platform serves as the definitive source for AI investment market intelligen
       if (this.isProduction) {
         const lang = this.getCurrentLang();
         const demoNote = lang === 'en' 
-          ? '\n\n*This is an intelligent demo showcasing SVTR.AI\'s analysis capabilities. Ask me about AI venture capital trends, companies, or investment insights!*'
-          : '\n\n*这是SVTR.AI分析能力的智能演示。请询问AI创投趋势、公司信息或投资洞察！*';
+          ? '\n\n*This is an intelligent demo showcasing SVTR\'s analysis capabilities. Ask me about AI venture capital trends, companies, or investment insights!*'
+          : '\n\n*这是SVTR分析能力的智能演示。请询问AI创投趋势、公司信息或投资洞察！*';
         content += demoNote;
       }
       

@@ -1,7 +1,11 @@
 /**
  * SVTR.AI 混合RAG服务
  * 结合多种检索策略，实现成本优化和质量保证
+ * 增强版：集成查询扩展和语义优化
  */
+
+import { createQueryExpansionService, QueryExpansionService, QueryType } from './query-expansion-service';
+import { createSemanticCacheService, SemanticCacheService } from './semantic-cache-service';
 
 interface HybridRAGConfig {
   useOpenAI: boolean;
@@ -15,11 +19,15 @@ export class HybridRAGService {
   private vectorize: any;
   private ai: any;
   private openaiApiKey?: string;
+  private queryExpansionService: QueryExpansionService;
+  private cacheService: SemanticCacheService;
 
-  constructor(vectorize: any, ai: any, openaiApiKey?: string) {
+  constructor(vectorize: any, ai: any, openaiApiKey?: string, kvNamespace?: any) {
     this.vectorize = vectorize;
     this.ai = ai;
     this.openaiApiKey = openaiApiKey;
+    this.queryExpansionService = createQueryExpansionService();
+    this.cacheService = createSemanticCacheService(kvNamespace);
     
     // 智能配置：根据可用资源自动选择策略
     this.config = {
@@ -31,27 +39,97 @@ export class HybridRAGService {
   }
 
   /**
-   * 智能检索：多策略并行
+   * 智能检索：多策略并行 + 查询扩展增强 + 语义缓存
    */
   async performIntelligentRAG(query: string, options: any = {}) {
+    const startTime = Date.now();
+    console.log('🔍 开始智能RAG检索 (增强版 + 缓存)');
+    
+    // 1. 查询扩展和分析
+    const queryExpansion = this.queryExpansionService.expandQuery(query, {
+      includeContext: true,
+      maxExpansions: 8,
+      confidenceThreshold: 0.4
+    });
+    
+    console.log(`📈 查询扩展完成: 类型=${queryExpansion.queryType}, 置信度=${(queryExpansion.confidence * 100).toFixed(1)}%`);
+    
+    // 2. 检查语义缓存
+    const cacheHit = await this.cacheService.checkCache(query, queryExpansion.queryType, {
+      useSemanticMatch: true,
+      maxCandidates: 5
+    });
+    
+    if (cacheHit && cacheHit.confidence >= 0.8) {
+      console.log(`⚡ 缓存命中 (${cacheHit.isExact ? '精确' : '语义'}): ${(cacheHit.confidence * 100).toFixed(1)}%`);
+      return {
+        ...cacheHit.entry.results,
+        queryExpansion,
+        searchQuery: queryExpansion.expandedQuery,
+        fromCache: true,
+        cacheHit: {
+          similarity: cacheHit.similarity,
+          isExact: cacheHit.isExact,
+          responseTime: Date.now() - startTime
+        },
+        enhancedFeatures: {
+          queryExpansion: true,
+          semanticCaching: true,
+          cacheAccelerated: true
+        }
+      };
+    }
+    
+    // 3. 缓存未命中，执行完整检索
+    console.log('💫 执行完整RAG检索...');
+    const searchQuery = queryExpansion.expandedQuery;
     const strategies = [];
     
     // 策略1: 向量检索（如果可用）
     if (this.config.useOpenAI || this.config.useCloudflareAI) {
-      strategies.push(this.vectorSearch(query, options));
+      strategies.push(this.vectorSearch(searchQuery, { ...options, originalQuery: query, expansion: queryExpansion }));
     }
     
-    // 策略2: 关键词检索（总是可用）
-    strategies.push(this.keywordSearch(query, options));
+    // 策略2: 增强关键词检索
+    strategies.push(this.enhancedKeywordSearch(searchQuery, queryExpansion, options));
     
-    // 策略3: 模糊语义匹配
-    strategies.push(this.semanticPatternMatch(query, options));
+    // 策略3: 语义模式匹配
+    strategies.push(this.semanticPatternMatch(searchQuery, { ...options, queryType: queryExpansion.queryType }));
     
     // 并行执行所有策略
     const results = await Promise.allSettled(strategies);
     
     // 合并和排序结果
-    return this.mergeResults(results, query);
+    const mergedResults = this.mergeResults(results, query);
+    
+    // 4. 构建最终结果
+    const finalResults = {
+      ...mergedResults,
+      queryExpansion,
+      searchQuery,
+      fromCache: false,
+      responseTime: Date.now() - startTime,
+      enhancedFeatures: {
+        queryExpansion: true,
+        semanticEnhancement: true,
+        multiStrategyRetrieval: true,
+        semanticCaching: true
+      }
+    };
+    
+    // 5. 存储到缓存（如果结果质量足够好）
+    if (finalResults.confidence >= 0.6 && finalResults.matches?.length > 0) {
+      await this.cacheService.storeInCache(
+        query,
+        finalResults,
+        {
+          queryType: queryExpansion.queryType,
+          confidence: finalResults.confidence
+        }
+      );
+    }
+    
+    return finalResults;
   }
 
   /**
@@ -96,6 +174,48 @@ export class HybridRAGService {
       })),
       source: 'keyword'
     };
+  }
+
+  /**
+   * 增强关键词检索（使用查询扩展）
+   */
+  private async enhancedKeywordSearch(expandedQuery: string, queryExpansion: any, options: any) {
+    try {
+      // 提取原始和扩展的关键词
+      const originalKeywords = this.extractKeywords(queryExpansion.originalQuery);
+      const expandedKeywords = this.extractKeywords(expandedQuery);
+      const synonyms = queryExpansion.synonyms || [];
+      
+      // 合并所有搜索词，带权重
+      const weightedKeywords = [
+        ...originalKeywords.map(k => ({ term: k, weight: 1.0, type: 'original' })),
+        ...expandedKeywords.filter(k => !originalKeywords.includes(k)).map(k => ({ term: k, weight: 0.8, type: 'expanded' })),
+        ...synonyms.slice(0, 5).map(k => ({ term: k, weight: 0.6, type: 'synonym' }))
+      ];
+
+      console.log(`🔍 增强关键词检索: ${weightedKeywords.length} 个搜索词`);
+
+      // 查找匹配
+      const matches = await this.findWeightedKeywordMatches(weightedKeywords);
+      
+      // 基于查询类型调整评分
+      const typeAdjustedMatches = this.adjustScoresByQueryType(matches, queryExpansion.queryType);
+      
+      return {
+        matches: typeAdjustedMatches.map(match => ({
+          ...match,
+          score: match.keywordScore,
+          source: 'enhanced_keyword',
+          matchDetails: match.matchDetails
+        })),
+        source: 'enhanced_keyword',
+        searchTerms: weightedKeywords.length
+      };
+
+    } catch (error) {
+      console.log('增强关键词检索失败，回退到基础检索');
+      return this.keywordSearch(queryExpansion.originalQuery, options);
+    }
   }
 
   /**
@@ -324,27 +444,23 @@ export class HybridRAGService {
   }
 
   /**
-   * 获取存储的文档（从飞书同步数据）
+   * 获取存储的文档（仅从飞书真实同步数据）
    */
   private async getStoredDocuments() {
     try {
-      // 尝试从多个数据源读取
+      // 只从飞书知识库读取真实数据
       const documents = [];
       
-      // 1. AI周报数据
+      // 1. 飞书知识库数据
       try {
-        const weeklyData = await this.loadWeeklyData();
-        documents.push(...weeklyData);
-      } catch (e) { console.log('周报数据读取失败:', e.message); }
+        const feishuData = await this.loadFeishuKnowledgeBase();
+        documents.push(...feishuData);
+      } catch (e) { console.log('飞书知识库数据读取失败:', e.message); }
       
-      // 2. 交易精选数据
-      try {
-        const tradingData = await this.loadTradingData();
-        documents.push(...tradingData);
-      } catch (e) { console.log('交易数据读取失败:', e.message); }
-      
-      // 3. 预设知识库
-      documents.push(...this.getDefaultKnowledgeBase());
+      // 2. 预设知识库作为fallback
+      if (documents.length === 0) {
+        documents.push(...this.getDefaultKnowledgeBase());
+      }
       
       return documents;
     } catch (error) {
@@ -354,77 +470,65 @@ export class HybridRAGService {
   }
 
   /**
-   * 加载AI周报数据
+   * 加载飞书知识库数据
    */
-  private async loadWeeklyData() {
-    // 这里应该从实际的数据文件或API读取
-    // 暂时返回模拟数据
-    return [
-      {
-        id: 'weekly-115',
-        content: `AI周报第115期：2024年AI创投市场出现显著变化，企业级AI应用获得更多投资关注。主要趋势包括：1）从消费AI转向企业解决方案；2）基础设施投资持续增长；3）AI安全和治理工具需求上升。重点公司：Anthropic获得60亿美元D轮融资，Scale AI准备IPO，Perplexity企业级搜索获得2.5亿美元B轮。市场数据：2024年Q4企业级AI工具融资额达到78亿美元，同比增长156%。投资热点：AI Agent、多模态AI、边缘计算、数据基础设施。`,
-        title: 'AI周报第115期',
-        type: 'weekly',
-        source: '飞书知识库',
-        keywords: ['AI创投', '企业级AI', '投资趋势', 'Anthropic', 'Scale AI', 'Perplexity', '78亿美元', 'AI Agent']
-      },
-      {
-        id: 'weekly-114', 
-        content: `AI周报第114期：生成式AI市场趋于成熟，投资者更关注商业模式和盈利能力。关键观察：1）模型公司估值回归理性；2）应用层创新加速；3）数据护城河价值凸显。投资亮点：多模态AI应用获得重点关注，边缘AI部署需求增长，AI基础设施持续升温。具体数据：OpenAI ARR突破34亿美元，Anthropic月活用户增长300%，AI基础设施类公司平均估值倍数从60x降至25x。`,
-        title: 'AI周报第114期',
-        type: 'weekly',
-        source: '飞书知识库',
-        keywords: ['生成式AI', '商业模式', '多模态AI', '边缘AI', '数据护城河', 'OpenAI', '34亿美元ARR']
-      },
-      {
-        id: 'weekly-116',
-        content: `AI周报第116期：2025年AI创投新趋势浮现，Agent应用成为最大投资风口。核心观察：1）AI Agent市场预计2025年达到250亿美元；2）企业级Agent部署率提升至45%；3）垂直领域Agent专业化趋势明显。重点交易：Adept获得3.5亿美元B轮，Cognition AI估值20亿美元，多家Agent初创公司完成大额融资。技术突破：多Agent协作、工具调用优化、长期记忆管理成为核心竞争力。`,
-        title: 'AI周报第116期',
-        type: 'weekly', 
-        source: '飞书知识库',
-        keywords: ['AI Agent', '250亿美元', 'Adept', 'Cognition AI', '3.5亿美元', '20亿美元', '多Agent协作']
+  private async loadFeishuKnowledgeBase() {
+    try {
+      // 优先读取真实内容数据
+      let response = await fetch('/assets/data/rag/real-feishu-content.json').catch(() => null);
+      
+      // 如果真实内容不可用，回退到改进的知识库
+      if (!response || !response.ok) {
+        response = await fetch('/assets/data/rag/improved-feishu-knowledge-base.json');
       }
-    ];
-  }
-
-  /**
-   * 加载交易精选数据
-   */
-  private async loadTradingData() {
-    return [
-      {
-        id: 'company-anthropic',
-        content: `Anthropic：AI安全领域的领军企业，专注于开发安全、有用、无害的AI系统。融资情况：2024年完成60亿美元D轮融资，亚马逊和谷歌参投，估值达到180亿美元。技术优势：Constitutional AI技术，Claude系列模型在安全性和实用性方面表现突出。商业数据：2024年ARR达到8.5亿美元，企业客户增长500%，API调用量月增长率35%。市场地位：与OpenAI形成双雄对峙，在企业级AI服务市场占据重要位置。投资价值：预计2025年IPO，目标估值300-400亿美元。`,
-        title: 'Anthropic公司分析',
-        type: 'company',
-        source: 'AI创投库',
-        keywords: ['Anthropic', 'AI安全', 'Claude', 'Constitutional AI', '60亿美元', 'D轮融资', '8.5亿美元ARR', '300亿美元估值']
-      },
-      {
-        id: 'company-scale-ai',
-        content: `Scale AI：AI数据基础设施的独角兽企业，为自动驾驶、机器人、国防等领域提供高质量训练数据。融资情况：2021年E轮融资10亿美元，估值73亿美元，正准备IPO。商业模式：数据标注、模型评估、AI部署平台，服务涵盖整个AI开发周期。财务数据：2024年收入超过7.5亿美元，毛利率65%，客户留存率95%。客户基础：特斯拉、丰田、美国国防部等高端客户，收入增长强劲。IPO计划：预计2025年Q2上市，目标估值150-200亿美元。`,
-        title: 'Scale AI公司分析', 
-        type: 'company',
-        source: 'AI创投库',
-        keywords: ['Scale AI', '数据基础设施', 'IPO', '自动驾驶', '10亿美元', 'E轮融资', '7.5亿美元收入', '150亿美元估值']
-      },
-      {
-        id: 'company-openai',
-        content: `OpenAI：全球领先的AGI研究与应用公司，ChatGPT和GPT系列模型的创造者。融资情况：2024年完成65亿美元融资，估值1570亿美元，成为全球估值最高的AI公司。商业成绩：年收入突破40亿美元，ChatGPT Plus付费用户超过1000万，API收入占比45%。技术护城河：大规模预训练、RLHF优化、多模态能力领先。竞争态势：面临Anthropic、Google、Meta等强劲竞争，但在消费级AI应用保持领先。投资风险：监管压力增大，计算成本持续上升，技术人才竞争激烈。`,
-        title: 'OpenAI公司分析',
-        type: 'company', 
-        source: 'AI创投库',
-        keywords: ['OpenAI', 'ChatGPT', 'AGI', '65亿美元', '1570亿美元估值', '40亿美元收入', '1000万付费用户']
-      },
-      {
-        id: 'company-adept',
-        content: `Adept：专注于AI Agent的先锋企业，致力于打造能够与人类协作完成复杂任务的智能代理。融资情况：2024年完成3.5亿美元B轮融资，Greylock Partners领投，估值达到25亿美元。技术优势：Action Transformer模型，能够理解用户意图并自动执行复杂的软件操作。商业策略：面向企业级市场，提供定制化AI Agent解决方案。市场前景：AI Agent市场预计2025年达到250亿美元，Adept有望占据重要份额。投资亮点：团队来自OpenAI和Google DeepMind，技术实力雄厚。`,
-        title: 'Adept公司分析',
-        type: 'company',
-        source: 'AI创投库', 
-        keywords: ['Adept', 'AI Agent', '3.5亿美元', 'B轮融资', '25亿美元估值', 'Action Transformer', '250亿美元市场']
+      
+      if (!response.ok) {
+        throw new Error('无法读取飞书知识库数据');
       }
-    ];
+      
+      const data = await response.json();
+      const documents = [];
+      
+      // 处理真实内容格式
+      if (data.documents && Array.isArray(data.documents) && data.summary?.syncMethod === 'real_content_api') {
+        console.log('✅ 使用真实飞书API内容');
+        data.documents.forEach(doc => {
+          documents.push({
+            id: doc.id,
+            content: doc.content,
+            title: doc.title,
+            type: doc.type,
+            source: doc.source,
+            keywords: doc.keywords || doc.searchKeywords || [],
+            ragScore: doc.ragScore || 0,
+            verified: doc.metadata?.verified || false,
+            lastUpdated: doc.lastUpdated
+          });
+        });
+      } 
+      // 处理改进知识库格式（兼容性）
+      else if (data.documents && Array.isArray(data.documents)) {
+        console.log('⚠️ 使用备用知识库内容');
+        data.documents.forEach(doc => {
+          documents.push({
+            id: doc.id || `feishu-${Math.random().toString(36).substr(2, 9)}`,
+            content: doc.content || '',
+            title: doc.title || '飞书文档',
+            type: doc.type || 'feishu_doc',
+            source: '飞书知识库',
+            keywords: doc.keywords || [],
+            ragScore: doc.ragScore || 0,
+            verified: false
+          });
+        });
+      }
+      
+      console.log(`📊 已加载 ${documents.length} 个飞书文档 (${documents.filter(d => d.verified).length} 个已验证)`);
+      return documents;
+    } catch (error) {
+      console.log('读取飞书知识库失败:', error.message);
+      return [];
+    }
   }
 
   /**
@@ -507,6 +611,94 @@ export class HybridRAGService {
   }
 
   /**
+   * 加权关键词匹配
+   */
+  private async findWeightedKeywordMatches(weightedKeywords: any[]) {
+    const documents = await this.getStoredDocuments();
+    const matches = [];
+
+    documents.forEach(doc => {
+      const content = (doc.content || '').toLowerCase();
+      const title = (doc.title || '').toLowerCase();
+      
+      let totalScore = 0;
+      let matchedTerms = 0;
+      const matchDetails = { original: 0, expanded: 0, synonym: 0 };
+
+      weightedKeywords.forEach(({ term, weight, type }) => {
+        const termLower = term.toLowerCase();
+        const contentMatches = (content.match(new RegExp(termLower, 'gi')) || []).length;
+        const titleMatches = (title.match(new RegExp(termLower, 'gi')) || []).length;
+        
+        if (contentMatches > 0 || titleMatches > 0) {
+          matchedTerms++;
+          matchDetails[type]++;
+          
+          // 计算加权分数
+          const contentScore = contentMatches * 0.7 * weight;
+          const titleScore = titleMatches * 1.2 * weight; // 标题匹配更重要
+          totalScore += contentScore + titleScore;
+        }
+      });
+
+      if (totalScore > 0) {
+        matches.push({
+          ...doc,
+          keywordScore: Math.min(totalScore / weightedKeywords.length, 1.0),
+          matchedTerms,
+          matchDetails,
+          type: 'weighted_keyword_match'
+        });
+      }
+    });
+
+    return matches.sort((a, b) => b.keywordScore - a.keywordScore);
+  }
+
+  /**
+   * 根据查询类型调整分数
+   */
+  private adjustScoresByQueryType(matches: any[], queryType: any) {
+    const typeBoosts = {
+      'company_search': { companyKeywords: 1.3, generalContent: 1.0 },
+      'investment_analysis': { investmentKeywords: 1.3, marketData: 1.2 },
+      'market_trends': { trendKeywords: 1.3, analysisContent: 1.1 },
+      'technology_info': { techKeywords: 1.3, productInfo: 1.2 },
+      'funding_info': { fundingKeywords: 1.4, financialData: 1.2 },
+      'team_evaluation': { teamKeywords: 1.3, leadershipContent: 1.1 }
+    };
+
+    if (!typeBoosts[queryType]) return matches;
+
+    return matches.map(match => {
+      let boost = 1.0;
+      const content = (match.content || '').toLowerCase();
+      
+      // 根据内容类型应用不同的加权
+      if (queryType === 'company_search' && 
+         (content.includes('公司') || content.includes('企业') || content.includes('startup'))) {
+        boost *= 1.3;
+      }
+      
+      if (queryType === 'investment_analysis' && 
+         (content.includes('投资') || content.includes('融资') || content.includes('investment'))) {
+        boost *= 1.3;
+      }
+
+      if (queryType === 'funding_info' && 
+         (content.includes('轮次') || content.includes('估值') || content.includes('round'))) {
+        boost *= 1.4;
+      }
+
+      return {
+        ...match,
+        keywordScore: Math.min(match.keywordScore * boost, 1.0),
+        typeBoost: boost
+      };
+    });
+  }
+
+  /**
    * 关键词评分算法
    */
   private calculateKeywordScore(content: string, keywords: string[]): number {
@@ -540,6 +732,6 @@ export class HybridRAGService {
 /**
  * 工厂函数：创建最适合的RAG服务
  */
-export function createOptimalRAGService(vectorize: any, ai: any, openaiApiKey?: string) {
-  return new HybridRAGService(vectorize, ai, openaiApiKey);
+export function createOptimalRAGService(vectorize: any, ai: any, openaiApiKey?: string, kvNamespace?: any) {
+  return new HybridRAGService(vectorize, ai, openaiApiKey, kvNamespace);
 }
