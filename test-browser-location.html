@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>测试浏览器location信息</title>
+</head>
+<body>
+    <h2>🔍 浏览器Location信息测试</h2>
+    <div id="results"></div>
+    
+    <script>
+        function displayResults() {
+            const results = document.getElementById('results');
+            
+            const locationInfo = `
+                <h3>当前Location信息:</h3>
+                <p><strong>hostname:</strong> "${window.location.hostname}"</p>
+                <p><strong>port:</strong> "${window.location.port}"</p>
+                <p><strong>protocol:</strong> "${window.location.protocol}"</p>
+                <p><strong>href:</strong> "${window.location.href}"</p>
+                
+                <h3>环境检测测试:</h3>
+                <p><strong>hostname === 'localhost':</strong> ${window.location.hostname === 'localhost'}</p>
+                <p><strong>port === '3000':</strong> ${window.location.port === '3000'}</p>
+                <p><strong>port (type):</strong> ${typeof window.location.port}</p>
+                
+                <h3>逻辑测试:</h3>
+            `;
+            
+            // 测试当前逻辑
+            const isWranglerDev = window.location.hostname === 'localhost' && window.location.port === '3000';
+            const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+            const shouldUseAPI = isProduction || isWranglerDev;
+            
+            const logicResults = `
+                <p><strong>isWranglerDev:</strong> ${isWranglerDev}</p>
+                <p><strong>isProduction:</strong> ${isProduction}</p>
+                <p><strong>shouldUseAPI:</strong> ${shouldUseAPI}</p>
+                
+                <h3>预期结果:</h3>
+                <p>在localhost:3000应该显示 <strong>shouldUseAPI: true</strong></p>
+                <p>如果显示false，说明port检测有问题</p>
+            `;
+            
+            results.innerHTML = locationInfo + logicResults;
+            
+            // 在控制台也输出
+            console.log('🔍 浏览器Location调试信息:');
+            console.log('hostname:', window.location.hostname);
+            console.log('port:', window.location.port);
+            console.log('port type:', typeof window.location.port);
+            console.log('isWranglerDev:', isWranglerDev);
+            console.log('shouldUseAPI:', shouldUseAPI);
+        }
+        
+        // 页面加载后执行
+        window.addEventListener('load', displayResults);
+    </script>
+</body>
+</html>

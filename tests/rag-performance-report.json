@@ -1,0 +1,248 @@
+{
+  "timestamp": "2025-08-07T15:08:38.711Z",
+  "summary": {
+    "totalQueries": 5,
+    "avgScore": 0.6632,
+    "avgResponseTime": 0,
+    "totalTestTime": 12
+  },
+  "results": [
+    {
+      "query": "SVTR平台追踪多少家AI公司？",
+      "category": "platform_info",
+      "difficulty": "easy",
+      "ragResults": {
+        "vectorMatches": [],
+        "keywordMatches": [],
+        "patternMatches": [
+          {
+            "category": "platform_info",
+            "score": 0.8,
+            "type": "pattern_match",
+            "content": "SVTR.AI平台追踪10,761+家全球AI公司，覆盖121,884+专业投资人和创业者。",
+            "title": "platform_info 相关内容"
+          }
+        ],
+        "finalScore": 0.8,
+        "responseTime": 0,
+        "finalMatches": [
+          {
+            "category": "platform_info",
+            "score": 0.8,
+            "type": "pattern_match",
+            "content": "SVTR.AI平台追踪10,761+家全球AI公司，覆盖121,884+专业投资人和创业者。",
+            "title": "platform_info 相关内容",
+            "source": "pattern",
+            "finalScore": 0.8
+          }
+        ]
+      },
+      "scores": {
+        "relevance": 1,
+        "coverage": 0.75,
+        "accuracy": 0.8,
+        "completeness": 0.5
+      },
+      "totalScore": 0.8350000000000001,
+      "performance": {
+        "responseTime": 0,
+        "matchCount": 1,
+        "hasError": false
+      }
+    },
+    {
+      "query": "2024年AI投资趋势如何？",
+      "category": "investment_analysis",
+      "difficulty": "medium",
+      "ragResults": {
+        "vectorMatches": [],
+        "keywordMatches": [],
+        "patternMatches": [
+          {
+            "category": "investment_analysis",
+            "score": 0.4,
+            "type": "pattern_match",
+            "content": "2024年AI投资呈现分化趋势，企业级应用成为重点，B2B AI解决方案占60%投资份额。",
+            "title": "investment_analysis 相关内容"
+          }
+        ],
+        "finalScore": 0.4,
+        "responseTime": 0,
+        "finalMatches": [
+          {
+            "category": "investment_analysis",
+            "score": 0.4,
+            "type": "pattern_match",
+            "content": "2024年AI投资呈现分化趋势，企业级应用成为重点，B2B AI解决方案占60%投资份额。",
+            "title": "investment_analysis 相关内容",
+            "source": "pattern",
+            "finalScore": 0.4
+          }
+        ]
+      },
+      "scores": {
+        "relevance": 1,
+        "coverage": 0.5,
+        "accuracy": 0.32000000000000006,
+        "completeness": 0.3333333333333333
+      },
+      "totalScore": 0.6473333333333334,
+      "performance": {
+        "responseTime": 0,
+        "matchCount": 1,
+        "hasError": false
+      }
+    },
+    {
+      "query": "如何识别有潜力的AI初创团队？",
+      "category": "evaluation_criteria",
+      "difficulty": "hard",
+      "ragResults": {
+        "vectorMatches": [],
+        "keywordMatches": [],
+        "patternMatches": [
+          {
+            "category": "evaluation_criteria",
+            "score": 0.6,
+            "type": "pattern_match",
+            "content": "识别AI初创团队需要关注技术实力、团队背景、市场定位、商业模式和执行能力等关键要素。",
+            "title": "evaluation_criteria 相关内容"
+          }
+        ],
+        "finalScore": 0.6,
+        "responseTime": 0,
+        "finalMatches": [
+          {
+            "category": "evaluation_criteria",
+            "score": 0.6,
+            "type": "pattern_match",
+            "content": "识别AI初创团队需要关注技术实力、团队背景、市场定位、商业模式和执行能力等关键要素。",
+            "title": "evaluation_criteria 相关内容",
+            "source": "pattern",
+            "finalScore": 0.6
+          }
+        ]
+      },
+      "scores": {
+        "relevance": 1,
+        "coverage": 0.75,
+        "accuracy": 0.36,
+        "completeness": 0.25
+      },
+      "totalScore": 0.722,
+      "performance": {
+        "responseTime": 0,
+        "matchCount": 1,
+        "hasError": false
+      }
+    },
+    {
+      "query": "生成式AI领域的投资机会？",
+      "category": "sector_analysis",
+      "difficulty": "medium",
+      "ragResults": {
+        "vectorMatches": [],
+        "keywordMatches": [],
+        "patternMatches": [
+          {
+            "category": "sector_analysis",
+            "score": 0.4,
+            "type": "pattern_match",
+            "content": "AI基础设施、生成式AI、企业级AI应用是当前最具潜力的投资赛道。",
+            "title": "sector_analysis 相关内容"
+          },
+          {
+            "category": "investment_analysis",
+            "score": 0.2,
+            "type": "pattern_match",
+            "content": "2024年AI投资呈现分化趋势，企业级应用成为重点，B2B AI解决方案占60%投资份额。",
+            "title": "investment_analysis 相关内容"
+          }
+        ],
+        "finalScore": 0.30000000000000004,
+        "responseTime": 0,
+        "finalMatches": [
+          {
+            "category": "sector_analysis",
+            "score": 0.4,
+            "type": "pattern_match",
+            "content": "AI基础设施、生成式AI、企业级AI应用是当前最具潜力的投资赛道。",
+            "title": "sector_analysis 相关内容",
+            "source": "pattern",
+            "finalScore": 0.4
+          },
+          {
+            "category": "investment_analysis",
+            "score": 0.2,
+            "type": "pattern_match",
+            "content": "2024年AI投资呈现分化趋势，企业级应用成为重点，B2B AI解决方案占60%投资份额。",
+            "title": "investment_analysis 相关内容",
+            "source": "pattern",
+            "finalScore": 0.2
+          }
+        ]
+      },
+      "scores": {
+        "relevance": 0.5,
+        "coverage": 0.3333333333333333,
+        "accuracy": 0.24000000000000005,
+        "completeness": 0.6666666666666666
+      },
+      "totalScore": 0.41466666666666663,
+      "performance": {
+        "responseTime": 0,
+        "matchCount": 2,
+        "hasError": false
+      }
+    },
+    {
+      "query": "AI基础设施赛道发展前景？",
+      "category": "sector_analysis",
+      "difficulty": "hard",
+      "ragResults": {
+        "vectorMatches": [],
+        "keywordMatches": [],
+        "patternMatches": [
+          {
+            "category": "sector_analysis",
+            "score": 0.6,
+            "type": "pattern_match",
+            "content": "AI基础设施、生成式AI、企业级AI应用是当前最具潜力的投资赛道。",
+            "title": "sector_analysis 相关内容"
+          }
+        ],
+        "finalScore": 0.6,
+        "responseTime": 0,
+        "finalMatches": [
+          {
+            "category": "sector_analysis",
+            "score": 0.6,
+            "type": "pattern_match",
+            "content": "AI基础设施、生成式AI、企业级AI应用是当前最具潜力的投资赛道。",
+            "title": "sector_analysis 相关内容",
+            "source": "pattern",
+            "finalScore": 0.6
+          }
+        ]
+      },
+      "scores": {
+        "relevance": 1,
+        "coverage": 0.6666666666666666,
+        "accuracy": 0.36,
+        "completeness": 0.25
+      },
+      "totalScore": 0.697,
+      "performance": {
+        "responseTime": 0,
+        "matchCount": 1,
+        "hasError": false
+      }
+    }
+  ],
+  "recommendations": [
+    "Expand knowledge base with more comprehensive AI startup and investment data",
+    "Consider implementing vector embeddings for better semantic search",
+    "Add real-time knowledge base updates from Feishu",
+    "Implement query intent classification for better results"
+  ]
+}

@@ -1,0 +1,2171 @@
+{
+  "timestamp": "2025-08-08T02:50:01.996Z",
+  "summary": {
+    "totalNodes": 252,
+    "nodesFixed": 180,
+    "patternsFixed": 180
+  },
+  "fixes": [
+    {
+      "nodeId": "node_StZ4wqMcsipGvikIy0PcV3xUnkS",
+      "title": "AI创投观察丨2025 Q2：资本风暴与技术竞速",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_QZt5wuIvhigrTdkGdBjcFRsKnaf",
+      "title": "SVTR AI创投库",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_TUz3wkiD9igrDzkqGIBcZAkan8c",
+      "title": "资源库",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_FOtNwOT9nigpVPkfPJ3cb5zJnpe",
+      "title": "AI融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_NmuMwMNR3iCL6UkhwnScVFo1nXb",
+      "title": "AI基建榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_LAVyw0Lk6iq1DPkuc3JcKJCNnZe",
+      "title": "AI高校榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_C56lwQjjWiaHjSkj7b4c5jnbnmd",
+      "title": "AI应用榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_CxjXwqcKNimB86kEX6AcZSAFn2d",
+      "title": "AI工具榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_AoDpweiHZiXHl7kILmVcDyuQn7f",
+      "title": "Top 50 Gen AI Tools by A16Z ",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_YfH4wEQuJihz6ak4pDgcVrhmnag",
+      "title": "AI大厂榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_OrG5wae6ciPvQOkxdplcNNnWnhh",
+      "title": "AI机构榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_KgxiwgTRyiqyXBkFKp9cUVScnde",
+      "title": "AI公司研究",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_OzWywSxFWikdyYk7v1DcJ9MCnQc",
+      "title": "AMP Robotics，这家科技公司如何用AI拯救垃圾场？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_PkEiwTXKuiqRZHkFY1bcARTgnjg",
+      "title": "Bardeen，更稳更快，用AI代理将重复任务自动化",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_ZlOuwUfOrixKvIkHpObcR1TKnJh",
+      "title": "Carta，从股权管理工具到取代纽交所？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_X1xFwdrwtiMqtKk7iZZcmTPunqc",
+      "title": "Consensus，用AI解锁学术，让人人走进科学",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_LsPZwFt1qi4sNLk6wmHcLilSnXc",
+      "title": "Discord，获腾讯多次押注，打造属于你自己的线上互动社区 ",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_IilFwmPcjiM0thkd8lRcDbhcnNg",
+      "title": "DoNotPay，世界首款机器人律师",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_H9stw0YrSiFpY2kg6z1cWfB9n0f",
+      "title": "Hugging Face，开源AI的未来",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_HrmXwnSUbisUdZk8qxtc2HCynKd",
+      "title": "Marblism， 一句AI提示词自动生成各类软件 ",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_LAIywRXOxiAYGVkMsemcGy5UnDb",
+      "title": "MultiOn，给软件装上大脑",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Y4TcwhYBjiHD3NktJOvcZONrn8c",
+      "title": "Replicate，1人AI公司背后的幕后英雄",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Ct7GwPNCviRGmok1CkwctKEDnCe",
+      "title": "Replit，GPTs的受益者VS受伤者？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_HRDawoyz3inylzkWWozcF72nnbd",
+      "title": "Runway VS Pika，AI视频的未来",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_NJxKwyhKxixj48kuxqgcO9CYnrc",
+      "title": "Scale AI，如何成为数字世界的‘水源’？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_JtJcwG4AAi5pEfkgM0Cci67qn4g",
+      "title": "SHEIN，打造下一个中国首富？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_LrHRwdIiliEOTikPGI3cWXHrnGc",
+      "title": "Substack，美版公众号，为价值付费",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_QhGCwZfPCiEm4AkXchOc3mrEn5b",
+      "title": "Superhuman：邮件超人，拥抱 AI",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_LDalwQkQAi3ZlTk3JV8c90Rfnuf",
+      "title": "Zapier ，AI+自动化",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_AOMMwSjWNi85gXkVxF4cYwVynUE",
+      "title": "xAI丨SVTR",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_XPdzwCUZLirwWYkWE9ucBePgntb",
+      "title": "ALC丨Lambda，如何成为AI开发者的“算力救世主”？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_TB4nwFKSjiZybRkoZx7c7mBXnxd",
+      "title": "SVTR丨硅谷科技评论",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_G0oMwUeNbiZkQBkX9iXcfMllnpe",
+      "title": "SVTR.AI会员专区",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_So63wQEFaiWOxUkJg8CcslBinhX",
+      "title": "AI创投群丨会员专区",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_QccYww9uairmypkzCLAcT8innAc",
+      "title": "AI创投会丨会员专区",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Q3dKwEtWai1t2gkwuPZcSfHUndi",
+      "title": "第013期丨“AI张雪峰”背后的野心：中国AI教育创业公司高考纸鸢完成数百万融资，能否引领志愿填报新",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_KyWBwl9D7iaHbmkKxLbc1R6qnkb",
+      "title": "第012期丨AI+医疗服务：行业专家袁博士解读真实世界数据如何重塑医疗生态？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Xk3xwdkZMimJjokMbDdcouQinHb",
+      "title": "第011期丨AI效率工具北美生存法则：硅谷创始人如何撬动个人成长市场？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_NaucwLHs7izOzMkBm96cfy7KnJc",
+      "title": "第010期丨销售行业的革命来了！AI如何助力团队突破业绩天花板？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_LUm1wsZZwiYzPukuEisclHN4nJh",
+      "title": "第009期丨AI驱动编程：真能让小白成为开发高手吗？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_VmbewrxZKibLCAkHyjtcsGQLnjf",
+      "title": "第008期丨AI应用大爆发倒计时，传统企业如何破局？前麦肯锡战略专家为你解读未来趋势",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_ToUowSvaUiccRckwpzKcvoAKn6e",
+      "title": "第007期丨AI+视频，改变创作规则的新引擎，谁能抓住百亿级市场新机遇？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_EjTDwV7vgizpo2kav0tcksBdn3e",
+      "title": "第006期丨AI+时尚穿搭，颠覆传统的环保男装订阅平台！",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Q8NMw9D0DiBZkhkPfJwcoNAPnpb",
+      "title": "第005期丨AI+法律服务：AI正在改变专利写作",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_QLF8wFJB9irEZbkOE7zcVVojnVb",
+      "title": "第004期丨AI+数据分析：重塑决策与增长的未来",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_TXsNwG4ZZiXkOKkQq9fcsWYsnSh",
+      "title": "第003期丨AI+国防安防：千亿赛道崛起：AI如何重新定义现代战场的核心竞争力？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Cv0YwWMd8in0hyk0DrAcCOyinyz",
+      "title": "第002期丨AI+人力资源：用科技重塑就业与招聘的未来",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Hr0swR2pJiil35kVeIScCtgGnqd",
+      "title": "第001期丨AI+社交该怎么玩？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Q8nYwfAisiyw46khjfQcp0I9n1b",
+      "title": "AI创投营丨会员专区",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_ADv6wXLc5iDslJkv9qjcvumNnTg",
+      "title": "福布斯2025 年全球顶级 VC 投资人榜单数据洞察",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_MrnbwIzySiJNiDkPdM0csElXnE4",
+      "title": "SVTR.AI周报 #116",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_ErjSwcOOkiDomjkM5lscDe0tnhc",
+      "title": "SVTR.AI Weekly #116",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_I4gjwsKhNil4LEkKQSYcyJsVn9g",
+      "title": "SVTR.AI 100",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_DI9Hw8v8tiZF2Xk13KDcDI8Bn1b",
+      "title": "SVTR.AI创投榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_ILRbwZA87iK2QRkNUIPc5A02nTh",
+      "title": "『AI创投榜』融资排行榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_VZ7xwj1vZiYrJGkZxjcclZXtnAc",
+      "title": "AI年度融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_JPZDwW7briB00ukxwSac1vTBnZd",
+      "title": "AI音频融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_M2qvwzXYliY6f2kqKHkcnA8vnXg",
+      "title": "AI财务融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_RU7twbh7fiHgk6k9pjBc5GsEnsh",
+      "title": "AI+HR融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_HTemw2pxXiu29ck0PjjcKBoKnHe",
+      "title": "AI云算力融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_HJn7wIZhHi0sWSkL8pachTYEnSf",
+      "title": "AI+营销融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Q9pywUeaMifgd1kwJRpcQtAun3c",
+      "title": "AI机器人融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Hi9RwqNPhiDQoZkdIBtcYprxnRb",
+      "title": "AI+法律融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_GfdMwsPfMiw1JSkD0z0cqzuanMb",
+      "title": "AI+金融融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_OhoawztoAiLQLakoIs3cQpZ3nKe",
+      "title": "AI智能体融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_VQ6cwWhAbi2mLckPbQ9cAEbKnJd",
+      "title": "AI效率工具融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_M1avwdeVIifOimk4boHcVqXCnag",
+      "title": "AI国防安防融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_MqE5wDb0XinlPwkc5Igc5D2gnsg",
+      "title": "AI安全合规融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_HnblwYDOgiEcHbk3YL6c9wTPnvb",
+      "title": "AI+编程融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Dm2twk7jkiw2xQkDs6sc8q0Lnzh",
+      "title": "AI+BI融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_OX9QwiIOoiw6XUkWOVicaAZTnab",
+      "title": "AI大模型融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_CiPFwTQKQiJpbukEE1EcLGV2nQc",
+      "title": "AI+Web3融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_RnFrwGXqWi4kN2kHjm0cgqpLnQc",
+      "title": "AI+搜索融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_HCh6wDwQTiCOsMkPQAgctbLwn04",
+      "title": "AI+视频融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_PTEvwQy4uiYbV7kAXVqcIUOenCh",
+      "title": "AI+社交融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_BibXwtZCmipryukUMDtcqJtUnqg",
+      "title": "『AI创投榜』估值排行榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_BpXQw5zxYiVnBLkyHYDcfAernHd",
+      "title": "AI独角兽估值榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_GiamwlL0EiWFx3kfxh7cJTG0n3g",
+      "title": "AI初创估值榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_OfGNwYm73i8eoxkcz73cAVFjntc",
+      "title": "AI华人融资榜",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_PrShwOdJvi9hjOkyBCicrCY7nqb",
+      "title": "SVTR.AI创投群",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_FeE4wE5kwi2BvlksekTcJvN6n1e",
+      "title": "SVTR.AI创投库",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_O72Tw0SQpikTihknz70c3gNTnag",
+      "title": "全球AI创投生态：拥抱未来的黄金时代",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Z90cwHqu1iij1ZkJ8rsceSDJnbc",
+      "title": "2025年全球AI",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Q0BAwFT3JiDPELkp0YDcXnWfniv",
+      "title": "法国人工智能行动峰会在即，欧洲AI初创企业生态扫描",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_CBQNwWkZHiEHj7k9e1ScTo57nkg",
+      "title": "AI创投库丨创业公司",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_BKwFwMqR4iXIBok07dzcvuz7nLd",
+      "title": "01（零一万物）丨李开复：实现AI普惠",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_QPepw9H3PiTsdQkWIc9cw5GJnDb",
+      "title": "11x.ai，AI虚拟销售员，如何在半年内突破200万美元？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_ZphSwEnq1iRMZWkYntQcr1dfnOe",
+      "title": "AlphaSense，金融界的“谷歌”，如何用AI颠覆市场情报分析？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_C4pwwThPJiCLnakGn41cfb4annb",
+      "title": "Anduril Industries，AI 重新定义现代战争与和平",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_ClvWwoD2siN1BskPXGZcrCjInFf",
+      "title": "Anthropic，OpenAI宫斗背后的公司",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_NjhwwNKCYizE1pk6EUBcfjBDnAd",
+      "title": "AssemblyAI，企业音频市场拓荒者",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Yg2jwux3yik3hwkT1iWcxIePnOe",
+      "title": "Cal AI：17 岁少年悄悄开发 AI 应用，半年狂赚 1200 万美元背后的隐秘策略",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_NfRYwPmxJi4zrRksR5QchfBTnCg",
+      "title": "Calendly，日程安排助手，AI效率工具鼻祖",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_CIGYw6tGZi5H04k8PU1c2T0xnHa",
+      "title": "Cohere，为企业提供NLP模型",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_RTkTwZ89RiWU70k5bC6cCUB4neg",
+      "title": "CoreWeave：GPU租赁独角兽，英伟达的好盟友",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_K3ogwzifOi72DdkEaHqcJHKNnxf",
+      "title": "Databricks，从数据湖到AI大模型",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_EIPlwWSMni4Uf5kvdmwclxcmnxl",
+      "title": "DeepSeek",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_IHwKw1bQkizrpwkOeLVcRuIwnsf",
+      "title": "DeepSeek最新交流纪要",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_S0IKwH8ypiNehakH8wyczqhZnsc",
+      "title": "DeepSeek最重要的三篇论文解读",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_XlWTw4ufoijht9k2lHDctOxKnJe",
+      "title": "ElevenLabs， 如何颠覆内容创作，让声音变得更智能？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_FqSawINO9i7k2gkRhSvciWi2nCe",
+      "title": "Figure，将人类从体力劳动中解放",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_FbV8wPf7ri8RbpkMtqwcM2ldnVd",
+      "title": "Glean，AI+企业搜索的创新者 ",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_AmCNwcG41iiw6ekElSscgNmPnbc",
+      "title": "Hallow，如何用AI重塑信仰？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_WP4Xwt1QkiknNCkFdrNcCR5SnXf",
+      "title": "Hippocratic AI，如何用AI代理缓解全球医护人员短缺？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_MjlCwCsoHiCrrYkvS4bc3u4InDf",
+      "title": "华为昇腾DeepSeek解决方案",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_UV53w0AvViJyxVk8DamcfT6AnUf",
+      "title": "Letta：AI代理技术栈市场地图",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_DwHKwg7DGiNq6Bk2QH3cf8ojn7c",
+      "title": "Mistral，欧洲大模型之王，性能成本的前沿",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Ijepw82ntiW3L6k0BHYcKnrOn2b",
+      "title": "AI创投库丨投资机构",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_RfSqwJlyeiyqyZkvSZscPjxLn2d",
+      "title": "风险投资史（The Power Law）",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_UfnMwrNVCi9xMxkWv0bcFaFqntc",
+      "title": "20VC：从播客主持人到4亿美元风投大佬，2024 年最佳新技术和商业播客",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_IHyvwuN8UiJcWGkiXYocUnBMntg",
+      "title": "A16Z（Andreessen Horowitz）",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_ZbjwwVpLnirjlLkku0QcGFOln2g",
+      "title": "A16Z： 2024年消费者（C端）产品Top 100",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_MErLwJbfDiHmAJkeCWZcY011nWh",
+      "title": "A16Z： APPs Unwrapped",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_VManwjtlQixUJfkJPqXcxqZ9n3g",
+      "title": "A16Z：2C市场地图",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_ON4xwcnSviIZ8ukV640cL0C4nGf",
+      "title": "a16z：2025年AI语音智能体（AI Voice Agents）该怎么投？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_QH9gwH9qTiRTDskerzwcqiNfnRc",
+      "title": "a16z：2025年The Top 100 Gen AI",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_JWfHwo9qiiMfYpkVGcWcDq7mnYc",
+      "title": " Air Street Capital：State of AI",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_YX4Yw3oi4icRTikAEqvcqrwJnyb",
+      "title": "Altimeter Capital，谁会赢得AI的用户之战？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_OGuvwIMD2icJ5jkpw4Vcw2K5ntd",
+      "title": "Archerman Capital：关于Deepseek的几点思考",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_VMG3w1uT5iqHKVkCeBKcQyd3nad",
+      "title": "Ark Invest丨Big Ideas 2025",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_IYKNwFYReiFL12kBmITcgQEhngw",
+      "title": "Battery Ventures：State of the OpenCloud",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_FDw6wAlHLiSmKekXWUacUZgznbb",
+      "title": "Redpoint Ventures",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_LYS0w2nb6iB1b3kdyQqcBzXhnKe",
+      "title": "Conviction",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_RLKEwtsvLiYfG1khB6cciILlnyc",
+      "title": "Dawn Capital，VC如何通过人工智能增强人脉，发现下一个伟大的创始人？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_L0LWwvHvNiLBj2kD01Zcbzirnpd",
+      "title": "Elad Gil：关于人工智能我不知道的事情",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_BwYUwNMani5Z9mk0MV4c2Pz4nag",
+      "title": "Founders Fund：AI热潮下如何投出下一个独角兽？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_PwC0wXec5itDwKkUhjrcdnzln7b",
+      "title": "蒂尔研究员：聚焦AI，颠覆未来",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_KAWHwiwnsiEEdXkK7EYcLkP3nef",
+      "title": "Founders Fund投资哲学解读：先知、门徒、福音与王国",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_G9K1wPoEtiMhHekUStQceFEvnSg",
+      "title": "Madrona丨2025 年最值得关注的AI五大趋势",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Ee1wwDTfwipwZCkIVwqcYCNLnLe",
+      "title": "Menlo Ventures",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_LVJSwydEOieKFzktDUacKUbcnFd",
+      "title": "2024年企业生成式人工智能现状报告",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_RHVxwVyciiqtHKk9qI2cAUDTn0e",
+      "title": "AI代理进入智能时代，企业自动化的新机遇",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_QQjfwFQG4ir7emkwkvlcHHM2njg",
+      "title": "Wing Venture Capital",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Sn5SwxaoGijOaoko5Yxcl3Iinfh",
+      "title": "MiraclePlus（奇绩论坛）",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_CS7Jwo361iNpqYkQLHQcFd7FnNh",
+      "title": " ICONIQ，小扎的朋友圈，SaaS投资之王",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_H2T1weKwpi229kkmzVeczqdrnge",
+      "title": "Sam Altman， 超越 OpenAI，占据投资舞台中心",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_HCTDw1JR0i4Uz2kGyEicG58ynsh",
+      "title": "Sam Altman的地产生意经",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_ASsBwEBmqiIjIBkOiDTcqIMpnHf",
+      "title": "AI创投库丨行业研究",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_AiPqwfvn8ix6MDkTCx5cibpBn0b",
+      "title": "2024年度复盘丨最佳人工智能书单：如何使用和理解该技术？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_G8ttwGJegiRfpBkm93OcQSxrnbe",
+      "title": "2024年度复盘丨AI工程师阅读清单",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_FXG7wRk90i00ZgkoJt2cuKgTnfJ",
+      "title": "基础层",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_EjsfwJINbiTZLlkk5iFcHLFqnOg",
+      "title": "数据丨内容争夺战，AI如何重塑信息的获取与共享",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_RievwTYt4i6VbCkRxOtcPM4Mndf",
+      "title": "数据时代",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_DNmfwXHoqiQQEYkRKdscoKWunue",
+      "title": "算力丨计算机芯片的演变：从DeepSeek崛起，英伟达暴跌谈起",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_I9SkwEEc2iVokxkbDrscLOkznqd",
+      "title": "模型层",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_KvTYwGl7BiNT2ckemnacIvKinKc",
+      "title": "垂类模型丨3D视频，那些赶超Sora的初创公司",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_C8Wkwa8HiiNQrqkyhaacWZlYnKf",
+      "title": "垂类模型丨AI设计，从Adobe 、Figma 、Canva到OpenAI",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_O96GwwfmiiuBeukSekecGVp7nLb",
+      "title": "AI代理/智能体（Agent）",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_D5ApwsGgfiRGhckfsU2cCoI6nEb",
+      "title": "AI 代理风口已至：如何从损益表视角评估企业智能体的价值？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_LQA7w3Ykfi6JVJkM5gsc54PxnAc",
+      "title": "AI Agent市场地图",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_FGKPwLYtHinUxlkb9VmcQhMVni0",
+      "title": "应用层",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_DP4wwygTvitaKrkexvsczc8Unwc",
+      "title": "AI+金融",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_PNWuwSt4ri1Q7qkxHYkcLRefnhg",
+      "title": "AI+金融丨从七行代码到500亿美元估值，AI将如何缔造下一个金融科技传奇？ 副本",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_KqB8wo9EUiyFujkUAOkc8sI8nZ7",
+      "title": "AI+硬件",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Dy8DwYzYVidFQWkDibQcQhi8nzd",
+      "title": "教育服务丨全国首个“AI张雪峰”诞生，北大创业团队用 AI 重塑教育咨询行业",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_PSuaw7MteiHEvtkBMSTcKbYJnzd",
+      "title": "文娱游戏丨谁都不想错失的12家初创公司大盘点",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_CXdFwSJ5pimZ3QkvdAHcqK9snSc",
+      "title": "安全合规丨市场地图",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_CwA1wC1builCSCkL31cc3vF5nnf",
+      "title": "具身智能/机器人 ",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_BZVBwQOP3iU6ZPkat6PczvwfnAd",
+      "title": "矿产勘探丨科技巨头押注矿业革命，联手绘就地球“藏宝图”",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_C81bw8VzTiduZxklDVEc7xC8ngb",
+      "title": "心理精神丨如何走出创业焦虑与身心困境？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_KuouwnejyiX2irkUgVTc9VxFnEd",
+      "title": "医疗健康丨市场地图",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Pji0wcmEaiL4sSk4KQYcDM7unnd",
+      "title": "AI浏览器丨互联网计算机，三十年的战争",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_WatPwHzCWinjXVkb5SrcF4Runge",
+      "title": "科学研究丨AI4S崛起：如何利用贝多芬和康定斯基加速解锁自然奥秘？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Jd9nwa9g3i7yCVkaPYPcO0hYnxc",
+      "title": "应用工具丨市场地图",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_IeoNwTHrRicFGUkiHArc5G6JnDg",
+      "title": "AI工具排行：2023年访问量Top 50 ",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_YOcQwYZq7i09nRkjSUdcOC1Nnse",
+      "title": "AI工具排行：2023年效率工具分析",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_YYeVwLKF6iHlBukclEKcXSRNnHd",
+      "title": "Sensor Tower：State of AI Apps 2024",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_SOlWw8JlPiaFJjkfxROcqANEn7f",
+      "title": "Product Hunt 2023年度最佳应用 副本",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Ac3HwsjWlimaPgkNRwEcJYfDn1c",
+      "title": "出海避坑指南：美国公司注册，是否该逃离特拉华？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_I2LPwkS0ti4chekdpACcuuA6nzc",
+      "title": "从科幻走向现实，谁将成为人形机器人的王者？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_ZPjNwvR4Gi01qokXm4tcLYjRnGh",
+      "title": "5%开发者创造96%的价值：谁在用开源AI重写全球科技的权力版图？",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_WbxFweBOFiAxWik6lpFcCuGHnYe",
+      "title": "AI 人物|那些来自斯坦福“疯狂科学家”和AI创投人",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_N2MIwXwClitUy4k1JtvcYqfjnoe",
+      "title": "SVTR.AI创投会",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_CcJ4wIAtuiipCgkrYD2cWbOOnhg",
+      "title": "『AI创投会』筹备会议纪要",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_Y3QEwX18ximgj8karwjc62DZnAc",
+      "title": "『AI创投会』首期筹备会议",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_J3v0wuQyZicsIfkki94cSAC0njf",
+      "title": "SVTR.AI创投营",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_KhNfwDN8piN2GWkJygtcRfVlnag",
+      "title": "『AI的未来』丨解锁未来：全球连线「生成式AI+出海」闭门路演",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_KuaIwYPGIikNIEkM47DcAtp6ndd",
+      "title": "全球连线「生成式AI+出海」闭门路演（视频） ",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_MSIUwt9b1ivbsGkwbbGcYfyFn9Z",
+      "title": "【SVTR AI 创投营·硅谷站】首期招募正式开启！",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    },
+    {
+      "nodeId": "node_O98vwU29si7v7Sk3UtgceAZpnTj",
+      "title": "『AI的未来』丨智领全球：硅谷视角下中国AI初创出海",
+      "fixes": [
+        {
+          "pattern": "general_cleaning",
+          "original": "格式清理",
+          "fixed": "已优化格式和空白字符",
+          "context": ""
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "level": "warning",
+    "type": "dataQuality",
+    "message": "内容覆盖率需要改善",
+    "timestamp": "2025-08-07T20:19:59.346Z",
+    "details": {
+      "status": "warning",
+      "message": "内容覆盖率需要改善",
+      "metrics": {
+        "totalNodes": 252,
+        "validNodes": 190,
+        "coverage": 75.4,
+        "avgContentLength": 2497
+      }
+    }
+  },
+  {
+    "level": "warning",
+    "type": "syncHealth",
+    "message": "缺少同步报告",
+    "timestamp": "2025-08-07T20:19:59.346Z",
+    "details": {
+      "status": "warning",
+      "message": "缺少同步报告",
+      "lastSync": null
+    }
+  },
+  {
+    "level": "warning",
+    "type": "dataQuality",
+    "message": "内容覆盖率需要改善",
+    "timestamp": "2025-08-07T20:22:26.125Z",
+    "details": {
+      "status": "warning",
+      "message": "内容覆盖率需要改善",
+      "metrics": {
+        "totalNodes": 252,
+        "validNodes": 190,
+        "coverage": 75.4,
+        "avgContentLength": 2497
+      }
+    }
+  },
+  {
+    "level": "warning",
+    "type": "syncHealth",
+    "message": "缺少同步报告",
+    "timestamp": "2025-08-07T20:22:26.125Z",
+    "details": {
+      "status": "warning",
+      "message": "缺少同步报告",
+      "lastSync": null
+    }
+  }
+]
