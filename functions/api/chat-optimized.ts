@@ -9,9 +9,9 @@ import { createOptimalRAGService } from '../lib/hybrid-rag-service';
 const ENHANCED_SYSTEM_PROMPT = `你是凯瑞(Kerry)，硅谷科技评论(SVTR)的AI创投分析师，专注于为用户提供准确、有用的AI创投信息。
 
 🎯 核心要求：
-1. 直接回答用户问题，基于SVTR数据提供专业分析
+1. 直接回答用户问题，基于SVTR数据和实时网络信息提供专业分析
 2. 保持简洁、准确的回复风格，避免冗余表述
-3. 优先使用知识库信息，确保回答的权威性
+3. 智能结合知识库信息与最新网络数据，确保回答的权威性和时效性
 
 📊 SVTR平台核心信息：
 • 创始人：Min Liu (Allen)，在美国硅谷创立SVTR
@@ -46,7 +46,12 @@ const ENHANCED_SYSTEM_PROMPT = `你是凯瑞(Kerry)，硅谷科技评论(SVTR)�
 
 引导话术："如需更深入的投资咨询或项目对接，欢迎添加凯瑞微信：pkcapital2023，获得一对一专业服务。"
 
-使用GPT-OSS开源模型的强大推理能力，直接提供有价值的专业回答。`;
+🌐 实时信息能力：
+• 自动检索最新AI创投数据和估值信息
+• 实时获取融资新闻和市场动态
+• 结合历史数据与实时信息提供全面分析
+
+使用GPT-OSS开源模型的强大推理能力和实时网络搜索，直接提供有价值的专业回答。`;
 
 /**
  * 增强查询扩展 - 改进关键词匹配
@@ -171,11 +176,17 @@ export async function onRequestPost(context: any): Promise<Response> {
     const queryInfo = enhanceUserQuery(userQuery);
     console.log(`📈 查询增强: 类型=${queryInfo.queryType}, 关键词=[${queryInfo.keywords.join(', ')}]`);
     
-    // 初始化RAG服务
+    // 初始化RAG服务（含网络搜索能力）
     const ragService = createOptimalRAGService(
       env.SVTR_VECTORIZE,
       env.AI,
-      env.OPENAI_API_KEY
+      env.OPENAI_API_KEY,
+      undefined, // KV namespace
+      { 
+        searchApiKey: env.GOOGLE_SEARCH_API_KEY,
+        searchEngineId: env.GOOGLE_SEARCH_ENGINE_ID,
+        fallbackEnabled: true
+      }
     );
 
     // 执行增强的RAG检索
@@ -301,7 +312,27 @@ export async function onRequestPost(context: any): Promise<Response> {
           if (done) {
             // 响应结束，添加来源信息（如果有RAG匹配）
             if (ragContext.matches.length > 0 && hasContent) {
-              const sourceInfo = `\n\n---\n📚 **信息来源**: SVTR知识库 (${ragContext.matches.length}个匹配，置信度${(ragContext.confidence * 100).toFixed(1)}%)\n🔍 **查询类型**: ${queryInfo.queryType}\n💡 **数据版本**: 2025年最新`;
+              // 检查是否包含网络搜索结果
+              const webSearchResults = ragContext.matches.filter(match => match.source === 'web_search');
+              const knowledgeBaseResults = ragContext.matches.filter(match => match.source !== 'web_search');
+              
+              let sourceInfo = `\n\n---\n📚 **信息来源**: `;
+              
+              if (webSearchResults.length > 0) {
+                sourceInfo += `🌐 实时网络数据 (${webSearchResults.length}个)`;
+                if (knowledgeBaseResults.length > 0) {
+                  sourceInfo += ` + SVTR知识库 (${knowledgeBaseResults.length}个)`;
+                }
+              } else {
+                sourceInfo += `SVTR知识库 (${ragContext.matches.length}个匹配)`;
+              }
+              
+              sourceInfo += `\n🔍 **查询类型**: ${queryInfo.queryType}`;
+              sourceInfo += `\n💡 **置信度**: ${(ragContext.confidence * 100).toFixed(1)}%`;
+              
+              if (webSearchResults.length > 0) {
+                sourceInfo += `\n⚡ **实时性**: 包含最新网络数据`;
+              }
               
               await writer.write(encoder.encode('data: ' + JSON.stringify({
                 delta: { content: sourceInfo }

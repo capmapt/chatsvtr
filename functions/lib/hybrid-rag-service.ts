@@ -6,11 +6,13 @@
 
 import { createQueryExpansionService, QueryExpansionService, QueryType } from './query-expansion-service';
 import { createSemanticCacheService, SemanticCacheService } from './semantic-cache-service';
+import { createWebSearchService, WebSearchService } from './web-search-service';
 
 interface HybridRAGConfig {
   useOpenAI: boolean;
   useCloudflareAI: boolean;
   useKeywordSearch: boolean;
+  useWebSearch: boolean;
   fallbackEnabled: boolean;
 }
 
@@ -21,19 +23,22 @@ export class HybridRAGService {
   private openaiApiKey?: string;
   private queryExpansionService: QueryExpansionService;
   private cacheService: SemanticCacheService;
+  private webSearchService: WebSearchService;
 
-  constructor(vectorize: any, ai: any, openaiApiKey?: string, kvNamespace?: any) {
+  constructor(vectorize: any, ai: any, openaiApiKey?: string, kvNamespace?: any, webSearchConfig?: any) {
     this.vectorize = vectorize;
     this.ai = ai;
     this.openaiApiKey = openaiApiKey;
     this.queryExpansionService = createQueryExpansionService();
     this.cacheService = createSemanticCacheService(kvNamespace);
+    this.webSearchService = createWebSearchService(webSearchConfig);
     
     // 智能配置：根据可用资源自动选择策略
     this.config = {
       useOpenAI: !!openaiApiKey,
       useCloudflareAI: !!ai,
       useKeywordSearch: true,
+      useWebSearch: true, // 默认启用网络搜索
       fallbackEnabled: true
     };
   }
@@ -81,7 +86,7 @@ export class HybridRAGService {
     }
     
     // 3. 缓存未命中，执行完整检索
-    console.log('💫 执行完整RAG检索...');
+    console.log('💫 执行完整RAG检索 + 网络搜索...');
     const searchQuery = queryExpansion.expandedQuery;
     const strategies = [];
     
@@ -95,6 +100,12 @@ export class HybridRAGService {
     
     // 策略3: 语义模式匹配
     strategies.push(this.semanticPatternMatch(searchQuery, { ...options, queryType: queryExpansion.queryType }));
+    
+    // 策略4: 实时网络搜索（新增）
+    if (this.config.useWebSearch && this.shouldUseWebSearch(queryExpansion, query)) {
+      console.log('🌐 启动实时网络搜索...');
+      strategies.push(this.performWebSearch(searchQuery, queryExpansion, options));
+    }
     
     // 并行执行所有策略
     const results = await Promise.allSettled(strategies);
@@ -759,11 +770,99 @@ export class HybridRAGService {
     const coverageBonus = matchedKeywords / keywords.length;
     return Math.min((score + coverageBonus * 0.3) * 2, 1.0);
   }
+
+  /**
+   * 判断是否需要网络搜索 - 优化版，减少误触发
+   */
+  private shouldUseWebSearch(queryExpansion: any, originalQuery: string): boolean {
+    const query = originalQuery.toLowerCase();
+    
+    // 排除基础知识和定义类查询
+    const basicKnowledgeKeywords = ['什么是', 'what is', '怎么', 'how to', '如何', '定义', 'definition'];
+    const isBasicKnowledge = basicKnowledgeKeywords.some(keyword => query.includes(keyword));
+    
+    // 排除SVTR内部信息查询
+    const internalKeywords = ['svtr', '创始人', 'founder', '硅谷科技评论'];
+    const isInternalQuery = internalKeywords.some(keyword => query.includes(keyword));
+    
+    // 如果是基础知识或内部信息查询，不使用网络搜索
+    if (isBasicKnowledge || isInternalQuery) {
+      return false;
+    }
+    
+    // 时效性敏感查询
+    const timeKeywords = ['最新', '2024', '2025', 'latest', 'recent', '估值', 'valuation', '融资', 'funding'];
+    const hasTimeKeywords = timeKeywords.some(keyword => query.includes(keyword.toLowerCase()));
+    
+    // 特定公司实时信息查询
+    const companies = ['openai', 'anthropic', 'meta', 'google', 'microsoft', 'nvidia', 'tesla', 'apple'];
+    const hasCompanyQuery = companies.some(company => query.includes(company));
+    
+    // 市场数据查询（必须同时包含时效性关键词）
+    const marketKeywords = ['市场', 'market', '趋势', 'trend', '数据', 'data'];
+    const hasMarketQuery = marketKeywords.some(keyword => query.includes(keyword.toLowerCase()));
+    
+    // 查询类型判断
+    const queryType = queryExpansion.queryType;
+    const realtimeQueryTypes = ['funding_info', 'company_analysis', 'market_trends'];
+    
+    // 严格的触发条件：需要同时满足公司+时效性 或 明确的实时查询类型
+    return (hasCompanyQuery && hasTimeKeywords) || 
+           (hasMarketQuery && hasTimeKeywords) || 
+           (realtimeQueryTypes.includes(queryType) && hasTimeKeywords) ||
+           (queryType === 'market_trends' && hasTimeKeywords); // 市场趋势类查询单独处理
+  }
+
+  /**
+   * 执行网络搜索
+   */
+  private async performWebSearch(searchQuery: string, queryExpansion: any, options: any): Promise<any> {
+    try {
+      const webResults = await this.webSearchService.performIntelligentSearch(searchQuery, {
+        maxResults: 3,
+        timeRange: 'recent',
+        sources: ['techcrunch', 'bloomberg', 'reuters', 'crunchbase'],
+        language: 'zh-CN'
+      });
+
+      // 将网络搜索结果转换为RAG格式
+      const ragMatches = webResults.map((result: any) => ({
+        id: `web-${Math.random().toString(36).substr(2, 9)}`,
+        content: result.content,
+        title: result.title,
+        score: result.relevanceScore,
+        source: 'web_search',
+        url: result.url,
+        publishDate: result.publishDate,
+        verified: result.verified,
+        type: 'web_search_result',
+        isRealtime: true
+      }));
+
+      console.log(`🌐 网络搜索完成: ${ragMatches.length}个结果`);
+
+      return {
+        matches: ragMatches,
+        source: 'web_search',
+        isRealtime: true,
+        searchQuery: searchQuery,
+        resultCount: ragMatches.length
+      };
+
+    } catch (error) {
+      console.log('🌐 网络搜索失败:', error.message);
+      return {
+        matches: [],
+        source: 'web_search_failed',
+        error: error.message
+      };
+    }
+  }
 }
 
 /**
  * 工厂函数：创建最适合的RAG服务
  */
-export function createOptimalRAGService(vectorize: any, ai: any, openaiApiKey?: string, kvNamespace?: any) {
-  return new HybridRAGService(vectorize, ai, openaiApiKey, kvNamespace);
+export function createOptimalRAGService(vectorize: any, ai: any, openaiApiKey?: string, kvNamespace?: any, webSearchConfig?: any) {
+  return new HybridRAGService(vectorize, ai, openaiApiKey, kvNamespace, webSearchConfig);
 }

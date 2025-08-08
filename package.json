@@ -65,7 +65,8 @@
     "sync:health": "node scripts/sync-monitor.js",
     "sync:real": "node scripts/real-content-sync.js",
     "test:permissions": "node scripts/test-api-permissions.js",
-    "test:content": "node scripts/test-content-access.js"
+    "test:content": "node scripts/test-content-access.js",
+    "test:websearch": "node scripts/test-web-search-integration.js"
   },
   "keywords": [
     "AI",
