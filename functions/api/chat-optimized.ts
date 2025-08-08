@@ -4,6 +4,7 @@
  */
 
 import { createOptimalRAGService } from '../lib/hybrid-rag-service';
+import { createCompanyAnalysisFormatter, extractCompanyDataFromRAG } from '../lib/company-analysis-formatter';
 
 // 增强的系统提示词 - 包含关键知识和行为指导
 const ENHANCED_SYSTEM_PROMPT = `你是凯瑞(Kerry)，硅谷科技评论(SVTR)的AI创投分析师，专注于为用户提供准确、有用的AI创投信息。
@@ -50,6 +51,11 @@ const ENHANCED_SYSTEM_PROMPT = `你是凯瑞(Kerry)，硅谷科技评论(SVTR)�
 • 自动检索最新AI创投数据和估值信息
 • 实时获取融资新闻和市场动态
 • 结合历史数据与实时信息提供全面分析
+
+📊 专业分析格式：
+• 公司分析：执行摘要 → 公司概况 → 商业模式 → 市场竞争 → 财务融资 → 风险机遇 → 投资亮点
+• 结构化输出：清晰分段、层次分明、专业术语、数据支撑
+• 投资视角：基于专业投资分析框架，提供决策参考
 
 使用GPT-OSS开源模型的强大推理能力和实时网络搜索，直接提供有价值的专业回答。`;
 
@@ -99,11 +105,36 @@ function enhanceUserQuery(query: string): {
     };
   }
   
-  // OpenAI分析查询扩展  
-  if (lowercaseQuery.includes('openai') || lowercaseQuery.includes('chatgpt')) {
+  // 公司分析查询扩展（增强版）
+  const analysisKeywords = ['分析', '研究', '评估', '报告', 'analysis', 'research'];
+  const companyKeywords = ['公司', '企业', 'company', 'corp', 'inc'];
+  const hasAnalysisIntent = analysisKeywords.some(kw => lowercaseQuery.includes(kw));
+  const hasCompanyContext = companyKeywords.some(kw => lowercaseQuery.includes(kw));
+  
+  // 特定公司分析
+  if (lowercaseQuery.includes('openai') && (hasAnalysisIntent || hasCompanyContext)) {
     return {
-      expandedQuery: `${query} OpenAI分析 ChatGPT GPT模型 AI公司`,
-      keywords: ['OpenAI', 'ChatGPT', 'GPT', 'AI模型'],
+      expandedQuery: `${query} OpenAI公司分析 ChatGPT 估值 融资 商业模式 竞争对手`,
+      keywords: ['OpenAI', 'ChatGPT', '公司分析', '估值', '融资'],
+      queryType: 'company_analysis'
+    };
+  }
+  
+  if (lowercaseQuery.includes('anthropic') && (hasAnalysisIntent || hasCompanyContext)) {
+    return {
+      expandedQuery: `${query} Anthropic公司分析 Claude AI 投资 团队 技术`,
+      keywords: ['Anthropic', 'Claude', '公司分析', '投资', 'AI'],
+      queryType: 'company_analysis'
+    };
+  }
+  
+  // 通用公司分析识别
+  if (hasAnalysisIntent && (hasCompanyContext || 
+      lowercaseQuery.includes('创业') || lowercaseQuery.includes('startup') ||
+      lowercaseQuery.includes('独角兽') || lowercaseQuery.includes('unicorn'))) {
+    return {
+      expandedQuery: `${query} 公司分析 投资价值 商业模式 财务状况`,
+      keywords: query.split(/\s+/).filter(word => word.length > 1),
       queryType: 'company_analysis'
     };
   }
@@ -117,12 +148,45 @@ function enhanceUserQuery(query: string): {
 }
 
 /**
- * 改进的RAG上下文生成
+ * 改进的RAG上下文生成 - 支持公司分析格式化
  */
 function generateSmartPrompt(basePrompt: string, ragContext: any, queryInfo: any): string {
   // 对敏感联系类查询的特殊处理
   if (queryInfo.queryType === 'contact_sensitive') {
     return basePrompt + `\n\n当前查询："${queryInfo.expandedQuery}"\n\n🚨 特别提醒：此查询涉及敏感信息，请在回答中适当引导用户添加凯瑞微信：pkcapital2023 获得专业一对一服务。`;
+  }
+
+  // 公司分析类查询的专业格式化处理
+  if (queryInfo.queryType === 'company_analysis') {
+    try {
+      // 提取公司名称
+      const companyNameMatch = queryInfo.expandedQuery.match(/分析\s*([A-Za-z\u4e00-\u9fa5]+)|([A-Za-z\u4e00-\u9fa5]+)\s*分析|([A-Za-z\u4e00-\u9fa5]+)\s*公司/);
+      const companyName = companyNameMatch ? (companyNameMatch[1] || companyNameMatch[2] || companyNameMatch[3]) : '目标公司';
+      
+      // 分离网络搜索结果
+      const webSearchResults = ragContext.matches?.filter((match: any) => match.source === 'web_search') || [];
+      const knowledgeBaseMatches = ragContext.matches?.filter((match: any) => match.source !== 'web_search') || [];
+      
+      // 提取公司数据
+      const companyData = extractCompanyDataFromRAG(companyName, knowledgeBaseMatches, webSearchResults);
+      
+      // 创建格式化器
+      const formatter = createCompanyAnalysisFormatter();
+      
+      // 生成专业分析报告
+      const analysisReport = formatter.formatCompanyAnalysis(companyData, {
+        ragMatches: ragContext.matches || [],
+        webSearchResults,
+        confidence: ragContext.confidence || 0.7,
+        queryType: queryInfo.queryType
+      });
+
+      return basePrompt + `\n\n🎯 专业公司分析任务：分析${companyName}\n\n📊 请按以下专业投资分析框架输出：\n\n${analysisReport}\n\n💡 请基于知识库信息和实时数据，按上述格式提供专业分析。`;
+      
+    } catch (error) {
+      console.log('公司分析格式化失败，使用标准格式:', error);
+      // 降级到标准格式
+    }
   }
 
   if (!ragContext.matches || ragContext.matches.length === 0) {
