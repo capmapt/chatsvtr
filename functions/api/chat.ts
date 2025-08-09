@@ -149,24 +149,19 @@ export async function onRequestPost(context: any): Promise<Response> {
         
         console.log('📋 调用参数准备中...');
         
-        // OpenAI GPT-OSS模型使用不同的API格式
+        // OpenAI GPT-OSS模型使用标准messages格式（修正）
         if (model.includes('@cf/openai/gpt-oss')) {
-          console.log('🔄 使用OpenAI专用格式');
+          console.log('🔄 使用OpenAI GPT-OSS标准格式');
           
-          // 提取系统消息作为instructions
-          const systemMessage = messagesWithEnhancedSystem.find(m => m.role === 'system');
-          const conversationMessages = messagesWithEnhancedSystem.filter(m => m.role !== 'system');
-          
-          // OpenAI模型使用input参数，支持消息数组格式
+          // OpenAI GPT-OSS模型实际使用标准messages格式
           response = await env.AI.run(model, {
-            instructions: systemMessage ? systemMessage.content : BASE_SYSTEM_PROMPT,
-            input: conversationMessages, // 直接传递消息数组
+            messages: messagesWithEnhancedSystem,
             stream: true,
             max_tokens: 4096,
             temperature: 0.8
           });
           
-          console.log('✅ OpenAI格式调用完成');
+          console.log('✅ OpenAI GPT-OSS格式调用完成');
           
         } else {
           console.log('🔄 使用标准messages格式');
@@ -230,16 +225,13 @@ export async function onRequestPost(context: any): Promise<Response> {
                   try {
                     const data = JSON.parse(line.slice(6));
                     if (data.response) {
-                      // 检测并过滤重复的"正在分析"文本
+                      // 数字丢失调试 - 记录原始AI响应
                       const content = data.response;
-                      if (content && (
-                        content.includes('正在分析') || 
-                        content.includes('分析中') ||
-                        content.includes('思考中') ||
-                        /^[。\.]+$/.test(content.trim())
-                      )) {
-                        // 跳过这些重复的分析文本
-                        continue;
+                      const hasNumbers = /\d/.test(content);
+                      if (hasNumbers) {
+                        console.log('🔢 AI模型输出包含数字:', content);
+                      } else if (content && content.length > 0) {
+                        console.log('⚠️ AI模型输出不含数字:', content);
                       }
                       
                       // 转换为前端期望的格式
@@ -298,16 +290,13 @@ export async function onRequestPost(context: any): Promise<Response> {
               try {
                 const data = JSON.parse(line.slice(6));
                 if (data.response) {
-                  // 检测并过滤重复的"正在分析"文本
+                  // 数字丢失调试 - 记录原始AI响应
                   const content = data.response;
-                  if (content && (
-                    content.includes('正在分析') || 
-                    content.includes('分析中') ||
-                    content.includes('思考中') ||
-                    /^[。\.]+$/.test(content.trim())
-                  )) {
-                    // 跳过这些重复的分析文本
-                    continue;
+                  const hasNumbers = /\d/.test(content);
+                  if (hasNumbers) {
+                    console.log('🔢 AI模型输出包含数字:', content);
+                  } else if (content && content.length > 0) {
+                    console.log('⚠️ AI模型输出不含数字:', content);
                   }
                   
                   // 转换为前端期望的格式

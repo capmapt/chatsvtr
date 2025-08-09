@@ -79,6 +79,13 @@ class SVTRChat {
               
               const data = JSON.parse(jsonStr);
               if (data.response && typeof data.response === 'string') {
+                // 数字调试日志
+                const hasNumbers = /\d/.test(data.response);
+                if (hasNumbers) {
+                  console.log('🔢 收到包含数字的响应片段:', data.response);
+                  console.log('🔢 提取的数字:', data.response.match(/\d+/g));
+                }
+                
                 if (!hasContent) {
                   this.removeLoadingMessage(loadingMessage);
                   messageElement = this.renderMessage(assistantMessage);
@@ -87,7 +94,16 @@ class SVTRChat {
                 }
                 
                 assistantMessage.content += data.response;
-                contentElement.innerHTML = this.formatMessage(assistantMessage.content);
+                const formattedContent = this.formatMessage(assistantMessage.content);
+                
+                // 格式化后的数字检查
+                if (hasNumbers) {
+                  console.log('🔢 累积内容:', assistantMessage.content);
+                  console.log('🔢 格式化后:', formattedContent);
+                  console.log('🔢 格式化后包含数字:', /\d/.test(formattedContent));
+                }
+                
+                contentElement.innerHTML = formattedContent;
                 
                 requestAnimationFrame(() => {
                   this.scrollToBottom();
@@ -189,6 +205,30 @@ What would you like to know?`,
   matchResponseBySemantic(userMessage, lang) {
     const message = userMessage.toLowerCase();
     
+    // 特殊处理：数学问题
+    const mathPattern = /^\s*\d+\s*[\+\-\*\/\=\(\)]+\s*\d*\s*\=?\s*$/;
+    const simpleMathWords = ['加', '减', '乘', '除', '等于', 'plus', 'minus', 'times', 'divided', 'equals'];
+    const isMathQuestion = mathPattern.test(userMessage) || 
+                          simpleMathWords.some(word => message.includes(word)) ||
+                          /\d+\s*[\+\-\*\/]\s*\d+/.test(userMessage);
+    
+    if (isMathQuestion) {
+      return 'math_question';
+    }
+    
+    // 特殊处理：年份相关问题
+    const yearPatterns = {
+      zh: ['年', '什么年', '哪一年', '哪年', '年份', '今年', '明年', '去年'],
+      en: ['year', 'what year', 'which year', 'when', 'annual', 'yearly']
+    };
+    
+    const relevantYearPatterns = lang === 'en' ? yearPatterns.en : [...yearPatterns.zh, ...yearPatterns.en];
+    const isYearQuestion = relevantYearPatterns.some(pattern => message.includes(pattern));
+    
+    if (isYearQuestion) {
+      return 'year_question';
+    }
+    
     // 定义更精确的语义匹配规则
     const semanticPatterns = {
       investment: {
@@ -274,6 +314,9 @@ What would you like to know?`,
   getVariedDemoResponses(lang) {
     if (lang === 'en') {
       return {
+        math_question: [
+          "I'm an AI venture capital assistant focused on AI investment analysis. For mathematical calculations, I'd recommend:\n\n• **Simple math**: 1+1=2 ✓\n• **For complex calculations**: Use specialized tools or calculators\n• **For AI-related financial modeling**: I can help with investment valuations and market analysis\n\nWould you like to know about AI venture capital trends, funding rounds, or startup valuations instead? I have comprehensive data on the AI investment ecosystem!"
+        ],
         investment: [
           `Based on SVTR's latest analysis, AI venture capital is experiencing unprecedented growth:
 
@@ -430,6 +473,40 @@ Technology differentiation remains the key driver of sustainable competitive adv
 The next wave of AI investing will focus on companies solving real business problems rather than just advancing model capabilities.`
         ],
 
+        year_question: [
+          `2024 is a pivotal year for AI venture capital! Based on SVTR's analysis:
+
+**2024 AI VC Characteristics**:
+• **Capital Concentration**: Over $50B in total funding, concentrated in leading companies
+• **Enterprise Focus**: Shift from consumer AI to enterprise applications and solutions
+• **Technology Maturity**: Transition from proof-of-concept to commercialization and profitability
+• **Regulatory Clarity**: Global AI governance frameworks taking shape, compliance becoming key
+
+**Key Milestones**:
+• OpenAI, Anthropic and other leaders achieving $100B+ valuations
+• 45+ new AI unicorns born with total valuation exceeding $100B
+• Enterprise AI adoption exceeding 80% among Fortune 500
+• AI infrastructure investments reaching historic highs
+
+2024 marks the crucial transition from speculation to value creation in AI venture capital.`,
+          
+          `From an investment perspective, 2024 is the "maturation year" for AI venture markets:
+
+**Market Evolution**:
+• **Investment Rationalization**: From blind hype to focus on actual value and ROI
+• **Sector Specialization**: Vertical AI applications receiving more attention and capital
+• **Technical Barriers**: Data advantages and expertise becoming core competitive moats
+• **Exit Channels**: IPO and M&A markets providing clear exit paths for AI companies
+
+**2024 Key Metrics**:
+• Total AI VC funding: $50+B (35% YoY growth)
+• New unicorns: 45 AI companies exceeding $1B valuation
+• Average round sizes: Series A $25M, Series B $60M
+• Exit cases: 12 AI companies successfully IPO'd, total market cap $200+B
+
+This year witnessed the acceleration of AI's commercialization journey from concept to reality.`
+        ],
+
         general: [
           `Welcome to SVTR's comprehensive AI venture capital analysis platform:
 
@@ -498,6 +575,9 @@ Our platform serves as the definitive source for AI investment market intelligen
       };
     } else {
       return {
+        math_question: [
+          "我是SVTR的AI创投分析师，专注于AI投资分析。对于数学计算，我建议：\n\n• **简单数学**：1+1=2 ✓\n• **复杂计算**：使用专业计算器工具\n• **AI相关的财务建模**：我可以帮助投资估值和市场分析\n\n您想了解AI创投趋势、融资轮次或初创公司估值吗？我拥有全面的AI投资生态系统数据！"
+        ],
         investment: [
           `基于SVTR最新分析，AI创投正经历前所未有的增长：
 
@@ -636,6 +716,40 @@ Our platform serves as the definitive source for AI investment market intelligen
 • 数据使用和模型部署的监管约束
 
 下一波AI投资将专注于解决真实商业问题的公司，而不仅仅是推进模型能力。`
+        ],
+
+        year_question: [
+          `2024年是AI创投发展的关键转折年！根据SVTR数据分析：
+
+**2024年AI创投特点**：
+• **资本集中**：总融资额超过500亿美元，但集中在头部公司
+• **企业聚焦**：从消费级AI转向企业级应用和解决方案
+• **技术成熟**：从概念验证转向商业化落地和盈利模式
+• **监管明确**：全球AI治理框架逐步完善，合规成为关键
+
+**关键里程碑**：
+• OpenAI、Anthropic等头部公司获得百亿美元估值
+• 45+家新AI独角兽诞生，总估值超过1000亿美元
+• 企业级AI采用率在Fortune 500中超过80%
+• AI基础设施投资创历史新高
+
+2024年标志着AI创投从投机转向价值创造的重要转型期。`,
+          
+          `从投资角度看，2024年是AI创投市场的"成熟元年"：
+
+**市场演变**：
+• **投资理性化**：从盲目追热点转向关注实际价值和ROI
+• **赛道细分**：垂直领域AI应用获得更多关注和资本
+• **技术门槛**：数据优势和专业知识成为核心竞争力
+• **退出通道**：IPO和并购市场为AI公司提供明确退出路径
+
+**2024年关键数据**：
+• AI创投总额：500+亿美元（同比增长35%）
+• 新增独角兽：45家AI公司估值超过10亿美元
+• 平均轮次规模：A轮2500万美元，B轮6000万美元
+• 退出案例：12家AI公司成功IPO，总市值超过2000亿美元
+
+这一年见证了AI从概念走向现实的商业化进程加速。`
         ],
 
         general: [

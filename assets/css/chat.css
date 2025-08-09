@@ -90,6 +90,11 @@
   border: none;
   box-shadow: none;
   word-wrap: break-word;
+  /* 确保数字正常显示 - 使用系统字体堆栈 */
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-variant-numeric: normal;
+  direction: ltr;
+  unicode-bidi: plaintext;
 }
 
 .message-content p {
