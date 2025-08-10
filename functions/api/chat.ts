@@ -56,6 +56,49 @@ SVTR平台信息：
 请基于SVTR AI创投库数据，提供直接、专业的答案。`;
 
 /**
+ * 判断是否需要显示来源信息
+ */
+function shouldShowSourceInfo(query: string, ragContext: any): boolean {
+  const lowerQuery = query.toLowerCase();
+  
+  // 触发条件1: 明确询问数据来源
+  const sourceKeywords = ['数据来源', '来源', 'source', '从哪', '哪里来', '基于什么'];
+  const asksAboutSource = sourceKeywords.some(keyword => lowerQuery.includes(keyword));
+  
+  // 触发条件2: 询问具体数据（估值、融资等敏感信息）
+  const dataKeywords = ['估值', '融资', '投资', '轮次', '多少', '数据', '最新', '价格', '股价'];
+  const asksAboutData = dataKeywords.some(keyword => lowerQuery.includes(keyword));
+  
+  // 触发条件3: 商业相关询问
+  const businessKeywords = ['合作', '联系', '咨询', '服务', '项目', '对接', '投资机会'];
+  const asksAboutBusiness = businessKeywords.some(keyword => lowerQuery.includes(keyword));
+  
+  // 触发条件4: 有实时搜索数据
+  const hasRealTimeData = ragContext.matches.some(m => m.source === 'web_search' || m.source === 'DuckDuckGo');
+  
+  // 满足任一条件就显示来源信息
+  return asksAboutSource || asksAboutData || asksAboutBusiness || hasRealTimeData;
+}
+
+/**
+ * 判断是否为商业咨询询问
+ */
+function isBusinessInquiry(query: string): boolean {
+  const lowerQuery = query.toLowerCase();
+  
+  const businessKeywords = [
+    // 投资相关
+    '投资机会', '融资', '项目对接', '合作', '咨询',
+    // 交易相关  
+    '交易', '并购', '收购', '估值', '尽调',
+    // 服务相关
+    '服务', '联系', '商务', '业务', '客户'
+  ];
+  
+  return businessKeywords.some(keyword => lowerQuery.includes(keyword));
+}
+
+/**
  * 生成增强的系统提示词
  */
 function generateEnhancedPrompt(basePrompt: string, ragContext: any): string {
@@ -286,161 +329,99 @@ export async function onRequestPost(context: any): Promise<Response> {
       }
     }
 
-    // 如果有RAG匹配，在响应流中注入来源信息
-    if (ragContext.matches.length > 0) {
-      // 创建自定义响应流，转换为标准流式格式
-      const { readable, writable } = new TransformStream();
-      const writer = writable.getWriter();
-      const reader = response.getReader();
-      const decoder = new TextDecoder();
-      const encoder = new TextEncoder();
-      
-      // 开始流处理
-      (async () => {
-        try {
-          let responseComplete = false;
-          
-          while (!responseComplete) {
-            const { done, value } = await reader.read();
-            
-            if (done) {
-              // 响应结束，添加智能数据来源标注
-              const hasRealTimeData = ragContext.matches.some(m => m.source === 'web_search' || m.source === 'DuckDuckGo');
-              
-              let sourceInfo = '\n\n---\n';
-              
-              if (hasRealTimeData) {
-                sourceInfo += '**🌐 数据来源：SVTR AI创投库 + 实时搜索**\n';
-                sourceInfo += '结合权威知识库数据与最新网络信息\n';
-              } else {
-                sourceInfo += '**📊 数据来源：SVTR AI创投库**\n';
-                sourceInfo += '基于专业AI创投数据库的权威分析\n';
-              }
-              
-              // 如果有匹配的内容，显示数据规模和匹配情况
-              if (ragContext.matches && ragContext.matches.length > 0) {
-                sourceInfo += `追踪10,761+家全球AI公司，${ragContext.matches.length}个相关匹配\n`;
-                sourceInfo += `数据置信度：${(ragContext.confidence * 100).toFixed(1)}%\n`;
-              }
-              
-              // 商业合作引导
-              sourceInfo += '\n**💼 投资交易咨询**\n';
-              sourceInfo += '联系凯瑞微信：**pkcapital2023**';
-              
-              // 使用与响应内容相同的格式发送来源信息
-              const sourceFormat = JSON.stringify({
-                response: sourceInfo
-              });
-              await writer.write(encoder.encode('data: ' + sourceFormat + '\n\n'));
-              await writer.write(encoder.encode('data: [DONE]\n\n'));
-              responseComplete = true;
-            } else {
-              // 解析Cloudflare AI响应并转换为标准格式
-              const chunk = decoder.decode(value);
-              const lines = chunk.split('\n');
-              
-              for (const line of lines) {
-                if (line.startsWith('data: ') && !line.includes('[DONE]')) {
-                  try {
-                    const data = JSON.parse(line.slice(6));
-                    if (data.response) {
-                      // 数字输出调试 - 详细记录AI响应
-                      const content = data.response;
-                      const hasNumbers = /\d/.test(content);
-                      if (hasNumbers) {
-                        const numbers = content.match(/\d+/g) || [];
-                        console.log('🔢 AI模型输出包含数字:', content);
-                        console.log('🔢 提取到的数字:', numbers.join(', '));
-                      } else if (content && content.length > 5) {
-                        console.log('⚠️ AI模型输出不含数字 (长度' + content.length + '):', content.substring(0, 50) + '...');
-                      }
-                      
-                      // 转换为前端期望的格式
-                      const standardFormat = JSON.stringify({
-                        response: content
-                      });
-                      await writer.write(encoder.encode('data: ' + standardFormat + '\n\n'));
-                    }
-                  } catch (e) {
-                    // 如果解析失败，直接转发原始数据
-                    await writer.write(value);
-                  }
-                } else if (line.includes('[DONE]')) {
-                  // 不要转发原始的[DONE]，我们会在最后添加
-                  continue;
-                } else if (line.trim()) {
-                  await writer.write(encoder.encode(line + '\n'));
-                }
-              }
-            }
-          }
-        } catch (error) {
-          console.error('流处理错误:', error);
-        } finally {
-          await writer.close();
-        }
-      })();
-      
-      return new Response(readable, {
-      headers: responseHeaders
-    });
-    }
-
-    // 没有RAG匹配，转换为标准格式后返回
+    // 智能判断是否需要显示来源信息
+    const shouldShow = shouldShowSourceInfo(userQuery, ragContext);
+    
+    // 创建自定义响应流，转换为标准流式格式
     const { readable, writable } = new TransformStream();
     const writer = writable.getWriter();
     const reader = response.getReader();
     const decoder = new TextDecoder();
     const encoder = new TextEncoder();
     
-    // 转换响应格式
+    // 开始流处理
     (async () => {
       try {
-        while (true) {
+        let responseComplete = false;
+        
+        while (!responseComplete) {
           const { done, value } = await reader.read();
           
           if (done) {
-            await writer.write(encoder.encode('data: [DONE]\n\n'));
-            break;
-          }
-          
-          // 解析Cloudflare AI响应并转换为标准格式
-          const chunk = decoder.decode(value);
-          const lines = chunk.split('\n');
-          
-          for (const line of lines) {
-            if (line.startsWith('data: ') && !line.includes('[DONE]')) {
-              try {
-                const data = JSON.parse(line.slice(6));
-                if (data.response) {
-                  // 数字输出调试 - 详细记录AI响应（无RAG版本）
-                  const content = data.response;
-                  const hasNumbers = /\d/.test(content);
-                  if (hasNumbers) {
-                    const numbers = content.match(/\d+/g) || [];
-                    console.log('🔢 AI模型输出包含数字:', content);
-                    console.log('🔢 提取到的数字:', numbers.join(', '));
-                  } else if (content && content.length > 5) {
-                    console.log('⚠️ AI模型输出不含数字 (长度' + content.length + '):', content.substring(0, 50) + '...');
-                  }
-                  
-                  // 转换为前端期望的格式
-                  const standardFormat = JSON.stringify({
-                    response: content
-                  });
-                  await writer.write(encoder.encode('data: ' + standardFormat + '\n\n'));
-                }
-              } catch (e) {
-                // 如果解析失败，直接转发原始数据
-                await writer.write(value);
+            // 响应结束，根据条件添加来源信息
+            if (ragContext.matches.length > 0 && shouldShow) {
+              const hasRealTimeData = ragContext.matches.some(m => m.source === 'web_search' || m.source === 'DuckDuckGo');
+              const isBusiness = isBusinessInquiry(userQuery);
+              
+              let sourceInfo = '\n\n---\n';
+              
+              // 数据来源信息
+              if (hasRealTimeData) {
+                sourceInfo += '**🌐 数据来源：SVTR AI创投库 + 实时搜索**\n';
+              } else {
+                sourceInfo += '**📊 数据来源：SVTR AI创投库**\n';
               }
-            } else if (!line.includes('[DONE]') && line.trim()) {
-              await writer.write(encoder.encode(line + '\n'));
+              
+              // 数据规模信息
+              sourceInfo += `追踪10,761+家全球AI公司数据\n`;
+              
+              // 商业咨询引导（仅在相关询问时显示）
+              if (isBusiness) {
+                sourceInfo += '\n**💼 投资交易咨询**\n';
+                sourceInfo += '联系凯瑞微信：**pkcapital2023**';
+              }
+              
+              // 使用与响应内容相同的格式发送来源信息
+              const sourceFormat = JSON.stringify({
+                response: sourceInfo
+              });
+              await writer.write(encoder.encode('data: ' + sourceFormat + '\n\n'));
+            }
+            
+            await writer.write(encoder.encode('data: [DONE]\n\n'));
+            responseComplete = true;
+          } else {
+            // 解析Cloudflare AI响应并转换为标准格式
+            const chunk = decoder.decode(value);
+            const lines = chunk.split('\n');
+            
+            for (const line of lines) {
+              if (line.startsWith('data: ') && !line.includes('[DONE]')) {
+                try {
+                  const data = JSON.parse(line.slice(6));
+                  if (data.response) {
+                    // 数字输出调试 - 详细记录AI响应
+                    const content = data.response;
+                    const hasNumbers = /\d/.test(content);
+                    if (hasNumbers) {
+                      const numbers = content.match(/\d+/g) || [];
+                      console.log('🔢 AI模型输出包含数字:', content);
+                      console.log('🔢 提取到的数字:', numbers.join(', '));
+                    } else if (content && content.length > 5) {
+                      console.log('⚠️ AI模型输出不含数字 (长度' + content.length + '):', content.substring(0, 50) + '...');
+                    }
+                    
+                    // 转换为前端期望的格式
+                    const standardFormat = JSON.stringify({
+                      response: content
+                    });
+                    await writer.write(encoder.encode('data: ' + standardFormat + '\n\n'));
+                  }
+                } catch (e) {
+                  // 如果解析失败，直接转发原始数据
+                  await writer.write(value);
+                }
+              } else if (line.includes('[DONE]')) {
+                // 不要转发原始的[DONE]，我们会在最后添加
+                continue;
+              } else if (line.trim()) {
+                await writer.write(encoder.encode(line + '\n'));
+              }
             }
           }
         }
       } catch (error) {
-        console.error('流格式转换错误:', error);
+        console.error('流处理错误:', error);
       } finally {
         await writer.close();
       }
