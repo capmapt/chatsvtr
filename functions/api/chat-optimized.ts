@@ -398,9 +398,11 @@ export async function onRequestPost(context: any): Promise<Response> {
                 sourceInfo += `\n⚡ **实时性**: 包含最新网络数据`;
               }
               
-              await writer.write(encoder.encode('data: ' + JSON.stringify({
-                delta: { content: sourceInfo }
-              }) + '\n\n'));
+              // 使用与响应内容相同的格式发送来源信息
+              const sourceFormat = JSON.stringify({
+                response: sourceInfo
+              });
+              await writer.write(encoder.encode('data: ' + sourceFormat + '\n\n'));
             }
             
             await writer.write(encoder.encode('data: [DONE]\n\n'));

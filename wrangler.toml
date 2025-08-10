@@ -42,6 +42,18 @@ index_name = "autorag-svtr-knowledge-base-ai"
 
 [ai]
 binding = "AI"
+
+# AI Gateway配置 - 已创建并启用  
+# 注意：AI Gateway通过env.AI绑定自动使用，无需额外配置
+
+# KV存储绑定 - 扩展使用
+[[kv_namespaces]]
+binding = "SVTR_CACHE"
+id = "6c8056d110964334af5e44e875fad54e"
+
+[[kv_namespaces]]
+binding = "SVTR_SESSIONS"
+id = "070deb624f41469f9cf7d8dde603f8b9"
 [[headers]]
 for = "*.avif"
 [headers.values]

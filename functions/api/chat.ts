@@ -55,8 +55,30 @@ export async function onRequestPost(context: any): Promise<Response> {
     const body: any = await request.json();
     const { messages } = body;
 
+    // 获取或生成临时会话ID（无需用户注册）
+    const sessionId = request.headers.get('x-session-id') || 
+                     request.headers.get('cf-ray') || 
+                     `temp_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
     // 获取用户最新问题
     const userQuery = messages[messages.length - 1]?.content || '';
+    
+    // KV缓存检查 - RAG查询缓存（无需用户身份）  
+    const queryBytes = new TextEncoder().encode(userQuery);
+    const cacheKey = `rag:${btoa(String.fromCharCode(...queryBytes)).substring(0, 32)}`;
+    let ragContext;
+    
+    if (env.SVTR_CACHE) {
+      try {
+        const cachedRAG = await env.SVTR_CACHE.get(cacheKey);
+        if (cachedRAG) {
+          ragContext = JSON.parse(cachedRAG);
+          console.log('🎯 使用缓存的RAG结果');
+        }
+      } catch (cacheError) {
+        console.log('⚠️ RAG缓存读取失败:', cacheError.message);
+      }
+    }
     
     // 初始化混合RAG服务
     const ragService = createOptimalRAGService(
@@ -65,13 +87,27 @@ export async function onRequestPost(context: any): Promise<Response> {
       env.OPENAI_API_KEY
     );
 
-    // 执行智能检索增强
-    console.log('🔍 开始混合RAG检索增强...');
-    const ragContext = await ragService.performIntelligentRAG(userQuery, {
-      topK: 8,
-      threshold: 0.7,
-      includeAlternatives: true
-    });
+    // 执行智能检索增强（如果没有缓存）
+    if (!ragContext) {
+      console.log('🔍 开始混合RAG检索增强...');
+      ragContext = await ragService.performIntelligentRAG(userQuery, {
+        topK: 8,
+        threshold: 0.7,
+        includeAlternatives: true
+      });
+      
+      // 缓存RAG结果（24小时有效期）
+      if (env.SVTR_CACHE && ragContext.matches.length > 0) {
+        try {
+          await env.SVTR_CACHE.put(cacheKey, JSON.stringify(ragContext), {
+            expirationTtl: 24 * 60 * 60 // 24小时
+          });
+          console.log('💾 RAG结果已缓存');
+        } catch (cacheError) {
+          console.log('⚠️ RAG缓存写入失败:', cacheError.message);
+        }
+      }
+    }
 
     // 生成增强提示词
     const enhancedSystemPrompt = generateEnhancedPrompt(
@@ -111,53 +147,79 @@ export async function onRequestPost(context: any): Promise<Response> {
     // 默认使用Llama 3.1模型（数字输出稳定且可用）
     let selectedModel = '@cf/meta/llama-3.1-8b-instruct';
     
-    // 智能模型选择逻辑 - 按优先级判断
-    const isCodeRelated = userQuery.toLowerCase().includes('code') || 
-                         userQuery.toLowerCase().includes('代码') ||
-                         userQuery.toLowerCase().includes('programming') ||
-                         userQuery.toLowerCase().includes('编程');
+    // SVTR业务导向的智能模型选择策略
+    const query = userQuery.toLowerCase();
     
-    const isComplexQuery = userQuery.includes('复杂') || 
-                          userQuery.includes('详细') ||
-                          userQuery.includes('分析') ||
-                          userQuery.length > 50;
+    // 1. AI创投数据分析场景 - 需要准确数字和专业分析
+    const isInvestmentAnalysis = query.includes('投资') || query.includes('融资') || 
+                                query.includes('估值') || query.includes('轮次') ||
+                                query.includes('亿') || query.includes('万') || query.includes('$') ||
+                                query.includes('独角兽') || query.includes('ipo') ||
+                                query.includes('上市') || query.includes('收购');
     
-    const isSimpleQuery = userQuery.length < 30 && 
-                         !isComplexQuery && 
-                         !isCodeRelated &&
-                         !userQuery.includes('投资') &&
-                         !userQuery.includes('融资') &&
-                         !userQuery.includes('公司');
+    // 2. 公司研究和市场分析 - 需要深度推理能力
+    const isCompanyResearch = query.includes('公司') || query.includes('startup') ||
+                             query.includes('创业') || query.includes('团队') ||
+                             query.includes('ceo') || query.includes('创始人') ||
+                             query.includes('商业模式') || query.includes('竞争');
     
-    if (isCodeRelated) {
+    // 3. 技术和产品分析 - 代码和技术相关
+    const isTechAnalysis = query.includes('技术') || query.includes('ai模型') ||
+                          query.includes('算法') || query.includes('开源') ||
+                          query.includes('代码') || query.includes('programming') ||
+                          query.includes('api') || query.includes('github');
+    
+    // 4. 行业趋势和宏观分析 - 需要综合推理
+    const isTrendAnalysis = query.includes('趋势') || query.includes('发展') ||
+                           query.includes('未来') || query.includes('预测') ||
+                           query.includes('市场') || query.includes('行业') ||
+                           query.includes('报告') || query.includes('分析');
+    
+    // 5. 简单咨询和FAQ
+    const isSimpleQuery = query.length < 30 && 
+                         !isInvestmentAnalysis && !isCompanyResearch && 
+                         !isTechAnalysis && !isTrendAnalysis;
+    
+    // 智能模型分配策略
+    if (isInvestmentAnalysis) {
+      // 投资分析优先数字稳定性，使用Llama 3.1
+      selectedModel = '@cf/meta/llama-3.1-8b-instruct';
+      console.log('💰 投资分析场景，使用Llama 3.1（数字输出稳定）');
+    } else if (isTechAnalysis) {
+      // 技术分析使用Qwen，代码理解能力强
       selectedModel = '@cf/qwen/qwen1.5-14b-chat-awq';
-      console.log('🔧 检测到代码相关问题，使用Qwen 1.5稳定模型');
+      console.log('🔧 技术分析场景，使用Qwen 1.5（技术理解优秀）');
+    } else if (isCompanyResearch || isTrendAnalysis) {
+      // 复杂分析使用DeepSeek，推理能力强
+      selectedModel = '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b';
+      console.log('📊 深度分析场景，使用DeepSeek R1（推理能力强）');
     } else if (isSimpleQuery) {
+      // 简单查询使用Llama 3.1，响应快且稳定
       selectedModel = '@cf/meta/llama-3.1-8b-instruct';
-      console.log('💡 简单问题，使用Llama 3.1稳定模型');
+      console.log('💡 简单咨询，使用Llama 3.1（响应迅速）');
     } else {
-      // 默认使用Llama 3.1模型处理AI创投相关复杂问题（数字输出稳定）
+      // 默认场景使用Llama 3.1，平衡性能和稳定性
       selectedModel = '@cf/meta/llama-3.1-8b-instruct';
-      console.log('🚀 使用Llama 3.1稳定模型处理专业问题');
+      console.log('🚀 默认场景，使用Llama 3.1（综合表现最佳）');
     }
     
     // 模型调用，失败时使用fallback
     let response;
     for (const model of [selectedModel, ...modelPriority.filter(m => m !== selectedModel)]) {
       try {
-        console.log('🧠 尝试模型: ' + model);
+        console.log('🧠 尝试模型: ' + model + ' (通过AI Gateway监控)');
         
         console.log('📋 调用参数准备中...');
         
         console.log('🔄 使用标准messages格式');
         
-        // 所有模型统一使用标准messages格式，确保数字输出一致性
+        // 所有模型统一使用标准messages格式，AI Gateway自动监控
         response = await env.AI.run(model, {
           messages: messagesWithEnhancedSystem,
           stream: true,
           max_tokens: 4096,
           temperature: 0.7,  // 降低temperature提高数字输出稳定性
-          top_p: 0.95,
+          top_p: 0.95
         });
         
         console.log('✅ 标准格式调用完成，模型: ' + model);
@@ -173,6 +235,22 @@ export async function onRequestPost(context: any): Promise<Response> {
     
     if (!response) {
       throw new Error('所有AI模型都不可用');
+    }
+
+    // 保存会话上下文（可选，用于对话连贯性）
+    if (env.SVTR_SESSIONS) {
+      try {
+        const sessionData = {
+          query: userQuery,
+          timestamp: Date.now(),
+          ragMatches: ragContext.matches.length
+        };
+        await env.SVTR_SESSIONS.put(`session:${sessionId}`, JSON.stringify(sessionData), {
+          expirationTtl: 2 * 60 * 60 // 2小时会话有效期
+        });
+      } catch (sessionError) {
+        console.log('⚠️ 会话保存失败:', sessionError.message);
+      }
     }
 
     // 如果有RAG匹配，在响应流中注入来源信息
@@ -246,7 +324,9 @@ export async function onRequestPost(context: any): Promise<Response> {
         }
       })();
       
-      return new Response(readable, responseHeaders);
+      return new Response(readable, {
+      headers: responseHeaders
+    });
     }
 
     // 没有RAG匹配，转换为标准格式后返回
@@ -309,7 +389,9 @@ export async function onRequestPost(context: any): Promise<Response> {
       }
     })();
     
-    return new Response(readable, responseHeaders);
+    return new Response(readable, {
+      headers: responseHeaders
+    });
 
   } catch (error) {
     console.error('Enhanced Chat API Error:', error);

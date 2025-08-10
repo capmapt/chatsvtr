@@ -1,0 +1,93 @@
+name: Daily RAG Data Sync
+
+on:
+  schedule:
+    # 每天UTC时间18:00 (北京时间02:00) 自动同步
+    - cron: '0 18 * * *'
+  workflow_dispatch: # 允许手动触发
+    inputs:
+      sync_type:
+        description: 'Sync type (smart/complete/enhanced)'
+        required: false
+        default: 'smart'
+
+jobs:
+  sync-rag-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Configure environment
+      run: |
+        echo "FEISHU_APP_ID=${{ secrets.FEISHU_APP_ID }}" >> $GITHUB_ENV
+        echo "FEISHU_APP_SECRET=${{ secrets.FEISHU_APP_SECRET }}" >> $GITHUB_ENV
+        echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
+        
+    - name: Run smart sync strategy
+      run: |
+        echo "🚀 开始每日智能同步..."
+        npm run sync
+        
+    - name: Check sync results
+      run: |
+        echo "📊 同步结果检查:"
+        if [ -f "assets/data/rag/enhanced-feishu-full-content.json" ]; then
+          echo "✅ RAG数据文件存在"
+          echo "📁 文件大小: $(du -h assets/data/rag/enhanced-feishu-full-content.json)"
+          echo "🕐 最后修改: $(stat -c %y assets/data/rag/enhanced-feishu-full-content.json)"
+        else
+          echo "❌ RAG数据文件不存在"
+          exit 1
+        fi
+        
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        if [ -n "$(git status --porcelain)" ]; then
+          git add assets/data/rag/
+          git commit -m "🔄 每日自动同步RAG数据 - $(date +'%Y-%m-%d %H:%M UTC')"
+          git push
+          echo "✅ 数据已更新并推送到仓库"
+        else
+          echo "ℹ️ 无数据变更，跳过提交"
+        fi
+        
+    - name: Deploy to Cloudflare (if data changed)
+      if: success()
+      run: |
+        echo "🚀 检查是否需要重新部署..."
+        if [ -n "$(git log --oneline -1 | grep '每日自动同步')" ]; then
+          echo "📊 数据已更新，触发重新部署"
+          npx wrangler pages deploy --commit-dirty=true
+          echo "✅ 已部署最新数据到生产环境"
+        else
+          echo "ℹ️ 数据无变更，跳过部署"
+        fi
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+    - name: Send notification (optional)
+      if: failure()
+      run: |
+        echo "❌ 每日同步失败，需要人工检查"
+        # 可以添加Slack/Discord通知
+        
+    - name: Summary
+      run: |
+        echo "📋 每日同步任务完成"
+        echo "⏰ 执行时间: $(date)"
+        echo "🔄 下次同步: 明天UTC 18:00 (北京时间02:00)"

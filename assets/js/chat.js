@@ -12,8 +12,19 @@ class SVTRChat {
     this.apiEndpoint = '/api/chat';
     this.isProduction = this.detectProductionEnvironment();
     this.quotaWarningShown = false; // 配额警告显示标志
+    this.sessionId = this.getOrCreateSessionId(); // 支持会话管理
     
     this.init();
+  }
+
+  getOrCreateSessionId() {
+    // 获取或创建会话ID（浏览器级别，支持KV会话管理）
+    let sessionId = localStorage.getItem('svtr_session_id');
+    if (!sessionId) {
+      sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      localStorage.setItem('svtr_session_id', sessionId);
+    }
+    return sessionId;
   }
 
   detectProductionEnvironment() {
@@ -33,6 +44,7 @@ class SVTRChat {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'x-session-id': this.sessionId, // 添加会话ID支持KV存储
         },
         body: JSON.stringify({
           messages: this.messages.filter(m => m.role !== 'system')
@@ -1039,6 +1051,7 @@ Our platform serves as the definitive source for AI investment market intelligen
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'x-session-id': this.sessionId, // 添加会话ID支持KV存储
         },
         body: JSON.stringify({
           messages: this.messages.filter(m => m.role !== 'system')
