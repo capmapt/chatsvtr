@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>最终数字显示诊断</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            background: #f5f5f5; 
+        }
+        .test-box { 
+            background: white; 
+            border: 1px solid #ddd; 
+            margin: 15px 0; 
+            padding: 20px; 
+            border-radius: 8px;
+        }
+        .message-content-test {
+            color: #333;
+            line-height: 1.6;
+            font-size: 15px;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+            font-variant-numeric: normal;
+            direction: ltr;
+            unicode-bidi: plaintext;
+            word-wrap: break-word;
+        }
+        .debug { background: #f0f0f0; padding: 10px; font-family: monospace; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>🔍 最终数字显示诊断</h1>
+
+    <div class="test-box">
+        <h3>1. 直接HTML数字测试</h3>
+        <p>静态数字：1+1=2, 2024年, 500亿美元, 45%市场</p>
+        <p>Unicode数字：①②③④⑤</p>
+        <p>全角数字：１＋１＝２</p>
+    </div>
+
+    <div class="test-box">
+        <h3>2. 使用完全相同的CSS样式</h3>
+        <div class="message-content-test">
+            我是SVTR的AI创投分析师，专注于AI投资分析。对于数学计算，我建议：<br><br>
+            • <strong>简单数学</strong>：1+1=2 ✓<br>
+            • <strong>复杂计算</strong>：使用专业计算器工具<br>
+            • <strong>AI相关的财务建模</strong>：我可以帮助投资估值和市场分析<br><br>
+            您想了解AI创投趋势、融资轮次或初创公司估值吗？我拥有全面的AI投资生态系统数据！
+        </div>
+    </div>
+
+    <div class="test-box">
+        <h3>3. JavaScript动态插入测试</h3>
+        <div id="js-dynamic-test" class="message-content-test">等待JavaScript...</div>
+    </div>
+
+    <div class="test-box">
+        <h3>4. 字符替换测试</h3>
+        <div id="char-replace-test">测试进行中...</div>
+    </div>
+
+    <div class="test-box">
+        <h3>5. 浏览器兼容性检测</h3>
+        <div id="browser-info">检测中...</div>
+    </div>
+
+    <div class="debug" id="debug-log">
+        🔍 调试日志：<br>
+    </div>
+
+    <script>
+        function log(msg) {
+            document.getElementById('debug-log').innerHTML += new Date().toLocaleTimeString() + ': ' + msg + '<br>';
+        }
+
+        log('开始最终诊断...');
+
+        // 测试1: 浏览器信息
+        const browserInfo = {
+            userAgent: navigator.userAgent,
+            platform: navigator.platform,
+            language: navigator.language,
+            cookieEnabled: navigator.cookieEnabled,
+            onLine: navigator.onLine
+        };
+        
+        document.getElementById('browser-info').innerHTML = 
+            '浏览器: ' + browserInfo.userAgent + '<br>' +
+            '平台: ' + browserInfo.platform + '<br>' +
+            '语言: ' + browserInfo.language;
+        
+        log('✅ 浏览器信息获取完成');
+
+        // 测试2: 动态内容插入
+        const mathResponse = "我是SVTR的AI创投分析师，专注于AI投资分析。对于数学计算，我建议：<br><br>• <strong>简单数学</strong>：1+1=2 ✓<br>• <strong>复杂计算</strong>：使用专业计算器工具<br>• <strong>AI相关的财务建模</strong>：我可以帮助投资估值和市场分析<br><br>您想了解AI创投趋势、融资轮次或初创公司估值吗？我拥有全面的AI投资生态系统数据！";
+        
+        document.getElementById('js-dynamic-test').innerHTML = mathResponse;
+        log('✅ 动态内容插入完成');
+
+        // 测试3: 字符替换
+        setTimeout(() => {
+            const originalText = "简单数字：1+1=2";
+            const element = document.getElementById('char-replace-test');
+            element.textContent = originalText;
+            
+            const displayedText = element.textContent;
+            const matches = displayedText === originalText;
+            
+            element.innerHTML = `
+                原始文本: "${originalText}"<br>
+                显示文本: "${displayedText}"<br>
+                匹配: ${matches ? '✅' : '❌'}<br>
+                包含数字: ${/\d/.test(displayedText) ? '✅' : '❌'}
+            `;
+            
+            log('字符替换测试: ' + (matches ? '成功' : '失败'));
+        }, 500);
+
+        // 测试4: 字体检测
+        function detectFont() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.font = '16px system-ui';
+            const metrics = ctx.measureText('1234567890');
+            log('字体宽度测量: ' + metrics.width + 'px');
+        }
+
+        detectFont();
+
+        // 测试5: CSS计算样式检查
+        setTimeout(() => {
+            const testElement = document.querySelector('.message-content-test');
+            if (testElement) {
+                const computedStyle = window.getComputedStyle(testElement);
+                log('计算样式检查:');
+                log('  font-family: ' + computedStyle.fontFamily);
+                log('  font-variant-numeric: ' + computedStyle.fontVariantNumeric);
+                log('  direction: ' + computedStyle.direction);
+                log('  unicode-bidi: ' + computedStyle.unicodeBidi);
+                log('  color: ' + computedStyle.color);
+            }
+        }, 800);
+
+        // 最终检查：页面中是否真的包含数字
+        setTimeout(() => {
+            const pageText = document.body.innerText;
+            const hasNumbers = /\d/.test(pageText);
+            const numberCount = (pageText.match(/\d/g) || []).length;
+            
+            log('🎯 最终检查:');
+            log('  页面包含数字: ' + (hasNumbers ? '✅' : '❌'));
+            log('  数字字符总数: ' + numberCount);
+            
+            if (!hasNumbers) {
+                log('❌ 严重问题: 页面完全无法显示数字!');
+                log('可能的原因: 字体文件损坏、浏览器设置、或系统级别问题');
+            }
+        }, 1000);
+
+        log('所有测试已启动，请查看结果...');
+    </script>
+</body>
+</html>

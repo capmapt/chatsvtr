@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生产环境数字显示调试</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { border: 1px solid #ccc; margin: 10px 0; padding: 15px; }
+        .debug-output { background: #f5f5f5; padding: 10px; font-family: monospace; }
+        .error { color: red; }
+        .success { color: green; }
+    </style>
+</head>
+<body>
+    <h1>🔍 生产环境数字显示调试</h1>
+
+    <div class="test-section">
+        <h3>1. 基础数字渲染测试</h3>
+        <p>HTML中的数字：1+1=2, 2024年, 500亿美元, 45%</p>
+        <div id="js-numbers">等待JavaScript...</div>
+    </div>
+
+    <div class="test-section">
+        <h3>2. 模拟聊天格式化测试</h3>
+        <div id="formatted-test">等待格式化...</div>
+    </div>
+
+    <div class="test-section">
+        <h3>3. 数学问题匹配测试</h3>
+        <div id="math-match-test">等待测试...</div>
+    </div>
+
+    <div class="test-section">
+        <h3>4. 字体渲染检测</h3>
+        <div style="font-family: system-ui;">system-ui: 1234567890</div>
+        <div style="font-family: Arial;">Arial: 1234567890</div>
+        <div style="font-family: 'Helvetica Neue';">Helvetica Neue: 1234567890</div>
+    </div>
+
+    <div class="debug-output" id="debug-log">
+        调试日志：<br>
+    </div>
+
+    <script>
+        function log(message) {
+            const debugLog = document.getElementById('debug-log');
+            debugLog.innerHTML += new Date().toLocaleTimeString() + ': ' + message + '<br>';
+        }
+
+        // 测试1: JS数字插入
+        document.getElementById('js-numbers').innerHTML = 'JS插入数字: 1+1=2, 2024年, 500亿美元, 45%';
+        log('✅ 基础数字插入完成');
+
+        // 测试2: 模拟formatMessage函数
+        function formatMessage(content) {
+            return content
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/\n/g, '<br>')
+                .replace(/•/g, '•');
+        }
+
+        const testContent = "• **简单数学**：1+1=2 ✓\\n• **资金规模**：2024年AI初创公司融资超过500亿美元";
+        const formatted = formatMessage(testContent);
+        document.getElementById('formatted-test').innerHTML = formatted;
+        log('✅ 格式化测试: ' + (formatted.includes('1+1=2') ? '包含数字' : '❌ 数字丢失'));
+
+        // 测试3: 数学问题匹配
+        function testMathMatching(input) {
+            const mathPattern = /^\\s*\\d+\\s*[\\+\\-\\*\\/\\=\\(\\)]+\\s*\\d*\\s*\\=?\\s*$/;
+            const hasNumbers = /\\d/.test(input);
+            const isMathQuestion = mathPattern.test(input);
+            
+            return {
+                input: input,
+                hasNumbers: hasNumbers,
+                isMathQuestion: isMathQuestion,
+                pattern: mathPattern.toString()
+            };
+        }
+
+        const mathTests = ['1+1=', '2+2=4', 'hello', '2024年'];
+        let mathResults = mathTests.map(testMathMatching);
+        
+        document.getElementById('math-match-test').innerHTML = mathResults.map(r => 
+            `输入: "${r.input}" | 包含数字: ${r.hasNumbers} | 数学问题: ${r.isMathQuestion}`
+        ).join('<br>');
+
+        // 测试4: 检测实际使用的字体
+        setTimeout(() => {
+            const testElement = document.createElement('div');
+            testElement.style.font = 'system-ui';
+            testElement.textContent = '1234567890';
+            document.body.appendChild(testElement);
+            
+            const computedStyle = window.getComputedStyle(testElement);
+            log('🔤 实际字体: ' + computedStyle.fontFamily);
+            log('📏 字符宽度: ' + testElement.offsetWidth + 'px');
+            
+            document.body.removeChild(testElement);
+        }, 100);
+
+        // 测试5: 检查生产环境文件
+        fetch('/assets/js/chat-optimized.js')
+            .then(response => response.text())
+            .then(content => {
+                const hasMathQuestion = content.includes('math_question');
+                const hasNumberRegex = content.includes('\\\\d+');
+                log('📁 生产文件检查:');
+                log('  - 包含math_question: ' + (hasMathQuestion ? '✅' : '❌'));
+                log('  - 包含数字正则: ' + (hasNumberRegex ? '✅' : '❌'));
+                log('  - 文件大小: ' + Math.round(content.length/1024) + 'KB');
+            })
+            .catch(err => {
+                log('❌ 无法加载生产文件: ' + err.message);
+            });
+
+        log('🚀 所有测试启动完成');
+    </script>
+</body>
+</html>
