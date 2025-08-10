@@ -5,55 +5,41 @@
 
 import { createOptimalRAGService } from '../lib/hybrid-rag-service';
 
-// AI创投系统提示词 - ChatGPT风格思考展示
-const BASE_SYSTEM_PROMPT = `你是凯瑞(Kerry)，硅谷科技评论(SVTR)的AI创投分析师，专注于为用户提供准确、有用的AI创投信息。
+// SVTR AI创投库查询助手 - 严格基于数据的事实性回答
+const BASE_SYSTEM_PROMPT = `你是SVTR AI创投库的专业数据查询助手。
 
-核心要求：
-1. 对于复杂的公司分析查询，先展示思考过程，再给出结果
-2. 基于SVTR AI创投库数据提供专业回答
-3. 使用结构化格式输出，提升专业性和可读性
+🚨 **严格约束（必须遵守）**：
+1. **仅基于提供的知识库内容回答** - 禁止编造、推测或补充任何未在知识库中的信息
+2. **数据不足时明确说明** - 使用"SVTR知识库中暂无相关数据"等表述
+3. **所有数字必须来源于知识库** - 不得估算或推测任何数值
+4. **明确标注数据来源和时效性** - 每次回答都要说明数据来源
+5. **保持客观中立** - 提供数据事实，避免主观分析判断
 
-**思考过程展示格式（仅用于复杂分析）：**
-🤔 **分析思路**
-正在分析[公司名]的[具体问题]...
-考虑因素：[关键分析维度]...
-数据整合：[相关数据点]...
+📊 **回答格式要求**：
+**基于SVTR AI创投库的查询结果：**
+[仅基于知识库的具体内容]
 
-**分析结果**
-[具体答案内容]
+**数据来源：** SVTR AI创投库 (追踪10,761+家全球AI公司)
+**数据时效：** [说明数据更新时间或声明时效性]
 
-输出格式要求：
-• 对于数值查询（估值、融资等）：提供具体数字和时间节点
-• 对于趋势分析：使用要点列表或表格形式
-• 对于公司对比：提供对比表格或分点说明
-• 重要信息用**粗体**标注，关键数字突出显示
+🔍 **数据完整性说明**：
+如知识库数据不完整，必须说明："基于现有数据显示..."或"知识库中部分信息可能不完整"
 
-SVTR平台信息：
-• 追踪10,761+家全球AI公司
-• 覆盖121,884+专业投资人和创业者
-• 提供AI周报、投资分析和市场洞察
-• 数据来源：SVTR AI创投库
-• 创始人：Min Liu (Allen)
+⚠️ **不确定性处理**：
+- 当知识库中没有相关信息时：明确回复"SVTR知识库中暂无该信息"
+- 当信息不完整时：说明"据现有数据显示"
+- 当需要推测时：明确表示"无法基于现有数据确认"
 
-专业回复模板：
-对于估值/融资查询，请按以下格式回复：
-**最新估值概览**
-1. **XXX亿美元** — 已确认的最新估值
-2. 融资时间：XXXX年XX月
-3. 投资方：主要投资机构名单
-4. 估值变化：与上轮对比情况
+✅ **标准回复原则**：
+• 准确性 > 完整性：宁可信息不完整，不可信息不准确
+• 数据驱动：所有回答必须有知识库依据
+• 谦逊表达：承认数据局限性，不过度自信
+• 专业引导：适当引导联系专业服务
 
-标准引导语：
-• 数据来源：SVTR AI创投库
-• 涉及交易投资咨询：联系凯瑞微信 pkcapital2023
+💼 **专业咨询引导**：
+涉及具体投资决策时，建议联系凯瑞微信：pkcapital2023
 
-回复原则：
-• 对话框内直接给出核心答案，不要过多解释
-• 重点信息加粗显示，数据准确具体
-• 适当引导用户获取更多服务
-• 保持专业、简洁的回复风格
-
-请基于SVTR AI创投库数据，提供直接、专业的答案。`;
+**请严格基于SVTR AI创投库提供的知识内容，给出准确、客观的数据回复。**`;
 
 /**
  * 判断是否需要显示来源信息
@@ -252,31 +238,27 @@ export async function onRequestPost(context: any): Promise<Response> {
     // 5. 简单查询
     const isSimpleQuery = query.length < 20 && !isCompanyAnalysis && !isDataQuery;
     
-    // 智能模型分配策略 - 优先推理能力
-    if (isCompanyAnalysis) {
-      // 公司分析优先推理能力，展示思考过程
-      selectedModel = '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b';
-      console.log('🏢 公司分析场景，使用DeepSeek R1（思考推理能力强）');
-    } else if (isDataQuery) {
-      // 数据查询优先数字稳定性
+    // 智能模型分配策略 - 优先事实准确性，避免编造
+    if (isDataQuery) {
+      // 数据查询最优先准确性，避免编造数字
       selectedModel = '@cf/meta/llama-3.1-8b-instruct';
-      console.log('💰 数据查询场景，使用Llama 3.1（数字输出稳定）');
-    } else if (isTechAnalysis) {
-      // 技术分析使用Qwen，技术理解能力强
-      selectedModel = '@cf/qwen/qwen1.5-14b-chat-awq';
-      console.log('🔧 技术分析场景，使用Qwen 1.5（技术理解优秀）');
-    } else if (isTrendAnalysis) {
-      // 趋势分析使用DeepSeek，推理能力强
-      selectedModel = '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b';
-      console.log('📈 趋势分析场景，使用DeepSeek R1（推理能力强）');
+      console.log('💰 数据查询场景，使用Llama 3.1（数字输出最稳定，避免编造）');
     } else if (isSimpleQuery) {
-      // 简单查询使用Llama 3.1，响应快
+      // 简单查询使用最稳定模型
       selectedModel = '@cf/meta/llama-3.1-8b-instruct';
-      console.log('💡 简单查询，使用Llama 3.1（响应迅速）');
+      console.log('💡 简单查询，使用Llama 3.1（保守稳定，避免过度发挥）');
+    } else if (isTechAnalysis) {
+      // 技术分析使用Qwen，但降低创造性
+      selectedModel = '@cf/qwen/qwen1.5-14b-chat-awq';
+      console.log('🔧 技术分析场景，使用Qwen 1.5（技术理解能力强但保守）');
+    } else if (isCompanyAnalysis || isTrendAnalysis) {
+      // 分析场景谨慎使用推理模型，但已通过prompt严格约束
+      selectedModel = '@cf/meta/llama-3.1-8b-instruct'; // 改为保守模型
+      console.log('🏢 分析场景，使用Llama 3.1（避免过度推理和编造）');
     } else {
-      // 默认使用DeepSeek，提供更好的分析能力
-      selectedModel = '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b';
-      console.log('🚀 默认场景，使用DeepSeek R1（综合推理能力强）');
+      // 默认使用最保守的模型，避免编造
+      selectedModel = '@cf/meta/llama-3.1-8b-instruct';
+      console.log('🚀 默认场景，使用Llama 3.1（最保守稳定，严格基于数据）');
     }
     
     // 模型调用，失败时使用fallback
@@ -294,8 +276,8 @@ export async function onRequestPost(context: any): Promise<Response> {
           messages: messagesWithEnhancedSystem,
           stream: true,
           max_tokens: 4096,
-          temperature: 0.7,  // 降低temperature提高数字输出稳定性
-          top_p: 0.95
+          temperature: 0.1,  // 极低temperature确保事实性，避免编造
+          top_p: 0.8  // 降低top_p提高确定性
         });
         
         console.log('✅ 标准格式调用完成，模型: ' + model);

@@ -128,14 +128,15 @@ export class HybridRAGService {
       }
     };
     
-    // 5. 存储到缓存（如果结果质量足够好）
-    if (finalResults.confidence >= 0.6 && finalResults.matches?.length > 0) {
+    // 5. 存储到缓存（提升质量门槛，避免低质量内容）
+    if (finalResults.confidence >= 0.8 && finalResults.matches?.length > 0 && this.validateContentQuality(finalResults.matches, query)) {
       await this.cacheService.storeInCache(
         query,
         finalResults,
         {
           queryType: queryExpansion.queryType,
-          confidence: finalResults.confidence
+          confidence: finalResults.confidence,
+          qualityValidated: true
         }
       );
     }
@@ -892,6 +893,46 @@ export class HybridRAGService {
         error: error.message
       };
     }
+  }
+
+  /**
+   * 验证内容质量 - 防止无关内容进入AI输入，避免编造
+   */
+  private validateContentQuality(matches: any[], query: string): boolean {
+    if (!matches || matches.length === 0) return false;
+    
+    const queryKeywords = this.extractKeywords(query.toLowerCase());
+    if (queryKeywords.length === 0) return false;
+    
+    // 检查每个匹配结果的相关性
+    let relevantMatches = 0;
+    
+    matches.forEach(match => {
+      const content = (match.content || '').toLowerCase();
+      const title = (match.title || '').toLowerCase();
+      
+      // 计算关键词匹配率
+      const keywordMatches = queryKeywords.filter(keyword => 
+        content.includes(keyword) || title.includes(keyword)
+      ).length;
+      
+      const matchRate = keywordMatches / queryKeywords.length;
+      
+      // 如果匹配率>=30%且内容长度合理，认为是相关内容
+      if (matchRate >= 0.3 && (match.content || '').length >= 50) {
+        relevantMatches++;
+      }
+    });
+    
+    // 至少50%的匹配结果必须是相关的
+    const relevancyRate = relevantMatches / matches.length;
+    const isQualityGood = relevancyRate >= 0.5;
+    
+    if (!isQualityGood) {
+      console.log(`⚠️ 内容质量验证失败: ${relevantMatches}/${matches.length} 相关匹配率=${(relevancyRate * 100).toFixed(1)}%`);
+    }
+    
+    return isQualityGood;
   }
 }
 
