@@ -5,13 +5,20 @@
 
 import { createOptimalRAGService } from '../lib/hybrid-rag-service';
 
-// AI创投系统提示词 - 使用OpenAI开源模型优化
+// AI创投系统提示词 - 强化结构化输出
 const BASE_SYSTEM_PROMPT = `你是凯瑞(Kerry)，硅谷科技评论(SVTR)的AI创投分析师，专注于为用户提供准确、有用的AI创投信息。
 
 核心要求：
 1. 直接回答用户问题，不要说"正在分析"或显示思考过程
-2. 基于SVTR平台数据提供专业回答
-3. 保持简洁、准确的回复风格
+2. 基于SVTR平台数据和最新网络信息提供专业回答
+3. **使用结构化格式输出，提升专业性和可读性**
+
+输出格式要求：
+• 对于数值查询（估值、融资等）：提供具体数字和时间节点
+• 对于趋势分析：使用要点列表或表格形式
+• 对于公司对比：提供对比表格或分点说明
+• 包含数据来源说明和时间范围
+• 重要信息用**粗体**标注，关键数字突出显示
 
 SVTR平台信息：
 • 追踪10,761+家全球AI公司
@@ -20,10 +27,18 @@ SVTR平台信息：
 • 每日更新最新AI创投动态
 • 创始人：Min Liu (Allen)
 
+专业回复模板：
+对于估值/融资查询，请按以下格式回复：
+**最新估值概览**
+1. **XXX亿美元** — 已确认的最新估值
+2. 融资时间：XXXX年XX月
+3. 投资方：主要投资机构名单
+4. 估值变化：与上轮对比情况
+
 联系方式引导：
 当用户询问投资机会、融资需求、项目对接、商业合作等敏感信息时，引导添加凯瑞微信：pkcapital2023，获得专业一对一服务。
 
-当前使用OpenAI GPT-OSS开源模型，具备强大的推理和分析能力。请直接回答用户问题，提供有价值的信息。`;
+使用最先进的AI模型和实时数据，确保信息准确性和时效性。请提供结构化、专业的回复。`;
 
 /**
  * 生成增强的系统提示词
@@ -271,10 +286,50 @@ export async function onRequestPost(context: any): Promise<Response> {
             const { done, value } = await reader.read();
             
             if (done) {
-              // 响应结束，添加来源信息
-              const sourceInfo = '\n\n---\n**📚 基于SVTR知识库** (' + ragContext.matches.length + '个匹配，置信度' + (ragContext.confidence * 100).toFixed(1) + '%):\n' + ragContext.sources.map((source, index) => (index + 1) + '. ' + source).join('\n');
+              // 响应结束，添加增强的来源信息 - GPT-5风格
+              const webSources = ragContext.matches.filter(m => m.source === 'web_search');
+              const knowledgeSources = ragContext.matches.filter(m => m.source !== 'web_search');
               
-              await writer.write(encoder.encode('data: ' + JSON.stringify({delta: {content: sourceInfo}}) + '\n\n'));
+              let sourceInfo = '\n\n---\n';
+              
+              // 如果有网络搜索结果，优先展示
+              if (webSources.length > 0) {
+                sourceInfo += '**🌐 实时数据来源**\n';
+                webSources.forEach((source, index) => {
+                  sourceInfo += `${index + 1}. **${source.title || '最新报道'}**`;
+                  if (source.publishDate) {
+                    sourceInfo += ` (${source.publishDate})`;
+                  }
+                  if (source.url) {
+                    sourceInfo += ` - [查看原文](${source.url})`;
+                  }
+                  sourceInfo += '\n';
+                });
+                sourceInfo += '\n';
+              }
+              
+              // SVTR知识库来源
+              if (knowledgeSources.length > 0) {
+                sourceInfo += '**📚 SVTR知识库** (';
+                sourceInfo += knowledgeSources.length + '个匹配，置信度' + (ragContext.confidence * 100).toFixed(1) + '%)\n';
+                ragContext.sources.slice(0, 5).forEach((source, index) => {
+                  sourceInfo += `${index + 1}. ${source}\n`;
+                });
+              }
+              
+              // 数据质量标识
+              if (ragContext.fromCache) {
+                sourceInfo += '\n*⚡ 缓存加速响应*';
+              }
+              if (ragContext.isRealtime) {
+                sourceInfo += '\n*🔄 包含实时网络数据*';
+              }
+              
+              // 使用与响应内容相同的格式发送来源信息
+              const sourceFormat = JSON.stringify({
+                response: sourceInfo
+              });
+              await writer.write(encoder.encode('data: ' + sourceFormat + '\n\n'));
               await writer.write(encoder.encode('data: [DONE]\n\n'));
               responseComplete = true;
             } else {

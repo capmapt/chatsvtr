@@ -772,57 +772,92 @@ export class HybridRAGService {
   }
 
   /**
-   * 判断是否需要网络搜索 - 优化版，减少误触发
+   * 判断是否需要网络搜索 - 优化版，更智能的触发条件
    */
   private shouldUseWebSearch(queryExpansion: any, originalQuery: string): boolean {
     const query = originalQuery.toLowerCase();
     
-    // 排除基础知识和定义类查询
-    const basicKnowledgeKeywords = ['什么是', 'what is', '怎么', 'how to', '如何', '定义', 'definition'];
+    // 排除基础知识和定义类查询 - 优化逻辑，优先基础概念解释
+    const basicKnowledgeKeywords = ['什么是', 'what is', '怎么做', 'how to', '定义', 'definition'];
     const isBasicKnowledge = basicKnowledgeKeywords.some(keyword => query.includes(keyword));
     
-    // 排除SVTR内部信息查询
-    const internalKeywords = ['svtr', '创始人', 'founder', '硅谷科技评论'];
-    const isInternalQuery = internalKeywords.some(keyword => query.includes(keyword));
+    // 排除SVTR内部信息查询（但允许SVTR vs其他公司的对比）
+    const internalOnlyKeywords = ['svtr', '创始人', 'founder', '硅谷科技评论'];
+    const hasOtherCompany = ['openai', 'anthropic', 'meta', 'google', 'microsoft', 'nvidia', 'tesla', 'apple'].some(company => query.includes(company));
+    const isInternalQuery = internalOnlyKeywords.some(keyword => query.includes(keyword)) && !hasOtherCompany;
     
-    // 如果是基础知识或内部信息查询，不使用网络搜索
+    // 如果是纯基础知识或纯内部信息查询，不使用网络搜索
     if (isBasicKnowledge || isInternalQuery) {
       return false;
     }
     
-    // 时效性敏感查询
-    const timeKeywords = ['最新', '2024', '2025', 'latest', 'recent', '估值', 'valuation', '融资', 'funding'];
+    // 扩大时效性关键词范围
+    const timeKeywords = [
+      '最新', '2024', '2025', 'latest', 'recent', 'new', 'current', '现在', '目前', '当前',
+      '估值', 'valuation', '融资', 'funding', '轮次', 'round', '投资', 'investment',
+      '价格', 'price', '股价', 'stock', '市值', 'market cap', '收购', 'acquisition'
+    ];
     const hasTimeKeywords = timeKeywords.some(keyword => query.includes(keyword.toLowerCase()));
     
-    // 特定公司实时信息查询
-    const companies = ['openai', 'anthropic', 'meta', 'google', 'microsoft', 'nvidia', 'tesla', 'apple'];
+    // 扩大公司名单，包含更多AI创投相关公司
+    const companies = [
+      'openai', 'anthropic', 'meta', 'google', 'microsoft', 'nvidia', 'tesla', 'apple', 
+      'amazon', 'facebook', 'alphabet', 'salesforce', 'oracle', 'adobe', 'uber',
+      'airbnb', 'stripe', 'spacex', 'bytedance', '字节跳动', '腾讯', '阿里巴巴', '百度'
+    ];
     const hasCompanyQuery = companies.some(company => query.includes(company));
     
-    // 市场数据查询（必须同时包含时效性关键词）
-    const marketKeywords = ['市场', 'market', '趋势', 'trend', '数据', 'data'];
+    // 扩大市场数据查询关键词
+    const marketKeywords = [
+      '市场', 'market', '趋势', 'trend', '数据', 'data', '报告', 'report',
+      '分析', 'analysis', '预测', 'forecast', '增长', 'growth', '收入', 'revenue'
+    ];
     const hasMarketQuery = marketKeywords.some(keyword => query.includes(keyword.toLowerCase()));
+    
+    // 金融和投资相关查询
+    const financeKeywords = ['ipo', '上市', '财报', 'earnings', '业绩', 'performance', '股东', 'investor'];
+    const hasFinanceQuery = financeKeywords.some(keyword => query.includes(keyword.toLowerCase()));
     
     // 查询类型判断
     const queryType = queryExpansion.queryType;
-    const realtimeQueryTypes = ['funding_info', 'company_analysis', 'market_trends'];
+    const realtimeQueryTypes = ['funding_info', 'company_analysis', 'market_trends', 'investment_analysis'];
     
-    // 严格的触发条件：需要同时满足公司+时效性 或 明确的实时查询类型
-    return (hasCompanyQuery && hasTimeKeywords) || 
-           (hasMarketQuery && hasTimeKeywords) || 
-           (realtimeQueryTypes.includes(queryType) && hasTimeKeywords) ||
-           (queryType === 'market_trends' && hasTimeKeywords); // 市场趋势类查询单独处理
+    // 分层触发逻辑：实时数据查询 > 基础概念查询
+    const hasRealtimeNeed = hasCompanyQuery ||                         // 任何公司查询
+                           hasFinanceQuery ||                          // 任何金融查询
+                           (hasMarketQuery && (hasTimeKeywords || query.includes('趋势'))) || // 市场+时效性或趋势
+                           (realtimeQueryTypes.includes(queryType)) ||  // 实时查询类型
+                           (hasTimeKeywords && query.length > 5) ||     // 时效性+非超短查询
+                           query.includes('多少') ||                     // 数值查询
+                           query.includes('how much') ||                // 英文数值查询  
+                           query.includes('最新') ||                     // 专门针对最新信息
+                           /\d{4}/.test(query);                         // 包含年份
+    
+    // 如果有实时数据需求，即使是基础知识查询也优先使用网络搜索（如：最新的OpenAI估值是什么意思）
+    // 如果是纯基础概念查询（如：什么是A轮融资），使用知识库
+    return hasRealtimeNeed && !isBasicKnowledge;
   }
 
   /**
-   * 执行网络搜索
+   * 执行网络搜索 - 增强版，更多结果和数据源
    */
   private async performWebSearch(searchQuery: string, queryExpansion: any, options: any): Promise<any> {
     try {
       const webResults = await this.webSearchService.performIntelligentSearch(searchQuery, {
-        maxResults: 3,
+        maxResults: 8,  // 增加到8个结果
         timeRange: 'recent',
-        sources: ['techcrunch', 'bloomberg', 'reuters', 'crunchbase'],
-        language: 'zh-CN'
+        sources: [
+          // 核心科技和金融媒体
+          'techcrunch', 'bloomberg', 'reuters', 'crunchbase',
+          // 扩展数据源
+          'theverge', 'wired', 'cnbc', 'forbes', 'wsj', 'ft',
+          // AI和创投专业媒体
+          'venturebeat', 'axios', 'theinformation', 'pitchbook'
+        ],
+        language: 'zh-CN',
+        includeMetadata: true,
+        enableComparison: true,
+        priorityDomains: ['bloomberg.com', 'reuters.com', 'techcrunch.com', 'crunchbase.com']
       });
 
       // 将网络搜索结果转换为RAG格式
