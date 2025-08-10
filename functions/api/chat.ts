@@ -5,26 +5,34 @@
 
 import { createOptimalRAGService } from '../lib/hybrid-rag-service';
 
-// AI创投系统提示词 - 强化结构化输出
+// AI创投系统提示词 - ChatGPT风格思考展示
 const BASE_SYSTEM_PROMPT = `你是凯瑞(Kerry)，硅谷科技评论(SVTR)的AI创投分析师，专注于为用户提供准确、有用的AI创投信息。
 
 核心要求：
-1. 直接回答用户问题，不要说"正在分析"或显示思考过程
-2. 基于SVTR平台数据和最新网络信息提供专业回答
-3. **使用结构化格式输出，提升专业性和可读性**
+1. 对于复杂的公司分析查询，先展示思考过程，再给出结果
+2. 基于SVTR AI创投库数据提供专业回答
+3. 使用结构化格式输出，提升专业性和可读性
+
+**思考过程展示格式（仅用于复杂分析）：**
+🤔 **分析思路**
+正在分析[公司名]的[具体问题]...
+考虑因素：[关键分析维度]...
+数据整合：[相关数据点]...
+
+**分析结果**
+[具体答案内容]
 
 输出格式要求：
 • 对于数值查询（估值、融资等）：提供具体数字和时间节点
 • 对于趋势分析：使用要点列表或表格形式
 • 对于公司对比：提供对比表格或分点说明
-• 包含数据来源说明和时间范围
 • 重要信息用**粗体**标注，关键数字突出显示
 
 SVTR平台信息：
 • 追踪10,761+家全球AI公司
 • 覆盖121,884+专业投资人和创业者
 • 提供AI周报、投资分析和市场洞察
-• 每日更新最新AI创投动态
+• 数据来源：SVTR AI创投库
 • 创始人：Min Liu (Allen)
 
 专业回复模板：
@@ -35,10 +43,17 @@ SVTR平台信息：
 3. 投资方：主要投资机构名单
 4. 估值变化：与上轮对比情况
 
-联系方式引导：
-当用户询问投资机会、融资需求、项目对接、商业合作等敏感信息时，引导添加凯瑞微信：pkcapital2023，获得专业一对一服务。
+标准引导语：
+• 数据来源：SVTR AI创投库
+• 涉及交易投资咨询：联系凯瑞微信 pkcapital2023
 
-使用最先进的AI模型和实时数据，确保信息准确性和时效性。请提供结构化、专业的回复。`;
+回复原则：
+• 对话框内直接给出核心答案，不要过多解释
+• 重点信息加粗显示，数据准确具体
+• 适当引导用户获取更多服务
+• 保持专业、简洁的回复风格
+
+请基于SVTR AI创投库数据，提供直接、专业的答案。`;
 
 /**
  * 生成增强的系统提示词
@@ -162,60 +177,63 @@ export async function onRequestPost(context: any): Promise<Response> {
     // 默认使用Llama 3.1模型（数字输出稳定且可用）
     let selectedModel = '@cf/meta/llama-3.1-8b-instruct';
     
-    // SVTR业务导向的智能模型选择策略
+    // SVTR业务导向的智能模型选择策略 - 优化思考展示
     const query = userQuery.toLowerCase();
     
-    // 1. AI创投数据分析场景 - 需要准确数字和专业分析
-    const isInvestmentAnalysis = query.includes('投资') || query.includes('融资') || 
-                                query.includes('估值') || query.includes('轮次') ||
-                                query.includes('亿') || query.includes('万') || query.includes('$') ||
-                                query.includes('独角兽') || query.includes('ipo') ||
-                                query.includes('上市') || query.includes('收购');
-    
-    // 2. 公司研究和市场分析 - 需要深度推理能力
-    const isCompanyResearch = query.includes('公司') || query.includes('startup') ||
+    // 1. 公司深度分析场景 - 需要思考过程和推理能力（优先级最高）
+    const isCompanyAnalysis = query.includes('公司') || query.includes('startup') ||
                              query.includes('创业') || query.includes('团队') ||
                              query.includes('ceo') || query.includes('创始人') ||
-                             query.includes('商业模式') || query.includes('竞争');
+                             query.includes('商业模式') || query.includes('竞争') ||
+                             query.includes('分析') || query.includes('怎么样') ||
+                             query.includes('如何看待') || query.includes('评价');
     
-    // 3. 技术和产品分析 - 代码和技术相关
+    // 2. AI创投数据查询场景 - 需要准确数字
+    const isDataQuery = query.includes('投资') || query.includes('融资') || 
+                        query.includes('估值') || query.includes('轮次') ||
+                        query.includes('亿') || query.includes('万') || query.includes('$') ||
+                        query.includes('独角兽') || query.includes('ipo') ||
+                        query.includes('上市') || query.includes('收购') ||
+                        query.includes('多少') || query.includes('最新');
+    
+    // 3. 技术产品分析 - 技术理解能力
     const isTechAnalysis = query.includes('技术') || query.includes('ai模型') ||
                           query.includes('算法') || query.includes('开源') ||
-                          query.includes('代码') || query.includes('programming') ||
-                          query.includes('api') || query.includes('github');
+                          query.includes('代码') || query.includes('api');
     
-    // 4. 行业趋势和宏观分析 - 需要综合推理
+    // 4. 市场趋势分析 - 综合推理
     const isTrendAnalysis = query.includes('趋势') || query.includes('发展') ||
                            query.includes('未来') || query.includes('预测') ||
-                           query.includes('市场') || query.includes('行业') ||
-                           query.includes('报告') || query.includes('分析');
+                           query.includes('市场') || query.includes('行业');
     
-    // 5. 简单咨询和FAQ
-    const isSimpleQuery = query.length < 30 && 
-                         !isInvestmentAnalysis && !isCompanyResearch && 
-                         !isTechAnalysis && !isTrendAnalysis;
+    // 5. 简单查询
+    const isSimpleQuery = query.length < 20 && !isCompanyAnalysis && !isDataQuery;
     
-    // 智能模型分配策略
-    if (isInvestmentAnalysis) {
-      // 投资分析优先数字稳定性，使用Llama 3.1
+    // 智能模型分配策略 - 优先推理能力
+    if (isCompanyAnalysis) {
+      // 公司分析优先推理能力，展示思考过程
+      selectedModel = '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b';
+      console.log('🏢 公司分析场景，使用DeepSeek R1（思考推理能力强）');
+    } else if (isDataQuery) {
+      // 数据查询优先数字稳定性
       selectedModel = '@cf/meta/llama-3.1-8b-instruct';
-      console.log('💰 投资分析场景，使用Llama 3.1（数字输出稳定）');
+      console.log('💰 数据查询场景，使用Llama 3.1（数字输出稳定）');
     } else if (isTechAnalysis) {
-      // 技术分析使用Qwen，代码理解能力强
+      // 技术分析使用Qwen，技术理解能力强
       selectedModel = '@cf/qwen/qwen1.5-14b-chat-awq';
       console.log('🔧 技术分析场景，使用Qwen 1.5（技术理解优秀）');
-    } else if (isCompanyResearch || isTrendAnalysis) {
-      // 复杂分析使用DeepSeek，推理能力强
+    } else if (isTrendAnalysis) {
+      // 趋势分析使用DeepSeek，推理能力强
       selectedModel = '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b';
-      console.log('📊 深度分析场景，使用DeepSeek R1（推理能力强）');
+      console.log('📈 趋势分析场景，使用DeepSeek R1（推理能力强）');
     } else if (isSimpleQuery) {
-      // 简单查询使用Llama 3.1，响应快且稳定
+      // 简单查询使用Llama 3.1，响应快
       selectedModel = '@cf/meta/llama-3.1-8b-instruct';
-      console.log('💡 简单咨询，使用Llama 3.1（响应迅速）');
+      console.log('💡 简单查询，使用Llama 3.1（响应迅速）');
     } else {
-      // 默认场景使用Llama 3.1，平衡性能和稳定性
-      selectedModel = '@cf/meta/llama-3.1-8b-instruct';
-      console.log('🚀 默认场景，使用Llama 3.1（综合表现最佳）');
+      // 默认使用DeepSeek，提供更好的分析能力
+      selectedModel = '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b';
+      console.log('🚀 默认场景，使用DeepSeek R1（综合推理能力强）');
     }
     
     // 模型调用，失败时使用fallback
@@ -286,44 +304,28 @@ export async function onRequestPost(context: any): Promise<Response> {
             const { done, value } = await reader.read();
             
             if (done) {
-              // 响应结束，添加增强的来源信息 - GPT-5风格
-              const webSources = ragContext.matches.filter(m => m.source === 'web_search');
-              const knowledgeSources = ragContext.matches.filter(m => m.source !== 'web_search');
+              // 响应结束，添加智能数据来源标注
+              const hasRealTimeData = ragContext.matches.some(m => m.source === 'web_search' || m.source === 'DuckDuckGo');
               
               let sourceInfo = '\n\n---\n';
               
-              // 如果有网络搜索结果，优先展示
-              if (webSources.length > 0) {
-                sourceInfo += '**🌐 实时数据来源**\n';
-                webSources.forEach((source, index) => {
-                  sourceInfo += `${index + 1}. **${source.title || '最新报道'}**`;
-                  if (source.publishDate) {
-                    sourceInfo += ` (${source.publishDate})`;
-                  }
-                  if (source.url) {
-                    sourceInfo += ` - [查看原文](${source.url})`;
-                  }
-                  sourceInfo += '\n';
-                });
-                sourceInfo += '\n';
+              if (hasRealTimeData) {
+                sourceInfo += '**🌐 数据来源：SVTR AI创投库 + 实时搜索**\n';
+                sourceInfo += '结合权威知识库数据与最新网络信息\n';
+              } else {
+                sourceInfo += '**📊 数据来源：SVTR AI创投库**\n';
+                sourceInfo += '基于专业AI创投数据库的权威分析\n';
               }
               
-              // SVTR知识库来源
-              if (knowledgeSources.length > 0) {
-                sourceInfo += '**📚 SVTR知识库** (';
-                sourceInfo += knowledgeSources.length + '个匹配，置信度' + (ragContext.confidence * 100).toFixed(1) + '%)\n';
-                ragContext.sources.slice(0, 5).forEach((source, index) => {
-                  sourceInfo += `${index + 1}. ${source}\n`;
-                });
+              // 如果有匹配的内容，显示数据规模和匹配情况
+              if (ragContext.matches && ragContext.matches.length > 0) {
+                sourceInfo += `追踪10,761+家全球AI公司，${ragContext.matches.length}个相关匹配\n`;
+                sourceInfo += `数据置信度：${(ragContext.confidence * 100).toFixed(1)}%\n`;
               }
               
-              // 数据质量标识
-              if (ragContext.fromCache) {
-                sourceInfo += '\n*⚡ 缓存加速响应*';
-              }
-              if (ragContext.isRealtime) {
-                sourceInfo += '\n*🔄 包含实时网络数据*';
-              }
+              // 商业合作引导
+              sourceInfo += '\n**💼 投资交易咨询**\n';
+              sourceInfo += '联系凯瑞微信：**pkcapital2023**';
               
               // 使用与响应内容相同的格式发送来源信息
               const sourceFormat = JSON.stringify({

@@ -33,12 +33,12 @@ export class HybridRAGService {
     this.cacheService = createSemanticCacheService(kvNamespace);
     this.webSearchService = createWebSearchService(webSearchConfig);
     
-    // 智能配置：根据可用资源自动选择策略
+    // 智能配置：根据可用资源自动选择策略 - 混合知识库+实时搜索
     this.config = {
       useOpenAI: !!openaiApiKey,
       useCloudflareAI: !!ai,
       useKeywordSearch: true,
-      useWebSearch: true, // 默认启用网络搜索
+      useWebSearch: true, // 启用改进的网络搜索
       fallbackEnabled: true
     };
   }
