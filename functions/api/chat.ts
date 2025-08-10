@@ -98,18 +98,18 @@ export async function onRequestPost(context: any): Promise<Response> {
       'X-Accel-Buffering': 'no',
     });
 
-    // 智能模型选择策略 - 优先使用OpenAI开源模型
+    // 智能模型选择策略 - 修复数字显示问题，使用数字输出稳定的模型
     const modelPriority = [
-      '@cf/openai/gpt-oss-120b',                      // OpenAI最新开源大模型 (117B参数)
-      '@cf/openai/gpt-oss-20b',                       // OpenAI轻量级开源模型 (21B参数)
-      '@cf/meta/llama-3.3-70b-instruct',              // Meta Llama备用模型
-      '@cf/qwen/qwen2.5-coder-32b-instruct',          // 代码专用模型
+      '@cf/meta/llama-3.1-8b-instruct',               // Meta Llama 3.1稳定模型 (数字输出正常)
+      '@cf/qwen/qwen1.5-14b-chat-awq',                // Qwen 1.5稳定版本 (数字处理良好)
       '@cf/deepseek-ai/deepseek-r1-distill-qwen-32b', // DeepSeek推理模型
-      '@cf/qwen/qwen1.5-14b-chat-awq'                 // 稳定fallback
+      '@cf/meta/llama-3.3-70b-instruct',              // Meta Llama 3.3 (可能不存在)
+      '@cf/qwen/qwen2.5-coder-32b-instruct',          // Qwen代码模型 (数字输出异常)
+      '@cf/openai/gpt-oss-120b'                       // OpenAI开源模型 (数字输出异常)
     ];
     
-    // 默认使用OpenAI GPT-OSS 120B模型
-    let selectedModel = '@cf/openai/gpt-oss-120b';
+    // 默认使用Llama 3.1模型（数字输出稳定且可用）
+    let selectedModel = '@cf/meta/llama-3.1-8b-instruct';
     
     // 智能模型选择逻辑 - 按优先级判断
     const isCodeRelated = userQuery.toLowerCase().includes('code') || 
@@ -130,15 +130,15 @@ export async function onRequestPost(context: any): Promise<Response> {
                          !userQuery.includes('公司');
     
     if (isCodeRelated) {
-      selectedModel = '@cf/openai/gpt-oss-120b';
-      console.log('🔧 检测到代码相关问题，使用OpenAI大模型');
+      selectedModel = '@cf/qwen/qwen1.5-14b-chat-awq';
+      console.log('🔧 检测到代码相关问题，使用Qwen 1.5稳定模型');
     } else if (isSimpleQuery) {
-      selectedModel = '@cf/openai/gpt-oss-20b';
-      console.log('💡 简单问题，使用OpenAI轻量级模型优化响应速度');
+      selectedModel = '@cf/meta/llama-3.1-8b-instruct';
+      console.log('💡 简单问题，使用Llama 3.1稳定模型');
     } else {
-      // 默认使用OpenAI大模型处理AI创投相关复杂问题
-      selectedModel = '@cf/openai/gpt-oss-120b';
-      console.log('🚀 使用OpenAI大模型处理专业问题');
+      // 默认使用Llama 3.1模型处理AI创投相关复杂问题（数字输出稳定）
+      selectedModel = '@cf/meta/llama-3.1-8b-instruct';
+      console.log('🚀 使用Llama 3.1稳定模型处理专业问题');
     }
     
     // 模型调用，失败时使用fallback
@@ -149,34 +149,18 @@ export async function onRequestPost(context: any): Promise<Response> {
         
         console.log('📋 调用参数准备中...');
         
-        // OpenAI GPT-OSS模型使用标准messages格式（修正）
-        if (model.includes('@cf/openai/gpt-oss')) {
-          console.log('🔄 使用OpenAI GPT-OSS标准格式');
-          
-          // OpenAI GPT-OSS模型实际使用标准messages格式
-          response = await env.AI.run(model, {
-            messages: messagesWithEnhancedSystem,
-            stream: true,
-            max_tokens: 4096,
-            temperature: 0.8
-          });
-          
-          console.log('✅ OpenAI GPT-OSS格式调用完成');
-          
-        } else {
-          console.log('🔄 使用标准messages格式');
-          
-          // 其他模型使用标准messages格式
-          response = await env.AI.run(model, {
-            messages: messagesWithEnhancedSystem,
-            stream: true,
-            max_tokens: 4096,
-            temperature: 0.8,
-            top_p: 0.95,
-          });
-          
-          console.log('✅ 标准格式调用完成');
-        }
+        console.log('🔄 使用标准messages格式');
+        
+        // 所有模型统一使用标准messages格式，确保数字输出一致性
+        response = await env.AI.run(model, {
+          messages: messagesWithEnhancedSystem,
+          stream: true,
+          max_tokens: 4096,
+          temperature: 0.7,  // 降低temperature提高数字输出稳定性
+          top_p: 0.95,
+        });
+        
+        console.log('✅ 标准格式调用完成，模型: ' + model);
         
         console.log('✅ 成功使用模型: ' + model);
         break;
@@ -225,13 +209,15 @@ export async function onRequestPost(context: any): Promise<Response> {
                   try {
                     const data = JSON.parse(line.slice(6));
                     if (data.response) {
-                      // 数字丢失调试 - 记录原始AI响应
+                      // 数字输出调试 - 详细记录AI响应
                       const content = data.response;
                       const hasNumbers = /\d/.test(content);
                       if (hasNumbers) {
+                        const numbers = content.match(/\d+/g) || [];
                         console.log('🔢 AI模型输出包含数字:', content);
-                      } else if (content && content.length > 0) {
-                        console.log('⚠️ AI模型输出不含数字:', content);
+                        console.log('🔢 提取到的数字:', numbers.join(', '));
+                      } else if (content && content.length > 5) {
+                        console.log('⚠️ AI模型输出不含数字 (长度' + content.length + '):', content.substring(0, 50) + '...');
                       }
                       
                       // 转换为前端期望的格式
@@ -290,13 +276,15 @@ export async function onRequestPost(context: any): Promise<Response> {
               try {
                 const data = JSON.parse(line.slice(6));
                 if (data.response) {
-                  // 数字丢失调试 - 记录原始AI响应
+                  // 数字输出调试 - 详细记录AI响应（无RAG版本）
                   const content = data.response;
                   const hasNumbers = /\d/.test(content);
                   if (hasNumbers) {
+                    const numbers = content.match(/\d+/g) || [];
                     console.log('🔢 AI模型输出包含数字:', content);
-                  } else if (content && content.length > 0) {
-                    console.log('⚠️ AI模型输出不含数字:', content);
+                    console.log('🔢 提取到的数字:', numbers.join(', '));
+                  } else if (content && content.length > 5) {
+                    console.log('⚠️ AI模型输出不含数字 (长度' + content.length + '):', content.substring(0, 50) + '...');
                   }
                   
                   // 转换为前端期望的格式
