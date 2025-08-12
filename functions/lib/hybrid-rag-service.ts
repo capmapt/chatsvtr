@@ -4,9 +4,7 @@
  * 增强版：集成查询扩展和语义优化
  */
 
-import { createQueryExpansionService, QueryExpansionService, QueryType } from './query-expansion-service';
-import { createSemanticCacheService, SemanticCacheService } from './semantic-cache-service';
-import { createWebSearchService, WebSearchService } from './web-search-service';
+// 移除不存在的依赖服务，使用内联实现
 
 interface HybridRAGConfig {
   useOpenAI: boolean;
@@ -21,9 +19,6 @@ export class HybridRAGService {
   private vectorize: any;
   private ai: any;
   private openaiApiKey?: string;
-  private queryExpansionService: QueryExpansionService;
-  private cacheService: SemanticCacheService;
-  private webSearchService: WebSearchService;
   private requestContext?: Request;
 
   constructor(vectorize: any, ai: any, openaiApiKey?: string, kvNamespace?: any, webSearchConfig?: any, requestContext?: Request) {
@@ -31,9 +26,6 @@ export class HybridRAGService {
     this.ai = ai;
     this.openaiApiKey = openaiApiKey;
     this.requestContext = requestContext;
-    this.queryExpansionService = createQueryExpansionService();
-    this.cacheService = createSemanticCacheService(kvNamespace);
-    this.webSearchService = createWebSearchService(webSearchConfig);
     
     // 智能配置：根据可用资源自动选择策略 - 混合知识库+实时搜索
     this.config = {
@@ -46,11 +38,11 @@ export class HybridRAGService {
   }
 
   /**
-   * 智能检索：多策略并行 + 查询扩展增强 + 语义缓存 + 联系方式过滤
+   * 智能检索：简化版，专注核心RAG功能
    */
   async performIntelligentRAG(query: string, options: any = {}) {
     const startTime = Date.now();
-    console.log('🔍 开始智能RAG检索 (增强版 + 缓存)');
+    console.log('🔍 开始RAG检索...');
     
     // 特殊处理：联系方式查询验证
     const isContactQuery = this.isContactInfoQuery(query);
@@ -60,62 +52,18 @@ export class HybridRAGService {
       options.strictFiltering = true;
     }
     
-    // 1. 查询扩展和分析
-    const queryExpansion = this.queryExpansionService.expandQuery(query, {
-      includeContext: true,
-      maxExpansions: 8,
-      confidenceThreshold: 0.4
-    });
-    
-    console.log(`📈 查询扩展完成: 类型=${queryExpansion.queryType}, 置信度=${(queryExpansion.confidence * 100).toFixed(1)}%`);
-    
-    // 2. 检查语义缓存
-    const cacheHit = await this.cacheService.checkCache(query, queryExpansion.queryType, {
-      useSemanticMatch: true,
-      maxCandidates: 5
-    });
-    
-    if (cacheHit && cacheHit.confidence >= 0.8) {
-      console.log(`⚡ 缓存命中 (${cacheHit.isExact ? '精确' : '语义'}): ${(cacheHit.confidence * 100).toFixed(1)}%`);
-      return {
-        ...cacheHit.entry.results,
-        queryExpansion,
-        searchQuery: queryExpansion.expandedQuery,
-        fromCache: true,
-        cacheHit: {
-          similarity: cacheHit.similarity,
-          isExact: cacheHit.isExact,
-          responseTime: Date.now() - startTime
-        },
-        enhancedFeatures: {
-          queryExpansion: true,
-          semanticCaching: true,
-          cacheAccelerated: true
-        }
-      };
-    }
-    
-    // 3. 缓存未命中，执行完整检索
-    console.log('💫 执行完整RAG检索 + 网络搜索...');
-    const searchQuery = queryExpansion.expandedQuery;
     const strategies = [];
     
     // 策略1: 向量检索（如果可用）
     if (this.config.useOpenAI || this.config.useCloudflareAI) {
-      strategies.push(this.vectorSearch(searchQuery, { ...options, originalQuery: query, expansion: queryExpansion }));
+      strategies.push(this.vectorSearch(query, options));
     }
     
-    // 策略2: 增强关键词检索
-    strategies.push(this.enhancedKeywordSearch(searchQuery, queryExpansion, options));
+    // 策略2: 关键词检索
+    strategies.push(this.keywordSearch(query, options));
     
     // 策略3: 语义模式匹配
-    strategies.push(this.semanticPatternMatch(searchQuery, { ...options, queryType: queryExpansion.queryType }));
-    
-    // 策略4: 实时网络搜索（新增）
-    if (this.config.useWebSearch && this.shouldUseWebSearch(queryExpansion, query)) {
-      console.log('🌐 启动实时网络搜索...');
-      strategies.push(this.performWebSearch(searchQuery, queryExpansion, options));
-    }
+    strategies.push(this.semanticPatternMatch(query, options));
     
     // 并行执行所有策略
     const results = await Promise.allSettled(strategies);
@@ -123,33 +71,16 @@ export class HybridRAGService {
     // 合并和排序结果
     const mergedResults = this.mergeResults(results, query);
     
-    // 4. 构建最终结果
+    // 构建最终结果
     const finalResults = {
       ...mergedResults,
-      queryExpansion,
-      searchQuery,
+      searchQuery: query,
       fromCache: false,
       responseTime: Date.now() - startTime,
       enhancedFeatures: {
-        queryExpansion: true,
-        semanticEnhancement: true,
-        multiStrategyRetrieval: true,
-        semanticCaching: true
+        multiStrategyRetrieval: true
       }
     };
-    
-    // 5. 存储到缓存（提升质量门槛，避免低质量内容）
-    if (finalResults.confidence >= 0.8 && finalResults.matches?.length > 0 && this.validateContentQuality(finalResults.matches, query)) {
-      await this.cacheService.storeInCache(
-        query,
-        finalResults,
-        {
-          queryType: queryExpansion.queryType,
-          confidence: finalResults.confidence,
-          qualityValidated: true
-        }
-      );
-    }
     
     return finalResults;
   }
@@ -198,47 +129,6 @@ export class HybridRAGService {
     };
   }
 
-  /**
-   * 增强关键词检索（使用查询扩展）
-   */
-  private async enhancedKeywordSearch(expandedQuery: string, queryExpansion: any, options: any) {
-    try {
-      // 提取原始和扩展的关键词
-      const originalKeywords = this.extractKeywords(queryExpansion.originalQuery);
-      const expandedKeywords = this.extractKeywords(expandedQuery);
-      const synonyms = queryExpansion.synonyms || [];
-      
-      // 合并所有搜索词，带权重
-      const weightedKeywords = [
-        ...originalKeywords.map(k => ({ term: k, weight: 1.0, type: 'original' })),
-        ...expandedKeywords.filter(k => !originalKeywords.includes(k)).map(k => ({ term: k, weight: 0.8, type: 'expanded' })),
-        ...synonyms.slice(0, 5).map(k => ({ term: k, weight: 0.6, type: 'synonym' }))
-      ];
-
-      console.log(`🔍 增强关键词检索: ${weightedKeywords.length} 个搜索词`);
-
-      // 查找匹配
-      const matches = await this.findWeightedKeywordMatches(weightedKeywords);
-      
-      // 基于查询类型调整评分
-      const typeAdjustedMatches = this.adjustScoresByQueryType(matches, queryExpansion.queryType);
-      
-      return {
-        matches: typeAdjustedMatches.map(match => ({
-          ...match,
-          score: match.keywordScore,
-          source: 'enhanced_keyword',
-          matchDetails: match.matchDetails
-        })),
-        source: 'enhanced_keyword',
-        searchTerms: weightedKeywords.length
-      };
-
-    } catch (error) {
-      console.log('增强关键词检索失败，回退到基础检索');
-      return this.keywordSearch(queryExpansion.originalQuery, options);
-    }
-  }
 
   /**
    * 语义模式匹配
@@ -667,109 +557,7 @@ export class HybridRAGService {
     }
   }
 
-  /**
-   * 加权关键词匹配 - 增强联系方式过滤
-   */
-  private async findWeightedKeywordMatches(weightedKeywords: any[], options: any = {}) {
-    const documents = await this.getStoredDocuments();
-    const matches = [];
 
-    documents.forEach(doc => {
-      const content = (doc.content || '').toLowerCase();
-      const title = (doc.title || '').toLowerCase();
-      
-      // 联系方式查询特殊过滤
-      if (options.contactInfoQuery) {
-        const isThirdPartyCompany = this.containsThirdPartyContactInfo(content, title);
-        if (isThirdPartyCompany) {
-          console.log(`🚫 过滤第三方联系信息: ${doc.title}`);
-          return; // 跳过包含第三方公司联系信息的文档
-        }
-        
-        // 只保留明确包含SVTR官方联系信息的内容
-        const containsSVTROfficialInfo = this.containsSVTRContactInfo(content, title);
-        if (!containsSVTROfficialInfo) {
-          return; // 跳过不包含SVTR官方信息的文档
-        }
-      }
-      
-      let totalScore = 0;
-      let matchedTerms = 0;
-      const matchDetails = { original: 0, expanded: 0, synonym: 0 };
-
-      weightedKeywords.forEach(({ term, weight, type }) => {
-        const termLower = term.toLowerCase();
-        const contentMatches = (content.match(new RegExp(termLower, 'gi')) || []).length;
-        const titleMatches = (title.match(new RegExp(termLower, 'gi')) || []).length;
-        
-        if (contentMatches > 0 || titleMatches > 0) {
-          matchedTerms++;
-          matchDetails[type]++;
-          
-          // 计算加权分数
-          const contentScore = contentMatches * 0.7 * weight;
-          const titleScore = titleMatches * 1.2 * weight; // 标题匹配更重要
-          totalScore += contentScore + titleScore;
-        }
-      });
-
-      if (totalScore > 0) {
-        matches.push({
-          ...doc,
-          keywordScore: Math.min(totalScore / weightedKeywords.length, 1.0),
-          matchedTerms,
-          matchDetails,
-          type: 'weighted_keyword_match',
-          contactFiltered: options.contactInfoQuery || false
-        });
-      }
-    });
-
-    return matches.sort((a, b) => b.keywordScore - a.keywordScore);
-  }
-
-  /**
-   * 根据查询类型调整分数
-   */
-  private adjustScoresByQueryType(matches: any[], queryType: any) {
-    const typeBoosts = {
-      'company_search': { companyKeywords: 1.3, generalContent: 1.0 },
-      'investment_analysis': { investmentKeywords: 1.3, marketData: 1.2 },
-      'market_trends': { trendKeywords: 1.3, analysisContent: 1.1 },
-      'technology_info': { techKeywords: 1.3, productInfo: 1.2 },
-      'funding_info': { fundingKeywords: 1.4, financialData: 1.2 },
-      'team_evaluation': { teamKeywords: 1.3, leadershipContent: 1.1 }
-    };
-
-    if (!typeBoosts[queryType]) return matches;
-
-    return matches.map(match => {
-      let boost = 1.0;
-      const content = (match.content || '').toLowerCase();
-      
-      // 根据内容类型应用不同的加权
-      if (queryType === 'company_search' && 
-         (content.includes('公司') || content.includes('企业') || content.includes('startup'))) {
-        boost *= 1.3;
-      }
-      
-      if (queryType === 'investment_analysis' && 
-         (content.includes('投资') || content.includes('融资') || content.includes('investment'))) {
-        boost *= 1.3;
-      }
-
-      if (queryType === 'funding_info' && 
-         (content.includes('轮次') || content.includes('估值') || content.includes('round'))) {
-        boost *= 1.4;
-      }
-
-      return {
-        ...match,
-        keywordScore: Math.min(match.keywordScore * boost, 1.0),
-        typeBoost: boost
-      };
-    });
-  }
 
   /**
    * 关键词评分算法
@@ -801,128 +589,7 @@ export class HybridRAGService {
     return Math.min((score + coverageBonus * 0.3) * 2, 1.0);
   }
 
-  /**
-   * 判断是否需要网络搜索 - 优化版，更智能的触发条件
-   */
-  private shouldUseWebSearch(queryExpansion: any, originalQuery: string): boolean {
-    const query = originalQuery.toLowerCase();
-    
-    // 排除基础知识和定义类查询 - 优化逻辑，优先基础概念解释
-    const basicKnowledgeKeywords = ['什么是', 'what is', '怎么做', 'how to', '定义', 'definition'];
-    const isBasicKnowledge = basicKnowledgeKeywords.some(keyword => query.includes(keyword));
-    
-    // 排除SVTR内部信息查询（但允许SVTR vs其他公司的对比）
-    const internalOnlyKeywords = ['svtr', '创始人', 'founder', '硅谷科技评论'];
-    const hasOtherCompany = ['openai', 'anthropic', 'meta', 'google', 'microsoft', 'nvidia', 'tesla', 'apple'].some(company => query.includes(company));
-    const isInternalQuery = internalOnlyKeywords.some(keyword => query.includes(keyword)) && !hasOtherCompany;
-    
-    // 如果是纯基础知识或纯内部信息查询，不使用网络搜索
-    if (isBasicKnowledge || isInternalQuery) {
-      return false;
-    }
-    
-    // 扩大时效性关键词范围
-    const timeKeywords = [
-      '最新', '2024', '2025', 'latest', 'recent', 'new', 'current', '现在', '目前', '当前',
-      '估值', 'valuation', '融资', 'funding', '轮次', 'round', '投资', 'investment',
-      '价格', 'price', '股价', 'stock', '市值', 'market cap', '收购', 'acquisition'
-    ];
-    const hasTimeKeywords = timeKeywords.some(keyword => query.includes(keyword.toLowerCase()));
-    
-    // 扩大公司名单，包含更多AI创投相关公司
-    const companies = [
-      'openai', 'anthropic', 'meta', 'google', 'microsoft', 'nvidia', 'tesla', 'apple', 
-      'amazon', 'facebook', 'alphabet', 'salesforce', 'oracle', 'adobe', 'uber',
-      'airbnb', 'stripe', 'spacex', 'bytedance', '字节跳动', '腾讯', '阿里巴巴', '百度'
-    ];
-    const hasCompanyQuery = companies.some(company => query.includes(company));
-    
-    // 扩大市场数据查询关键词
-    const marketKeywords = [
-      '市场', 'market', '趋势', 'trend', '数据', 'data', '报告', 'report',
-      '分析', 'analysis', '预测', 'forecast', '增长', 'growth', '收入', 'revenue'
-    ];
-    const hasMarketQuery = marketKeywords.some(keyword => query.includes(keyword.toLowerCase()));
-    
-    // 金融和投资相关查询
-    const financeKeywords = ['ipo', '上市', '财报', 'earnings', '业绩', 'performance', '股东', 'investor'];
-    const hasFinanceQuery = financeKeywords.some(keyword => query.includes(keyword.toLowerCase()));
-    
-    // 查询类型判断
-    const queryType = queryExpansion.queryType;
-    const realtimeQueryTypes = ['funding_info', 'company_analysis', 'market_trends', 'investment_analysis'];
-    
-    // 分层触发逻辑：实时数据查询 > 基础概念查询
-    const hasRealtimeNeed = hasCompanyQuery ||                         // 任何公司查询
-                           hasFinanceQuery ||                          // 任何金融查询
-                           (hasMarketQuery && (hasTimeKeywords || query.includes('趋势'))) || // 市场+时效性或趋势
-                           (realtimeQueryTypes.includes(queryType)) ||  // 实时查询类型
-                           (hasTimeKeywords && query.length > 5) ||     // 时效性+非超短查询
-                           query.includes('多少') ||                     // 数值查询
-                           query.includes('how much') ||                // 英文数值查询  
-                           query.includes('最新') ||                     // 专门针对最新信息
-                           /\d{4}/.test(query);                         // 包含年份
-    
-    // 如果有实时数据需求，即使是基础知识查询也优先使用网络搜索（如：最新的OpenAI估值是什么意思）
-    // 如果是纯基础概念查询（如：什么是A轮融资），使用知识库
-    return hasRealtimeNeed && !isBasicKnowledge;
-  }
 
-  /**
-   * 执行网络搜索 - 增强版，更多结果和数据源
-   */
-  private async performWebSearch(searchQuery: string, queryExpansion: any, options: any): Promise<any> {
-    try {
-      const webResults = await this.webSearchService.performIntelligentSearch(searchQuery, {
-        maxResults: 8,  // 增加到8个结果
-        timeRange: 'recent',
-        sources: [
-          // 核心科技和金融媒体
-          'techcrunch', 'bloomberg', 'reuters', 'crunchbase',
-          // 扩展数据源
-          'theverge', 'wired', 'cnbc', 'forbes', 'wsj', 'ft',
-          // AI和创投专业媒体
-          'venturebeat', 'axios', 'theinformation', 'pitchbook'
-        ],
-        language: 'zh-CN',
-        includeMetadata: true,
-        enableComparison: true,
-        priorityDomains: ['bloomberg.com', 'reuters.com', 'techcrunch.com', 'crunchbase.com']
-      });
-
-      // 将网络搜索结果转换为RAG格式
-      const ragMatches = webResults.map((result: any) => ({
-        id: `web-${Math.random().toString(36).substr(2, 9)}`,
-        content: result.content,
-        title: result.title,
-        score: result.relevanceScore,
-        source: 'web_search',
-        url: result.url,
-        publishDate: result.publishDate,
-        verified: result.verified,
-        type: 'web_search_result',
-        isRealtime: true
-      }));
-
-      console.log(`🌐 网络搜索完成: ${ragMatches.length}个结果`);
-
-      return {
-        matches: ragMatches,
-        source: 'web_search',
-        isRealtime: true,
-        searchQuery: searchQuery,
-        resultCount: ragMatches.length
-      };
-
-    } catch (error) {
-      console.log('🌐 网络搜索失败:', error.message);
-      return {
-        matches: [],
-        source: 'web_search_failed',
-        error: error.message
-      };
-    }
-  }
 
   /**
    * 检测是否为联系方式查询
