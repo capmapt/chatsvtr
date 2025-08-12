@@ -44,11 +44,19 @@ export class HybridRAGService {
   }
 
   /**
-   * 智能检索：多策略并行 + 查询扩展增强 + 语义缓存
+   * 智能检索：多策略并行 + 查询扩展增强 + 语义缓存 + 联系方式过滤
    */
   async performIntelligentRAG(query: string, options: any = {}) {
     const startTime = Date.now();
     console.log('🔍 开始智能RAG检索 (增强版 + 缓存)');
+    
+    // 特殊处理：联系方式查询验证
+    const isContactQuery = this.isContactInfoQuery(query);
+    if (isContactQuery) {
+      console.log('📞 检测到联系方式查询，启用特殊过滤逻辑');
+      options.contactInfoQuery = true;
+      options.strictFiltering = true;
+    }
     
     // 1. 查询扩展和分析
     const queryExpansion = this.queryExpansionService.expandQuery(query, {
@@ -655,15 +663,30 @@ export class HybridRAGService {
   }
 
   /**
-   * 加权关键词匹配
+   * 加权关键词匹配 - 增强联系方式过滤
    */
-  private async findWeightedKeywordMatches(weightedKeywords: any[]) {
+  private async findWeightedKeywordMatches(weightedKeywords: any[], options: any = {}) {
     const documents = await this.getStoredDocuments();
     const matches = [];
 
     documents.forEach(doc => {
       const content = (doc.content || '').toLowerCase();
       const title = (doc.title || '').toLowerCase();
+      
+      // 联系方式查询特殊过滤
+      if (options.contactInfoQuery) {
+        const isThirdPartyCompany = this.containsThirdPartyContactInfo(content, title);
+        if (isThirdPartyCompany) {
+          console.log(`🚫 过滤第三方联系信息: ${doc.title}`);
+          return; // 跳过包含第三方公司联系信息的文档
+        }
+        
+        // 只保留明确包含SVTR官方联系信息的内容
+        const containsSVTROfficialInfo = this.containsSVTRContactInfo(content, title);
+        if (!containsSVTROfficialInfo) {
+          return; // 跳过不包含SVTR官方信息的文档
+        }
+      }
       
       let totalScore = 0;
       let matchedTerms = 0;
@@ -691,7 +714,8 @@ export class HybridRAGService {
           keywordScore: Math.min(totalScore / weightedKeywords.length, 1.0),
           matchedTerms,
           matchDetails,
-          type: 'weighted_keyword_match'
+          type: 'weighted_keyword_match',
+          contactFiltered: options.contactInfoQuery || false
         });
       }
     });
@@ -893,6 +917,89 @@ export class HybridRAGService {
         error: error.message
       };
     }
+  }
+
+  /**
+   * 检测是否为联系方式查询
+   */
+  private isContactInfoQuery(query: string): boolean {
+    const queryLower = query.toLowerCase();
+    const contactKeywords = [
+      '联系方式', '联系', 'contact', '联系我们', '联系信息',
+      '电话', 'phone', '手机', 'mobile', 'tel',
+      '邮箱', 'email', '邮件', 'mail',
+      '地址', 'address', '位置', 'location',
+      '微信', 'wechat', 'wx',
+      '官网', 'website', 'site', 'url',
+      '如何联系', 'how to contact', '怎么联系',
+      'svtr联系', 'svtr contact', '硅谷科技评论联系'
+    ];
+    
+    return contactKeywords.some(keyword => queryLower.includes(keyword));
+  }
+
+  /**
+   * 检测内容是否包含第三方公司联系信息（需要过滤掉）
+   */
+  private containsThirdPartyContactInfo(content: string, title: string): boolean {
+    const fullText = `${content} ${title}`.toLowerCase();
+    
+    // 第三方公司关键词（从RAG数据中发现的）
+    const thirdPartyCompanies = [
+      'glean', 'kleiner perkins', 'menlo park', 'palo alto',
+      '凯鹏华盈', '门洛帕克', 'carta', 'discord', 'consensus',
+      '5400 sand hill', 'sand hill road', '650 543 4800',
+      'info@svtr.ai', // 这个邮箱在代码中未找到，可能是错误信息
+      'openai', 'anthropic', 'meta', 'google'
+    ];
+    
+    // 第三方地址模式
+    const thirdPartyAddressPatterns = [
+      /menlo park.*ca.*94025/i,
+      /5400.*sand.*hill.*rd/i,
+      /suite.*200.*menlo.*park/i
+    ];
+    
+    const hasThirdPartyCompany = thirdPartyCompanies.some(company => 
+      fullText.includes(company.toLowerCase())
+    );
+    
+    const hasThirdPartyAddress = thirdPartyAddressPatterns.some(pattern => 
+      pattern.test(fullText)
+    );
+    
+    return hasThirdPartyCompany || hasThirdPartyAddress;
+  }
+
+  /**
+   * 检测内容是否包含SVTR官方联系信息
+   */
+  private containsSVTRContactInfo(content: string, title: string): boolean {
+    const fullText = `${content} ${title}`.toLowerCase();
+    
+    // SVTR官方确认的联系信息
+    const svtrOfficialKeywords = [
+      'pkcapital2023',           // 官方微信号
+      'svtr.ai',                 // 官网
+      'https://svtr.ai',         // 官网完整URL
+      'contact@svtr.ai',         // 官方邮箱
+      'svtr', 'svtr.ai',         // 品牌名称
+      '硅谷科技评论', '凯瑞',      // 中文品牌名
+      '联系我们', '联系方式'       // 通用联系页面
+    ];
+    
+    const hasSVTRKeywords = svtrOfficialKeywords.some(keyword => 
+      fullText.includes(keyword.toLowerCase())
+    );
+    
+    // 如果文档标题或内容明确提到SVTR且包含联系相关词汇
+    const isSVTRContext = (
+      fullText.includes('svtr') || 
+      fullText.includes('硅谷科技评论') || 
+      fullText.includes('pkcapital')
+    );
+    
+    return hasSVTRKeywords && isSVTRContext;
   }
 
   /**
