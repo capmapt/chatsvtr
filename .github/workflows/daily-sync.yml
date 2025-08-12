@@ -30,9 +30,8 @@ jobs:
       
     - name: Configure environment
       run: |
-        echo "FEISHU_APP_ID=${{ secrets.FEISHU_APP_ID }}" >> $GITHUB_ENV
-        echo "FEISHU_APP_SECRET=${{ secrets.FEISHU_APP_SECRET }}" >> $GITHUB_ENV
-        echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> $GITHUB_ENV
+        echo "FEISHU_APP_ID=cli_a8e2014cbe7d9013" >> $GITHUB_ENV
+        echo "FEISHU_APP_SECRET=tysHBj6njxwafO92dwO1DdttVvqvesf0" >> $GITHUB_ENV
         
     - name: Run smart sync strategy
       run: |
@@ -56,13 +55,14 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         
-        if [ -n "$(git status --porcelain)" ]; then
+        # 忽略node_modules变化，只关注RAG数据
+        if [ -n "$(git status --porcelain assets/data/rag/)" ]; then
           git add assets/data/rag/
           git commit -m "🔄 每日自动同步RAG数据 - $(date +'%Y-%m-%d %H:%M UTC')"
           git push
           echo "✅ 数据已更新并推送到仓库"
         else
-          echo "ℹ️ 无数据变更，跳过提交"
+          echo "ℹ️ RAG数据无变更，跳过提交"
         fi
         
     - name: Deploy to Cloudflare (if data changed)
