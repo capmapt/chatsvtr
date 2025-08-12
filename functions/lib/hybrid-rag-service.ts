@@ -24,11 +24,13 @@ export class HybridRAGService {
   private queryExpansionService: QueryExpansionService;
   private cacheService: SemanticCacheService;
   private webSearchService: WebSearchService;
+  private requestContext?: Request;
 
-  constructor(vectorize: any, ai: any, openaiApiKey?: string, kvNamespace?: any, webSearchConfig?: any) {
+  constructor(vectorize: any, ai: any, openaiApiKey?: string, kvNamespace?: any, webSearchConfig?: any, requestContext?: Request) {
     this.vectorize = vectorize;
     this.ai = ai;
     this.openaiApiKey = openaiApiKey;
+    this.requestContext = requestContext;
     this.queryExpansionService = createQueryExpansionService();
     this.cacheService = createSemanticCacheService(kvNamespace);
     this.webSearchService = createWebSearchService(webSearchConfig);
@@ -490,25 +492,28 @@ export class HybridRAGService {
   }
 
   /**
-   * 加载飞书知识库数据 - 优先使用完整同步数据
+   * 加载飞书知识库数据 - 修复Cloudflare Workers环境下的文件访问
    */
   private async loadFeishuKnowledgeBase() {
     try {
+      // 构建完整URL - 解决Workers环境相对路径问题
+      const baseUrl = this.getBaseUrl();
+      
       // 第一优先级：完整增强版同步数据
-      let response = await fetch('/assets/data/rag/enhanced-feishu-full-content.json').catch(() => null);
+      let response = await fetch(`${baseUrl}/assets/data/rag/enhanced-feishu-full-content.json`).catch(() => null);
       
       // 第二优先级：真实内容数据
       if (!response || !response.ok) {
-        response = await fetch('/assets/data/rag/real-feishu-content.json').catch(() => null);
+        response = await fetch(`${baseUrl}/assets/data/rag/real-feishu-content.json`).catch(() => null);
       }
       
       // 第三优先级：改进的知识库（向后兼容）
       if (!response || !response.ok) {
-        response = await fetch('/assets/data/rag/improved-feishu-knowledge-base.json');
+        response = await fetch(`${baseUrl}/assets/data/rag/improved-feishu-knowledge-base.json`).catch(() => null);
       }
       
-      if (!response.ok) {
-        throw new Error('无法读取飞书知识库数据');
+      if (!response || !response.ok) {
+        throw new Error('无法读取飞书知识库数据 - 所有数据源都不可用');
       }
       
       const data = await response.json();
@@ -1003,6 +1008,37 @@ export class HybridRAGService {
   }
 
   /**
+   * 获取基础URL - 解决Cloudflare Workers环境下的文件访问问题
+   */
+  private getBaseUrl(): string {
+    // 优先从请求上下文获取
+    if (this.requestContext) {
+      const url = new URL(this.requestContext.url);
+      return url.origin;
+    }
+    
+    // 在Cloudflare Workers环境中，尝试从全局变量获取URL
+    if (typeof globalThis !== 'undefined' && globalThis.location) {
+      return globalThis.location.origin;
+    }
+    
+    // 从请求头获取host信息（如果在HTTP context中）
+    if (typeof globalThis !== 'undefined' && globalThis.request) {
+      const request = globalThis.request as Request;
+      const url = new URL(request.url);
+      return url.origin;
+    }
+    
+    // 根据环境推断URL
+    if (typeof process !== 'undefined' && process.env.NODE_ENV === 'development') {
+      return 'http://localhost:3000';
+    }
+    
+    // 生产环境默认值
+    return 'https://chat.svtr.ai';
+  }
+
+  /**
    * 验证内容质量 - 防止无关内容进入AI输入，避免编造
    */
   private validateContentQuality(matches: any[], query: string): boolean {
@@ -1046,6 +1082,6 @@ export class HybridRAGService {
 /**
  * 工厂函数：创建最适合的RAG服务
  */
-export function createOptimalRAGService(vectorize: any, ai: any, openaiApiKey?: string, kvNamespace?: any, webSearchConfig?: any) {
-  return new HybridRAGService(vectorize, ai, openaiApiKey, kvNamespace, webSearchConfig);
+export function createOptimalRAGService(vectorize: any, ai: any, openaiApiKey?: string, kvNamespace?: any, webSearchConfig?: any, requestContext?: Request) {
+  return new HybridRAGService(vectorize, ai, openaiApiKey, kvNamespace, webSearchConfig, requestContext);
 }

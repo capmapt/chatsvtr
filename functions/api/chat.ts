@@ -121,11 +121,14 @@ export async function onRequestPost(context: any): Promise<Response> {
       }
     }
     
-    // 初始化混合RAG服务
+    // 初始化混合RAG服务 - 传递request上下文解决文件路径问题
     const ragService = createOptimalRAGService(
       env.SVTR_VECTORIZE,
       env.AI,
-      env.OPENAI_API_KEY
+      env.OPENAI_API_KEY,
+      env.SVTR_CACHE,
+      null,
+      request
     );
 
     // 执行智能检索增强（如果没有缓存）
