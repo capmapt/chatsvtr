@@ -1,17 +1,19 @@
 module.exports = {
   testEnvironment: 'jsdom',
-  setupFilesAfterEnv: ['<rootDir>/../tests/setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
   testMatch: [
-    '<rootDir>/../tests/**/*.test.js'
+    '<rootDir>/tests/**/*.test.js'
   ],
   testPathIgnorePatterns: [
-    '<rootDir>/../tests/e2e/'
+    '<rootDir>/tests/e2e/',
+    '<rootDir>/node_modules/',
+    '<rootDir>/backups/'
   ],
   collectCoverageFrom: [
-    '<rootDir>/../assets/js/**/*.js',
-    '!<rootDir>/../assets/js/**/*.min.js',
-    '!<rootDir>/../assets/js/**/*-backup-*.js',
-    '!<rootDir>/../assets/js/**/*-optimized.js'
+    'assets/js/**/*.js',
+    '!assets/js/**/*.min.js',
+    '!assets/js/**/*-backup-*.js',
+    '!assets/js/**/*-optimized.js'
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],

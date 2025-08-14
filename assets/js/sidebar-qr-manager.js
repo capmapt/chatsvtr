@@ -8,7 +8,7 @@ class SidebarQRManager {
     this.currentLanguage = document.documentElement.lang || 'zh-CN';
     this.isAnimating = false;
     this.animationDuration = 300; // 动画持续时间
-    
+
     this.init();
   }
 
@@ -22,13 +22,13 @@ class SidebarQRManager {
     this.wechatQR = document.querySelector('.wechat-qr');
     this.discordQR = document.querySelector('.discord-qr');
     this.qrContainer = document.querySelector('.qr-container');
-    
+
     // 验证必要元素存在
     if (!this.wechatQR || !this.discordQR) {
       console.warn('QR Manager: QR code elements not found');
       return false;
     }
-    
+
     return true;
   }
 
@@ -75,7 +75,7 @@ class SidebarQRManager {
     }
 
     console.log(`QR Manager: Switching from ${this.currentLanguage} to ${newLanguage}`);
-    
+
     this.isAnimating = true;
     const oldLanguage = this.currentLanguage;
     this.currentLanguage = newLanguage;
@@ -197,12 +197,12 @@ class SidebarQRManager {
    */
   getQRElement(language) {
     switch (language) {
-      case 'zh-CN':
-        return this.wechatQR;
-      case 'en':
-        return this.discordQR;
-      default:
-        return this.wechatQR; // 默认返回微信QR码
+    case 'zh-CN':
+      return this.wechatQR;
+    case 'en':
+      return this.discordQR;
+    default:
+      return this.wechatQR; // 默认返回微信QR码
     }
   }
 
@@ -225,7 +225,7 @@ class SidebarQRManager {
     // 显示目标QR码
     if (targetQR) {
       targetQR.style.display = 'block';
-      
+
       if (useAnimation && !this.isAnimating) {
         // 如果需要动画且当前不在动画中，触发淡入动画
         const wrapper = targetQR.querySelector('.qr-image-wrapper');
@@ -288,9 +288,9 @@ function initializeSidebarQRManager() {
   if (sidebarQRManager) {
     sidebarQRManager.destroy();
   }
-  
+
   sidebarQRManager = new SidebarQRManager();
-  
+
   // 开发环境下添加到全局对象方便调试
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     window.sidebarQRManager = sidebarQRManager;

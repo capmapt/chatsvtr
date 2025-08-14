@@ -24,16 +24,16 @@ class ImageOptimizer {
   init() {
     // 检查浏览器支持
     this.checkBrowserSupport();
-    
+
     // 初始化Intersection Observer
     this.initIntersectionObserver();
-    
+
     // 扫描现有图片
     this.scanImages();
-    
+
     // 设置事件监听
     this.setupEventListeners();
-    
+
     // 预加载关键图片
     this.preloadCriticalImages();
   }
@@ -43,15 +43,15 @@ class ImageOptimizer {
     if (this.options.enableWebP) {
       this.supportsWebP = this.checkWebPSupport();
     }
-    
+
     // 检查AVIF支持
     if (this.options.enableAVIF) {
       this.supportsAVIF = this.checkAVIFSupport();
     }
-    
+
     // 检查Intersection Observer支持
     this.supportsIntersectionObserver = 'IntersectionObserver' in window;
-    
+
     console.log('图片优化器浏览器支持情况:', {
       webP: this.supportsWebP,
       avif: this.supportsAVIF,
@@ -101,7 +101,7 @@ class ImageOptimizer {
 
   setupScrollFallback() {
     let ticking = false;
-    
+
     const checkImages = () => {
       const images = document.querySelectorAll('img[data-src]:not([data-loaded])');
       images.forEach(img => {
@@ -126,7 +126,7 @@ class ImageOptimizer {
   isInViewport(element) {
     const rect = element.getBoundingClientRect();
     const margin = parseInt(this.options.rootMargin, 10);
-    
+
     return (
       rect.bottom >= -margin &&
       rect.right >= -margin &&
@@ -138,7 +138,7 @@ class ImageOptimizer {
   scanImages() {
     // 扫描所有需要懒加载的图片
     const images = document.querySelectorAll('img[data-src], picture source[data-srcset]');
-    
+
     images.forEach(element => {
       if (element.tagName === 'IMG') {
         this.setupImageElement(element);
@@ -159,7 +159,7 @@ class ImageOptimizer {
 
     // 添加加载状态类
     img.classList.add('lazy-image');
-    
+
     // 开始观察
     if (this.observer) {
       this.observer.observe(img);
@@ -186,27 +186,27 @@ class ImageOptimizer {
     try {
       // 获取最优图片源
       const imageSrc = await this.getOptimalImageSrc(img);
-      
+
       // 预加载图片
       await this.preloadSingleImage(imageSrc);
-      
+
       // 处理picture元素中的source
       const picture = img.closest('picture');
       if (picture) {
         this.updatePictureSources(picture);
       }
-      
+
       // 更新img元素
       img.src = imageSrc;
       img.removeAttribute('data-src');
       img.setAttribute('data-loaded', 'true');
-      
+
       // 添加加载完成的类
       img.classList.remove('lazy-loading');
       img.classList.add('lazy-loaded');
-      
+
       this.loadedImages.add(img);
-      
+
       // 触发自定义事件
       img.dispatchEvent(new CustomEvent('imageLoaded', {
         detail: { src: imageSrc }
@@ -220,7 +220,7 @@ class ImageOptimizer {
 
   async getOptimalImageSrc(img) {
     const baseSrc = img.dataset.src || img.src;
-    
+
     if (!baseSrc) {
       throw new Error('没有可用的图片源');
     }
@@ -234,31 +234,31 @@ class ImageOptimizer {
 
     // 生成不同格式的候选URL
     const candidates = this.generateImageCandidates(baseSrc);
-    
+
     // 选择最佳格式
     const optimalSrc = await this.selectBestFormat(candidates);
-    
+
     // 缓存结果
     this.setCache(cacheKey, optimalSrc);
-    
+
     return optimalSrc;
   }
 
   generateImageCandidates(baseSrc) {
     const candidates = [{ src: baseSrc, format: 'original' }];
-    
+
     // 尝试生成WebP版本
     if (this.supportsWebP && baseSrc.includes('.')) {
       const webpSrc = baseSrc.replace(/\.(jpg|jpeg|png)$/i, '.webp');
       candidates.unshift({ src: webpSrc, format: 'webp' });
     }
-    
+
     // 尝试生成AVIF版本（如果支持）
     if (this.supportsAVIF && baseSrc.includes('.')) {
       const avifSrc = baseSrc.replace(/\.(jpg|jpeg|png|webp)$/i, '.avif');
       candidates.unshift({ src: avifSrc, format: 'avif' });
     }
-    
+
     return candidates;
   }
 
@@ -275,7 +275,7 @@ class ImageOptimizer {
         continue;
       }
     }
-    
+
     // 如果都失败了，返回原始源
     return candidates[candidates.length - 1].src;
   }
@@ -283,28 +283,28 @@ class ImageOptimizer {
   checkImageAvailability(src) {
     return new Promise((resolve) => {
       const img = new Image();
-      
+
       const cleanup = () => {
         img.onload = null;
         img.onerror = null;
       };
-      
+
       img.onload = () => {
         cleanup();
         resolve(true);
       };
-      
+
       img.onerror = () => {
         cleanup();
         resolve(false);
       };
-      
+
       // 设置超时
       setTimeout(() => {
         cleanup();
         resolve(false);
       }, 3000);
-      
+
       img.src = src;
     });
   }
@@ -312,20 +312,20 @@ class ImageOptimizer {
   preloadSingleImage(src) {
     return new Promise((resolve, reject) => {
       const img = new Image();
-      
+
       img.onload = () => resolve(img);
       img.onerror = () => reject(new Error(`图片加载失败: ${src}`));
-      
+
       // 设置超时
       setTimeout(() => reject(new Error('图片加载超时')), 10000);
-      
+
       img.src = src;
     });
   }
 
   updatePictureSources(picture) {
     const sources = picture.querySelectorAll('source[data-srcset]');
-    
+
     sources.forEach(source => {
       const srcset = source.dataset.srcset;
       if (srcset) {
@@ -338,13 +338,13 @@ class ImageOptimizer {
   handleImageError(img, error) {
     img.classList.remove('lazy-loading');
     img.classList.add('lazy-error');
-    
+
     this.failedImages.add(img);
-    
+
     // 设置错误占位符
     img.src = this.generateErrorPlaceholder();
     img.alt = img.alt || '图片加载失败';
-    
+
     // 触发错误事件
     img.dispatchEvent(new CustomEvent('imageError', {
       detail: { error: error.message }
@@ -359,7 +359,7 @@ class ImageOptimizer {
         <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#ccc" font-family="sans-serif" font-size="14">加载中...</text>
       </svg>
     `;
-    
+
     return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
   }
 
@@ -370,7 +370,7 @@ class ImageOptimizer {
         <text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#999" font-family="sans-serif" font-size="14">图片加载失败</text>
       </svg>
     `;
-    
+
     return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
   }
 
@@ -396,10 +396,10 @@ class ImageOptimizer {
       mutations.forEach(mutation => {
         mutation.addedNodes.forEach(node => {
           if (node.nodeType === Node.ELEMENT_NODE) {
-            const images = node.querySelectorAll ? 
-              node.querySelectorAll('img[data-src]') : 
+            const images = node.querySelectorAll ?
+              node.querySelectorAll('img[data-src]') :
               (node.tagName === 'IMG' && node.hasAttribute('data-src') ? [node] : []);
-            
+
             images.forEach(img => this.setupImageElement(img));
           }
         });
@@ -420,14 +420,16 @@ class ImageOptimizer {
   getFromCache(key) {
     try {
       const item = localStorage.getItem(key);
-      if (!item) return null;
-      
+      if (!item) {
+        return null;
+      }
+
       const parsed = JSON.parse(item);
       if (Date.now() - parsed.timestamp > this.options.cacheTimeout) {
         localStorage.removeItem(key);
         return null;
       }
-      
+
       return parsed.value;
     } catch {
       return null;
@@ -476,7 +478,7 @@ document.addEventListener('DOMContentLoaded', () => {
     threshold: 0.01,
     enableWebP: true
   });
-  
+
   console.log('图片优化器已启动:', window.imageOptimizer.getStats());
 });
 

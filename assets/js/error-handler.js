@@ -11,8 +11,10 @@ class ErrorHandler {
   }
 
   init() {
-    if (this.isInitialized) return;
-    
+    if (this.isInitialized) {
+      return;
+    }
+
     // 捕获全局JavaScript错误
     window.addEventListener('error', (event) => {
       this.handleError({
@@ -32,7 +34,7 @@ class ErrorHandler {
         message: event.reason?.message || 'Unhandled Promise Rejection',
         reason: event.reason
       });
-      
+
       // 防止控制台显示错误
       event.preventDefault();
     });
@@ -88,11 +90,11 @@ class ErrorHandler {
     const filename = errorInfo.filename || '';
     const stack = errorInfo.error?.stack || '';
     const reason = errorInfo.reason?.toString() || '';
-    
+
     // 检查多个可能包含扩展信息的字段
     const textToCheck = [message, filename, stack, reason].join(' ');
-    
-    return knownExtensionErrors.some(pattern => 
+
+    return knownExtensionErrors.some(pattern =>
       textToCheck.toLowerCase().includes(pattern.toLowerCase())
     );
   }
@@ -113,7 +115,7 @@ class ErrorHandler {
       'lark.com',
       'discord.com'
     ];
-    
+
     return networkErrorPatterns.some(pattern => message.includes(pattern));
   }
 
@@ -123,8 +125,12 @@ class ErrorHandler {
       console.group('🚨 SVTR.AI Error Handler');
       console.error('Error Type:', errorInfo.type);
       console.error('Message:', errorInfo.message);
-      if (errorInfo.filename) console.error('File:', errorInfo.filename);
-      if (errorInfo.lineno) console.error('Line:', errorInfo.lineno);
+      if (errorInfo.filename) {
+        console.error('File:', errorInfo.filename);
+      }
+      if (errorInfo.lineno) {
+        console.error('Line:', errorInfo.lineno);
+      }
       console.groupEnd();
     }
 
@@ -143,7 +149,7 @@ class ErrorHandler {
   }
 
   isProduction() {
-    return window.location.hostname !== 'localhost' && 
+    return window.location.hostname !== 'localhost' &&
            !window.location.hostname.includes('127.0.0.1') &&
            !window.location.hostname.includes('preview');
   }
@@ -172,12 +178,12 @@ class ErrorHandler {
 // 立即执行的错误捕获（在所有其他代码之前）
 (function() {
   'use strict';
-  
+
   // 立即捕获Promise rejection错误
   window.addEventListener('unhandledrejection', function(event) {
     const errorText = event.reason?.toString() || '';
     const stack = event.reason?.stack || '';
-    
+
     // 检查是否为Chrome扩展错误
     const extensionPatterns = [
       'all-frames.js',
@@ -186,34 +192,34 @@ class ErrorHandler {
       'Extension context invalidated',
       'chrome-extension://'
     ];
-    
-    const isExtensionError = extensionPatterns.some(pattern => 
+
+    const isExtensionError = extensionPatterns.some(pattern =>
       errorText.includes(pattern) || stack.includes(pattern)
     );
-    
+
     if (isExtensionError) {
       // 静默处理扩展错误
       event.preventDefault();
       return;
     }
   }, true);
-  
+
   // 立即捕获JavaScript错误
   window.addEventListener('error', function(event) {
     const message = event.message || '';
     const filename = event.filename || '';
-    
+
     const extensionPatterns = [
       'all-frames.js',
       'Could not establish connection',
       'chrome-extension://',
       'content_script'
     ];
-    
-    const isExtensionError = extensionPatterns.some(pattern => 
+
+    const isExtensionError = extensionPatterns.some(pattern =>
       message.includes(pattern) || filename.includes(pattern)
     );
-    
+
     if (isExtensionError) {
       // 静默处理扩展错误
       event.preventDefault();

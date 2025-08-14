@@ -63,7 +63,6 @@
     "sync:auto:status": "node scripts/auto-sync-scheduler.js status",
     "sync:auto:trigger": "node scripts/auto-sync-scheduler.js trigger",
     "sync:auto:restart": "node scripts/auto-sync-scheduler.js restart",
-    "sync:monitor": "node scripts/sync-monitor.js",
     "sync:health": "node scripts/sync-monitor.js",
     "sync:real": "node scripts/real-content-sync.js",
     "test:permissions": "node scripts/test-api-permissions.js",

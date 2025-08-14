@@ -5,7 +5,7 @@
 
 (function() {
   'use strict';
-  
+
   // 等待所有相关脚本加载完成
   function initSidebarIntegration() {
     // 确保主应用和侧边栏调整器都已加载
@@ -13,35 +13,35 @@
       setTimeout(initSidebarIntegration, 100);
       return;
     }
-    
+
     const app = window.svtrApp;
     const resizer = window.sidebarResizer;
-    
+
     // 监听侧边栏宽度变化
     window.addEventListener('sidebarWidthChange', (event) => {
       const { width } = event.detail;
-      
+
       // 更新CSS自定义属性
       document.documentElement.style.setProperty('--sidebar-width', `${width}px`);
-      
+
       // 通知其他组件宽度变化
       if (app && typeof app.onSidebarWidthChange === 'function') {
         app.onSidebarWidthChange(width);
       }
-      
+
       // 保存到会话存储用于页面刷新后恢复
       sessionStorage.setItem('svtr-sidebar-last-width', width.toString());
     });
-    
+
     // 监听侧边栏开关状态变化
     const originalOpenSidebar = app.openSidebar;
     const originalCloseSidebar = app.closeSidebar;
-    
+
     if (originalOpenSidebar && originalCloseSidebar) {
       // 扩展开启侧边栏方法
       app.openSidebar = function() {
         originalOpenSidebar.call(this);
-        
+
         // 应用保存的宽度
         const savedWidth = resizer.getWidth();
         if (savedWidth) {
@@ -50,11 +50,11 @@
           }, 50);
         }
       };
-      
+
       // 扩展关闭侧边栏方法
       app.closeSidebar = function() {
         originalCloseSidebar.call(this);
-        
+
         // 清理内联样式
         setTimeout(() => {
           const content = document.querySelector('.content');
@@ -64,7 +64,7 @@
         }, 300);
       };
     }
-    
+
     // 页面加载时恢复宽度
     const lastWidth = sessionStorage.getItem('svtr-sidebar-last-width');
     if (lastWidth) {
@@ -73,7 +73,7 @@
         document.documentElement.style.setProperty('--sidebar-width', `${width}px`);
       }
     }
-    
+
     // 键盘快捷键支持
     document.addEventListener('keydown', (e) => {
       // Ctrl/Cmd + Shift + [ : 减少宽度
@@ -82,34 +82,36 @@
         const currentWidth = resizer.getWidth() || 240;
         resizer.setWidth(Math.max(200, currentWidth - 20));
       }
-      
+
       // Ctrl/Cmd + Shift + ] : 增加宽度
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === ']') {
         e.preventDefault();
         const currentWidth = resizer.getWidth() || 240;
         resizer.setWidth(Math.min(500, currentWidth + 20));
       }
-      
+
       // Ctrl/Cmd + Shift + \ : 重置宽度
       if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === '\\') {
         e.preventDefault();
         resizer.reset();
       }
     });
-    
+
     // 添加宽度调整提示（仅桌面端）
     if (window.innerWidth > 768) {
       addWidthHint();
     }
-    
+
     console.log('[SidebarIntegration] 侧边栏集成功能已启用');
   }
-  
+
   // 添加宽度调整提示
   function addWidthHint() {
     const sidebar = document.querySelector('.sidebar');
-    if (!sidebar) return;
-    
+    if (!sidebar) {
+      return;
+    }
+
     // 创建提示元素
     const hint = document.createElement('div');
     hint.className = 'sidebar-width-hint';
@@ -121,7 +123,7 @@
         <span>可拖拽调整宽度</span>
       </div>
     `;
-    
+
     // 添加样式
     const hintStyles = document.createElement('style');
     hintStyles.textContent = `
@@ -170,16 +172,16 @@
         }
       }
     `;
-    
+
     document.head.appendChild(hintStyles);
     sidebar.appendChild(hint);
-    
+
     // 5秒后隐藏提示
     setTimeout(() => {
       hint.style.display = 'none';
     }, 8000);
   }
-  
+
   // 窗口焦点时检查组件状态
   window.addEventListener('focus', () => {
     if (window.sidebarResizer && window.innerWidth > 768) {
@@ -189,7 +191,7 @@
       }
     }
   });
-  
+
   // 页面可见性变化时的处理
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden && window.sidebarResizer && window.innerWidth > 768) {
@@ -202,7 +204,7 @@
       }, 100);
     }
   });
-  
+
   // 初始化
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initSidebarIntegration);

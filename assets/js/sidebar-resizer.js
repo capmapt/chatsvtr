@@ -16,13 +16,13 @@ class SidebarResizer {
     this.sidebar = null;
     this.overlay = null;
     this.content = null;
-    
+
     // 存储键名
     this.storageKey = 'svtr-sidebar-width';
-    
+
     this.init();
   }
-  
+
   init() {
     this.detectMobile();
     this.cacheDOMElements();
@@ -30,36 +30,36 @@ class SidebarResizer {
     this.loadSavedWidth();
     this.setupEventListeners();
     this.setupMediaQueryListener();
-    
+
     console.log('[SidebarResizer] 侧边栏宽度调整功能已启用');
   }
-  
+
   detectMobile() {
     this.isMobile = window.innerWidth <= 768;
   }
-  
+
   cacheDOMElements() {
     this.sidebar = document.querySelector('.sidebar');
     this.overlay = document.querySelector('.overlay');
     this.content = document.querySelector('.content');
-    
+
     if (!this.sidebar) {
       console.error('[SidebarResizer] 未找到侧边栏元素');
       return;
     }
   }
-  
+
   createResizeHandle() {
     if (this.isMobile || !this.sidebar) {
       return;
     }
-    
+
     // 创建拖拽手柄
     this.resizeHandle = document.createElement('div');
     this.resizeHandle.className = 'sidebar-resize-handle';
     this.resizeHandle.setAttribute('aria-label', '拖拽调整侧边栏宽度');
     this.resizeHandle.setAttribute('title', '拖拽调整侧边栏宽度');
-    
+
     // 添加手柄图标
     this.resizeHandle.innerHTML = `
       <div class="resize-handle-icon">
@@ -70,13 +70,15 @@ class SidebarResizer {
         </svg>
       </div>
     `;
-    
+
     this.sidebar.appendChild(this.resizeHandle);
   }
-  
+
   loadSavedWidth() {
-    if (this.isMobile) return;
-    
+    if (this.isMobile) {
+      return;
+    }
+
     const savedWidth = localStorage.getItem(this.storageKey);
     if (savedWidth) {
       const width = parseInt(savedWidth, 10);
@@ -85,72 +87,76 @@ class SidebarResizer {
         return;
       }
     }
-    
+
     // 设置默认宽度
     this.setSidebarWidth(this.defaultWidth);
   }
-  
+
   setSidebarWidth(width) {
-    if (this.isMobile || !this.sidebar) return;
-    
+    if (this.isMobile || !this.sidebar) {
+      return;
+    }
+
     // 限制宽度范围
     width = Math.max(this.minWidth, Math.min(this.maxWidth, width));
-    
+
     // 设置CSS变量来控制侧边栏宽度
     document.documentElement.style.setProperty('--sidebar-width', `${width}px`);
-    
+
     // 同时设置内联样式作为备用（确保优先级）
     this.sidebar.style.width = `${width}px`;
-    
+
     // 调整内容区域的margin（仅在桌面端且侧边栏打开时）
     if (this.content && this.sidebar.classList.contains('open') && !this.isMobile) {
       this.content.style.marginLeft = `${width}px`;
     }
-    
+
     // 触发自定义事件
     this.dispatchWidthChangeEvent(width);
   }
-  
+
   dispatchWidthChangeEvent(width) {
     const event = new CustomEvent('sidebarWidthChange', {
       detail: { width, timestamp: Date.now() }
     });
     window.dispatchEvent(event);
   }
-  
+
   setupEventListeners() {
-    if (this.isMobile || !this.resizeHandle) return;
-    
+    if (this.isMobile || !this.resizeHandle) {
+      return;
+    }
+
     // 鼠标事件
     this.resizeHandle.addEventListener('mousedown', this.handleMouseDown.bind(this));
     document.addEventListener('mousemove', this.handleMouseMove.bind(this));
     document.addEventListener('mouseup', this.handleMouseUp.bind(this));
-    
+
     // 触摸事件（平板设备）
     this.resizeHandle.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: false });
     document.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: false });
     document.addEventListener('touchend', this.handleTouchEnd.bind(this));
-    
+
     // 键盘事件（无障碍支持）
     this.resizeHandle.addEventListener('keydown', this.handleKeyDown.bind(this));
-    
+
     // 双击重置
     this.resizeHandle.addEventListener('dblclick', this.resetToDefault.bind(this));
-    
+
     // 窗口大小变化
     window.addEventListener('resize', this.handleWindowResize.bind(this));
   }
-  
+
   setupMediaQueryListener() {
     const mediaQuery = window.matchMedia('(max-width: 768px)');
     mediaQuery.addListener(this.handleMediaQueryChange.bind(this));
     this.handleMediaQueryChange(mediaQuery);
   }
-  
+
   handleMediaQueryChange(mq) {
     const wasMobile = this.isMobile;
     this.isMobile = mq.matches;
-    
+
     if (this.isMobile && !wasMobile) {
       // 切换到移动端：隐藏拖拽手柄，重置样式
       if (this.resizeHandle) {
@@ -167,7 +173,7 @@ class SidebarResizer {
       this.loadSavedWidth();
     }
   }
-  
+
   resetSidebarStyles() {
     if (this.sidebar) {
       this.sidebar.style.width = '';
@@ -176,151 +182,173 @@ class SidebarResizer {
       this.content.style.marginLeft = '';
     }
   }
-  
+
   // 鼠标事件处理
   handleMouseDown(e) {
-    if (this.isMobile) return;
-    
+    if (this.isMobile) {
+      return;
+    }
+
     e.preventDefault();
     this.startResize(e.clientX);
   }
-  
+
   handleMouseMove(e) {
-    if (!this.isResizing || this.isMobile) return;
-    
+    if (!this.isResizing || this.isMobile) {
+      return;
+    }
+
     e.preventDefault();
     this.updateResize(e.clientX);
   }
-  
+
   handleMouseUp(e) {
-    if (!this.isResizing || this.isMobile) return;
-    
+    if (!this.isResizing || this.isMobile) {
+      return;
+    }
+
     e.preventDefault();
     this.endResize();
   }
-  
+
   // 触摸事件处理
   handleTouchStart(e) {
-    if (this.isMobile) return;
-    
+    if (this.isMobile) {
+      return;
+    }
+
     e.preventDefault();
     const touch = e.touches[0];
     this.startResize(touch.clientX);
   }
-  
+
   handleTouchMove(e) {
-    if (!this.isResizing || this.isMobile) return;
-    
+    if (!this.isResizing || this.isMobile) {
+      return;
+    }
+
     e.preventDefault();
     const touch = e.touches[0];
     this.updateResize(touch.clientX);
   }
-  
+
   handleTouchEnd(e) {
-    if (!this.isResizing || this.isMobile) return;
-    
+    if (!this.isResizing || this.isMobile) {
+      return;
+    }
+
     e.preventDefault();
     this.endResize();
   }
-  
+
   // 键盘事件处理（无障碍支持）
   handleKeyDown(e) {
-    if (this.isMobile || !this.sidebar) return;
-    
+    if (this.isMobile || !this.sidebar) {
+      return;
+    }
+
     const currentWidth = parseInt(this.sidebar.style.width) || this.defaultWidth;
     let newWidth = currentWidth;
-    
+
     switch (e.key) {
-      case 'ArrowLeft':
-        newWidth = Math.max(this.minWidth, currentWidth - 10);
-        break;
-      case 'ArrowRight':
-        newWidth = Math.min(this.maxWidth, currentWidth + 10);
-        break;
-      case 'Home':
-        newWidth = this.minWidth;
-        break;
-      case 'End':
-        newWidth = this.maxWidth;
-        break;
-      case 'Enter':
-      case ' ':
-        this.resetToDefault();
-        return;
-      default:
-        return;
+    case 'ArrowLeft':
+      newWidth = Math.max(this.minWidth, currentWidth - 10);
+      break;
+    case 'ArrowRight':
+      newWidth = Math.min(this.maxWidth, currentWidth + 10);
+      break;
+    case 'Home':
+      newWidth = this.minWidth;
+      break;
+    case 'End':
+      newWidth = this.maxWidth;
+      break;
+    case 'Enter':
+    case ' ':
+      this.resetToDefault();
+      return;
+    default:
+      return;
     }
-    
+
     e.preventDefault();
     this.setSidebarWidth(newWidth);
     this.saveWidth(newWidth);
   }
-  
+
   // 调整逻辑
   startResize(clientX) {
     this.isResizing = true;
     this.startX = clientX;
     this.startWidth = parseInt(this.sidebar.style.width) || this.defaultWidth;
-    
+
     // 添加调整状态样式
     document.body.classList.add('sidebar-resizing');
     this.resizeHandle.classList.add('active');
-    
+
     // 禁用文本选择
     document.body.style.userSelect = 'none';
     document.body.style.cursor = 'col-resize';
   }
-  
+
   updateResize(clientX) {
-    if (!this.isResizing) return;
-    
+    if (!this.isResizing) {
+      return;
+    }
+
     const deltaX = clientX - this.startX;
     const newWidth = this.startWidth + deltaX;
-    
+
     this.setSidebarWidth(newWidth);
   }
-  
+
   endResize() {
-    if (!this.isResizing) return;
-    
+    if (!this.isResizing) {
+      return;
+    }
+
     this.isResizing = false;
-    
+
     // 保存新宽度
     const currentWidth = parseInt(this.sidebar.style.width) || this.defaultWidth;
     this.saveWidth(currentWidth);
-    
+
     // 移除调整状态样式
     document.body.classList.remove('sidebar-resizing');
     this.resizeHandle.classList.remove('active');
-    
+
     // 恢复文本选择
     document.body.style.userSelect = '';
     document.body.style.cursor = '';
-    
+
     // 提供触觉反馈
     this.hapticFeedback();
   }
-  
+
   resetToDefault() {
-    if (this.isMobile) return;
-    
+    if (this.isMobile) {
+      return;
+    }
+
     this.setSidebarWidth(this.defaultWidth);
     this.saveWidth(this.defaultWidth);
     this.hapticFeedback('success');
   }
-  
+
   saveWidth(width) {
-    if (this.isMobile) return;
-    
+    if (this.isMobile) {
+      return;
+    }
+
     localStorage.setItem(this.storageKey, width.toString());
   }
-  
+
   handleWindowResize() {
     // 防抖处理
     clearTimeout(this.windowResizeTimeout);
     this.windowResizeTimeout = setTimeout(() => {
       this.detectMobile();
-      
+
       if (!this.isMobile && this.sidebar) {
         // 确保宽度在有效范围内
         const currentWidth = parseInt(this.sidebar.style.width) || this.defaultWidth;
@@ -330,7 +358,7 @@ class SidebarResizer {
       }
     }, 150);
   }
-  
+
   hapticFeedback(type = 'light') {
     if (navigator.vibrate) {
       const patterns = {
@@ -340,41 +368,45 @@ class SidebarResizer {
       navigator.vibrate(patterns[type] || patterns.light);
     }
   }
-  
+
   // 公共API
   getWidth() {
-    if (this.isMobile || !this.sidebar) return null;
+    if (this.isMobile || !this.sidebar) {
+      return null;
+    }
     return parseInt(this.sidebar.style.width) || this.defaultWidth;
   }
-  
+
   setWidth(width) {
-    if (this.isMobile) return false;
-    
+    if (this.isMobile) {
+      return false;
+    }
+
     width = parseInt(width);
     if (isNaN(width) || width < this.minWidth || width > this.maxWidth) {
       return false;
     }
-    
+
     this.setSidebarWidth(width);
     this.saveWidth(width);
     return true;
   }
-  
+
   reset() {
     this.resetToDefault();
   }
-  
+
   destroy() {
     if (this.resizeHandle) {
       this.resizeHandle.remove();
       this.resizeHandle = null;
     }
-    
+
     this.resetSidebarStyles();
     document.body.classList.remove('sidebar-resizing');
     document.body.style.userSelect = '';
     document.body.style.cursor = '';
-    
+
     // 清理定时器
     if (this.windowResizeTimeout) {
       clearTimeout(this.windowResizeTimeout);
@@ -507,9 +539,9 @@ function initSidebarResizer() {
   if (sidebarResizer) {
     sidebarResizer.destroy();
   }
-  
+
   sidebarResizer = new SidebarResizer();
-  
+
   // 暴露到全局对象供调试使用
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     window.sidebarResizer = sidebarResizer;

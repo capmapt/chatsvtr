@@ -1,16 +1,15 @@
 #!/usr/bin/env node
 
 /**
- * 增强版飞书知识库同步脚本 V2
- * 使用正确的API端点获取完整的子节点内容
- * 基于API测试发现的正确调用方式
+ * 修复版飞书知识库同步脚本 
+ * 使用正确的metainfo API获取工作表ID，解决数据获取问题
  */
 
 require('dotenv').config();
 const fs = require('fs').promises;
 const path = require('path');
 
-class EnhancedFeishuSyncV2 {
+class FixedFeishuSync {
   constructor() {
     this.config = {
       appId: 'cli_a8e2014cbe7d9013',
@@ -59,7 +58,6 @@ class EnhancedFeishuSyncV2 {
     console.log(`🌲 获取子节点: ${parentNodeToken}`);
     
     try {
-      // 使用正确的子节点API
       const url = `${this.config.baseUrl}/wiki/v2/spaces/${this.config.spaceId}/nodes?parent_node_token=${parentNodeToken}`;
       
       const response = await fetch(url, {
@@ -88,6 +86,17 @@ class EnhancedFeishuSyncV2 {
     return [];
   }
 
+  // 将数字转换为Excel列标识符 (1->A, 26->Z, 27->AA)
+  numberToColumn(num) {
+    let result = '';
+    while (num > 0) {
+      num--;
+      result = String.fromCharCode(65 + (num % 26)) + result;
+      num = Math.floor(num / 26);
+    }
+    return result || 'A';
+  }
+
   // 获取文档内容 - 根据类型使用不同API
   async getDocumentContent(objToken, objType, title) {
     console.log(`📄 获取文档内容: ${title} (${objType})`);
@@ -95,7 +104,7 @@ class EnhancedFeishuSyncV2 {
     if (objType === 'docx') {
       return await this.getDocxContent(objToken, title);
     } else if (objType === 'sheet') {
-      return await this.getSheetContent(objToken, title);
+      return await this.getSheetContentFixed(objToken, title);
     }
     
     return null;
@@ -131,42 +140,58 @@ class EnhancedFeishuSyncV2 {
     return null;
   }
 
-  // 获取电子表格内容 - 实用版：基于测试结果的可行方案
-  async getSheetContent(objToken, title) {
+  // 修复版表格内容获取 - 使用正确的metainfo API
+  async getSheetContentFixed(objToken, title) {
     try {
-      // 首先获取表格基础信息
-      const infoUrl = `${this.config.baseUrl}/sheets/v3/spreadsheets/${objToken}`;
+      // 使用metainfo API获取正确的工作表信息
+      const metaUrl = `${this.config.baseUrl}/sheets/v2/spreadsheets/${objToken}/metainfo`;
       
-      const infoResponse = await fetch(infoUrl, {
+      const metaResponse = await fetch(metaUrl, {
         headers: {
           'Authorization': `Bearer ${this.accessToken}`,
           'Content-Type': 'application/json'
         }
       });
       
-      if (infoResponse.ok) {
-        const infoData = await infoResponse.json();
-        console.log(`✅ 成功获取表格信息: ${title}`);
+      if (!metaResponse.ok) {
+        console.log(`⚠️ 表格metainfo获取失败: ${metaResponse.status}`);
+        return null;
+      }
+      
+      const metaData = await metaResponse.json();
+      
+      if (metaData.code !== 0 || !metaData.data?.sheets) {
+        console.log(`⚠️ 表格metainfo解析失败`);
+        return null;
+      }
+      
+      const sheetsInfo = metaData.data.sheets;
+      console.log(`✅ 成功获取表格信息: ${title} - 发现 ${sheetsInfo.length} 个工作表`);
+      
+      // 获取所有工作表的数据
+      const allSheetsData = [];
+      let totalProcessedCells = 0;
+      
+      for (const [index, sheetInfo] of sheetsInfo.entries()) {
+        const sheetId = sheetInfo.sheetId;
+        const sheetTitle = sheetInfo.title;
+        const rowCount = sheetInfo.rowCount || 0;
+        const colCount = sheetInfo.columnCount || 0;
         
-        // 尝试获取实际数据 - 使用多种策略
-        const allSheetsData = [];
-        let totalProcessedCells = 0;
+        console.log(`📊 处理工作表 ${index + 1}/${sheetsInfo.length}: "${sheetTitle}" (${rowCount}行 × ${colCount}列)`);
         
-        console.log(`📊 开始尝试获取表格数据...`);
+        // 计算最优的数据获取范围 - 限制大小以避免API超时
+        const maxRows = Math.min(rowCount, 1500); // 限制最大行数
+        const maxCols = Math.min(colCount, 40); // 限制最大列数
         
-        // 策略1: 尝试不同的范围大小，从小到大
-        const rangeSizes = [
-          { range: 'A1:Z100', desc: '标准范围' },
-          { range: 'A1:AB200', desc: '扩展范围' },
-          { range: 'A1:AZ500', desc: '大范围' },
-          { range: 'A1:CV1000', desc: '超大范围' }
-        ];
-        
-        for (const {range, desc} of rangeSizes) {
+        if (maxRows > 0 && maxCols > 0) {
+          const endColumn = this.numberToColumn(maxCols);
+          const range = `A1:${endColumn}${maxRows}`;
+          
+          console.log(`🔍 获取范围: ${range}`);
+          
           try {
-            console.log(`🔍 尝试 ${desc}: ${range}`);
-            
-            const dataUrl = `${this.config.baseUrl}/sheets/v2/spreadsheets/${objToken}/values/${range}`;
+            const dataUrl = `${this.config.baseUrl}/sheets/v2/spreadsheets/${objToken}/values/${sheetId}!${range}`;
             
             const dataResponse = await fetch(dataUrl, {
               headers: {
@@ -177,139 +202,83 @@ class EnhancedFeishuSyncV2 {
             
             if (dataResponse.ok) {
               const data = await dataResponse.json();
-              const values = data.data?.values || [];
               
-              console.log(`📊 ${desc} 响应: ${values.length} 行`);
-              
-              if (values.length > 0) {
-                const cellCount = values.reduce((sum, row) => sum + row.length, 0);
-                totalProcessedCells += cellCount;
-                
-                allSheetsData.push({
-                  sheetName: '主工作表',
-                  sheetId: 'default',
-                  data: values,
-                  rowCount: values.length,
-                  cellCount: cellCount,
-                  range: range,
-                  method: desc
-                });
-                
-                console.log(`✅ ${desc}成功: ${values.length}行, ${cellCount}个单元格`);
-                
-                // 如果获得了大量数据，就使用这个范围
-                if (cellCount > 100) {
-                  break;
-                }
-              }
-            } else {
-              console.log(`⚠️ ${desc}失败: ${dataResponse.status}`);
-            }
-          } catch (rangeError) {
-            console.log(`⚠️ ${desc}错误: ${rangeError.message}`);
-          }
-        }
-        
-        // 策略2: 如果默认工作表没数据，尝试常见工作表名称
-        if (allSheetsData.length === 0 || totalProcessedCells < 50) {
-          console.log(`📋 尝试常见工作表名称...`);
-          
-          const commonSheetNames = ['Sheet1', 'sheet1', '工作表1', 'Sheet 1', '0'];
-          
-          for (const sheetName of commonSheetNames) {
-            try {
-              const range = 'A1:Z200';
-              const dataUrl = `${this.config.baseUrl}/sheets/v2/spreadsheets/${objToken}/values/${sheetName}!${range}`;
-              
-              console.log(`🔍 尝试工作表 "${sheetName}"`);
-              
-              const dataResponse = await fetch(dataUrl, {
-                headers: {
-                  'Authorization': `Bearer ${this.accessToken}`,
-                  'Content-Type': 'application/json'
-                }
-              });
-              
-              if (dataResponse.ok) {
-                const data = await dataResponse.json();
+              if (data.code === 0) {
                 const values = data.data?.values || [];
                 
                 if (values.length > 0) {
                   const cellCount = values.reduce((sum, row) => sum + row.length, 0);
+                  totalProcessedCells += cellCount;
                   
-                  // 如果找到更多数据，替换之前的结果
-                  if (cellCount > totalProcessedCells) {
-                    allSheetsData.length = 0; // 清空之前的数据
-                    totalProcessedCells = cellCount;
-                    
-                    allSheetsData.push({
-                      sheetName: sheetName,
-                      sheetId: sheetName,
-                      data: values,
-                      rowCount: values.length,
-                      cellCount: cellCount,
-                      range: range,
-                      method: '命名工作表'
-                    });
-                    
-                    console.log(`✅ 工作表 "${sheetName}" 成功: ${values.length}行, ${cellCount}个单元格`);
-                    break;
-                  }
+                  allSheetsData.push({
+                    sheetName: sheetTitle,
+                    sheetId: sheetId,
+                    data: values,
+                    rowCount: values.length,
+                    cellCount: cellCount,
+                    range: range,
+                    method: 'metainfo_fixed'
+                  });
+                  
+                  console.log(`✅ "${sheetTitle}" 成功: ${values.length}行, ${cellCount}个单元格`);
+                } else {
+                  console.log(`⚠️ "${sheetTitle}" 返回0行数据`);
                 }
+              } else {
+                console.log(`⚠️ "${sheetTitle}" API错误: ${data.msg}`);
               }
-            } catch (sheetError) {
-              console.log(`⚠️ 工作表 "${sheetName}" 错误: ${sheetError.message}`);
+            } else {
+              console.log(`⚠️ "${sheetTitle}" HTTP错误: ${dataResponse.status}`);
             }
+          } catch (sheetError) {
+            console.log(`⚠️ "${sheetTitle}" 处理异常: ${sheetError.message}`);
           }
+        } else {
+          console.log(`⚠️ "${sheetTitle}" 跳过 - 无有效尺寸`);
         }
         
-        if (allSheetsData.length > 0 && totalProcessedCells > 0) {
-          // 构建结构化的表格内容
-          const structuredContent = this.buildStructuredSheetContent(title, allSheetsData, infoData.data?.spreadsheet);
-          
-          console.log(`🎉 表格 "${title}" 数据获取完成: ${allSheetsData.length}个工作表, ${totalProcessedCells}个单元格`);
-          console.log(`📊 内容长度: ${structuredContent.length} 字符 (比原来的100字符增加了 ${Math.round(structuredContent.length/100)}x)`);
-          
-          return {
-            type: 'sheet',
-            content: structuredContent,
-            sheetInfo: infoData.data?.spreadsheet,
-            allSheetsData: allSheetsData,
-            totalCells: totalProcessedCells,
-            length: structuredContent.length,
-            optimized: true
-          };
-        } else {
-          console.log(`⚠️ 表格 "${title}" 无法获取有效数据，使用降级方案`);
+        // 添加延迟避免API限制
+        if (index < sheetsInfo.length - 1) {
+          await new Promise(resolve => setTimeout(resolve, 300));
         }
+      }
+      
+      if (allSheetsData.length > 0 && totalProcessedCells > 0) {
+        // 构建结构化的表格内容
+        const structuredContent = this.buildStructuredSheetContent(title, allSheetsData, metaData.data?.properties);
+        
+        console.log(`🎉 表格 "${title}" 数据获取完成: ${allSheetsData.length}个工作表, ${totalProcessedCells}个单元格`);
+        console.log(`📊 内容长度: ${structuredContent.length} 字符 (相比原来的100字符增加了 ${Math.round(structuredContent.length/100)}x)`);
+        
+        return {
+          type: 'sheet',
+          content: structuredContent,
+          sheetInfo: metaData.data?.properties,
+          allSheetsData: allSheetsData,
+          totalCells: totalProcessedCells,
+          length: structuredContent.length,
+          optimized: true
+        };
+      } else {
+        console.log(`⚠️ 表格 "${title}" 无法获取有效数据，使用降级方案`);
         
         // 降级方案：如果无法获取详细数据，至少保存基本信息
-        const fallbackContent = this.buildFallbackSheetContent(title, infoData.data?.spreadsheet);
+        const fallbackContent = this.buildFallbackSheetContent(title, metaData.data?.properties);
         
         return {
           type: 'sheet',
           content: fallbackContent,
-          sheetInfo: infoData.data?.spreadsheet,
+          sheetInfo: metaData.data?.properties,
           length: fallbackContent.length,
           optimized: false
         };
       }
+      
     } catch (error) {
       console.log(`⚠️ 表格内容获取失败: ${error.message}`);
     }
     
     return null;
-  }
-
-  // 将数字转换为Excel列标识符 (1->A, 26->Z, 27->AA)
-  numberToColumn(num) {
-    let result = '';
-    while (num > 0) {
-      num--;
-      result = String.fromCharCode(65 + (num % 26)) + result;
-      num = Math.floor(num / 26);
-    }
-    return result || 'A';
   }
 
   // 构建结构化的表格内容
@@ -319,15 +288,15 @@ class EnhancedFeishuSyncV2 {
     // 添加表格基本信息
     if (sheetInfo) {
       content += `**表格信息：**\n`;
-      content += `- 创建者: ${sheetInfo.owner_id || '未知'}\n`;
-      content += `- 链接: ${sheetInfo.url || ''}\n`;
-      content += `- 工作表数量: ${allSheetsData.length}\n\n`;
+      content += `- 标题: ${sheetInfo.title || title}\n`;
+      content += `- 总工作表数量: ${sheetInfo.sheetCount || allSheetsData.length}\n`;
+      content += `- 版本: ${sheetInfo.revision || '未知'}\n\n`;
     }
     
     // 处理每个工作表的数据
     allSheetsData.forEach((sheetData, index) => {
       content += `## 工作表 ${index + 1}: ${sheetData.sheetName}\n\n`;
-      content += `**数据规模：** ${sheetData.rowCount}行 × ${Math.max(...sheetData.data.map(row => row.length))}列\n\n`;
+      content += `**数据规模：** ${sheetData.rowCount}行 × ${Math.max(...sheetData.data.map(row => row.length))}列 (${sheetData.cellCount}个单元格)\n\n`;
       
       if (sheetData.data.length > 0) {
         // 添加表头
@@ -336,8 +305,8 @@ class EnhancedFeishuSyncV2 {
           content += `**列标题：** ${headers.join(' | ')}\n\n`;
         }
         
-        // 添加数据行（最多包含前50行以控制大小）
-        const maxRows = Math.min(sheetData.data.length, 50);
+        // 添加数据行（控制数量以控制大小）
+        const maxRows = Math.min(sheetData.data.length, 100); // 每个工作表最多100行
         content += `**数据内容（前${maxRows}行）：**\n`;
         
         for (let i = 0; i < maxRows; i++) {
@@ -366,9 +335,8 @@ class EnhancedFeishuSyncV2 {
     if (sheetInfo) {
       content += `**表格信息：**\n`;
       content += `- 标题: ${sheetInfo.title || title}\n`;
-      content += `- 创建者: ${sheetInfo.owner_id || '未知'}\n`;
-      content += `- 链接: ${sheetInfo.url || ''}\n`;
-      content += `- Token: ${sheetInfo.token || ''}\n\n`;
+      content += `- 总工作表数量: ${sheetInfo.sheetCount || '未知'}\n`;
+      content += `- 版本: ${sheetInfo.revision || '未知'}\n\n`;
     }
     
     content += `**备注：** 这是一个飞书表格文档，包含AI创投相关数据。由于API限制，无法获取详细数据内容。\n`;
@@ -412,8 +380,8 @@ class EnhancedFeishuSyncV2 {
       if (docContent.sheetInfo) {
         processedNode.metadata.sheetInfo = docContent.sheetInfo;
       }
-      if (docContent.sheets) {
-        processedNode.metadata.sheets = docContent.sheets;
+      if (docContent.allSheetsData) {
+        processedNode.metadata.allSheetsData = docContent.allSheetsData;
       }
     } else {
       processedNode.content = `节点: ${node.title}\\n类型: ${node.obj_type}\\n创建时间: ${new Date(parseInt(node.node_create_time) * 1000).toLocaleDateString()}`;
@@ -462,7 +430,7 @@ class EnhancedFeishuSyncV2 {
     });
     
     // 提取标题中的关键词
-    title.split(/[\\s,，、]+/).forEach(word => {
+    title.split(/[\s,，、]+/).forEach(word => {
       if (word.length > 1) {
         keywords.push(word.toLowerCase());
       }
@@ -525,8 +493,8 @@ class EnhancedFeishuSyncV2 {
   }
 
   // 主同步流程
-  async runEnhancedSync() {
-    console.log('🚀 开始增强版飞书知识库同步 V2..\\n');
+  async runFixedSync() {
+    console.log('🚀 开始修复版飞书知识库同步...\n');
     
     if (!await this.getAccessToken()) {
       throw new Error('认证失败');
@@ -540,14 +508,14 @@ class EnhancedFeishuSyncV2 {
       
       // 递归处理每个根节点
       for (const rootNode of rootNodes) {
-        console.log(`\\n🎯 开始处理根节点: ${rootNode.title}`);
+        console.log(`\n🎯 开始处理根节点: ${rootNode.title}`);
         await this.processNodeRecursively(rootNode, 0);
       }
       
       // 保存结果
       await this.saveResults();
       
-      console.log('\\n🎉 增强版同步完成！');
+      console.log('\n🎉 修复版同步完成！');
       console.log(`📊 总计处理节点: ${this.knowledgeBase.length}`);
       console.log(`📝 平均内容长度: ${Math.round(this.knowledgeBase.reduce((sum, item) => sum + (item.contentLength || 0), 0) / this.knowledgeBase.length)}`);
       
@@ -569,13 +537,13 @@ class EnhancedFeishuSyncV2 {
         nodesByType: {},
         avgContentLength: Math.round(this.knowledgeBase.reduce((sum, item) => sum + (item.contentLength || 0), 0) / this.knowledgeBase.length),
         avgRagScore: Math.round(this.knowledgeBase.reduce((sum, item) => sum + (item.ragScore || 0), 0) / this.knowledgeBase.length * 100) / 100,
-        apiVersion: 'v2_enhanced',
-        syncMethod: 'recursive_full_content',
+        apiVersion: 'v2_fixed',
+        syncMethod: 'metainfo_based_full_content',
         sourceInfo: {
           platform: 'SVTR飞书知识库',
           spaceId: this.config.spaceId,
           domain: this.config.wikiDomain,
-          syncVersion: 'enhanced-feishu-sync-v2'
+          syncVersion: 'fixed-feishu-sync'
         }
       };
       
@@ -608,8 +576,8 @@ class EnhancedFeishuSyncV2 {
 // 主函数
 async function main() {
   try {
-    const syncer = new EnhancedFeishuSyncV2();
-    await syncer.runEnhancedSync();
+    const syncer = new FixedFeishuSync();
+    await syncer.runFixedSync();
   } catch (error) {
     console.error('❌ 程序执行失败:', error.message);
     process.exit(1);
@@ -621,4 +589,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = EnhancedFeishuSyncV2;
+module.exports = FixedFeishuSync;

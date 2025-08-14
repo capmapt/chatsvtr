@@ -16,7 +16,7 @@ function formatSize(bytes) {
 
 function calculateSavings() {
   console.log('📊 网站优化效果总结\n');
-  console.log('=' * 50);
+  console.log('='.repeat(50));
   
   // 图片优化统计
   console.log('\n🖼️  图片优化 (WebP转换):');
@@ -43,7 +43,7 @@ function calculateSavings() {
   });
   
   const imageSavings = totalImageOriginal - totalImageOptimized;
-  const imageReduction = ((imageSavings / totalImageOriginal) * 100).toFixed(1);
+  const imageReduction = totalImageOriginal > 0 ? ((imageSavings / totalImageOriginal) * 100).toFixed(1) : '0.0';
   console.log(`   总计节省: ${formatSize(imageSavings)} (${imageReduction}%)`);
   
   // CSS/JS优化统计
@@ -73,7 +73,7 @@ function calculateSavings() {
   });
   
   const assetSavings = totalAssetOriginal - totalAssetOptimized;
-  const assetReduction = ((assetSavings / totalAssetOriginal) * 100).toFixed(1);
+  const assetReduction = totalAssetOriginal > 0 ? ((assetSavings / totalAssetOriginal) * 100).toFixed(1) : '0.0';
   console.log(`   总计节省: ${formatSize(assetSavings)} (${assetReduction}%)`);
   
   // Gzip压缩效果预估
@@ -105,7 +105,7 @@ function calculateSavings() {
   });
   
   const gzipSavings = totalBeforeGzip - totalAfterGzip;
-  const gzipReduction = ((gzipSavings / totalBeforeGzip) * 100).toFixed(1);
+  const gzipReduction = totalBeforeGzip > 0 ? ((gzipSavings / totalBeforeGzip) * 100).toFixed(1) : '0.0';
   console.log(`   Gzip额外节省: ${formatSize(gzipSavings)} (${gzipReduction}%)`);
   
   // 总体效果统计
@@ -114,12 +114,12 @@ function calculateSavings() {
   const totalWithGzipSize = totalImageOptimized + totalAfterGzip;
   
   console.log('\n🎯 总体优化效果:');
-  console.log('=' * 30);
+  console.log('='.repeat(30));
   console.log(`原始总大小: ${formatSize(totalOriginalSize)}`);
   console.log(`优化后(无Gzip): ${formatSize(totalOptimizedSize)} (节省 ${formatSize(totalOriginalSize - totalOptimizedSize)})`);
   console.log(`优化后(含Gzip): ${formatSize(totalWithGzipSize)} (节省 ${formatSize(totalOriginalSize - totalWithGzipSize)})`);
   
-  const finalReduction = ((totalOriginalSize - totalWithGzipSize) / totalOriginalSize * 100).toFixed(1);
+  const finalReduction = totalOriginalSize > 0 ? ((totalOriginalSize - totalWithGzipSize) / totalOriginalSize * 100).toFixed(1) : '0.0';
   console.log(`最终减少: ${finalReduction}%`);
   
   console.log('\n✅ 优化目标达成情况:');

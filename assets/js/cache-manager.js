@@ -11,15 +11,15 @@ class CacheManager {
       apiResponseCache: 5 * 60 * 1000, // 5分钟
       htmlCache: 60 * 60 * 1000, // 1小时
       imageCache: 30 * 24 * 60 * 60 * 1000, // 30天
-      
+
       // 预测性加载配置
       prefetchDelay: 50, // 鼠标悬停50ms后开始预取
       maxPrefetchSize: 5 * 1024 * 1024, // 最大预取5MB
-      
+
       // 存储配额管理
       maxStorageSize: 50 * 1024 * 1024, // 最大存储50MB
       cleanupThreshold: 0.9, // 90%时开始清理
-      
+
       ...options
     };
 
@@ -38,22 +38,22 @@ class CacheManager {
   async init() {
     // 检查浏览器支持
     this.checkStorageSupport();
-    
+
     // 初始化Service Worker缓存
     await this.initServiceWorker();
-    
+
     // 设置智能预取
     this.setupIntelligentPrefetch();
-    
+
     // 设置定期清理
     this.setupPeriodicCleanup();
-    
+
     // 加载现有缓存
     await this.loadExistingCache();
-    
+
     // 设置存储监控
     this.monitorStorage();
-    
+
     if (!window.SVTRErrorHandler?.isProduction()) {
       console.log('缓存管理器初始化完成');
     }
@@ -64,7 +64,7 @@ class CacheManager {
     this.supportsSessionStorage = this.testStorage('sessionStorage');
     this.supportsIndexedDB = 'indexedDB' in window;
     this.supportsServiceWorker = 'serviceWorker' in navigator;
-    
+
     console.log('存储支持情况:', {
       localStorage: this.supportsLocalStorage,
       sessionStorage: this.supportsSessionStorage,
@@ -86,7 +86,9 @@ class CacheManager {
   }
 
   async initServiceWorker() {
-    if (!this.supportsServiceWorker) return;
+    if (!this.supportsServiceWorker) {
+      return;
+    }
 
     try {
       // 检查Service Worker文件是否存在
@@ -103,18 +105,18 @@ class CacheManager {
         scope: '/',
         updateViaCache: 'none'
       });
-      
+
       if (!window.SVTRErrorHandler?.isProduction()) {
         console.log('Service Worker注册成功:', registration);
       }
-      
+
       // 监听更新
       registration.addEventListener('updatefound', () => {
         if (!window.SVTRErrorHandler?.isProduction()) {
           console.log('Service Worker有更新');
         }
         const newWorker = registration.installing;
-        
+
         newWorker.addEventListener('statechange', () => {
           if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
             // 有新版本可用
@@ -146,17 +148,19 @@ class CacheManager {
 
   setupIntelligentPrefetch() {
     let prefetchTimer = null;
-    
+
     // 鼠标悬停预取 - 只预取内部链接
     document.addEventListener('mouseover', (event) => {
       const link = event.target.closest('a[href]');
-      if (!link) return;
-      
+      if (!link) {
+        return;
+      }
+
       // 🚫 跳过外部链接，避免CORS错误
       if (this.isExternalUrl(link.href)) {
         return;
       }
-      
+
       clearTimeout(prefetchTimer);
       prefetchTimer = setTimeout(() => {
         this.prefetchResource(link.href);
@@ -175,7 +179,7 @@ class CacheManager {
   setupBehaviorBasedPrefetch() {
     // 分析用户点击模式
     const clickPatterns = this.getClickPatterns();
-    
+
     // 预取可能访问的页面 - 只预取内部链接
     clickPatterns.forEach(pattern => {
       if (pattern.probability > 0.7 && !this.isExternalUrl(pattern.url)) {
@@ -213,12 +217,12 @@ class CacheManager {
         timestamp: Date.now(),
         referrer: document.referrer
       });
-      
+
       // 只保留最近1000条记录
       if (patterns.length > 1000) {
         patterns.splice(0, patterns.length - 1000);
       }
-      
+
       localStorage.setItem('svtr_click_patterns', JSON.stringify(patterns));
     } catch {
       // 存储失败时忽略
@@ -230,7 +234,7 @@ class CacheManager {
     try {
       const urlObj = new URL(url, window.location.origin);
       const currentHost = window.location.hostname;
-      
+
       // 外部域名列表（不进行预取）
       const externalDomains = [
         'feishu.cn',
@@ -241,12 +245,12 @@ class CacheManager {
         'twitter.com',
         'linkedin.com'
       ];
-      
+
       // 如果是相对URL或同域名，允许预取
       if (urlObj.hostname === currentHost || urlObj.hostname === '') {
         return false;
       }
-      
+
       // 检查是否为已知的外部域名
       return externalDomains.some(domain => urlObj.hostname.includes(domain));
     } catch {
@@ -256,17 +260,19 @@ class CacheManager {
   }
 
   async prefetchResource(url) {
-    if (this.prefetchQueue.has(url)) return;
-    
+    if (this.prefetchQueue.has(url)) {
+      return;
+    }
+
     // 🚫 强制检查：不预取任何包含飞书域名的链接
-    if (url.includes('feishu.cn') || url.includes('lark.com') || 
+    if (url.includes('feishu.cn') || url.includes('lark.com') ||
         url.includes('discord.com') || url.includes('github.com')) {
       if (!window.SVTRErrorHandler?.isProduction()) {
         console.log('🚫 跳过外部链接预取:', url);
       }
       return;
     }
-    
+
     // 🚫 双重检查：使用原有的外部URL检测
     if (this.isExternalUrl(url)) {
       if (!window.SVTRErrorHandler?.isProduction()) {
@@ -274,43 +280,43 @@ class CacheManager {
       }
       return;
     }
-    
+
     try {
       // 检查是否已缓存
       if (await this.get(url)) {
         return;
       }
-      
+
       // 检查资源大小
       const head = await fetch(url, { method: 'HEAD' });
       const size = parseInt(head.headers.get('content-length') || '0');
-      
+
       if (size > this.options.maxPrefetchSize) {
         if (!window.SVTRErrorHandler?.isProduction()) {
           console.log('资源太大，跳过预取:', url);
         }
         return;
       }
-      
+
       this.prefetchQueue.add(url);
-      
+
       // 低优先级预取
       const response = await fetch(url, {
         priority: 'low'
       });
-      
+
       if (response.ok) {
         await this.set(url, await response.clone().text(), {
           type: 'prefetch',
           size
         });
-        
+
         this.analytics.prefetches++;
         if (!window.SVTRErrorHandler?.isProduction()) {
           console.log('预取成功:', url);
         }
       }
-      
+
     } catch (error) {
       // 不在生产环境显示预取失败错误，避免控制台污染
       if (!window.SVTRErrorHandler?.isProduction()) {
@@ -323,7 +329,7 @@ class CacheManager {
 
   predictNextContent() {
     const scrollPercentage = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-    
+
     // 接近页面底部时预加载相关内容
     if (scrollPercentage > 0.8) {
       this.prefetchRelatedContent();
@@ -336,7 +342,7 @@ class CacheManager {
     const relatedLinks = Array.from(links)
       .slice(0, 3) // 只预取前3个相关链接
       .map(link => link.href);
-    
+
     for (const url of relatedLinks) {
       await this.prefetchResource(url);
     }
@@ -345,7 +351,7 @@ class CacheManager {
   // 核心缓存操作
   async get(key, options = {}) {
     const cacheKey = this.normalizeKey(key);
-    
+
     try {
       // 先检查内存缓存
       const memoryItem = this.cache.get(cacheKey);
@@ -353,7 +359,7 @@ class CacheManager {
         this.analytics.hits++;
         return memoryItem.data;
       }
-      
+
       // 检查localStorage
       if (this.supportsLocalStorage) {
         const storageItem = localStorage.getItem(cacheKey);
@@ -370,7 +376,7 @@ class CacheManager {
           }
         }
       }
-      
+
       // 检查IndexedDB（大数据）
       if (this.supportsIndexedDB && options.checkIndexedDB !== false) {
         const idbItem = await this.getFromIndexedDB(cacheKey);
@@ -379,10 +385,10 @@ class CacheManager {
           return idbItem.data;
         }
       }
-      
+
       this.analytics.misses++;
       return null;
-      
+
     } catch (error) {
       console.warn('缓存获取失败:', error);
       this.analytics.misses++;
@@ -393,7 +399,7 @@ class CacheManager {
   async set(key, data, options = {}) {
     const cacheKey = this.normalizeKey(key);
     const ttl = options.ttl || this.getTTLByType(options.type || 'default');
-    
+
     const cacheItem = {
       data,
       timestamp: Date.now(),
@@ -407,7 +413,7 @@ class CacheManager {
     try {
       // 存储到内存缓存
       this.cache.set(cacheKey, cacheItem);
-      
+
       // 根据大小选择存储位置
       if (cacheItem.size < 1024 * 1024) { // 小于1MB存localStorage
         if (this.supportsLocalStorage) {
@@ -419,9 +425,9 @@ class CacheManager {
           await this.setToIndexedDB(cacheKey, cacheItem);
         }
       }
-      
+
       return true;
-      
+
     } catch (error) {
       console.warn('缓存设置失败:', error);
       return false;
@@ -430,15 +436,15 @@ class CacheManager {
 
   async delete(key) {
     const cacheKey = this.normalizeKey(key);
-    
+
     // 从内存删除
     this.cache.delete(cacheKey);
-    
+
     // 从localStorage删除
     if (this.supportsLocalStorage) {
       localStorage.removeItem(cacheKey);
     }
-    
+
     // 从IndexedDB删除
     if (this.supportsIndexedDB) {
       await this.deleteFromIndexedDB(cacheKey);
@@ -448,7 +454,7 @@ class CacheManager {
   async clear() {
     // 清空内存缓存
     this.cache.clear();
-    
+
     // 清空localStorage中的缓存项
     if (this.supportsLocalStorage) {
       const keys = Object.keys(localStorage);
@@ -458,7 +464,7 @@ class CacheManager {
         }
       });
     }
-    
+
     // 清空IndexedDB
     if (this.supportsIndexedDB) {
       await this.clearIndexedDB();
@@ -483,7 +489,7 @@ class CacheManager {
       'prefetch': this.options.htmlCache,
       'default': this.options.htmlCache
     };
-    
+
     return ttlMap[type] || ttlMap.default;
   }
 
@@ -495,25 +501,29 @@ class CacheManager {
   }
 
   async ensureStorageSpace(requiredSize) {
-    if (!this.supportsLocalStorage) return;
-    
+    if (!this.supportsLocalStorage) {
+      return;
+    }
+
     try {
       // 检查当前使用量
       const currentSize = this.getStorageSize();
       const available = this.options.maxStorageSize - currentSize;
-      
+
       if (available < requiredSize) {
         await this.performLRUCleanup(requiredSize - available);
       }
-      
+
     } catch (error) {
       console.warn('存储空间管理失败:', error);
     }
   }
 
   getStorageSize() {
-    if (!this.supportsLocalStorage) return 0;
-    
+    if (!this.supportsLocalStorage) {
+      return 0;
+    }
+
     let size = 0;
     for (const key in localStorage) {
       if (key.startsWith('svtr_cache_')) {
@@ -525,7 +535,7 @@ class CacheManager {
 
   async performLRUCleanup(requiredSpace) {
     const items = [];
-    
+
     // 收集所有缓存项信息
     for (const key in localStorage) {
       if (key.startsWith('svtr_cache_')) {
@@ -541,21 +551,23 @@ class CacheManager {
         }
       }
     }
-    
+
     // 按LRU分数排序
     items.sort((a, b) => a.score - b.score);
-    
+
     // 删除项目直到释放足够空间
     let freedSpace = 0;
     for (const item of items) {
-      if (freedSpace >= requiredSpace) break;
-      
+      if (freedSpace >= requiredSpace) {
+        break;
+      }
+
       localStorage.removeItem(item.key);
       this.cache.delete(item.key);
       freedSpace += item.size || 0;
       this.analytics.evictions++;
     }
-    
+
     console.log(`LRU清理完成，释放空间: ${freedSpace} bytes`);
   }
 
@@ -564,7 +576,7 @@ class CacheManager {
     const age = now - item.timestamp;
     const lastAccess = now - (item.lastAccess || item.timestamp);
     const accessFrequency = (item.accessCount || 0) / Math.max(age / (24 * 60 * 60 * 1000), 1);
-    
+
     // 综合评分：年龄 + 最后访问时间 - 访问频率
     return age * 0.3 + lastAccess * 0.5 - accessFrequency * 1000;
   }
@@ -574,7 +586,7 @@ class CacheManager {
     setInterval(() => {
       this.performPeriodicCleanup();
     }, 60 * 60 * 1000);
-    
+
     // 页面卸载时清理
     window.addEventListener('beforeunload', () => {
       this.performPeriodicCleanup();
@@ -583,30 +595,31 @@ class CacheManager {
 
   async performPeriodicCleanup() {
     console.log('执行定期缓存清理');
-    
-    const now = Date.now();
+
     const keysToDelete = [];
-    
+
     // 清理过期项
     this.cache.forEach((item, key) => {
       if (this.isExpired(item)) {
         keysToDelete.push(key);
       }
     });
-    
+
     // 删除过期项
     for (const key of keysToDelete) {
       await this.delete(key.replace('svtr_cache_', ''));
     }
-    
+
     console.log(`清理了${keysToDelete.length}个过期缓存项`);
   }
 
   async loadExistingCache() {
-    if (!this.supportsLocalStorage) return;
-    
+    if (!this.supportsLocalStorage) {
+      return;
+    }
+
     let loadedCount = 0;
-    
+
     for (const key in localStorage) {
       if (key.startsWith('svtr_cache_')) {
         try {
@@ -622,7 +635,7 @@ class CacheManager {
         }
       }
     }
-    
+
     console.log(`加载了${loadedCount}个现有缓存项`);
   }
 
@@ -638,17 +651,17 @@ class CacheManager {
   }
 
   // IndexedDB操作（用于大数据存储）
-  async getFromIndexedDB(key) {
+  async getFromIndexedDB(_key) {
     // 简化的IndexedDB实现
     return null; // 暂时返回null，后续可以实现
   }
 
-  async setToIndexedDB(key, item) {
+  async setToIndexedDB(_key, _item) {
     // 简化的IndexedDB实现
     return false;
   }
 
-  async deleteFromIndexedDB(key) {
+  async deleteFromIndexedDB(_key) {
     // 简化的IndexedDB实现
     return true;
   }
@@ -661,7 +674,7 @@ class CacheManager {
   // 统计信息
   getStats() {
     const storageSize = this.getStorageSize();
-    
+
     return {
       memoryCache: this.cache.size,
       storageSize,
@@ -676,15 +689,20 @@ class CacheManager {
   async cacheResponse(url, response) {
     const contentType = response.headers.get('content-type') || '';
     let type = 'default';
-    
-    if (contentType.includes('image/')) type = 'image';
-    else if (contentType.includes('text/html')) type = 'html';
-    else if (contentType.includes('application/json')) type = 'api';
-    else if (contentType.includes('text/css') || contentType.includes('application/javascript')) type = 'static';
-    
+
+    if (contentType.includes('image/')) {
+      type = 'image';
+    } else if (contentType.includes('text/html')) {
+      type = 'html';
+    } else if (contentType.includes('application/json')) {
+      type = 'api';
+    } else if (contentType.includes('text/css') || contentType.includes('application/javascript')) {
+      type = 'static';
+    }
+
     const data = await response.text();
     await this.set(url, data, { type });
-    
+
     return data;
   }
 
@@ -695,16 +713,16 @@ class CacheManager {
       if (cached && !options.bypassCache) {
         return new Response(cached);
       }
-      
+
       // 发起请求
       const response = await fetch(url, options);
-      
+
       // 缓存响应
       if (response.ok && response.status < 400) {
-        const cachedData = await this.cacheResponse(url, response.clone());
+        await this.cacheResponse(url, response.clone());
         return response;
       }
-      
+
       return response;
     };
   }
@@ -713,10 +731,10 @@ class CacheManager {
 // 自动初始化
 document.addEventListener('DOMContentLoaded', () => {
   window.cacheManager = new CacheManager();
-  
+
   // 记录页面访问
   window.cacheManager.recordClick(window.location.href);
-  
+
   console.log('缓存管理器已启动');
 });
 

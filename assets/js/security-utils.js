@@ -10,8 +10,10 @@ class SecurityUtils {
    * @returns {string} 转义后的安全字符串
    */
   static escapeHtml(str) {
-    if (typeof str !== 'string') return '';
-    
+    if (typeof str !== 'string') {
+      return '';
+    }
+
     const div = document.createElement('div');
     div.textContent = str;
     return div.innerHTML;
@@ -23,19 +25,21 @@ class SecurityUtils {
    * @returns {string} 清理后的安全HTML
    */
   static sanitizeHtml(html) {
-    if (typeof html !== 'string') return '';
-    
+    if (typeof html !== 'string') {
+      return '';
+    }
+
     // 允许的安全标签和属性
     const allowedTags = ['p', 'br', 'strong', 'em', 'b', 'i', 'u', 'span', 'div'];
     const allowedAttributes = ['class'];
-    
+
     // 创建临时容器
     const temp = document.createElement('div');
     temp.innerHTML = html;
-    
+
     // 递归清理所有元素
     this.cleanElement(temp, allowedTags, allowedAttributes);
-    
+
     return temp.innerHTML;
   }
 
@@ -47,7 +51,7 @@ class SecurityUtils {
    */
   static cleanElement(element, allowedTags, allowedAttributes) {
     const children = Array.from(element.children);
-    
+
     children.forEach(child => {
       // 检查标签是否允许
       if (!allowedTags.includes(child.tagName.toLowerCase())) {
@@ -57,7 +61,7 @@ class SecurityUtils {
         element.replaceChild(replacement, child);
         return;
       }
-      
+
       // 清理属性
       const attributes = Array.from(child.attributes);
       attributes.forEach(attr => {
@@ -65,7 +69,7 @@ class SecurityUtils {
           child.removeAttribute(attr.name);
         }
       });
-      
+
       // 递归清理子元素
       this.cleanElement(child, allowedTags, allowedAttributes);
     });
@@ -84,52 +88,53 @@ class SecurityUtils {
       allowEmpty: false,
       type: 'text' // text, email, url
     };
-    
+
     const opts = { ...defaults, ...options };
     const result = { isValid: true, message: '', sanitized: '' };
-    
+
     // 基本检查
     if (typeof input !== 'string') {
       result.isValid = false;
       result.message = '输入必须是字符串';
       return result;
     }
-    
+
     // 长度检查
     if (!opts.allowEmpty && input.trim().length < opts.minLength) {
       result.isValid = false;
       result.message = `输入不能少于${opts.minLength}个字符`;
       return result;
     }
-    
+
     if (input.length > opts.maxLength) {
       result.isValid = false;
       result.message = `输入不能超过${opts.maxLength}个字符`;
       return result;
     }
-    
+
     // 类型验证
     switch (opts.type) {
-      case 'email':
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(input)) {
-          result.isValid = false;
-          result.message = '请输入有效的邮箱地址';
-          return result;
-        }
-        break;
-        
-      case 'url':
-        try {
-          new URL(input);
-        } catch {
-          result.isValid = false;
-          result.message = '请输入有效的URL地址';
-          return result;
-        }
-        break;
+    case 'email': {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(input)) {
+        result.isValid = false;
+        result.message = '请输入有效的邮箱地址';
+        return result;
+      }
+      break;
     }
-    
+
+    case 'url':
+      try {
+        new URL(input);
+      } catch {
+        result.isValid = false;
+        result.message = '请输入有效的URL地址';
+        return result;
+      }
+      break;
+    }
+
     // 恶意脚本检测
     const dangerousPatterns = [
       /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
@@ -140,14 +145,14 @@ class SecurityUtils {
       /<embed/gi,
       /<form/gi
     ];
-    
+
     const hasDangerousContent = dangerousPatterns.some(pattern => pattern.test(input));
     if (hasDangerousContent) {
       result.isValid = false;
       result.message = '输入包含不安全的内容';
       return result;
     }
-    
+
     // 返回清理后的输入
     result.sanitized = this.escapeHtml(input.trim());
     return result;
@@ -161,11 +166,11 @@ class SecurityUtils {
   static generateSecureRandom(length = 16) {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
-    
+
     if (window.crypto && window.crypto.getRandomValues) {
       const array = new Uint8Array(length);
       window.crypto.getRandomValues(array);
-      
+
       for (let i = 0; i < length; i++) {
         result += chars[array[i] % chars.length];
       }
@@ -175,7 +180,7 @@ class SecurityUtils {
         result += chars[Math.floor(Math.random() * chars.length)];
       }
     }
-    
+
     return result;
   }
 
@@ -189,12 +194,12 @@ class SecurityUtils {
     try {
       const parsedUrl = new URL(url, window.location.href);
       const currentOrigin = window.location.origin;
-      
+
       // 同源检查
       if (parsedUrl.origin === currentOrigin) {
         return true;
       }
-      
+
       // 白名单检查
       const safeOrigins = [
         'https://fonts.googleapis.com',
@@ -202,7 +207,7 @@ class SecurityUtils {
         'https://c0uiiy15npu.feishu.cn',
         ...whitelist
       ];
-      
+
       return safeOrigins.includes(parsedUrl.origin);
     } catch {
       return false;
@@ -220,7 +225,7 @@ class SecurityUtils {
       if (typeof jsonString !== 'string' || !jsonString.trim()) {
         return null;
       }
-      
+
       // 检查是否包含函数调用等危险内容
       const dangerousPatterns = [
         /function\s*\(/gi,
@@ -228,16 +233,16 @@ class SecurityUtils {
         /eval\s*\(/gi,
         /constructor/gi
       ];
-      
-      const hasDangerousContent = dangerousPatterns.some(pattern => 
+
+      const hasDangerousContent = dangerousPatterns.some(pattern =>
         pattern.test(jsonString)
       );
-      
+
       if (hasDangerousContent) {
         console.warn('JSON包含潜在危险内容，解析被阻止');
         return null;
       }
-      
+
       return JSON.parse(jsonString);
     } catch (error) {
       console.warn('JSON解析失败:', error);
@@ -254,21 +259,21 @@ class SecurityUtils {
    */
   static rateLimit(func, limit = 10, window = 60000) {
     const calls = [];
-    
+
     return function(...args) {
       const now = Date.now();
-      
+
       // 清理过期的调用记录
       while (calls.length > 0 && calls[0] < now - window) {
         calls.shift();
       }
-      
+
       // 检查是否超过限制
       if (calls.length >= limit) {
         console.warn('调用频率超过限制');
         return;
       }
-      
+
       calls.push(now);
       return func.apply(this, args);
     };

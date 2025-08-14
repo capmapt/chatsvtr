@@ -10,21 +10,21 @@ class UXEnhancer {
       touchDelay: 300,
       swipeThreshold: 50,
       longPressDelay: 500,
-      
+
       // 错误处理配置
       errorDisplayTime: 5000,
       maxRetries: 3,
       retryDelay: 1000,
-      
+
       // 性能配置
       throttleDelay: 16,
       debounceDelay: 250,
-      
+
       // 无障碍配置
       enableFocusManagement: true,
       enableKeyboardNavigation: true,
       enableScreenReader: true,
-      
+
       ...options
     };
 
@@ -33,29 +33,29 @@ class UXEnhancer {
     this.currentFocus = null;
     this.errorQueue = [];
     this.retryCount = new Map();
-    
+
     this.init();
   }
 
   init() {
     // 移动端优化
     this.setupMobileOptimizations();
-    
+
     // 触摸交互
     this.setupTouchInteractions();
-    
+
     // 错误处理
     this.setupErrorHandling();
-    
+
     // 无障碍访问
     this.setupAccessibility();
-    
+
     // 性能优化
     this.setupPerformanceOptimizations();
-    
+
     // 网络状态监听
     this.setupNetworkMonitoring();
-    
+
     console.log('用户体验增强器已启动', {
       mobile: this.isMobile,
       touch: this.isTouch
@@ -68,20 +68,22 @@ class UXEnhancer {
   }
 
   setupMobileOptimizations() {
-    if (!this.isMobile) return;
+    if (!this.isMobile) {
+      return;
+    }
 
     // 禁用双击缩放延迟
     this.eliminateTouchDelay();
-    
+
     // 优化滚动性能
     this.optimizeScrolling();
-    
+
     // 改善点击反馈
     this.enhanceClickFeedback();
-    
+
     // 防止意外缩放
     this.preventAccidentalZoom();
-    
+
     // 优化虚拟键盘
     this.handleVirtualKeyboard();
   }
@@ -89,7 +91,7 @@ class UXEnhancer {
   eliminateTouchDelay() {
     // 添加快速点击类
     document.documentElement.classList.add('touch-action-manipulation');
-    
+
     // 添加全局CSS
     if (!document.getElementById('mobile-optimizations')) {
       const style = document.createElement('style');
@@ -136,7 +138,7 @@ class UXEnhancer {
         document.body.classList.add('is-scrolling');
         isScrolling = true;
       }
-      
+
       clearTimeout(window.scrollEndTimer);
       window.scrollEndTimer = setTimeout(() => {
         document.body.classList.remove('is-scrolling');
@@ -148,10 +150,10 @@ class UXEnhancer {
   enhanceClickFeedback() {
     // 为交互元素添加视觉反馈
     const interactiveElements = document.querySelectorAll('button, a, .clickable, [role="button"]');
-    
+
     interactiveElements.forEach(element => {
       element.classList.add('fast-click');
-      
+
       // 添加涟漪效果
       element.addEventListener('touchstart', this.createRippleEffect.bind(this), { passive: true });
     });
@@ -163,7 +165,7 @@ class UXEnhancer {
     const size = Math.max(rect.width, rect.height);
     const x = event.touches[0].clientX - rect.left - size / 2;
     const y = event.touches[0].clientY - rect.top - size / 2;
-    
+
     const ripple = document.createElement('div');
     ripple.className = 'ripple-effect';
     ripple.style.cssText = `
@@ -179,7 +181,7 @@ class UXEnhancer {
       pointer-events: none;
       z-index: 1000;
     `;
-    
+
     // 添加动画样式
     if (!document.getElementById('ripple-animation')) {
       const style = document.createElement('style');
@@ -199,10 +201,10 @@ class UXEnhancer {
       `;
       document.head.appendChild(style);
     }
-    
+
     element.style.position = element.style.position || 'relative';
     element.appendChild(ripple);
-    
+
     setTimeout(() => {
       if (ripple.parentNode) {
         ripple.parentNode.removeChild(ripple);
@@ -220,7 +222,7 @@ class UXEnhancer {
       }
       lastTouchEnd = now;
     }, { passive: false });
-    
+
     // 防止捏合缩放（在某些情况下）
     document.addEventListener('gesturestart', (event) => {
       event.preventDefault();
@@ -228,12 +230,12 @@ class UXEnhancer {
   }
 
   handleVirtualKeyboard() {
-    let initialViewportHeight = window.innerHeight;
-    
+    const initialViewportHeight = window.innerHeight;
+
     window.addEventListener('resize', this.debounce(() => {
       const currentHeight = window.innerHeight;
       const heightDifference = initialViewportHeight - currentHeight;
-      
+
       if (heightDifference > 150) { // 虚拟键盘打开
         document.body.classList.add('keyboard-open');
         this.adjustForKeyboard(heightDifference);
@@ -244,14 +246,14 @@ class UXEnhancer {
     }, this.options.debounceDelay));
   }
 
-  adjustForKeyboard(keyboardHeight) {
+  adjustForKeyboard(_keyboardHeight) {
     // 调整聊天输入框位置
     const chatInput = document.querySelector('.svtr-chat-input-area');
     if (chatInput) {
       chatInput.style.position = 'fixed';
       chatInput.style.bottom = '10px';
     }
-    
+
     // 滚动到输入焦点
     const activeElement = document.activeElement;
     if (activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA')) {
@@ -270,14 +272,16 @@ class UXEnhancer {
   }
 
   setupTouchInteractions() {
-    if (!this.isTouch) return;
+    if (!this.isTouch) {
+      return;
+    }
 
     // 长按手势
     this.setupLongPress();
-    
+
     // 滑动手势
     this.setupSwipeGestures();
-    
+
     // 拉拽刷新
     this.setupPullToRefresh();
   }
@@ -285,28 +289,28 @@ class UXEnhancer {
   setupLongPress() {
     let longPressTimer = null;
     let startX, startY;
-    
+
     document.addEventListener('touchstart', (event) => {
       const touch = event.touches[0];
       startX = touch.clientX;
       startY = touch.clientY;
-      
+
       longPressTimer = setTimeout(() => {
         const element = document.elementFromPoint(startX, startY);
         this.handleLongPress(element, { x: startX, y: startY });
       }, this.options.longPressDelay);
     }, { passive: true });
-    
+
     document.addEventListener('touchmove', (event) => {
       const touch = event.touches[0];
       const deltaX = Math.abs(touch.clientX - startX);
       const deltaY = Math.abs(touch.clientY - startY);
-      
+
       if (deltaX > 10 || deltaY > 10) {
         clearTimeout(longPressTimer);
       }
     }, { passive: true });
-    
+
     document.addEventListener('touchend', () => {
       clearTimeout(longPressTimer);
     }, { passive: true });
@@ -317,7 +321,7 @@ class UXEnhancer {
     if (element.closest('.svtr-message')) {
       this.showContextMenu(element, position);
     }
-    
+
     // 长按复制文本
     if (element.textContent && element.textContent.length > 10) {
       this.showContextMenu(element, position);
@@ -339,13 +343,13 @@ class UXEnhancer {
       z-index: 10000;
       min-width: 120px;
     `;
-    
+
     const actions = [
       { text: '复制', action: () => this.copyText(element.textContent) },
       { text: '分享', action: () => this.shareText(element.textContent) },
       { text: '取消', action: () => menu.remove() }
     ];
-    
+
     actions.forEach(({ text, action }) => {
       const item = document.createElement('div');
       item.textContent = text;
@@ -360,9 +364,9 @@ class UXEnhancer {
       });
       menu.appendChild(item);
     });
-    
+
     document.body.appendChild(menu);
-    
+
     // 自动关闭
     setTimeout(() => {
       if (menu.parentNode) {
@@ -373,29 +377,29 @@ class UXEnhancer {
 
   setupSwipeGestures() {
     let startX, startY, startTime;
-    
+
     document.addEventListener('touchstart', (event) => {
       const touch = event.touches[0];
       startX = touch.clientX;
       startY = touch.clientY;
       startTime = Date.now();
     }, { passive: true });
-    
+
     document.addEventListener('touchend', (event) => {
       const touch = event.changedTouches[0];
       const endX = touch.clientX;
       const endY = touch.clientY;
       const endTime = Date.now();
-      
+
       const deltaX = endX - startX;
       const deltaY = endY - startY;
       const deltaTime = endTime - startTime;
-      
+
       // 检查是否为有效滑动
-      if (Math.abs(deltaX) > this.options.swipeThreshold && 
-          Math.abs(deltaY) < Math.abs(deltaX) * 0.5 && 
+      if (Math.abs(deltaX) > this.options.swipeThreshold &&
+          Math.abs(deltaY) < Math.abs(deltaX) * 0.5 &&
           deltaTime < 500) {
-        
+
         if (deltaX > 0) {
           this.handleSwipeRight(event.target);
         } else {
@@ -415,7 +419,7 @@ class UXEnhancer {
     }
   }
 
-  handleSwipeLeft(element) {
+  handleSwipeLeft(_element) {
     // 左滑关闭侧边栏
     if (document.body.classList.contains('sidebar-open')) {
       this.closeSidebar();
@@ -436,29 +440,31 @@ class UXEnhancer {
     let pullStartY = 0;
     let isPulling = false;
     const refreshThreshold = 80;
-    
+
     document.addEventListener('touchstart', (event) => {
       if (window.scrollY === 0) {
         pullStartY = event.touches[0].clientY;
         isPulling = true;
       }
     }, { passive: true });
-    
+
     document.addEventListener('touchmove', (event) => {
-      if (!isPulling) return;
-      
+      if (!isPulling) {
+        return;
+      }
+
       const pullDistance = event.touches[0].clientY - pullStartY;
-      
+
       if (pullDistance > 10 && window.scrollY === 0) {
         this.showPullToRefreshIndicator(pullDistance);
-        
+
         if (pullDistance > refreshThreshold) {
           this.triggerRefresh();
           isPulling = false;
         }
       }
     }, { passive: true });
-    
+
     document.addEventListener('touchend', () => {
       isPulling = false;
       this.hidePullToRefreshIndicator();
@@ -485,7 +491,7 @@ class UXEnhancer {
       indicator.textContent = '下拉刷新';
       document.body.appendChild(indicator);
     }
-    
+
     const progress = Math.min(distance / 80, 1);
     indicator.style.top = `${-50 + progress * 70}px`;
   }
@@ -504,7 +510,7 @@ class UXEnhancer {
 
   triggerRefresh() {
     this.showToast('正在刷新页面...', 'info');
-    
+
     // 刷新页面内容
     setTimeout(() => {
       window.location.reload();
@@ -514,13 +520,13 @@ class UXEnhancer {
   setupErrorHandling() {
     // 全局错误捕获
     this.setupGlobalErrorHandling();
-    
+
     // 网络错误处理
     this.setupNetworkErrorHandling();
-    
+
     // 用户友好的错误显示
     this.setupErrorDisplay();
-    
+
     // 自动重试机制
     this.setupAutoRetry();
   }
@@ -530,12 +536,12 @@ class UXEnhancer {
     window.addEventListener('error', (event) => {
       this.handleError('JavaScript错误', event.error || event.message, 'error');
     });
-    
+
     // Promise拒绝
     window.addEventListener('unhandledrejection', (event) => {
       this.handleError('异步操作失败', event.reason, 'warning');
     });
-    
+
     // 资源加载错误
     document.addEventListener('error', (event) => {
       if (event.target !== window) {
@@ -549,7 +555,7 @@ class UXEnhancer {
     const originalFetch = window.fetch;
     window.fetch = async (...args) => {
       const url = args[0];
-      
+
       // 🚫 直接阻止对外部资源的fetch请求
       if (typeof url === 'string' && this.isExternalResource(url)) {
         if (!window.SVTRErrorHandler?.isProduction()) {
@@ -557,14 +563,14 @@ class UXEnhancer {
         }
         throw new Error('External resource fetch blocked to prevent CORS errors');
       }
-      
+
       try {
         const response = await originalFetch(...args);
-        
+
         if (!response.ok) {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
-        
+
         return response;
       } catch (error) {
         // 检查是否为本地开发环境的API请求
@@ -572,12 +578,12 @@ class UXEnhancer {
           console.log('本地开发环境，跳过API错误处理:', url);
           throw error; // 直接抛出错误，不进行重试
         }
-        
+
         // 如果是外部资源错误，不进行重试处理
         if (this.shouldIgnoreNetworkError(error.message) || this.isExternalResource(url)) {
           throw error;
         }
-        
+
         this.handleNetworkError(url, error);
         throw error;
       }
@@ -585,7 +591,7 @@ class UXEnhancer {
   }
 
   isLocalDevelopment() {
-    return window.location.hostname === 'localhost' || 
+    return window.location.hostname === 'localhost' ||
            window.location.hostname === '127.0.0.1' ||
            window.location.hostname === '0.0.0.0';
   }
@@ -595,12 +601,12 @@ class UXEnhancer {
     if (this.shouldIgnoreNetworkError(message)) {
       return;
     }
-    
+
     // 只在开发环境显示错误详情
     if (!window.SVTRErrorHandler?.isProduction()) {
       console.error(`${title}:`, message);
     }
-    
+
     // 添加到错误队列
     this.errorQueue.push({
       title,
@@ -608,7 +614,7 @@ class UXEnhancer {
       type,
       timestamp: Date.now()
     });
-    
+
     // 显示错误
     this.displayNextError();
   }
@@ -625,26 +631,28 @@ class UXEnhancer {
       'Access-Control-Allow-Origin',
       'net::ERR_FAILED'
     ];
-    
+
     return ignoredPatterns.some(pattern => messageStr.includes(pattern));
   }
 
   // 检查是否为外部资源
   isExternalResource(url) {
-    if (!url || typeof url !== 'string') return false;
-    
+    if (!url || typeof url !== 'string') {
+      return false;
+    }
+
     try {
       // 直接字符串检查，更可靠
       const externalDomains = [
         'feishu.cn',
-        'lark.com', 
+        'lark.com',
         'discord.com',
         'github.com',
         'google.com',
         'twitter.com',
         'linkedin.com'
       ];
-      
+
       return externalDomains.some(domain => url.includes(domain));
     } catch {
       return false;
@@ -654,26 +662,26 @@ class UXEnhancer {
   handleResourceError(element) {
     const resourceType = element.tagName.toLowerCase();
     const src = element.src || element.href;
-    
+
     switch (resourceType) {
-      case 'img':
-        this.handleImageError(element);
-        break;
-      case 'script':
-        this.handleScriptError(element);
-        break;
-      case 'link':
-        this.handleStyleError(element);
-        break;
-      default:
-        this.handleError('资源加载失败', `无法加载 ${resourceType}: ${src}`, 'warning');
+    case 'img':
+      this.handleImageError(element);
+      break;
+    case 'script':
+      this.handleScriptError(element);
+      break;
+    case 'link':
+      this.handleStyleError(element);
+      break;
+    default:
+      this.handleError('资源加载失败', `无法加载 ${resourceType}: ${src}`, 'warning');
     }
   }
 
   handleImageError(img) {
     // 尝试加载备用图片
     const fallbackSrc = img.dataset.fallback || this.generateErrorPlaceholder();
-    
+
     if (img.src !== fallbackSrc) {
       img.src = fallbackSrc;
       img.alt = img.alt || '图片加载失败';
@@ -683,7 +691,7 @@ class UXEnhancer {
   handleScriptError(script) {
     const src = script.src;
     this.handleError('脚本加载失败', `无法加载脚本: ${src}`, 'error');
-    
+
     // 尝试从备用CDN加载
     if (src.includes('googleapis.com')) {
       this.loadFallbackScript(src);
@@ -698,7 +706,7 @@ class UXEnhancer {
   handleNetworkError(url, error) {
     const retryKey = url.toString();
     const retryCount = this.retryCount.get(retryKey) || 0;
-    
+
     if (retryCount < this.options.maxRetries) {
       // 自动重试
       this.scheduleRetry(url, retryKey, retryCount);
@@ -709,7 +717,7 @@ class UXEnhancer {
 
   scheduleRetry(url, retryKey, currentCount) {
     const delay = this.options.retryDelay * Math.pow(2, currentCount); // 指数退避
-    
+
     setTimeout(async () => {
       try {
         this.retryCount.set(retryKey, currentCount + 1);
@@ -719,7 +727,7 @@ class UXEnhancer {
         this.handleNetworkError(url, error);
       }
     }, delay);
-    
+
     this.showToast(`网络请求失败，${delay/1000}秒后重试...`, 'info');
   }
 
@@ -727,11 +735,11 @@ class UXEnhancer {
     if (typeof message === 'string') {
       return message.length > 100 ? message.substring(0, 100) + '...' : message;
     }
-    
+
     if (message instanceof Error) {
       return message.message;
     }
-    
+
     return JSON.stringify(message).substring(0, 100);
   }
 
@@ -752,14 +760,16 @@ class UXEnhancer {
   }
 
   displayNextError() {
-    if (this.errorQueue.length === 0) return;
-    
+    if (this.errorQueue.length === 0) {
+      return;
+    }
+
     const error = this.errorQueue.shift();
     const errorElement = this.createErrorElement(error);
-    
+
     const container = document.getElementById('error-container');
     container.appendChild(errorElement);
-    
+
     // 自动移除
     setTimeout(() => {
       if (errorElement.parentNode) {
@@ -782,7 +792,7 @@ class UXEnhancer {
       transition: transform 0.3s ease;
       cursor: pointer;
     `;
-    
+
     element.innerHTML = `
       <div style="font-weight: bold; margin-bottom: 4px;">${error.title}</div>
       <div style="font-size: 14px; opacity: 0.9;">${error.message}</div>
@@ -790,17 +800,17 @@ class UXEnhancer {
         ${new Date(error.timestamp).toLocaleTimeString()}
       </div>
     `;
-    
+
     // 点击关闭
     element.addEventListener('click', () => {
       this.removeErrorElement(element);
     });
-    
+
     // 显示动画
     setTimeout(() => {
       element.style.transform = 'translateX(0)';
     }, 10);
-    
+
     return element;
   }
 
@@ -834,17 +844,19 @@ class UXEnhancer {
   }
 
   setupAccessibility() {
-    if (!this.options.enableAccessibility) return;
-    
+    if (!this.options.enableAccessibility) {
+      return;
+    }
+
     // 焦点管理
     this.setupFocusManagement();
-    
+
     // 键盘导航
     this.setupKeyboardNavigation();
-    
+
     // 屏幕阅读器支持
     this.setupScreenReaderSupport();
-    
+
     // 高对比度模式
     this.setupHighContrastMode();
   }
@@ -855,7 +867,7 @@ class UXEnhancer {
       this.currentFocus = event.target;
       this.announceToScreenReader(`焦点移至 ${this.getFocusDescription(event.target)}`);
     });
-    
+
     // 焦点丢失处理
     document.addEventListener('focusout', (event) => {
       if (!event.relatedTarget) {
@@ -870,9 +882,9 @@ class UXEnhancer {
   }
 
   getFocusDescription(element) {
-    return element.getAttribute('aria-label') || 
-           element.getAttribute('title') || 
-           element.textContent?.trim().substring(0, 50) || 
+    return element.getAttribute('aria-label') ||
+           element.getAttribute('title') ||
+           element.textContent?.trim().substring(0, 50) ||
            element.tagName.toLowerCase();
   }
 
@@ -885,7 +897,7 @@ class UXEnhancer {
       'button, input, textarea',
       'a[href]'
     ];
-    
+
     for (const selector of focusTargets) {
       const element = document.querySelector(selector);
       if (element && this.isElementVisible(element)) {
@@ -898,22 +910,22 @@ class UXEnhancer {
   setupKeyboardNavigation() {
     document.addEventListener('keydown', (event) => {
       switch (event.key) {
-        case 'Escape':
-          this.handleEscapeKey(event);
-          break;
-        case 'Tab':
-          this.handleTabNavigation(event);
-          break;
-        case 'Enter':
-        case ' ':
-          this.handleActivation(event);
-          break;
-        case 'ArrowUp':
-        case 'ArrowDown':
-        case 'ArrowLeft':
-        case 'ArrowRight':
-          this.handleArrowNavigation(event);
-          break;
+      case 'Escape':
+        this.handleEscapeKey(event);
+        break;
+      case 'Tab':
+        this.handleTabNavigation(event);
+        break;
+      case 'Enter':
+      case ' ':
+        this.handleActivation(event);
+        break;
+      case 'ArrowUp':
+      case 'ArrowDown':
+      case 'ArrowLeft':
+      case 'ArrowRight':
+        this.handleArrowNavigation(event);
+        break;
       }
     });
   }
@@ -926,7 +938,7 @@ class UXEnhancer {
       event.preventDefault();
       return;
     }
-    
+
     // 关闭侧边栏
     if (document.body.classList.contains('sidebar-open')) {
       this.closeSidebar();
@@ -938,7 +950,7 @@ class UXEnhancer {
     // 确保Tab导航在可见元素间循环
     const focusableElements = this.getFocusableElements();
     const currentIndex = focusableElements.indexOf(document.activeElement);
-    
+
     if (event.shiftKey) {
       // Shift+Tab 向前
       if (currentIndex === 0) {
@@ -963,7 +975,7 @@ class UXEnhancer {
       'select:not([disabled])',
       '[tabindex]:not([tabindex="-1"])'
     ];
-    
+
     return Array.from(document.querySelectorAll(selectors.join(',')))
       .filter(element => this.isElementVisible(element));
   }
@@ -971,10 +983,10 @@ class UXEnhancer {
   isElementVisible(element) {
     const rect = element.getBoundingClientRect();
     const style = window.getComputedStyle(element);
-    
-    return rect.width > 0 && 
-           rect.height > 0 && 
-           style.visibility !== 'hidden' && 
+
+    return rect.width > 0 &&
+           rect.height > 0 &&
+           style.visibility !== 'hidden' &&
            style.display !== 'none' &&
            element.offsetParent !== null;
   }
@@ -1000,11 +1012,13 @@ class UXEnhancer {
 
   announceToScreenReader(message, priority = 'polite') {
     const announcer = document.getElementById('sr-announcements');
-    if (!announcer) return;
-    
+    if (!announcer) {
+      return;
+    }
+
     announcer.setAttribute('aria-live', priority);
     announcer.textContent = message;
-    
+
     // 清除消息避免重复宣布
     setTimeout(() => {
       announcer.textContent = '';
@@ -1016,7 +1030,7 @@ class UXEnhancer {
     if (window.matchMedia('(prefers-contrast: high)').matches) {
       document.body.classList.add('high-contrast');
     }
-    
+
     // 监听高对比度设置变化
     window.matchMedia('(prefers-contrast: high)').addListener((event) => {
       if (event.matches) {
@@ -1030,10 +1044,10 @@ class UXEnhancer {
   setupPerformanceOptimizations() {
     // 节流和防抖工具
     this.setupThrottleDebounce();
-    
+
     // 延迟加载非关键功能
     this.setupLazyFeatures();
-    
+
     // 内存清理
     this.setupMemoryCleanup();
   }
@@ -1061,7 +1075,7 @@ class UXEnhancer {
     window.addEventListener('beforeunload', () => {
       this.cleanup();
     });
-    
+
     // 定期清理
     setInterval(() => {
       this.performMemoryCleanup();
@@ -1070,10 +1084,10 @@ class UXEnhancer {
 
   performMemoryCleanup() {
     // 清理过期的错误消息
-    this.errorQueue = this.errorQueue.filter(error => 
+    this.errorQueue = this.errorQueue.filter(error =>
       Date.now() - error.timestamp < 60000
     );
-    
+
     // 清理过期的重试计数
     for (const [key, count] of this.retryCount.entries()) {
       if (count >= this.options.maxRetries) {
@@ -1088,12 +1102,12 @@ class UXEnhancer {
       this.showToast('网络连接已恢复', 'success');
       this.handleNetworkReconnect();
     });
-    
+
     window.addEventListener('offline', () => {
       this.showToast('网络连接已断开，部分功能可能不可用', 'warning');
       this.handleNetworkDisconnect();
     });
-    
+
     // 检查网络质量
     this.monitorNetworkQuality();
   }
@@ -1101,7 +1115,7 @@ class UXEnhancer {
   handleNetworkReconnect() {
     // 重新尝试失败的请求
     this.retryCount.clear();
-    
+
     // 重新初始化需要网络的功能
     this.reinitializeNetworkFeatures();
   }
@@ -1109,14 +1123,16 @@ class UXEnhancer {
   handleNetworkDisconnect() {
     // 启用离线模式
     document.body.classList.add('offline-mode');
-    
+
     // 显示离线提示
     this.showOfflineMessage();
   }
 
   showOfflineMessage() {
-    if (document.getElementById('offline-message')) return;
-    
+    if (document.getElementById('offline-message')) {
+      return;
+    }
+
     const message = document.createElement('div');
     message.id = 'offline-message';
     message.style.cssText = `
@@ -1132,25 +1148,25 @@ class UXEnhancer {
       font-weight: bold;
     `;
     message.textContent = '当前处于离线状态，部分功能不可用';
-    
+
     document.body.appendChild(message);
   }
 
   monitorNetworkQuality() {
     if ('connection' in navigator) {
       const connection = navigator.connection;
-      
+
       const updateNetworkInfo = () => {
         const effectiveType = connection.effectiveType;
         document.body.setAttribute('data-network-type', effectiveType);
-        
+
         if (effectiveType === 'slow-2g' || effectiveType === '2g') {
           this.enableLowBandwidthMode();
         } else {
           this.disableLowBandwidthMode();
         }
       };
-      
+
       connection.addEventListener('change', updateNetworkInfo);
       updateNetworkInfo();
     }
@@ -1176,10 +1192,10 @@ class UXEnhancer {
   throttle(func, delay) {
     let timeoutId;
     let lastExecTime = 0;
-    
+
     return function (...args) {
       const currentTime = Date.now();
-      
+
       if (currentTime - lastExecTime > delay) {
         func.apply(this, args);
         lastExecTime = currentTime;
@@ -1195,7 +1211,7 @@ class UXEnhancer {
 
   debounce(func, delay) {
     let timeoutId;
-    
+
     return function (...args) {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => func.apply(this, args), delay);
@@ -1220,14 +1236,14 @@ class UXEnhancer {
       text-align: center;
     `;
     toast.textContent = message;
-    
+
     document.body.appendChild(toast);
-    
+
     // 显示动画
     setTimeout(() => {
       toast.style.transform = 'translateX(-50%) translateY(0)';
     }, 10);
-    
+
     // 自动隐藏
     setTimeout(() => {
       toast.style.transform = 'translateX(-50%) translateY(100px)';

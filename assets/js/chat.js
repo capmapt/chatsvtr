@@ -13,7 +13,7 @@ class SVTRChat {
     this.isProduction = this.detectProductionEnvironment();
     this.quotaWarningShown = false; // 配额警告显示标志
     this.sessionId = this.getOrCreateSessionId(); // 支持会话管理
-    
+
     this.init();
   }
 
@@ -32,7 +32,7 @@ class SVTRChat {
     // Wrangler开发环境（localhost:3000）也支持真实AI API
     const isWranglerDev = window.location.hostname === 'localhost' && window.location.port === '3000';
     const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
-    
+
     // Wrangler开发环境或真正的生产环境都使用真实API
     return isProduction || isWranglerDev;
   }
@@ -65,30 +65,34 @@ class SVTRChat {
   async handleStreamingResponse(response, loadingMessage) {
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
-    let assistantMessage = {
+    const assistantMessage = {
       role: 'assistant',
       content: '',
       timestamp: new Date()
     };
-    
+
     let messageElement = null;
     let contentElement = null;
     let hasContent = false;
-    
+
     try {
       while (true) {
         const { done, value } = await reader.read();
-        if (done) break;
-        
+        if (done) {
+          break;
+        }
+
         const chunk = decoder.decode(value, {stream: true});
         const lines = chunk.split('\n');
-        
+
         for (const line of lines) {
           if (line.trim() && line.startsWith('data: ')) {
             try {
               const jsonStr = line.slice(6).trim();
-              if (jsonStr === '[DONE]') break;
-              
+              if (jsonStr === '[DONE]') {
+                break;
+              }
+
               const data = JSON.parse(jsonStr);
               if (data.response && typeof data.response === 'string') {
                 // 数字调试日志
@@ -97,26 +101,26 @@ class SVTRChat {
                   console.log('🔢 收到包含数字的响应片段:', data.response);
                   console.log('🔢 提取的数字:', data.response.match(/\d+/g));
                 }
-                
+
                 if (!hasContent) {
                   this.removeLoadingMessage(loadingMessage);
                   messageElement = this.renderMessage(assistantMessage);
                   contentElement = messageElement.querySelector('.message-content');
                   hasContent = true;
                 }
-                
+
                 assistantMessage.content += data.response;
                 const formattedContent = this.formatMessage(assistantMessage.content);
-                
+
                 // 格式化后的数字检查
                 if (hasNumbers) {
                   console.log('🔢 累积内容:', assistantMessage.content);
                   console.log('🔢 格式化后:', formattedContent);
                   console.log('🔢 格式化后包含数字:', /\d/.test(formattedContent));
                 }
-                
+
                 contentElement.innerHTML = formattedContent;
-                
+
                 requestAnimationFrame(() => {
                   this.scrollToBottom();
                 });
@@ -130,12 +134,12 @@ class SVTRChat {
     } finally {
       reader.releaseLock();
     }
-    
+
     if (assistantMessage.content.trim()) {
       this.messages.push(assistantMessage);
       this.showShareButton();
     }
-    
+
     this.setLoading(false);
   }
 
@@ -144,24 +148,24 @@ class SVTRChat {
     if (window.i18n) {
       return window.i18n.getCurrentLanguage();
     }
-    
+
     // Fallback: check which button is active
     const enBtn = document.getElementById('btnEn');
     if (enBtn && enBtn.classList.contains('active')) {
       return 'en';
     }
-    
+
     return 'zh-CN';
   }
 
   getTranslation(key) {
     const lang = this.getCurrentLang();
-    
+
     // Fallback translations if translations object is not available
     if (typeof translations === 'undefined') {
       return this.getFallbackTranslation(key, lang);
     }
-    
+
     return translations[lang] ? translations[lang][key] : this.getFallbackTranslation(key, lang);
   }
 
@@ -200,47 +204,47 @@ What would you like to know?`,
         'chat_clear_btn': 'Clear'
       }
     };
-    
+
     return fallbackTranslations[lang] ? fallbackTranslations[lang][key] : key;
   }
 
   getSmartDemoResponse(userMessage) {
     const lang = this.getCurrentLang();
-    
+
     // 改进的响应匹配逻辑：基于语义相关性而非简单关键词
     const responseType = this.matchResponseBySemantic(userMessage, lang);
-    
+
     // 获取最相关的演示回复
     return this.getRelevantDemoResponse(userMessage, responseType, lang);
   }
 
   matchResponseBySemantic(userMessage, lang) {
     const message = userMessage.toLowerCase();
-    
+
     // 特殊处理：数学问题
-    const mathPattern = /^\s*\d+\s*[\+\-\*\/\=\(\)]+\s*\d*\s*\=?\s*$/;
+    const mathPattern = /^\s*\d+\s*[+\-*/=()]+\s*\d*\s*=?\s*$/;
     const simpleMathWords = ['加', '减', '乘', '除', '等于', 'plus', 'minus', 'times', 'divided', 'equals'];
-    const isMathQuestion = mathPattern.test(userMessage) || 
+    const isMathQuestion = mathPattern.test(userMessage) ||
                           simpleMathWords.some(word => message.includes(word)) ||
-                          /\d+\s*[\+\-\*\/]\s*\d+/.test(userMessage);
-    
+                          /\d+\s*[+\-*/]\s*\d+/.test(userMessage);
+
     if (isMathQuestion) {
       return 'math_question';
     }
-    
+
     // 特殊处理：年份相关问题
     const yearPatterns = {
       zh: ['年', '什么年', '哪一年', '哪年', '年份', '今年', '明年', '去年'],
       en: ['year', 'what year', 'which year', 'when', 'annual', 'yearly']
     };
-    
+
     const relevantYearPatterns = lang === 'en' ? yearPatterns.en : [...yearPatterns.zh, ...yearPatterns.en];
     const isYearQuestion = relevantYearPatterns.some(pattern => message.includes(pattern));
-    
+
     if (isYearQuestion) {
       return 'year_question';
     }
-    
+
     // 定义更精确的语义匹配规则
     const semanticPatterns = {
       investment: {
@@ -260,38 +264,42 @@ What would you like to know?`,
         en: ['technology', 'tech', 'ai', 'artificial intelligence', 'algorithm', 'model', 'data', 'platform']
       }
     };
-    
+
     // 计算每个类型的匹配分数
     let bestMatch = 'general';
     let highestScore = 0;
-    
+
     Object.keys(semanticPatterns).forEach(type => {
       const patterns = semanticPatterns[type];
       const relevantPatterns = lang === 'en' ? patterns.en : [...patterns.zh, ...patterns.en];
-      
+
       let score = 0;
       relevantPatterns.forEach(pattern => {
         if (message.includes(pattern)) {
           // 根据匹配词的重要性给不同权重
-          if (pattern.length > 4) score += 3; // 长词匹配权重更高
-          else if (pattern.length > 2) score += 2;
-          else score += 1;
+          if (pattern.length > 4) {
+            score += 3; // 长词匹配权重更高
+          } else if (pattern.length > 2) {
+            score += 2;
+          } else {
+            score += 1;
+          }
         }
       });
-      
+
       if (score > highestScore) {
         highestScore = score;
         bestMatch = type;
       }
     });
-    
+
     return bestMatch;
   }
 
   getRelevantDemoResponse(userMessage, responseType, lang) {
     const responses = this.getVariedDemoResponses(lang);
     const responseOptions = responses[responseType] || responses.general;
-    
+
     // 基于消息内容选择最相关的回复（而非轮数）
     let selectedResponse;
     if (responseOptions.length === 1) {
@@ -301,15 +309,15 @@ What would you like to know?`,
       const messageHash = this.hashString(userMessage) % responseOptions.length;
       selectedResponse = responseOptions[messageHash];
     }
-    
+
     // 简化个性化处理，只在确实相关时引用用户问题
     if (responseType !== 'general') {
-      const intro = lang === 'en' 
-        ? `Based on your question about AI venture capital:\n\n`
-        : `关于您的AI创投问题：\n\n`;
+      const intro = lang === 'en'
+        ? 'Based on your question about AI venture capital:\n\n'
+        : '关于您的AI创投问题：\n\n';
       return intro + selectedResponse;
     }
-    
+
     return selectedResponse;
   }
 
@@ -327,7 +335,7 @@ What would you like to know?`,
     if (lang === 'en') {
       return {
         math_question: [
-          "I'm an AI venture capital assistant focused on AI investment analysis. For mathematical calculations, I'd recommend:\n\n• **Simple math**: 1+1=2 ✓\n• **For complex calculations**: Use specialized tools or calculators\n• **For AI-related financial modeling**: I can help with investment valuations and market analysis\n\nWould you like to know about AI venture capital trends, funding rounds, or startup valuations instead? I have comprehensive data on the AI investment ecosystem!"
+          'I\'m an AI venture capital assistant focused on AI investment analysis. For mathematical calculations, I\'d recommend:\n\n• **Simple math**: 1+1=2 ✓\n• **For complex calculations**: Use specialized tools or calculators\n• **For AI-related financial modeling**: I can help with investment valuations and market analysis\n\nWould you like to know about AI venture capital trends, funding rounds, or startup valuations instead? I have comprehensive data on the AI investment ecosystem!'
         ],
         investment: [
           `Based on SVTR's latest analysis, AI venture capital is experiencing unprecedented growth:
@@ -501,7 +509,7 @@ The next wave of AI investing will focus on companies solving real business prob
 • AI infrastructure investments reaching historic highs
 
 2024 marks the crucial transition from speculation to value creation in AI venture capital.`,
-          
+
           `From an investment perspective, 2024 is the "maturation year" for AI venture markets:
 
 **Market Evolution**:
@@ -564,31 +572,31 @@ Our platform serves as the definitive source for AI investment market intelligen
 
         supplements: {
           investment: [
-            `**Additional Market Context**: Current AI investment concentration shows 80% of funding going to just 20% of companies, indicating a winner-take-all dynamic similar to previous technology cycles.`,
-            `**Regulatory Impact**: Recent AI governance frameworks in EU and US are creating compliance costs but also barriers to entry that benefit well-funded incumbents.`,
-            `**Global Dynamics**: Chinese AI investments have declined 40% due to export restrictions, while European AI funding has grown 150% year-over-year.`
+            '**Additional Market Context**: Current AI investment concentration shows 80% of funding going to just 20% of companies, indicating a winner-take-all dynamic similar to previous technology cycles.',
+            '**Regulatory Impact**: Recent AI governance frameworks in EU and US are creating compliance costs but also barriers to entry that benefit well-funded incumbents.',
+            '**Global Dynamics**: Chinese AI investments have declined 40% due to export restrictions, while European AI funding has grown 150% year-over-year.'
           ],
           startup: [
-            `**Talent Wars**: AI engineer compensation has increased 60% year-over-year, with signing bonuses reaching $500K+ for senior ML engineers at top startups.`,
-            `**Technical Moats**: Companies building on proprietary datasets are achieving 3x higher valuations than those relying on public data sources.`,
-            `**Customer Concentration**: Most successful AI startups derive 60%+ revenue from enterprise customers with $1B+ annual revenue.`
+            '**Talent Wars**: AI engineer compensation has increased 60% year-over-year, with signing bonuses reaching $500K+ for senior ML engineers at top startups.',
+            '**Technical Moats**: Companies building on proprietary datasets are achieving 3x higher valuations than those relying on public data sources.',
+            '**Customer Concentration**: Most successful AI startups derive 60%+ revenue from enterprise customers with $1B+ annual revenue.'
           ],
           trend: [
-            `**Cyclical Patterns**: AI investment cycles are shortening from 18-month to 12-month periods, driven by rapid technology advancement.`,
-            `**Sector Maturity**: Enterprise AI categories are reaching Series B/C maturity while consumer AI remains early-stage experimental.`,
-            `**Geographic Arbitrage**: Emerging markets offering 70% cost advantages for AI development talent while maintaining comparable quality.`
+            '**Cyclical Patterns**: AI investment cycles are shortening from 18-month to 12-month periods, driven by rapid technology advancement.',
+            '**Sector Maturity**: Enterprise AI categories are reaching Series B/C maturity while consumer AI remains early-stage experimental.',
+            '**Geographic Arbitrage**: Emerging markets offering 70% cost advantages for AI development talent while maintaining comparable quality.'
           ],
           technology: [
-            `**Performance Benchmarks**: Latest AI models are achieving human-level performance on 90%+ of standardized cognitive tasks, but real-world deployment remains challenging.`,
-            `**Infrastructure Costs**: Training costs for frontier models have increased 10x annually, creating natural barriers to entry for new model developers.`,
-            `**Open Source Impact**: Open-source AI models are commoditizing basic capabilities while specialized applications maintain pricing power.`
+            '**Performance Benchmarks**: Latest AI models are achieving human-level performance on 90%+ of standardized cognitive tasks, but real-world deployment remains challenging.',
+            '**Infrastructure Costs**: Training costs for frontier models have increased 10x annually, creating natural barriers to entry for new model developers.',
+            '**Open Source Impact**: Open-source AI models are commoditizing basic capabilities while specialized applications maintain pricing power.'
           ]
         }
       };
     } else {
       return {
         math_question: [
-          "我是SVTR的AI创投分析师，专注于AI投资分析。对于数学计算，我建议：\n\n• **简单数学**：1+1=2 ✓\n• **复杂计算**：使用专业计算器工具\n• **AI相关的财务建模**：我可以帮助投资估值和市场分析\n\n您想了解AI创投趋势、融资轮次或初创公司估值吗？我拥有全面的AI投资生态系统数据！"
+          '我是SVTR的AI创投分析师，专注于AI投资分析。对于数学计算，我建议：\n\n• **简单数学**：1+1=2 ✓\n• **复杂计算**：使用专业计算器工具\n• **AI相关的财务建模**：我可以帮助投资估值和市场分析\n\n您想了解AI创投趋势、融资轮次或初创公司估值吗？我拥有全面的AI投资生态系统数据！'
         ],
         investment: [
           `基于SVTR最新分析，AI创投正经历前所未有的增长：
@@ -746,7 +754,7 @@ Our platform serves as the definitive source for AI investment market intelligen
 • AI基础设施投资创历史新高
 
 2024年标志着AI创投从投机转向价值创造的重要转型期。`,
-          
+
           `从投资角度看，2024年是AI创投市场的"成熟元年"：
 
 **市场演变**：
@@ -809,24 +817,24 @@ Our platform serves as the definitive source for AI investment market intelligen
 
         supplements: {
           investment: [
-            `**附加市场背景**：当前AI投资集中度显示80%资金流向仅20%的公司，表明类似于之前技术周期的赢者通吃动态。`,
-            `**监管影响**：欧盟和美国最新AI治理框架正在创造合规成本，但也为资金充足的现有企业创造了进入壁垒。`,
-            `**全球动态**：由于出口限制，中国AI投资下降40%，而欧洲AI融资同比增长150%。`
+            '**附加市场背景**：当前AI投资集中度显示80%资金流向仅20%的公司，表明类似于之前技术周期的赢者通吃动态。',
+            '**监管影响**：欧盟和美国最新AI治理框架正在创造合规成本，但也为资金充足的现有企业创造了进入壁垒。',
+            '**全球动态**：由于出口限制，中国AI投资下降40%，而欧洲AI融资同比增长150%。'
           ],
           startup: [
-            `**人才争夺**：AI工程师薪酬同比增长60%，顶级初创企业高级ML工程师签约奖金达到50万美元+。`,
-            `**技术护城河**：基于专有数据集构建的公司估值比依赖公共数据源的公司高3倍。`,
-            `**客户集中度**：最成功的AI初创企业60%+收入来自年收入10亿美元+的企业客户。`
+            '**人才争夺**：AI工程师薪酬同比增长60%，顶级初创企业高级ML工程师签约奖金达到50万美元+。',
+            '**技术护城河**：基于专有数据集构建的公司估值比依赖公共数据源的公司高3倍。',
+            '**客户集中度**：最成功的AI初创企业60%+收入来自年收入10亿美元+的企业客户。'
           ],
           trend: [
-            `**周期性模式**：AI投资周期正从18个月缩短到12个月周期，由快速技术进步驱动。`,
-            `**行业成熟度**：企业AI类别正达到B/C轮成熟度，而消费AI仍处于早期实验阶段。`,
-            `**地理套利**：新兴市场为AI开发人才提供70%成本优势，同时保持可比质量。`
+            '**周期性模式**：AI投资周期正从18个月缩短到12个月周期，由快速技术进步驱动。',
+            '**行业成熟度**：企业AI类别正达到B/C轮成熟度，而消费AI仍处于早期实验阶段。',
+            '**地理套利**：新兴市场为AI开发人才提供70%成本优势，同时保持可比质量。'
           ],
           technology: [
-            `**性能基准**：最新AI模型在90%+标准化认知任务上达到人类水平性能，但现实世界部署仍具挑战性。`,
-            `**基础设施成本**：前沿模型训练成本每年增长10倍，为新模型开发者创造自然进入壁垒。`,
-            `**开源影响**：开源AI模型正在将基础能力商品化，而专业应用保持定价权。`
+            '**性能基准**：最新AI模型在90%+标准化认知任务上达到人类水平性能，但现实世界部署仍具挑战性。',
+            '**基础设施成本**：前沿模型训练成本每年增长10倍，为新模型开发者创造自然进入壁垒。',
+            '**开源影响**：开源AI模型正在将基础能力商品化，而专业应用保持定价权。'
           ]
         }
       };
@@ -890,7 +898,7 @@ Our platform serves as the definitive source for AI investment market intelligen
 
     // 分享功能
     shareBtn.addEventListener('click', () => this.shareConversation());
-    
+
     // 清空对话
     clearBtn.addEventListener('click', () => this.clearChat());
   }
@@ -898,16 +906,16 @@ Our platform serves as the definitive source for AI investment market intelligen
   setupTextareaAutoResize() {
     const input = document.getElementById('svtr-chat-input');
     const sendBtn = document.getElementById('svtr-chat-send');
-    
+
     // 自动调整textarea高度
     input.addEventListener('input', () => {
       input.style.height = '44px';
       input.style.height = Math.min(input.scrollHeight, 120) + 'px';
-      
+
       // 显示/隐藏发送按钮透明度
       sendBtn.style.opacity = input.value.trim() ? '1' : '0.5';
     });
-    
+
     // 初始状态
     sendBtn.style.opacity = '0.5';
   }
@@ -930,7 +938,7 @@ Our platform serves as the definitive source for AI investment market intelligen
     this.createChatInterface();
     this.bindEvents();
     this.setupTextareaAutoResize();
-    
+
     // Update welcome message content and re-render all messages
     this.updateWelcomeMessage();
     this.rerenderMessages();
@@ -947,24 +955,24 @@ Our platform serves as the definitive source for AI investment market intelligen
   addWelcomeMessage() {
     const welcomeTitle = this.getTranslation('chat_welcome_title');
     const welcomeContent = this.getTranslation('chat_welcome_content');
-    
+
     let content = `${welcomeTitle}\n\n${welcomeContent}`;
-    
+
     // 在生产环境中添加演示说明
     if (this.isProduction) {
       const lang = this.getCurrentLang();
-      const demoNote = lang === 'en' 
+      const demoNote = lang === 'en'
         ? '\n\n*This is an intelligent demo showcasing SVTR\'s analysis capabilities. Ask me about AI venture capital trends, companies, or investment insights!*'
         : '\n\n*这是SVTR分析能力的智能演示。请询问AI创投趋势、公司信息或投资洞察！*';
       content += demoNote;
     }
-    
+
     const welcomeMessage = {
       role: 'assistant',
       content: content,
       timestamp: new Date()
     };
-    
+
     this.messages.push(welcomeMessage);
     this.renderMessage(welcomeMessage);
   }
@@ -972,32 +980,34 @@ Our platform serves as the definitive source for AI investment market intelligen
   async sendMessage() {
     const input = document.getElementById('svtr-chat-input');
     const message = input.value.trim();
-    
-    if (!message || this.isLoading) return;
-    
+
+    if (!message || this.isLoading) {
+      return;
+    }
+
     // 在生产环境中显示配额状态
     if (this.isProduction) {
       this.updateQuotaStatus();
     }
-    
+
     // 添加用户消息
     const userMessage = {
-      role: 'user', 
+      role: 'user',
       content: message,
       timestamp: new Date()
     };
     this.messages.push(userMessage);
     this.renderMessage(userMessage);
-    
+
     // 清空输入框并重置高度
     input.value = '';
     input.style.height = '44px'; // 重置textarea高度
-    
+
     // 显示加载状态
     this.setLoading(true);
     this.isThinking = false; // 重置推理状态
     const loadingMessage = this.showLoadingMessage();
-    
+
     // 在生产环境中先尝试真实API，如果失败再使用智能演示
     if (this.isProduction) {
       // 尝试调用真实API，如果成功就使用，失败则用演示
@@ -1006,14 +1016,14 @@ Our platform serves as the definitive source for AI investment market intelligen
           // API不可用，使用改进的演示系统
           setTimeout(() => {
             this.removeLoadingMessage(loadingMessage);
-            
+
             const demoMessage = this.getSmartDemoResponse(message);
             const assistantMessage = {
               role: 'assistant',
               content: demoMessage,
               timestamp: new Date()
             };
-            
+
             this.messages.push(assistantMessage);
             this.renderMessage(assistantMessage);
             this.showShareButton();
@@ -1021,30 +1031,30 @@ Our platform serves as the definitive source for AI investment market intelligen
           }, 1000 + Math.random() * 2000); // 1-3秒随机延迟，模拟真实AI响应
         }
       });
-      
+
       return;
     }
-    
+
     // 本地开发环境：直接使用演示模式，避免API请求错误
     console.log('本地开发环境，使用演示模式');
     setTimeout(() => {
       this.removeLoadingMessage(loadingMessage);
-      
+
       const demoMessage = this.getSmartDemoResponse(message);
       const assistantMessage = {
         role: 'assistant',
         content: demoMessage,
         timestamp: new Date()
       };
-      
+
       this.messages.push(assistantMessage);
       this.renderMessage(assistantMessage);
       this.showShareButton();
       this.setLoading(false);
     }, 800 + Math.random() * 1200); // 0.8-2秒随机延迟
-    
+
     return;
-    
+
     try {
       // 调用真实AI API（仅在本地开发环境）
       const response = await fetch(this.apiEndpoint, {
@@ -1066,34 +1076,38 @@ Our platform serves as the definitive source for AI investment market intelligen
       // 处理流式响应
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
-      let assistantMessage = {
+      const assistantMessage = {
         role: 'assistant',
         content: '',
         timestamp: new Date()
       };
-      
+
       // 先保持加载状态，等有内容时再显示消息
       let messageElement = null;
       let contentElement = null;
       let hasContent = false;
-      
+
       try {
         while (true) {
           const { done, value } = await reader.read();
-          if (done) break;
-          
+          if (done) {
+            break;
+          }
+
           // 改善中文处理：累积buffer避免中文字符断裂
           const chunk = decoder.decode(value, {stream: true});
-          
+
           // 分行处理，但保持完整性
           const lines = chunk.split('\n');
-          
+
           for (const line of lines) {
             if (line.trim() && line.startsWith('data: ')) {
               try {
                 const jsonStr = line.slice(6).trim();
-                if (jsonStr === '[DONE]') break;
-                
+                if (jsonStr === '[DONE]') {
+                  break;
+                }
+
                 const data = JSON.parse(jsonStr);
                 if (data.response && typeof data.response === 'string') {
                   // 首次收到内容时创建消息元素
@@ -1103,11 +1117,11 @@ Our platform serves as the definitive source for AI investment market intelligen
                     contentElement = messageElement.querySelector('.message-content');
                     hasContent = true;
                   }
-                  
+
                   // 累积内容并显示
                   assistantMessage.content += data.response;
                   contentElement.innerHTML = this.formatMessage(assistantMessage.content);
-                  
+
                   // 滚动到底部
                   requestAnimationFrame(() => {
                     this.scrollToBottom();
@@ -1126,16 +1140,16 @@ Our platform serves as the definitive source for AI investment market intelligen
         // 确保读取器被关闭
         reader.releaseLock();
       }
-      
+
       // 只有当内容不为空时才添加到消息历史
       if (assistantMessage.content.trim()) {
         this.messages.push(assistantMessage);
         this.showShareButton();
       }
-      
+
     } catch (error) {
       this.removeLoadingMessage(loadingMessage);
-      
+
       // 如果API失败，显示智能演示响应
       const demoMessage = this.getSmartDemoResponse(message);
 
@@ -1144,7 +1158,7 @@ Our platform serves as the definitive source for AI investment market intelligen
         content: demoMessage,
         timestamp: new Date()
       };
-      
+
       this.messages.push(assistantMessage);
       this.renderMessage(assistantMessage);
       this.showShareButton();
@@ -1158,11 +1172,11 @@ Our platform serves as the definitive source for AI investment market intelligen
     const messagesContainer = document.getElementById('svtr-chat-messages');
     const messageElement = document.createElement('div');
     messageElement.className = `svtr-message ${message.role}`;
-    
+
     const isUser = message.role === 'user';
     const avatarText = isUser ? 'U' : 'AI';
     const name = isUser ? '您' : '凯瑞 (Kerry)';
-    
+
     messageElement.innerHTML = `
       <div class="message-header">
         <div class="message-avatar">${avatarText}</div>
@@ -1171,10 +1185,10 @@ Our platform serves as the definitive source for AI investment market intelligen
       </div>
       <div class="message-content">${this.formatMessage(message.content)}</div>
     `;
-    
+
     messagesContainer.appendChild(messageElement);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    
+
     return messageElement;
   }
 
@@ -1198,10 +1212,10 @@ Our platform serves as the definitive source for AI investment market intelligen
         </div>
       </div>
     `;
-    
+
     messagesContainer.appendChild(loadingElement);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    
+
     return loadingElement;
   }
 
@@ -1240,10 +1254,10 @@ Our platform serves as the definitive source for AI investment market intelligen
     this.isLoading = loading;
     const sendBtn = document.getElementById('svtr-chat-send');
     const input = document.getElementById('svtr-chat-input');
-    
+
     sendBtn.disabled = loading;
     input.disabled = loading;
-    
+
     if (loading) {
       sendBtn.innerHTML = '<span class="loading-spinner">⟳</span>';
     } else {
@@ -1268,9 +1282,11 @@ Our platform serves as the definitive source for AI investment market intelligen
     // 生成分享内容
     const lastUserMessage = this.messages.filter(m => m.role === 'user').pop();
     const lastAssistantMessage = this.messages.filter(m => m.role === 'assistant').pop();
-    
-    if (!lastUserMessage || !lastAssistantMessage) return;
-    
+
+    if (!lastUserMessage || !lastAssistantMessage) {
+      return;
+    }
+
     const shareContent = `💡 来自SVTR的AI创投洞察：
 
 🔍 问题：${lastUserMessage.content}
@@ -1310,7 +1326,7 @@ Our platform serves as the definitive source for AI investment market intelligen
     toast.className = 'svtr-toast';
     toast.textContent = message;
     document.body.appendChild(toast);
-    
+
     setTimeout(() => {
       toast.remove();
     }, 3000);
@@ -1333,18 +1349,18 @@ Our platform serves as the definitive source for AI investment market intelligen
     if (this.messages.length > 0 && this.messages[0].role === 'assistant') {
       const welcomeTitle = this.getTranslation('chat_welcome_title');
       const welcomeContent = this.getTranslation('chat_welcome_content');
-      
+
       let content = `${welcomeTitle}\n\n${welcomeContent}`;
-      
+
       // 在生产环境中添加演示说明
       if (this.isProduction) {
         const lang = this.getCurrentLang();
-        const demoNote = lang === 'en' 
+        const demoNote = lang === 'en'
           ? '\n\n*This is an intelligent demo showcasing SVTR\'s analysis capabilities. Ask me about AI venture capital trends, companies, or investment insights!*'
           : '\n\n*这是SVTR分析能力的智能演示。请询问AI创投趋势、公司信息或投资洞察！*';
         content += demoNote;
       }
-      
+
       this.messages[0].content = content;
     }
   }
@@ -1373,7 +1389,7 @@ Our platform serves as the definitive source for AI investment market intelligen
 ${quotaData.message}${quotaData.upgradeHint ? '\n\n' + quotaData.upgradeHint : ''}`,
         timestamp: new Date()
       };
-      
+
       // 只显示一次配额警告
       if (!this.quotaWarningShown) {
         this.renderMessage(quotaWarning);
