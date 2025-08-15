@@ -96,6 +96,8 @@ class EnhancedFeishuSyncV2 {
       return await this.getDocxContent(objToken, title);
     } else if (objType === 'sheet') {
       return await this.getSheetContent(objToken, title);
+    } else if (objType === 'bitable') {
+      return await this.getBitableContent(objToken, title);
     }
     
     return null;
@@ -299,6 +301,193 @@ class EnhancedFeishuSyncV2 {
     }
     
     return null;
+  }
+
+  // 获取多维表格(bitable)内容
+  async getBitableContent(appToken, title) {
+    console.log(`📊 开始获取多维表格: ${title}`);
+    
+    try {
+      // 1. 首先获取表格基本信息
+      const appInfoUrl = `${this.config.baseUrl}/bitable/v1/apps/${appToken}`;
+      
+      const appInfoResponse = await fetch(appInfoUrl, {
+        headers: {
+          'Authorization': `Bearer ${this.accessToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!appInfoResponse.ok) {
+        throw new Error(`获取表格信息失败: ${appInfoResponse.status}`);
+      }
+
+      const appInfo = await appInfoResponse.json();
+      console.log(`✅ 获取表格基本信息成功: ${title}`);
+
+      // 2. 获取所有数据表
+      const tablesUrl = `${this.config.baseUrl}/bitable/v1/apps/${appToken}/tables`;
+      
+      const tablesResponse = await fetch(tablesUrl, {
+        headers: {
+          'Authorization': `Bearer ${this.accessToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!tablesResponse.ok) {
+        throw new Error(`获取数据表列表失败: ${tablesResponse.status}`);
+      }
+
+      const tablesData = await tablesResponse.json();
+      const tables = tablesData.data?.items || [];
+      
+      console.log(`📋 发现 ${tables.length} 个数据表`);
+
+      let allTablesContent = [];
+      let totalRecords = 0;
+
+      // 3. 遍历每个数据表获取数据
+      for (const table of tables.slice(0, 5)) { // 限制处理前5个表格
+        try {
+          console.log(`📊 处理数据表: ${table.name || table.table_id}`);
+
+          // 获取数据表字段信息
+          const fieldsUrl = `${this.config.baseUrl}/bitable/v1/apps/${appToken}/tables/${table.table_id}/fields`;
+          const fieldsResponse = await fetch(fieldsUrl, {
+            headers: {
+              'Authorization': `Bearer ${this.accessToken}`,
+              'Content-Type': 'application/json'
+            }
+          });
+
+          let fields = [];
+          if (fieldsResponse.ok) {
+            const fieldsData = await fieldsResponse.json();
+            fields = fieldsData.data?.items || [];
+          }
+
+          // 获取数据记录
+          const recordsUrl = `${this.config.baseUrl}/bitable/v1/apps/${appToken}/tables/${table.table_id}/records?page_size=100`;
+          const recordsResponse = await fetch(recordsUrl, {
+            headers: {
+              'Authorization': `Bearer ${this.accessToken}`,
+              'Content-Type': 'application/json'
+            }
+          });
+
+          if (recordsResponse.ok) {
+            const recordsData = await recordsResponse.json();
+            const records = recordsData.data?.items || [];
+            
+            allTablesContent.push({
+              tableName: table.name || table.table_id,
+              tableId: table.table_id,
+              fields: fields,
+              records: records,
+              recordCount: records.length
+            });
+
+            totalRecords += records.length;
+            console.log(`✅ 数据表 "${table.name}" 获取成功: ${records.length} 条记录`);
+          }
+        } catch (tableError) {
+          console.log(`⚠️ 数据表处理失败: ${tableError.message}`);
+        }
+      }
+
+      // 4. 构建结构化内容
+      const structuredContent = this.buildBitableContent(title, allTablesContent, appInfo.data);
+
+      console.log(`🎉 多维表格 "${title}" 获取完成: ${allTablesContent.length}个数据表, ${totalRecords}条记录`);
+
+      return {
+        type: 'bitable',
+        content: structuredContent,
+        appInfo: appInfo.data,
+        tablesData: allTablesContent,
+        totalRecords: totalRecords,
+        length: structuredContent.length
+      };
+
+    } catch (error) {
+      console.log(`❌ 多维表格获取失败: ${error.message}`);
+      
+      // 降级方案：返回基本信息
+      const fallbackContent = `# ${title}\n\n**状态：** 基础信息获取成功，详细数据获取失败\n\n**多维表格信息：**\n- 标题: ${title}\n- Token: ${appToken}\n- 类型: bitable (多维表格)\n\n**备注：** 这是一个飞书多维表格文档，由于API权限或其他限制，无法获取详细数据内容。`;
+      
+      return {
+        type: 'bitable',
+        content: fallbackContent,
+        length: fallbackContent.length,
+        error: error.message
+      };
+    }
+  }
+
+  // 构建多维表格结构化内容
+  buildBitableContent(title, tablesData, appInfo) {
+    let content = `# ${title}\n\n`;
+    
+    // 添加应用基本信息
+    if (appInfo) {
+      content += `**多维表格信息：**\n`;
+      content += `- 创建者: ${appInfo.owner_id || '未知'}\n`;
+      content += `- 应用ID: ${appInfo.app_token}\n`;
+      content += `- 数据表数量: ${tablesData.length}\n\n`;
+    }
+
+    // 处理每个数据表
+    tablesData.forEach((tableInfo, index) => {
+      content += `## 数据表 ${index + 1}: ${tableInfo.tableName}\n\n`;
+      content += `**记录数量：** ${tableInfo.recordCount}\n\n`;
+
+      // 添加字段信息
+      if (tableInfo.fields && tableInfo.fields.length > 0) {
+        content += `**字段列表：**\n`;
+        tableInfo.fields.forEach(field => {
+          content += `- ${field.field_name} (${field.type})\n`;
+        });
+        content += `\n`;
+      }
+
+      // 添加前几条记录作为示例
+      if (tableInfo.records && tableInfo.records.length > 0) {
+        content += `**数据示例：**\n`;
+        const sampleSize = Math.min(3, tableInfo.records.length);
+        
+        for (let i = 0; i < sampleSize; i++) {
+          const record = tableInfo.records[i];
+          content += `\n**记录 ${i + 1}:**\n`;
+          
+          // 遍历记录中的字段值
+          Object.entries(record.fields || {}).forEach(([fieldId, value]) => {
+            const fieldName = tableInfo.fields.find(f => f.field_id === fieldId)?.field_name || fieldId;
+            const displayValue = this.formatFieldValue(value);
+            content += `- ${fieldName}: ${displayValue}\n`;
+          });
+        }
+        
+        if (tableInfo.records.length > sampleSize) {
+          content += `\n... 还有 ${tableInfo.records.length - sampleSize} 条记录\n`;
+        }
+        content += `\n`;
+      }
+    });
+
+    return content;
+  }
+
+  // 格式化字段值显示
+  formatFieldValue(value) {
+    if (value === null || value === undefined) return '空';
+    if (typeof value === 'object') {
+      if (Array.isArray(value)) {
+        return value.length > 0 ? value.map(v => v.text || v).join(', ') : '[]';
+      }
+      return value.text || JSON.stringify(value).substring(0, 100);
+    }
+    return String(value).substring(0, 100);
   }
 
   // 将数字转换为Excel列标识符 (1->A, 26->Z, 27->AA)
