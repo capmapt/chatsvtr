@@ -1,5 +1,6 @@
 module.exports = {
   testEnvironment: 'jsdom',
+  rootDir: '../', // Set root to project root since config is in subfolder
   setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
   testMatch: [
     '<rootDir>/tests/**/*.test.js'

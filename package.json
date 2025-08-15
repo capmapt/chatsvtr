@@ -9,7 +9,7 @@
     "dev:static": "python3 -m http.server 3000",
     "preview": "echo '🔍 Starting preview server...' && python3 -m http.server 8080",
     "build": "tsc && echo 'Workers compiled successfully'",
-    "test": "jest --passWithNoTests",
+    "test": "jest --config config/jest.config.js",
     "test:watch": "jest --watch",
     "test:e2e": "playwright test --project=chromium",
     "test:e2e:full": "playwright test",
