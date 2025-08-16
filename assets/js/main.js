@@ -65,17 +65,68 @@
     }
 
     setupEventListeners() {
-      if (this.domElements.toggle && this.domElements.overlay) {
+      // 🚀 移动端修复：检查是否已有移动端修复器
+      const isMobile = window.innerWidth <= 768;
+      const hasMobileFix = window.mobileSidebarFix && isMobile;
+      
+      if (!hasMobileFix && this.domElements.toggle && this.domElements.overlay) {
         this.domElements.toggle.addEventListener('click', () => this.toggleSidebar());
         this.domElements.overlay.addEventListener('click', () => this.closeSidebar());
+      } else if (hasMobileFix) {
+        console.log('[SVTRApp] 检测到移动端修复器，跳过事件监听器设置');
       }
 
-      // Handle escape key
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && this.isSidebarOpen()) {
-          this.closeSidebar();
+      // 🚀 ChatGPT方案：添加侧边栏关闭按钮事件监听器
+      const closeButton = document.querySelector('.sidebar-close');
+      if (closeButton) {
+        closeButton.addEventListener('click', () => this.closeSidebar());
+      }
+
+      // Handle escape key (桌面端)
+      if (!isMobile) {
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && this.isSidebarOpen()) {
+            this.closeSidebar();
+          }
+        });
+      }
+
+      // Setup sidebar scroll detection for visual indicators
+      this.setupSidebarScrollDetection();
+    }
+
+    setupSidebarScrollDetection() {
+      const sidebar = this.domElements.sidebar;
+      if (!sidebar) return;
+
+      // Check if sidebar content is scrollable and add visual indicators
+      const checkScrollable = () => {
+        const isScrollable = sidebar.scrollHeight > sidebar.clientHeight;
+        sidebar.classList.toggle('has-scroll', isScrollable);
+        
+        // Add scroll event listener if scrollable
+        if (isScrollable) {
+          sidebar.addEventListener('scroll', this.handleSidebarScroll.bind(this));
         }
-      });
+      };
+
+      // Check on load and resize
+      checkScrollable();
+      window.addEventListener('resize', debounce(checkScrollable, 250));
+    }
+
+    handleSidebarScroll() {
+      const sidebar = this.domElements.sidebar;
+      if (!sidebar) return;
+
+      // Calculate scroll position
+      const scrollTop = sidebar.scrollTop;
+      const scrollHeight = sidebar.scrollHeight;
+      const clientHeight = sidebar.clientHeight;
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10; // 10px tolerance
+
+      // Toggle bottom gradient visibility
+      sidebar.classList.toggle('scroll-at-bottom', isAtBottom);
     }
 
     initializeSidebar() {
@@ -90,14 +141,10 @@
         return;
       }
 
-      // 移动端：自动关闭侧边栏节省屏幕空间
-      if (this.isSidebarOpen() && (isMobile || isFirstVisit)) {
-        setTimeout(() => {
-          this.closeSidebar();
-          if (isFirstVisit) {
-            localStorage.setItem('sidebarAutoClosed', '1');
-          }
-        }, CONFIG.SIDEBAR_AUTO_CLOSE_DELAY);
+      // 移动端：参考ChatGPT方案，移除自动关闭，完全用户控制
+      // 用户通过遮罩点击、滑动手势或关闭按钮主动关闭侧边栏
+      if (isFirstVisit) {
+        localStorage.setItem('sidebarAutoClosed', '1');
       }
     }
 

@@ -277,55 +277,84 @@ header {
   100% { box-shadow: 0 0 15px 0 #ffe08288, 0 2px 12px #fa8c3230; }
 }
 
+/* 🌐 英文界面专用标签样式优化 */
+html[lang="en"] .business-tag {
+  font-size: 1.3rem; /* 稍微减小英文字体大小 */
+  letter-spacing: 1.5px; /* 减少英文字符间距 */
+  padding: 18px 36px; /* 调整英文版本的内边距 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase; /* 英文大写显示更专业 */
+  font-weight: 700; /* 稍微减轻字重 */
+}
+
 /* Sidebar */
 .sidebar {
   position: fixed; 
   top: 0; 
   left: 0; 
   bottom: 0; 
-  width: 240px; /* 优化：从260px减少到240px，提升桌面端比例 */
-  padding: 80px 20px 30px; /* 增加底部padding确保内容不被截断 */
+  width: 240px;
+  /* 🚀 关键修复：使用flexbox布局，不用padding */
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(135deg, #FFE0B2, #FFF3D6);
   backdrop-filter: blur(8px);
   border-right: 1px solid var(--border-color);
-  overflow-y: auto;
-  overflow-x: hidden; /* 防止水平滚动 */
+  /* 🚀 移除overflow，让子元素控制滚动 */
+  overflow: hidden;
   transform: translateX(-100%);
   transition: transform var(--transition-fast);
   z-index: 1050;
   font-family: "Helvetica Neue", Arial, sans-serif;
-  /* 确保滚动条样式 */
-  scrollbar-width: thin;
-  scrollbar-color: rgba(250, 140, 50, 0.3) transparent;
 }
 
-/* WebKit浏览器滚动条样式 */
-.sidebar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-  background: rgba(250, 140, 50, 0.3);
-  border-radius: 3px;
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-  background: rgba(250, 140, 50, 0.5);
-}
+/* 移除原有的sidebar滚动条样式，现在滚动在nav元素上 */
 
 .sidebar.open { 
   transform: translateX(0); 
 }
 
+/* 🚀 固定区域：头部 */
 .sidebar-header {
+  flex-shrink: 0; /* 不允许收缩 */
   display: flex; 
   align-items: center; 
-  margin-bottom: 2rem;
+  padding: 2rem 20px 1.5rem 20px; /* 调整顶部距离为合适值 */
+  margin: 0; /* 移除margin，用padding控制 */
+  position: relative;
+}
+
+/* 侧边栏关闭按钮 - 参考ChatGPT方案 */
+.sidebar-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+  z-index: 10;
+}
+
+.sidebar-close:hover {
+  background: rgba(0, 0, 0, 0.15);
+  color: #333;
+  transform: scale(1.1);
+}
+
+.sidebar-close:active {
+  transform: scale(0.95);
 }
 
 .sidebar-logo {
@@ -357,6 +386,46 @@ header {
   margin-bottom: 0.5rem;
   font-size: 1rem;
   color: #333;
+}
+
+/* 🚀 可滚动区域：导航容器 */
+.sidebar nav {
+  flex: 1; /* 占据剩余空间 */
+  overflow-y: auto; /* 垂直滚动 */
+  overflow-x: hidden; /* 禁止水平滚动 */
+  padding: 0.5rem 20px 2rem 20px; /* 减少顶部内边距 */
+  margin: 0;
+  /* 🚀 强化滚动条可见性 */
+  scrollbar-width: auto; /* Firefox：显示正常宽度滚动条 */
+  scrollbar-color: rgba(250, 140, 50, 0.8) rgba(255, 255, 255, 0.2);
+}
+
+/* 🚀 WebKit滚动条样式强化 */
+.sidebar nav::-webkit-scrollbar {
+  width: 12px; /* 增加宽度 */
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar nav::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  margin: 4px;
+}
+
+.sidebar nav::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, 
+    rgba(250, 140, 50, 0.9) 0%, 
+    rgba(250, 140, 50, 0.7) 100%);
+  border-radius: 6px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  min-height: 30px;
+}
+
+.sidebar nav::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, 
+    rgba(250, 140, 50, 1.0) 0%, 
+    rgba(250, 140, 50, 0.9) 100%);
+  transform: scale(1.1);
 }
 
 /* Navigation */
@@ -396,189 +465,6 @@ header {
   text-decoration: none; 
 }
 
-.sidebar-footer {
-  margin-top: 2rem;
-  padding: 0;
-}
-
-.qr-container {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 41, 59, 0.8) 100%);
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  position: relative;
-  overflow: hidden;
-  text-align: center;
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(148, 163, 184, 0.15);
-}
-
-
-.qr-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-  justify-content: center;
-  position: relative;
-}
-
-.qr-icon {
-  color: #06B6D4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-  background: rgba(6, 182, 212, 0.1);
-  border-radius: 6px;
-  border: 1px solid rgba(6, 182, 212, 0.2);
-}
-
-.qr-title {
-  color: #E2E8F0;
-  font-weight: 600;
-  font-size: 0.85rem;
-  text-shadow: 0 0 10px rgba(226, 232, 240, 0.3);
-  letter-spacing: 0.5px;
-}
-
-.qr-image-wrapper {
-  position: relative;
-  display: inline-block;
-  margin: 12px auto;
-  border-radius: 8px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 6px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(6, 182, 212, 0.2);
-}
-
-.qr-image-wrapper img {
-  width: 90px;
-  height: 90px;
-  display: block;
-  margin: 0 auto;
-  border-radius: 6px;
-  object-fit: contain;
-}
-
-.qr-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-}
-
-.scan-line {
-  position: absolute;
-  left: 6px;
-  right: 6px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.6), transparent);
-  animation: simpleScan 2s ease-in-out infinite;
-}
-
-@keyframes simpleScan {
-  0%, 100% {
-    top: 6px;
-    opacity: 0;
-  }
-  50% {
-    top: 50%;
-    opacity: 0.8;
-    transform: translateY(-50%);
-  }
-}
-
-.qr-text {
-  color: #6B7280;
-  font-size: 0.75rem;
-  margin: 12px 0;
-  text-align: center;
-  line-height: 1.4;
-}
-
-.qr-actions {
-  margin-top: 12px;
-  display: flex;
-  gap: 6px;
-  justify-content: center;
-}
-
-.qr-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  background: rgba(15, 23, 42, 0.5);
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  border-radius: 6px;
-  color: #94A3B8;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  backdrop-filter: blur(8px);
-}
-
-.qr-button:hover {
-  background: rgba(15, 23, 42, 0.7);
-  border-color: rgba(148, 163, 184, 0.4);
-  color: #E2E8F0;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.qr-button.feishu:hover {
-  border-color: rgba(59, 130, 246, 0.4);
-  color: #60A5FA;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
-}
-
-.qr-button.discord:hover {
-  border-color: rgba(88, 101, 242, 0.4);
-  color: #A78BFA;
-  box-shadow: 0 4px 12px rgba(88, 101, 242, 0.15);
-}
-
-.qr-button:active {
-  transform: translateY(0);
-}
-
-.qr-button svg {
-  opacity: 0.8;
-  width: 16px;
-  height: 16px;
-}
-
-/* 🌐 多语言社群入口设计 - 双二维码支持 */
-
-/* 默认状态：所有QR码隐藏 */
-.wechat-qr,
-.discord-qr {
-  display: none;
-}
-
-/* 中文界面：只显示微信二维码（基于html[lang]属性） */
-html[lang="zh-CN"] .wechat-qr {
-  display: block;
-}
-
-html[lang="zh-CN"] .discord-qr {
-  display: none;
-}
-
-/* 英文界面：只显示Discord二维码（基于html[lang]属性） */
-html[lang="en"] .wechat-qr {
-  display: none;
-}
-
-html[lang="en"] .discord-qr {
-  display: block;
-}
 
 /* Menu Toggle */
 .menu-toggle {
@@ -675,6 +561,14 @@ html[lang="en"] .discord-qr {
 @media (min-width: 1200px) {
   .sidebar {
     width: 280px; /* 大屏幕：适当增宽提升体验 */
+    /* 🚀 确保PC端也使用正确的布局 */
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+  .sidebar nav {
+    /* 🚀 PC端强化滚动条 */
+    scrollbar-width: auto !important;
   }
   .content.shifted,
   .sidebar.open ~ .content {
@@ -879,11 +773,38 @@ html[lang="en"] .discord-qr {
     padding: 14px 28px;
     letter-spacing: 1.8px;
   }
+  
+  /* 🌐 768px以下英文界面优化 */
+  html[lang="en"] .business-tag {
+    font-size: 1.1rem;
+    letter-spacing: 1.2px;
+    padding: 14px 24px;
+    text-transform: uppercase;
+  }
 
   /* Sidebar */
   .sidebar {
     width: 200px; /* 平板端：优化为200px，更协调的比例 */
-    padding: 70px 16px 16px;
+    /* 🚀 移除padding，保持flexbox布局 */
+  }
+  
+  /* 🚀 移动端：调整header的padding */
+  .sidebar-header {
+    padding: 55px 16px 0.5rem 16px !important;
+  }
+  
+  /* 移动端关闭按钮优化 */
+  .sidebar-close {
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+  
+  
+  .sidebar nav {
+    padding: 1rem 16px 2rem 16px !important;
   }
   
   .sidebar-header h2 {
@@ -1013,6 +934,14 @@ html[lang="en"] .discord-qr {
     width: 100%;
     margin: 0;
   }
+  
+  /* 🌐 600px以下英文界面优化 */
+  html[lang="en"] .business-tag {
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
 
   .waitlist-form {
     flex-direction: column;
@@ -1029,7 +958,17 @@ html[lang="en"] .discord-qr {
 @media (max-width: 480px) and (min-width: 376px) {
   .sidebar {
     width: 160px; /* 标准手机：42.7%占比，黄金比例 */
-    padding: 65px 12px 12px;
+    /* 🚀 移除padding，保持flexbox布局 */
+  }
+  
+  /* 🚀 调整各区域的padding */
+  .sidebar-header {
+    padding: 50px 12px 0.5rem 12px !important;
+  }
+  
+  
+  .sidebar nav {
+    padding: 1rem 12px 2rem 12px !important;
   }
   .sidebar.open ~ .content {
     margin-left: 160px;
@@ -1103,7 +1042,17 @@ html[lang="en"] .discord-qr {
 @media (max-width: 375px) {
   .sidebar {
     width: 140px; /* 小屏手机：38.9%占比，减少压迫感 */
-    padding: 60px 10px 10px;
+    /* 🚀 移除padding，保持flexbox布局 */
+  }
+  
+  /* 🚀 调整各区域的padding */
+  .sidebar-header {
+    padding: 45px 10px 0.5rem 10px !important;
+  }
+  
+  
+  .sidebar nav {
+    padding: 1rem 10px 2rem 10px !important;
   }
   .sidebar.open ~ .content {
     margin-left: 140px;
