@@ -326,36 +326,6 @@ html[lang="en"] .business-tag {
   position: relative;
 }
 
-/* 侧边栏关闭按钮 - 参考ChatGPT方案 */
-.sidebar-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: rgba(0, 0, 0, 0.1);
-  border: none;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: #666;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  line-height: 1;
-  z-index: 10;
-}
-
-.sidebar-close:hover {
-  background: rgba(0, 0, 0, 0.15);
-  color: #333;
-  transform: scale(1.1);
-}
-
-.sidebar-close:active {
-  transform: scale(0.95);
-}
 
 .sidebar-logo {
   width: 40px; 
@@ -793,14 +763,6 @@ html[lang="en"] .business-tag {
     padding: 55px 16px 0.5rem 16px !important;
   }
   
-  /* 移动端关闭按钮优化 */
-  .sidebar-close {
-    top: 0.5rem;
-    right: 0.5rem;
-    width: 28px;
-    height: 28px;
-    font-size: 16px;
-  }
   
   
   .sidebar nav {

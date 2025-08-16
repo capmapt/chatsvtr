@@ -76,11 +76,6 @@
         console.log('[SVTRApp] 检测到移动端修复器，跳过事件监听器设置');
       }
 
-      // 🚀 ChatGPT方案：添加侧边栏关闭按钮事件监听器
-      const closeButton = document.querySelector('.sidebar-close');
-      if (closeButton) {
-        closeButton.addEventListener('click', () => this.closeSidebar());
-      }
 
       // Handle escape key (桌面端)
       if (!isMobile) {
