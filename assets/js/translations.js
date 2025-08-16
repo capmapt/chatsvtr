@@ -15,17 +15,17 @@ const translations = {
     sub_investors: '机构概览',
     sub_people: '人员概览',
     // Navigation group headers
-    nav_data_analytics: '📊 数据分析',
-    nav_community_hub: '🤝 社区中心', 
-    nav_premium_services: '💎 专业服务',
-    nav_about_us: 'ℹ️ 关于我们',
+    nav_data_analytics: '数据分析',
+    nav_community_hub: '社区中心', 
+    nav_premium_services: '专业服务',
+    nav_about_us: '关于我们',
     
     // Navigation items
     nav_database: 'AI创投库',
     nav_group: 'AI创投群',
     nav_meetup: 'AI创投会',
     nav_camp: 'AI创投营',
-    nav_about: '🏢 关于我们',
+    nav_about: '关于我们',
     nav_contact: '联系我们',
     
     // Premium services
@@ -36,7 +36,7 @@ const translations = {
     sub_linkedin: '💼 LinkedIn',
     sub_twitter: '🐦 Twitter',
     sub_github: '⚡ GitHub',
-    sub_daily_helper: '📰 AI日报助手',
+    sub_daily_helper: 'AI日报助手',
     sidebar_qr_title: '扫码加群',
     sidebar_qr_text: '添加好友，进群交流',
     discord_join_button: '加入Discord社群',
@@ -106,17 +106,17 @@ const translations = {
     sub_investors: 'Investors',
     sub_people: 'People',
     // Navigation group headers
-    nav_data_analytics: '📊 Data Analytics',
-    nav_community_hub: '🤝 Community Hub',
-    nav_premium_services: '💎 Premium Services', 
-    nav_about_us: 'ℹ️ About Us',
+    nav_data_analytics: 'Data Analytics',
+    nav_community_hub: 'Community Hub',
+    nav_premium_services: 'Premium Services', 
+    nav_about_us: 'About Us',
     
     // Navigation items
     nav_database: 'AI Database',
     nav_group: 'AI Group',
     nav_meetup: 'AI Meetup',
     nav_camp: 'AI Camp',
-    nav_about: '🏢 About Us',
+    nav_about: 'About Us',
     nav_contact: 'Contact',
     
     // Premium services
@@ -127,7 +127,7 @@ const translations = {
     sub_linkedin: '💼 LinkedIn',
     sub_twitter: '🐦 Twitter',
     sub_github: '⚡ GitHub',
-    sub_daily_helper: '📰 AI Daily Helper',
+    sub_daily_helper: 'AI Daily Helper',
     sidebar_qr_title: 'Join Community',
     sidebar_qr_text: 'Connect with AI VC professionals',
     discord_join_button: 'Join Discord Community',
