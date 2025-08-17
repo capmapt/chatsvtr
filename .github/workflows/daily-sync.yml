@@ -25,6 +25,8 @@ env:
 permissions:
   contents: write
   actions: read
+  pull-requests: write
+  issues: write
 
 jobs:
   sync-trading-data:
@@ -35,7 +37,7 @@ jobs:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN || github.token }}
           fetch-depth: 0
           persist-credentials: true
 
@@ -111,14 +113,18 @@ jobs:
           TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S UTC')
           
           echo "💾 执行提交..."
-          git commit -m "chore: 📊 每日交易精选数据同步 - $TIMESTAMP
-
-🤖 Generated with [Claude Code](https://claude.ai/code)
-
-Co-Authored-By: Claude <noreply@anthropic.com>"
+          git commit -m "chore: 📊 每日交易精选数据同步 - $TIMESTAMP" \
+                     -m "" \
+                     -m "🤖 Generated with [Claude Code](https://claude.ai/code)" \
+                     -m "" \
+                     -m "Co-Authored-By: Claude <noreply@anthropic.com>"
           
           echo "🚀 推送到远程仓库..."
-          git push origin main
+          git push origin main || {
+            echo "⚠️ 推送失败，尝试使用替代方法..."
+            git remote set-url origin https://x-access-token:${{ secrets.PAT_TOKEN || github.token }}@github.com/${{ github.repository }}.git
+            git push origin main
+          }
           
           echo "✅ 推送完成"
 
