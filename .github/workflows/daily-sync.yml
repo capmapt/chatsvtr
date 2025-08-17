@@ -21,7 +21,11 @@ env:
   # 飞书API配置
   FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
   FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
-  
+
+permissions:
+  contents: write
+  actions: read
+
 jobs:
   sync-trading-data:
     name: 🔄 同步交易精选数据
@@ -33,6 +37,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
+          persist-credentials: true
 
       - name: 🟢 Setup Node.js
         uses: actions/setup-node@v4
@@ -79,32 +84,43 @@ jobs:
       - name: 📝 Check for Changes
         id: check_changes
         run: |
+          echo "🔍 检查文件变更..."
           git add .
+          
+          echo "📋 Git状态："
+          git status --porcelain
+          
           if git diff --staged --quiet; then
             echo "changes=false" >> $GITHUB_OUTPUT
             echo "📋 没有数据更新"
           else
             echo "changes=true" >> $GITHUB_OUTPUT
             echo "📋 检测到数据更新"
+            echo "📋 暂存的变更："
+            git diff --staged --name-only
           fi
 
       - name: 💾 Commit and Push Changes
         if: steps.check_changes.outputs.changes == 'true'
         run: |
+          echo "🔧 配置Git用户信息..."
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           
-          # 生成提交信息
+          echo "📝 准备提交..."
           TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S UTC')
-          COMMIT_MSG="chore: 📊 每日交易精选数据同步 - $TIMESTAMP"
           
-          git commit -m "$COMMIT_MSG
+          echo "💾 执行提交..."
+          git commit -m "chore: 📊 每日交易精选数据同步 - $TIMESTAMP
 
-          🤖 Generated with [Claude Code](https://claude.ai/code)
+🤖 Generated with [Claude Code](https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
           
-          Co-Authored-By: Claude <noreply@anthropic.com>"
+          echo "🚀 推送到远程仓库..."
+          git push origin main
           
-          git push
+          echo "✅ 推送完成"
 
       - name: 📈 Generate Sync Report
         if: always()

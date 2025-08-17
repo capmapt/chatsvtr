@@ -2,8 +2,8 @@
   "meta": {
     "title": "交易精选",
     "description": "精选优质创业公司与投资机会分析",
-    "totalCompanies": 14,
-    "lastUpdated": "2025-08-15T16:54:59.043Z",
+    "totalCompanies": 13,
+    "lastUpdated": "2025-08-17T18:56:32.989Z",
     "source": "SVTR飞书知识库",
     "dataVersion": "2.0"
   },
@@ -106,42 +106,6 @@
     },
     {
       "id": 4,
-      "name": "Cohere",
-      "sector": "🤖 大语言模型",
-      "stage": "独角兽 · 成熟期",
-      "description": "Cohere Inc.（加拿大/多伦多）目前正洽谈一轮 3–5 亿美元 的新融资，投前估值预计将达到 60–63 亿美元",
-      "fundingAmount": "5.0亿美元融资 · 估值55亿美元",
-      "lastFundingDate": "2024年7月",
-      "valuation": "55亿美元",
-      "investors": [
-        "Cisco",
-        "AMD",
-        "Fujitsu",
-        "Nvidia",
-        "Salesforce Ventures",
-        "PSP Investments"
-      ],
-      "founder": "Aidan Gomez",
-      "website": "https://cohere.com/",
-      "location": "加拿大多伦多",
-      "foundedYear": "2019",
-      "employees": "",
-      "arr": "",
-      "tags": [
-        "文本",
-        "AI100",
-        "Unicorn"
-      ],
-      "analysisPoints": [
-        "🦄 独角兽企业，市场估值55亿美元",
-        "💎 单轮融资5.0亿美元，资本高度认可",
-        "👨‍💻 创始人Aidan Gomez来自顶级科技公司，技术实力雄厚"
-      ],
-      "businessModel": "为企业提供生成式AI文本模型、嵌入模型和检索模型等产品。",
-      "deepResearch": ""
-    },
-    {
-      "id": 5,
       "name": "Runway",
       "sector": "🎯 垂直模型",
       "stage": "· 成熟期",
@@ -173,7 +137,7 @@
       "deepResearch": ""
     },
     {
-      "id": 6,
+      "id": 5,
       "name": "Abridge",
       "sector": "🧬 生命科学",
       "stage": "独角兽 · 成熟期",
@@ -209,7 +173,7 @@
       "deepResearch": ""
     },
     {
-      "id": 7,
+      "id": 6,
       "name": "Reflection AI",
       "sector": "👨‍💻 开发者工具",
       "stage": "准独角兽 · 初创期",
@@ -244,7 +208,7 @@
       "deepResearch": ""
     },
     {
-      "id": 8,
+      "id": 7,
       "name": "Vast Data",
       "sector": "💾 数据服务",
       "stage": "独角兽 · 成熟期",
@@ -275,7 +239,7 @@
       "deepResearch": ""
     },
     {
-      "id": 9,
+      "id": 8,
       "name": "n8n",
       "sector": "👨‍💻 开发者工具",
       "stage": "准独角兽 · 成熟期",
@@ -306,7 +270,7 @@
       "deepResearch": ""
     },
     {
-      "id": 10,
+      "id": 9,
       "name": "Fireworks AI",
       "sector": "🤖 AI模型",
       "stage": "准独角兽 · 成长期",
@@ -340,7 +304,7 @@
       "deepResearch": ""
     },
     {
-      "id": 11,
+      "id": 10,
       "name": "LangChain",
       "sector": "🤖 AI模型",
       "stage": "· 初创期",
@@ -368,7 +332,7 @@
       "deepResearch": ""
     },
     {
-      "id": 12,
+      "id": 11,
       "name": "Substack",
       "sector": "🏢 企业服务",
       "stage": "· 成熟期",
@@ -392,7 +356,7 @@
       "deepResearch": ""
     },
     {
-      "id": 13,
+      "id": 12,
       "name": "Canva",
       "sector": "🎯 垂直模型",
       "stage": "超级独角兽 · 初创期",
@@ -417,7 +381,7 @@
       "deepResearch": ""
     },
     {
-      "id": 14,
+      "id": 13,
       "name": "Polymarket",
       "sector": "💰 金融科技",
       "stage": "独角兽 · 成长期",
