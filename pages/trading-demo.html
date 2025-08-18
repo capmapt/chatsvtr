@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI交易精选演示 - SVTR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e1b4b 0%, #581c87 50%, #1e1b4b 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .company-card {
+            background: rgba(255, 255, 255, 0.95);
+            transition: all 0.3s ease;
+        }
+        .company-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Header -->
+    <div class="container mx-auto px-4 py-12">
+        <div class="text-center mb-16 animate-fade-in">
+            <div class="flex justify-center items-center gap-3 mb-6">
+                <svg class="w-10 h-10 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                </svg>
+                <h1 class="text-5xl md:text-6xl font-bold text-white">AI交易精选</h1>
+            </div>
+            <p class="text-xl text-purple-200 max-w-3xl mx-auto">
+                精选全球最具潜力的AI公司，为您提供专业的投资分析与机会洞察
+            </p>
+            <div class="mt-6">
+                <span class="bg-purple-600/20 text-purple-200 border border-purple-400/30 px-4 py-2 rounded-full text-sm">
+                    🔥 实时更新 · 专业分析 · 独家洞察
+                </span>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 animate-fade-in">
+            <div class="glass-card rounded-xl p-6 text-center hover:bg-white/15 transition-all duration-300">
+                <svg class="w-8 h-8 text-purple-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                </svg>
+                <div class="text-3xl font-bold text-white mb-1">24</div>
+                <div class="text-purple-200 text-sm">精选公司</div>
+            </div>
+            
+            <div class="glass-card rounded-xl p-6 text-center hover:bg-white/15 transition-all duration-300">
+                <svg class="w-8 h-8 text-green-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <div class="text-3xl font-bold text-white mb-1">$2.4B</div>
+                <div class="text-purple-200 text-sm">总融资额</div>
+            </div>
+            
+            <div class="glass-card rounded-xl p-6 text-center hover:bg-white/15 transition-all duration-300">
+                <svg class="w-8 h-8 text-blue-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                </svg>
+                <div class="text-3xl font-bold text-white mb-1">$180M</div>
+                <div class="text-purple-200 text-sm">平均估值</div>
+            </div>
+            
+            <div class="glass-card rounded-xl p-6 text-center hover:bg-white/15 transition-all duration-300">
+                <svg class="w-8 h-8 text-orange-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                <div class="text-3xl font-bold text-white mb-1">实时</div>
+                <div class="text-purple-200 text-sm">数据更新</div>
+            </div>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap gap-3 mb-12 justify-center animate-fade-in">
+            <button class="bg-purple-600 text-white px-6 py-2 rounded-lg font-medium shadow-lg transition-all hover:bg-purple-700">
+                全部分类
+            </button>
+            <button class="text-purple-200 border border-purple-400/30 px-6 py-2 rounded-lg font-medium hover:bg-purple-600/20 transition-all">
+                人工智能
+            </button>
+            <button class="text-purple-200 border border-purple-400/30 px-6 py-2 rounded-lg font-medium hover:bg-purple-600/20 transition-all">
+                AI安全
+            </button>
+            <button class="text-purple-200 border border-purple-400/30 px-6 py-2 rounded-lg font-medium hover:bg-purple-600/20 transition-all">
+                AI图像
+            </button>
+        </div>
+
+        <!-- Companies Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in">
+            <!-- OpenAI Card -->
+            <div class="company-card rounded-xl p-6 shadow-xl">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">OpenAI</h3>
+                        <div class="flex gap-2 mb-2">
+                            <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-medium">人工智能</span>
+                            <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-xs">成长期</span>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">高信心</span>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="flex items-center gap-1 text-green-600 font-bold text-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                            </svg>
+                            +340%
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-gray-600 mb-4 leading-relaxed">
+                    领先的人工智能研究公司，开发了GPT系列和ChatGPT等革命性AI产品，正在重新定义人工智能的应用边界
+                </p>
+
+                <!-- Funding Info -->
+                <div class="bg-gradient-to-br from-gray-50 to-purple-50 rounded-lg p-4 border border-gray-100 mb-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <div class="text-sm text-gray-500 mb-1">融资金额</div>
+                            <div class="font-bold text-lg text-gray-900">$10B</div>
+                        </div>
+                        <div>
+                            <div class="text-sm text-gray-500 mb-1">融资日期</div>
+                            <div class="font-semibold text-gray-700">2024-01-15</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                        <div class="text-sm text-gray-500 mb-1">当前估值</div>
+                        <div class="font-bold text-2xl text-purple-600">$80B</div>
+                    </div>
+                </div>
+
+                <!-- Investors -->
+                <div class="mb-4">
+                    <div class="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+                        </svg>
+                        投资机构
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Microsoft</span>
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Khosla Ventures</span>
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Reid Hoffman</span>
+                    </div>
+                </div>
+
+                <!-- Analysis Points -->
+                <div class="mb-4">
+                    <div class="text-sm font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                        </svg>
+                        投资亮点
+                    </div>
+                    <div class="space-y-2">
+                        <div class="text-sm text-gray-700 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border-l-4 border-blue-400">
+                            市场领导地位稳固，用户规模超过1亿
+                        </div>
+                        <div class="text-sm text-gray-700 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border-l-4 border-blue-400">
+                            技术壁垒高，拥有强大的研发团队
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tags -->
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="text-xs text-purple-600 border border-purple-300 px-2 py-1 rounded">#ChatGPT</span>
+                    <span class="text-xs text-purple-600 border border-purple-300 px-2 py-1 rounded">#GPT-4</span>
+                    <span class="text-xs text-purple-600 border border-purple-300 px-2 py-1 rounded">#API</span>
+                    <span class="text-xs text-purple-600 border border-purple-300 px-2 py-1 rounded">#企业级AI</span>
+                </div>
+
+                <!-- Website Link -->
+                <div class="pt-4 border-t border-gray-100">
+                    <a href="https://openai.com" target="_blank" class="w-full bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-50 hover:border-purple-300 transition-all flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        访问官网
+                    </a>
+                </div>
+            </div>
+
+            <!-- Anthropic Card -->
+            <div class="company-card rounded-xl p-6 shadow-xl">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Anthropic</h3>
+                        <div class="flex gap-2 mb-2">
+                            <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-medium">AI安全</span>
+                            <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-xs">成长期</span>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">高信心</span>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="flex items-center gap-1 text-green-600 font-bold text-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                            </svg>
+                            +280%
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-gray-600 mb-4 leading-relaxed">
+                    专注于AI安全研究，开发了Claude系列AI助手，强调安全可靠的AI系统，在对话AI领域表现突出
+                </p>
+
+                <div class="bg-gradient-to-br from-gray-50 to-purple-50 rounded-lg p-4 border border-gray-100 mb-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <div class="text-sm text-gray-500 mb-1">融资金额</div>
+                            <div class="font-bold text-lg text-gray-900">$4B</div>
+                        </div>
+                        <div>
+                            <div class="text-sm text-gray-500 mb-1">融资日期</div>
+                            <div class="font-semibold text-gray-700">2024-02-20</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                        <div class="text-sm text-gray-500 mb-1">当前估值</div>
+                        <div class="font-bold text-2xl text-purple-600">$18B</div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="text-sm font-semibold text-gray-700 mb-2">投资机构</div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Spark Capital</span>
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Sound Ventures</span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="text-sm font-semibold text-gray-700 mb-2">投资亮点</div>
+                    <div class="space-y-2">
+                        <div class="text-sm text-gray-700 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border-l-4 border-blue-400">
+                            AI安全领域的领军企业
+                        </div>
+                        <div class="text-sm text-gray-700 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border-l-4 border-blue-400">
+                            Claude模型在安全性和有用性方面表现优异
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="text-xs text-purple-600 border border-purple-300 px-2 py-1 rounded">#Claude</span>
+                    <span class="text-xs text-purple-600 border border-purple-300 px-2 py-1 rounded">#AI安全</span>
+                    <span class="text-xs text-purple-600 border border-purple-300 px-2 py-1 rounded">#对话AI</span>
+                </div>
+
+                <div class="pt-4 border-t border-gray-100">
+                    <a href="https://anthropic.com" target="_blank" class="w-full bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-50 hover:border-purple-300 transition-all flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        访问官网
+                    </a>
+                </div>
+            </div>
+
+            <!-- Midjourney Card -->
+            <div class="company-card rounded-xl p-6 shadow-xl">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex-1">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Midjourney</h3>
+                        <div class="flex gap-2 mb-2">
+                            <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-medium">AI图像</span>
+                            <span class="bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-xs">成长期</span>
+                            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-medium">中信心</span>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="flex items-center gap-1 text-green-600 font-bold text-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                            </svg>
+                            +520%
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-gray-600 mb-4 leading-relaxed">
+                    领先的AI图像生成平台，通过Discord提供服务，在创意设计领域广受欢迎，拥有庞大的活跃用户社区
+                </p>
+
+                <div class="bg-gradient-to-br from-gray-50 to-purple-50 rounded-lg p-4 border border-gray-100 mb-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <div class="text-sm text-gray-500 mb-1">融资金额</div>
+                            <div class="font-bold text-lg text-gray-900">未披露</div>
+                        </div>
+                        <div>
+                            <div class="text-sm text-gray-500 mb-1">融资日期</div>
+                            <div class="font-semibold text-gray-700">2023-12-10</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                        <div class="text-sm text-gray-500 mb-1">当前估值</div>
+                        <div class="font-bold text-2xl text-purple-600">$4B</div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="text-sm font-semibold text-gray-700 mb-2">投资亮点</div>
+                    <div class="space-y-2">
+                        <div class="text-sm text-gray-700 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border-l-4 border-blue-400">
+                            AI图像生成领域的标杆产品
+                        </div>
+                        <div class="text-sm text-gray-700 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border-l-4 border-blue-400">
+                            用户社区活跃，月活跃用户超千万
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="text-xs text-purple-600 border border-purple-300 px-2 py-1 rounded">#图像生成</span>
+                    <span class="text-xs text-purple-600 border border-purple-300 px-2 py-1 rounded">#创意设计</span>
+                    <span class="text-xs text-purple-600 border border-purple-300 px-2 py-1 rounded">#Discord</span>
+                </div>
+
+                <div class="pt-4 border-t border-gray-100">
+                    <a href="https://midjourney.com" target="_blank" class="w-full bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-50 hover:border-purple-300 transition-all flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        访问官网
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="mt-20 text-center animate-fade-in">
+            <div class="glass-card rounded-2xl p-12 border border-white/30 max-w-4xl mx-auto">
+                <h3 class="text-3xl font-bold text-white mb-4">
+                    想要获取更多AI投资机会？
+                </h3>
+                <p class="text-purple-200 text-lg mb-8 max-w-2xl mx-auto">
+                    加入SVTR专业投资者社区，获取第一手AI创投资讯和深度分析报告
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button class="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-10 py-4 rounded-lg font-semibold shadow-lg transition-all">
+                        🚀 立即加入社区
+                    </button>
+                    <button class="border border-white/40 text-white hover:bg-white/10 px-10 py-4 rounded-lg font-semibold transition-all">
+                        了解更多详情
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

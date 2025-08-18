@@ -1,0 +1,154 @@
+{
+  "name": "SVTR Content Automation Workflow",
+  "description": "自动化飞书内容到多平台发布的完整工作流",
+  "active": true,
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{"field": "hours", "hour": 2}]
+        }
+      },
+      "name": "Daily Sync Trigger",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "feishu-webhook",
+        "responseMode": "responseNode"
+      },
+      "name": "Feishu Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [200, 500]
+    },
+    {
+      "parameters": {
+        "command": "node scripts/smart-sync-strategy.js",
+        "workingDirectory": "/home/lium/chatsvtr"
+      },
+      "name": "Execute SVTR Sync",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [400, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "{{$json.status}}",
+              "operation": "equal",
+              "value2": "success"
+            }
+          ]
+        }
+      },
+      "name": "Sync Success Check",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [600, 400]
+    },
+    {
+      "parameters": {
+        "command": "npm run deploy:cloudflare",
+        "workingDirectory": "/home/lium/chatsvtr"
+      },
+      "name": "Auto Deploy",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [800, 300]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "operation": "create",
+        "chatId": "AI_VENTURE_TEAM",
+        "text": "✅ SVTR数据同步成功，网站已自动部署更新"
+      },
+      "name": "Success Notification",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [1000, 200]
+    },
+    {
+      "parameters": {
+        "resource": "message", 
+        "operation": "create",
+        "chatId": "AI_VENTURE_TEAM",
+        "text": "❌ SVTR数据同步失败，请检查飞书API连接"
+      },
+      "name": "Error Notification",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [800, 500]
+    }
+  ],
+  "connections": {
+    "Daily Sync Trigger": {
+      "main": [
+        [
+          {
+            "node": "Execute SVTR Sync",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Feishu Webhook": {
+      "main": [
+        [
+          {
+            "node": "Execute SVTR Sync", 
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute SVTR Sync": {
+      "main": [
+        [
+          {
+            "node": "Sync Success Check",
+            "type": "main", 
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sync Success Check": {
+      "main": [
+        [
+          {
+            "node": "Auto Deploy",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto Deploy": {
+      "main": [
+        [
+          {
+            "node": "Success Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}

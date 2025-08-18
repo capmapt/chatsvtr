@@ -860,11 +860,12 @@ Our platform serves as the definitive source for AI investment market intelligen
           <div class="svtr-chat-input-container">
             <textarea 
               id="svtr-chat-input" 
+              data-testid="chat-input"
               placeholder="${this.getTranslation('chat_input_placeholder')}"
               maxlength="1000"
               rows="1"
             ></textarea>
-            <button id="svtr-chat-send" class="svtr-chat-send-btn">
+            <button id="svtr-chat-send" data-testid="chat-send" class="svtr-chat-send-btn">
               <span class="send-icon">↑</span>
             </button>
           </div>

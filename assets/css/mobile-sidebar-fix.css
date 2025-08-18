@@ -1,0 +1,150 @@
+/**
+ * 移动端侧边栏修复样式
+ * 提升性能和用户体验，避免闪退问题
+ */
+
+/* 🚀 移动端侧边栏性能优化 */
+@media (max-width: 768px) {
+  .sidebar[data-mobile-fixed="true"] {
+    /* 使用GPU加速，减少重绘 */
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    
+    /* 优化动画性能 */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    
+    /* 减少动画复杂度 */
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* 降级模式样式 */
+  .sidebar[data-mobile-fixed="true"].fallback-mode {
+    transition: none !important;
+    will-change: auto;
+  }
+
+  /* 优化overlay性能 */
+  .overlay {
+    /* 使用GPU加速 */
+    will-change: opacity;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    
+    /* 简化动画 */
+    transition: opacity 0.2s ease-out;
+  }
+
+  /* 内容区域优化 */
+  .content {
+    /* 避免不必要的重布局 */
+    will-change: transform;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* 低端设备优化 */
+  @media (max-device-width: 768px) and (-webkit-max-device-pixel-ratio: 1) {
+    .sidebar[data-mobile-fixed="true"] {
+      transition: none !important;
+    }
+    
+    .overlay {
+      transition: none !important;
+    }
+    
+    .content {
+      transition: none !important;
+    }
+  }
+}
+
+/* 🚀 触摸反馈优化 */
+.mobile-fix-toast {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  animation: toast-slide-in 0.3s ease-out;
+}
+
+@keyframes toast-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* 🚀 错误状态指示器 */
+.sidebar[data-mobile-fixed="true"][data-error="true"]::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  background: #ff4444;
+  border-radius: 50%;
+  z-index: 1000;
+  display: none; /* 仅开发环境显示 */
+}
+
+/* 🚀 健康状态指示器（仅开发环境） */
+body[data-debug="true"] .sidebar[data-mobile-fixed="true"][data-error="true"]::before {
+  display: block;
+}
+
+/* 🚀 无障碍优化 */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar[data-mobile-fixed="true"],
+  .overlay,
+  .content {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* 🚀 高对比度模式支持 */
+@media (prefers-contrast: high) {
+  .mobile-fix-toast {
+    background: #000;
+    color: #fff;
+    border: 2px solid #fff;
+  }
+}
+
+/* 🚀 暗色主题支持 */
+@media (prefers-color-scheme: dark) {
+  .mobile-fix-toast {
+    background: rgba(255, 255, 255, 0.9);
+    color: #000;
+  }
+}
+
+/* 🚀 防止触摸穿透 */
+.overlay.active {
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* 🚀 优化滚动性能 */
+.sidebar nav {
+  /* 改善移动端滚动 */
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+  
+  /* 减少滚动时的重绘 */
+  will-change: scroll-position;
+}
+
+/* 🚀 内存优化：隐藏时释放GPU资源 */
+.sidebar:not(.open) {
+  will-change: auto;
+}
+
+.sidebar.open {
+  will-change: transform;
+}

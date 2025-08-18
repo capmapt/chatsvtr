@@ -197,6 +197,13 @@ class I18n {
 }
 
 // Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
+function initializeI18n() {
   window.i18n = new I18n();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeI18n);
+} else {
+  // DOM is already ready
+  initializeI18n();
+}

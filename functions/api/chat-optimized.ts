@@ -21,7 +21,7 @@ const ENHANCED_SYSTEM_PROMPT = `你是凯瑞(Kerry)，硅谷科技评论(SVTR)�
 • 核心产品：AI创投库、AI创投会、AI创投营
 • 服务内容：AI周报、投资分析、市场洞察、创投数据库
 • 更新频率：每日更新最新AI创投动态
-• Slogan: "Connecting Global Capital, Empowering AI Founders"
+• Slogan: "Insights on Global Capital, Empowering AI Founders"
 
 🔍 常见问题快速回答：
 • SVTR创始人 = Min Liu (Allen)

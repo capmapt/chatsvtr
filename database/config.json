@@ -1,0 +1,32 @@
+{
+  "database": {
+    "path": "/home/lium/chatsvtr/database/svtr.db",
+    "relative_path": "./database/svtr.db",
+    "initialization_sql": "/home/lium/chatsvtr/database/init.sql",
+    "description": "SVTR AI创投平台主数据库"
+  },
+  "mcp_configuration": {
+    "server_name": "sqlite",
+    "command": "npx",
+    "args": [
+      "-y",
+      "mcp-server-sqlite-npx",
+      "/home/lium/chatsvtr/database/svtr.db"
+    ],
+    "claude_code_command": "claude mcp add sqlite \"npx -y mcp-server-sqlite-npx /home/lium/chatsvtr/database/svtr.db\""
+  },
+  "tables": {
+    "users": "用户管理和认证",
+    "chat_history": "聊天历史和AI交互记录",
+    "page_visits": "网站访问统计",
+    "sync_logs": "数据同步日志",
+    "ai_venture_cache": "AI创投数据缓存",
+    "email_subscriptions": "邮件订阅管理",
+    "system_config": "系统配置参数",
+    "performance_metrics": "性能监控数据"
+  },
+  "views": {
+    "user_activity_summary": "用户活动汇总",
+    "recent_sync_status": "近期同步状态"
+  }
+}
