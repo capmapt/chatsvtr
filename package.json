@@ -54,7 +54,7 @@
     "sync:daily": "node scripts/complete-sync-manager.js",
     "sync:full": "node scripts/complete-sync-manager.js",
     "sync:webhook": "node scripts/complete-sync-manager.js",
-    "sync:test": "node scripts/quick-sync-test.js", 
+    "sync:test": "node scripts/quick-sync-test.js",
     "sync:verify": "node scripts/quick-sync-test.js",
     "sync:trading": "node scripts/sync-trading-picks-only.js",
     "sync:trading:web": "node scripts/convert-trading-picks-for-web.js",
@@ -114,6 +114,6 @@
     "wrangler": "^4.28.1"
   },
   "dependencies": {
-    "dotenv": "^17.2.0"
+    "dotenv": "^17.2.1"
   }
 }
