@@ -35,6 +35,7 @@
     cacheDOMElements() {
       // Sidebar elements
       this.domElements.toggle = document.querySelector('.menu-toggle');
+      this.domElements.headerLogo = document.querySelector('.header-logo');
       this.domElements.sidebar = document.querySelector('.sidebar');
       this.domElements.overlay = document.querySelector('.overlay');
       this.domElements.content = document.querySelector('.content');
@@ -69,11 +70,32 @@
       const isMobile = window.innerWidth <= 768;
       const hasMobileFix = window.mobileSidebarFix && isMobile;
       
-      if (!hasMobileFix && this.domElements.toggle && this.domElements.overlay) {
-        this.domElements.toggle.addEventListener('click', () => this.toggleSidebar());
+      if (!hasMobileFix && this.domElements.overlay) {
+        // 页面左上角logo点击事件（既能跳转管理面板，也能切换侧边栏）
+        if (this.domElements.headerLogo) {
+          this.domElements.headerLogo.addEventListener('click', (e) => {
+            // 如果按住Ctrl/Cmd键，则跳转管理面板
+            if (e.ctrlKey || e.metaKey) {
+              window.open('/pages/admin-dashboard.html', '_blank');
+            } else {
+              // 否则切换侧边栏
+              this.toggleSidebar();
+            }
+          });
+        }
+        // 保留原有的toggle按钮功能（如果存在）
+        if (this.domElements.toggle) {
+          this.domElements.toggle.addEventListener('click', () => this.toggleSidebar());
+        }
         this.domElements.overlay.addEventListener('click', () => this.closeSidebar());
       } else if (hasMobileFix) {
         console.log('[SVTRApp] 检测到移动端修复器，跳过事件监听器设置');
+      }
+
+      // 侧边栏折叠按钮事件监听器
+      const collapseBtn = document.querySelector('.sidebar-collapse-btn');
+      if (collapseBtn) {
+        collapseBtn.addEventListener('click', () => this.toggleSidebar());
       }
 
 

@@ -93,6 +93,8 @@
   <link rel="stylesheet" href="assets/css/touch-optimized.css">
   <link rel="stylesheet" href="assets/css/mobile-banner-fix.css">
   <link rel="stylesheet" href="assets/css/mobile-sidebar-fix.css">
+  <link rel="stylesheet" href="assets/css/user-actions.css">
+  <link rel="stylesheet" href="assets/css/user-actions-modal.css">
   
   <!-- Preload critical images (WebP preferred) -->
   <link rel="preload" href="assets/images/banner.avif" as="image" type="image/avif">
@@ -206,19 +208,37 @@
       <span class="divider">|</span>
       <button id="btnEn">English</button>
     </div>
-    <button class="menu-toggle" aria-label="打开/关闭菜单" data-i18n-attr-aria-label="menu_toggle_aria_label">☰</button>
+    <picture class="header-logo" style="cursor: pointer; position: fixed; top: 20px; left: 20px; z-index: 1100;" title="点击切换侧边栏，Ctrl+点击打开管理面板">
+      <source srcset="assets/images/logo.avif" type="image/avif">
+      <source srcset="assets/images/logo.webp" type="image/webp">
+      <img src="assets/images/logo.jpg" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;" alt="SVTR.AI logo" loading="lazy">
+    </picture>
   </header>
   <div class="overlay"></div>
   <aside class="sidebar open" role="navigation" aria-label="主导航">
     <div class="sidebar-header">
-      <picture>
-        <source srcset="assets/images/logo.avif" type="image/avif">
-        <source srcset="assets/images/logo.webp" type="image/webp">
-        <img src="assets/images/logo.jpg" class="sidebar-logo" alt="SVTR.AI logo" data-i18n-attr-alt="logo_alt_text" loading="lazy">
-      </picture>
-      <h2 data-i18n="sidebar_title">硅谷科技评论</h2>
+      <button class="sidebar-collapse-btn" aria-label="折叠侧边栏" data-i18n-attr-aria-label="collapse_sidebar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 7H21M3 12H21M3 17H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
     </div>
     
+    <!-- 用户操作区域 -->
+    <div class="user-actions">
+      <!-- 邮件订阅主按钮 -->
+      <div class="subscription-section">
+        <button class="btn-email-subscribe primary-btn" data-i18n="btn_email_subscribe" aria-label="订阅SVTR AI周报">
+          ✉️ <span data-i18n="nav_email_subscribe">订阅AI周报</span>
+        </button>
+        <p class="subscribe-subtitle" data-i18n="subscribe_subtitle">每周一送达 · 5 分钟读完</p>
+      </div>
+      
+      <!-- 登录/注册次按钮 -->
+      <button class="btn-member-login secondary-btn" data-i18n="btn_member_login" aria-label="登录或注册会员账户">
+        👤 <span data-i18n="nav_member_login">登录 / 注册</span>
+      </button>
+    </div>
     
     <nav>
       <ul class="nav-list">
@@ -356,6 +376,7 @@
   
   <!-- Load translations and scripts -->
   <script src="assets/js/translations.js"></script>
+  <script src="assets/js/user-actions.js" defer></script>
   <script src="assets/js/sidebar-qr-manager-optimized.js" defer></script>
   <script src="assets/js/i18n-optimized.js"></script>
   <script src="assets/js/main-optimized.js" defer></script>

@@ -1,0 +1,38 @@
+# Exclude large documentation files to reduce token consumption
+docs/**/*.md
+*.log
+*.sqlite
+.wrangler/**
+node_modules/**
+
+# Exclude MCP generated content
+claude-code-mcp/**
+superdesign-mcp-claude-code/**
+superdesign/**
+
+# Exclude backup and temporary files
+assets/backup/**
+.playwright-mcp/**
+database/**
+
+# Exclude large data files
+assets/data/rag/**
+*.json.backup
+
+# Exclude test output and coverage
+coverage/**
+test-results/**
+playwright-report/**
+
+# Exclude build artifacts
+dist/**
+build/**
+.next/**
+
+# Exclude large guides that are not essential for coding
+*MCP*GUIDE.md
+*EFFICIENCY*GUIDE.md
+optimization-plan.md
+phase2-planning.md
+feishu-api-enhancement-plan.md
+next-optimization-strategy.md
