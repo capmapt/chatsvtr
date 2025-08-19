@@ -15,23 +15,30 @@ const translations = {
     sub_investors: '机构概览',
     sub_people: '人员概览',
     // Navigation group headers
-    nav_data_analytics: '数据分析',
-    nav_community_hub: '社区中心', 
-    nav_premium_services: '专业服务',
+    nav_data_products: '数据产品',
+    nav_ai_vc_database: 'AI创投库',
+    nav_vc_community: '创投社区',
+    nav_professional_services: '专业服务',
     nav_about_us: '关于我们',
     
-    // Navigation items
-    nav_database: 'AI创投库',
-    nav_group: 'AI创投群',
-    nav_meetup: 'AI创投会',
-    nav_camp: 'AI创投营',
-    nav_about: '关于我们',
-    nav_contact: '联系我们',
+    // Data products navigation
+    nav_ai_vc_ranking: 'AI创投榜',
+    nav_ai_funding_ranking: 'AI融资榜',
+    nav_ai_investment_ranking: 'AI投资榜',
     
-    // Premium services
-    nav_consulting: '投资咨询',
+    // Database navigation
+    nav_company_database: '公司库',
+    nav_institution_database: '机构库',
+    nav_people_database: '人物库',
+    
+    // Community navigation
+    nav_ai_vc_meetup: 'AI创投会',
+    nav_ai_vc_group: 'AI创投群',
+    
+    // Professional services
     nav_project_matching: '项目对接',
-    nav_custom_reports: '定制报告',
+    nav_ai_startup_camp: 'AI创业营',
+    nav_ai_investment_camp: 'AI投资营',
     sub_email: '📧 邮箱联系',
     sub_linkedin: '💼 LinkedIn',
     sub_twitter: '🐦 Twitter',
@@ -59,9 +66,9 @@ const translations = {
     tag_meetup_text: 'AI创投会', 
     tag_camp_text: 'AI创投营',
     // 优化的标签图标 - 与widget风格一致
-    tag_data_analytics_text: '数据分析',
-    tag_community_hub_text: '社区中心',
-    tag_premium_services_text: '专业服务',
+    tag_data_products_text: '数据产品',
+    tag_vc_community_text: '创投社区',
+    tag_professional_services_text: '专业服务',
     menu_toggle_aria_label: '打开/关闭菜单',
     logo_alt_text: 'SVTR 商标',
     qr_alt_text: '添加好友二维码',
@@ -106,23 +113,30 @@ const translations = {
     sub_investors: 'Investors',
     sub_people: 'People',
     // Navigation group headers
-    nav_data_analytics: 'Data Analytics',
-    nav_community_hub: 'Community Hub',
-    nav_premium_services: 'Premium Services', 
+    nav_data_products: 'Database',
+    nav_ai_vc_database: 'AI VC Database',
+    nav_vc_community: 'VC Community',
+    nav_professional_services: 'Professional Services',
     nav_about_us: 'About Us',
     
-    // Navigation items
-    nav_database: 'AI Database',
-    nav_group: 'AI Group',
-    nav_meetup: 'AI Meetup',
-    nav_camp: 'AI Camp',
-    nav_about: 'About Us',
-    nav_contact: 'Contact',
+    // Data products navigation
+    nav_ai_vc_ranking: 'AI VC Ranking',
+    nav_ai_funding_ranking: 'AI Funding Ranking',
+    nav_ai_investment_ranking: 'AI Investment Ranking',
     
-    // Premium services
-    nav_consulting: 'Investment Consulting',
+    // Database navigation
+    nav_company_database: 'Company Database',
+    nav_institution_database: 'Institution Database',
+    nav_people_database: 'People Database',
+    
+    // Community navigation
+    nav_ai_vc_meetup: 'AI VC Meetup',
+    nav_ai_vc_group: 'AI VC Group',
+    
+    // Professional services
     nav_project_matching: 'Project Matching',
-    nav_custom_reports: 'Custom Reports',
+    nav_ai_startup_camp: 'AI Startup Camp',
+    nav_ai_investment_camp: 'AI Investment Camp',
     sub_email: '📧 Email',
     sub_linkedin: '💼 LinkedIn',
     sub_twitter: '🐦 Twitter',
@@ -150,9 +164,9 @@ const translations = {
     tag_meetup_text: 'AI Meetup',
     tag_camp_text: 'AI Camp',
     // 优化的标签图标 - 与widget风格一致  
-    tag_data_analytics_text: 'Data Analytics',
-    tag_community_hub_text: 'Community Hub',
-    tag_premium_services_text: 'Premium Services',
+    tag_data_products_text: 'Database',
+    tag_vc_community_text: 'Community',
+    tag_professional_services_text: 'Services',
     menu_toggle_aria_label: 'Open/Close menu',
     logo_alt_text: 'SVTR Logo',
     qr_alt_text: 'Add friend QR code',
