@@ -39,6 +39,16 @@ const translations = {
     nav_project_matching: '项目对接',
     nav_ai_startup_camp: 'AI创业营',
     nav_ai_investment_camp: 'AI投资营',
+    
+    // User actions (sidebar top)
+    nav_email_subscribe: '订阅AI周报',
+    nav_member_login: '登录 / 注册',
+    nav_admin_panel: '管理面板',
+    btn_email_subscribe: '订阅AI周报',
+    btn_member_login: '登录 / 注册',
+    subscribe_subtitle: '每周一送达 · 5 分钟读完',
+    collapse_sidebar: '折叠侧边栏',
+    member_center: '进入会员中心',
     sub_email: '📧 邮箱联系',
     sub_linkedin: '💼 LinkedIn',
     sub_twitter: '🐦 Twitter',
@@ -137,6 +147,16 @@ const translations = {
     nav_project_matching: 'Project Matching',
     nav_ai_startup_camp: 'AI Startup Camp',
     nav_ai_investment_camp: 'AI Investment Camp',
+    
+    // User actions (sidebar top)
+    nav_email_subscribe: 'Subscribe to SVTR AI Weekly',
+    nav_member_login: 'Login / Register',
+    nav_admin_panel: 'Admin Panel',
+    btn_email_subscribe: 'Subscribe to SVTR AI Weekly',
+    btn_member_login: 'Login / Register',
+    subscribe_subtitle: 'Delivered weekly · 5-min read',
+    collapse_sidebar: 'Collapse Sidebar',
+    member_center: 'Member Center',
     sub_email: '📧 Email',
     sub_linkedin: '💼 LinkedIn',
     sub_twitter: '🐦 Twitter',
