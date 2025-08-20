@@ -76,7 +76,7 @@
           this.domElements.headerLogo.addEventListener('click', (e) => {
             // 如果按住Ctrl/Cmd键，则跳转管理面板
             if (e.ctrlKey || e.metaKey) {
-              window.open('/pages/admin-dashboard.html', '_blank');
+              window.open('/pages/admin-center.html', '_blank');
             } else {
               // 否则切换侧边栏
               this.toggleSidebar();
@@ -98,6 +98,17 @@
         collapseBtn.addEventListener('click', () => this.toggleSidebar());
       }
 
+      // 侧边栏logo点击事件（Ctrl+点击打开管理面板）
+      const sidebarLogo = document.querySelector('.sidebar-logo');
+      if (sidebarLogo) {
+        sidebarLogo.addEventListener('click', (e) => {
+          // 如果按住Ctrl/Cmd键，则跳转管理面板
+          if (e.ctrlKey || e.metaKey) {
+            window.open('/pages/admin-center.html', '_blank');
+          }
+          // 否则不做任何操作（保持logo装饰功能）
+        });
+      }
 
       // Handle escape key (桌面端)
       if (!isMobile) {
