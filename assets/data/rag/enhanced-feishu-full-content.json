@@ -1,24 +1,24 @@
 {
   "summary": {
-    "lastUpdated": "2025-08-18T18:41:58.566Z",
-    "totalNodes": 253,
+    "lastUpdated": "2025-08-20T18:40:34.747Z",
+    "totalNodes": 255,
     "nodesByLevel": {
       "level_0": 3,
       "level_1": 21,
-      "level_2": 31,
+      "level_2": 33,
       "level_3": 134,
       "level_4": 56,
       "level_5": 8
     },
     "nodesByType": {
       "sheet": 66,
-      "docx": 181,
+      "docx": 183,
       "slides": 3,
       "bitable": 2,
       "file": 1
     },
-    "avgContentLength": 2546,
-    "avgRagScore": 47.64,
+    "avgContentLength": 2527,
+    "avgRagScore": 47.34,
     "apiVersion": "v2_enhanced",
     "syncMethod": "recursive_full_content",
     "sourceInfo": {
@@ -38,7 +38,7 @@
       "level": 0,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "E7wbw3r5Mi0ctEk6Q3acXBzCntg",
         "objToken": "PERPsZO0ph5nZztjBTSctDAdnYg",
@@ -79,7 +79,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "StZ4wqMcsipGvikIy0PcV3xUnkS",
         "objToken": "JzoVdB3Gwo4MPJxgzEfcSjv3nIe",
@@ -123,7 +123,7 @@
       "level": 0,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "QZt5wuIvhigrTdkGdBjcFRsKnaf",
         "objToken": "CB2cdSdyzokFt7xi2wOchtP6nPb",
@@ -157,7 +157,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "BXxIwfJNgi4d6GkajoHcA4QYnOd",
         "objToken": "Fz9BszdbFh407stolmucmkISnfg",
@@ -200,7 +200,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "V38WwuAsFirFEnkXVrgclXsnnuh",
         "objToken": "QG51s3QrjhTnHztEBc5cvT9PnSb",
@@ -242,7 +242,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "EaEtwsOyqiROxYkwSfzcILPRnxc",
         "objToken": "IYOBsHnakh68uytzPxTcAkTvnyg",
@@ -284,7 +284,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Z4WewTXyMikHKPkiYkLcR08dnrh",
         "objToken": "YOmusYZgFhiQlNtauV2cX8Runjb",
@@ -324,7 +324,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "WCp2w16clio9yOk4jNAcHJPAnPg",
         "objToken": "Krvvs5kOWh18zMtiNU6c0SKdn9g",
@@ -366,7 +366,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "SlDew1aCaiOCxakhiCMcjVjNnZe",
         "objToken": "BBLPsF7LWhz4rztcyEic0fENnLx",
@@ -407,7 +407,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "VYnvwdfG2iVdM3keeaAcqAkInze",
         "objToken": "RyZusrnKlhH2AxtBKWmckPsonBc",
@@ -447,7 +447,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "S1bPwhuPTiTzYtk8HEocSXoJnZc",
         "objToken": "PTBFskYwghdYSEt8esuc2QuTnKf",
@@ -487,7 +487,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "RRHqwq3KSisN9rkEPAgcPekcnEe",
         "objToken": "TNxJsPUxDh4SxPtzJyecUMSIn2g",
@@ -527,7 +527,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Dhb9w3pFHibvxfkijLTckrpqnwe",
         "objToken": "UiZHsCq7nhpWLNtY98WcQjlSnZd",
@@ -568,7 +568,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "TUz3wkiD9igrDzkqGIBcZAkan8c",
         "objToken": "U5v2dhreaoIOL6xGE5BcIYdanFe",
@@ -602,7 +602,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "FOtNwOT9nigpVPkfPJ3cb5zJnpe",
         "objToken": "GIJfdDvPyoAqtUx16JEcMKSFnHb",
@@ -635,7 +635,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "D1J7wyBN3isW9CkSrIScbXTHn2h",
         "objToken": "PVCDsxV9XhcP0XtP2EgcGbpYnQg",
@@ -676,7 +676,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "TWlGweMHIiQkVMkjJfFcGcEQn7j",
         "objToken": "La2CslnkHhX6aRtf9JTci8sYnsb",
@@ -716,7 +716,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Fey9wCmJeiV7rWkNKcPcZtxwnhx",
         "objToken": "IuMrsESr7hbK8otBNLFcUL4Ensh",
@@ -758,7 +758,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Io0GwEPv3i5wAkkaAwwcTg4Tn90",
         "objToken": "DUIKsLBDJh7vEQt5PLtcjAc8nNh",
@@ -800,7 +800,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Q3UuwspBLiqESTkAUC4cwJd8nah",
         "objToken": "BeeUsBA8Th2wMCtjtgkc4uornWc",
@@ -840,7 +840,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "HgwTwPErzic7SxkxVb4chRi7nsd",
         "objToken": "SIhFsJGavhJlI3tUoTGcLSVFnad",
@@ -880,7 +880,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "NmuMwMNR3iCL6UkhwnScVFo1nXb",
         "objToken": "YPHEdDAKBoFd87xXruBcznjMnUa",
@@ -911,7 +911,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "ZuVDwgdqTikhvCki4qjcvaKgnpe",
         "objToken": "L8gfsawBlhLqRytD6SccCEElnve",
@@ -951,7 +951,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "LAVyw0Lk6iq1DPkuc3JcKJCNnZe",
         "objToken": "Xqvldo23vom9pZxcoUmcGLYcnIt",
@@ -982,7 +982,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "UtxTw9nqEi7MS3kylhDcRYx5nPb",
         "objToken": "BglFsoQXQh25cOtyztWcOdkznKc",
@@ -1022,7 +1022,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "HyOnwbLuLisk4EkLDMjcdMGfnKg",
         "objToken": "F0z5sLZSoh4whEtEKhQc0vZqn2b",
@@ -1062,7 +1062,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "WjfuwFWiyiK4v0kD469czzPxn8f",
         "objToken": "Gn4QsDfwUhwmrCtAcgtcf8TinWg",
@@ -1102,7 +1102,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Oi39wmbyaiXQIZkD9ALcZppOnEj",
         "objToken": "A5sOs2PS9hL61ct6ImxcFq59nrr",
@@ -1142,7 +1142,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "LfZew4ST7i9QPjk7rQYcxWyfnLc",
         "objToken": "CC6MskfCfhpR82tXEPYc6Fr1nHe",
@@ -1182,7 +1182,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "BYUMwaNdUinAy5kQNoCcvjMbnOb",
         "objToken": "X8M8sDLcohUa3ttGeuicfgvNnwc",
@@ -1222,7 +1222,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "W721wkvrEimjuqkgmCccsEmTn4b",
         "objToken": "LMxJsfhvVhC3BJtf6fycBpWYnTg",
@@ -1262,7 +1262,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "S9fawZ9Q8i27qKkbyC9cghJzngf",
         "objToken": "Z0ifsdGEMh9POrtJGQIc6Hl4nFd",
@@ -1302,7 +1302,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "KkL0wpCJOimSvrkQRYJczEfcnSh",
         "objToken": "XFdjsTeqQhl4iltWhVicsEQUnze",
@@ -1342,7 +1342,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "LpY8wglOaisoWqkhh3NcRCiNnac",
         "objToken": "XYY3s3WQ2hparbtchrmcu1BEnWf",
@@ -1382,7 +1382,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "C56lwQjjWiaHjSkj7b4c5jnbnmd",
         "objToken": "QmQ6dZ3UwoyhVJxw1BvcjZsKnRb",
@@ -1413,7 +1413,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "NPzCwKlbFikUMAkqUpecbWjWnsg",
         "objToken": "UYSfsAVvfhPyCAtTvJMcCSV0nve",
@@ -1454,7 +1454,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "U3SswbEYpiQ6jNkGdRIcquFCn4c",
         "objToken": "IO0osHFp3heMOytPdLgc8qZYnDf",
@@ -1494,7 +1494,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "CxjXwqcKNimB86kEX6AcZSAFn2d",
         "objToken": "QA24dWiTno3Nk4xKNOVcer7rnw6",
@@ -1525,7 +1525,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "VPZtwT6vliphIqkPdFJcopypnuf",
         "objToken": "FTGusMWlmhEixbtMoilc3PYFnwh",
@@ -1565,7 +1565,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "AoDpweiHZiXHl7kILmVcDyuQn7f",
         "objToken": "IdrSddsUPocK3xxX2rpcEwxInab",
@@ -1597,7 +1597,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "YfH4wEQuJihz6ak4pDgcVrhmnag",
         "objToken": "F8oGdJkUwo2KkUxnhQlcpWXrnkh",
@@ -1628,7 +1628,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "AgdnwpUF0iVf21kTEYmc8pNonDg",
         "objToken": "RbPosl9ZAhBDt5tqL9IcRYhhnof",
@@ -1668,7 +1668,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "XcppwIHUTiycV4kDnjucXxzTnUh",
         "objToken": "QdgKs1YPMhi6ditTIpacLPA7nVc",
@@ -1709,7 +1709,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Wpg8wagKki50oNk5OPncUkJUn2f",
         "objToken": "BfCJs8RFghjUxcto6bsc5CoYnFc",
@@ -1749,7 +1749,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Ow9KwzybAi2aXXkxvW8cBM4QnId",
         "objToken": "VC5tsPBxChYHWFtRW7kcBxD8nHc",
@@ -1789,7 +1789,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "QF8Vw1q30iY5vKkFsOtcM9NcnYf",
         "objToken": "LQEwsIJ19hQNh2teWmRcbD6znob",
@@ -1829,7 +1829,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "M3uXwwBTViVkBPkmNMtc71cwn5e",
         "objToken": "FDLvsYqQGhjJoitMWfUcStP6n2g",
@@ -1869,7 +1869,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "LAm0wQ0tnihxMJk53LRcMyaSnor",
         "objToken": "BUWYslLBthzjG9tOOvZcMfRRn8e",
@@ -1910,7 +1910,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "IDq0wmBHriqToLkYh2wcDHhSnwf",
         "objToken": "QDLtswdMDhH2GktZXXccRP5In4e",
@@ -1950,7 +1950,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "T0zKwHwkMiDcXikyp2wclON5nkh",
         "objToken": "WlXhsGvSchbBhPtXDRtcZo8Qnmf",
@@ -1990,7 +1990,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "EMBdwe86giqetrkuSGGc1eX0n6M",
         "objToken": "H7VIsAkuXhlac2tSt5acjwdbnNb",
@@ -2030,7 +2030,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "OrG5wae6ciPvQOkxdplcNNnWnhh",
         "objToken": "D0MBdVIqPoWyVZxjfE3cvxFVnXb",
@@ -2062,7 +2062,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "OAfuw81eviIynzk4nhrctaRtnrc",
         "objToken": "Ntaesb1uzhVXCqtnZ1ucMt25nTe",
@@ -2102,7 +2102,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "IGb5wbulaitLaSkeVtHcVH1pnBb",
         "objToken": "AMIbsNVwAhXhfmtX80BcktmBnOf",
@@ -2143,7 +2143,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Ps7Uwv4xKi05OHkUeRmcP0hOnsb",
         "objToken": "MYpss0yvqh1mC1tExbPcE3h2nDe",
@@ -2183,7 +2183,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "GceEwu3zCivMSTk5grUc5F3Nn1f",
         "objToken": "TM09slN5chxnhSthCiicMlQknjb",
@@ -2223,7 +2223,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "VezHwbLl0iigXik4wWqc0XqNnOb",
         "objToken": "UAu5sQmZzhMrDKt3GzHcZ4SqnBe",
@@ -2264,7 +2264,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "GUD4whbRfiAY1Yko1mpcnCybn9e",
         "objToken": "OJXLs1EMFhiyV5tuBeTcUOMrnxe",
@@ -2304,7 +2304,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Vhmqwzcvfirv9pkCzeXcZQjFnrd",
         "objToken": "JhtUsZR8bhOTPftdpjdcWEDdnNe",
@@ -2346,7 +2346,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "PjlrwOgwOirLCukoL1Hc5shSnYe",
         "objToken": "E6G5s6BF5h2FkptbP2GcHcqjn1d",
@@ -2386,7 +2386,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "K50owFdghi8SuJkXWMxc01nVnSc",
         "objToken": "VzQwsznnMhAGq9tkFo9cT1JTnYc",
@@ -2426,7 +2426,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "VEg2wOMTZimWGHk2iYRcC2vQnQe",
         "objToken": "KbZuskZz5h9nX7tDvN5cH3ZJnpc",
@@ -2467,7 +2467,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "ZBCcwJhD5iMbHBk1AUlceCGfnwf",
         "objToken": "AAGysU2a4hHDfXtFD5Ec5y8Knzd",
@@ -2509,7 +2509,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "V245ww6d7itD7kkMB6wcivbqnrf",
         "objToken": "Wyn4s36Tmh6zbgtfVzMcb0Eenf1",
@@ -2549,7 +2549,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Lq54wfwAfiUpDVkZQIaccPytnVg",
         "objToken": "GmU3scKqqhuzz9tcrzEcCcr4nwf",
@@ -2589,7 +2589,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "G21sww6sYifAqNkR6JpcgL8gngX",
         "objToken": "YOtxssoiihAoQkt9SpqcUghWnLe",
@@ -2629,7 +2629,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "CVlCwvUgVitVbik9NLtceNjknJE",
         "objToken": "AwFZsjOG8hg9ultgHYBcK0iunJe",
@@ -2669,7 +2669,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "TGrdwqZxsiWDe2kf4emcb2MfnKF",
         "objToken": "MOg4sEjp2hPaehtach6cTU3Wnrh",
@@ -2709,7 +2709,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "KgxiwgTRyiqyXBkFKp9cUVScnde",
         "objToken": "WEp0ddsPfo6pZKxAOUucPBR8nwf",
@@ -2742,7 +2742,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "OzWywSxFWikdyYk7v1DcJ9MCnQc",
         "objToken": "VoyXdxlNho9BZpxudjic7kgynDh",
@@ -2789,7 +2789,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "PkEiwTXKuiqRZHkFY1bcARTgnjg",
         "objToken": "Gku0dDf1JoZeYjxXUmJcw8tgn5f",
@@ -2833,7 +2833,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "ZlOuwUfOrixKvIkHpObcR1TKnJh",
         "objToken": "IfksdKvrsoHqK4xmgljcHTXCn0c",
@@ -2880,7 +2880,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "X1xFwdrwtiMqtKk7iZZcmTPunqc",
         "objToken": "XzKHdroWnoESEfxuRpLcOGiDnYf",
@@ -2924,7 +2924,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "LsPZwFt1qi4sNLk6wmHcLilSnXc",
         "objToken": "ODB4dMsbkolxdUxKGZncTju9nmQ",
@@ -2971,7 +2971,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "IilFwmPcjiM0thkd8lRcDbhcnNg",
         "objToken": "RGE3dJVSZoDYVwx5NficM4cDnWb",
@@ -3013,7 +3013,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "H9stw0YrSiFpY2kg6z1cWfB9n0f",
         "objToken": "IWrbd3M6coWN9MxWw8BcFagcnfB",
@@ -3054,7 +3054,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "HrmXwnSUbisUdZk8qxtc2HCynKd",
         "objToken": "EAxZddsCboagQhx6GWKcNACynvh",
@@ -3099,7 +3099,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "LAIywRXOxiAYGVkMsemcGy5UnDb",
         "objToken": "Xwg3dK3QPoaa4JxiOM8c6TCnnid",
@@ -3145,7 +3145,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Y4TcwhYBjiHD3NktJOvcZONrn8c",
         "objToken": "OBqNdvKPnowlvMxLH9Uc781fn4f",
@@ -3190,7 +3190,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Ct7GwPNCviRGmok1CkwctKEDnCe",
         "objToken": "JyVsdUpQOoseQLxKRETceGLEnqc",
@@ -3237,7 +3237,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "HRDawoyz3inylzkWWozcF72nnbd",
         "objToken": "WzGKdGzxfoHRvTxHP2Rcpzjsnag",
@@ -3283,7 +3283,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "NJxKwyhKxixj48kuxqgcO9CYnrc",
         "objToken": "CBEqdS95moa6OdxPnc9cWQCgnPf",
@@ -3330,7 +3330,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "JtJcwG4AAi5pEfkgM0Cci67qn4g",
         "objToken": "OOtEdO8TfonGlaxJsH4cPdCzned",
@@ -3375,7 +3375,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "LrHRwdIiliEOTikPGI3cWXHrnGc",
         "objToken": "K0KldhWVaoCo0rxJOD4cAJJdnst",
@@ -3419,7 +3419,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "QhGCwZfPCiEm4AkXchOc3mrEn5b",
         "objToken": "XH6EdLoitoy0BDxp3zBcxPaDn0e",
@@ -3462,7 +3462,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "LDalwQkQAi3ZlTk3JV8c90Rfnuf",
         "objToken": "TsrbdHGWCoqx2exMsbzcXPaQncb",
@@ -3505,7 +3505,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "AOMMwSjWNi85gXkVxF4cYwVynUE",
         "objToken": "HPredUWOnordKix6i5ic4uPOn0b",
@@ -3540,7 +3540,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "XPdzwCUZLirwWYkWE9ucBePgntb",
         "objToken": "RjLCdlOzfoVGV8xS2SicXHHSn2f",
@@ -3581,7 +3581,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Re4pwtQUqiPCnskC723c3CHPnmc",
         "objToken": "Zh4Ps2uJJhEuihtG1RYc4cXUnCe",
@@ -3621,7 +3621,7 @@
       "level": 0,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "TB4nwFKSjiZybRkoZx7c7mBXnxd",
         "objToken": "DEzTdMe8qoLE3gxtnUHcZP83nNb",
@@ -3631,8 +3631,8 @@
         "parentToken": "",
         "level": 0
       },
-      "content": "SVTR丨硅谷科技评论\n同步块\n\n访问须知：\n如果您对前沿科技感兴趣，欢迎加入硅谷科技评论（SVTR.AI）创投社区。\n如果您是创始人或投资人，欢迎加入硅谷科技评论（SVTR.AI）生态联盟。\n如果您是我们权益会员，请移步硅谷科技评论（SVTR.AI）权益会员专区。\n目录导航\n\nAI 交易\n\nAI 周报\n\nAI 100\n\nAI创投榜\n\n1、融资概览\n\n\n\n\n\n\n\n\n\n\n\n\n2、赛道概览\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3、公司概览\n\n\n\n\n\n\n\n\n4、机构概览\n\n5、人物概览\n\n\n\n\n\nAI创投群\n同步块\n\nAI创投群：全球专业社区，走进科技前沿。\n\n覆盖全球10W+ 顶尖AI从业者，包括AI创投库中6000+创始人和投资人。\n专业认证群，每位成员通过专业认证，每日高密度信息推送、互动和分享。\n『AI创投会』每周活动，邀请一线从业嘉宾，与社区成员闭门分享，深度互动。\n『AI的未来』主题活动，邀请业内领军大咖，线上和线下同频共振，探索未来。\n扫码或添加微信（pkcapital2023），与更多社区伙伴，进行深度交流。\n2bff0323852eee0ed8aa75d5e63caab.jpg\n\n\n\nAI创投库\n\nAI创投会\n\nAI创投营\n\n社区动态\n\n\n1280X1280.PNG\n\n15.png\n\n\n17.png\n\n你的段落文字 (61).png\n\n\n\nAI创投会第001期.png\n\n\n\n008.jpg\n\n\n社区成员\n\n\n11b0dba9904db3b450f379d106039e1.jpg\n\n\n3644ea2fb127435a12b427be4a20e00.jpg\n\n\n\nfd779df102fc5031b2aac9661e400b8.jpg\n\n44136b92638698f33ce0c69003b1528.jpg\n\nce252de4cd8517a9def49f0145d12a8.jpg\n\n\n0f00763aa68382c4f3b9d563449e1e6.jpg\n\nc156535d08ac5874aec48e0d90195d2.jpg\n\n5136eada9418073a73b7529a336aeef.jpg\n\n\n合作伙伴\n\n\nimage.png\n\nimage.png\n\nimage.png\n\nimage.png\n\n\nimage.png\n\nimage.png\n\nimage.png\n\nimage.png\n\n\nimage.png\n\n3ee223e81e872a396db7f31746c9726d.jpg\n\nimage.png\n\nimage.png\n\n\nimage.png\n\n6baabf85b101f836ccc6d6e5337995f8.jpg\n\nimage.png\n\n4b7cfdc2b1e22811f1278ba5b7559f48.jpg\n\n会员权益\n\n数据说明\n\n关于我们\n同步块\n\nSVTR（硅谷科技评论），Silicon Valley Tech Review，也寓意 Startup & Venture Tech Review。在ChatGPT问世之际，由Min Liu（Allen）发起于美国硅谷，是一家数据驱动的创投社区。我们立足硅谷，面向全球 AI 创业者与投资人，提供创投数据库、社区活动与孵化服务。\n\nSVTR旗下AI创投库（AI Venture Database）（包括开源榜单AI创投榜和 AI 100）、AI创投群（AI Venture Club）、AI创投会（AI Venture Meetup）、AI创投营（AI Venture Camp）和风险投资（VC），打造全球前沿科技（AI）创新生态系统，为创始人提供找人、找钱和找方向等专业服务。\n\n目前覆盖全球10W+ 顶尖AI从业者，包括来自谷歌、微软、英伟达、亚马逊、百度、阿里、腾讯等全球科技大厂工程师和AI创始人，红杉、YC、IDG、DCM、启明、奇绩、深创投等一线投资机构AI投资人，以及来自斯坦福、哈佛、MIT、清华、北大、交大、多伦多大学等顶尖高校院所研究人员。\n\n孵化案例：AI超级工程师模本科技；AI教育咨询公司高考纸鸢。\n\n联系我们\n\n我们是投资人，也是创业者，聚焦AI（科技）和跨境出海。\n欢迎联系凯瑞（pkcapital2023），加入社群，畅聊与期待。\n如果您在硅谷或上海，约茶或咖啡，把酒言欢，共创未来。\n还可线上相约 1 on 1，全球连线，穿越时空，共话Gen AI。\n\n\nContributor\n\n\n2761e4407b96f8c7c41e151bc7741ec.jpg\n\n67ec9aa08c955b1d4755d5084aaf906.jpg\n\nbbf23a29a0d1e85269b288a7dc2046f.jpg\n\n\n64f78fe16689cf9c3dd1671b99313f7.jpg\n\n899774c921cce841f8a48427ae3f0b5.jpg\n\nf084c011750b54d82b16d3b1afac6d1.jpg\n\n知识库动态\n\n\n",
-      "contentLength": 2104,
+      "content": "SVTR丨硅谷科技评论\n同步块\n\n访问须知：\n如果您对前沿科技感兴趣，欢迎加入硅谷科技评论（SVTR）创投社区。\n如果您是创始人或投资人，欢迎加入硅谷科技评论（SVTR）生态联盟。\n如果您是我们权益会员，请移步硅谷科技评论（SVTR）权益会员专区。\n目录导航\n\nAI 交易\n\nAI 周报\n\nAI 100\n\nAI创投榜\n\n1、融资概览\n\n\n\n\n\n\n\n\n\n\n\n\n2、赛道概览\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n3、公司概览\n\n\n\n\n\n\n\n\n4、机构概览\n\n5、人物概览\n\n\n\n\n\nAI创投群\n同步块\n\nAI创投群：全球专业社区，走进科技前沿。\n\n覆盖全球10W+ 顶尖AI从业者，包括AI创投库中6000+创始人和投资人。\n专业认证群，每位成员通过专业认证，每日高密度信息推送、互动和分享。\n『AI创投会』每周活动，邀请一线从业嘉宾，与社区成员闭门分享，深度互动。\n『AI的未来』主题活动，邀请业内领军大咖，线上和线下同频共振，探索未来。\n扫码或添加微信（pkcapital2023），与更多社区伙伴，进行深度交流。\n2bff0323852eee0ed8aa75d5e63caab.jpg\n\n\n\nAI创投库\n\nAI创投会\n\nAI创投营\n\n社区动态\n\n\n1280X1280.PNG\n\n15.png\n\n\n17.png\n\n你的段落文字 (61).png\n\n\n\nAI创投会第001期.png\n\n\n\n008.jpg\n\n\n社区成员\n\n\n11b0dba9904db3b450f379d106039e1.jpg\n\n\n3644ea2fb127435a12b427be4a20e00.jpg\n\n\n\nfd779df102fc5031b2aac9661e400b8.jpg\n\n44136b92638698f33ce0c69003b1528.jpg\n\nce252de4cd8517a9def49f0145d12a8.jpg\n\n\n0f00763aa68382c4f3b9d563449e1e6.jpg\n\nc156535d08ac5874aec48e0d90195d2.jpg\n\n5136eada9418073a73b7529a336aeef.jpg\n\n\n合作伙伴\n\n\nimage.png\n\nimage.png\n\nimage.png\n\nimage.png\n\n\nimage.png\n\nimage.png\n\nimage.png\n\nimage.png\n\n\nimage.png\n\n3ee223e81e872a396db7f31746c9726d.jpg\n\nimage.png\n\nimage.png\n\n\nimage.png\n\n6baabf85b101f836ccc6d6e5337995f8.jpg\n\nimage.png\n\n4b7cfdc2b1e22811f1278ba5b7559f48.jpg\n\n会员权益\n\n数据说明\n\n关于我们\n同步块\n\nSVTR（硅谷科技评论），Silicon Valley Tech Review，也寓意 Startup & Venture Tech Review。在ChatGPT问世之际，由Min Liu（Allen）发起于美国硅谷，是一家数据驱动的创投社区。我们立足硅谷，面向全球 AI 创业者与投资人，提供创投数据库、社区活动与孵化服务。\n\nSVTR旗下AI创投库（AI Venture Database）（包括开源榜单AI创投榜和 AI 100）、AI创投群（AI Venture Club）、AI创投会（AI Venture Meetup）、AI创投营（AI Venture Camp）和风险投资（VC），打造全球前沿科技（AI）创新生态系统，为创始人提供找人、找钱和找方向等专业服务。\n\n目前覆盖全球10W+ 顶尖AI从业者，包括来自谷歌、微软、英伟达、亚马逊、百度、阿里、腾讯等全球科技大厂工程师和AI创始人，红杉、YC、IDG、DCM、启明、奇绩、深创投等一线投资机构AI投资人，以及来自斯坦福、哈佛、MIT、清华、北大、交大、多伦多大学等顶尖高校院所研究人员。\n\n孵化案例：AI超级工程师模本科技；AI教育咨询公司高考纸鸢。\n\n联系我们\n\n我们是投资人，也是创业者，聚焦AI（科技）和跨境出海。\n欢迎联系凯瑞（pkcapital2023），加入社群，畅聊与期待。\n如果您在硅谷或上海，约茶或咖啡，把酒言欢，共创未来。\n还可线上相约 1 on 1，全球连线，穿越时空，共话Gen AI。\n\n\nContributor\n\n\n2761e4407b96f8c7c41e151bc7741ec.jpg\n\n67ec9aa08c955b1d4755d5084aaf906.jpg\n\nbbf23a29a0d1e85269b288a7dc2046f.jpg\n\n\n64f78fe16689cf9c3dd1671b99313f7.jpg\n\n899774c921cce841f8a48427ae3f0b5.jpg\n\nf084c011750b54d82b16d3b1afac6d1.jpg\n\n知识库动态\n\n\n",
+      "contentLength": 2095,
       "docType": "docx",
       "searchKeywords": [
         "ai",
@@ -3656,7 +3656,7 @@
         "company_database",
         "member_services"
       ],
-      "ragScore": 68.16
+      "ragScore": 68.07
     },
     {
       "id": "node_G0oMwUeNbiZkQBkX9iXcfMllnpe",
@@ -3667,7 +3667,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "G0oMwUeNbiZkQBkX9iXcfMllnpe",
         "objToken": "OuGkdg9naoKEGZx2ZiUcXlIjnOA",
@@ -3708,7 +3708,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "JRvmwgx95i545OkIABOclT8Znlc",
         "objToken": "MaJ1smQ25hMZ1ptMbtAcXpYrnHb",
@@ -3748,7 +3748,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "So63wQEFaiWOxUkJg8CcslBinhX",
         "objToken": "DrzydmI7woLH3txtgcVcYBKHnCb",
@@ -3781,7 +3781,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "IeCiwz0cxiGFNnkaGvvcnUXwn3d",
         "objToken": "PI7MsjRnYhQB2it2WfMcobwMnIe",
@@ -3822,7 +3822,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "AyQCwDoguiCTOTk03picD4cqnUc",
         "objToken": "HjZLsuWhFlNWIUdHbxfcozfDneb",
@@ -3855,7 +3855,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "QccYww9uairmypkzCLAcT8innAc",
         "objToken": "RPIyd3TuwoEeCkxTpFGcOpwinWe",
@@ -3888,7 +3888,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Q3dKwEtWai1t2gkwuPZcSfHUndi",
         "objToken": "Wr4HdUJvLodzSnxaGuqcVa9FnDh",
@@ -3931,7 +3931,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "KyWBwl9D7iaHbmkKxLbc1R6qnkb",
         "objToken": "SzIndAHuHovDnLxKgLZcAV5KnSg",
@@ -3975,7 +3975,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Xk3xwdkZMimJjokMbDdcouQinHb",
         "objToken": "Sl9Aduo21oBOnLxYaAecoHpqnce",
@@ -4016,7 +4016,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "NaucwLHs7izOzMkBm96cfy7KnJc",
         "objToken": "JLcFdQ0Apo9BHaxP41vcJYgVnLe",
@@ -4058,7 +4058,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "LUm1wsZZwiYzPukuEisclHN4nJh",
         "objToken": "C7TsdWL8TontFMx8zMdcA7g7nsf",
@@ -4097,7 +4097,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "VmbewrxZKibLCAkHyjtcsGQLnjf",
         "objToken": "Qh74d588iojGHYxzEs0c2J6cnPd",
@@ -4140,7 +4140,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "ToUowSvaUiccRckwpzKcvoAKn6e",
         "objToken": "W0p1drUTbodn7cxtSAEcAdVGnTg",
@@ -4183,7 +4183,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "EjTDwV7vgizpo2kav0tcksBdn3e",
         "objToken": "B6sZdqR7DoBVeuxCeNWcahS2nib",
@@ -4227,7 +4227,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Q8NMw9D0DiBZkhkPfJwcoNAPnpb",
         "objToken": "RaMYdYBAKoMsmTxBNVMctKItn0g",
@@ -4272,7 +4272,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "QLF8wFJB9irEZbkOE7zcVVojnVb",
         "objToken": "CxvJdBd7Zoov24xPXxNc6a5AnFe",
@@ -4315,7 +4315,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "TXsNwG4ZZiXkOKkQq9fcsWYsnSh",
         "objToken": "OOXkdbITYokPPsxngSicEZnXn7g",
@@ -4357,7 +4357,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Cv0YwWMd8in0hyk0DrAcCOyinyz",
         "objToken": "WETgd0AUbofXkAx8W1ZchCjTntA",
@@ -4397,7 +4397,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Hr0swR2pJiil35kVeIScCtgGnqd",
         "objToken": "ScikdaePwojmejxJwaGcl8cOnwf",
@@ -4440,7 +4440,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Q8nYwfAisiyw46khjfQcp0I9n1b",
         "objToken": "LZZldlgh0o37laxqwb6cywYWn3p",
@@ -4467,6 +4467,70 @@
       "ragScore": 21.4
     },
     {
+      "id": "node_Fr2rwSwQ2iYYz4kqOxic4Nomnud",
+      "title": "AI创业营",
+      "nodeToken": "Fr2rwSwQ2iYYz4kqOxic4Nomnud",
+      "objToken": "Oon6dM5UboQQ9Hxw8DgcbDIcnzc",
+      "objType": "docx",
+      "level": 2,
+      "type": "wiki_node",
+      "source": "SVTR飞书知识库",
+      "lastUpdated": "2025-08-20",
+      "metadata": {
+        "nodeToken": "Fr2rwSwQ2iYYz4kqOxic4Nomnud",
+        "objToken": "Oon6dM5UboQQ9Hxw8DgcbDIcnzc",
+        "objType": "docx",
+        "hasChild": false,
+        "createTime": "1755573137",
+        "parentToken": "G0oMwUeNbiZkQBkX9iXcfMllnpe",
+        "level": 2
+      },
+      "content": "AI创业营\n\n\n\n\n\n\n",
+      "contentLength": 12,
+      "docType": "docx",
+      "searchKeywords": [
+        "ai",
+        "ai创业营"
+      ],
+      "semanticTags": [
+        "artificial_intelligence"
+      ],
+      "ragScore": 6.18
+    },
+    {
+      "id": "node_JXSRwQKxAiqQkVkV4eWcZzBtnfh",
+      "title": "AI投资营",
+      "nodeToken": "JXSRwQKxAiqQkVkV4eWcZzBtnfh",
+      "objToken": "W7w1dieJsohPArxaKERcAzcHnIe",
+      "objType": "docx",
+      "level": 2,
+      "type": "wiki_node",
+      "source": "SVTR飞书知识库",
+      "lastUpdated": "2025-08-20",
+      "metadata": {
+        "nodeToken": "JXSRwQKxAiqQkVkV4eWcZzBtnfh",
+        "objToken": "W7w1dieJsohPArxaKERcAzcHnIe",
+        "objType": "docx",
+        "hasChild": false,
+        "createTime": "1755573208",
+        "parentToken": "G0oMwUeNbiZkQBkX9iXcfMllnpe",
+        "level": 2
+      },
+      "content": "AI投资营\n\n\n\n\n\n\n",
+      "contentLength": 12,
+      "docType": "docx",
+      "searchKeywords": [
+        "ai",
+        "投资",
+        "ai投资营"
+      ],
+      "semanticTags": [
+        "investment_funding",
+        "artificial_intelligence"
+      ],
+      "ragScore": 12.18
+    },
+    {
       "id": "node_ADv6wXLc5iDslJkv9qjcvumNnTg",
       "title": "福布斯2025 年全球顶级 VC 投资人榜单数据洞察",
       "nodeToken": "ADv6wXLc5iDslJkv9qjcvumNnTg",
@@ -4475,7 +4539,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "ADv6wXLc5iDslJkv9qjcvumNnTg",
         "objToken": "H10Qd0q5CoqJBYxQDObcVMZTnQd",
@@ -4520,7 +4584,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "CNRPwjCvBiElEgkP1EwcaIA5nJe",
         "objToken": "XCNeb9GjNaQaeYsm7WwcZRSJn1f",
@@ -4530,8 +4594,8 @@
         "parentToken": "TB4nwFKSjiZybRkoZx7c7mBXnxd",
         "level": 1
       },
-      "content": "# 交易精选\n\n**多维表格信息：**\n- 创建者: 未知\n- 应用ID: undefined\n- 数据表数量: 1\n\n## 数据表 1: Deal\n\n**记录数量：** 26\n\n**字段列表：**\n- NO. (2)\n- 周报 (1)\n- 细分领域 (1)\n- 二级分类 (1)\n- 公司名称 (1)\n- 成立时间 (2)\n- 成立地点 (1)\n- 主要业务 (1)\n- 金额\n（万美元） (2)\n- 投资方 (1)\n- 估值\n（亿美元） (2)\n- 累计融资\n（万美元） (2)\n- 创始人 (1)\n- 工作经历 (1)\n- 教育背景 (1)\n- 好友联创 (1)\n- 公司人数 (1)\n- 用户数（万人） (1)\n- ARR（万美元） (2)\n- 净利润（万美元） (1)\n- 深度研究 (1)\n- 更新时间 (5)\n- 官网 (1)\n- 联系方式 (1)\n- 企业介绍 (1)\n- 团队背景 (1)\n- 标签 (1)\n- 未命名 (1)\n- SourceID (1)\n- logo (17)\n- 项目详情 (15)\n\n**数据示例：**\n\n**记录 1:**\n- ARR（万美元）: 140000\n- NO.: 1\n- SourceID: NzUxNzI5MDIzOTc3NDUyMzM5NDoxOjYzYmIzYjA5NDRhMzUyODZlMGZkM2NlN2FlYTI1ZGI1OjE=\n- logo: [object Object]\n- 主要业务: 人工智能技术\n- 二级分类: 模型层-大模型\n- 企业介绍: Anthropic 正与包括阿布扎比MGX（Mubadala Growth Management 旗下AI基金）在内的多家中东主权资本深入接洽，拟筹资 30–50亿美元，目标估值 超过1500亿美元，\n- 估值\n（亿美元）: 615\n- 公司人数: 750\n- 公司名称: Anthropic\n- 创始人: Dario Amodei\n- 周报: Deal\n- 团队背景: Dario Amodei，Anthropic联合创始人兼首席执行官。曾任OpenAI研究副总裁、研究总监及AI安全团队负责人，主导开发GPT-2和GPT-3。在加入OpenAI前，曾是Google B\n- 好友联创: Daniela Amodei\n- 官网: https://www.anthropic.com/\n- 工作经历: Anthropic、OpenAI、Google、百度\n- 成立地点: 美国旧金山\n- 成立时间: 2021\n- 投资方: Lightspeed Venture Partners、Bessemer Venture Partners、Cisco Investments等\n- 教育背景: 斯坦福（Stanford）大学、普林斯顿大学\n- 更新时间: 1752336000000\n- 标签: 多模态,AI100,Unicorn,AI50\n- 深度研究: Anthropic，OpenAI宫斗背后的公司 \n- 累计融资\n（万美元）: 1820000\n- 细分领域: 模型层\n- 联系方式: https://www.linkedin.com/in/dario-amodei-3934934/\n- 金额\n（万美元）: 350000\n- 项目详情: xAI，1130亿美元估值杀入第二名！正在颠覆大模型的游戏规则\n\n**记录 2:**\n- NO.: 2\n- SourceID: NzUxNzI5MDIzOTc3NDUyMzM5NDoyOmFkYjQ2NTFkZjhlMDE5ZjAyZjI1NmMzYjc5NzQ4N2EyOjE=\n- 主要业务: 为 AI 训练提供大规模高质量数据标注服务\n- 二级分类: 基础层-数据\n- 企业介绍: Surge AI，2021 年成立于 美国旧金山，为 AI 训练提供大规模高质量数据标注服务。正筹划 10 亿美元首轮融资，投资方未披露。本轮估值为 250 亿美元。Surge AI 去年的收入超过 \n- 估值\n（亿美元）: 150\n- 公司名称: Surge AI\n- 创始人: Edwin C.\n- 周报: Deal\n- 团队背景: Edwin C.，Surge AI创始人兼CEO。曾任Facebook研究科学家，曾在Google从事核心科学研究，曾在Twitter负责广告质量，曾在Clarium Capital Manageme\n- 官网: https://www.surgehq.ai\n- 工作经历: Facebook、Google、Twitter、Clarium Capital Management\n- 成立地点: 美国旧金山\n- 成立时间: 2021\n- 教育背景: 麻省理工学院\n- 更新时间: 1751731200000\n- 标签: 华人\n- 累计融资\n（万美元）: 100000\n- 细分领域: 基础层\n- 联系方式: https://www.linkedin.com/in/edwinzchen/\n- 金额\n（万美元）: 100000\n\n**记录 3:**\n- ARR（万美元）: 20000\n- NO.: 3\n- SourceID: NzUxNzI5MDIzOTc3NDUyMzM5NDozOjE4MTZjOWIxNTg1ZGQ1ODc1ZDdmN2E0ZWM2NzZhYjg1OjE=\n- 主要业务: 开发AI驱动的编程助手Cursor\n- 二级分类: 应用层-开发者\n- 企业介绍: Anysphere（Cursor），正以 180-200 亿美元估值进行融资\n- 估值\n（亿美元）: 90\n- 公司人数: 50\n- 公司名称: Anysphere（Cursor）\n- 创始人: Michael Truell\n- 周报: Deal\n- 团队背景: Michael Truell，创始人/CEO。专注统计数学研究、LLM驱动的推荐系统、高吞吐量药物管道和热门编程竞赛领域。2022年在MIT学习计算机科学和数学专业毕业。Truell 在MIT（麻省理\n- 好友联创: Sualeh Asif、Arvid Lunnemark、Aman Sanger\n- 官网: https://www.anysphere.co/\n- 工作经历: Anysphere\n- 成立地点: 美国旧金山\n- 成立时间: 2022\n- 投资方: Thrive Capital、Andreessen Horowitz、Accel\n- 教育背景: MIT\n- 更新时间: 1746892800000\n- 标签: 编程,Unicorn,AI Native\n- 累计融资\n（万美元）: 107300\n- 细分领域: 应用层\n- 联系方式: https://www.linkedin.com/in/michael-t-5b1bbb122/\n- 金额\n（万美元）: 90000\n\n... 还有 23 条记录\n\n",
-      "contentLength": 2876,
+      "content": "# 交易精选\n\n**多维表格信息：**\n- 创建者: 未知\n- 应用ID: undefined\n- 数据表数量: 1\n\n## 数据表 1: Deal\n\n**记录数量：** 26\n\n**字段列表：**\n- NO. (2)\n- 周报 (1)\n- 细分领域 (1)\n- 二级分类 (1)\n- 公司名称 (1)\n- 成立时间 (2)\n- 成立地点 (1)\n- 主要业务 (1)\n- 金额\n（万美元） (2)\n- 投资方 (1)\n- 估值\n（亿美元） (2)\n- 累计融资\n（万美元） (2)\n- 创始人 (1)\n- 工作经历 (1)\n- 教育背景 (1)\n- 好友联创 (1)\n- 公司人数 (1)\n- 用户数（万人） (1)\n- ARR（万美元） (2)\n- 净利润（万美元） (1)\n- 深度研究 (1)\n- 更新时间 (5)\n- 官网 (1)\n- 联系方式 (1)\n- 企业介绍 (1)\n- 团队背景 (1)\n- 标签 (1)\n- 未命名 (1)\n- SourceID (1)\n- logo (17)\n- 项目详情 (15)\n\n**数据示例：**\n\n**记录 1:**\n- NO.: 1\n- SourceID: NzUxNzI5MDIzOTc3NDUyMzM5NDoxOmNkZTNlNWExN2Q4YjdkNmY5MDU2MzBiOGZiMTNiN2M5OjE=\n- logo: [object Object]\n- 主要业务: 提供基于云的平台，帮助企业存储、管理和分析大量数据\n- 二级分类: 基础层-数据\n- 企业介绍: Databricks，正以 1000 亿美元估值 进行新一轮融资。此次交易由 Thrive Capital、Insight Partners 和 WCM Investment Management 领\n- 估值\n（亿美元）: 620\n- 公司名称: Databricks\n- 创始人: Ali Ghodsi\n- 周报: Deal\n- 团队背景: Ali Ghodsi，Databricks联合创始人兼CEO，现任加州大学伯克利分校兼职教授。曾任KTH皇家理工学院助理教授，并参与创办了Hive Streaming和Peerialism AB。他拥\n- 好友联创: NA\n- 官网: https://www.databricks.com/\n- 工作经历: Databricks、KTH皇家理工学院、Hive Streaming、Peerialism AB\n- 成立地点: 美国旧金山\n- 成立时间: 2013\n- 投资方: Thrive Capital、Andreessen Horowitz、Insight Partners、GIC、Capital Group、WCM、MGX、Lightspeed、 Founders F\n- 教育背景: KTH皇家理工学院、米德瑞典大学\n- 标签: AI100,Unicorn,AI50\n- 累计融资\n（万美元）: 1300000\n- 细分领域: 基础层\n- 联系方式: https://www.linkedin.com/in/alighodsi\n- 金额\n（万美元）: 1000000\n- 项目详情: xAI，1130亿美元估值杀入第二名！正在颠覆大模型的游戏规则\n\n**记录 2:**\n- ARR（万美元）: 140000\n- NO.: 2\n- SourceID: NzUxNzI5MDIzOTc3NDUyMzM5NDoyOmEyNjcxZmRjYTZmYzA3NmIxMDM5MzgwZjJjNjA3NjQxOjE=\n- 主要业务: 人工智能技术\n- 二级分类: 模型层-大模型\n- 企业介绍: Anthropic 正与包括阿布扎比MGX（Mubadala Growth Management 旗下AI基金）在内的多家中东主权资本深入接洽，拟筹资 30–50亿美元，目标估值 超过1500亿美元，\n- 估值\n（亿美元）: 615\n- 公司人数: 750\n- 公司名称: Anthropic\n- 创始人: Dario Amodei\n- 周报: Deal\n- 团队背景: Dario Amodei，Anthropic联合创始人兼首席执行官。曾任OpenAI研究副总裁、研究总监及AI安全团队负责人，主导开发GPT-2和GPT-3。在加入OpenAI前，曾是Google B\n- 好友联创: Daniela Amodei\n- 官网: https://www.anthropic.com/\n- 工作经历: Anthropic、OpenAI、Google、百度\n- 成立地点: 美国旧金山\n- 成立时间: 2021\n- 投资方: Lightspeed Venture Partners、Bessemer Venture Partners、Cisco Investments等\n- 教育背景: 斯坦福（Stanford）大学、普林斯顿大学\n- 更新时间: 1752336000000\n- 标签: 多模态,AI100,Unicorn,AI50\n- 深度研究: Anthropic，OpenAI宫斗背后的公司 \n- 累计融资\n（万美元）: 1820000\n- 细分领域: 模型层\n- 联系方式: https://www.linkedin.com/in/dario-amodei-3934934/\n- 金额\n（万美元）: 350000\n\n**记录 3:**\n- NO.: 3\n- SourceID: NzUxNzI5MDIzOTc3NDUyMzM5NDozOjRiYWFmNTgyODg3NDQ5NWIzNzlkZWQ2NGExM2I0MDNmOjE=\n- 主要业务: 为 AI 训练提供大规模高质量数据标注服务\n- 二级分类: 基础层-数据\n- 企业介绍: Surge AI，2021 年成立于 美国旧金山，为 AI 训练提供大规模高质量数据标注服务。正筹划 10 亿美元首轮融资，投资方未披露。本轮估值为 250 亿美元。Surge AI 去年的收入超过 \n- 估值\n（亿美元）: 150\n- 公司名称: Surge AI\n- 创始人: Edwin C.\n- 周报: Deal\n- 团队背景: Edwin C.，Surge AI创始人兼CEO。曾任Facebook研究科学家，曾在Google从事核心科学研究，曾在Twitter负责广告质量，曾在Clarium Capital Manageme\n- 官网: https://www.surgehq.ai\n- 工作经历: Facebook、Google、Twitter、Clarium Capital Management\n- 成立地点: 美国旧金山\n- 成立时间: 2021\n- 教育背景: 麻省理工学院\n- 更新时间: 1751731200000\n- 标签: 华人\n- 累计融资\n（万美元）: 100000\n- 细分领域: 基础层\n- 联系方式: https://www.linkedin.com/in/edwinzchen/\n- 金额\n（万美元）: 100000\n\n... 还有 23 条记录\n\n",
+      "contentLength": 2952,
       "docType": "bitable",
       "searchKeywords": [
         "ai",
@@ -4545,12 +4609,14 @@
         "交易精选"
       ],
       "semanticTags": [
+        "svtr_platform",
         "investment_funding",
         "artificial_intelligence",
+        "market_analysis",
         "company_database",
         "member_services"
       ],
-      "ragScore": 80.81
+      "ragScore": 81.57
     },
     {
       "id": "node_V2JnwfmvtiBUTdkc32rcQrXWn4g",
@@ -4561,7 +4627,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "V2JnwfmvtiBUTdkc32rcQrXWn4g",
         "objToken": "KzDUsnIlNhYMBQtQWgTcoQwQn1e",
@@ -4601,7 +4667,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "MrnbwIzySiJNiDkPdM0csElXnE4",
         "objToken": "HRuBdh9dZouaRjxOUkpcCMzJnl0",
@@ -4645,7 +4711,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "ErjSwcOOkiDomjkM5lscDe0tnhc",
         "objToken": "SPXwduQQIo4dH5xEj98cMOYynTd",
@@ -4687,7 +4753,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "ZVIRw9ZSnirpv3kmRLWc6kOVn7b",
         "objToken": "GSsMsFfQ4lKfG1dJ7LIcIBCmnnb",
@@ -4717,7 +4783,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "I4gjwsKhNil4LEkKQSYcyJsVn9g",
         "objToken": "LqgGdbqFOo4zEax05ZrcboBQn1b",
@@ -4750,7 +4816,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "DI9Hw8v8tiZF2Xk13KDcDI8Bn1b",
         "objToken": "Y8vpdFRzooS0jfx95Zkcb0FJn6c",
@@ -4789,7 +4855,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "BxOLwsEciiMkBMkJj7Hc6vqCn1c",
         "objToken": "LeWBsMjWNhh8BttcpalclTKOn0g",
@@ -4831,7 +4897,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "LvTbwkBLIidV8ckRRVKccg5Enze",
         "objToken": "KaMjsqHMnh5MkIth1DOc33X0nbd",
@@ -4873,7 +4939,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "ILRbwZA87iK2QRkNUIPc5A02nTh",
         "objToken": "GbmUdBjYpoZTrix2DRvci94Cnte",
@@ -4908,7 +4974,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "VZ7xwj1vZiYrJGkZxjcclZXtnAc",
         "objToken": "H4grdCCVOoU3O7xqVKGcLGHDn8w",
@@ -4941,7 +5007,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "JPZDwW7briB00ukxwSac1vTBnZd",
         "objToken": "GXK1dBGmgoTYcUx9ogwcmEbHntb",
@@ -4974,7 +5040,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "M2qvwzXYliY6f2kqKHkcnA8vnXg",
         "objToken": "EPlTdz6lpoq4j6xRc6jct6ABnIh",
@@ -5007,7 +5073,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "RU7twbh7fiHgk6k9pjBc5GsEnsh",
         "objToken": "OgoUdGF8zoRANEx8JsKcE2GonKd",
@@ -5040,7 +5106,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "HTemw2pxXiu29ck0PjjcKBoKnHe",
         "objToken": "DomWdQDpTocV9qx5GezcecXynM1",
@@ -5073,7 +5139,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "HJn7wIZhHi0sWSkL8pachTYEnSf",
         "objToken": "SWHIdKgvlo4x9vxn2mscR0RYn2d",
@@ -5106,7 +5172,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Q9pywUeaMifgd1kwJRpcQtAun3c",
         "objToken": "VmQ5d7ejToigJ3xgFvBcdP2cnjc",
@@ -5139,7 +5205,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Hi9RwqNPhiDQoZkdIBtcYprxnRb",
         "objToken": "BofddArcToH080xvEOZcjYHKnYg",
@@ -5172,7 +5238,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "GfdMwsPfMiw1JSkD0z0cqzuanMb",
         "objToken": "KDPPdjcEMoQnfJxdSldcWzNxnag",
@@ -5205,7 +5271,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "OhoawztoAiLQLakoIs3cQpZ3nKe",
         "objToken": "OU2BdCukPoP08Axm0yPcNW19n8d",
@@ -5238,7 +5304,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "VQ6cwWhAbi2mLckPbQ9cAEbKnJd",
         "objToken": "Ohf7dCe4Goi3eGxri7JcSpOCn6c",
@@ -5271,7 +5337,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "M1avwdeVIifOimk4boHcVqXCnag",
         "objToken": "DEvqdfxito31aSxm8SkcN7kpnRe",
@@ -5304,7 +5370,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "MqE5wDb0XinlPwkc5Igc5D2gnsg",
         "objToken": "ZpeldYjP6orUzZxii7icQLMWnsf",
@@ -5337,7 +5403,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "HnblwYDOgiEcHbk3YL6c9wTPnvb",
         "objToken": "Q45fdRJMdoMHuBxxWfRc4I82nhf",
@@ -5370,7 +5436,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Dm2twk7jkiw2xQkDs6sc8q0Lnzh",
         "objToken": "KMkMdcoPFo7UpjxK7wfc0C9Pnoe",
@@ -5403,7 +5469,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "OX9QwiIOoiw6XUkWOVicaAZTnab",
         "objToken": "CXybdB9pXoNxuxxUpBwckud7ndZ",
@@ -5436,7 +5502,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "CiPFwTQKQiJpbukEE1EcLGV2nQc",
         "objToken": "J2MndV8VsogLFPxUxZacbTILnxg",
@@ -5469,7 +5535,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "RnFrwGXqWi4kN2kHjm0cgqpLnQc",
         "objToken": "H0QQdKxUGohJIGxB7RjcEDPjnwc",
@@ -5502,7 +5568,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "HCh6wDwQTiCOsMkPQAgctbLwn04",
         "objToken": "Rgm6dQYxjoOpT4xzx00cOApDnpd",
@@ -5535,7 +5601,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "PTEvwQy4uiYbV7kAXVqcIUOenCh",
         "objToken": "Sa3jdS2mKo246KxlTA1coYj5nSh",
@@ -5568,7 +5634,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "BibXwtZCmipryukUMDtcqJtUnqg",
         "objToken": "S3oSdDcx9o2rU9xtSdDcq59in7e",
@@ -5603,7 +5669,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "BpXQw5zxYiVnBLkyHYDcfAernHd",
         "objToken": "D72Wdqtmlo8tZkxiIs7cFARxnIb",
@@ -5637,7 +5703,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "GiamwlL0EiWFx3kfxh7cJTG0n3g",
         "objToken": "TPEbdhXwDoYRDTxVKh4cnGO0nrg",
@@ -5670,7 +5736,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "OfGNwYm73i8eoxkcz73cAVFjntc",
         "objToken": "VwBrdb0tYoLLeaxPBEkc2VhGn1g",
@@ -5703,7 +5769,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "PrShwOdJvi9hjOkyBCicrCY7nqb",
         "objToken": "EqiYd5RYQoElFSxDYyScsl3qnYg",
@@ -5737,7 +5803,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "FeE4wE5kwi2BvlksekTcJvN6n1e",
         "objToken": "I8QcduMPXoeKI0xEJV4cJSznnkh",
@@ -5783,7 +5849,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "XD3JwKvdDikxfnkipwZcGmn0nVd",
         "objToken": "FSBmsRVfLl0mdUdzz9EceYAAntc",
@@ -5814,7 +5880,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "O72Tw0SQpikTihknz70c3gNTnag",
         "objToken": "UjrQdVosxorIE6x7hXRc4SdQnSe",
@@ -5857,7 +5923,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Z90cwHqu1iij1ZkJ8rsceSDJnbc",
         "objToken": "ECZPdx5uwoV3SMxhamkcDHDqnjg",
@@ -5890,7 +5956,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Q0BAwFT3JiDPELkp0YDcXnWfniv",
         "objToken": "DG1SdGpc4orZrixDTJscXm1MnQh",
@@ -5933,7 +5999,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "CBQNwWkZHiEHj7k9e1ScTo57nkg",
         "objToken": "KwbHdJaJdoPC9GxQQ72cjaavnGg",
@@ -5967,7 +6033,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "BKwFwMqR4iXIBok07dzcvuz7nLd",
         "objToken": "FF07dCnDloCsErxORzjcM8S8nSb",
@@ -5998,7 +6064,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "QPepw9H3PiTsdQkWIc9cw5GJnDb",
         "objToken": "LmCxdLqNGoMmVfx37dvcUGU3n7f",
@@ -6045,7 +6111,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "ZphSwEnq1iRMZWkYntQcr1dfnOe",
         "objToken": "KlPldr5pxobgTtxyMgEc416jn4g",
@@ -6094,7 +6160,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "C4pwwThPJiCLnakGn41cfb4annb",
         "objToken": "Ak8QdS9yio1iOWxtwOjcXcKInWf",
@@ -6143,7 +6209,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "ClvWwoD2siN1BskPXGZcrCjInFf",
         "objToken": "CzDbdIhdeo62Wdxc5jbcjQNjnyg",
@@ -6191,7 +6257,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "NjhwwNKCYizE1pk6EUBcfjBDnAd",
         "objToken": "Ji68d8icCoxo78xiElGcP5jTnud",
@@ -6234,7 +6300,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Yg2jwux3yik3hwkT1iWcxIePnOe",
         "objToken": "KfrSdYBVeogHeGxJZwQcL9Whnvd",
@@ -6274,7 +6340,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "NfRYwPmxJi4zrRksR5QchfBTnCg",
         "objToken": "MgERdc3ylo12raxyyfTcFsTwnlg",
@@ -6323,7 +6389,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "CIGYw6tGZi5H04k8PU1c2T0xnHa",
         "objToken": "OmApdkYjvoamYsxuiYEccuU7nfd",
@@ -6367,7 +6433,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "RTkTwZ89RiWU70k5bC6cCUB4neg",
         "objToken": "FZVYdOPAeoEIBHx4YRjc5Yubnih",
@@ -6415,7 +6481,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "K3ogwzifOi72DdkEaHqcJHKNnxf",
         "objToken": "XixUdOG3No0WI2xlod8cc6bTnxr",
@@ -6461,7 +6527,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "EIPlwWSMni4Uf5kvdmwclxcmnxl",
         "objToken": "JBAgddlB7oMTfTxSaMUc4KInnOR",
@@ -6490,7 +6556,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "IHwKw1bQkizrpwkOeLVcRuIwnsf",
         "objToken": "HPUHdjfH9oxSiFxcbjqcW1mmnRc",
@@ -6527,7 +6593,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "S0IKwH8ypiNehakH8wyczqhZnsc",
         "objToken": "UBhUdcZgJoOJelx4UV6c8s9OnRc",
@@ -6566,7 +6632,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "XlWTw4ufoijht9k2lHDctOxKnJe",
         "objToken": "KD0GdjwVZowGTjxK1gYcAdnSnIc",
@@ -6616,7 +6682,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "FqSawINO9i7k2gkRhSvciWi2nCe",
         "objToken": "Qq3mdtSefoueGSx1qYScQ85CnPd",
@@ -6665,7 +6731,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "FbV8wPf7ri8RbpkMtqwcM2ldnVd",
         "objToken": "ZnnsdcItnotAumxsE9Ocfyv8nzb",
@@ -6711,7 +6777,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "AmCNwcG41iiw6ekElSscgNmPnbc",
         "objToken": "JoqTdaFl5omU9DxeUE6c3CCPntR",
@@ -6759,7 +6825,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "WP4Xwt1QkiknNCkFdrNcCR5SnXf",
         "objToken": "RSMJdjxqAofn2FxbDKacvQUvnad",
@@ -6807,7 +6873,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "MjlCwCsoHiCrrYkvS4bc3u4InDf",
         "objToken": "DJ4sdT8yOovJL7xNM6BccT3Enng",
@@ -6835,7 +6901,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "UV53w0AvViJyxVk8DamcfT6AnUf",
         "objToken": "IZgudZ5OWoZIk6xkfWkctvT9nFg",
@@ -6879,7 +6945,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "DwHKwg7DGiNq6Bk2QH3cf8ojn7c",
         "objToken": "Lh99dUCJAoxmtAxrbVvcM2s7n0c",
@@ -6930,7 +6996,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Ijepw82ntiW3L6k0BHYcKnrOn2b",
         "objToken": "ID8MdfykdoMauRxZq5IcYW2knge",
@@ -6965,7 +7031,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "RfSqwJlyeiyqyZkvSZscPjxLn2d",
         "objToken": "RCeed34nko3DMzx8GftcZ8VMnQe",
@@ -6996,7 +7062,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "UfnMwrNVCi9xMxkWv0bcFaFqntc",
         "objToken": "EeULddU5noEaK4x2hP7cs9txnLh",
@@ -7042,7 +7108,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "IHyvwuN8UiJcWGkiXYocUnBMntg",
         "objToken": "JdUqdRWtooevdyxQ49bcfBXrnXe",
@@ -7075,7 +7141,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "ZbjwwVpLnirjlLkku0QcGFOln2g",
         "objToken": "Xs6YdUSQGoxjrDx7pYkcu67an5f",
@@ -7114,7 +7180,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "MErLwJbfDiHmAJkeCWZcY011nWh",
         "objToken": "YXABdrNSUo0mLHxFOQwcV9YGnee",
@@ -7143,7 +7209,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "VManwjtlQixUJfkJPqXcxqZ9n3g",
         "objToken": "WlnFdFrScotG4dxp4P7cwjgGnah",
@@ -7176,7 +7242,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "ON4xwcnSviIZ8ukV640cL0C4nGf",
         "objToken": "AjlBdHBj5or10JxpXIhcJcmtnFg",
@@ -7222,7 +7288,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "QH9gwH9qTiRTDskerzwcqiNfnRc",
         "objToken": "MLgmdontrozfmbxcuKzcJFSFnPd",
@@ -7261,7 +7327,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "JWfHwo9qiiMfYpkVGcWcDq7mnYc",
         "objToken": "TLmedTnkLowrbNxBkTHcyE1cnwe",
@@ -7300,7 +7366,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "YX4Yw3oi4icRTikAEqvcqrwJnyb",
         "objToken": "IcYjdlOjZocr4Ex1yzNcsqqXnfd",
@@ -7344,7 +7410,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "OGuvwIMD2icJ5jkpw4Vcw2K5ntd",
         "objToken": "XaFXdlPyEooC7xxF68fcKIHynhh",
@@ -7388,7 +7454,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "VMG3w1uT5iqHKVkCeBKcQyd3nad",
         "objToken": "ZcyEdTK6DokxbLxSeyWcw3ZFnOg",
@@ -7429,7 +7495,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "IYKNwFYReiFL12kBmITcgQEhngw",
         "objToken": "I9r2dQbSLofCYKxQZFUcLnjOnNo",
@@ -7472,7 +7538,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "FDw6wAlHLiSmKekXWUacUZgznbb",
         "objToken": "HU3ydfyQroJXK1xwTuMcDvS8ng1",
@@ -7510,7 +7576,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "LYS0w2nb6iB1b3kdyQqcBzXhnKe",
         "objToken": "M8agdcxYqo6EZ2xdkvBcR2t1nRd",
@@ -7550,7 +7616,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "RLKEwtsvLiYfG1khB6cciILlnyc",
         "objToken": "Wx47dMNCQoo9GDxKM60cAySjn3e",
@@ -7595,7 +7661,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "L0LWwvHvNiLBj2kD01Zcbzirnpd",
         "objToken": "BZHMdcdSLorNJ7xSng3cGdrzn0c",
@@ -7636,7 +7702,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "BwYUwNMani5Z9mk0MV4c2Pz4nag",
         "objToken": "MAOxdcRHpo0qruxiYy3ciFK4nQf",
@@ -7682,7 +7748,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "PwC0wXec5itDwKkUhjrcdnzln7b",
         "objToken": "EekKdBxJuo6EH6xb5jbcrQ7SnIf",
@@ -7727,7 +7793,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "KAWHwiwnsiEEdXkK7EYcLkP3nef",
         "objToken": "OeDpdb5dQoRSzYxxE8Lc1byUn0g",
@@ -7775,7 +7841,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "G9K1wPoEtiMhHekUStQceFEvnSg",
         "objToken": "CfdidX0a2o1UAaxerzBcKWWWnah",
@@ -7817,7 +7883,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Ee1wwDTfwipwZCkIVwqcYCNLnLe",
         "objToken": "DlrzdF55DoRdklxxC18cN3dxnrc",
@@ -7858,7 +7924,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "LVJSwydEOieKFzktDUacKUbcnFd",
         "objToken": "JLWFdSdktovxnyxfl01c8NP9nXc",
@@ -7897,7 +7963,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "RHVxwVyciiqtHKk9qI2cAUDTn0e",
         "objToken": "VN9JdOw0qoa8s8xaKlLc7GhSnFf",
@@ -7937,7 +8003,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "QQjfwFQG4ir7emkwkvlcHHM2njg",
         "objToken": "YqFZdG6QFoP6lixtPrbcSJ2unyc",
@@ -7978,7 +8044,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Sn5SwxaoGijOaoko5Yxcl3Iinfh",
         "objToken": "RX7odCwIYo0mo1xZJiqc8o0EnNb",
@@ -8023,7 +8089,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Jlssw4bkJiIWRRkJT7KcNyjcn3c",
         "objToken": "IO4ssH7JKhPo3VtecencuiYpnHh",
@@ -8063,7 +8129,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "K5Saw55GHisYiIkkViwc9xYknmc",
         "objToken": "TY4ks5bMchRMAUtE1vMcmXjKnKg",
@@ -8103,7 +8169,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "JPqAwMn2Ri6F02kqIp5ci7JqnZb",
         "objToken": "Gc0HbgSQXoJIMVxgJ01c1QsynBb",
@@ -8130,7 +8196,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "CS7Jwo361iNpqYkQLHQcFd7FnNh",
         "objToken": "LpBGd3xjfoKNynxsxracSKHinDb",
@@ -8175,7 +8241,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "H2T1weKwpi229kkmzVeczqdrnge",
         "objToken": "DDe8duwjEo2nsLxYV26cQA9dnlh",
@@ -8221,7 +8287,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "HCTDw1JR0i4Uz2kGyEicG58ynsh",
         "objToken": "PHrudr9dCo7y5dxmd4Pcjg8knYk",
@@ -8259,7 +8325,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "ASsBwEBmqiIjIBkOiDTcqIMpnHf",
         "objToken": "QjfjdwNico3ij7xrstGcknQanE0",
@@ -8292,7 +8358,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "AiPqwfvn8ix6MDkTCx5cibpBn0b",
         "objToken": "RhFOdQtDFo2XGmxvJhrcVIKEnhb",
@@ -8332,7 +8398,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "G8ttwGJegiRfpBkm93OcQSxrnbe",
         "objToken": "Kz39d2ecno6XJRxxHEfchKfTncg",
@@ -8372,7 +8438,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "FXG7wRk90i00ZgkoJt2cuKgTnfJ",
         "objToken": "KY1Zdmzewo3f5Cx7bUNc3QYcn7A",
@@ -8400,7 +8466,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "EjsfwJINbiTZLlkk5iFcHLFqnOg",
         "objToken": "GtVRdrzhCoTl6txQZvIcsnctndc",
@@ -8444,7 +8510,7 @@
       "level": 5,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "RievwTYt4i6VbCkRxOtcPM4Mndf",
         "objToken": "T35Zdsglno6VGLx4snocDwn4nyh",
@@ -8472,7 +8538,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "DNmfwXHoqiQQEYkRKdscoKWunue",
         "objToken": "RRa4dqCZAomug1xn1ZfcTgoTnWg",
@@ -8515,7 +8581,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "I9SkwEEc2iVokxkbDrscLOkznqd",
         "objToken": "KwCQdjxLio662Txvn0lcWTJ6nHK",
@@ -8547,7 +8613,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "MlsJwCZ25ioroKkWG2Yc3h3nndg",
         "objToken": "JfgqbMPWhakeNpsvP6wcjHIcnml",
@@ -8583,7 +8649,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "KvTYwGl7BiNT2ckemnacIvKinKc",
         "objToken": "VgI3daqC1oLjYnx0iQGciw7hn5b",
@@ -8624,7 +8690,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "C8Wkwa8HiiNQrqkyhaacWZlYnKf",
         "objToken": "MAscd0sUloUXLyxKFEccf1Lwnkg",
@@ -8666,7 +8732,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "O96GwwfmiiuBeukSekecGVp7nLb",
         "objToken": "MtOBdN5H5o1OQvxnaW6cpQUQnWb",
@@ -8702,7 +8768,7 @@
       "level": 5,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "D5ApwsGgfiRGhckfsU2cCoI6nEb",
         "objToken": "DRtddg1ajoIt7ZxKb9rcT6yHn2c",
@@ -8743,7 +8809,7 @@
       "level": 5,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "LQA7w3Ykfi6JVJkM5gsc54PxnAc",
         "objToken": "HvqidAOyaoZuuIxtUcmcJWCjnGh",
@@ -8784,7 +8850,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "FGKPwLYtHinUxlkb9VmcQhMVni0",
         "objToken": "VC4JdG4OAoOdjwxuuSVc6azanYe",
@@ -8815,7 +8881,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "DP4wwygTvitaKrkexvsczc8Unwc",
         "objToken": "PtH1dr2elotDepxvIHvc2GqjnPc",
@@ -8846,7 +8912,7 @@
       "level": 5,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "PNWuwSt4ri1Q7qkxHYkcLRefnhg",
         "objToken": "TPd7dkCdEoXYLLxstxMcVZfJnth",
@@ -8894,7 +8960,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "KqB8wo9EUiyFujkUAOkc8sI8nZ7",
         "objToken": "UbbtdujfGosqwTxy2E8cRTV4nlc",
@@ -8925,7 +8991,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Dy8DwYzYVidFQWkDibQcQhi8nzd",
         "objToken": "GSGMd0NZZoZ1wFxduEkcxOmQnjg",
@@ -8968,7 +9034,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "PSuaw7MteiHEvtkBMSTcKbYJnzd",
         "objToken": "OJtadDDrLoKXEVxQRQvcMSRSn5g",
@@ -9010,7 +9076,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "CXdFwSJ5pimZ3QkvdAHcqK9snSc",
         "objToken": "YqALdOjecoqe0xxAlJScGv7wn2l",
@@ -9042,7 +9108,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "CwA1wC1builCSCkL31cc3vF5nnf",
         "objToken": "ZBB5dk9iKo3JQbxh8zMcJE60nHd",
@@ -9077,7 +9143,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "BZVBwQOP3iU6ZPkat6PczvwfnAd",
         "objToken": "SewUdGKPXoceKyxFQ6AcYzlUnn1",
@@ -9123,7 +9189,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "C81bw8VzTiduZxklDVEc7xC8ngb",
         "objToken": "GoaxdzH7Ho9X2Oxw1H8cuM0Anbd",
@@ -9160,7 +9226,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "KuouwnejyiX2irkUgVTc9VxFnEd",
         "objToken": "CIBZdoaBDoF7lTxb5G1cvFaZnqe",
@@ -9190,7 +9256,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Pji0wcmEaiL4sSk4KQYcDM7unnd",
         "objToken": "RNDUdgLVOoZZZBxbLHucbzIcnih",
@@ -9233,7 +9299,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "WatPwHzCWinjXVkb5SrcF4Runge",
         "objToken": "MIlxdNawZojTigxvQC2c1uiFnhb",
@@ -9271,7 +9337,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Jd9nwa9g3i7yCVkaPYPcO0hYnxc",
         "objToken": "V0y4dvP6To8uI7xgZuTc0unwnEd",
@@ -9303,7 +9369,7 @@
       "level": 5,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "IeoNwTHrRicFGUkiHArc5G6JnDg",
         "objToken": "CGhAdMeB5opnPOx9BI2cKNSmnlI",
@@ -9340,7 +9406,7 @@
       "level": 5,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "YOcQwYZq7i09nRkjSUdcOC1Nnse",
         "objToken": "XUOkd2YJsorY6xxmFhPc1hlfnaf",
@@ -9376,7 +9442,7 @@
       "level": 5,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "YYeVwLKF6iHlBukclEKcXSRNnHd",
         "objToken": "FqJddvudnodN7lxoxkRcXofqn6d",
@@ -9410,7 +9476,7 @@
       "level": 5,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "SOlWw8JlPiaFJjkfxROcqANEn7f",
         "objToken": "F3RNd2rTPoEDUPxZwTVc6RNpn9d",
@@ -9449,7 +9515,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Ac3HwsjWlimaPgkNRwEcJYfDn1c",
         "objToken": "RwaXdLNjJosCknxkQzgcqagKnre",
@@ -9492,7 +9558,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "I2LPwkS0ti4chekdpACcuuA6nzc",
         "objToken": "UkBXdilA0o3Fh8xLx4RcHV16n8e",
@@ -9539,7 +9605,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "ZPjNwvR4Gi01qokXm4tcLYjRnGh",
         "objToken": "NE3ddQAUloYcv1x40hscx8Lrn1e",
@@ -9579,7 +9645,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "WbxFweBOFiAxWik6lpFcCuGHnYe",
         "objToken": "LO4WdrIFLoR1k9xdDRxcSXF1n3d",
@@ -9623,7 +9689,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "N2MIwXwClitUy4k1JtvcYqfjnoe",
         "objToken": "QL9kd6GrdoeH1nxQoldcy4W9nGc",
@@ -9662,7 +9728,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "CcJ4wIAtuiipCgkrYD2cWbOOnhg",
         "objToken": "MCAodAfXaouvAix7W9rcgQRmnEg",
@@ -9697,7 +9763,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "Y3QEwX18ximgj8karwjc62DZnAc",
         "objToken": "IZfSdbwjEoIVmvxOHzNcavJSnJd",
@@ -9737,7 +9803,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "U06rwX7Z9idQfUkJaAEc4aBhnQe",
         "objToken": "XfAlsGhpxhLEv5tcIiRcXYV2nih",
@@ -9777,7 +9843,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "TSPcwb6udi7Qh9kYhFgcpvN7nrd",
         "objToken": "PfZUdS9KAoW18sxFFVvcHwRmnid",
@@ -9817,7 +9883,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "J3v0wuQyZicsIfkki94cSAC0njf",
         "objToken": "AuYZdvML1o546MxtWc8cWWV2nzf",
@@ -9856,7 +9922,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "KhNfwDN8piN2GWkJygtcRfVlnag",
         "objToken": "C7zxd8OCgo4R4HxUET4cg6y1nih",
@@ -9902,7 +9968,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "KuaIwYPGIikNIEkM47DcAtp6ndd",
         "objToken": "YtfNduHsBoUgF3xkjzCcl4Z2nbe",
@@ -9944,7 +10010,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "MSIUwt9b1ivbsGkwbbGcYfyFn9Z",
         "objToken": "HGPydaDTAoaL5MxYYhsc5ne5nnd",
@@ -9989,7 +10055,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-08-18",
+      "lastUpdated": "2025-08-20",
       "metadata": {
         "nodeToken": "O98vwU29si7v7Sk3UtgceAZpnTj",
         "objToken": "DFnidXsnhonKrbxwl1JczlYqnJb",
