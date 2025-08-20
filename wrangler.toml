@@ -54,6 +54,18 @@ id = "6c8056d110964334af5e44e875fad54e"
 [[kv_namespaces]]
 binding = "SVTR_SESSIONS"
 id = "070deb624f41469f9cf7d8dde603f8b9"
+
+# OAuth 认证环境变量
+[vars]
+APP_URL = "https://auth.svtr.ai"
+ALLOWED_RETURN_TO = "https://svtr.ai,https://svtrglobal.com,https://svtrai.com,http://localhost:3000"
+GOOGLE_CLIENT_ID = "369633995349-7apl7m77mpeo4231b1kl2v3nonqi60ga.apps.googleusercontent.com"
+GITHUB_CLIENT_ID = "Ov23liTtfl1NQmZtq2em"
+
+# OAuth 密钥通过wrangler secrets设置
+# wrangler secret put GOOGLE_CLIENT_SECRET
+# wrangler secret put GITHUB_CLIENT_SECRET
+
 [[headers]]
 for = "*.avif"
 [headers.values]

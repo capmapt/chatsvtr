@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>认证系统测试页面</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        .btn { padding: 10px 20px; margin: 10px 0; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-danger { background: #dc3545; color: white; }
+        .result { margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 4px; }
+        input { padding: 8px; margin: 5px 0; width: 200px; border: 1px solid #ddd; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>🧪 SVTR 认证系统测试</h1>
+    
+    <!-- 邮箱验证码测试 -->
+    <div class="test-section">
+        <h3>📧 邮箱验证码测试</h3>
+        <input type="email" id="email1" placeholder="输入邮箱地址" value="test@svtr.ai">
+        <button class="btn btn-primary" onclick="sendCode()">发送验证码</button>
+        <br>
+        <input type="text" id="code" placeholder="输入6位验证码" maxlength="6">
+        <button class="btn btn-success" onclick="verifyCode()">验证登录</button>
+        <div class="result" id="result1"></div>
+    </div>
+    
+    <!-- Magic Link测试 -->
+    <div class="test-section">
+        <h3>🔗 Magic Link测试</h3>
+        <input type="email" id="email2" placeholder="输入邮箱地址" value="test2@svtr.ai">
+        <button class="btn btn-primary" onclick="sendMagicLink()">发送Magic Link</button>
+        <div class="result" id="result2"></div>
+    </div>
+    
+    <!-- OAuth测试 -->
+    <div class="test-section">
+        <h3>🔐 OAuth测试</h3>
+        <button class="btn btn-danger" onclick="testGoogleAuth()">Google OAuth</button>
+        <button class="btn" onclick="testGitHubAuth()" style="background: #24292e; color: white;">GitHub OAuth</button>
+        <div class="result" id="result3"></div>
+    </div>
+    
+    <script>
+        // 邮箱验证码功能
+        async function sendCode() {
+            const email = document.getElementById('email1').value;
+            const result = document.getElementById('result1');
+            
+            if (!email) {
+                result.innerHTML = '❌ 请输入邮箱地址';
+                return;
+            }
+            
+            try {
+                result.innerHTML = '⏳ 发送中...';
+                const response = await fetch('/api/auth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'send_code',
+                        email: email
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.innerHTML = `✅ ${data.message}`;
+                } else {
+                    result.innerHTML = `❌ ${data.message}`;
+                }
+            } catch (error) {
+                result.innerHTML = `❌ 请求失败: ${error.message}`;
+            }
+        }
+        
+        async function verifyCode() {
+            const email = document.getElementById('email1').value;
+            const code = document.getElementById('code').value;
+            const result = document.getElementById('result1');
+            
+            if (!email || !code) {
+                result.innerHTML = '❌ 请输入邮箱和验证码';
+                return;
+            }
+            
+            try {
+                result.innerHTML = '⏳ 验证中...';
+                const response = await fetch('/api/auth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'verify_code',
+                        email: email,
+                        code: code
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.innerHTML = `✅ ${data.message}<br>
+                        <strong>用户信息:</strong><br>
+                        ID: ${data.data.user.id}<br>
+                        邮箱: ${data.data.user.email}<br>
+                        姓名: ${data.data.user.name}<br>
+                        头像: <img src="${data.data.user.avatar}" width="32" height="32"><br>
+                        Token: ${data.data.token}`;
+                    
+                    // 保存到localStorage
+                    localStorage.setItem('svtr_user', JSON.stringify(data.data.user));
+                    localStorage.setItem('svtr_token', data.data.token);
+                } else {
+                    result.innerHTML = `❌ ${data.message}`;
+                }
+            } catch (error) {
+                result.innerHTML = `❌ 验证失败: ${error.message}`;
+            }
+        }
+        
+        // Magic Link功能
+        async function sendMagicLink() {
+            const email = document.getElementById('email2').value;
+            const result = document.getElementById('result2');
+            
+            if (!email) {
+                result.innerHTML = '❌ 请输入邮箱地址';
+                return;
+            }
+            
+            try {
+                result.innerHTML = '⏳ 发送中...';
+                const response = await fetch('/api/auth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'send_magic_link',
+                        email: email
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.innerHTML = `✅ ${data.message}`;
+                } else {
+                    result.innerHTML = `❌ ${data.message}`;
+                }
+            } catch (error) {
+                result.innerHTML = `❌ 请求失败: ${error.message}`;
+            }
+        }
+        
+        // OAuth功能
+        function testGoogleAuth() {
+            const result = document.getElementById('result3');
+            result.innerHTML = '⏳ 重定向到Google授权页面...';
+            window.open('/api/auth/google', '_self');
+        }
+        
+        function testGitHubAuth() {
+            const result = document.getElementById('result3');
+            result.innerHTML = '⏳ 重定向到GitHub授权页面...';
+            window.open('/api/auth/github', '_self');
+        }
+        
+        // 检查现有登录状态
+        window.addEventListener('load', () => {
+            const user = localStorage.getItem('svtr_user');
+            const token = localStorage.getItem('svtr_token');
+            
+            if (user && token) {
+                const userData = JSON.parse(user);
+                document.body.insertAdjacentHTML('afterbegin', `
+                    <div style="background: #d4edda; padding: 15px; margin-bottom: 20px; border-radius: 8px; border: 1px solid #c3e6cb;">
+                        <h3>✅ 已登录用户信息</h3>
+                        <p><strong>姓名:</strong> ${userData.name}</p>
+                        <p><strong>邮箱:</strong> ${userData.email}</p>
+                        <p><strong>ID:</strong> ${userData.id}</p>
+                        <p><strong>头像:</strong> <img src="${userData.avatar}" width="32" height="32"></p>
+                        <button class="btn btn-danger" onclick="logout()">退出登录</button>
+                    </div>
+                `);
+            }
+            
+            // 检查OAuth回调
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('auth_success') === 'true') {
+                const token = urlParams.get('token');
+                const userStr = urlParams.get('user');
+                
+                if (token && userStr) {
+                    try {
+                        const user = JSON.parse(decodeURIComponent(userStr));
+                        localStorage.setItem('svtr_user', JSON.stringify(user));
+                        localStorage.setItem('svtr_token', token);
+                        
+                        document.getElementById('result3').innerHTML = `✅ OAuth登录成功!<br>
+                            用户: ${user.name} (${user.email})`;
+                        
+                        // 清理URL参数
+                        window.history.replaceState({}, '', window.location.pathname);
+                        
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                    } catch (error) {
+                        document.getElementById('result3').innerHTML = `❌ OAuth数据解析失败: ${error.message}`;
+                    }
+                }
+            }
+            
+            if (urlParams.get('auth_error')) {
+                const error = urlParams.get('auth_error');
+                document.getElementById('result3').innerHTML = `❌ OAuth登录失败: ${error}`;
+            }
+        });
+        
+        function logout() {
+            localStorage.removeItem('svtr_user');
+            localStorage.removeItem('svtr_token');
+            location.reload();
+        }
+    </script>
+</body>
+</html>

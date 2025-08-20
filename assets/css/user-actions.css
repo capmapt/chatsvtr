@@ -317,9 +317,721 @@
   }
 }
 
+/* ===========================================
+   用户认证模态框样式
+   =========================================== */
+
+/* 模态框基础样式 */
+.user-action-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 480px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: hidden;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px 0;
+  border-bottom: 1px solid #f3f4f6;
+  margin-bottom: 24px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.modal-body {
+  padding: 0 24px 24px;
+  max-height: calc(90vh - 120px);
+  overflow-y: auto;
+}
+
+/* ===========================================
+   社交登录按钮样式
+   =========================================== */
+
+.social-login-section {
+  margin-bottom: 24px;
+}
+
+.social-login-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-oauth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  background: white;
+  color: #374151;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  height: 50px;
+}
+
+.btn-oauth:hover {
+  border-color: #d1d5db;
+  background: #f9fafb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-oauth:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-google:hover {
+  border-color: #EA4335;
+  background: #fef7f7;
+}
+
+.btn-github:hover {
+  border-color: #24292e;
+  background: #f6f8fa;
+}
+
+/* ===========================================
+   登录分割线样式
+   =========================================== */
+
+.login-divider {
+  display: flex;
+  align-items: center;
+  margin: 24px 0;
+  text-align: center;
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.login-divider span {
+  padding: 0 16px;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 500;
+  background: white;
+}
+
+/* ===========================================
+   邮箱登录区域样式
+   =========================================== */
+
+.email-login-section {
+  margin-bottom: 20px;
+}
+
+.login-method-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  background: #f3f4f6;
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.method-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.method-tab.active {
+  background: white;
+  color: #3b82f6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.method-tab:hover:not(.active) {
+  color: #374151;
+}
+
+.login-method-content {
+  display: none;
+}
+
+.login-method-content.active {
+  display: block;
+}
+
+/* 输入组样式 */
+.input-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.input-group input[type="email"] {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  background: #f9fafb;
+  transition: all 0.2s ease;
+}
+
+.input-group input[type="email"]:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.btn-send-code,
+.btn-send-magic {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  min-width: 100px;
+}
+
+.btn-send-code:hover,
+.btn-send-magic:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btn-send-code:disabled,
+.btn-send-magic:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* 验证码输入区域 */
+.verification-input {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.code-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 3px;
+  background: #f9fafb;
+  transition: all 0.2s ease;
+}
+
+.code-input:focus {
+  outline: none;
+  border-color: #10b981;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.btn-verify {
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  min-width: 100px;
+}
+
+.btn-verify:hover {
+  background: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Magic Link 成功状态 */
+.magic-link-sent {
+  text-align: center;
+  padding: 20px;
+}
+
+.success-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.success-icon {
+  font-size: 32px;
+}
+
+.success-message p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #10b981;
+}
+
+.success-message small {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+/* ===========================================
+   会员权益说明样式
+   =========================================== */
+
+.member-benefits {
+  background: linear-gradient(135deg, #fef3e2, #fde68a);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.member-benefits h4 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #92400e;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.member-benefits ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.member-benefits li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 13px;
+  color: #b45309;
+  font-weight: 500;
+}
+
+/* ===========================================
+   Toast 消息样式
+   =========================================== */
+
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  z-index: 10001;
+  opacity: 0;
+  transform: translateX(100px);
+  transition: all 0.3s ease;
+  max-width: 320px;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.toast-success {
+  background: #10b981;
+  color: white;
+}
+
+.toast-error {
+  background: #ef4444;
+  color: white;
+}
+
+.toast-info {
+  background: #3b82f6;
+  color: white;
+}
+
+/* ===========================================
+   响应式设计 - 移动端适配
+   =========================================== */
+
+@media (max-width: 768px) {
+  .modal-content {
+    max-width: 95%;
+    margin: 20px;
+  }
+  
+  .modal-header,
+  .modal-body {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  .modal-header h3 {
+    font-size: 18px;
+  }
+  
+  .btn-oauth {
+    height: 46px;
+    font-size: 13px;
+    padding: 12px 16px;
+  }
+  
+  .social-login-buttons {
+    gap: 10px;
+  }
+  
+  .input-group {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .btn-send-code,
+  .btn-send-magic,
+  .btn-verify {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .verification-input {
+    flex-direction: column;
+  }
+  
+  .member-benefits {
+    padding: 16px;
+    margin-top: 16px;
+  }
+  
+  .toast {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content {
+    border-radius: 12px;
+  }
+  
+  .modal-header,
+  .modal-body {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  .modal-header {
+    padding-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .modal-body {
+    padding-bottom: 20px;
+  }
+  
+  .btn-oauth {
+    height: 42px;
+    font-size: 12px;
+    gap: 8px;
+  }
+  
+  .login-divider {
+    margin: 20px 0;
+  }
+  
+  .method-tab {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+  
+  .input-group input[type="email"],
+  .code-input {
+    font-size: 16px; /* 防止iOS缩放 */
+  }
+  
+  .member-benefits {
+    padding: 14px;
+  }
+  
+  .member-benefits h4 {
+    font-size: 15px;
+  }
+  
+  .member-benefits li {
+    font-size: 12px;
+  }
+}
+
+/* ===========================================
+   暗色模式支持
+   =========================================== */
+
+@media (prefers-color-scheme: dark) {
+  .modal-content {
+    background: #1f2937;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  }
+  
+  .modal-header {
+    border-color: #374151;
+  }
+  
+  .modal-header h3 {
+    color: #f9fafb;
+  }
+  
+  .modal-close {
+    color: #9ca3af;
+  }
+  
+  .modal-close:hover {
+    background: #374151;
+    color: #f3f4f6;
+  }
+  
+  .btn-oauth {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+  
+  .btn-oauth:hover {
+    background: #4b5563;
+    border-color: #6b7280;
+  }
+  
+  .login-divider::before,
+  .login-divider::after {
+    background: #4b5563;
+  }
+  
+  .login-divider span {
+    background: #1f2937;
+    color: #9ca3af;
+  }
+  
+  .login-method-tabs {
+    background: #374151;
+  }
+  
+  .method-tab {
+    color: #9ca3af;
+  }
+  
+  .method-tab.active {
+    background: #4b5563;
+    color: #60a5fa;
+  }
+  
+  .input-group input[type="email"],
+  .code-input {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+  
+  .input-group input[type="email"]:focus,
+  .code-input:focus {
+    background: #4b5563;
+    border-color: #3b82f6;
+  }
+  
+  .member-benefits {
+    background: linear-gradient(135deg, #451a03, #78350f);
+  }
+  
+  .member-benefits h4 {
+    color: #fbbf24;
+  }
+  
+  .member-benefits li {
+    color: #f59e0b;
+  }
+}
+
+/* ===========================================
+   动画效果
+   =========================================== */
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* 加载状态按钮动画 */
+.btn-send-code.loading,
+.btn-send-magic.loading,
+.btn-verify.loading {
+  position: relative;
+  color: transparent;
+}
+
+.btn-send-code.loading::after,
+.btn-send-magic.loading::after,
+.btn-verify.loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* ===========================================
+   可访问性增强
+   =========================================== */
+
+.btn-oauth:focus-visible,
+.btn-send-code:focus-visible,
+.btn-send-magic:focus-visible,
+.btn-verify:focus-visible,
+.method-tab:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.input-group input[type="email"]:focus-visible,
+.code-input:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* 减少动画效果（用户偏好） */
+@media (prefers-reduced-motion: reduce) {
+  .user-action-modal,
+  .modal-content,
+  .btn-oauth,
+  .btn-send-code,
+  .btn-send-magic,
+  .btn-verify,
+  .toast {
+    animation: none;
+    transition: none;
+  }
+  
+  .btn-oauth:hover,
+  .btn-send-code:hover,
+  .btn-send-magic:hover,
+  .btn-verify:hover {
+    transform: none;
+  }
+}
+
 /* 打印样式 */
 @media print {
-  .user-actions {
+  .user-actions,
+  .user-action-modal,
+  .toast {
     display: none;
   }
 }
