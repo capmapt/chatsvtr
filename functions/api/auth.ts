@@ -1,7 +1,36 @@
 /**
  * SVTR 用户认证API端点
  * 支持邮箱验证码、Magic Link、OAuth登录
+ * 多域名支持: svtr.ai, svtrai.com, svtr.cn, svtrglobal.com
  */
+
+// 多域名CORS配置
+function getCorsHeaders(request: Request): Record<string, string> {
+  const origin = request.headers.get('Origin') || '';
+  
+  // 允许的域名列表
+  const allowedOrigins = [
+    'https://svtr.ai',
+    'https://svtrai.com',
+    'https://svtr.cn', 
+    'https://svtrglobal.com',
+    'http://localhost:3000'
+  ];
+  
+  // 检查请求来源是否在允许列表中
+  const allowedOrigin = allowedOrigins.find(allowed => 
+    origin.startsWith(allowed)
+  );
+  
+  return {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': allowedOrigin || '*',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Access-Control-Allow-Credentials': 'true',
+    'Access-Control-Max-Age': '86400'
+  };
+}
 
 interface User {
   id: string;
@@ -460,15 +489,11 @@ export async function onRequestGet(context: any): Promise<Response> {
   }
 }
 
-// 处理OPTIONS请求 - CORS
-export async function onRequestOptions(): Promise<Response> {
+// 处理OPTIONS请求 - CORS with multi-domain support
+export async function onRequestOptions(context: any): Promise<Response> {
+  const { request } = context;
   return new Response(null, {
     status: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      'Access-Control-Max-Age': '86400',
-    }
+    headers: getCorsHeaders(request)
   });
 }

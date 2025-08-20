@@ -83,6 +83,31 @@ async function createUserSession(env: any, user: any): Promise<string> {
   return sessionToken;
 }
 
+// 获取当前域名
+function getCurrentDomain(request: Request, env: any): string {
+  const requestUrl = new URL(request.url);
+  const hostname = requestUrl.hostname;
+  
+  // 支持的域名列表
+  const allowedDomains = [
+    'svtr.ai',
+    'svtrai.com', 
+    'svtr.cn',
+    'svtrglobal.com',
+    'localhost:3000'
+  ];
+  
+  // 检查当前域名是否在允许列表中
+  for (const domain of allowedDomains) {
+    if (hostname.includes(domain.split(':')[0])) {
+      return requestUrl.protocol + '//' + requestUrl.host;
+    }
+  }
+  
+  // 默认返回配置的主域名
+  return env.APP_URL || 'https://svtr.ai';
+}
+
 // 处理GET请求 - 发起OAuth流程和处理回调
 export async function onRequestGet(context: any): Promise<Response> {
   try {
@@ -92,12 +117,14 @@ export async function onRequestGet(context: any): Promise<Response> {
     const error = url.searchParams.get('error');
     const state = url.searchParams.get('state');
     
-    console.log('Google OAuth请求:', { code: !!code, error, state });
+    // 获取当前访问的域名
+    const currentDomain = getCurrentDomain(request, env);
+    console.log('Google OAuth请求:', { code: !!code, error, state, domain: currentDomain });
     
     // 检查是否有错误
     if (error) {
       console.error('Google OAuth错误:', error);
-      return Response.redirect(`${env.APP_URL || 'http://localhost:3000'}?auth_error=${encodeURIComponent(error)}`);
+      return Response.redirect(`${currentDomain}?auth_error=${encodeURIComponent(error)}`);
     }
     
     // 如果有授权码，处理回调
@@ -114,14 +141,14 @@ export async function onRequestGet(context: any): Promise<Response> {
             client_secret: env.GOOGLE_CLIENT_SECRET,
             code,
             grant_type: 'authorization_code',
-            redirect_uri: `${env.APP_URL || 'http://localhost:3000'}/api/auth/google`
+            redirect_uri: `${currentDomain}/api/auth/google`
           })
         });
         
         if (!tokenResponse.ok) {
           const errorText = await tokenResponse.text();
           console.error('Google token exchange失败:', errorText);
-          return Response.redirect(`${env.APP_URL || 'http://localhost:3000'}?auth_error=token_exchange_failed`);
+          return Response.redirect(`${currentDomain}?auth_error=token_exchange_failed`);
         }
         
         const tokens: GoogleTokenResponse = await tokenResponse.json();
@@ -137,7 +164,7 @@ export async function onRequestGet(context: any): Promise<Response> {
         if (!userResponse.ok) {
           const errorText = await userResponse.text();
           console.error('Google用户信息获取失败:', errorText);
-          return Response.redirect(`${env.APP_URL || 'http://localhost:3000'}?auth_error=user_info_failed`);
+          return Response.redirect(`${currentDomain}?auth_error=user_info_failed`);
         }
         
         const googleUser: GoogleUserInfo = await userResponse.json();
@@ -150,7 +177,7 @@ export async function onRequestGet(context: any): Promise<Response> {
         const sessionToken = await createUserSession(env, user);
         
         // 步骤5: 重定向到前端，携带会话token
-        const redirectUrl = new URL(env.APP_URL || 'http://localhost:3000');
+        const redirectUrl = new URL(currentDomain);
         redirectUrl.searchParams.set('auth_success', 'true');
         redirectUrl.searchParams.set('token', sessionToken);
         redirectUrl.searchParams.set('user', JSON.stringify({
@@ -164,19 +191,19 @@ export async function onRequestGet(context: any): Promise<Response> {
         
       } catch (error) {
         console.error('Google OAuth回调处理失败:', error);
-        return Response.redirect(`${env.APP_URL || 'http://localhost:3000'}?auth_error=callback_failed`);
+        return Response.redirect(`${currentDomain}?auth_error=callback_failed`);
       }
     }
     
     // 如果没有授权码，发起OAuth流程
     const authUrl = new URL('https://accounts.google.com/oauth2/v2/auth');
     authUrl.searchParams.set('client_id', env.GOOGLE_CLIENT_ID);
-    authUrl.searchParams.set('redirect_uri', `${env.APP_URL || 'http://localhost:3000'}/api/auth/google`);
+    authUrl.searchParams.set('redirect_uri', `${currentDomain}/api/auth/google`);
     authUrl.searchParams.set('response_type', 'code');
     authUrl.searchParams.set('scope', 'openid email profile');
     authUrl.searchParams.set('state', crypto.randomUUID()); // CSRF protection
     
-    console.log('重定向到Google授权页面');
+    console.log('重定向到Google授权页面, redirect_uri:', `${currentDomain}/api/auth/google`);
     return Response.redirect(authUrl.toString());
     
   } catch (error) {

@@ -126,6 +126,31 @@ async function createUserSession(env: any, user: any): Promise<string> {
   return sessionToken;
 }
 
+// 获取当前域名
+function getCurrentDomain(request: Request, env: any): string {
+  const requestUrl = new URL(request.url);
+  const hostname = requestUrl.hostname;
+  
+  // 支持的域名列表
+  const allowedDomains = [
+    'svtr.ai',
+    'svtrai.com', 
+    'svtr.cn',
+    'svtrglobal.com',
+    'localhost:3000'
+  ];
+  
+  // 检查当前域名是否在允许列表中
+  for (const domain of allowedDomains) {
+    if (hostname.includes(domain.split(':')[0])) {
+      return requestUrl.protocol + '//' + requestUrl.host;
+    }
+  }
+  
+  // 默认返回配置的主域名
+  return env.APP_URL || 'https://svtr.ai';
+}
+
 // 处理GET请求 - 发起OAuth流程和处理回调
 export async function onRequestGet(context: any): Promise<Response> {
   try {
@@ -135,12 +160,14 @@ export async function onRequestGet(context: any): Promise<Response> {
     const error = url.searchParams.get('error');
     const state = url.searchParams.get('state');
     
-    console.log('GitHub OAuth请求:', { code: !!code, error, state });
+    // 获取当前访问的域名
+    const currentDomain = getCurrentDomain(request, env);
+    console.log('GitHub OAuth请求:', { code: !!code, error, state, domain: currentDomain });
     
     // 检查是否有错误
     if (error) {
       console.error('GitHub OAuth错误:', error);
-      return Response.redirect(`${env.APP_URL || 'http://localhost:3000'}?auth_error=${encodeURIComponent(error)}`);
+      return Response.redirect(`${currentDomain}?auth_error=${encodeURIComponent(error)}`);
     }
     
     // 如果有授权码，处理回调
@@ -163,7 +190,7 @@ export async function onRequestGet(context: any): Promise<Response> {
         if (!tokenResponse.ok) {
           const errorText = await tokenResponse.text();
           console.error('GitHub token exchange失败:', errorText);
-          return Response.redirect(`${env.APP_URL || 'http://localhost:3000'}?auth_error=token_exchange_failed`);
+          return Response.redirect(`${currentDomain}?auth_error=token_exchange_failed`);
         }
         
         const tokens: GitHubTokenResponse = await tokenResponse.json();
@@ -181,7 +208,7 @@ export async function onRequestGet(context: any): Promise<Response> {
         if (!userResponse.ok) {
           const errorText = await userResponse.text();
           console.error('GitHub用户信息获取失败:', errorText);
-          return Response.redirect(`${env.APP_URL || 'http://localhost:3000'}?auth_error=user_info_failed`);
+          return Response.redirect(`${currentDomain}?auth_error=user_info_failed`);
         }
         
         const githubUser: GitHubUserInfo = await userResponse.json();
@@ -195,7 +222,7 @@ export async function onRequestGet(context: any): Promise<Response> {
         
         if (!email) {
           console.error('无法获取GitHub用户邮箱');
-          return Response.redirect(`${env.APP_URL || 'http://localhost:3000'}?auth_error=no_email`);
+          return Response.redirect(`${currentDomain}?auth_error=no_email`);
         }
         
         // 步骤4: 创建或更新本地用户
@@ -205,7 +232,7 @@ export async function onRequestGet(context: any): Promise<Response> {
         const sessionToken = await createUserSession(env, user);
         
         // 步骤6: 重定向到前端，携带会话token
-        const redirectUrl = new URL(env.APP_URL || 'http://localhost:3000');
+        const redirectUrl = new URL(currentDomain);
         redirectUrl.searchParams.set('auth_success', 'true');
         redirectUrl.searchParams.set('token', sessionToken);
         redirectUrl.searchParams.set('user', JSON.stringify({
@@ -219,18 +246,18 @@ export async function onRequestGet(context: any): Promise<Response> {
         
       } catch (error) {
         console.error('GitHub OAuth回调处理失败:', error);
-        return Response.redirect(`${env.APP_URL || 'http://localhost:3000'}?auth_error=callback_failed`);
+        return Response.redirect(`${currentDomain}?auth_error=callback_failed`);
       }
     }
     
     // 如果没有授权码，发起OAuth流程
     const authUrl = new URL('https://github.com/login/oauth/authorize');
     authUrl.searchParams.set('client_id', env.GITHUB_CLIENT_ID);
-    authUrl.searchParams.set('redirect_uri', `${env.APP_URL || 'http://localhost:3000'}/api/auth/github`);
+    authUrl.searchParams.set('redirect_uri', `${currentDomain}/api/auth/github`);
     authUrl.searchParams.set('scope', 'user:email read:user');
     authUrl.searchParams.set('state', crypto.randomUUID()); // CSRF protection
     
-    console.log('重定向到GitHub授权页面');
+    console.log('重定向到GitHub授权页面, redirect_uri:', `${currentDomain}/api/auth/github`);
     return Response.redirect(authUrl.toString());
     
   } catch (error) {

@@ -12,4 +12,6 @@ yarn-debug.log*
 yarn-error.log*
 .eslintcache
 *.tmp
-*.log
+*.log.wrangler/
+.playwright-mcp/
+node_modules/
