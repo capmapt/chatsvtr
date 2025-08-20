@@ -442,7 +442,7 @@
                         ${filteredData.map(subscriber => `
                             <tr>
                                 <td>
-                                    <span class="email-domain">*@${subscriber.emailDomain}</span>
+                                    <span class="email-domain">${subscriber.email || '*@' + subscriber.emailDomain}</span>
                                 </td>
                                 <td>
                                     <div class="preferences-tags">
@@ -531,7 +531,7 @@
             const csvContent = [
                 headers.join(','),
                 ...filteredData.map(row => [
-                    `*@${row.emailDomain}`,
+                    `"${row.email || '*@' + row.emailDomain}"`,
                     `"${(row.preferences || []).join(', ')}"`,
                     formatDate(row.subscribedAt),
                     row.language === 'zh-CN' ? '中文' : 'English'
@@ -549,9 +549,68 @@
             document.body.removeChild(link);
         }
 
-        // 查看详情（占位函数）
+        // 查看详情
         function viewDetails(subscriberId) {
-            alert(`查看订阅者详情: ${subscriberId}\n\n此功能正在开发中...`);
+            const subscriber = subscribersData.find(sub => sub.id === subscriberId);
+            if (!subscriber) {
+                alert('找不到订阅者信息');
+                return;
+            }
+            
+            const detailsHTML = `
+                <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.5;">
+                    <h3 style="color: #333; margin-bottom: 15px;">📧 订阅者详细信息</h3>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+                        <p><strong>邮箱地址:</strong> ${subscriber.email || '*@' + subscriber.emailDomain}</p>
+                        <p><strong>订阅时间:</strong> ${formatDate(subscriber.subscribedAt)}</p>
+                        <p><strong>语言偏好:</strong> ${subscriber.language === 'zh-CN' ? '中文' : 'English'}</p>
+                        <p><strong>IP地址:</strong> ${subscriber.ipAddress || '未记录'}</p>
+                        <p><strong>用户代理:</strong> ${subscriber.userAgent ? subscriber.userAgent.substring(0, 60) + '...' : '未记录'}</p>
+                    </div>
+                    <div style="background: #e3f2fd; padding: 15px; border-radius: 8px;">
+                        <p><strong>📋 订阅偏好:</strong></p>
+                        <ul style="margin: 5px 0 0 20px;">
+                            ${(subscriber.preferences || ['无特定偏好']).map(pref => `<li>${pref}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            // 创建模态框
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.5); display: flex; align-items: center; 
+                justify-content: center; z-index: 1000;
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: white; padding: 25px; border-radius: 15px; 
+                max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            `;
+            modalContent.innerHTML = detailsHTML + `
+                <div style="text-align: center; margin-top: 20px;">
+                    <button onclick="this.closest('[data-modal]').remove()" 
+                            style="background: #667eea; color: white; border: none; 
+                                   padding: 10px 20px; border-radius: 8px; cursor: pointer;">
+                        关闭
+                    </button>
+                </div>
+            `;
+            
+            modal.setAttribute('data-modal', 'true');
+            modal.appendChild(modalContent);
+            
+            // 点击背景关闭
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+            
+            document.body.appendChild(modal);
         }
 
         // 格式化日期

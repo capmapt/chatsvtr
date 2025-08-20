@@ -212,10 +212,13 @@ export async function onRequestGet(context: any): Promise<Response> {
       
       const publicList = subscribers.map((sub: any) => ({
         id: sub.id,
+        email: sub.email, // 返回完整邮箱用于管理面板
         emailDomain: sub.email.split('@')[1],
         preferences: sub.preferences,
         subscribedAt: sub.subscribedAt,
-        language: sub.language
+        language: sub.language,
+        ipAddress: sub.ipAddress,
+        userAgent: sub.userAgent
       }));
       
       return new Response(JSON.stringify(publicList), {
