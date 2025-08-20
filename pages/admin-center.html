@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVTR 管理中心</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+        
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* 侧边栏 */
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar-header {
+            padding: 25px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .sidebar-header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-header p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .nav-menu {
+            padding: 20px 0;
+        }
+        
+        .nav-section {
+            margin-bottom: 30px;
+        }
+        
+        .nav-section-title {
+            padding: 0 20px 10px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.6;
+            font-weight: 600;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .nav-item:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .nav-item.active {
+            background: rgba(255,255,255,0.2);
+            border-right: 3px solid white;
+        }
+        
+        .nav-item-icon {
+            font-size: 1.2rem;
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .nav-item-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        /* 主内容区 */
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            background: #f5f7fa;
+        }
+        
+        .content-header {
+            background: white;
+            padding: 20px 30px;
+            border-bottom: 1px solid #e1e5e9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .content-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .content-subtitle {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: #5a6fd8;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 1px solid #667eea;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .content-body {
+            padding: 30px;
+        }
+        
+        /* 仪表板卡片 */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e1e5e9;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .card-icon {
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .card-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .card-description {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .card-trend {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+        
+        .trend-up {
+            color: #10a37f;
+        }
+        
+        .trend-down {
+            color: #d73502;
+        }
+        
+        /* 内容模块 */
+        .content-module {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e1e5e9;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .content-module.active {
+            display: block;
+        }
+        
+        .module-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #e1e5e9;
+            background: #f8f9fa;
+        }
+        
+        .module-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .module-subtitle {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .module-content {
+            padding: 25px;
+        }
+        
+        /* 表格样式 */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e1e5e9;
+        }
+        
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+        }
+        
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        /* 状态标签 */
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background: #e8f5e8;
+            color: #388e3c;
+        }
+        
+        .status-pending {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+        
+        .status-inactive {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+        
+        /* 移动端响应式 */
+        .mobile-menu-btn {
+            display: none;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .content-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-body {
+                padding: 20px;
+            }
+        }
+        
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        /* 加载状态 */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e1e5e9;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- 侧边栏 -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1>🚀 SVTR</h1>
+                <p>管理中心</p>
+            </div>
+            
+            <div class="nav-menu">
+                <div class="nav-section">
+                    <div class="nav-section-title">概览</div>
+                    <a class="nav-item active" onclick="showModule('dashboard')">
+                        <span class="nav-item-icon">📊</span>
+                        <span class="nav-item-text">仪表板</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">内容管理</div>
+                    <a class="nav-item" onclick="showModule('content')">
+                        <span class="nav-item-icon">✍️</span>
+                        <span class="nav-item-text">内容创作</span>
+                    </a>
+                    <a class="nav-item" onclick="showModule('subscription')">
+                        <span class="nav-item-icon">📧</span>
+                        <span class="nav-item-text">订阅管理</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">平台管理</div>
+                    <a class="nav-item" onclick="showModule('projects')">
+                        <span class="nav-item-icon">💼</span>
+                        <span class="nav-item-text">项目管理</span>
+                    </a>
+                    <a class="nav-item" onclick="showModule('users')">
+                        <span class="nav-item-icon">👥</span>
+                        <span class="nav-item-text">用户管理</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">数据分析</div>
+                    <a class="nav-item" onclick="showModule('analytics')">
+                        <span class="nav-item-icon">📈</span>
+                        <span class="nav-item-text">数据分析</span>
+                    </a>
+                    <a class="nav-item" onclick="showModule('reports')">
+                        <span class="nav-item-icon">📋</span>
+                        <span class="nav-item-text">报告生成</span>
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">系统</div>
+                    <a class="nav-item" onclick="showModule('settings')">
+                        <span class="nav-item-icon">⚙️</span>
+                        <span class="nav-item-text">系统设置</span>
+                    </a>
+                    <a class="nav-item" onclick="showModule('logs')">
+                        <span class="nav-item-icon">📝</span>
+                        <span class="nav-item-text">操作日志</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <header class="content-header">
+                <div>
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()">☰</button>
+                    <h1 class="content-title" id="pageTitle">仪表板</h1>
+                    <p class="content-subtitle" id="pageSubtitle">SVTR 平台运营概览</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary" onclick="refreshData()">🔄 刷新</button>
+                    <button class="btn-primary" onclick="showQuickActions()">⚡ 快捷操作</button>
+                </div>
+            </header>
+            
+            <div class="content-body">
+                <!-- 仪表板模块 -->
+                <div id="dashboard-module" class="content-module active">
+                    <div class="dashboard-grid">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <span class="card-icon">👥</span>
+                                <span class="card-title">总用户数</span>
+                            </div>
+                            <div class="card-value" id="totalUsers">-</div>
+                            <div class="card-description">注册用户总数</div>
+                            <div class="card-trend trend-up">
+                                <span>↗ +12%</span>
+                                <span>本月增长</span>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <span class="card-icon">💼</span>
+                                <span class="card-title">活跃项目</span>
+                            </div>
+                            <div class="card-value" id="activeProjects">-</div>
+                            <div class="card-description">正在进行的投资项目</div>
+                            <div class="card-trend trend-up">
+                                <span>↗ +8%</span>
+                                <span>本月新增</span>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <span class="card-icon">📧</span>
+                                <span class="card-title">订阅用户</span>
+                            </div>
+                            <div class="card-value" id="subscribers">-</div>
+                            <div class="card-description">AI周报订阅用户</div>
+                            <div class="card-trend trend-up">
+                                <span>↗ +24%</span>
+                                <span>本周增长</span>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <span class="card-icon">💰</span>
+                                <span class="card-title">投资总额</span>
+                            </div>
+                            <div class="card-value" id="totalInvestment">-</div>
+                            <div class="card-description">平台促成投资金额</div>
+                            <div class="card-trend trend-up">
+                                <span>↗ +18%</span>
+                                <span>本季度增长</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <span class="card-icon">📊</span>
+                            <span class="card-title">最近活动</span>
+                        </div>
+                        <div id="recentActivities">
+                            <div class="loading-spinner"></div>
+                            <span style="margin-left: 10px;">加载最近活动...</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 内容创作模块 -->
+                <div id="content-module" class="content-module">
+                    <div class="module-header">
+                        <div class="module-title">内容创作管理</div>
+                        <div class="module-subtitle">管理AI周报、投资洞察等内容创作</div>
+                    </div>
+                    <div class="module-content">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">✍️</div>
+                            <h3>内容创作功能</h3>
+                            <p>正在开发中，敬请期待...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 订阅管理模块 -->
+                <div id="subscription-module" class="content-module">
+                    <div class="module-header">
+                        <div class="module-title">订阅管理</div>
+                        <div class="module-subtitle">管理AI周报订阅用户和邮件发送</div>
+                    </div>
+                    <div class="module-content">
+                        <iframe src="admin-dashboard.html" style="width: 100%; height: 600px; border: none; border-radius: 8px;"></iframe>
+                    </div>
+                </div>
+                
+                <!-- 项目管理模块 -->
+                <div id="projects-module" class="content-module">
+                    <div class="module-header">
+                        <div class="module-title">投资项目管理</div>
+                        <div class="module-subtitle">管理平台上的所有投资项目和申请</div>
+                    </div>
+                    <div class="module-content">
+                        <!-- 项目统计卡片 -->
+                        <div class="dashboard-grid" style="margin-bottom: 30px;">
+                            <div class="dashboard-card">
+                                <div class="card-header">
+                                    <span class="card-icon">📊</span>
+                                    <span class="card-title">总项目数</span>
+                                </div>
+                                <div class="card-value" id="totalProjectsCount">-</div>
+                                <div class="card-description">平台所有项目</div>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="card-header">
+                                    <span class="card-icon">✅</span>
+                                    <span class="card-title">活跃项目</span>
+                                </div>
+                                <div class="card-value" id="activeProjectsCount">-</div>
+                                <div class="card-description">正在进行的项目</div>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="card-header">
+                                    <span class="card-icon">⏳</span>
+                                    <span class="card-title">待审核</span>
+                                </div>
+                                <div class="card-value" id="pendingProjectsCount">-</div>
+                                <div class="card-description">等待审核的项目</div>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="card-header">
+                                    <span class="card-icon">💰</span>
+                                    <span class="card-title">总融资额</span>
+                                </div>
+                                <div class="card-value" id="totalFundingAmount">-</div>
+                                <div class="card-description">累计融资金额</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 操作栏 -->
+                        <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <select id="projectStatusFilter" onchange="filterProjects()" class="form-input" style="width: auto;">
+                                    <option value="">所有状态</option>
+                                    <option value="active">活跃</option>
+                                    <option value="pending">待审核</option>
+                                    <option value="completed">已完成</option>
+                                    <option value="paused">暂停</option>
+                                    <option value="rejected">已拒绝</option>
+                                </select>
+                                <select id="projectCategoryFilter" onchange="filterProjects()" class="form-input" style="width: auto;">
+                                    <option value="">所有类别</option>
+                                    <option value="AI">AI</option>
+                                    <option value="Fintech">金融科技</option>
+                                    <option value="Healthcare">医疗健康</option>
+                                    <option value="E-commerce">电子商务</option>
+                                    <option value="Enterprise">企业服务</option>
+                                    <option value="Consumer">消费者</option>
+                                    <option value="Other">其他</option>
+                                </select>
+                                <input type="text" id="projectSearchInput" placeholder="搜索项目名称..." onkeyup="filterProjects()" class="form-input" style="width: 200px;">
+                            </div>
+                            <button class="btn-primary" onclick="showCreateProjectModal()">➕ 创建项目</button>
+                        </div>
+                        
+                        <!-- 项目列表 -->
+                        <div id="projectsTableContainer">
+                            <div class="loading-spinner"></div>
+                            <span style="margin-left: 10px;">加载项目数据...</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 用户管理模块 -->
+                <div id="users-module" class="content-module">
+                    <div class="module-header">
+                        <div class="module-title">用户管理</div>
+                        <div class="module-subtitle">管理创业者、投资人等平台用户</div>
+                    </div>
+                    <div class="module-content">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">👥</div>
+                            <h3>用户管理功能</h3>
+                            <p>正在开发中，敬请期待...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 数据分析模块 -->
+                <div id="analytics-module" class="content-module">
+                    <div class="module-header">
+                        <div class="module-title">数据分析</div>
+                        <div class="module-subtitle">查看平台运营数据和投资统计</div>
+                    </div>
+                    <div class="module-content">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📈</div>
+                            <h3>数据分析功能</h3>
+                            <p>正在开发中，敬请期待...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 报告生成模块 -->
+                <div id="reports-module" class="content-module">
+                    <div class="module-header">
+                        <div class="module-title">报告生成</div>
+                        <div class="module-subtitle">生成运营报告和投资分析报告</div>
+                    </div>
+                    <div class="module-content">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📋</div>
+                            <h3>报告生成功能</h3>
+                            <p>正在开发中，敬请期待...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 系统设置模块 -->
+                <div id="settings-module" class="content-module">
+                    <div class="module-header">
+                        <div class="module-title">系统设置</div>
+                        <div class="module-subtitle">配置平台参数和系统设置</div>
+                    </div>
+                    <div class="module-content">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">⚙️</div>
+                            <h3>系统设置功能</h3>
+                            <p>正在开发中，敬请期待...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 操作日志模块 -->
+                <div id="logs-module" class="content-module">
+                    <div class="module-header">
+                        <div class="module-title">操作日志</div>
+                        <div class="module-subtitle">查看系统和用户操作记录</div>
+                    </div>
+                    <div class="module-content">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📝</div>
+                            <h3>操作日志功能</h3>
+                            <p>正在开发中，敬请期待...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // 全局状态
+        let currentModule = 'dashboard';
+        let dashboardData = {};
+        let projectsData = [];
+        let filteredProjectsData = [];
+
+        // 页面加载初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboardData();
+            setInterval(loadDashboardData, 5 * 60 * 1000); // 每5分钟刷新
+        });
+
+        // 加载仪表板数据
+        async function loadDashboardData() {
+            try {
+                // 获取订阅数据
+                const subscriptionResponse = await fetch('/api/subscribe?action=stats');
+                if (subscriptionResponse.ok) {
+                    const subscriptionData = await subscriptionResponse.json();
+                    document.getElementById('subscribers').textContent = subscriptionData.totalSubscribers || 0;
+                }
+
+                // 模拟其他数据
+                document.getElementById('totalUsers').textContent = '2,847';
+                document.getElementById('activeProjects').textContent = '156';
+                document.getElementById('totalInvestment').textContent = '$42.8M';
+
+                // 模拟最近活动
+                setTimeout(() => {
+                    const activitiesHtml = `
+                        <div style="space-y: 15px;">
+                            <div style="padding: 10px 0; border-bottom: 1px solid #e1e5e9;">
+                                <strong>新项目提交:</strong> AI医疗诊断平台 - TechHealth
+                                <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">2小时前</div>
+                            </div>
+                            <div style="padding: 10px 0; border-bottom: 1px solid #e1e5e9;">
+                                <strong>用户注册:</strong> 5名新用户加入平台
+                                <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">4小时前</div>
+                            </div>
+                            <div style="padding: 10px 0; border-bottom: 1px solid #e1e5e9;">
+                                <strong>投资完成:</strong> 智能物流项目获得A轮投资
+                                <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">昨天</div>
+                            </div>
+                            <div style="padding: 10px 0;">
+                                <strong>内容发布:</strong> AI周报第42期已发送
+                                <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">2天前</div>
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('recentActivities').innerHTML = activitiesHtml;
+                }, 1500);
+
+            } catch (error) {
+                console.error('加载仪表板数据失败:', error);
+            }
+        }
+
+        // 显示模块
+        function showModule(moduleId) {
+            // 隐藏所有模块
+            document.querySelectorAll('.content-module').forEach(module => {
+                module.classList.remove('active');
+            });
+
+            // 移除所有导航项的active状态
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // 显示目标模块
+            const targetModule = document.getElementById(moduleId + '-module');
+            if (targetModule) {
+                targetModule.classList.add('active');
+            }
+
+            // 设置导航项active状态
+            event.target.closest('.nav-item').classList.add('active');
+
+            // 更新页面标题
+            const titles = {
+                dashboard: { title: '仪表板', subtitle: 'SVTR 平台运营概览' },
+                content: { title: '内容创作', subtitle: '管理AI周报和投资洞察内容' },
+                subscription: { title: '订阅管理', subtitle: '管理AI周报订阅用户' },
+                projects: { title: '项目管理', subtitle: '管理投资项目和申请' },
+                users: { title: '用户管理', subtitle: '管理平台用户和权限' },
+                analytics: { title: '数据分析', subtitle: '平台运营数据和投资统计' },
+                reports: { title: '报告生成', subtitle: '生成运营和投资分析报告' },
+                settings: { title: '系统设置', subtitle: '配置平台参数和系统设置' },
+                logs: { title: '操作日志', subtitle: '查看系统和用户操作记录' }
+            };
+
+            const titleData = titles[moduleId] || titles.dashboard;
+            document.getElementById('pageTitle').textContent = titleData.title;
+            document.getElementById('pageSubtitle').textContent = titleData.subtitle;
+
+            currentModule = moduleId;
+
+            // 加载模块特定数据
+            if (moduleId === 'projects') {
+                loadProjectsData();
+            }
+
+            // 关闭移动端侧边栏
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('mobile-open');
+            }
+        }
+
+        // 切换侧边栏 (移动端)
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('mobile-open');
+        }
+
+        // 刷新数据
+        function refreshData() {
+            const refreshBtn = event.target;
+            const originalText = refreshBtn.innerHTML;
+            
+            refreshBtn.innerHTML = '<span class="loading-spinner"></span> 刷新中...';
+            refreshBtn.disabled = true;
+
+            loadDashboardData().finally(() => {
+                setTimeout(() => {
+                    refreshBtn.innerHTML = originalText;
+                    refreshBtn.disabled = false;
+                }, 1000);
+            });
+        }
+
+        // 快捷操作
+        function showQuickActions() {
+            alert('快捷操作功能正在开发中...\n\n计划包括:\n• 快速创建项目\n• 发送通知\n• 生成报告\n• 数据导出');
+        }
+
+        // 点击侧边栏外部关闭 (移动端)
+        document.addEventListener('click', function(event) {
+            const sidebar = document.getElementById('sidebar');
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (window.innerWidth <= 768 && 
+                sidebar.classList.contains('mobile-open') && 
+                !sidebar.contains(event.target) && 
+                !mobileMenuBtn.contains(event.target)) {
+                sidebar.classList.remove('mobile-open');
+            }
+        });
+
+        // 窗口大小改变时重置侧边栏状态
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                document.getElementById('sidebar').classList.remove('mobile-open');
+            }
+        });
+
+        // 项目管理相关函数
+        async function loadProjectsData() {
+            try {
+                console.log('加载项目数据...');
+                
+                // 获取项目统计
+                const statsResponse = await fetch('/api/projects?action=stats');
+                if (statsResponse.ok) {
+                    const stats = await statsResponse.json();
+                    updateProjectStats(stats);
+                }
+                
+                // 获取项目列表
+                const listResponse = await fetch('/api/projects?action=list');
+                if (listResponse.ok) {
+                    const projects = await listResponse.json();
+                    projectsData = Array.isArray(projects) ? projects : [];
+                    filteredProjectsData = [...projectsData];
+                    renderProjectsTable();
+                }
+                
+            } catch (error) {
+                console.error('加载项目数据失败:', error);
+                document.getElementById('projectsTableContainer').innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #d32f2f;">
+                        <h3>⚠️ 加载失败</h3>
+                        <p>无法加载项目数据: ${error.message}</p>
+                        <button class="btn-primary" onclick="loadProjectsData()">重新加载</button>
+                    </div>
+                `;
+            }
+        }
+
+        function updateProjectStats(stats) {
+            document.getElementById('totalProjectsCount').textContent = stats.totalProjects || 0;
+            document.getElementById('activeProjectsCount').textContent = stats.activeProjects || 0;
+            document.getElementById('pendingProjectsCount').textContent = stats.pendingProjects || 0;
+            
+            const totalFunding = stats.totalFunding || 0;
+            document.getElementById('totalFundingAmount').textContent = formatCurrency(totalFunding);
+        }
+
+        function renderProjectsTable() {
+            const container = document.getElementById('projectsTableContainer');
+            
+            if (filteredProjectsData.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 60px; color: #666;">
+                        <div style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;">💼</div>
+                        <h3>暂无项目数据</h3>
+                        <p>点击"创建项目"开始添加第一个项目</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const tableHTML = `
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>项目名称</th>
+                            <th>创始人</th>
+                            <th>类别</th>
+                            <th>阶段</th>
+                            <th>状态</th>
+                            <th>融资目标</th>
+                            <th>当前融资</th>
+                            <th>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${filteredProjectsData.map(project => `
+                            <tr>
+                                <td>
+                                    <strong>${project.name}</strong>
+                                    <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">
+                                        ${project.description.substring(0, 50)}...
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>${project.founder}</div>
+                                    <div style="font-size: 0.8rem; color: #666;">${project.founderEmail}</div>
+                                </td>
+                                <td>
+                                    <span style="background: #e3f2fd; color: #1976d2; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem;">
+                                        ${project.category}
+                                    </span>
+                                </td>
+                                <td>${formatStage(project.stage)}</td>
+                                <td>
+                                    <span class="status-badge ${getStatusClass(project.status)}">
+                                        ${formatStatus(project.status)}
+                                    </span>
+                                </td>
+                                <td>${formatCurrency(project.fundingGoal)}</td>
+                                <td>
+                                    ${formatCurrency(project.currentFunding)}
+                                    <div style="font-size: 0.8rem; color: #666;">
+                                        ${project.investorCount} 投资人
+                                    </div>
+                                </td>
+                                <td>${formatDateTime(project.createdAt)}</td>
+                                <td>
+                                    <button onclick="viewProjectDetails('${project.id}')" class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem; margin-right: 5px;">查看</button>
+                                    <button onclick="editProject('${project.id}')" class="btn-primary" style="padding: 4px 8px; font-size: 0.8rem;">编辑</button>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            
+            container.innerHTML = tableHTML;
+        }
+
+        function filterProjects() {
+            const statusFilter = document.getElementById('projectStatusFilter').value;
+            const categoryFilter = document.getElementById('projectCategoryFilter').value;
+            const searchTerm = document.getElementById('projectSearchInput').value.toLowerCase();
+            
+            filteredProjectsData = projectsData.filter(project => {
+                if (statusFilter && project.status !== statusFilter) return false;
+                if (categoryFilter && project.category !== categoryFilter) return false;
+                if (searchTerm && !project.name.toLowerCase().includes(searchTerm)) return false;
+                return true;
+            });
+            
+            renderProjectsTable();
+        }
+
+        function showCreateProjectModal() {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.5); display: flex; align-items: center; 
+                justify-content: center; z-index: 2000; overflow-y: auto;
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: white; padding: 30px; border-radius: 15px; 
+                max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            `;
+            
+            modalContent.innerHTML = `
+                <h3 style="margin-bottom: 20px; color: #333;">📝 创建新项目</h3>
+                <form id="createProjectForm" onsubmit="return false;">
+                    <div class="form-group">
+                        <label class="form-label">项目名称 *</label>
+                        <input type="text" name="name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">项目描述 *</label>
+                        <textarea name="description" class="form-input form-textarea" required></textarea>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group">
+                            <label class="form-label">项目类别 *</label>
+                            <select name="category" class="form-input" required>
+                                <option value="">请选择</option>
+                                <option value="AI">AI</option>
+                                <option value="Fintech">金融科技</option>
+                                <option value="Healthcare">医疗健康</option>
+                                <option value="E-commerce">电子商务</option>
+                                <option value="Enterprise">企业服务</option>
+                                <option value="Consumer">消费者</option>
+                                <option value="Other">其他</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">融资阶段 *</label>
+                            <select name="stage" class="form-input" required>
+                                <option value="">请选择</option>
+                                <option value="idea">创意阶段</option>
+                                <option value="seed">种子轮</option>
+                                <option value="series-a">A轮</option>
+                                <option value="series-b">B轮</option>
+                                <option value="series-c">C轮</option>
+                                <option value="ipo">IPO</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="form-group">
+                            <label class="form-label">创始人姓名 *</label>
+                            <input type="text" name="founder" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">创始人邮箱 *</label>
+                            <input type="email" name="founderEmail" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">融资目标 (USD) *</label>
+                        <input type="number" name="fundingGoal" class="form-input" min="1" required>
+                    </div>
+                    <div style="text-align: center; margin-top: 25px;">
+                        <button type="button" onclick="this.closest('[data-modal]').remove()" class="btn-secondary" style="margin-right: 10px;">取消</button>
+                        <button type="button" onclick="createProject()" class="btn-primary">创建项目</button>
+                    </div>
+                </form>
+            `;
+            
+            modal.setAttribute('data-modal', 'true');
+            modal.appendChild(modalContent);
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.remove();
+            });
+            
+            document.body.appendChild(modal);
+        }
+
+        async function createProject() {
+            const form = document.getElementById('createProjectForm');
+            const formData = new FormData(form);
+            const projectData = Object.fromEntries(formData.entries());
+            
+            // 转换数字字段
+            projectData.fundingGoal = Number(projectData.fundingGoal);
+            
+            try {
+                const response = await fetch('/api/projects', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(projectData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('项目创建成功！');
+                    document.querySelector('[data-modal]').remove();
+                    loadProjectsData(); // 重新加载数据
+                } else {
+                    alert('创建失败：' + (result.message || '未知错误'));
+                }
+            } catch (error) {
+                alert('创建失败：' + error.message);
+            }
+        }
+
+        function viewProjectDetails(projectId) {
+            const project = projectsData.find(p => p.id === projectId);
+            if (!project) {
+                alert('项目不存在');
+                return;
+            }
+            
+            alert(`项目详情：${project.name}\n\n功能开发中，敬请期待...`);
+        }
+
+        function editProject(projectId) {
+            alert(`编辑项目：${projectId}\n\n功能开发中，敬请期待...`);
+        }
+
+        // 工具函数
+        function formatCurrency(amount) {
+            if (amount >= 1000000) {
+                return '$' + (amount / 1000000).toFixed(1) + 'M';
+            } else if (amount >= 1000) {
+                return '$' + (amount / 1000).toFixed(1) + 'K';
+            }
+            return '$' + amount.toLocaleString();
+        }
+
+        function formatStage(stage) {
+            const stages = {
+                'idea': '创意阶段',
+                'seed': '种子轮',
+                'series-a': 'A轮',
+                'series-b': 'B轮',
+                'series-c': 'C轮',
+                'ipo': 'IPO'
+            };
+            return stages[stage] || stage;
+        }
+
+        function formatStatus(status) {
+            const statuses = {
+                'active': '活跃',
+                'pending': '待审核',
+                'completed': '已完成',
+                'paused': '暂停',
+                'rejected': '已拒绝'
+            };
+            return statuses[status] || status;
+        }
+
+        function getStatusClass(status) {
+            const classes = {
+                'active': 'status-active',
+                'pending': 'status-pending',
+                'completed': 'status-active',
+                'paused': 'status-pending',
+                'rejected': 'status-inactive'
+            };
+            return classes[status] || 'status-pending';
+        }
+
+        function formatDateTime(dateString) {
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('zh-CN') + ' ' + date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+            } catch (error) {
+                return '无效日期';
+            }
+        }
+    </script>
+</body>
+</html>
