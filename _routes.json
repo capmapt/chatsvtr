@@ -4,6 +4,14 @@
     "/*"
   ],
   "exclude": [
-    "/api/*"
+    "/assets/*",
+    "/images/*",
+    "/docs/*",
+    "/scripts/*",
+    "/components/*",
+    "/database/*",
+    "/superdesign/*",
+    "/claude-code-mcp/*",
+    "/pages/*"
   ]
 }
