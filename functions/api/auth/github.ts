@@ -137,6 +137,7 @@ function getCurrentDomain(request: Request, env: any): string {
     'svtrai.com', 
     'svtr.cn',
     'svtrglobal.com',
+    'chatsvtr.pages.dev',
     'localhost:3000'
   ];
   
