@@ -131,6 +131,20 @@ export async function onRequestGet(context: any): Promise<Response> {
     // 如果有授权码，处理回调
     if (code) {
       try {
+        // 解析state中的原始域名
+        let originalDomain = currentDomain;
+        if (state) {
+          try {
+            const stateData = JSON.parse(atob(state));
+            originalDomain = stateData.originalDomain || currentDomain;
+            console.log('Google OAuth回调，原始域名:', originalDomain);
+          } catch (e) {
+            console.warn('无法解析state参数:', e);
+          }
+        }
+        
+        // 使用统一回调域名进行token交换
+        const unifiedCallbackDomain = env.APP_URL || 'https://svtr.ai';
         // 步骤1: 用授权码换取访问令牌
         const tokenResponse = await fetch('https://oauth2.googleapis.com/token', {
           method: 'POST',
@@ -142,14 +156,14 @@ export async function onRequestGet(context: any): Promise<Response> {
             client_secret: env.GOOGLE_CLIENT_SECRET,
             code,
             grant_type: 'authorization_code',
-            redirect_uri: `${currentDomain}/api/auth/google`
+            redirect_uri: `${unifiedCallbackDomain}/api/auth/google`
           })
         });
         
         if (!tokenResponse.ok) {
           const errorText = await tokenResponse.text();
           console.error('Google token exchange失败:', errorText);
-          return Response.redirect(`${currentDomain}?auth_error=token_exchange_failed`);
+          return Response.redirect(`${originalDomain}?auth_error=token_exchange_failed`);
         }
         
         const tokens: GoogleTokenResponse = await tokenResponse.json();
@@ -165,7 +179,7 @@ export async function onRequestGet(context: any): Promise<Response> {
         if (!userResponse.ok) {
           const errorText = await userResponse.text();
           console.error('Google用户信息获取失败:', errorText);
-          return Response.redirect(`${currentDomain}?auth_error=user_info_failed`);
+          return Response.redirect(`${originalDomain}?auth_error=user_info_failed`);
         }
         
         const googleUser: GoogleUserInfo = await userResponse.json();
@@ -178,7 +192,7 @@ export async function onRequestGet(context: any): Promise<Response> {
         const sessionToken = await createUserSession(env, user);
         
         // 步骤5: 重定向到前端，携带会话token
-        const redirectUrl = new URL(currentDomain);
+        const redirectUrl = new URL(originalDomain);
         redirectUrl.searchParams.set('auth_success', 'true');
         redirectUrl.searchParams.set('token', sessionToken);
         redirectUrl.searchParams.set('user', JSON.stringify({
@@ -192,19 +206,30 @@ export async function onRequestGet(context: any): Promise<Response> {
         
       } catch (error) {
         console.error('Google OAuth回调处理失败:', error);
-        return Response.redirect(`${currentDomain}?auth_error=callback_failed`);
+        return Response.redirect(`${originalDomain}?auth_error=callback_failed`);
       }
     }
     
     // 如果没有授权码，发起OAuth流程
     const authUrl = new URL('https://accounts.google.com/oauth2/v2/auth');
     authUrl.searchParams.set('client_id', env.GOOGLE_CLIENT_ID);
-    authUrl.searchParams.set('redirect_uri', `${currentDomain}/api/auth/google`);
+    
+    // 使用统一回调域名策略，与GitHub OAuth保持一致
+    const unifiedCallbackDomain = env.APP_URL || 'https://svtr.ai';
+    authUrl.searchParams.set('redirect_uri', `${unifiedCallbackDomain}/api/auth/google`);
     authUrl.searchParams.set('response_type', 'code');
     authUrl.searchParams.set('scope', 'openid email profile');
-    authUrl.searchParams.set('state', crypto.randomUUID()); // CSRF protection
     
-    console.log('重定向到Google授权页面, redirect_uri:', `${currentDomain}/api/auth/google`);
+    // 在state中保存原始域名，用于回调后重定向
+    const stateData = {
+      csrf: crypto.randomUUID(),
+      originalDomain: currentDomain
+    };
+    authUrl.searchParams.set('state', btoa(JSON.stringify(stateData))); // Base64编码
+    
+    console.log('重定向到Google授权页面');
+    console.log('- redirect_uri:', `${unifiedCallbackDomain}/api/auth/google`);
+    console.log('- 原始域名:', currentDomain);
     return Response.redirect(authUrl.toString());
     
   } catch (error) {

@@ -174,6 +174,17 @@ export async function onRequestGet(context: any): Promise<Response> {
     // 如果有授权码，处理回调
     if (code) {
       try {
+        // 解析state中的原始域名
+        let originalDomain = currentDomain;
+        if (state) {
+          try {
+            const stateData = JSON.parse(atob(state));
+            originalDomain = stateData.originalDomain || currentDomain;
+            console.log('GitHub OAuth回调，原始域名:', originalDomain);
+          } catch (e) {
+            console.warn('无法解析state参数:', e);
+          }
+        }
         // 步骤1: 用授权码换取访问令牌
         const tokenResponse = await fetch('https://github.com/login/oauth/access_token', {
           method: 'POST',
@@ -191,7 +202,7 @@ export async function onRequestGet(context: any): Promise<Response> {
         if (!tokenResponse.ok) {
           const errorText = await tokenResponse.text();
           console.error('GitHub token exchange失败:', errorText);
-          return Response.redirect(`${currentDomain}?auth_error=token_exchange_failed`);
+          return Response.redirect(`${originalDomain}?auth_error=token_exchange_failed`);
         }
         
         const tokens: GitHubTokenResponse = await tokenResponse.json();
@@ -209,7 +220,7 @@ export async function onRequestGet(context: any): Promise<Response> {
         if (!userResponse.ok) {
           const errorText = await userResponse.text();
           console.error('GitHub用户信息获取失败:', errorText);
-          return Response.redirect(`${currentDomain}?auth_error=user_info_failed`);
+          return Response.redirect(`${originalDomain}?auth_error=user_info_failed`);
         }
         
         const githubUser: GitHubUserInfo = await userResponse.json();
@@ -223,7 +234,7 @@ export async function onRequestGet(context: any): Promise<Response> {
         
         if (!email) {
           console.error('无法获取GitHub用户邮箱');
-          return Response.redirect(`${currentDomain}?auth_error=no_email`);
+          return Response.redirect(`${originalDomain}?auth_error=no_email`);
         }
         
         // 步骤4: 创建或更新本地用户
@@ -233,7 +244,7 @@ export async function onRequestGet(context: any): Promise<Response> {
         const sessionToken = await createUserSession(env, user);
         
         // 步骤6: 重定向到前端，携带会话token
-        const redirectUrl = new URL(currentDomain);
+        const redirectUrl = new URL(originalDomain);
         redirectUrl.searchParams.set('auth_success', 'true');
         redirectUrl.searchParams.set('token', sessionToken);
         redirectUrl.searchParams.set('user', JSON.stringify({
@@ -247,18 +258,29 @@ export async function onRequestGet(context: any): Promise<Response> {
         
       } catch (error) {
         console.error('GitHub OAuth回调处理失败:', error);
-        return Response.redirect(`${currentDomain}?auth_error=callback_failed`);
+        return Response.redirect(`${originalDomain}?auth_error=callback_failed`);
       }
     }
     
     // 如果没有授权码，发起OAuth流程
     const authUrl = new URL('https://github.com/login/oauth/authorize');
     authUrl.searchParams.set('client_id', env.GITHUB_CLIENT_ID);
-    authUrl.searchParams.set('redirect_uri', `${currentDomain}/api/auth/github`);
-    authUrl.searchParams.set('scope', 'user:email read:user');
-    authUrl.searchParams.set('state', crypto.randomUUID()); // CSRF protection
     
-    console.log('重定向到GitHub授权页面, redirect_uri:', `${currentDomain}/api/auth/github`);
+    // 使用统一回调域名策略，解决GitHub OAuth多域名问题
+    const unifiedCallbackDomain = env.APP_URL || 'https://svtr.ai';
+    authUrl.searchParams.set('redirect_uri', `${unifiedCallbackDomain}/api/auth/github`);
+    authUrl.searchParams.set('scope', 'user:email read:user');
+    
+    // 在state中保存原始域名，用于回调后重定向
+    const stateData = {
+      csrf: crypto.randomUUID(),
+      originalDomain: currentDomain
+    };
+    authUrl.searchParams.set('state', btoa(JSON.stringify(stateData))); // Base64编码
+    
+    console.log('重定向到GitHub授权页面');
+    console.log('- redirect_uri:', `${unifiedCallbackDomain}/api/auth/github`);
+    console.log('- 原始域名:', currentDomain);
     return Response.redirect(authUrl.toString());
     
   } catch (error) {
