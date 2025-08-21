@@ -18,13 +18,13 @@ class SVTRUserActions {
   }
 
   bindElements() {
-    this.emailSubscribeBtn = document.querySelector('.btn-email-subscribe');
+    this.subscribeForm = document.querySelector('#subscribeForm');
     this.memberLoginBtn = document.querySelector('.btn-member-login');
   }
 
   bindEvents() {
-    if (this.emailSubscribeBtn) {
-      this.emailSubscribeBtn.addEventListener('click', (e) => this.handleEmailSubscribe(e));
+    if (this.subscribeForm) {
+      this.subscribeForm.addEventListener('submit', (e) => this.handleSubscribeSubmit(e));
     }
     
     if (this.memberLoginBtn) {
@@ -33,24 +33,75 @@ class SVTRUserActions {
   }
 
   /**
-   * 处理邮件订阅
+   * 处理订阅表单提交
    */
-  async handleEmailSubscribe(event) {
+  async handleSubscribeSubmit(event) {
     event.preventDefault();
-    const button = event.currentTarget;
+    const form = event.target;
+    const email = form.querySelector('#subscribeEmail').value;
+    const submitBtn = form.querySelector('.btn-subscribe-submit');
+    const statusDiv = form.querySelector('#subscribeStatus');
+    const currentLang = this.getCurrentLang();
     
     try {
-      // 添加加载状态
-      this.setButtonLoading(button, true);
+      // 设置提交状态
+      submitBtn.disabled = true;
+      submitBtn.textContent = currentLang === 'zh-CN' ? '提交中...' : 'Submitting...';
+      statusDiv.className = 'subscribe-status loading';
+      statusDiv.textContent = currentLang === 'zh-CN' ? '正在提交订阅请求...' : 'Submitting subscription...';
       
-      // 显示邮件订阅弹窗
-      this.showEmailSubscribeModal();
+      // 调用订阅API
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          language: currentLang,
+          preferences: ['AI Weekly', 'Market Insights'] // 默认订阅选项
+        })
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok && data.success) {
+        // 订阅成功
+        statusDiv.className = 'subscribe-status success';
+        statusDiv.textContent = currentLang === 'zh-CN' 
+          ? '🎉 订阅成功！' 
+          : '🎉 Success!';
+        
+        // 清空表单
+        form.reset();
+        
+        // 5秒后清空状态消息
+        setTimeout(() => {
+          statusDiv.textContent = '';
+          statusDiv.className = 'subscribe-status';
+        }, 5000);
+        
+      } else {
+        throw new Error(data.error || 'Subscription failed');
+      }
       
     } catch (error) {
-      console.error('邮件订阅处理失败:', error);
-      this.showToast('订阅服务暂时不可用，请稍后重试', 'error');
+      console.error('订阅失败:', error);
+      statusDiv.className = 'subscribe-status error';
+      statusDiv.textContent = currentLang === 'zh-CN' 
+        ? '❌ 订阅失败，请稍后重试或联系客服' 
+        : '❌ Subscription failed. Please try again later.';
+        
+      // 10秒后清空错误消息
+      setTimeout(() => {
+        statusDiv.textContent = '';
+        statusDiv.className = 'subscribe-status';
+      }, 10000);
+      
     } finally {
-      this.setButtonLoading(button, false);
+      // 恢复按钮状态
+      submitBtn.disabled = false;
+      submitBtn.textContent = currentLang === 'zh-CN' ? '订阅SVTR AI周报' : 'Subscribe to SVTR AI Weekly';
     }
   }
 
@@ -76,57 +127,6 @@ class SVTRUserActions {
     }
   }
 
-  /**
-   * 显示邮件订阅弹窗
-   */
-  showEmailSubscribeModal() {
-    const currentLang = this.getCurrentLang();
-    
-    const modal = document.createElement('div');
-    modal.className = 'user-action-modal';
-    modal.innerHTML = `
-      <div class="modal-backdrop" onclick="this.parentElement.remove()"></div>
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3>${currentLang === 'zh-CN' ? '📧 订阅AI周报' : '📧 Subscribe to AI Weekly'}</h3>
-          <button class="modal-close" onclick="this.closest('.user-action-modal').remove()">×</button>
-        </div>
-        <div class="modal-body">
-          <p>${currentLang === 'zh-CN' 
-            ? '订阅SVTR AI周报，获取最新AI创投动态、市场分析和投资机会洞察。' 
-            : 'Subscribe to SVTR AI Weekly for latest AI VC trends, market analysis and investment insights.'}</p>
-          <form class="subscribe-form">
-            <input type="email" 
-                   placeholder="${currentLang === 'zh-CN' ? '请输入您的邮箱地址' : 'Enter your email address'}" 
-                   required>
-            <div class="checkbox-group">
-              <label>
-                <input type="checkbox" checked>
-                <span>${currentLang === 'zh-CN' ? 'AI周报（每周一期）' : 'AI Weekly Report'}</span>
-              </label>
-              <label>
-                <input type="checkbox" checked>
-                <span>${currentLang === 'zh-CN' ? '市场洞察（重要事件推送）' : 'Market Insights'}</span>
-              </label>
-              <label>
-                <input type="checkbox">
-                <span>${currentLang === 'zh-CN' ? '产品更新（新功能通知）' : 'Product Updates'}</span>
-              </label>
-            </div>
-            <button type="submit" class="btn-primary">
-              ${currentLang === 'zh-CN' ? '立即订阅' : 'Subscribe Now'}
-            </button>
-          </form>
-        </div>
-      </div>
-    `;
-    
-    document.body.appendChild(modal);
-    
-    // 绑定表单提交事件
-    const form = modal.querySelector('.subscribe-form');
-    form.addEventListener('submit', (e) => this.handleSubscribeSubmit(e, modal));
-  }
 
   /**
    * 显示会员登录弹窗
@@ -568,63 +568,6 @@ class SVTRUserActions {
     }
   }
   
-  /**
-   * 处理订阅表单提交
-   */
-  async handleSubscribeSubmit(event, modal) {
-    event.preventDefault();
-    const form = event.target;
-    const email = form.querySelector('input[type="email"]').value;
-    const checkboxes = Array.from(form.querySelectorAll('input[type="checkbox"]:checked'))
-      .map(cb => cb.nextElementSibling.textContent);
-    
-    try {
-      // 调用真实的订阅API
-      const response = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          preferences: checkboxes,
-          language: this.getCurrentLang()
-        })
-      });
-      
-      const result = await response.json();
-      
-      if (result.success) {
-        const currentLang = this.getCurrentLang();
-        const successMessage = currentLang === 'zh-CN' 
-          ? '订阅成功！欢迎加入SVTR社区' 
-          : 'Successfully subscribed! Welcome to SVTR community';
-        
-        this.showToast(successMessage, 'success');
-        modal.remove();
-        
-        // 标记按钮为成功状态
-        this.setButtonSuccess(this.emailSubscribeBtn);
-        
-        // 记录成功事件
-        this.trackSubscriptionEvent('subscribe_success', email);
-      } else {
-        throw new Error(result.message || '订阅失败');
-      }
-      
-    } catch (error) {
-      console.error('订阅失败:', error);
-      const currentLang = this.getCurrentLang();
-      const errorMessage = currentLang === 'zh-CN' 
-        ? '订阅失败，请稍后重试' 
-        : 'Subscription failed, please try again later';
-      
-      this.showToast(errorMessage, 'error');
-      
-      // 记录失败事件
-      this.trackSubscriptionEvent('subscribe_error', email, error.message);
-    }
-  }
 
   /**
    * 处理登录表单提交

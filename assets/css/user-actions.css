@@ -16,16 +16,139 @@
 .subscription-section {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
+  margin-bottom: 2px;
 }
 
-.subscribe-subtitle {
-  margin: 0;
-  font-size: 12px;
-  color: #6b7280;
+/* 订阅标题区域 */
+.subscribe-header {
   text-align: center;
-  line-height: 1.3;
+}
+
+.subscribe-trust {
+  margin: 0;
+  font-size: 13px;
+  color: #059669;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* 内联订阅表单 */
+.subscribe-form-inline {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.subscribe-form-inline input {
+  padding: 14px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 14px;
+  background: white;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.subscribe-form-inline input:focus {
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+.subscribe-form-inline input::placeholder {
+  color: #9ca3af;
+}
+
+.btn-subscribe-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 12px;
+  background: #16a34a;
+  color: white;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-subscribe-submit:hover {
+  background: #15803d;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(22, 163, 74, 0.35);
+}
+
+.btn-subscribe-submit:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
+}
+
+.btn-subscribe-submit:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* 状态消息 */
+.subscribe-status {
+  text-align: center;
+  font-size: 14px;
   font-weight: 500;
+  padding: 8px;
+  border-radius: 8px;
+  margin-top: 4px;
+  min-height: 20px;
+}
+
+.subscribe-status.success {
+  background: rgba(22, 163, 74, 0.1);
+  color: #16a34a;
+  border: 1px solid rgba(22, 163, 74, 0.2);
+}
+
+.subscribe-status.error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.subscribe-status.loading {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+
+/* 移动端响应式设计 */
+@media (max-width: 480px) {
+  .subscription-section {
+    gap: 12px;
+  }
+  
+  .subscribe-trust {
+    font-size: 12px;
+  }
+  
+  .subscribe-form-inline input {
+    padding: 12px 14px;
+    font-size: 16px; /* 防止iOS缩放 */
+  }
+  
+  .btn-subscribe-submit {
+    padding: 14px 20px;
+    font-size: 14px;
+  }
+  
+  .subscribe-status {
+    font-size: 13px;
+  }
 }
 
 /* 主按钮样式 - 订阅按钮 */

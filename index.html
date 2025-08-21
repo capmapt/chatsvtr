@@ -226,12 +226,26 @@
     
     <!-- 用户操作区域 -->
     <div class="user-actions">
-      <!-- 邮件订阅主按钮 -->
+      <!-- 邮件订阅区域 -->
       <div class="subscription-section">
-        <button class="btn-email-subscribe primary-btn" data-i18n="btn_email_subscribe" aria-label="订阅SVTR AI周报">
-          ✉️ <span data-i18n="nav_email_subscribe">订阅AI周报</span>
-        </button>
-        <p class="subscribe-subtitle" data-i18n="subscribe_subtitle">每周一送达 · 5 分钟读完</p>
+        <div class="subscribe-header">
+          <p class="subscribe-trust" data-i18n="subscribe_trust">
+            已有 10W+ 创始人/投资人订阅
+          </p>
+        </div>
+        
+        <!-- 内联订阅表单 -->
+        <form class="subscribe-form-inline" id="subscribeForm">
+          <input type="email" 
+                 id="subscribeEmail"
+                 placeholder="you@company.com"
+                 data-i18n-placeholder="subscribe_email_placeholder"
+                 required>
+          <button type="submit" class="btn-subscribe-submit" data-i18n="subscribe_submit">
+            订阅SVTR AI周报
+          </button>
+          <div class="subscribe-status" id="subscribeStatus"></div>
+        </form>
       </div>
       
       <!-- 登录/注册次按钮 -->
@@ -244,8 +258,11 @@
       <ul class="nav-list">
         <!-- 数据产品组 -->
         <li class="nav-group">
-          <a href="#data-products" class="group-header" data-i18n="nav_data_products">数据产品</a>
-          <ul class="sub-list">
+          <a href="#data-products" class="group-header collapsible" data-i18n="nav_data_products">
+            <span class="group-title">数据产品</span>
+            <span class="toggle-icon">▶</span>
+          </a>
+          <ul class="sub-list collapsed">
             <li>
               <a href="https://c0uiiy15npu.feishu.cn/wiki/DI9Hw8v8tiZF2Xk13KDcDI8Bn1b?from=from_copylink" data-i18n="nav_ai_vc_ranking" target="_blank" rel="noopener noreferrer">AI创投榜</a>
               <ul class="sub-list">
@@ -267,8 +284,11 @@
         
         <!-- 创投社区组 -->
         <li class="nav-group">
-          <a href="#vc-community" class="group-header" data-i18n="nav_vc_community">创投社区</a>
-          <ul class="sub-list">
+          <a href="#vc-community" class="group-header collapsible" data-i18n="nav_vc_community">
+            <span class="group-title">创投社区</span>
+            <span class="toggle-icon">▶</span>
+          </a>
+          <ul class="sub-list collapsed">
             <li><a href="pages/ai-weekly.html" data-i18n="nav_ai_weekly">AI周报</a></li>
             <li><a href="https://c0uiiy15npu.feishu.cn/wiki/N2MIwXwClitUy4k1JtvcYqfjnoe?from=from_copylink" data-i18n="nav_ai_vc_meetup" target="_blank" rel="noopener noreferrer">AI创投会</a></li>
             <li><a href="https://c0uiiy15npu.feishu.cn/base/SRmKb3sSAauviCsf0cocnCWdnd2?table=blkZ3RiwRz0nScoi" data-i18n="nav_ai_vc_group" target="_blank" rel="noopener noreferrer">AI创投群</a></li>
@@ -277,8 +297,11 @@
         
         <!-- 专业服务组 -->
         <li class="nav-group">
-          <a href="#professional-services" class="group-header" data-i18n="nav_professional_services">专业服务</a>
-          <ul class="sub-list">
+          <a href="#professional-services" class="group-header collapsible" data-i18n="nav_professional_services">
+            <span class="group-title">专业服务</span>
+            <span class="toggle-icon">▶</span>
+          </a>
+          <ul class="sub-list collapsed">
             <li><a href="https://svtrglobal.feishu.cn/wiki/CNRPwjCvBiElEgkP1EwcaIA5nJe?from=from_copylink" data-i18n="nav_project_matching" target="_blank" rel="noopener noreferrer">项目对接</a></li>
             <li><a href="https://svtrglobal.feishu.cn/wiki/Fr2rwSwQ2iYYz4kqOxic4Nomnud?from=from_copylink" data-i18n="nav_ai_startup_camp" target="_blank" rel="noopener noreferrer">AI创业营</a></li>
             <li><a href="https://svtrglobal.feishu.cn/wiki/JXSRwQKxAiqQkVkV4eWcZzBtnfh?from=from_copylink" data-i18n="nav_ai_investment_camp" target="_blank" rel="noopener noreferrer">AI投资营</a></li>
@@ -363,9 +386,10 @@
   <!-- 移动端触摸优化 -->
   <script src="assets/js/touch-enhancer.js"></script>
   
-  <!-- 侧边栏宽度调整功能 -->
+  <!-- 侧边栏功能 -->
   <script src="assets/js/sidebar-resizer.js"></script>
   <script src="assets/js/sidebar-integration.js"></script>
+  <script src="assets/js/sidebar-collapsible.js"></script>
   
   <!-- Enhanced error handling and monitoring -->
   <script src="assets/js/enhanced-error-handler.js"></script>
