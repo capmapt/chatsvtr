@@ -211,7 +211,7 @@ export async function onRequestGet(context: any): Promise<Response> {
     }
     
     // 如果没有授权码，发起OAuth流程
-    const authUrl = new URL('https://accounts.google.com/oauth2/v2/auth');
+    const authUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth');
     authUrl.searchParams.set('client_id', env.GOOGLE_CLIENT_ID);
     
     // 使用统一回调域名策略，与GitHub OAuth保持一致
