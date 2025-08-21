@@ -77,21 +77,59 @@ function isValidEmail(email: string): boolean {
   return emailRegex.test(email);
 }
 
-// 发送验证邮件（模拟发送，实际需要配置邮件服务）
-async function sendVerificationEmail(email: string, code: string, type: 'code' | 'magic'): Promise<boolean> {
+// 发送验证邮件 - AWS SES集成
+async function sendVerificationEmail(env: any, email: string, code: string, type: 'code' | 'magic', language: 'zh-CN' | 'en' = 'zh-CN'): Promise<boolean> {
   try {
-    console.log(`发送${type === 'code' ? '验证码' : 'Magic Link'}邮件到: ${email}`);
-    console.log(`内容: ${type === 'code' ? `验证码: ${code}` : `Magic Link: https://svtr.ai/auth/verify?token=${code}`}`);
-    
-    // TODO: 集成实际邮件服务 (AWS SES, SendGrid, Resend等)
-    // const emailService = new EmailService(env.EMAIL_API_KEY);
-    // await emailService.send({
-    //   to: email,
-    //   subject: type === 'code' ? 'SVTR 登录验证码' : 'SVTR 登录链接',
-    //   html: generateEmailTemplate(code, type)
-    // });
-    
-    return true;
+    // 检查是否配置了AWS SES
+    if (env.AWS_ACCESS_KEY_ID && env.AWS_SECRET_ACCESS_KEY && env.AWS_REGION && env.FROM_EMAIL) {
+      const { AWSEmailService } = await import('../lib/email-service');
+      
+      const emailService = new AWSEmailService({
+        accessKeyId: env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+        region: env.AWS_REGION,
+        fromEmail: env.FROM_EMAIL
+      });
+      
+      if (type === 'code') {
+        // 发送验证码邮件
+        const success = await emailService.sendVerificationCode({
+          email,
+          code,
+          language
+        });
+        
+        if (success) {
+          console.log(`AWS SES验证码邮件发送成功: ${email}`);
+        } else {
+          console.error(`AWS SES验证码邮件发送失败: ${email}`);
+        }
+        
+        return success;
+      } else {
+        // 发送Magic Link邮件
+        const magicLink = `https://svtr.ai/api/auth?action=verify_magic_link&token=${code}`;
+        const success = await emailService.sendMagicLink({
+          email,
+          magicLink,
+          language
+        });
+        
+        if (success) {
+          console.log(`AWS SES Magic Link邮件发送成功: ${email}`);
+        } else {
+          console.error(`AWS SES Magic Link邮件发送失败: ${email}`);
+        }
+        
+        return success;
+      }
+    } else {
+      // 模拟发送（开发环境）
+      console.log(`[模拟发送] ${type === 'code' ? '验证码' : 'Magic Link'}邮件到: ${email}`);
+      console.log(`[模拟内容] ${type === 'code' ? `验证码: ${code}` : `Magic Link: https://svtr.ai/api/auth?action=verify_magic_link&token=${code}`}`);
+      
+      return true;
+    }
   } catch (error) {
     console.error('邮件发送失败:', error);
     return false;
@@ -204,7 +242,8 @@ export async function onRequestPost(context: any): Promise<Response> {
       });
       
       // 发送验证邮件
-      const emailSent = await sendVerificationEmail(email, code, 'code');
+      const language = requestData.language || 'zh-CN';
+      const emailSent = await sendVerificationEmail(env, email, code, 'code', language);
       
       if (emailSent) {
         return new Response(JSON.stringify({
@@ -265,7 +304,8 @@ export async function onRequestPost(context: any): Promise<Response> {
       });
       
       // 发送Magic Link邮件
-      const emailSent = await sendVerificationEmail(email, magicToken, 'magic');
+      const language = requestData.language || 'zh-CN';
+      const emailSent = await sendVerificationEmail(env, email, magicToken, 'magic', language);
       
       if (emailSent) {
         return new Response(JSON.stringify({

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVTR OAuth 测试页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .btn-google {
+            background-color: #4285f4;
+            color: white;
+        }
+        .btn-github {
+            background-color: #333;
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .user-info {
+            background-color: #e7f3ff;
+            border: 1px solid #bee5eb;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .server-info {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 SVTR OAuth 登录测试</h1>
+        
+        <div class="server-info">
+            <h3>📊 服务器状态</h3>
+            <p><strong>生产环境</strong>: https://svtr.ai</p>
+            <p><strong>测试环境</strong>: https://chatsvtr.pages.dev</p>
+            <p><strong>认证服务</strong>: https://svtr-auth.liumin-gsm.workers.dev</p>
+        </div>
+        
+        <h2>🔐 OAuth 社交登录测试</h2>
+        <p>点击下方按钮测试 Google 和 GitHub 登录功能：</p>
+        
+        <div>
+            <a href="https://svtr.ai/api/auth/google" class="btn btn-google" target="_blank">
+                🔍 Google 登录 (生产环境)
+            </a>
+            <a href="https://chatsvtr.pages.dev/api/auth/google" class="btn btn-google" target="_blank">
+                🔍 Google 登录 (测试环境)
+            </a>
+        </div>
+        
+        <div>
+            <a href="https://svtr.ai/api/auth/github" class="btn btn-github" target="_blank">
+                🐙 GitHub 登录 (生产环境)
+            </a>
+            <a href="https://chatsvtr.pages.dev/api/auth/github" class="btn btn-github" target="_blank">
+                🐙 GitHub 登录 (测试环境)
+            </a>
+        </div>
+        
+        <div id="authStatus"></div>
+        <div id="userInfo"></div>
+        
+        <h2>📝 测试结果记录</h2>
+        <div id="testResults">
+            <p>点击上方登录按钮进行测试，结果将显示在这里...</p>
+        </div>
+    </div>
+    
+    <script>
+        // 检查URL参数中的认证结果
+        function checkAuthResult() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const authSuccess = urlParams.get('auth_success');
+            const authError = urlParams.get('auth_error');
+            const token = urlParams.get('token');
+            const userStr = urlParams.get('user');
+            
+            const statusDiv = document.getElementById('authStatus');
+            const userDiv = document.getElementById('userInfo');
+            const resultsDiv = document.getElementById('testResults');
+            
+            if (authSuccess === 'true') {
+                statusDiv.innerHTML = '<div class="status success">✅ OAuth 登录成功！</div>';
+                
+                if (userStr) {
+                    try {
+                        const user = JSON.parse(decodeURIComponent(userStr));
+                        userDiv.innerHTML = `
+                            <div class="user-info">
+                                <h3>👤 用户信息</h3>
+                                <p><strong>ID:</strong> ${user.id}</p>
+                                <p><strong>邮箱:</strong> ${user.email}</p>
+                                <p><strong>姓名:</strong> ${user.name}</p>
+                                <p><strong>头像:</strong> <img src="${user.avatar}" width="50" height="50" style="border-radius: 50%;"></p>
+                                <p><strong>Token:</strong> ${token}</p>
+                            </div>
+                        `;
+                        
+                        // 保存到localStorage
+                        localStorage.setItem('svtr_user', JSON.stringify(user));
+                        localStorage.setItem('svtr_token', token);
+                        
+                        resultsDiv.innerHTML = `
+                            <div class="status success">
+                                <h4>✅ OAuth 登录测试成功</h4>
+                                <p>• 用户信息获取成功</p>
+                                <p>• 会话令牌生成成功</p>
+                                <p>• 数据已保存到本地存储</p>
+                            </div>
+                        `;
+                        
+                    } catch (error) {
+                        console.error('解析用户信息失败:', error);
+                        resultsDiv.innerHTML = `
+                            <div class="status error">
+                                <h4>⚠️ 用户信息解析失败</h4>
+                                <p>原始数据: ${userStr}</p>
+                            </div>
+                        `;
+                    }
+                }
+                
+            } else if (authError) {
+                statusDiv.innerHTML = `<div class="status error">❌ OAuth 登录失败: ${authError}</div>`;
+                resultsDiv.innerHTML = `
+                    <div class="status error">
+                        <h4>❌ OAuth 登录测试失败</h4>
+                        <p><strong>错误类型:</strong> ${authError}</p>
+                        <p><strong>可能原因:</strong></p>
+                        <ul>
+                            <li>OAuth 应用配置问题</li>
+                            <li>回调URL不匹配</li>
+                            <li>客户端密钥未配置</li>
+                            <li>用户取消授权</li>
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            // 清理URL参数
+            if (authSuccess || authError) {
+                window.history.replaceState({}, '', window.location.pathname);
+            }
+        }
+        
+        // 页面加载时检查认证结果
+        document.addEventListener('DOMContentLoaded', checkAuthResult);
+        
+        // 测试会话验证
+        function testSession() {
+            const token = localStorage.getItem('svtr_token');
+            if (token) {
+                fetch('https://chatsvtr.pages.dev/api/auth?action=verify_session&token=' + token)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('会话验证结果:', data);
+                    })
+                    .catch(error => {
+                        console.error('会话验证失败:', error);
+                    });
+            }
+        }
+        
+        // 自动测试会话（如果有token）
+        setTimeout(testSession, 1000);
+    </script>
+</body>
+</html>
