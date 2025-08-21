@@ -2,40 +2,6 @@ name = "chatsvtr"
 compatibility_date = "2024-07-16"
 pages_build_output_dir = "."
 
-# Enable Gzip/Brotli compression for all text-based assets
-[[headers]]
-for = "*.css"
-[headers.values]
-"Content-Encoding" = "gzip"
-"Cache-Control" = "public, max-age=31536000, immutable"
-
-[[headers]]
-for = "*.js"
-[headers.values]
-"Content-Encoding" = "gzip"
-"Cache-Control" = "public, max-age=31536000, immutable"
-
-[[headers]]
-for = "*.html"
-[headers.values]
-"Content-Encoding" = "gzip"
-"Cache-Control" = "public, max-age=3600"
-
-[[headers]]
-for = "*.webp"
-[headers.values]
-"Cache-Control" = "public, max-age=31536000, immutable"
-
-[[headers]]
-for = "*.png"
-[headers.values]
-"Cache-Control" = "public, max-age=31536000, immutable"
-
-[[headers]]
-for = "*.jpg"
-[headers.values]
-"Cache-Control" = "public, max-age=31536000, immutable"
-
 [[vectorize]]
 binding = "SVTR_VECTORIZE"
 index_name = "autorag-svtr-knowledge-base-ai"
@@ -62,12 +28,15 @@ ALLOWED_RETURN_TO = "https://svtr.ai,https://svtrai.com,https://svtr.cn,https://
 GOOGLE_CLIENT_ID = "369633995349-7apl7m77mpeo4231b1kl2v3nonqi60ga.apps.googleusercontent.com"
 GITHUB_CLIENT_ID = "Ov23liTtfl1NQmZtq2em"
 
-# OAuth 密钥通过wrangler secrets设置
-# wrangler secret put GOOGLE_CLIENT_SECRET
-# wrangler secret put GITHUB_CLIENT_SECRET
+# AWS SES 邮件服务配置
+AWS_REGION = "us-east-1"
+FROM_EMAIL = "noreply@svtr.ai"
 
-[[headers]]
-for = "*.avif"
-[headers.values]
-"Cache-Control" = "public, max-age=31536000, immutable"
-"Content-Type" = "image/avif"
+# Secrets 通过wrangler secret命令设置
+# OAuth secrets:
+# wrangler pages secret put GOOGLE_CLIENT_SECRET
+# wrangler pages secret put GITHUB_CLIENT_SECRET
+# AWS SES secrets:
+# wrangler pages secret put AWS_ACCESS_KEY_ID  
+# wrangler pages secret put AWS_SECRET_ACCESS_KEY
+

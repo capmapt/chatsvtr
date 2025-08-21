@@ -203,25 +203,25 @@
 </head>
 <body itemscope itemtype="https://schema.org/WebPage">
   <header>
+    <button class="menu-toggle" aria-label="打开侧边栏" data-i18n-attr-aria-label="open_sidebar">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 7H21M3 12H21M3 17H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
     <div class="lang-toggle">
       <button id="btnZh" class="active">中文</button>
       <span class="divider">|</span>
       <button id="btnEn">English</button>
     </div>
-    <picture class="header-logo" style="cursor: pointer; position: fixed; top: 20px; left: 20px; z-index: 1100;" title="点击切换侧边栏，Ctrl+点击打开管理面板">
-      <source srcset="assets/images/logo.avif" type="image/avif">
-      <source srcset="assets/images/logo.webp" type="image/webp">
-      <img src="assets/images/logo.jpg" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;" alt="SVTR.AI logo" loading="lazy">
-    </picture>
   </header>
   <div class="overlay"></div>
   <aside class="sidebar open" role="navigation" aria-label="主导航">
     <div class="sidebar-header">
-      <button class="sidebar-collapse-btn" aria-label="折叠侧边栏" data-i18n-attr-aria-label="collapse_sidebar">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3 7H21M3 12H21M3 17H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
+      <picture class="sidebar-logo">
+        <source srcset="assets/images/logo.avif" type="image/avif">
+        <source srcset="assets/images/logo.webp" type="image/webp">
+        <img src="assets/images/logo.jpg" alt="SVTR.AI logo" loading="lazy">
+      </picture>
     </div>
     
     <!-- 用户操作区域 -->

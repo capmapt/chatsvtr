@@ -1,0 +1,26 @@
+name = "svtr-auth"
+main = "worker.ts"
+compatibility_date = "2024-01-15"
+compatibility_flags = ["nodejs_compat"]
+
+# KV绑定 - OTP验证码存储
+[[kv_namespaces]]
+binding = "OTP_KV"
+id = "766acfa754c1454eb2072ecfa6b15fa7"
+preview_id = "1bc38549528f4a9591de6d79084ae8b2"
+
+# 环境变量
+[vars]
+APP_URL = "https://auth.svtr.ai"
+ALLOWED_RETURN_TO = "https://svtr.ai,https://svtrglobal.com,https://svtrai.com,https://svtr.cn"
+AWS_REGION = "us-west-2"
+FROM_LOGIN = "no-reply@svtr.ai"
+APP_SECRET = "43c7610b7bd828fe9fd959da32e0abec6ead16922d28fd3a56c69d0b12e03f2d"
+
+# 生产环境Secrets (通过wrangler secret put设置)
+# AWS_ACCESS_KEY_ID
+# AWS_SECRET_ACCESS_KEY
+
+[env.production]
+name = "svtr-auth"
+route = { pattern = "auth.svtr.ai/*", zone_name = "svtr.ai" }

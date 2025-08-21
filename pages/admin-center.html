@@ -296,6 +296,127 @@
         .data-table tr:hover {
             background: #f8f9fa;
         }
+
+        /* 订阅管理专用样式 */
+        .email-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .email-cell small {
+            color: #666;
+            font-size: 0.75rem;
+        }
+
+        .preferences-cell {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .preference-tag {
+            background: #e3f2fd;
+            color: #1565c0;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+        }
+
+        .language-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .language-badge.zh {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .language-badge.en {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .date-cell {
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+
+        .ip-cell {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-small {
+            padding: 4px 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .btn-info {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .btn-info:hover {
+            background: #bbdefb;
+        }
+
+        .btn-danger {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .btn-danger:hover {
+            background: #ffcdd2;
+        }
+
+        .module-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .toolbar-filters {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .table-info {
+            margin-top: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center;
+        }
         
         /* 状态标签 */
         .status-badge {
@@ -594,10 +715,67 @@
                 <div id="subscription-module" class="content-module">
                     <div class="module-header">
                         <div class="module-title">订阅管理</div>
-                        <div class="module-subtitle">管理AI周报订阅用户和邮件发送</div>
+                        <div class="module-subtitle">管理AI周报订阅者和相关数据</div>
                     </div>
                     <div class="module-content">
-                        <iframe src="admin-dashboard.html" style="width: 100%; height: 600px; border: none; border-radius: 8px;"></iframe>
+                        <!-- 订阅者统计概览 -->
+                        <div class="stats-grid" style="margin-bottom: 30px;">
+                            <div class="stat-card">
+                                <div class="stat-icon">✉️</div>
+                                <div class="stat-content">
+                                    <div class="stat-number" id="subscription-total-subscribers">--</div>
+                                    <div class="stat-label">总订阅者</div>
+                                    <div class="stat-change" id="subscription-growth">+0</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">🇨🇳</div>
+                                <div class="stat-content">
+                                    <div class="stat-number" id="subscription-zh-users">--</div>
+                                    <div class="stat-label">中文用户</div>
+                                    <div class="stat-change" id="subscription-zh-percentage">0%</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">🇺🇸</div>
+                                <div class="stat-content">
+                                    <div class="stat-number" id="subscription-en-users">--</div>
+                                    <div class="stat-label">英文用户</div>
+                                    <div class="stat-change" id="subscription-en-percentage">0%</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">📈</div>
+                                <div class="stat-content">
+                                    <div class="stat-number" id="subscription-today-new">--</div>
+                                    <div class="stat-label">今日新增</div>
+                                    <div class="stat-change">+new</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 订阅者管理操作区 -->
+                        <div class="module-toolbar">
+                            <div class="toolbar-filters">
+                                <select id="subscriptionLanguageFilter" onchange="filterSubscriptions()" class="form-input" style="width: auto;">
+                                    <option value="">所有语言</option>
+                                    <option value="zh-CN">中文</option>
+                                    <option value="en-US">英文</option>
+                                </select>
+                                <input type="text" id="subscriptionSearchInput" placeholder="搜索邮箱..." onkeyup="filterSubscriptions()" class="form-input" style="width: 200px;">
+                                <input type="date" id="subscriptionDateFilter" onchange="filterSubscriptions()" class="form-input" style="width: auto;">
+                            </div>
+                            <div class="toolbar-actions">
+                                <button class="btn-secondary" onclick="exportSubscriptions()">📥 导出数据</button>
+                                <button class="btn-primary" onclick="refreshSubscriptions()">🔄 刷新</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 订阅者列表 -->
+                        <div id="subscriptionsTableContainer">
+                            <div class="loading-spinner"></div>
+                            <span style="margin-left: 10px;">加载订阅数据...</span>
+                        </div>
                     </div>
                 </div>
                 
@@ -857,6 +1035,8 @@
             // 加载模块特定数据
             if (moduleId === 'projects') {
                 loadProjectsData();
+            } else if (moduleId === 'subscription') {
+                loadSubscriptionsData();
             }
 
             // 关闭移动端侧边栏
@@ -910,6 +1090,235 @@
                 document.getElementById('sidebar').classList.remove('mobile-open');
             }
         });
+
+        // 订阅管理相关函数
+        let subscriptionsData = [];
+        let filteredSubscriptionsData = [];
+
+        async function loadSubscriptionsData() {
+            try {
+                console.log('加载订阅数据...');
+                
+                // 获取订阅统计
+                const statsResponse = await fetch('/api/subscribe?action=stats');
+                if (statsResponse.ok) {
+                    const stats = await statsResponse.json();
+                    console.log('订阅统计数据:', stats);
+                    updateSubscriptionStats(stats);
+                }
+                
+                // 获取订阅者列表
+                const listResponse = await fetch('/api/subscribe?action=list');
+                if (listResponse.ok) {
+                    const subscribers = await listResponse.json();
+                    console.log('订阅者列表:', subscribers);
+                    subscriptionsData = Array.isArray(subscribers) ? subscribers : [];
+                    filteredSubscriptionsData = [...subscriptionsData];
+                    renderSubscriptionsTable();
+                }
+                
+            } catch (error) {
+                console.error('加载订阅数据失败:', error);
+                document.getElementById('subscriptionsTableContainer').innerHTML = `
+                    <div class="error-message">
+                        <div style="color: #dc3545; text-align: center; padding: 20px;">
+                            <div>❌ 加载订阅数据失败</div>
+                            <div style="font-size: 14px; margin-top: 5px;">请检查网络连接后重试</div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function updateSubscriptionStats(stats) {
+            document.getElementById('subscription-total-subscribers').textContent = stats.totalSubscribers || 0;
+            document.getElementById('subscription-growth').textContent = `+${stats.todaySubscribers || 0}`;
+            
+            const zhUsers = stats.languageDistribution?.['zh-CN'] || 0;
+            const enUsers = stats.languageDistribution?.['en-US'] || 0;
+            const total = stats.totalSubscribers || 1;
+            
+            document.getElementById('subscription-zh-users').textContent = zhUsers;
+            document.getElementById('subscription-en-users').textContent = enUsers;
+            document.getElementById('subscription-zh-percentage').textContent = `${Math.round(zhUsers / total * 100)}%`;
+            document.getElementById('subscription-en-percentage').textContent = `${Math.round(enUsers / total * 100)}%`;
+            document.getElementById('subscription-today-new').textContent = stats.todaySubscribers || 0;
+        }
+
+        function renderSubscriptionsTable() {
+            const container = document.getElementById('subscriptionsTableContainer');
+            
+            if (filteredSubscriptionsData.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📭</div>
+                        <h3>暂无订阅数据</h3>
+                        <p>还没有用户订阅AI周报</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const tableHTML = `
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>邮箱地址</th>
+                                <th>订阅偏好</th>
+                                <th>语言</th>
+                                <th>订阅时间</th>
+                                <th>IP地址</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${filteredSubscriptionsData.map(subscriber => `
+                                <tr>
+                                    <td>
+                                        <div class="email-cell">
+                                            <strong>${subscriber.email}</strong>
+                                            <small>${subscriber.email.split('@')[1]}</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="preferences-cell">
+                                            ${(subscriber.preferences || []).map(pref => 
+                                                `<span class="preference-tag">${pref}</span>`
+                                            ).join('')}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="language-badge ${subscriber.language === 'zh-CN' ? 'zh' : 'en'}">
+                                            ${subscriber.language === 'zh-CN' ? '🇨🇳 中文' : '🇺🇸 英文'}
+                                        </span>
+                                    </td>
+                                    <td class="date-cell">${formatSubscriptionDate(subscriber.subscribedAt)}</td>
+                                    <td class="ip-cell">${subscriber.ipAddress || '--'}</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn-small btn-info" onclick="viewSubscriptionDetails('${subscriber.email}')" title="查看详情">
+                                                👁️
+                                            </button>
+                                            <button class="btn-small btn-danger" onclick="removeSubscription('${subscriber.email}')" title="取消订阅">
+                                                🗑️
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-info">
+                    <span>共 ${filteredSubscriptionsData.length} 个订阅者 (总计 ${subscriptionsData.length} 个)</span>
+                </div>
+            `;
+            
+            container.innerHTML = tableHTML;
+        }
+
+        function filterSubscriptions() {
+            const languageFilter = document.getElementById('subscriptionLanguageFilter').value;
+            const searchInput = document.getElementById('subscriptionSearchInput').value.toLowerCase();
+            const dateFilter = document.getElementById('subscriptionDateFilter').value;
+            
+            filteredSubscriptionsData = subscriptionsData.filter(subscriber => {
+                const matchesLanguage = !languageFilter || subscriber.language === languageFilter;
+                const matchesSearch = !searchInput || subscriber.email.toLowerCase().includes(searchInput);
+                const matchesDate = !dateFilter || subscriber.subscribedAt?.startsWith(dateFilter);
+                
+                return matchesLanguage && matchesSearch && matchesDate;
+            });
+            
+            renderSubscriptionsTable();
+        }
+
+        function refreshSubscriptions() {
+            loadSubscriptionsData();
+        }
+
+        function exportSubscriptions() {
+            try {
+                const csvContent = [
+                    ['邮箱地址', '订阅偏好', '语言', '订阅时间', 'IP地址', 'User Agent'],
+                    ...filteredSubscriptionsData.map(sub => [
+                        sub.email,
+                        (sub.preferences || []).join('; '),
+                        sub.language,
+                        sub.subscribedAt,
+                        sub.ipAddress || '',
+                        sub.userAgent || ''
+                    ])
+                ].map(row => row.map(field => `"${String(field).replace(/"/g, '""')}"`).join(',')).join('\n');
+                
+                const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `SVTR订阅者数据_${new Date().toISOString().split('T')[0]}.csv`;
+                link.click();
+                
+                console.log('订阅数据导出成功');
+            } catch (error) {
+                console.error('导出失败:', error);
+                alert('导出失败，请重试');
+            }
+        }
+
+        function viewSubscriptionDetails(email) {
+            const subscriber = subscriptionsData.find(sub => sub.email === email);
+            if (!subscriber) return;
+            
+            const detailsHTML = `
+                <div class="modal-content">
+                    <h3>订阅者详情</h3>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <label>邮箱地址:</label>
+                            <span>${subscriber.email}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>订阅偏好:</label>
+                            <span>${(subscriber.preferences || []).join(', ')}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>语言设置:</label>
+                            <span>${subscriber.language === 'zh-CN' ? '中文' : '英文'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>订阅时间:</label>
+                            <span>${formatSubscriptionDate(subscriber.subscribedAt)}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>IP地址:</label>
+                            <span>${subscriber.ipAddress || '未记录'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <label>浏览器:</label>
+                            <span>${subscriber.userAgent || '未记录'}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            showModal('订阅者详情', detailsHTML);
+        }
+
+        function removeSubscription(email) {
+            if (confirm(`确定要取消 ${email} 的订阅吗？`)) {
+                // 这里可以添加取消订阅的API调用
+                alert('取消订阅功能正在开发中...');
+            }
+        }
+
+        function formatSubscriptionDate(dateString) {
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('zh-CN') + ' ' + date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+            } catch (error) {
+                return '无效日期';
+            }
+        }
 
         // 项目管理相关函数
         async function loadProjectsData() {
