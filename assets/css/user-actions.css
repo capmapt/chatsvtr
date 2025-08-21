@@ -457,6 +457,16 @@
   background: #f6f8fa;
 }
 
+.btn-linkedin {
+  border-color: #0077B5;
+  color: #0077B5;
+}
+
+.btn-linkedin:hover {
+  border-color: #0077B5;
+  background: #f0f8ff;
+}
+
 /* ===========================================
    登录分割线样式
    =========================================== */

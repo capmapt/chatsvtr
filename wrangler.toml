@@ -27,6 +27,7 @@ APP_URL = "https://svtr.ai"
 ALLOWED_RETURN_TO = "https://svtr.ai,https://svtrai.com,https://svtr.cn,https://svtrglobal.com,http://localhost:3000"
 GOOGLE_CLIENT_ID = "369633995349-7apl7m77mpeo4231b1kl2v3nonqi60ga.apps.googleusercontent.com"
 GITHUB_CLIENT_ID = "Ov23liTtfl1NQmZtq2em"
+LINKEDIN_CLIENT_ID = "YOUR_LINKEDIN_CLIENT_ID"
 
 # AWS SES 邮件服务配置
 AWS_REGION = "us-east-1"
@@ -36,6 +37,7 @@ FROM_EMAIL = "noreply@svtr.ai"
 # OAuth secrets:
 # wrangler pages secret put GOOGLE_CLIENT_SECRET
 # wrangler pages secret put GITHUB_CLIENT_SECRET
+# wrangler pages secret put LINKEDIN_CLIENT_SECRET
 # AWS SES secrets:
 # wrangler pages secret put AWS_ACCESS_KEY_ID  
 # wrangler pages secret put AWS_SECRET_ACCESS_KEY
