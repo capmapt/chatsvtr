@@ -34,6 +34,12 @@
   animation: modalSlideIn 0.3s ease;
 }
 
+/* 个人中心模态框样式 */
+.user-profile-modal .modal-content {
+  max-width: 600px;
+  max-height: 85vh;
+}
+
 .modal-header {
   display: flex;
   align-items: center;
@@ -212,6 +218,224 @@
   opacity: 0.6;
 }
 
+/* 社交登录按钮样式 */
+.social-login-section {
+  margin-bottom: 20px;
+}
+
+.social-login-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-oauth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-oauth:hover {
+  background: #f8f9fa;
+  border-color: #bbb;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-google:hover {
+  background: #f8f9fa;
+  border-color: #4285F4;
+}
+
+.btn-github:hover {
+  background: #f8f9fa;
+  border-color: #24292e;
+}
+
+.btn-linkedin:hover {
+  background: #f8f9fa;
+  border-color: #0077b5;
+}
+
+/* 登录分割线样式 */
+.login-divider {
+  position: relative;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.login-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #ddd;
+}
+
+.login-divider span {
+  background: white;
+  padding: 0 16px;
+  color: #666;
+  font-size: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+/* 邮箱登录区域样式 */
+.email-login-section {
+  margin-bottom: 20px;
+}
+
+.login-method-tabs {
+  display: flex;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.method-tab {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  background: none;
+  color: #666;
+  font-size: 14px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.method-tab.active {
+  color: #FA8C32;
+  border-bottom-color: #FA8C32;
+  font-weight: 600;
+}
+
+.login-method-content {
+  display: none;
+}
+
+.login-method-content.active {
+  display: block;
+}
+
+.input-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #FA8C32;
+  box-shadow: 0 0 0 3px rgba(250, 140, 50, 0.1);
+}
+
+.btn-send-code,
+.btn-send-magic {
+  padding: 12px 16px;
+  background: #FA8C32;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-send-code:hover,
+.btn-send-magic:hover {
+  background: #e67a28;
+}
+
+.btn-send-code:disabled,
+.btn-send-magic:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.verification-input {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.code-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  text-align: center;
+  font-family: monospace;
+  letter-spacing: 2px;
+}
+
+.btn-verify {
+  padding: 12px 20px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-verify:hover {
+  background: #43A047;
+}
+
+.magic-link-sent {
+  text-align: center;
+  padding: 20px;
+}
+
+.success-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.success-icon {
+  font-size: 32px;
+}
+
+.success-message p {
+  margin: 0;
+  font-weight: 600;
+  color: #4CAF50;
+}
+
+.success-message small {
+  color: #666;
+  font-size: 12px;
+}
+
 /* 会员权益样式 */
 .member-benefits {
   margin-top: 24px;
@@ -363,5 +587,499 @@
   .tab-btn.active {
     background: rgba(250, 140, 50, 0.1);
     border-bottom-color: #eee;
+  }
+}
+
+/* ============ 个人中心样式 ============ */
+
+/* 用户基本信息区域 */
+.user-info-section {
+  margin-bottom: 20px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(250, 140, 50, 0.05), rgba(255, 224, 178, 0.1));
+  border-radius: 12px;
+  border: 1px solid rgba(250, 140, 50, 0.15);
+}
+
+.user-avatar-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.user-avatar-large {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3px solid #FA8C32;
+  padding: 2px;
+  background: white;
+}
+
+.user-basic-info h4 {
+  margin: 0 0 4px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.user-email {
+  margin: 0 0 4px;
+  color: #666;
+  font-size: 14px;
+}
+
+.user-provider {
+  display: inline-block;
+  font-size: 12px;
+  color: #FA8C32;
+  background: rgba(250, 140, 50, 0.1);
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(250, 140, 50, 0.2);
+}
+
+/* 个人中心导航标签 */
+.profile-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 20px;
+  padding: 4px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.profile-tab {
+  flex: 1;
+  min-width: 100px;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: #666;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.profile-tab:hover {
+  background: rgba(250, 140, 50, 0.1);
+  color: #FA8C32;
+}
+
+.profile-tab.active {
+  background: #FA8C32;
+  color: white;
+  box-shadow: 0 2px 4px rgba(250, 140, 50, 0.3);
+}
+
+/* 个人中心内容区域 */
+.profile-content {
+  display: none;
+}
+
+.profile-content.active {
+  display: block;
+}
+
+.info-card {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.info-card h5 {
+  margin: 0 0 16px;
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+  border-bottom: 2px solid #FA8C32;
+  padding-bottom: 8px;
+}
+
+/* 信息行样式 */
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row label {
+  font-weight: 600;
+  color: #555;
+  font-size: 14px;
+}
+
+.info-row span {
+  color: #333;
+  font-size: 14px;
+}
+
+/* 偏好设置样式 */
+.preference-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.preference-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.preference-item:hover {
+  background: rgba(250, 140, 50, 0.05);
+}
+
+.preference-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #FA8C32;
+}
+
+.preference-item span {
+  font-size: 14px;
+  color: #555;
+}
+
+.preference-select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+  color: #333;
+}
+
+.preference-select:focus {
+  outline: none;
+  border-color: #FA8C32;
+  box-shadow: 0 0 0 3px rgba(250, 140, 50, 0.1);
+}
+
+/* 话题标签样式 */
+.topic-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.topic-tag {
+  display: inline-block;
+  padding: 6px 12px;
+  background: linear-gradient(135deg, rgba(250, 140, 50, 0.1), rgba(255, 224, 178, 0.2));
+  color: #FA8C32;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 16px;
+  border: 1px solid rgba(250, 140, 50, 0.2);
+}
+
+/* 专家列表样式 */
+.expert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.expert-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+.expert-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #FA8C32;
+  padding: 1px;
+  background: white;
+}
+
+.expert-info {
+  flex: 1;
+}
+
+.expert-name {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.expert-title {
+  display: block;
+  font-size: 12px;
+  color: #666;
+}
+
+/* 好友列表样式 */
+.friends-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.friend-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+.friend-item img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #FA8C32;
+  padding: 1px;
+  background: white;
+}
+
+.friend-info {
+  flex: 1;
+}
+
+.friend-name {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.friend-status {
+  display: block;
+  font-size: 12px;
+  color: #4CAF50;
+}
+
+.btn-friend-action {
+  background: #FA8C32;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-friend-action:hover {
+  background: #e67a28;
+}
+
+.btn-add-friend {
+  background: linear-gradient(135deg, #FA8C32, #FFBB33);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-add-friend:hover {
+  background: linear-gradient(135deg, #e67a28, #e6a82d);
+  transform: translateY(-1px);
+}
+
+/* 会员权益样式 */
+.membership-card {
+  background: linear-gradient(135deg, rgba(250, 140, 50, 0.05), rgba(255, 224, 178, 0.1));
+  border: 1px solid rgba(250, 140, 50, 0.2);
+}
+
+.membership-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #FA8C32, #FFBB33);
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(250, 140, 50, 0.3);
+}
+
+.badge-icon {
+  font-size: 18px;
+}
+
+.badge-text {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.membership-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid rgba(250, 140, 50, 0.1);
+}
+
+.benefit-icon {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.benefit-text {
+  flex: 1;
+  font-size: 14px;
+  color: #333;
+}
+
+.benefit-status {
+  font-size: 16px;
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.benefit-status.active {
+  color: #4CAF50;
+}
+
+/* 操作按钮区域 */
+.profile-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.btn-logout {
+  flex: 1;
+  background: #f44336;
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+  background: #d32f2f;
+  transform: translateY(-1px);
+}
+
+.btn-save-profile {
+  flex: 1;
+  background: linear-gradient(135deg, #4CAF50, #66BB6A);
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-save-profile:hover {
+  background: linear-gradient(135deg, #43A047, #5CBB5D);
+  transform: translateY(-1px);
+}
+
+/* 响应式设计 - 个人中心 */
+@media (max-width: 768px) {
+  .user-profile-modal .modal-content {
+    max-width: 95%;
+  }
+  
+  .profile-tabs {
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  .profile-tab {
+    flex: none;
+    text-align: left;
+  }
+  
+  .user-avatar-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+  
+  .info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .profile-actions {
+    flex-direction: column;
+  }
+  
+  .expert-item,
+  .friend-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .topic-tags {
+    flex-direction: column;
+  }
+  
+  .topic-tag {
+    text-align: center;
+  }
+  
+  .membership-benefits {
+    gap: 8px;
+  }
+  
+  .benefit-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 6px;
   }
 }

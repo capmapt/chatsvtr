@@ -106,27 +106,264 @@ class SVTRUserActions {
   }
 
   /**
-   * 处理会员登录
+   * 处理会员登录/用户菜单
    */
   async handleMemberLogin(event) {
     event.preventDefault();
     const button = event.currentTarget;
     
-    try {
-      // 添加加载状态
-      this.setButtonLoading(button, true);
-      
-      // 显示会员登录弹窗
-      this.showMemberLoginModal();
-      
-    } catch (error) {
-      console.error('会员登录处理失败:', error);
-      this.showToast('登录服务暂时不可用，请稍后重试', 'error');
-    } finally {
-      this.setButtonLoading(button, false);
+    // 检查是否已登录
+    const userStr = localStorage.getItem('svtr_user');
+    const token = localStorage.getItem('svtr_token');
+    
+    if (userStr && token) {
+      try {
+        const user = JSON.parse(userStr);
+        // 已登录，显示用户菜单
+        this.showUserProfileModal(user);
+      } catch (error) {
+        console.error('解析用户信息失败:', error);
+        // 清理无效数据，显示登录界面
+        localStorage.removeItem('svtr_user');
+        localStorage.removeItem('svtr_token');
+        this.showMemberLoginModal();
+      }
+    } else {
+      // 未登录，显示登录界面
+      try {
+        // 添加加载状态
+        this.setButtonLoading(button, true);
+        
+        // 显示会员登录弹窗
+        this.showMemberLoginModal();
+        
+      } catch (error) {
+        console.error('会员登录处理失败:', error);
+        this.showToast('登录服务暂时不可用，请稍后重试', 'error');
+      } finally {
+        this.setButtonLoading(button, false);
+      }
     }
   }
 
+
+  /**
+   * 显示用户个人后台界面
+   */
+  showUserProfileModal(user) {
+    const currentLang = this.getCurrentLang();
+    
+    const modal = document.createElement('div');
+    modal.className = 'user-action-modal user-profile-modal';
+    modal.innerHTML = `
+      <div class="modal-backdrop" onclick="this.parentElement.remove()"></div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>${currentLang === 'zh-CN' ? '👤 个人中心' : '👤 Profile Center'}</h3>
+          <button class="modal-close" onclick="this.closest('.user-action-modal').remove()">×</button>
+        </div>
+        <div class="modal-body">
+          <!-- 用户基本信息 -->
+          <div class="user-info-section">
+            <div class="user-avatar-info">
+              <img src="${user.avatar}" alt="${user.name}" class="user-avatar-large">
+              <div class="user-basic-info">
+                <h4>${user.name}</h4>
+                <p class="user-email">${user.email}</p>
+                <span class="user-provider">通过 ${user.provider || 'Email'} 登录</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 个人中心导航标签 -->
+          <div class="profile-tabs">
+            <button class="profile-tab active" data-tab="profile">
+              📝 ${currentLang === 'zh-CN' ? '个人信息' : 'Profile'}
+            </button>
+            <button class="profile-tab" data-tab="preferences">
+              ⚙️ ${currentLang === 'zh-CN' ? '偏好设置' : 'Preferences'}
+            </button>
+            <button class="profile-tab" data-tab="following">
+              👥 ${currentLang === 'zh-CN' ? '关注' : 'Following'}
+            </button>
+            <button class="profile-tab" data-tab="friends">
+              🤝 ${currentLang === 'zh-CN' ? '好友' : 'Friends'}
+            </button>
+            <button class="profile-tab" data-tab="membership">
+              💎 ${currentLang === 'zh-CN' ? '会员权益' : 'Membership'}
+            </button>
+          </div>
+
+          <!-- 个人信息标签页 -->
+          <div class="profile-content active" data-tab="profile">
+            <div class="info-card">
+              <h5>${currentLang === 'zh-CN' ? '基本信息' : 'Basic Information'}</h5>
+              <div class="info-row">
+                <label>${currentLang === 'zh-CN' ? '用户名:' : 'Username:'}</label>
+                <span>${user.name}</span>
+              </div>
+              <div class="info-row">
+                <label>${currentLang === 'zh-CN' ? '邮箱:' : 'Email:'}</label>
+                <span>${user.email}</span>
+              </div>
+              <div class="info-row">
+                <label>${currentLang === 'zh-CN' ? '注册时间:' : 'Member Since:'}</label>
+                <span>${user.createdAt || new Date().toLocaleDateString()}</span>
+              </div>
+              <div class="info-row">
+                <label>${currentLang === 'zh-CN' ? '最后登录:' : 'Last Login:'}</label>
+                <span>${new Date().toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 偏好设置标签页 -->
+          <div class="profile-content" data-tab="preferences">
+            <div class="info-card">
+              <h5>${currentLang === 'zh-CN' ? '内容偏好' : 'Content Preferences'}</h5>
+              <div class="preference-items">
+                <label class="preference-item">
+                  <input type="checkbox" checked>
+                  <span>${currentLang === 'zh-CN' ? 'AI 周报订阅' : 'AI Weekly Newsletter'}</span>
+                </label>
+                <label class="preference-item">
+                  <input type="checkbox" checked>
+                  <span>${currentLang === 'zh-CN' ? '市场洞察报告' : 'Market Insights'}</span>
+                </label>
+                <label class="preference-item">
+                  <input type="checkbox">
+                  <span>${currentLang === 'zh-CN' ? '投资机会推送' : 'Investment Opportunities'}</span>
+                </label>
+                <label class="preference-item">
+                  <input type="checkbox">
+                  <span>${currentLang === 'zh-CN' ? '活动邀请' : 'Event Invitations'}</span>
+                </label>
+              </div>
+            </div>
+            <div class="info-card">
+              <h5>${currentLang === 'zh-CN' ? '语言偏好' : 'Language Preference'}</h5>
+              <select class="preference-select">
+                <option value="zh-CN" ${currentLang === 'zh-CN' ? 'selected' : ''}>${currentLang === 'zh-CN' ? '中文简体' : 'Chinese (Simplified)'}</option>
+                <option value="en" ${currentLang === 'en' ? 'selected' : ''}>${currentLang === 'zh-CN' ? '英文' : 'English'}</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 关注标签页 -->
+          <div class="profile-content" data-tab="following">
+            <div class="info-card">
+              <h5>${currentLang === 'zh-CN' ? '关注的话题' : 'Following Topics'}</h5>
+              <div class="topic-tags">
+                <span class="topic-tag">🤖 AI Technology</span>
+                <span class="topic-tag">💰 Venture Capital</span>
+                <span class="topic-tag">🚀 Startups</span>
+                <span class="topic-tag">📊 Market Analysis</span>
+                <span class="topic-tag">🔬 Deep Tech</span>
+              </div>
+            </div>
+            <div class="info-card">
+              <h5>${currentLang === 'zh-CN' ? '关注的专家' : 'Following Experts'}</h5>
+              <div class="expert-list">
+                <div class="expert-item">
+                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=expert1" alt="Expert 1">
+                  <div class="expert-info">
+                    <span class="expert-name">张明华</span>
+                    <span class="expert-title">AI投资专家</span>
+                  </div>
+                </div>
+                <div class="expert-item">
+                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=expert2" alt="Expert 2">
+                  <div class="expert-info">
+                    <span class="expert-name">Sarah Chen</span>
+                    <span class="expert-title">Venture Partner</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 好友标签页 -->
+          <div class="profile-content" data-tab="friends">
+            <div class="info-card">
+              <h5>${currentLang === 'zh-CN' ? '好友列表' : 'Friends List'}</h5>
+              <div class="friends-list">
+                <div class="friend-item">
+                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=friend1" alt="Friend 1">
+                  <div class="friend-info">
+                    <span class="friend-name">李小明</span>
+                    <span class="friend-status">在线</span>
+                  </div>
+                  <button class="btn-friend-action">💬</button>
+                </div>
+                <div class="friend-item">
+                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=friend2" alt="Friend 2">
+                  <div class="friend-info">
+                    <span class="friend-name">王小红</span>
+                    <span class="friend-status">离线</span>
+                  </div>
+                  <button class="btn-friend-action">💬</button>
+                </div>
+              </div>
+              <button class="btn-add-friend">
+                ➕ ${currentLang === 'zh-CN' ? '添加好友' : 'Add Friend'}
+              </button>
+            </div>
+          </div>
+
+          <!-- 会员权益标签页 -->
+          <div class="profile-content" data-tab="membership">
+            <div class="info-card membership-card">
+              <h5>${currentLang === 'zh-CN' ? '会员等级' : 'Membership Level'}</h5>
+              <div class="membership-badge">
+                <span class="badge-icon">⭐</span>
+                <span class="badge-text">${currentLang === 'zh-CN' ? '高级会员' : 'Premium Member'}</span>
+              </div>
+              <div class="membership-benefits">
+                <div class="benefit-item">
+                  <span class="benefit-icon">📊</span>
+                  <span class="benefit-text">${currentLang === 'zh-CN' ? '高级数据分析报告' : 'Advanced Analytics Reports'}</span>
+                  <span class="benefit-status active">✓</span>
+                </div>
+                <div class="benefit-item">
+                  <span class="benefit-icon">🎯</span>
+                  <span class="benefit-text">${currentLang === 'zh-CN' ? '个性化投资机会推送' : 'Personalized Investment Opportunities'}</span>
+                  <span class="benefit-status active">✓</span>
+                </div>
+                <div class="benefit-item">
+                  <span class="benefit-icon">🤝</span>
+                  <span class="benefit-text">${currentLang === 'zh-CN' ? '专属社群和活动' : 'Exclusive Community & Events'}</span>
+                  <span class="benefit-status active">✓</span>
+                </div>
+                <div class="benefit-item">
+                  <span class="benefit-icon">💼</span>
+                  <span class="benefit-text">${currentLang === 'zh-CN' ? '一对一咨询服务' : '1-on-1 Consultation Services'}</span>
+                  <span class="benefit-status active">✓</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 操作按钮区域 -->
+          <div class="profile-actions">
+            <button class="btn-logout" onclick="window.svtrUserActions.handleLogout()">
+              🚪 ${currentLang === 'zh-CN' ? '退出登录' : 'Logout'}
+            </button>
+            <button class="btn-save-profile">
+              💾 ${currentLang === 'zh-CN' ? '保存设置' : 'Save Settings'}
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // 绑定标签页切换事件
+    this.bindProfileTabSwitching(modal);
+    
+    // 绑定保存设置事件
+    this.bindProfileActions(modal);
+  }
 
   /**
    * 显示会员登录弹窗
@@ -706,6 +943,132 @@ class SVTRUserActions {
     }
     
     return 'en';
+  }
+
+  /**
+   * 绑定个人中心标签页切换
+   */
+  bindProfileTabSwitching(modal) {
+    const profileTabs = modal.querySelectorAll('.profile-tab');
+    const profileContents = modal.querySelectorAll('.profile-content');
+    
+    profileTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetTab = tab.dataset.tab;
+        
+        // 更新标签状态
+        profileTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        // 更新内容显示
+        profileContents.forEach(content => {
+          content.classList.remove('active');
+          if (content.dataset.tab === targetTab) {
+            content.classList.add('active');
+          }
+        });
+      });
+    });
+  }
+
+  /**
+   * 绑定个人中心操作事件
+   */
+  bindProfileActions(modal) {
+    // 保存设置按钮
+    const saveBtn = modal.querySelector('.btn-save-profile');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', () => {
+        this.handleSaveProfile(modal);
+      });
+    }
+
+    // 添加好友按钮
+    const addFriendBtn = modal.querySelector('.btn-add-friend');
+    if (addFriendBtn) {
+      addFriendBtn.addEventListener('click', () => {
+        this.showToast('添加好友功能正在开发中', 'info');
+      });
+    }
+
+    // 好友聊天按钮
+    const friendActionBtns = modal.querySelectorAll('.btn-friend-action');
+    friendActionBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.showToast('聊天功能正在开发中', 'info');
+      });
+    });
+  }
+
+  /**
+   * 处理保存个人设置
+   */
+  async handleSaveProfile(modal) {
+    try {
+      const currentLang = this.getCurrentLang();
+      
+      // 收集偏好设置
+      const preferences = [];
+      const checkboxes = modal.querySelectorAll('.preference-item input[type="checkbox"]:checked');
+      checkboxes.forEach(checkbox => {
+        preferences.push(checkbox.nextElementSibling.textContent.trim());
+      });
+      
+      // 获取语言偏好
+      const languageSelect = modal.querySelector('.preference-select');
+      const language = languageSelect.value;
+      
+      // 模拟保存API调用
+      this.showToast(currentLang === 'zh-CN' ? '设置已保存' : 'Settings saved', 'success');
+      
+      // 如果语言设置有变化，可以触发页面语言切换
+      if (language !== currentLang) {
+        console.log('语言偏好已更新:', language);
+      }
+      
+    } catch (error) {
+      console.error('保存设置失败:', error);
+      this.showToast('保存失败，请重试', 'error');
+    }
+  }
+
+  /**
+   * 处理退出登录
+   */
+  handleLogout() {
+    const currentLang = this.getCurrentLang();
+    
+    // 确认对话框
+    if (confirm(currentLang === 'zh-CN' ? '确定要退出登录吗？' : 'Are you sure you want to logout?')) {
+      try {
+        // 清理本地存储
+        localStorage.removeItem('svtr_user');
+        localStorage.removeItem('svtr_token');
+        
+        // 恢复登录按钮状态
+        if (this.memberLoginBtn) {
+          this.memberLoginBtn.classList.remove('success');
+          this.memberLoginBtn.innerHTML = `
+            <span class="btn-icon">👤</span>
+            ${currentLang === 'zh-CN' ? '会员登录' : 'Member Login'}
+          `;
+        }
+        
+        // 关闭所有模态框
+        const modals = document.querySelectorAll('.user-action-modal');
+        modals.forEach(modal => modal.remove());
+        
+        // 显示成功消息
+        this.showToast(currentLang === 'zh-CN' ? '已成功退出登录' : 'Successfully logged out', 'success');
+        
+        // 跟踪登出事件
+        console.log('用户登出:', new Date().toISOString());
+        
+      } catch (error) {
+        console.error('退出登录失败:', error);
+        this.showToast(currentLang === 'zh-CN' ? '退出失败，请重试' : 'Logout failed, please try again', 'error');
+      }
+    }
   }
 }
 
