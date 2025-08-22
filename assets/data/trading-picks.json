@@ -2,10 +2,579 @@
   "meta": {
     "title": "交易精选",
     "description": "精选优质创业公司与投资机会分析",
-    "totalCompanies": 0,
-    "lastUpdated": "2025-08-21T18:30:28.275Z",
+    "totalCompanies": 18,
+    "lastUpdated": "2025-08-22T18:37:33.926Z",
     "source": "SVTR飞书知识库",
     "dataVersion": "2.0"
   },
-  "companies": []
+  "companies": [
+    {
+      "id": 1,
+      "name": "Databricks",
+      "sector": "💾 数据服务",
+      "stage": "超级独角兽 · 成熟期",
+      "description": "Databricks，正以 1000 亿美元估值 进行新一轮融资。此次交易由 Thrive Capital、Insight Partners 和 WCM Investment Management 领投，Andreessen Horowitz 也将参与。",
+      "fundingAmount": "100.0亿美元融资 · 估值620亿美元",
+      "lastFundingDate": "2025年",
+      "valuation": "620亿美元",
+      "investors": [
+        "Thrive Capital",
+        "Andreessen Horowitz",
+        "Insight Partners",
+        "GIC",
+        "Capital Group",
+        "WCM"
+      ],
+      "founder": "Ali Ghodsi",
+      "website": "https://www.databricks.com/",
+      "location": "美国旧金山",
+      "foundedYear": "2013",
+      "employees": "",
+      "arr": "",
+      "tags": [
+        "AI100",
+        "Unicorn",
+        "AI50"
+      ],
+      "analysisPoints": [
+        "🏆 超级独角兽企业，估值620亿美元，行业领军地位",
+        "💎 单轮融资100.0亿美元，资本高度认可"
+      ],
+      "businessModel": "提供基于云的平台，帮助企业存储、管理和分析大量数据",
+      "deepResearch": ""
+    },
+    {
+      "id": 2,
+      "name": "Anthropic",
+      "sector": "🤖 大语言模型",
+      "stage": "超级独角兽 · 成长期",
+      "description": "Anthropic 正与包括阿布扎比MGX（Mubadala Growth Management 旗下AI基金）在内的多家中东主权资本深入接洽，拟筹资 30–50亿美元，目标估值 超过1500亿美元，几乎为当前估值的三倍。阿布扎比相关基金通过二级市场以约 5亿美元 收购 FTX 所持 Anthropic 股权。Anthropic 的年度经常性收入（ARR）已由年初 10亿美元上涨 至目前 超过40...",
+      "fundingAmount": "35.0亿美元融资 · 估值615亿美元",
+      "lastFundingDate": "2025年7月",
+      "valuation": "615亿美元",
+      "investors": [
+        "Lightspeed Venture Partners",
+        "Bessemer Venture Partners",
+        "Cisco Investments等"
+      ],
+      "founder": "Dario Amodei",
+      "website": "https://www.anthropic.com/",
+      "location": "美国旧金山",
+      "foundedYear": "2021",
+      "employees": "750",
+      "arr": "14.0亿美元",
+      "tags": [
+        "多模态",
+        "AI100",
+        "Unicorn",
+        "AI50",
+        "高收入"
+      ],
+      "analysisPoints": [
+        "🏆 超级独角兽企业，估值615亿美元，行业领军地位",
+        "💰 年化收入14.0亿美元，商业模式成熟",
+        "💎 单轮融资35.0亿美元，资本高度认可"
+      ],
+      "businessModel": "人工智能技术",
+      "deepResearch": "Anthropic，OpenAI宫斗背后的公司"
+    },
+    {
+      "id": 3,
+      "name": "Surge AI",
+      "sector": "💾 数据服务",
+      "stage": "超级独角兽 · 成长期",
+      "description": "Surge AI，2021 年成立于 美国旧金山，为 AI 训练提供大规模高质量数据标注服务。正筹划 10 亿美元首轮融资，投资方未披露。本轮估值为 250 亿美元。Surge AI 去年的收入超过 10 亿美元，高于其更知名的竞争对手 Scale AI，后者同期报告的收入为 8.7 亿美元。Scale AI 在去年的一轮融资中估值为 140 亿美元，最近当 Meta 投资该公司 49% 的股份并...",
+      "fundingAmount": "10.0亿美元融资 · 估值150亿美元",
+      "lastFundingDate": "2025年7月",
+      "valuation": "150亿美元",
+      "investors": [],
+      "founder": "Edwin C.",
+      "website": "https://www.surgehq.ai",
+      "location": "美国旧金山",
+      "foundedYear": "2021",
+      "employees": "",
+      "arr": "",
+      "tags": [
+        "华人",
+        "华人创业"
+      ],
+      "analysisPoints": [
+        "🏆 超级独角兽企业，估值150亿美元，行业领军地位",
+        "💎 单轮融资10.0亿美元，资本高度认可",
+        "👨‍💻 创始人Edwin C.来自顶级科技公司，技术实力雄厚"
+      ],
+      "businessModel": "为 AI 训练提供大规模高质量数据标注服务",
+      "deepResearch": ""
+    },
+    {
+      "id": 4,
+      "name": "Anysphere（Cursor）",
+      "sector": "👨‍💻 开发者工具",
+      "stage": "独角兽 · 成长期",
+      "description": "Anysphere（Cursor），正以 180-200 亿美元估值进行融资",
+      "fundingAmount": "9.0亿美元融资 · 估值90亿美元",
+      "lastFundingDate": "2025年5月",
+      "valuation": "90亿美元",
+      "investors": [
+        "Thrive Capital",
+        "Andreessen Horowitz",
+        "Accel"
+      ],
+      "founder": "Michael Truell",
+      "website": "https://www.anysphere.co/",
+      "location": "美国旧金山",
+      "foundedYear": "2022",
+      "employees": "50",
+      "arr": "2.0亿美元",
+      "tags": [
+        "编程",
+        "Unicorn",
+        "AI Native"
+      ],
+      "analysisPoints": [
+        "🦄 独角兽企业，市场估值90亿美元",
+        "💰 年化收入2.0亿美元，商业模式成熟",
+        "💎 单轮融资9.0亿美元，资本高度认可"
+      ],
+      "businessModel": "开发AI驱动的编程助手Cursor",
+      "deepResearch": ""
+    },
+    {
+      "id": 5,
+      "name": "Cerebras Systems",
+      "sector": "⚙️ AI基础设施",
+      "stage": "独角兽 · 成熟期",
+      "description": "Cerebras，2016年成立于美国Sunnyvale，设计制造晶圆级芯片与AI计算系统，面向高性能AI工作负载。正在筹备约10亿美元新一轮融资，投资方为Fidelity（拟领投）。本轮估值未披露，累计融资约11.4亿美元。",
+      "fundingAmount": "7.2亿美元融资 · 估值40亿美元",
+      "lastFundingDate": "2025年8月",
+      "valuation": "40亿美元",
+      "investors": [
+        "Alpha Wave Ventures",
+        "Abu Dhabi Growth Fund",
+        "G42",
+        "Sam Altman（OpenAI首席执行官兼创始人）",
+        "Ilya Sutskever等"
+      ],
+      "founder": "Andrew Feldman",
+      "website": "https://cerebras.ai/",
+      "location": "美国太阳谷",
+      "foundedYear": "2016",
+      "employees": "",
+      "arr": "",
+      "tags": [
+        "GPU",
+        "AI100",
+        "Unicorn"
+      ],
+      "analysisPoints": [
+        "🦄 独角兽企业，市场估值40亿美元",
+        "💎 单轮融资7.2亿美元，资本高度认可"
+      ],
+      "businessModel": "开发超大晶圆GPU，用于AI的训练和推理",
+      "deepResearch": ""
+    },
+    {
+      "id": 6,
+      "name": "Vercel",
+      "sector": "👨‍💻 开发者工具",
+      "stage": "独角兽 · 成熟期",
+      "description": "Vercel 正在 与投资者就一轮融资进行早期谈判，该轮融资可能会使这家拥有 9 年历史的云托管和人工智能工具提供商的估值达到 8-90 亿美元 ，几乎是 2024 年 5 月估值的三倍，此前 ARR 翻了一番，达到 2 亿美元，核心服务毛利率为 76%，并推出了 V0 编码助手。",
+      "fundingAmount": "2.5亿美元融资 · 估值32.5亿美元",
+      "lastFundingDate": "2024年5月",
+      "valuation": "32.5亿美元",
+      "investors": [
+        "Accel",
+        "之前的投资方CRV",
+        "GV（Google）",
+        "Notable Capital",
+        "Bedrock",
+        "Geodesic Capital"
+      ],
+      "founder": "Guillermo Rauch",
+      "website": "https://vercel.com/",
+      "location": "美国旧金山",
+      "foundedYear": "2015",
+      "employees": "550",
+      "arr": "",
+      "tags": [
+        "编程",
+        "ET30"
+      ],
+      "analysisPoints": [
+        "🦄 独角兽企业，市场估值32.5亿美元",
+        "💎 单轮融资2.5亿美元，资本高度认可"
+      ],
+      "businessModel": "公司业务为开发Next.js框架，为构建基于云的 Web 应用程序提供平台",
+      "deepResearch": ""
+    },
+    {
+      "id": 7,
+      "name": "Lambda",
+      "sector": "⚙️ AI基础设施",
+      "stage": "独角兽 · 成熟期",
+      "description": "Lambda 正在洽谈新一轮股权融资，目标估值 40–50 亿美元，拟募资规模“数亿美元”；市场消息称该轮为 crossover/Pre-IPO 性质，公司 最快年内启动 IPO 进程",
+      "fundingAmount": "4.8亿美元融资 · 估值25亿美元",
+      "lastFundingDate": "2025年8月",
+      "valuation": "25亿美元",
+      "investors": [
+        "Andra Capital",
+        "SGW",
+        "Nvidia",
+        "Super Micro Computer",
+        "Andrej Karpathy"
+      ],
+      "founder": "Stephen Balaban",
+      "website": "https://lambdalabs.com/",
+      "location": "美国圣何塞",
+      "foundedYear": "2012",
+      "employees": "",
+      "arr": "",
+      "tags": [
+        "云",
+        "AI100",
+        "Unicorn",
+        "AI50"
+      ],
+      "analysisPoints": [
+        "🦄 独角兽企业，市场估值25亿美元",
+        "💎 单轮融资4.8亿美元，资本高度认可"
+      ],
+      "businessModel": "提供基于云的GPU计算资源和硬件",
+      "deepResearch": ""
+    },
+    {
+      "id": 8,
+      "name": "Runway",
+      "sector": "🎯 垂直模型",
+      "stage": "· 成熟期",
+      "description": "Runway，正以50亿美元估值进行5亿美元融资谈判，较上一轮估值上涨67%。本轮由General Atlantic和卡塔尔投资局(QIA)主导。此次交易看点在于 Runway 年化收入已达9000万美元，并计划于2025年底冲击2.65亿美元收入，已与 Lionsgate、AMC Networks 达成合作协议，在 AI 视频生成赛道中具备先发优势。资金将用于产品研发与全球扩张。",
+      "fundingAmount": "3.1亿美元融资",
+      "lastFundingDate": "2025年4月",
+      "valuation": "",
+      "investors": [
+        "General Atlantic",
+        "Fidelity",
+        "Baillie Gifford",
+        "Nvidia",
+        "SoftBank"
+      ],
+      "founder": "Cristóbal Valenzuela",
+      "website": "https://www.runwayml.com/",
+      "location": "美国纽约",
+      "foundedYear": "2018",
+      "employees": "",
+      "arr": "",
+      "tags": [
+        "AI50",
+        "视频"
+      ],
+      "analysisPoints": [
+        "💎 单轮融资3.1亿美元，资本高度认可"
+      ],
+      "businessModel": "开发用于媒体创作的生成式AI模型",
+      "deepResearch": ""
+    },
+    {
+      "id": 9,
+      "name": "Rivos",
+      "sector": "⚙️ AI基础设施",
+      "stage": "· 成长期",
+      "description": "Rivos，2021年成立于美国圣克拉拉，研发基于RISC-V的AI芯片以对标Nvidia的GPU。据报道拟募资4–5亿美元，投资方未披露。本轮估值约20亿美元（传闻），累计融资约3.7亿美元。 (数据中心动态, Reuters)",
+      "fundingAmount": "2.5亿美元融资",
+      "lastFundingDate": "2025年8月",
+      "valuation": "",
+      "investors": [
+        "Matrix Capital Management",
+        "Intel Capital",
+        "MediaTek",
+        "Cambium Capital",
+        "CIDC",
+        "Capital TEN"
+      ],
+      "founder": "Puneet Kumar",
+      "website": "https://www.rivosinc.com",
+      "location": "美国圣克拉拉",
+      "foundedYear": "2021",
+      "employees": "",
+      "arr": "",
+      "tags": [
+        "芯片"
+      ],
+      "analysisPoints": [
+        "💎 单轮融资2.5亿美元，资本高度认可",
+        "👨‍💻 创始人Puneet Kumar来自顶级科技公司，技术实力雄厚"
+      ],
+      "businessModel": "基于RISC-V架构开发服务器技术,旨在增强数据分析和生成式人工智能应用",
+      "deepResearch": ""
+    },
+    {
+      "id": 10,
+      "name": "Abridge",
+      "sector": "🧬 生命科学",
+      "stage": "独角兽 · 成熟期",
+      "description": "Abridge，正以 53 亿美元估值，寻求 3亿美元融资，投资方为 Andreessen Horowitz。",
+      "fundingAmount": "2.5亿美元融资 · 估值25亿美元",
+      "lastFundingDate": "2025年2月",
+      "valuation": "25亿美元",
+      "investors": [
+        "Elad Gil",
+        "IVP",
+        "Lightspeed Venture Partners",
+        "CVS Health Ventures",
+        "Redpoint Ventures",
+        "NVentures"
+      ],
+      "founder": "Shiv Rao",
+      "website": "https://www.abridge.com/",
+      "location": "美国匹兹堡",
+      "foundedYear": "2018",
+      "employees": "",
+      "arr": "",
+      "tags": [
+        "医疗服务",
+        "AI100",
+        "Unicorn",
+        "AI50"
+      ],
+      "analysisPoints": [
+        "🦄 独角兽企业，市场估值25亿美元",
+        "💎 单轮融资2.5亿美元，资本高度认可"
+      ],
+      "businessModel": "利用人工智能自动生成临床记录和医疗文档",
+      "deepResearch": ""
+    },
+    {
+      "id": 11,
+      "name": "Reflection AI",
+      "sector": "👨‍💻 开发者工具",
+      "stage": "准独角兽 · 初创期",
+      "description": "Reflection AI 是一家成立一年的初创公司，由前谷歌 DeepMind 研究人员共同创立，正在洽谈筹集超过 10 亿美元，以资助其开发开源大型语言模型的努力，以与中国的 DeepSeek、法国的 Mistral 和美国的 Meta Platforms 等公司竞争。据其中一位人士称，该公司已经提高了大部分目标。",
+      "fundingAmount": "1.3亿美元融资 · 估值5.55亿美元",
+      "lastFundingDate": "2025年3月",
+      "valuation": "5.55亿美元",
+      "investors": [
+        "Sequoia Capital",
+        "CRV",
+        "Lightspeed Venture Partners",
+        "Nvidia",
+        "Reid Hoffman",
+        "Alexandr Wang"
+      ],
+      "founder": "Misha Laskin",
+      "website": "https://www.reflection.ai/",
+      "location": "美国布鲁克林",
+      "foundedYear": "2024",
+      "employees": "",
+      "arr": "",
+      "tags": [
+        "连续创业",
+        "编程",
+        "AI Native"
+      ],
+      "analysisPoints": [
+        "💎 单轮融资1.3亿美元，资本高度认可",
+        "👨‍💻 创始人Misha Laskin来自顶级科技公司，技术实力雄厚"
+      ],
+      "businessModel": "开发能够自主编码的AI代理",
+      "deepResearch": ""
+    },
+    {
+      "id": 12,
+      "name": "Vast Data",
+      "sector": "💾 数据服务",
+      "stage": "独角兽 · 成熟期",
+      "description": "其平台简化数据存储、组织、处理和分析，以加速AI模型的性能",
+      "fundingAmount": "1.2亿美元融资 · 估值90亿美元",
+      "lastFundingDate": "2023年12月",
+      "valuation": "90亿美元",
+      "investors": [
+        "Fidelity",
+        "NEA",
+        "Drive Capital",
+        "Bond Capital"
+      ],
+      "founder": "Renen Hallak",
+      "website": "https://www.vastdata.com/",
+      "location": "美国纽约、以色列",
+      "foundedYear": "2016",
+      "employees": "",
+      "arr": "",
+      "tags": [
+        "AI50"
+      ],
+      "analysisPoints": [
+        "🦄 独角兽企业，市场估值90亿美元",
+        "💎 单轮融资1.2亿美元，资本高度认可"
+      ],
+      "businessModel": "其平台简化数据存储、组织、处理和分析，以加速AI模型的性能",
+      "deepResearch": ""
+    },
+    {
+      "id": 13,
+      "name": "n8n",
+      "sector": "👨‍💻 开发者工具",
+      "stage": "准独角兽 · 成熟期",
+      "description": "n8n，2019年成立于德国柏林，提供连接多种应用与API的低代码/自动化工作流平台。正在进行新一轮融资，投资方为Accel。本轮估值为23亿美元投前，累计融资约7,350万美元",
+      "fundingAmount": "6000万美元融资 · 估值2.7亿美元",
+      "lastFundingDate": "2025年3月",
+      "valuation": "2.7亿美元",
+      "investors": [
+        "Highland Europe",
+        "HV Capital",
+        "Sequoia",
+        "Felicis",
+        "Harpoon"
+      ],
+      "founder": "Jan Oberhauser",
+      "website": "https://n8n.io/",
+      "location": "德国柏林",
+      "foundedYear": "2019",
+      "employees": "",
+      "arr": "",
+      "tags": [
+        "投资人",
+        "自动化",
+        "开源"
+      ],
+      "analysisPoints": [],
+      "businessModel": "提供工作流自动化平台，帮助用户连接应用程序与API，自动化任务和流程",
+      "deepResearch": ""
+    },
+    {
+      "id": 14,
+      "name": "Fireworks AI",
+      "sector": "🤖 AI模型",
+      "stage": "准独角兽 · 成长期",
+      "description": "Fireworks AI，正以 40亿美元估值，寻求 C 轮融资。",
+      "fundingAmount": "5200万美元融资 · 估值5.52亿美元",
+      "lastFundingDate": "2024年7月",
+      "valuation": "5.52亿美元",
+      "investors": [
+        "Sequoia",
+        "NVIDIA",
+        "AMD",
+        "MongoDB Ventures"
+      ],
+      "founder": "Lin Qiao",
+      "website": "https://fireworks.ai/",
+      "location": "美国红木城",
+      "foundedYear": "2022",
+      "employees": "50",
+      "arr": "",
+      "tags": [
+        "关注",
+        "华人",
+        "AI50",
+        "开源",
+        "ET30"
+      ],
+      "analysisPoints": [
+        "👨‍💻 创始人Lin Qiao来自顶级科技公司，技术实力雄厚"
+      ],
+      "businessModel": "其开源API使开发者能够利用生成式人工智能功能创建应用程序",
+      "deepResearch": ""
+    },
+    {
+      "id": 15,
+      "name": "LangChain",
+      "sector": "🤖 AI模型",
+      "stage": "· 初创期",
+      "description": "LangChain，2022 年成立于美国旧金山，提供构建、评估与监控大语言模型应用的开发/运维一体化基础设施。正以约 10 亿美元估值，进行由 IVP 领投的新一轮股权融资（具体金额未披露）。今年公司的收入约 0.14 亿美元，净利润未披露。历史股东包括 Benchmark、Sequoia Capital、IVP（本轮）、Lux Capital、Conviction Partners 等，累计融...",
+      "fundingAmount": "2500万美元融资",
+      "lastFundingDate": "2024年2月",
+      "valuation": "",
+      "investors": [
+        "Sequoia Capital"
+      ],
+      "founder": "Harrison Chase",
+      "website": "https://www.langchain.com/",
+      "location": "美国旧金山",
+      "foundedYear": "2023",
+      "employees": "43",
+      "arr": "",
+      "tags": [
+        "AI50",
+        "智能体",
+        "ET30",
+        "AI Native"
+      ],
+      "analysisPoints": [],
+      "businessModel": "为开发人员提供工具用于创建和部署利用大型语言模型的应用程序",
+      "deepResearch": ""
+    },
+    {
+      "id": 16,
+      "name": "Substack",
+      "sector": "🏢 企业服务",
+      "stage": "· 成熟期",
+      "description": "Substack，正以 7亿+美元估值， 寻求 5000 万至 1 亿美元融资。ARR为~4500 万美元。",
+      "fundingAmount": "1000万美元融资",
+      "lastFundingDate": "2024年11月",
+      "valuation": "",
+      "investors": [
+        "Omeed Malik",
+        "Nate Silver"
+      ],
+      "founder": "Chris Best",
+      "website": "https://substack.com/",
+      "location": "美国加州",
+      "foundedYear": "2017",
+      "employees": "",
+      "arr": "",
+      "tags": [],
+      "analysisPoints": [],
+      "businessModel": "为创作者提供发布和盈利的新闻通讯平台",
+      "deepResearch": ""
+    },
+    {
+      "id": 19,
+      "name": "Canva",
+      "sector": "🎯 垂直模型",
+      "stage": "超级独角兽 · 初创期",
+      "description": "Canva 正以 370 亿美元的估值进行 400 至 5 亿美元的二级市场交易。 这将比 2024 年 10 月二次销售的 320 亿美元估值有所增加，但仍低于 2021 年 9 月融资轮融资的 400 亿美元峰值。根据AI创投库，Canva 在 2025 年第一季度的收入为 6.6 亿美元，EBITDA 为 1.5 亿美元。",
+      "fundingAmount": " · 估值370亿美元",
+      "lastFundingDate": "2025年6月",
+      "valuation": "370亿美元",
+      "investors": [],
+      "founder": "",
+      "website": "",
+      "location": "",
+      "foundedYear": "",
+      "employees": "5000",
+      "arr": "",
+      "tags": [
+        "ET30"
+      ],
+      "analysisPoints": [
+        "🏆 超级独角兽企业，估值370亿美元，行业领军地位"
+      ],
+      "businessModel": "",
+      "deepResearch": ""
+    },
+    {
+      "id": 20,
+      "name": "Polymarket",
+      "sector": "💰 金融科技",
+      "stage": "独角兽 · 成长期",
+      "description": "Polymarket，2020 年成立于美国纽约，基于区块链的预测市场平台，用户可就现实事件下注。目前正寻求 2 亿美元融资，Founders Fund 领投，拟投后估值 10 亿美元。若交易完成，累计融资将超 3.65 亿美元。(reuters.com, ccn.com)",
+      "fundingAmount": " · 估值10亿美元",
+      "lastFundingDate": "2025年6月",
+      "valuation": "10亿美元",
+      "investors": [],
+      "founder": "Shayne Coplan",
+      "website": "polymarket.com",
+      "location": "美国纽约",
+      "foundedYear": "2020",
+      "employees": "",
+      "arr": "",
+      "tags": [
+        "Web3"
+      ],
+      "analysisPoints": [
+        "🦄 独角兽企业，市场估值10亿美元"
+      ],
+      "businessModel": "基于区块链的预测市场平台，用户可就现实事件下注",
+      "deepResearch": ""
+    }
+  ]
 }
