@@ -33,3 +33,8 @@ npm error
 npm error To see a list of scripts, run:
 npm error   npm run
 npm error A complete log of this run can be found in: /home/lium/.npm/_logs/2025-08-20T09_00_02_069Z-debug-0.log
+npm error Missing script: "sync"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /home/lium/.npm/_logs/2025-08-22T09_00_01_936Z-debug-0.log
