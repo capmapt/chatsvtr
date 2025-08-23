@@ -95,7 +95,7 @@ function getCurrentDomain(request: Request, env: any): string {
     'svtr.cn',
     'svtrglobal.com',
     'chatsvtr.pages.dev',
-    'localhost:3000'
+    'localhost'  // 支持所有本地端口
   ];
   
   // 检查当前域名是否在允许列表中
