@@ -37,6 +37,10 @@ class MobileSidebarFix {
 
       this.cacheDOMElements();
       this.setupErrorHandling();
+      
+      // 移动端默认关闭侧边栏
+      this.initializeMobileSidebarState();
+      
       this.setupSafeEventListeners();
       this.setupPerformanceOptimizations();
       this.setupFallbackMode();
@@ -65,6 +69,28 @@ class MobileSidebarFix {
 
     // 添加状态属性
     this.elements.sidebar.setAttribute('data-mobile-fixed', 'true');
+  }
+
+  initializeMobileSidebarState() {
+    try {
+      // 移动端确保侧边栏默认关闭
+      console.log('[MobileSidebarFix] 初始化移动端侧边栏状态 - 设置为关闭');
+      
+      // 移除open类和shifted类
+      this.elements.sidebar.classList.remove('open');
+      if (this.elements.content) {
+        this.elements.content.classList.remove('shifted');
+      }
+      this.elements.overlay.classList.remove('active');
+      
+      // 更新内部状态
+      this.state.isOpen = false;
+      this.state.isAnimating = false;
+      
+      console.log('[MobileSidebarFix] 移动端侧边栏状态已设置为关闭');
+    } catch (error) {
+      this.handleError('初始化移动端侧边栏状态失败', error);
+    }
   }
 
   setupErrorHandling() {

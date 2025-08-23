@@ -93,6 +93,7 @@
   <link rel="stylesheet" href="assets/css/touch-optimized.css">
   <link rel="stylesheet" href="assets/css/mobile-banner-fix.css">
   <link rel="stylesheet" href="assets/css/mobile-sidebar-fix.css">
+  <link rel="stylesheet" href="assets/css/mobile-sidebar-default-fix.css">
   <link rel="stylesheet" href="assets/css/user-actions.css">
   <link rel="stylesheet" href="assets/css/user-actions-modal.css">
   
@@ -215,7 +216,7 @@
     </div>
   </header>
   <div class="overlay"></div>
-  <aside class="sidebar open" role="navigation" aria-label="主导航">
+  <aside class="sidebar" role="navigation" aria-label="主导航">
     <div class="sidebar-header">
       <picture class="sidebar-logo">
         <source srcset="assets/images/logo.avif" type="image/avif">
@@ -369,6 +370,9 @@
   
   <!-- Load security utilities -->
   <script src="assets/js/security-utils.js"></script>
+  
+  <!-- 🚀 侧边栏状态初始化（最高优先级） -->
+  <script src="assets/js/sidebar-desktop-mobile-init.js"></script>
   
   <!-- 🚀 移动端侧边栏修复器（优先加载） -->
   <script src="assets/js/mobile-sidebar-fix.js"></script>

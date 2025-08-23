@@ -1,0 +1,67 @@
+/**
+ * 移动端侧边栏默认关闭修复
+ * 确保在移动端侧边栏默认为关闭状态，桌面端默认为打开状态
+ */
+
+/* 桌面端默认显示侧边栏 */
+@media (min-width: 1200px) {
+  .sidebar {
+    transform: translateX(0) !important;
+  }
+  
+  .content {
+    margin-left: 280px !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+  .sidebar {
+    transform: translateX(0) !important;
+  }
+  
+  .content {
+    margin-left: 240px !important;
+  }
+}
+
+/* 移动端确保默认隐藏 */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%) !important;
+  }
+  
+  .sidebar.open {
+    transform: translateX(0) !important;
+  }
+  
+  .content {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+  
+  .sidebar.open ~ .content {
+    margin-left: 200px !important;
+    width: calc(100% - 200px) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar.open ~ .content {
+    margin-left: 180px !important;
+    width: calc(100% - 180px) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar.open ~ .content {
+    margin-left: 160px !important;
+    width: calc(100% - 160px) !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .sidebar.open ~ .content {
+    margin-left: 140px !important;
+    width: calc(100% - 140px) !important;
+  }
+}
