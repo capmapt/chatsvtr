@@ -147,7 +147,7 @@ function getCurrentDomain(request: Request, env: any): string {
     'svtr.cn',
     'svtrglobal.com',
     'chatsvtr.pages.dev',
-    'localhost:3000'
+    'localhost'  // 支持所有本地端口
   ];
   
   // 检查当前域名是否在允许列表中
@@ -223,7 +223,7 @@ export async function onRequestGet(context: any): Promise<Response> {
         console.log('LinkedIn tokens获取成功');
         
         // 步骤2: 使用访问令牌获取用户信息
-        const userResponse = await fetch('https://api.linkedin.com/v2/people/~?projection=(id,localizedFirstName,localizedLastName,profilePicture(displayImage~:playableStreams))', {
+        const userResponse = await fetch('https://api.linkedin.com/v2/me?projection=(id,localizedFirstName,localizedLastName,profilePicture(displayImage~:playableStreams))', {
           headers: {
             'Authorization': `Bearer ${tokens.access_token}`,
             'Accept': 'application/json'
