@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>移动端侧边栏状态调试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .debug-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .status-item:last-child {
+            border-bottom: none;
+        }
+        .status-label {
+            font-weight: 600;
+            color: #333;
+        }
+        .status-value {
+            font-family: monospace;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: #f8f9fa;
+            color: #495057;
+        }
+        .status-ok {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .test-button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background: #FA8C32;
+            color: white;
+            cursor: pointer;
+            margin: 8px 0;
+        }
+        .test-button:hover {
+            background: #e67e1e;
+        }
+        .instructions {
+            background: #e7f3ff;
+            border: 1px solid #b8daff;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-panel">
+        <h2>📱 移动端侧边栏状态检查</h2>
+        <div id="status-list">
+            <!-- 状态项将通过JavaScript动态生成 -->
+        </div>
+    </div>
+
+    <div class="debug-panel">
+        <h3>🧪 功能测试</h3>
+        <button class="test-button" onclick="window.location.href='/'">返回主页面</button>
+        <button class="test-button" onclick="testSidebarToggle()">测试侧边栏开关</button>
+        <button class="test-button" onclick="refreshStatus()">刷新状态</button>
+    </div>
+
+    <div class="instructions">
+        <h3>📋 使用说明</h3>
+        <ul>
+            <li><strong>正常状态</strong>: 窗口宽度 ≤ 768px 时，侧边栏应该默认关闭</li>
+            <li><strong>隐藏状态</strong>: Transform 应该显示 translateX(-100%) 或相当的负值</li>
+            <li><strong>如果异常</strong>: 请截图发送给开发团队，包含上方的状态信息</li>
+        </ul>
+    </div>
+
+    <script>
+        function getStatusClass(isOk, hasWarning = false) {
+            if (isOk && !hasWarning) return 'status-ok';
+            if (hasWarning) return 'status-warning';
+            return 'status-error';
+        }
+
+        function checkSidebarStatus() {
+            const status = [];
+
+            // 基本环境信息
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const userAgent = navigator.userAgent;
+            const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+            const isMobileWidth = windowWidth <= 768;
+
+            status.push({
+                label: '窗口宽度',
+                value: `${windowWidth}px`,
+                class: getStatusClass(true)
+            });
+
+            status.push({
+                label: '窗口高度',
+                value: `${windowHeight}px`,
+                class: getStatusClass(true)
+            });
+
+            status.push({
+                label: '移动端判断(宽度)',
+                value: isMobileWidth ? '是' : '否',
+                class: getStatusClass(true)
+            });
+
+            status.push({
+                label: '移动端判断(UA)',
+                value: isMobileUA ? '是' : '否',
+                class: getStatusClass(true)
+            });
+
+            // 检查主页面是否可访问
+            if (window.parent === window) {
+                status.push({
+                    label: '页面状态',
+                    value: '独立调试页面',
+                    class: getStatusClass(true, true)
+                });
+                return status;
+            }
+
+            // 侧边栏状态检查（仅在主页面中有效）
+            try {
+                const sidebar = document.querySelector('.sidebar');
+                const content = document.querySelector('.content');
+                const overlay = document.querySelector('.overlay');
+
+                if (sidebar) {
+                    const sidebarStyle = window.getComputedStyle(sidebar);
+                    const sidebarWidth = sidebarStyle.width;
+                    const sidebarTransform = sidebarStyle.transform;
+                    const isOpen = sidebar.classList.contains('open');
+
+                    status.push({
+                        label: '侧边栏宽度',
+                        value: sidebarWidth,
+                        class: getStatusClass(true)
+                    });
+
+                    status.push({
+                        label: '侧边栏变换',
+                        value: sidebarTransform === 'none' ? '无变换' : sidebarTransform,
+                        class: getStatusClass(sidebarTransform.includes('matrix') || sidebarTransform.includes('translateX'))
+                    });
+
+                    status.push({
+                        label: '侧边栏状态',
+                        value: isOpen ? '打开' : '关闭',
+                        class: getStatusClass(!isOpen) // 默认应该关闭
+                    });
+
+                    // 检查移动端默认状态
+                    if (isMobileWidth) {
+                        const shouldBeClosed = !isOpen;
+                        const hasCorrectTransform = sidebarTransform.includes('-') && sidebarTransform !== 'none';
+                        
+                        status.push({
+                            label: '移动端默认状态',
+                            value: shouldBeClosed && hasCorrectTransform ? '✓ 正常' : '✗ 异常',
+                            class: shouldBeClosed && hasCorrectTransform ? 'status-ok' : 'status-error'
+                        });
+                    }
+                } else {
+                    status.push({
+                        label: '侧边栏元素',
+                        value: '未找到',
+                        class: 'status-error'
+                    });
+                }
+
+            } catch (error) {
+                status.push({
+                    label: '检查错误',
+                    value: error.message,
+                    class: 'status-error'
+                });
+            }
+
+            return status;
+        }
+
+        function renderStatus() {
+            const statusList = document.getElementById('status-list');
+            const statuses = checkSidebarStatus();
+
+            statusList.innerHTML = statuses.map(item => `
+                <div class="status-item">
+                    <span class="status-label">${item.label}</span>
+                    <span class="status-value ${item.class}">${item.value}</span>
+                </div>
+            `).join('');
+        }
+
+        function refreshStatus() {
+            renderStatus();
+        }
+
+        function testSidebarToggle() {
+            alert('请返回主页面，点击左上角的菜单按钮（≡）测试侧边栏开关功能');
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', renderStatus);
+
+        // 监听窗口大小变化
+        window.addEventListener('resize', renderStatus);
+    </script>
+</body>
+</html>
