@@ -28,9 +28,11 @@ https://svtr.ai/api/auth/linkedin
 http://localhost:3000/api/auth/linkedin
 ```
 
-#### **Scopes** (权限范围):
-- ✅ `r_liteprofile` - 获取基本用户信息
-- ✅ `r_emailaddress` - 获取用户邮箱地址
+#### **产品和权限**:
+1. **必须添加产品**: "Sign In with LinkedIn using OpenID Connect"
+2. **Scopes** (权限范围):
+   - ✅ `profile` - 获取基本用户信息
+   - ✅ `email` - 获取用户邮箱地址
 
 ### 3. 获取应用凭据
 
@@ -126,9 +128,10 @@ open http://localhost:3000
 
 ### 常见问题
 
-1. **404错误**: 检查redirect URL是否正确配置
-2. **权限不足**: 确保申请了 `r_liteprofile` 和 `r_emailaddress` 权限
-3. **邮箱获取失败**: LinkedIn用户可能没有公开邮箱地址
+1. **"哎呀，出错了"错误**: LinkedIn应用必须添加"Sign In with LinkedIn using OpenID Connect"产品
+2. **权限不足**: 确保使用新的 `profile` 和 `email` 权限范围
+3. **404错误**: 检查redirect URL是否正确配置
+4. **Scope错误**: 新建的LinkedIn应用不再支持 `r_liteprofile` 和 `r_emailaddress`
 
 ### 调试步骤
 

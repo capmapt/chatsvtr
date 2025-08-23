@@ -4,30 +4,16 @@
  */
 
 interface LinkedInUserInfo {
-  id: string;
-  localizedFirstName: string;
-  localizedLastName: string;
-  profilePicture?: {
-    'displayImage~': {
-      elements: Array<{
-        identifiers: Array<{
-          identifier: string;
-        }>;
-      }>;
-    };
-  };
+  sub: string; // OpenID Connect标准的用户ID
+  name: string;
+  given_name: string;
+  family_name: string;
+  email: string;
+  email_verified: boolean;
+  picture?: string;
 }
 
-interface LinkedInEmailInfo {
-  elements: Array<{
-    'handle~': {
-      emailAddress: string;
-    };
-    handle: string;
-    primary: boolean;
-    type: string;
-  }>;
-}
+// OpenID Connect不再需要单独的邮箱接口，用户信息中已包含邮箱
 
 interface LinkedInTokenResponse {
   access_token: string;
@@ -35,53 +21,23 @@ interface LinkedInTokenResponse {
   token_type: string;
 }
 
-// 获取LinkedIn用户的邮箱
-async function getLinkedInEmail(accessToken: string): Promise<string | null> {
-  try {
-    const emailResponse = await fetch('https://api.linkedin.com/v2/emailAddresses?q=members&projection=(elements*(handle~))', {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Accept': 'application/json'
-      }
-    });
-    
-    if (!emailResponse.ok) {
-      console.error('LinkedIn邮箱获取失败:', await emailResponse.text());
-      return null;
-    }
-    
-    const emailData: LinkedInEmailInfo = await emailResponse.json();
-    const primaryEmail = emailData.elements?.find(email => email.primary);
-    
-    return primaryEmail?.['handle~']?.emailAddress || null;
-  } catch (error) {
-    console.error('获取LinkedIn邮箱失败:', error);
-    return null;
-  }
-}
+// OpenID Connect API直接返回用户邮箱，不需要单独获取
 
-// 创建或更新用户
-async function createOrUpdateLinkedInUser(env: any, linkedinUser: LinkedInUserInfo, email: string): Promise<any> {
+// 创建或更新用户 (OpenID Connect版本)
+async function createOrUpdateLinkedInUser(env: any, linkedinUser: LinkedInUserInfo): Promise<any> {
+  const email = linkedinUser.email;
   const existingUserData = await env.SVTR_CACHE.get(`user_${email}`);
-  
-  // 获取头像URL
-  let avatar = '';
-  if (linkedinUser.profilePicture?.['displayImage~']?.elements?.length > 0) {
-    const firstElement = linkedinUser.profilePicture['displayImage~'].elements[0];
-    if (firstElement.identifiers?.length > 0) {
-      avatar = firstElement.identifiers[0].identifier;
-    }
-  }
   
   const userData = {
     email,
-    name: `${linkedinUser.localizedFirstName} ${linkedinUser.localizedLastName}`.trim(),
-    avatar: avatar || '',
+    name: linkedinUser.name || `${linkedinUser.given_name} ${linkedinUser.family_name}`.trim(),
+    avatar: linkedinUser.picture || '',
     provider: 'linkedin' as const,
     linkedinProfile: {
-      id: linkedinUser.id,
-      firstName: linkedinUser.localizedFirstName,
-      lastName: linkedinUser.localizedLastName
+      id: linkedinUser.sub,
+      firstName: linkedinUser.given_name,
+      lastName: linkedinUser.family_name,
+      emailVerified: linkedinUser.email_verified
     }
   };
   
@@ -222,8 +178,8 @@ export async function onRequestGet(context: any): Promise<Response> {
         const tokens: LinkedInTokenResponse = await tokenResponse.json();
         console.log('LinkedIn tokens获取成功');
         
-        // 步骤2: 使用访问令牌获取用户信息
-        const userResponse = await fetch('https://api.linkedin.com/v2/me?projection=(id,localizedFirstName,localizedLastName,profilePicture(displayImage~:playableStreams))', {
+        // 步骤2: 使用访问令牌获取用户信息 (OpenID Connect标准)
+        const userResponse = await fetch('https://api.linkedin.com/v2/userinfo', {
           headers: {
             'Authorization': `Bearer ${tokens.access_token}`,
             'Accept': 'application/json'
@@ -237,18 +193,20 @@ export async function onRequestGet(context: any): Promise<Response> {
         }
         
         const linkedinUser: LinkedInUserInfo = await userResponse.json();
-        console.log('LinkedIn用户信息:', { id: linkedinUser.id, name: `${linkedinUser.localizedFirstName} ${linkedinUser.localizedLastName}` });
+        console.log('LinkedIn用户信息 (OpenID Connect):', { 
+          id: linkedinUser.sub, 
+          name: linkedinUser.name,
+          email: linkedinUser.email 
+        });
         
-        // 步骤3: 获取用户邮箱
-        const email = await getLinkedInEmail(tokens.access_token);
-        
-        if (!email) {
-          console.error('无法获取LinkedIn用户邮箱');
+        // 步骤3: 验证邮箱是否存在
+        if (!linkedinUser.email) {
+          console.error('LinkedIn用户信息中不包含邮箱');
           return Response.redirect(`${originalDomain}?auth_error=no_email`);
         }
         
         // 步骤4: 创建或更新本地用户
-        const user = await createOrUpdateLinkedInUser(env, linkedinUser, email);
+        const user = await createOrUpdateLinkedInUser(env, linkedinUser);
         
         // 步骤5: 创建会话
         const sessionToken = await createUserSession(env, user);
@@ -268,7 +226,7 @@ export async function onRequestGet(context: any): Promise<Response> {
         
       } catch (error) {
         console.error('LinkedIn OAuth回调处理失败:', error);
-        return Response.redirect(`${originalDomain}?auth_error=callback_failed`);
+        return Response.redirect(`${currentDomain}?auth_error=callback_failed`);
       }
     }
     
@@ -280,7 +238,7 @@ export async function onRequestGet(context: any): Promise<Response> {
     // 使用统一回调域名策略，与Google和GitHub OAuth保持一致
     const unifiedCallbackDomain = env.APP_URL || 'https://svtr.ai';
     authUrl.searchParams.set('redirect_uri', `${unifiedCallbackDomain}/api/auth/linkedin`);
-    authUrl.searchParams.set('scope', 'r_liteprofile r_emailaddress');
+    authUrl.searchParams.set('scope', 'profile email');
     
     // 在state中保存原始域名，用于回调后重定向
     const stateData = {
