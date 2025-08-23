@@ -238,7 +238,7 @@ export async function onRequestGet(context: any): Promise<Response> {
     // 使用统一回调域名策略，与Google和GitHub OAuth保持一致
     const unifiedCallbackDomain = env.APP_URL || 'https://svtr.ai';
     authUrl.searchParams.set('redirect_uri', `${unifiedCallbackDomain}/api/auth/linkedin`);
-    authUrl.searchParams.set('scope', 'profile email');
+    authUrl.searchParams.set('scope', 'openid profile email');
     
     // 在state中保存原始域名，用于回调后重定向
     const stateData = {

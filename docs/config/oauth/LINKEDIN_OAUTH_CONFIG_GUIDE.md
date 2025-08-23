@@ -31,6 +31,7 @@ http://localhost:3000/api/auth/linkedin
 #### **产品和权限**:
 1. **必须添加产品**: "Sign In with LinkedIn using OpenID Connect"
 2. **Scopes** (权限范围):
+   - ✅ `openid` - **必需** OpenID Connect标识
    - ✅ `profile` - 获取基本用户信息
    - ✅ `email` - 获取用户邮箱地址
 
@@ -129,7 +130,7 @@ open http://localhost:3000
 ### 常见问题
 
 1. **"哎呀，出错了"错误**: LinkedIn应用必须添加"Sign In with LinkedIn using OpenID Connect"产品
-2. **权限不足**: 确保使用新的 `profile` 和 `email` 权限范围
+2. **权限不足**: 确保使用新的 `openid profile email` 权限范围
 3. **404错误**: 检查redirect URL是否正确配置
 4. **Scope错误**: 新建的LinkedIn应用不再支持 `r_liteprofile` 和 `r_emailaddress`
 
