@@ -185,6 +185,25 @@
   box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
 }
 
+/* 侧边栏底部登录按钮区域 */
+.sidebar-bottom-actions {
+  position: absolute;
+  bottom: 20px; /* 与原sidebar padding保持一致 */
+  left: 20px;   /* 与原sidebar padding保持一致 */
+  right: 20px;  /* 与原sidebar padding保持一致 */
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(255, 248, 225, 0.95), rgba(255, 224, 178, 0.8));
+  border-top: 1px solid rgba(250, 140, 50, 0.2);
+  backdrop-filter: blur(4px);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(250, 140, 50, 0.1);
+}
+
+/* 为底部按钮预留空间，不覆盖原有侧边栏样式 */
+.sidebar nav {
+  margin-bottom: 80px; /* 为底部按钮预留空间 */
+}
+
 /* 次按钮样式 - 登录按钮 */
 .secondary-btn {
   display: flex;

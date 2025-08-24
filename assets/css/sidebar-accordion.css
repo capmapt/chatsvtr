@@ -1,0 +1,380 @@
+/**
+ * 侧边栏手风琴式菜单样式
+ * 支持流畅的展开/收起动画效果
+ */
+
+/* 菜单组容器 */
+.nav-group {
+  margin-bottom: 0.8rem;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
+}
+
+.nav-group:hover {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(250, 140, 50, 0.1);
+}
+
+/* 组标题样式 */
+.group-header.collapsible {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, rgba(250, 140, 50, 0.1), rgba(255, 221, 0, 0.05));
+  border: 1px solid rgba(250, 140, 50, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.group-header.collapsible::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(250, 140, 50, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.group-header.collapsible:hover::before {
+  left: 100%;
+}
+
+.group-header.collapsible:hover {
+  background: linear-gradient(135deg, rgba(250, 140, 50, 0.15), rgba(255, 221, 0, 0.08));
+  border-color: rgba(250, 140, 50, 0.3);
+  transform: translateX(2px);
+  box-shadow: 0 4px 12px rgba(250, 140, 50, 0.2);
+}
+
+.group-header.collapsible:active {
+  transform: translateX(1px) scale(0.98);
+  box-shadow: 0 2px 8px rgba(250, 140, 50, 0.15);
+}
+
+/* 组标题文字 */
+.group-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+  transition: color 0.3s ease;
+}
+
+.group-header.collapsible:hover .group-title {
+  color: #fa8c32;
+}
+
+/* 切换图标样式 */
+.toggle-icon {
+  font-size: 0.9rem;
+  color: #666;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(250, 140, 50, 0.2);
+}
+
+.group-header.collapsible:hover .toggle-icon {
+  color: #fa8c32;
+  background: rgba(250, 140, 50, 0.1);
+  border-color: rgba(250, 140, 50, 0.3);
+  box-shadow: 0 2px 6px rgba(250, 140, 50, 0.2);
+}
+
+.toggle-icon.expanded {
+  transform: rotate(90deg);
+  color: #fa8c32;
+  background: rgba(250, 140, 50, 0.15);
+  border-color: rgba(250, 140, 50, 0.4);
+  box-shadow: 0 2px 8px rgba(250, 140, 50, 0.25);
+}
+
+/* 子菜单容器 */
+.sub-list {
+  padding-left: 0;
+  margin-top: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(250, 140, 50, 0.02));
+  border-top: 1px solid rgba(250, 140, 50, 0.1);
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.sub-list.collapsed {
+  max-height: 0;
+  margin-top: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.sub-list.expanded {
+  max-height: 500px;
+  opacity: 1;
+  transform: translateY(0);
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.sub-list.expanding {
+  opacity: 0.7;
+  transform: translateY(-5px);
+}
+
+.sub-list.collapsing {
+  opacity: 0.3;
+  transform: translateY(-5px);
+}
+
+/* 子菜单项样式 */
+.sub-list li {
+  margin-bottom: 0.3rem;
+  padding: 0 16px;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  transition-delay: calc(var(--item-index, 0) * 0.05s);
+}
+
+.sub-list.expanded li {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.sub-list li:nth-child(1) { --item-index: 1; }
+.sub-list li:nth-child(2) { --item-index: 2; }
+.sub-list li:nth-child(3) { --item-index: 3; }
+.sub-list li:nth-child(4) { --item-index: 4; }
+.sub-list li:nth-child(5) { --item-index: 5; }
+.sub-list li:nth-child(6) { --item-index: 6; }
+
+/* 子菜单链接样式 */
+.sub-list a {
+  color: #555;
+  font-size: 0.9rem;
+  font-weight: 400;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  display: block;
+  text-decoration: none;
+  border-left: 3px solid transparent;
+}
+
+.sub-list a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(250, 140, 50, 0.1), rgba(250, 140, 50, 0.05));
+  transition: width 0.3s ease;
+  border-radius: 0 6px 6px 0;
+}
+
+.sub-list a:hover::before {
+  width: 100%;
+}
+
+.sub-list a:hover {
+  color: #fa8c32;
+  background: rgba(250, 140, 50, 0.08);
+  transform: translateX(4px);
+  border-left-color: #fa8c32;
+  box-shadow: 0 2px 8px rgba(250, 140, 50, 0.15);
+}
+
+.sub-list a:active {
+  transform: translateX(2px) scale(0.98);
+}
+
+/* 嵌套子菜单 (三级菜单) */
+.sub-list .sub-list {
+  margin-left: 16px;
+  margin-top: 4px;
+  padding-left: 8px;
+  border-left: 2px dashed rgba(250, 140, 50, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0 4px 4px 0;
+  max-height: none;
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease;
+}
+
+.sub-list.collapsed .sub-list {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-5px);
+  margin-top: 0;
+  overflow: hidden;
+}
+
+.sub-list.expanded .sub-list {
+  max-height: none;
+  opacity: 1;
+  transform: translateY(0);
+  margin-top: 4px;
+}
+
+.sub-list .sub-list li {
+  margin-bottom: 0.2rem;
+  padding: 0 8px;
+}
+
+.sub-list .sub-list a {
+  font-size: 0.8rem;
+  color: #777;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border-left: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.sub-list .sub-list a:hover {
+  color: #fa8c32;
+  background: rgba(250, 140, 50, 0.08);
+  border-left-color: #fa8c32;
+  transform: translateX(2px);
+}
+
+.sub-list .sub-list a::before {
+  content: '•';
+  color: rgba(250, 140, 50, 0.6);
+  margin-right: 6px;
+  font-size: 0.7rem;
+}
+
+/* 焦点样式 */
+.group-header.collapsible:focus {
+  outline: 2px solid rgba(250, 140, 50, 0.5);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(250, 140, 50, 0.1);
+}
+
+.sub-list a:focus {
+  outline: 2px solid rgba(250, 140, 50, 0.5);
+  outline-offset: 1px;
+  background: rgba(250, 140, 50, 0.08);
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+  .nav-group {
+    margin-bottom: 0.6rem;
+  }
+  
+  .group-header.collapsible {
+    padding: 10px 12px;
+    border-radius: 6px;
+  }
+  
+  .group-title {
+    font-size: 0.95rem;
+  }
+  
+  .toggle-icon {
+    font-size: 0.8rem;
+    width: 18px;
+    height: 18px;
+  }
+  
+  .sub-list li {
+    padding: 0 12px;
+    margin-bottom: 0.2rem;
+  }
+  
+  .sub-list a {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+  }
+  
+  .sub-list .sub-list {
+    margin-left: 15px;
+  }
+}
+
+/* 超小屏优化 */
+@media (max-width: 480px) {
+  .group-header.collapsible {
+    padding: 8px 10px;
+  }
+  
+  .group-title {
+    font-size: 0.9rem;
+  }
+  
+  .sub-list li {
+    padding: 0 10px;
+  }
+  
+  .sub-list a {
+    font-size: 0.8rem;
+    padding: 5px 8px;
+  }
+}
+
+/* 高对比度主题支持 */
+@media (prefers-contrast: high) {
+  .group-header.collapsible {
+    border-color: #fa8c32;
+    background: rgba(250, 140, 50, 0.2);
+  }
+  
+  .group-title {
+    color: #000;
+    font-weight: 700;
+  }
+  
+  .toggle-icon {
+    color: #fa8c32;
+    border-color: #fa8c32;
+  }
+  
+  .sub-list a {
+    color: #333;
+    border-left-width: 4px;
+  }
+  
+  .sub-list a:hover {
+    background: rgba(250, 140, 50, 0.15);
+    border-left-color: #fa8c32;
+  }
+}
+
+/* 减少动画模式 */
+@media (prefers-reduced-motion: reduce) {
+  .group-header.collapsible,
+  .toggle-icon,
+  .sub-list,
+  .sub-list li,
+  .sub-list a {
+    transition: none;
+  }
+  
+  .group-header.collapsible::before {
+    display: none;
+  }
+}

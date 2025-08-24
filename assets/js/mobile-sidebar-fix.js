@@ -87,9 +87,47 @@ class MobileSidebarFix {
       this.state.isOpen = false;
       this.state.isAnimating = false;
       
+      // 为移动端添加折叠按钮
+      this.addMobileCollapseButton();
+      
       console.log('[MobileSidebarFix] 移动端侧边栏状态已设置为关闭');
     } catch (error) {
       this.handleError('初始化移动端侧边栏状态失败', error);
+    }
+  }
+
+  addMobileCollapseButton() {
+    try {
+      // 检查是否已经存在折叠按钮
+      const existingBtn = this.elements.sidebar.querySelector('.mobile-sidebar-collapse');
+      if (existingBtn) {
+        existingBtn.remove();
+      }
+
+      // 创建移动端专用的折叠按钮
+      const collapseBtn = document.createElement('button');
+      collapseBtn.className = 'mobile-sidebar-collapse';
+      collapseBtn.setAttribute('aria-label', '收起侧边栏');
+      collapseBtn.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      `;
+
+      // 添加事件监听器
+      collapseBtn.addEventListener('click', () => {
+        this.safeCloseSidebar();
+      });
+
+      // 将按钮添加到sidebar-header中
+      const sidebarHeader = this.elements.sidebar.querySelector('.sidebar-header');
+      if (sidebarHeader) {
+        sidebarHeader.appendChild(collapseBtn);
+      }
+
+      console.log('[MobileSidebarFix] 移动端折叠按钮已添加');
+    } catch (error) {
+      this.handleError('添加移动端折叠按钮失败', error);
     }
   }
 

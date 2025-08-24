@@ -40,6 +40,11 @@ const translations = {
     nav_ai_startup_camp: 'AI创业营',
     nav_ai_investment_camp: 'AI投资营',
     
+    // About us navigation
+    nav_company_introduction: '公司介绍',
+    nav_management_team: '管理团队',
+    nav_contact_us: '联系我们',
+    
     // User actions (sidebar top)
     nav_email_subscribe: '订阅AI周报',
     nav_member_login: '登录 / 注册',
@@ -149,6 +154,11 @@ const translations = {
     nav_project_matching: 'Project Matching',
     nav_ai_startup_camp: 'AI Startup Camp',
     nav_ai_investment_camp: 'AI Investment Camp',
+    
+    // About us navigation
+    nav_company_introduction: 'Company Introduction',
+    nav_management_team: 'Management Team',
+    nav_contact_us: 'Contact Us',
     
     // User actions (sidebar top)
     nav_email_subscribe: 'Subscribe to SVTR AI Weekly',

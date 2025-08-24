@@ -94,8 +94,10 @@
   <link rel="stylesheet" href="assets/css/mobile-banner-fix.css">
   <link rel="stylesheet" href="assets/css/mobile-sidebar-fix.css">
   <link rel="stylesheet" href="assets/css/mobile-sidebar-default-fix.css">
+  <link rel="stylesheet" href="assets/css/sidebar-accordion.css">
   <link rel="stylesheet" href="assets/css/user-actions.css">
   <link rel="stylesheet" href="assets/css/user-actions-modal.css">
+  <link rel="stylesheet" href="assets/css/mobile-sidebar-enhanced.css">
   
   <!-- Preload critical images (WebP preferred) -->
   <link rel="preload" href="assets/images/banner.avif" as="image" type="image/avif">
@@ -248,11 +250,6 @@
           <div class="subscribe-status" id="subscribeStatus"></div>
         </form>
       </div>
-      
-      <!-- 登录/注册次按钮 -->
-      <button class="btn-member-login secondary-btn" data-i18n="btn_member_login" aria-label="登录或注册会员账户">
-        👤 <span data-i18n="nav_member_login">登录 / 注册</span>
-      </button>
     </div>
     
     <nav>
@@ -309,10 +306,27 @@
           </ul>
         </li>
         
-        <!-- 关于我们 -->
-        <li><a href="https://c0uiiy15npu.feishu.cn/wiki/MFl0wpCVIigeQVkIifVcsgEcnJc?from=from_copylink" data-i18n="nav_about_us" target="_blank" rel="noopener noreferrer">关于我们</a></li>
+        <!-- 关于我们组 -->
+        <li class="nav-group">
+          <a href="#about-us" class="group-header collapsible" data-i18n="nav_about_us">
+            <span class="group-title">关于我们</span>
+            <span class="toggle-icon">▶</span>
+          </a>
+          <ul class="sub-list collapsed">
+            <li><a href="https://c0uiiy15npu.feishu.cn/wiki/MFl0wpCVIigeQVkIifVcsgEcnJc?from=from_copylink" data-i18n="nav_company_introduction" target="_blank" rel="noopener noreferrer">公司介绍</a></li>
+            <li><a href="#management-team" data-i18n="nav_management_team">管理团队</a></li>
+            <li><a href="#contact-us" data-i18n="nav_contact_us">联系我们</a></li>
+          </ul>
+        </li>
       </ul>
     </nav>
+    
+    <!-- 侧边栏底部登录按钮 -->
+    <div class="sidebar-bottom-actions">
+      <button class="btn-member-login secondary-btn" data-i18n="btn_member_login" aria-label="登录或注册会员账户">
+        👤 <span data-i18n="nav_member_login">登录 / 注册</span>
+      </button>
+    </div>
   </aside>
   <main id="main-content" class="content" role="main">
     <section class="wrapper">

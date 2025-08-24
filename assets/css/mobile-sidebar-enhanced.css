@@ -1,0 +1,316 @@
+/**
+ * 移动端侧边栏优化 - 80%宽度 + 模糊背景层叠效果
+ * 针对手机端操作体验的专门优化
+ */
+
+/* 移动端侧边栏宽度优化 - 使用!important确保覆盖原有规则 */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 95vw !important; /* 使用视口宽度的95% */
+    max-width: 400px !important; /* 最大宽度限制，避免平板上过宽 */
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+  }
+
+  /* 侧边栏打开时，主内容区层叠在下方并模糊 */
+  .sidebar.open ~ .content,
+  .sidebar.open ~ main {
+    margin-left: 0 !important; /* 不推移内容，而是覆盖 */
+    filter: blur(3px) !important;
+    -webkit-filter: blur(3px) !important;
+    transition: filter 0.3s ease !important;
+    pointer-events: none !important; /* 禁用交互 */
+  }
+
+  /* 增强overlay背景效果 */
+  .sidebar.open ~ .overlay,
+  .overlay.active {
+    opacity: 0.6 !important; /* 增加背景遮罩透明度 */
+    pointer-events: auto !important;
+    backdrop-filter: blur(2px) !important;
+    -webkit-backdrop-filter: blur(2px) !important;
+  }
+
+  /* 侧边栏关闭时恢复内容 */
+  .content,
+  main {
+    filter: none;
+    -webkit-filter: none;
+    pointer-events: auto;
+  }
+
+  /* 优化侧边栏内部滚动 */
+  .sidebar nav {
+    padding-bottom: 100px; /* 为底部登录按钮预留更多空间 */
+  }
+
+  /* 移动端登录按钮优化 */
+  .sidebar-bottom-actions {
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(250, 140, 50, 0.3);
+  }
+
+  .sidebar-bottom-actions .btn-member-login {
+    font-size: 15px;
+    padding: 14px 20px;
+    min-height: 48px; /* 符合移动端最小触摸目标 */
+  }
+
+  /* 移动端侧边栏头部专门处理 */
+  .sidebar-header {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px 16px !important;
+    height: 60px !important;
+  }
+
+  .sidebar-logo {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  /* 移动端添加折叠按钮的JavaScript将会动态插入 */
+  .mobile-sidebar-collapse {
+    position: absolute !important;
+    left: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 8px !important;
+    border-radius: 6px !important;
+    color: #666 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    z-index: 11 !important;
+  }
+
+  .mobile-sidebar-collapse:hover {
+    background: rgba(250, 140, 50, 0.1) !important;
+    color: #fa8c32 !important;
+  }
+
+  /* 调整页面顶部menu-toggle按钮位置，与侧边栏logo对齐 */
+  .menu-toggle {
+    position: fixed !important;
+    top: 14px !important; /* 调整到与sidebar-header中心对齐 (30px - 16px = 14px) */
+    left: 16px !important;
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 18px !important;
+    padding: 6px !important;
+    background: rgba(250, 140, 50, 0.15) !important;
+    backdrop-filter: blur(8px) !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 1100 !important;
+  }
+
+  /* 菜单组样式优化 */
+  .nav-group {
+    margin-bottom: 1rem;
+  }
+
+  .group-header.collapsible {
+    padding: 16px 20px;
+    min-height: 56px; /* 增加触摸目标 */
+    border-radius: 12px;
+  }
+
+  .group-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  .toggle-icon {
+    font-size: 1rem;
+    width: 24px;
+    height: 24px;
+  }
+
+  /* 子菜单优化 */
+  .sub-list li {
+    margin-bottom: 0.4rem;
+  }
+
+  .sub-list a {
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    min-height: 44px; /* 符合触摸标准 */
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+  }
+
+  /* 三级菜单优化 */
+  .sub-list .sub-list a {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    min-height: 40px;
+  }
+
+  /* 订阅区域移动端优化 */
+  .user-actions {
+    margin: 16px;
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .subscribe-form-inline input {
+    padding: 16px 18px;
+    font-size: 16px; /* 防止iOS缩放 */
+    min-height: 48px;
+    border-radius: 14px;
+  }
+
+  .btn-subscribe-submit {
+    padding: 16px 24px;
+    font-size: 15px;
+    min-height: 48px;
+    border-radius: 14px;
+    font-weight: 700;
+  }
+}
+
+/* 超小屏幕优化 (iPhone SE等) */
+@media (max-width: 375px) {
+  .sidebar {
+    width: 95vw; /* 小屏幕保持95%比例 */
+    max-width: 380px;
+  }
+
+  .group-header.collapsible {
+    padding: 14px 16px;
+    min-height: 52px;
+  }
+
+  .group-title {
+    font-size: 1.05rem;
+  }
+
+  .sub-list a {
+    padding: 10px 14px;
+    font-size: 0.92rem;
+    min-height: 42px;
+  }
+}
+
+/* 大屏手机优化 (iPhone Plus等) */
+@media (max-width: 768px) and (min-width: 414px) {
+  .sidebar {
+    width: 95vw; /* 大屏手机保持95%比例 */
+    max-width: 420px;
+  }
+}
+
+/* 横屏模式优化 */
+@media (max-width: 768px) and (orientation: landscape) {
+  .sidebar {
+    width: 60vw; /* 横屏时减少宽度 */
+    max-width: 280px;
+  }
+
+  .sidebar nav {
+    padding-bottom: 80px; /* 横屏时减少底部空间 */
+  }
+}
+
+/* 高分辨率屏幕优化 */
+@media (max-width: 768px) and (-webkit-min-device-pixel-ratio: 2) {
+  .sidebar {
+    border-right: 0.5px solid rgba(250, 140, 50, 0.3);
+  }
+
+  .group-header.collapsible {
+    border: 0.5px solid rgba(250, 140, 50, 0.2);
+  }
+}
+
+/* 触摸设备手势优化 */
+@media (max-width: 768px) and (pointer: coarse) {
+  /* 增加所有可点击元素的触摸区域 */
+  .nav-list a,
+  .sub-list a,
+  .group-header.collapsible {
+    position: relative;
+  }
+
+  .nav-list a::before,
+  .sub-list a::before,
+  .group-header.collapsible::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    bottom: -4px;
+    left: -4px;
+    z-index: -1;
+  }
+}
+
+/* 无障碍优化 */
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .sidebar.open ~ .content,
+  .sidebar.open ~ main,
+  .overlay {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .content,
+  main {
+    filter: none !important;
+    -webkit-filter: none !important;
+  }
+}
+
+/* 高对比度模式 */
+@media (max-width: 768px) and (prefers-contrast: high) {
+  .sidebar {
+    background: rgba(255, 240, 200, 0.98);
+    border-right: 2px solid #fa8c32;
+  }
+
+  .group-header.collapsible {
+    background: rgba(250, 140, 50, 0.15);
+    border: 2px solid #fa8c32;
+  }
+
+  .overlay.active {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: none;
+  }
+}
+
+/* iOS Safari优化 */
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 768px) {
+    .sidebar {
+      /* iOS Safari的backdrop-filter优化 */
+      -webkit-backdrop-filter: blur(10px);
+      /* 防止iOS的橡皮筋效果 */
+      overscroll-behavior-y: contain;
+    }
+
+    .sidebar nav {
+      /* iOS滚动优化 */
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+  }
+}
