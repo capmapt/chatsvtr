@@ -3,7 +3,7 @@
     "title": "交易精选",
     "description": "精选优质创业公司与投资机会分析",
     "totalCompanies": 18,
-    "lastUpdated": "2025-08-23T18:27:48.614Z",
+    "lastUpdated": "2025-08-24T18:36:02.908Z",
     "source": "SVTR飞书知识库",
     "dataVersion": "2.0"
   },
@@ -15,7 +15,7 @@
       "stage": "超级独角兽 · 成熟期",
       "description": "Databricks，正以 1000 亿美元估值 进行新一轮融资。此次交易由 Thrive Capital、Insight Partners 和 WCM Investment Management 领投，Andreessen Horowitz 也将参与。",
       "fundingAmount": "100.0亿美元融资 · 估值620亿美元",
-      "lastFundingDate": "2025年",
+      "lastFundingDate": "2025年8月",
       "valuation": "620亿美元",
       "investors": [
         "Thrive Capital",
@@ -48,9 +48,9 @@
       "name": "Anthropic",
       "sector": "🤖 大语言模型",
       "stage": "超级独角兽 · 成长期",
-      "description": "Anthropic 正与包括阿布扎比MGX（Mubadala Growth Management 旗下AI基金）在内的多家中东主权资本深入接洽，拟筹资 30–50亿美元，目标估值 超过1500亿美元，几乎为当前估值的三倍。阿布扎比相关基金通过二级市场以约 5亿美元 收购 FTX 所持 Anthropic 股权。Anthropic 的年度经常性收入（ARR）已由年初 10亿美元上涨 至目前 超过40...",
+      "description": "Anthropic，正筹集高达 100 亿美元的资金，该轮融资由 Iconiq Capital 领投，TPG、Lightspeed、Spark、Menlo 和主权基金支持，这是之前报告的金额的两倍多。",
       "fundingAmount": "35.0亿美元融资 · 估值615亿美元",
-      "lastFundingDate": "2025年7月",
+      "lastFundingDate": "2025年8月",
       "valuation": "615亿美元",
       "investors": [
         "Lightspeed Venture Partners",
