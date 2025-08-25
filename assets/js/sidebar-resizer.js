@@ -145,6 +145,60 @@ class SidebarResizer {
 
     // 窗口大小变化
     window.addEventListener('resize', this.handleWindowResize.bind(this));
+
+    // 监听侧边栏开关状态变化，修复宽度调整后的隐藏问题
+    this.setupSidebarToggleListener();
+  }
+
+  setupSidebarToggleListener() {
+    if (!this.sidebar) return;
+
+    // 使用MutationObserver监听侧边栏class变化
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          this.handleSidebarToggle();
+        }
+      });
+    });
+
+    observer.observe(this.sidebar, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    // 保存observer引用以便清理
+    this.sidebarObserver = observer;
+
+    console.log('[SidebarResizer] 侧边栏开关监听器已设置');
+  }
+
+  handleSidebarToggle() {
+    if (!this.sidebar || this.isMobile) return;
+
+    const isOpen = this.sidebar.classList.contains('open');
+    const currentWidth = parseInt(this.sidebar.style.width) || this.defaultWidth;
+
+    if (!isOpen) {
+      // 侧边栏关闭时，确保完全隐藏
+      // 使用足够大的负值确保无论宽度多少都完全隐藏
+      this.sidebar.style.transform = `translateX(-${Math.max(currentWidth, 600)}px)`;
+      console.log(`[SidebarResizer] 侧边栏关闭，使用固定偏移: -${Math.max(currentWidth, 600)}px`);
+      
+      // 重置内容区域margin
+      if (this.content) {
+        this.content.style.marginLeft = '0px';
+      }
+    } else {
+      // 侧边栏打开时，移除自定义transform，使用CSS默认值
+      this.sidebar.style.transform = '';
+      console.log('[SidebarResizer] 侧边栏打开，恢复默认transform');
+      
+      // 设置内容区域margin
+      if (this.content) {
+        this.content.style.marginLeft = `${currentWidth}px`;
+      }
+    }
   }
 
   setupMediaQueryListener() {
@@ -402,6 +456,12 @@ class SidebarResizer {
       this.resizeHandle = null;
     }
 
+    // 清理MutationObserver
+    if (this.sidebarObserver) {
+      this.sidebarObserver.disconnect();
+      this.sidebarObserver = null;
+    }
+
     this.resetSidebarStyles();
     document.body.classList.remove('sidebar-resizing');
     document.body.style.userSelect = '';
@@ -411,6 +471,8 @@ class SidebarResizer {
     if (this.windowResizeTimeout) {
       clearTimeout(this.windowResizeTimeout);
     }
+
+    console.log('[SidebarResizer] 资源清理完成');
   }
 }
 
