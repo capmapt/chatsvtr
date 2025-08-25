@@ -35,7 +35,7 @@ class SmartSidebarUX {
     this.createUXElements();
     this.setupEventListeners();
     this.initializeMobileSidebar();
-    
+
     console.log('[SmartSidebarUX] 智能侧边栏UX已启用');
   }
 
@@ -73,7 +73,7 @@ class SmartSidebarUX {
       </div>
       <div class="hint-progress"></div>
     `;
-    
+
     // 添加样式
     hint.style.cssText = `
       position: absolute;
@@ -106,7 +106,7 @@ class SmartSidebarUX {
         <label for="autoCloseToggle" data-i18n="auto_close_setting">智能收起</label>
       </div>
     `;
-    
+
     panel.style.cssText = `
       position: absolute;
       bottom: 10px;
@@ -133,7 +133,7 @@ class SmartSidebarUX {
         <span data-i18n="swipe_to_close">向左滑动收起</span>
       </div>
     `;
-    
+
     hint.style.cssText = `
       position: absolute;
       bottom: 60px;
@@ -159,7 +159,7 @@ class SmartSidebarUX {
     if (this.hintElement) {
       const keepOpenBtn = this.hintElement.querySelector('.keep-open');
       const closeNowBtn = this.hintElement.querySelector('.close-now');
-      
+
       if (keepOpenBtn) {
         keepOpenBtn.addEventListener('click', () => this.handleKeepOpen());
       }
@@ -182,7 +182,7 @@ class SmartSidebarUX {
 
   setupInteractionDetection() {
     const interactionEvents = ['click', 'scroll', 'touchstart'];
-    
+
     interactionEvents.forEach(event => {
       this.elements.sidebar.addEventListener(event, () => {
         this.state.userInteracted = true;
@@ -244,7 +244,9 @@ class SmartSidebarUX {
   }
 
   showCloseHint() {
-    if (this.state.isHintShown || this.state.userInteracted) return;
+    if (this.state.isHintShown || this.state.userInteracted) {
+      return;
+    }
 
     this.state.isHintShown = true;
     this.hintElement.style.opacity = '1';
@@ -262,7 +264,9 @@ class SmartSidebarUX {
 
   animateProgress() {
     const progressBar = this.hintElement.querySelector('.hint-progress');
-    if (!progressBar) return;
+    if (!progressBar) {
+      return;
+    }
 
     progressBar.style.cssText = `
       position: absolute;
@@ -282,7 +286,9 @@ class SmartSidebarUX {
   }
 
   hideCloseHint() {
-    if (!this.hintElement) return;
+    if (!this.hintElement) {
+      return;
+    }
 
     this.hintElement.style.opacity = '0';
     this.hintElement.style.transform = 'translateY(-10px)';
@@ -290,7 +296,9 @@ class SmartSidebarUX {
   }
 
   showTouchHint() {
-    if (!this.touchHint || this.touchHint.style.opacity === '1') return;
+    if (!this.touchHint || this.touchHint.style.opacity === '1') {
+      return;
+    }
 
     this.touchHint.style.opacity = '1';
     this.touchHint.style.transform = 'translateX(0)';
@@ -305,7 +313,7 @@ class SmartSidebarUX {
     this.cancelAutoClose();
     this.hideCloseHint();
     this.state.userInteracted = true;
-    
+
     // 显示反馈
     this.showFeedback('侧边栏将保持打开状态', 'success');
   }
@@ -313,7 +321,7 @@ class SmartSidebarUX {
   handleCloseNow() {
     this.cancelAutoClose();
     this.closeSidebarSmoothly();
-    
+
     // 显示反馈
     this.showFeedback('侧边栏已收起', 'info');
   }
@@ -340,7 +348,7 @@ class SmartSidebarUX {
 
   closeSidebarSmoothly() {
     const { sidebar, overlay, content } = this.elements;
-    
+
     if (sidebar && overlay && content) {
       sidebar.classList.remove('open');
       overlay.classList.remove('active');
@@ -363,13 +371,13 @@ class SmartSidebarUX {
     const feedback = document.createElement('div');
     feedback.className = `sidebar-feedback ${type}`;
     feedback.textContent = message;
-    
+
     const bgColor = {
       success: 'rgba(40, 167, 69, 0.9)',
       info: 'rgba(23, 162, 184, 0.9)',
       warning: 'rgba(255, 193, 7, 0.9)'
     };
-    
+
     feedback.style.cssText = `
       position: fixed;
       top: 50%;

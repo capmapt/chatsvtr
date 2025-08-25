@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVTR Widget - 简洁现代风格</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .stat-animation {
+            animation: slideUp 0.6s ease-out forwards;
+        }
+        .stat-animation:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+        .stat-animation:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .progress-bar {
+            animation: progressFill 1.5s ease-out forwards;
+            animation-delay: 0.8s;
+        }
+        @keyframes progressFill {
+            from {
+                width: 0%;
+            }
+            to {
+                width: var(--progress-width);
+            }
+        }
+        .pulse-dot {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .number-counter {
+            font-variant-numeric: tabular-nums;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen p-6 font-sans">
+    <div class="max-w-4xl mx-auto">
+        <!-- 统计卡片网格 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- 社区成员卡片 -->
+            <div class="glass-card rounded-2xl p-8 shadow-xl stat-animation hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                <!-- 顶部指示器 -->
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-2 text-sm text-gray-500">
+                        <div class="w-2 h-2 bg-blue-500 rounded-full pulse-dot"></div>
+                        <span>实时数据</span>
+                    </div>
+                    <div class="text-2xl">👥</div>
+                </div>
+                
+                <!-- 主要数据 -->
+                <div class="text-center mb-6">
+                    <div class="text-4xl font-bold text-gray-800 number-counter mb-2">121,884</div>
+                    <div class="text-lg text-gray-600 font-medium">社区成员</div>
+                </div>
+                
+                <!-- 进度条 -->
+                <div class="mb-4">
+                    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full progress-bar" 
+                             style="--progress-width: 82%; width: 0%;"></div>
+                    </div>
+                </div>
+                
+                <!-- 增长指标 -->
+                <div class="flex items-center justify-center gap-2 text-sm">
+                    <div class="flex items-center gap-1 text-green-600 font-medium">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>+25/小时</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 企业会员卡片 -->
+            <div class="glass-card rounded-2xl p-8 shadow-xl stat-animation hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                <!-- 顶部指示器 -->
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-2 text-sm text-gray-500">
+                        <div class="w-2 h-2 bg-blue-500 rounded-full pulse-dot"></div>
+                        <span>实时数据</span>
+                    </div>
+                    <div class="text-2xl">🏢</div>
+                </div>
+                
+                <!-- 主要数据 -->
+                <div class="text-center mb-6">
+                    <div class="text-4xl font-bold text-gray-800 number-counter mb-2">10,761</div>
+                    <div class="text-lg text-gray-600 font-medium">创业公司与投资机构</div>
+                </div>
+                
+                <!-- 进度条 -->
+                <div class="mb-4">
+                    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full progress-bar" 
+                             style="--progress-width: 54%; width: 0%;"></div>
+                    </div>
+                </div>
+                
+                <!-- 增长指标 -->
+                <div class="flex items-center justify-center gap-2 text-sm">
+                    <div class="flex items-center gap-1 text-green-600 font-medium">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>+8/小时</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- VIP会员卡片 -->
+            <div class="glass-card rounded-2xl p-8 shadow-xl stat-animation hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                <!-- 顶部指示器 -->
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-2 text-sm text-gray-500">
+                        <div class="w-2 h-2 bg-blue-500 rounded-full pulse-dot"></div>
+                        <span>实时数据</span>
+                    </div>
+                    <div class="text-2xl">💎</div>
+                </div>
+                
+                <!-- 主要数据 -->
+                <div class="text-center mb-6">
+                    <div class="text-4xl font-bold text-gray-800 number-counter mb-2">1,102</div>
+                    <div class="text-lg text-gray-600 font-medium">权益会员</div>
+                </div>
+                
+                <!-- 进度条 -->
+                <div class="mb-4">
+                    <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div class="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full progress-bar" 
+                             style="--progress-width: 55%; width: 0%;"></div>
+                    </div>
+                </div>
+                
+                <!-- 增长指标 -->
+                <div class="flex items-center justify-center gap-2 text-sm">
+                    <div class="flex items-center gap-1 text-green-600 font-medium">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span>+3/小时</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部总览 -->
+        <div class="mt-8 glass-card rounded-2xl p-6 shadow-xl">
+            <div class="text-center">
+                <div class="text-sm text-gray-500 mb-2">SVTR AI创投生态系统</div>
+                <div class="text-lg font-medium text-gray-700">构建全球AI创投行业统一平台</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

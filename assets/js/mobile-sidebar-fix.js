@@ -11,7 +11,7 @@ class MobileSidebarFix {
     this.fallbackMode = false;
     this.touchSupported = 'ontouchstart' in window;
     this.isMobile = this.detectMobile();
-    
+
     // 状态管理
     this.state = {
       isOpen: false,
@@ -37,10 +37,10 @@ class MobileSidebarFix {
 
       this.cacheDOMElements();
       this.setupErrorHandling();
-      
+
       // 移动端默认关闭侧边栏
       this.initializeMobileSidebarState();
-      
+
       this.setupSafeEventListeners();
       this.setupPerformanceOptimizations();
       this.setupFallbackMode();
@@ -75,21 +75,21 @@ class MobileSidebarFix {
     try {
       // 移动端确保侧边栏默认关闭
       console.log('[MobileSidebarFix] 初始化移动端侧边栏状态 - 设置为关闭');
-      
+
       // 移除open类和shifted类
       this.elements.sidebar.classList.remove('open');
       if (this.elements.content) {
         this.elements.content.classList.remove('shifted');
       }
       this.elements.overlay.classList.remove('active');
-      
+
       // 更新内部状态
       this.state.isOpen = false;
       this.state.isAnimating = false;
-      
+
       // 为移动端添加折叠按钮
       this.addMobileCollapseButton();
-      
+
       console.log('[MobileSidebarFix] 移动端侧边栏状态已设置为关闭');
     } catch (error) {
       this.handleError('初始化移动端侧边栏状态失败', error);
@@ -190,15 +190,19 @@ class MobileSidebarFix {
 
     // 侧边栏滑动关闭
     this.elements.sidebar.addEventListener('touchstart', (e) => {
-      if (!this.state.isOpen) return;
-      
+      if (!this.state.isOpen) {
+        return;
+      }
+
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
       touchStartTime = Date.now();
     }, { passive: true });
 
     this.elements.sidebar.addEventListener('touchend', (e) => {
-      if (!this.state.isOpen) return;
+      if (!this.state.isOpen) {
+        return;
+      }
 
       const touchEndX = e.changedTouches[0].clientX;
       const touchEndY = e.changedTouches[0].clientY;
@@ -234,10 +238,16 @@ class MobileSidebarFix {
     const cores = navigator.hardwareConcurrency;
     const connection = navigator.connection;
 
-    if (memory && memory < 2) return true;
-    if (cores && cores < 2) return true;
-    if (connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g')) return true;
-    
+    if (memory && memory < 2) {
+      return true;
+    }
+    if (cores && cores < 2) {
+      return true;
+    }
+    if (connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g')) {
+      return true;
+    }
+
     return false;
   }
 
@@ -267,7 +277,7 @@ class MobileSidebarFix {
 
     try {
       this.isProcessing = true;
-      
+
       if (this.state.isOpen) {
         this.safeCloseSidebar();
       } else {
@@ -281,7 +291,9 @@ class MobileSidebarFix {
   }
 
   safeOpenSidebar() {
-    if (this.state.isOpen || this.state.isAnimating) return;
+    if (this.state.isOpen || this.state.isAnimating) {
+      return;
+    }
 
     try {
       this.state.isAnimating = true;
@@ -309,7 +321,9 @@ class MobileSidebarFix {
   }
 
   safeCloseSidebar() {
-    if (!this.state.isOpen || this.state.isAnimating) return;
+    if (!this.state.isOpen || this.state.isAnimating) {
+      return;
+    }
 
     try {
       this.state.isAnimating = true;
@@ -467,7 +481,7 @@ function initializeMobileSidebarFix() {
     }
 
     window.mobileSidebarFix = new MobileSidebarFix();
-    
+
     // 健康检查
     setInterval(() => {
       if (window.mobileSidebarFix && !window.mobileSidebarFix.isHealthy()) {

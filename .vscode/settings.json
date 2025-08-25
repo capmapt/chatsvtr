@@ -1,0 +1,24 @@
+{
+  "typescript.preferences.includePackageJsonAutoImports": "auto",
+  "eslint.workingDirectories": ["./"],
+  "jest.jestCommandLine": "npm test",
+  "files.associations": {
+    "wrangler.toml": "toml",
+    "*.html": "html"
+  },
+  "emmet.includeLanguages": {
+    "javascript": "html"
+  },
+  "html.autoClosingTags": true,
+  "css.validate": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "files.exclude": {
+    "**/.wrangler": true,
+    "**/node_modules": true,
+    "**/dist": true
+  }
+}

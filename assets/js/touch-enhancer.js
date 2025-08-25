@@ -25,16 +25,16 @@ class TouchEnhancer {
   init() {
     // 🚀 检查是否有移动端修复器处理侧边栏
     const hasMobileFix = window.mobileSidebarFix;
-    
+
     this.setupTouchFeedback();
-    
+
     if (!hasMobileFix) {
       this.setupSwipeGestures();
       console.log('[TouchEnhancer] 设置滑动手势（无修复器）');
     } else {
       console.log('[TouchEnhancer] 检测到移动端修复器，跳过滑动手势设置');
     }
-    
+
     this.setupDoubleTapPrevention();
     this.setupScrollOptimization();
     this.setupVibrationFeedback();

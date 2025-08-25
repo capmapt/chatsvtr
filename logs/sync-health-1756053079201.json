@@ -1,0 +1,23 @@
+{
+  "timestamp": "2025-08-24T16:31:19.201Z",
+  "process": {
+    "status": "idle",
+    "processes": []
+  },
+  "logs": {
+    "status": "frequent_failures",
+    "consecutiveFailures": 45,
+    "recentErrors": [
+      "npm error Missing script: \"sync\"",
+      "npm error",
+      "npm error To see a list of scripts, run:",
+      "npm error   npm run",
+      "npm error A complete log of this run can be found in: /home/lium/.npm/_logs/2025-08-24T09_00_01_524Z-debug-0.log"
+    ],
+    "recommendation": "investigate_errors"
+  },
+  "recommendations": [
+    "检查飞书API配置和网络连接",
+    "查看详细错误日志进行调试"
+  ]
+}

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVTR Widget - 数据可视化风格</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        .data-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        .chart-container {
+            position: relative;
+            height: 60px;
+            overflow: hidden;
+        }
+        .chart-bar {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            animation: barGrow 1.5s ease-out forwards;
+            transform-origin: bottom;
+            transform: scaleY(0);
+        }
+        .chart-bar:nth-child(1) { animation-delay: 0.1s; }
+        .chart-bar:nth-child(2) { animation-delay: 0.2s; }
+        .chart-bar:nth-child(3) { animation-delay: 0.3s; }
+        .chart-bar:nth-child(4) { animation-delay: 0.4s; }
+        .chart-bar:nth-child(5) { animation-delay: 0.5s; }
+        .chart-bar:nth-child(6) { animation-delay: 0.6s; }
+        .chart-bar:nth-child(7) { animation-delay: 0.7s; }
+        @keyframes barGrow {
+            to { transform: scaleY(1); }
+        }
+        .metric-number {
+            font-variant-numeric: tabular-nums;
+            animation: numberUp 2s ease-out forwards;
+        }
+        @keyframes numberUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .trend-line {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: drawLine 2s ease-out forwards;
+            animation-delay: 1s;
+        }
+        @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
+        }
+        .data-point {
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+        .data-point:nth-child(1) { animation-delay: 1.2s; }
+        .data-point:nth-child(2) { animation-delay: 1.4s; }
+        .data-point:nth-child(3) { animation-delay: 1.6s; }
+        .data-point:nth-child(4) { animation-delay: 1.8s; }
+        .data-point:nth-child(5) { animation-delay: 2.0s; }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        .pulse-ring {
+            animation: pulseRing 2s infinite;
+        }
+        @keyframes pulseRing {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        .donut-chart {
+            transform: rotate(-90deg);
+        }
+        .donut-segment {
+            stroke-dasharray: 0 100;
+            animation: donutFill 1.5s ease-out forwards;
+        }
+        .donut-segment.members { 
+            animation-delay: 0.5s;
+            stroke: #3b82f6;
+        }
+        .donut-segment.companies { 
+            animation-delay: 0.7s;
+            stroke: #1d4ed8;
+        }
+        .donut-segment.vip { 
+            animation-delay: 0.9s;
+            stroke: #1e40af;
+        }
+        @keyframes donutFill {
+            to { stroke-dasharray: var(--dash-array) 100; }
+        }
+        .live-badge {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            animation: livePulse 2s infinite;
+        }
+        @keyframes livePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            50% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen p-6 font-sans">
+    <div class="max-w-6xl mx-auto">
+        <!-- 顶部仪表板标题 -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">SVTR 数据仪表板</h1>
+            <p class="text-gray-600">AI创投生态系统实时分析与洞察</p>
+            <div class="inline-flex items-center gap-2 mt-4 live-badge text-white px-4 py-2 rounded-full text-sm font-medium">
+                <div class="w-2 h-2 bg-white rounded-full"></div>
+                <span>实时数据流</span>
+            </div>
+        </div>
+        
+        <!-- 主要指标卡片 -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- 社区成员卡片 -->
+            <div class="data-card rounded-2xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                            <span class="text-2xl">👥</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">社区成员</h3>
+                            <p class="text-sm text-gray-500">Community Members</p>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="w-4 h-4 bg-green-500 rounded-full pulse-ring"></div>
+                        <div class="w-4 h-4 bg-green-500 rounded-full absolute top-0"></div>
+                    </div>
+                </div>
+                
+                <div class="metric-number text-3xl font-bold text-gray-800 mb-2">121,884</div>
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="text-green-600 text-sm font-medium">↗ +25/小时</span>
+                    <span class="text-gray-400 text-sm">增长率: 0.02%</span>
+                </div>
+                
+                <!-- 迷你柱状图 -->
+                <div class="chart-container flex items-end gap-1">
+                    <div class="chart-bar w-3 bg-blue-500 rounded-t" style="height: 45%;"></div>
+                    <div class="chart-bar w-3 bg-blue-500 rounded-t" style="height: 60%;"></div>
+                    <div class="chart-bar w-3 bg-blue-500 rounded-t" style="height: 35%;"></div>
+                    <div class="chart-bar w-3 bg-blue-500 rounded-t" style="height: 80%;"></div>
+                    <div class="chart-bar w-3 bg-blue-500 rounded-t" style="height: 70%;"></div>
+                    <div class="chart-bar w-3 bg-blue-500 rounded-t" style="height: 90%;"></div>
+                    <div class="chart-bar w-3 bg-blue-500 rounded-t" style="height: 100%;"></div>
+                </div>
+            </div>
+            
+            <!-- 企业机构卡片 -->
+            <div class="data-card rounded-2xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                            <span class="text-2xl">🏢</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">企业机构</h3>
+                            <p class="text-sm text-gray-500">Companies & VCs</p>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="w-4 h-4 bg-green-500 rounded-full pulse-ring"></div>
+                        <div class="w-4 h-4 bg-green-500 rounded-full absolute top-0"></div>
+                    </div>
+                </div>
+                
+                <div class="metric-number text-3xl font-bold text-gray-800 mb-2">10,761</div>
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="text-green-600 text-sm font-medium">↗ +8/小时</span>
+                    <span class="text-gray-400 text-sm">增长率: 0.07%</span>
+                </div>
+                
+                <!-- 迷你面积图 -->
+                <div class="chart-container">
+                    <svg width="100%" height="60" class="overflow-visible">
+                        <path d="M0,50 Q30,40 60,35 T120,30 T180,25 T240,20" 
+                              stroke="#3b82f6" stroke-width="2" fill="none" class="trend-line"/>
+                        <path d="M0,50 Q30,40 60,35 T120,30 T180,25 T240,20 L240,60 L0,60 Z" 
+                              fill="url(#gradient)" opacity="0.3"/>
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.3"/>
+                                <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:0"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="240" cy="20" r="3" fill="#3b82f6" class="data-point"/>
+                    </svg>
+                </div>
+            </div>
+            
+            <!-- VIP会员卡片 -->
+            <div class="data-card rounded-2xl p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                            <span class="text-2xl">💎</span>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">权益会员</h3>
+                            <p class="text-sm text-gray-500">VIP Members</p>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="w-4 h-4 bg-green-500 rounded-full pulse-ring"></div>
+                        <div class="w-4 h-4 bg-green-500 rounded-full absolute top-0"></div>
+                    </div>
+                </div>
+                
+                <div class="metric-number text-3xl font-bold text-gray-800 mb-2">1,102</div>
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="text-green-600 text-sm font-medium">↗ +3/小时</span>
+                    <span class="text-gray-400 text-sm">增长率: 0.27%</span>
+                </div>
+                
+                <!-- 迷你环形图 -->
+                <div class="chart-container flex items-center justify-center">
+                    <svg width="60" height="60" class="donut-chart">
+                        <circle cx="30" cy="30" r="25" fill="none" stroke="#e5e7eb" stroke-width="6"/>
+                        <circle cx="30" cy="30" r="25" fill="none" stroke="#3b82f6" stroke-width="6" 
+                                class="donut-segment" style="--dash-array: 55;"/>
+                    </svg>
+                    <div class="absolute text-xs font-bold text-gray-800">55%</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 综合数据面板 -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- 增长趋势图 -->
+            <div class="data-card rounded-2xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">7天增长趋势</h3>
+                <div class="h-48 relative">
+                    <svg width="100%" height="100%" class="overflow-visible">
+                        <!-- 网格线 -->
+                        <defs>
+                            <pattern id="grid" width="40" height="30" patternUnits="userSpaceOnUse">
+                                <path d="M 40 0 L 0 0 0 30" fill="none" stroke="#f3f4f6" stroke-width="1"/>
+                            </pattern>
+                        </defs>
+                        <rect width="100%" height="100%" fill="url(#grid)"/>
+                        
+                        <!-- 成员增长线 -->
+                        <path d="M20,160 L80,140 L140,130 L200,120 L260,100 L320,90 L380,80" 
+                              stroke="#3b82f6" stroke-width="3" fill="none" class="trend-line"/>
+                        
+                        <!-- 企业增长线 -->
+                        <path d="M20,170 L80,160 L140,150 L200,145 L260,135 L320,130 L380,125" 
+                              stroke="#1d4ed8" stroke-width="3" fill="none" class="trend-line" style="animation-delay: 1.2s;"/>
+                        
+                        <!-- 数据点 -->
+                        <circle cx="380" cy="80" r="4" fill="#3b82f6" class="data-point"/>
+                        <circle cx="380" cy="125" r="4" fill="#1d4ed8" class="data-point"/>
+                    </svg>
+                </div>
+                <div class="flex items-center gap-6 mt-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                        <span class="text-sm text-gray-600">社区成员</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 bg-blue-700 rounded-full"></div>
+                        <span class="text-sm text-gray-600">企业机构</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 分布分析 -->
+            <div class="data-card rounded-2xl p-6">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">成员分布构成</h3>
+                <div class="flex items-center justify-center mb-6">
+                    <svg width="120" height="120" class="donut-chart">
+                        <circle cx="60" cy="60" r="50" fill="none" stroke="#e5e7eb" stroke-width="12"/>
+                        <circle cx="60" cy="60" r="50" fill="none" stroke-width="12" 
+                                class="donut-segment members" style="--dash-array: 91;"/>
+                        <circle cx="60" cy="60" r="50" fill="none" stroke-width="12" 
+                                class="donut-segment companies" style="--dash-array: 8; stroke-dashoffset: -91;"/>
+                        <circle cx="60" cy="60" r="50" fill="none" stroke-width="12" 
+                                class="donut-segment vip" style="--dash-array: 1; stroke-dashoffset: -99;"/>
+                    </svg>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                            <span class="text-sm text-gray-600">个人成员</span>
+                        </div>
+                        <span class="text-sm font-medium">91.2%</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 bg-blue-700 rounded-full"></div>
+                            <span class="text-sm text-gray-600">企业机构</span>
+                        </div>
+                        <span class="text-sm font-medium">8.0%</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 bg-blue-900 rounded-full"></div>
+                            <span class="text-sm text-gray-600">权益会员</span>
+                        </div>
+                        <span class="text-sm font-medium">0.8%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部状态栏 -->
+        <div class="mt-8 data-card rounded-2xl p-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <span class="text-sm text-gray-600">数据同步正常</span>
+                    </div>
+                    <span class="text-sm text-gray-400">|</span>
+                    <span class="text-sm text-gray-600">最后更新: 2024-01-22 15:30:45</span>
+                </div>
+                <div class="text-sm text-gray-500">
+                    SVTR.AI © 数据驱动的AI创投分析平台
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

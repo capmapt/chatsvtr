@@ -23,6 +23,38 @@
     pointer-events: none !important; /* 禁用交互 */
   }
 
+  /* 确保侧边栏内部元素可以交互 */
+  .sidebar {
+    pointer-events: auto !important;
+  }
+
+  /* 确保侧边栏内的所有交互元素都可以点击 */
+  .sidebar * {
+    pointer-events: auto !important;
+  }
+
+  /* 特别确保所有可交互元素正常工作 */
+  .sidebar .user-actions,
+  .sidebar .subscribe-form-inline,
+  .sidebar .subscribe-form-inline input,
+  .sidebar .subscribe-form-inline button,
+  .sidebar .btn-member-login,
+  .sidebar .nav-list,
+  .sidebar .nav-list a,
+  .sidebar .group-header,
+  .sidebar .sub-list a,
+  .sidebar .mobile-sidebar-collapse {
+    pointer-events: auto !important;
+  }
+
+  /* 防止iOS Safari的触摸延迟问题 */
+  .sidebar input,
+  .sidebar button,
+  .sidebar a {
+    -webkit-tap-highlight-color: rgba(0,0,0,0.1) !important;
+    touch-action: manipulation !important;
+  }
+
   /* 增强overlay背景效果 */
   .sidebar.open ~ .overlay,
   .overlay.active {
@@ -168,6 +200,7 @@
     margin: 16px;
     padding: 18px;
     border-radius: 16px;
+    pointer-events: auto !important; /* 确保用户操作区域可交互 */
   }
 
   .subscribe-form-inline input {
@@ -175,6 +208,15 @@
     font-size: 16px; /* 防止iOS缩放 */
     min-height: 48px;
     border-radius: 14px;
+    pointer-events: auto !important; /* 确保输入框可点击 */
+    -webkit-user-select: text !important; /* 允许文本选择 */
+    user-select: text !important;
+  }
+
+  /* 确保输入框焦点状态正常 */
+  .subscribe-form-inline input:focus {
+    outline: 2px solid #16a34a !important;
+    outline-offset: 2px !important;
   }
 
   .btn-subscribe-submit {

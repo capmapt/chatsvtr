@@ -17,26 +17,85 @@ class EnhancedFeishuSyncV2 {
       appSecret: 'tysHBj6njxwafO92dwO1DdttVvqvesf0',
       baseUrl: 'https://open.feishu.cn/open-apis',
       spaceId: '7321328173944340484',
-      wikiDomain: 'svtrglobal.feishu.cn'
+      wikiDomain: 'svtrglobal.feishu.cn',
+      // API限流配置
+      rateLimitDelay: 300, // 每次API调用间隔300ms
+      requestTimeout: 30000, // 30秒请求超时
+      maxRetries: 3 // 最大重试次数
     };
     
     this.accessToken = null;
     this.outputDir = path.join(__dirname, '../assets/data/rag');
     this.knowledgeBase = [];
+    this.apiCallCount = 0;
+    this.startTime = Date.now();
+  }
+
+  // API速率限制和重试机制
+  async sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  
+  async fetchWithTimeout(url, options, timeout = this.config.requestTimeout) {
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error(`请求超时 (${timeout}ms)`)), timeout);
+    });
+    
+    return Promise.race([
+      fetch(url, options),
+      timeoutPromise
+    ]);
+  }
+  
+  async apiCallWithRetry(url, options, context = '') {
+    let lastError = null;
+    
+    for (let attempt = 1; attempt <= this.config.maxRetries; attempt++) {
+      try {
+        // API调用前延迟
+        if (this.apiCallCount > 0) {
+          await this.sleep(this.config.rateLimitDelay);
+        }
+        
+        this.apiCallCount++;
+        console.log(`🔄 API调用 #${this.apiCallCount}: ${context} (尝试 ${attempt}/${this.config.maxRetries})`);
+        
+        const response = await this.fetchWithTimeout(url, options);
+        return response;
+        
+      } catch (error) {
+        lastError = error;
+        console.log(`⚠️ API调用失败 (尝试 ${attempt}/${this.config.maxRetries}): ${error.message}`);
+        
+        if (attempt < this.config.maxRetries) {
+          const backoffDelay = Math.min(1000 * Math.pow(2, attempt - 1), 5000);
+          console.log(`⏳ 等待 ${backoffDelay}ms 后重试...`);
+          await this.sleep(backoffDelay);
+        }
+      }
+    }
+    
+    throw lastError;
+  }
+  
+  logProgress() {
+    const elapsed = (Date.now() - this.startTime) / 1000;
+    const memUsage = process.memoryUsage();
+    console.log(`📊 进度报告: ${this.apiCallCount} API调用, ${elapsed.toFixed(1)}s 已用, 内存: ${(memUsage.heapUsed / 1024 / 1024).toFixed(1)}MB`);
   }
 
   async getAccessToken() {
     const url = `${this.config.baseUrl}/auth/v3/tenant_access_token/internal`;
     
     try {
-      const response = await fetch(url, {
+      const response = await this.apiCallWithRetry(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           app_id: this.config.appId,
           app_secret: this.config.appSecret
         })
-      });
+      }, '飞书认证');
       
       const data = await response.json();
       
@@ -54,20 +113,19 @@ class EnhancedFeishuSyncV2 {
     }
   }
 
-  // 使用正确的API获取子节点
+  // 使用正确的API获取子节点 - 优化版本
   async getChildNodes(parentNodeToken) {
     console.log(`🌲 获取子节点: ${parentNodeToken}`);
     
     try {
-      // 使用正确的子节点API
       const url = `${this.config.baseUrl}/wiki/v2/spaces/${this.config.spaceId}/nodes?parent_node_token=${parentNodeToken}`;
       
-      const response = await fetch(url, {
+      const response = await this.apiCallWithRetry(url, {
         headers: {
           'Authorization': `Bearer ${this.accessToken}`,
           'Content-Type': 'application/json'
         }
-      });
+      }, `获取子节点: ${parentNodeToken}`);
       
       console.log(`📊 子节点API响应: ${response.status}`);
       
@@ -75,6 +133,12 @@ class EnhancedFeishuSyncV2 {
         const data = await response.json();
         if (data.code === 0 && data.data?.items) {
           console.log(`✅ 成功获取 ${data.data.items.length} 个子节点`);
+          
+          // 定期报告进度
+          if (this.apiCallCount % 10 === 0) {
+            this.logProgress();
+          }
+          
           return data.data.items;
         }
       } else {
@@ -103,17 +167,17 @@ class EnhancedFeishuSyncV2 {
     return null;
   }
 
-  // 获取文档内容
+  // 获取文档内容 - 优化版本
   async getDocxContent(objToken, title) {
     try {
       const url = `${this.config.baseUrl}/docx/v1/documents/${objToken}/raw_content`;
       
-      const response = await fetch(url, {
+      const response = await this.apiCallWithRetry(url, {
         headers: {
           'Authorization': `Bearer ${this.accessToken}`,
           'Content-Type': 'application/json'
         }
-      });
+      }, `获取文档: ${title}`);
       
       if (response.ok) {
         const data = await response.json();
@@ -133,18 +197,18 @@ class EnhancedFeishuSyncV2 {
     return null;
   }
 
-  // 获取电子表格内容 - 实用版：基于测试结果的可行方案
+  // 获取电子表格内容 - 优化版本
   async getSheetContent(objToken, title) {
     try {
       // 首先获取表格基础信息
       const infoUrl = `${this.config.baseUrl}/sheets/v3/spreadsheets/${objToken}`;
       
-      const infoResponse = await fetch(infoUrl, {
+      const infoResponse = await this.apiCallWithRetry(infoUrl, {
         headers: {
           'Authorization': `Bearer ${this.accessToken}`,
           'Content-Type': 'application/json'
         }
-      });
+      }, `获取表格信息: ${title}`);
       
       if (infoResponse.ok) {
         const infoData = await infoResponse.json();

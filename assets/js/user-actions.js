@@ -26,7 +26,7 @@ class SVTRUserActions {
     if (this.subscribeForm) {
       this.subscribeForm.addEventListener('submit', (e) => this.handleSubscribeSubmit(e));
     }
-    
+
     if (this.memberLoginBtn) {
       this.memberLoginBtn.addEventListener('click', (e) => this.handleMemberLogin(e));
     }
@@ -42,14 +42,14 @@ class SVTRUserActions {
     const submitBtn = form.querySelector('.btn-subscribe-submit');
     const statusDiv = form.querySelector('#subscribeStatus');
     const currentLang = this.getCurrentLang();
-    
+
     try {
       // 设置提交状态
       submitBtn.disabled = true;
       submitBtn.textContent = currentLang === 'zh-CN' ? '提交中...' : 'Submitting...';
       statusDiv.className = 'subscribe-status loading';
       statusDiv.textContent = currentLang === 'zh-CN' ? '正在提交订阅请求...' : 'Submitting subscription...';
-      
+
       // 调用订阅API
       const response = await fetch('/api/subscribe', {
         method: 'POST',
@@ -62,42 +62,42 @@ class SVTRUserActions {
           preferences: ['AI Weekly', 'Market Insights'] // 默认订阅选项
         })
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok && data.success) {
         // 订阅成功
         statusDiv.className = 'subscribe-status success';
-        statusDiv.textContent = currentLang === 'zh-CN' 
-          ? '🎉 订阅成功！' 
+        statusDiv.textContent = currentLang === 'zh-CN'
+          ? '🎉 订阅成功！'
           : '🎉 Success!';
-        
+
         // 清空表单
         form.reset();
-        
+
         // 5秒后清空状态消息
         setTimeout(() => {
           statusDiv.textContent = '';
           statusDiv.className = 'subscribe-status';
         }, 5000);
-        
+
       } else {
         throw new Error(data.error || 'Subscription failed');
       }
-      
+
     } catch (error) {
       console.error('订阅失败:', error);
       statusDiv.className = 'subscribe-status error';
-      statusDiv.textContent = currentLang === 'zh-CN' 
-        ? '❌ 订阅失败，请稍后重试或联系客服' 
+      statusDiv.textContent = currentLang === 'zh-CN'
+        ? '❌ 订阅失败，请稍后重试或联系客服'
         : '❌ Subscription failed. Please try again later.';
-        
+
       // 10秒后清空错误消息
       setTimeout(() => {
         statusDiv.textContent = '';
         statusDiv.className = 'subscribe-status';
       }, 10000);
-      
+
     } finally {
       // 恢复按钮状态
       submitBtn.disabled = false;
@@ -111,11 +111,11 @@ class SVTRUserActions {
   async handleMemberLogin(event) {
     event.preventDefault();
     const button = event.currentTarget;
-    
+
     // 检查是否已登录
     const userStr = localStorage.getItem('svtr_user');
     const token = localStorage.getItem('svtr_token');
-    
+
     if (userStr && token) {
       try {
         const user = JSON.parse(userStr);
@@ -133,10 +133,10 @@ class SVTRUserActions {
       try {
         // 添加加载状态
         this.setButtonLoading(button, true);
-        
+
         // 显示会员登录弹窗
         this.showMemberLoginModal();
-        
+
       } catch (error) {
         console.error('会员登录处理失败:', error);
         this.showToast('登录服务暂时不可用，请稍后重试', 'error');
@@ -152,7 +152,7 @@ class SVTRUserActions {
    */
   showUserProfileModal(user) {
     const currentLang = this.getCurrentLang();
-    
+
     const modal = document.createElement('div');
     modal.className = 'user-action-modal user-profile-modal';
     modal.innerHTML = `
@@ -355,12 +355,12 @@ class SVTRUserActions {
         </div>
       </div>
     `;
-    
+
     document.body.appendChild(modal);
-    
+
     // 绑定标签页切换事件
     this.bindProfileTabSwitching(modal);
-    
+
     // 绑定保存设置事件
     this.bindProfileActions(modal);
   }
@@ -370,7 +370,7 @@ class SVTRUserActions {
    */
   showMemberLoginModal() {
     const currentLang = this.getCurrentLang();
-    
+
     const modal = document.createElement('div');
     modal.className = 'user-action-modal';
     modal.innerHTML = `
@@ -477,9 +477,9 @@ class SVTRUserActions {
         </div>
       </div>
     `;
-    
+
     document.body.appendChild(modal);
-    
+
     // 绑定新的登录事件
     this.bindNewLoginEvents(modal);
   }
@@ -491,15 +491,15 @@ class SVTRUserActions {
     // 绑定登录方式切换
     const methodTabs = modal.querySelectorAll('.method-tab');
     const methodContents = modal.querySelectorAll('.login-method-content');
-    
+
     methodTabs.forEach(tab => {
       tab.addEventListener('click', () => {
         const method = tab.dataset.method;
-        
+
         // 更新标签状态
         methodTabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-        
+
         // 更新内容显示
         methodContents.forEach(content => {
           content.classList.remove('active');
@@ -509,25 +509,25 @@ class SVTRUserActions {
         });
       });
     });
-    
+
     // 绑定邮箱验证码登录
     const emailCodeForm = modal.querySelector('.email-code-form');
     const sendCodeBtn = modal.querySelector('.btn-send-code');
     const verificationInput = modal.querySelector('.verification-input');
     const codeInput = modal.querySelector('.code-input');
-    
+
     sendCodeBtn.addEventListener('click', async () => {
       const emailInput = emailCodeForm.querySelector('input[type="email"]');
       const email = emailInput.value.trim();
-      
+
       if (!email || !this.isValidEmail(email)) {
         this.showToast('请输入有效的邮箱地址', 'error');
         return;
       }
-      
+
       try {
         this.setButtonLoading(sendCodeBtn, true);
-        
+
         const response = await fetch('/api/auth', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -536,22 +536,22 @@ class SVTRUserActions {
             email: email
           })
         });
-        
+
         const result = await response.json();
-        
+
         if (result.success) {
           this.showToast('验证码已发送到您的邮箱', 'success');
           emailInput.disabled = true;
           verificationInput.style.display = 'block';
           sendCodeBtn.textContent = '已发送';
           sendCodeBtn.disabled = true;
-          
+
           // 60秒倒计时
           this.startCountdown(sendCodeBtn, 60);
         } else {
           this.showToast(result.message || '验证码发送失败', 'error');
         }
-        
+
       } catch (error) {
         console.error('发送验证码失败:', error);
         this.showToast('发送失败，请重试', 'error');
@@ -559,7 +559,7 @@ class SVTRUserActions {
         this.setButtonLoading(sendCodeBtn, false);
       }
     });
-    
+
     // 验证码输入自动格式化
     codeInput.addEventListener('input', (e) => {
       e.target.value = e.target.value.replace(/\D/g, ''); // 只允许数字
@@ -568,24 +568,24 @@ class SVTRUserActions {
         emailCodeForm.dispatchEvent(new Event('submit'));
       }
     });
-    
+
     // 绑定验证码验证
     emailCodeForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
+
       const emailInput = emailCodeForm.querySelector('input[type="email"]');
       const email = emailInput.value.trim();
       const code = codeInput.value.trim();
-      
+
       if (!code || code.length !== 6) {
         this.showToast('请输入6位验证码', 'error');
         return;
       }
-      
+
       try {
         const verifyBtn = modal.querySelector('.btn-verify');
         this.setButtonLoading(verifyBtn, true);
-        
+
         const response = await fetch('/api/auth', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -595,38 +595,38 @@ class SVTRUserActions {
             code: code
           })
         });
-        
+
         const result = await response.json();
-        
+
         if (result.success) {
           this.handleLoginSuccess(result.data, modal);
         } else {
           this.showToast(result.message || '验证码错误', 'error');
         }
-        
+
       } catch (error) {
         console.error('验证登录失败:', error);
         this.showToast('登录失败，请重试', 'error');
       }
     });
-    
+
     // 绑定Magic Link发送
     const magicLinkForm = modal.querySelector('.magic-link-form');
     magicLinkForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
+
       const emailInput = magicLinkForm.querySelector('input[type="email"]');
       const email = emailInput.value.trim();
-      
+
       if (!email || !this.isValidEmail(email)) {
         this.showToast('请输入有效的邮箱地址', 'error');
         return;
       }
-      
+
       try {
         const sendMagicBtn = modal.querySelector('.btn-send-magic');
         this.setButtonLoading(sendMagicBtn, true);
-        
+
         const response = await fetch('/api/auth', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -635,22 +635,22 @@ class SVTRUserActions {
             email: email
           })
         });
-        
+
         const result = await response.json();
-        
+
         if (result.success) {
           this.showToast('登录链接已发送', 'success');
-          
+
           // 显示发送成功状态
           const inputGroup = magicLinkForm.querySelector('.input-group');
           const sentMessage = magicLinkForm.querySelector('.magic-link-sent');
-          
+
           inputGroup.style.display = 'none';
           sentMessage.style.display = 'block';
         } else {
           this.showToast(result.message || 'Magic Link发送失败', 'error');
         }
-        
+
       } catch (error) {
         console.error('发送Magic Link失败:', error);
         this.showToast('发送失败，请重试', 'error');
@@ -659,79 +659,79 @@ class SVTRUserActions {
       }
     });
   }
-  
+
   /**
    * 处理登录成功
    */
   handleLoginSuccess(data, modal) {
     const { user, token } = data;
-    
+
     // 保存用户信息和token
     localStorage.setItem('svtr_user', JSON.stringify(user));
     localStorage.setItem('svtr_token', token);
-    
+
     // 显示成功消息
     this.showToast(`欢迎回来，${user.name}！`, 'success');
-    
+
     // 关闭模态框
     modal.remove();
-    
+
     // 更新按钮状态
     this.setButtonSuccess(this.memberLoginBtn);
     this.memberLoginBtn.innerHTML = `
       <img src="${user.avatar}" style="width: 20px; height: 20px; border-radius: 50%; margin-right: 5px;">
       ${user.name}
     `;
-    
+
     // 触发登录成功事件
     this.trackLoginEvent('login_success', user.email, user.provider);
-    
+
     // 检查页面URL中是否有认证回调参数
     this.checkAuthCallback();
   }
-  
+
   /**
    * 检查OAuth认证回调
    */
   checkAuthCallback() {
     const urlParams = new URLSearchParams(window.location.search);
-    
+
     if (urlParams.get('auth_success') === 'true') {
       const token = urlParams.get('token');
       const userStr = urlParams.get('user');
-      
+
       if (token && userStr) {
         try {
           const user = JSON.parse(decodeURIComponent(userStr));
-          
+
           // 保存用户信息
           localStorage.setItem('svtr_user', JSON.stringify(user));
           localStorage.setItem('svtr_token', token);
-          
+
           // 显示成功消息
           this.showToast(`欢迎，${user.name}！`, 'success');
-          
+
           // 更新UI
           this.updateLoginUI(user);
-          
+
           // 清理URL参数
           window.history.replaceState({}, '', window.location.pathname);
-          
+
         } catch (error) {
           console.error('解析OAuth回调数据失败:', error);
         }
       }
     }
-    
+
     if (urlParams.get('auth_error')) {
       const error = urlParams.get('auth_error');
       this.showToast('登录失败: ' + error, 'error');
-      
+
       // 清理URL参数
       window.history.replaceState({}, '', window.location.pathname);
     }
   }
-  
+
   /**
    * 更新登录UI状态
    */
@@ -744,7 +744,7 @@ class SVTRUserActions {
       `;
     }
   }
-  
+
   /**
    * 验证邮箱格式
    */
@@ -752,18 +752,18 @@ class SVTRUserActions {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   }
-  
+
   /**
    * 开始倒计时
    */
   startCountdown(button, seconds) {
     let remaining = seconds;
     const originalText = button.textContent;
-    
+
     const timer = setInterval(() => {
       button.textContent = `重新发送 (${remaining}s)`;
       remaining--;
-      
+
       if (remaining < 0) {
         clearInterval(timer);
         button.textContent = originalText;
@@ -771,14 +771,14 @@ class SVTRUserActions {
       }
     }, 1000);
   }
-  
+
   /**
    * 检查现有登录状态
    */
   checkExistingLogin() {
     const userStr = localStorage.getItem('svtr_user');
     const token = localStorage.getItem('svtr_token');
-    
+
     if (userStr && token) {
       try {
         const user = JSON.parse(userStr);
@@ -792,7 +792,7 @@ class SVTRUserActions {
       }
     }
   }
-  
+
   /**
    * 跟踪登录事件
    */
@@ -804,7 +804,7 @@ class SVTRUserActions {
       console.error('事件跟踪失败:', error);
     }
   }
-  
+
 
   /**
    * 处理登录表单提交
@@ -814,17 +814,17 @@ class SVTRUserActions {
     const form = event.target;
     const email = form.querySelector('input[type="email"]').value;
     const password = form.querySelector('input[type="password"]').value;
-    
+
     try {
       // 模拟API调用
       await this.simulateAPICall();
-      
+
       this.showToast('登录成功！', 'success');
       modal.remove();
-      
+
       // 标记按钮为成功状态并更新文本
       this.setButtonSuccess(this.memberLoginBtn);
-      
+
     } catch (error) {
       this.showToast('登录失败，请检查邮箱和密码', 'error');
     }
@@ -836,15 +836,15 @@ class SVTRUserActions {
   bindTabSwitching(modal) {
     const tabBtns = modal.querySelectorAll('.tab-btn');
     const tabContents = modal.querySelectorAll('.tab-content');
-    
+
     tabBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const targetTab = btn.dataset.tab;
-        
+
         // 更新按钮状态
         tabBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        
+
         // 更新内容显示
         tabContents.forEach(content => {
           content.classList.remove('active');
@@ -886,13 +886,13 @@ class SVTRUserActions {
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
     toast.textContent = message;
-    
+
     document.body.appendChild(toast);
-    
+
     setTimeout(() => {
       toast.classList.add('show');
     }, 100);
-    
+
     setTimeout(() => {
       toast.classList.remove('show');
       setTimeout(() => toast.remove(), 300);
@@ -913,10 +913,10 @@ class SVTRUserActions {
         userAgent: navigator.userAgent.substring(0, 100),
         error: error
       };
-      
+
       // 可以发送到分析服务或记录到本地存储
       console.log('订阅事件:', eventData);
-      
+
       // 未来可以集成Google Analytics、Mixpanel等
       if (typeof gtag !== 'undefined') {
         gtag('event', eventType, {
@@ -936,12 +936,12 @@ class SVTRUserActions {
     if (window.i18n && window.i18n.getCurrentLanguage) {
       return window.i18n.getCurrentLanguage();
     }
-    
+
     const btnZh = document.getElementById('btnZh');
     if (btnZh && btnZh.classList.contains('active')) {
       return 'zh-CN';
     }
-    
+
     return 'en';
   }
 
@@ -951,15 +951,15 @@ class SVTRUserActions {
   bindProfileTabSwitching(modal) {
     const profileTabs = modal.querySelectorAll('.profile-tab');
     const profileContents = modal.querySelectorAll('.profile-content');
-    
+
     profileTabs.forEach(tab => {
       tab.addEventListener('click', () => {
         const targetTab = tab.dataset.tab;
-        
+
         // 更新标签状态
         profileTabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-        
+
         // 更新内容显示
         profileContents.forEach(content => {
           content.classList.remove('active');
@@ -1006,26 +1006,26 @@ class SVTRUserActions {
   async handleSaveProfile(modal) {
     try {
       const currentLang = this.getCurrentLang();
-      
+
       // 收集偏好设置
       const preferences = [];
       const checkboxes = modal.querySelectorAll('.preference-item input[type="checkbox"]:checked');
       checkboxes.forEach(checkbox => {
         preferences.push(checkbox.nextElementSibling.textContent.trim());
       });
-      
+
       // 获取语言偏好
       const languageSelect = modal.querySelector('.preference-select');
       const language = languageSelect.value;
-      
+
       // 模拟保存API调用
       this.showToast(currentLang === 'zh-CN' ? '设置已保存' : 'Settings saved', 'success');
-      
+
       // 如果语言设置有变化，可以触发页面语言切换
       if (language !== currentLang) {
         console.log('语言偏好已更新:', language);
       }
-      
+
     } catch (error) {
       console.error('保存设置失败:', error);
       this.showToast('保存失败，请重试', 'error');
@@ -1037,14 +1037,14 @@ class SVTRUserActions {
    */
   handleLogout() {
     const currentLang = this.getCurrentLang();
-    
+
     // 确认对话框
     if (confirm(currentLang === 'zh-CN' ? '确定要退出登录吗？' : 'Are you sure you want to logout?')) {
       try {
         // 清理本地存储
         localStorage.removeItem('svtr_user');
         localStorage.removeItem('svtr_token');
-        
+
         // 恢复登录按钮状态
         if (this.memberLoginBtn) {
           this.memberLoginBtn.classList.remove('success');
@@ -1053,17 +1053,17 @@ class SVTRUserActions {
             ${currentLang === 'zh-CN' ? '会员登录' : 'Member Login'}
           `;
         }
-        
+
         // 关闭所有模态框
         const modals = document.querySelectorAll('.user-action-modal');
         modals.forEach(modal => modal.remove());
-        
+
         // 显示成功消息
         this.showToast(currentLang === 'zh-CN' ? '已成功退出登录' : 'Successfully logged out', 'success');
-        
+
         // 跟踪登出事件
         console.log('用户登出:', new Date().toISOString());
-        
+
       } catch (error) {
         console.error('退出登录失败:', error);
         this.showToast(currentLang === 'zh-CN' ? '退出失败，请重试' : 'Logout failed, please try again', 'error');
