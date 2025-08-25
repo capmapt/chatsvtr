@@ -155,7 +155,12 @@ class MobileSidebarFix {
         this.safeToggleSidebar();
       }, 150);
 
-      const safeClose = this.debounce(() => {
+      const safeClose = this.debounce((e) => {
+        // 检查点击是否来自订阅相关元素
+        if (this.isSubscriptionElement(e.target)) {
+          console.log('[MobileSidebarFix] 订阅元素点击，不关闭侧边栏');
+          return;
+        }
         this.safeCloseSidebar();
       }, 100);
 
@@ -165,6 +170,9 @@ class MobileSidebarFix {
       // 添加新的安全监听器
       this.elements.toggle.addEventListener('click', safeToggle, { passive: false });
       this.elements.overlay.addEventListener('click', safeClose, { passive: false });
+
+      // 为订阅表单添加特殊处理
+      this.setupSubscriptionProtection();
 
       // 移动端特殊处理
       if (this.touchSupported) {
@@ -446,6 +454,59 @@ class MobileSidebarFix {
       }
     } catch (error) {
       console.warn('[MobileSidebarFix] 内存清理警告:', error);
+    }
+  }
+
+  // 订阅元素检查方法
+  isSubscriptionElement(element) {
+    if (!element) return false;
+    
+    // 检查元素本身及其父元素是否为订阅相关
+    let currentElement = element;
+    while (currentElement && currentElement !== document.body) {
+      // 检查类名和ID
+      const className = currentElement.className || '';
+      const id = currentElement.id || '';
+      
+      if (className.includes('subscription') || 
+          className.includes('subscribe') || 
+          id.includes('subscribe') ||
+          currentElement.tagName === 'INPUT' && currentElement.type === 'email') {
+        return true;
+      }
+      
+      currentElement = currentElement.parentElement;
+    }
+    
+    return false;
+  }
+
+  // 订阅表单保护机制
+  setupSubscriptionProtection() {
+    try {
+      // 查找所有订阅相关元素
+      const subscriptionElements = this.elements.sidebar.querySelectorAll(
+        '.subscription-section, .subscribe-form-inline, #subscribeEmail, #subscribeForm, [data-i18n*="subscribe"]'
+      );
+      
+      subscriptionElements.forEach(element => {
+        element.addEventListener('click', (e) => {
+          console.log('[MobileSidebarFix] 订阅元素点击，阻止冒泡');
+          e.stopPropagation();
+        }, { capture: true, passive: false });
+        
+        // 为输入框添加焦点保护
+        if (element.tagName === 'INPUT') {
+          element.addEventListener('focus', (e) => {
+            console.log('[MobileSidebarFix] 输入框获得焦点，阻止冒泡');
+            e.stopPropagation();
+          }, { capture: true, passive: false });
+        }
+      });
+
+      console.log(`[MobileSidebarFix] 已保护 ${subscriptionElements.length} 个订阅元素`);
+    } catch (error) {
+      console.warn('[MobileSidebarFix] 设置订阅保护失败:', error);
     }
   }
 
