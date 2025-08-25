@@ -30,7 +30,7 @@ GITHUB_CLIENT_ID = "Ov23liTtfl1NQmZtq2em"
 LINKEDIN_CLIENT_ID = "86fimn7a7dwvmr"
 
 # AWS SES 邮件服务配置
-AWS_REGION = "us-east-1"
+AWS_REGION = "us-west-2"
 FROM_EMAIL = "noreply@svtr.ai"
 
 # Secrets 通过wrangler secret命令设置

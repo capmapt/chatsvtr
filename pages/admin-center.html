@@ -98,6 +98,54 @@
             font-weight: 500;
         }
         
+        /* 子菜单样式 */
+        .nav-item[style*="padding-left: 32px"] {
+            background: rgba(255,255,255,0.05);
+            border-left: 2px solid rgba(255,255,255,0.2);
+            font-size: 0.85rem;
+        }
+        
+        .nav-item[style*="padding-left: 32px"]:hover {
+            background: rgba(255,255,255,0.15);
+            border-left-color: rgba(255,255,255,0.4);
+        }
+        
+        .nav-item[style*="padding-left: 32px"].active {
+            background: rgba(255,255,255,0.25);
+            border-left-color: white;
+        }
+
+        /* 订阅状态样式 */
+        .subscription-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .subscription-badge.subscribed {
+            background: rgba(34, 197, 94, 0.1);
+            color: #059669;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+        
+        .subscription-badge.not-subscribed {
+            background: rgba(107, 114, 128, 0.1);
+            color: #6b7280;
+            border: 1px solid rgba(107, 114, 128, 0.2);
+        }
+        
+        /* 地理位置样式 */
+        .location-icon {
+            font-size: 1rem;
+        }
+        
+        .location-text {
+            font-size: 0.9rem;
+            color: #374151;
+        }
+        
         /* 主内容区 */
         .main-content {
             margin-left: 260px;
@@ -569,10 +617,6 @@
                         <span class="nav-item-icon">✍️</span>
                         <span class="nav-item-text">内容创作</span>
                     </a>
-                    <a class="nav-item" onclick="showModule('subscription')">
-                        <span class="nav-item-icon">📧</span>
-                        <span class="nav-item-text">订阅管理</span>
-                    </a>
                 </div>
                 
                 <div class="nav-section">
@@ -584,6 +628,10 @@
                     <a class="nav-item" onclick="showModule('users')">
                         <span class="nav-item-icon">👥</span>
                         <span class="nav-item-text">用户管理</span>
+                    </a>
+                    <a class="nav-item" onclick="showModule('subscription')">
+                        <span class="nav-item-icon">📧</span>
+                        <span class="nav-item-text">订阅管理</span>
                     </a>
                 </div>
                 
@@ -718,38 +766,54 @@
                         <div class="module-subtitle">管理AI周报订阅者和相关数据</div>
                     </div>
                     <div class="module-content">
-                        <!-- 订阅者统计概览 -->
-                        <div class="stats-grid" style="margin-bottom: 30px;">
-                            <div class="stat-card">
-                                <div class="stat-icon">✉️</div>
-                                <div class="stat-content">
-                                    <div class="stat-number" id="subscription-total-subscribers">--</div>
-                                    <div class="stat-label">总订阅者</div>
-                                    <div class="stat-change" id="subscription-growth">+0</div>
+                        <!-- 订阅者统计卡片 -->
+                        <div class="dashboard-grid" style="margin-bottom: 30px;">
+                            <div class="dashboard-card">
+                                <div class="card-header">
+                                    <span class="card-icon">📧</span>
+                                    <span class="card-title">总订阅者</span>
+                                </div>
+                                <div class="card-value" id="subscription-total-subscribers">-</div>
+                                <div class="card-description">AI周报订阅用户</div>
+                                <div class="card-trend trend-up">
+                                    <span>↗ +24%</span>
+                                    <span>本月增长</span>
                                 </div>
                             </div>
-                            <div class="stat-card">
-                                <div class="stat-icon">🇨🇳</div>
-                                <div class="stat-content">
-                                    <div class="stat-number" id="subscription-zh-users">--</div>
-                                    <div class="stat-label">中文用户</div>
-                                    <div class="stat-change" id="subscription-zh-percentage">0%</div>
+                            <div class="dashboard-card">
+                                <div class="card-header">
+                                    <span class="card-icon">🇨🇳</span>
+                                    <span class="card-title">中文用户</span>
+                                </div>
+                                <div class="card-value" id="subscription-zh-users">-</div>
+                                <div class="card-description">中文订阅用户</div>
+                                <div class="card-trend">
+                                    <span id="subscription-zh-percentage">0%</span>
+                                    <span>占比</span>
                                 </div>
                             </div>
-                            <div class="stat-card">
-                                <div class="stat-icon">🇺🇸</div>
-                                <div class="stat-content">
-                                    <div class="stat-number" id="subscription-en-users">--</div>
-                                    <div class="stat-label">英文用户</div>
-                                    <div class="stat-change" id="subscription-en-percentage">0%</div>
+                            <div class="dashboard-card">
+                                <div class="card-header">
+                                    <span class="card-icon">🇺🇸</span>
+                                    <span class="card-title">英文用户</span>
+                                </div>
+                                <div class="card-value" id="subscription-en-users">-</div>
+                                <div class="card-description">英文订阅用户</div>
+                                <div class="card-trend">
+                                    <span id="subscription-en-percentage">0%</span>
+                                    <span>占比</span>
                                 </div>
                             </div>
-                            <div class="stat-card">
-                                <div class="stat-icon">📈</div>
-                                <div class="stat-content">
-                                    <div class="stat-number" id="subscription-today-new">--</div>
-                                    <div class="stat-label">今日新增</div>
-                                    <div class="stat-change">+new</div>
+                            <div class="dashboard-card">
+                                <div class="card-header">
+                                    <span class="card-icon">📈</span>
+                                    <span class="card-title">今日新增</span>
+                                </div>
+                                <div class="card-value" id="subscription-today-new">-</div>
+                                <div class="card-description">今日新增订阅</div>
+                                <div class="card-trend trend-up">
+                                    <span>+新增</span>
+                                    <span>持续增长</span>
                                 </div>
                             </div>
                         </div>
@@ -863,10 +927,82 @@
                         <div class="module-subtitle">管理创业者、投资人等平台用户</div>
                     </div>
                     <div class="module-content">
-                        <div class="empty-state">
-                            <div class="empty-state-icon">👥</div>
-                            <h3>用户管理功能</h3>
-                            <p>正在开发中，敬请期待...</p>
+                        <!-- 用户统计卡片 -->
+                        <div class="dashboard-grid" style="margin-bottom: 30px;">
+                            <div class="dashboard-card">
+                                <div class="card-header">
+                                    <span class="card-icon">👥</span>
+                                    <span class="card-title">总用户数</span>
+                                </div>
+                                <div class="card-value" id="totalUsersCount">-</div>
+                                <div class="card-description">注册用户总数</div>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="card-header">
+                                    <span class="card-icon">✅</span>
+                                    <span class="card-title">活跃用户</span>
+                                </div>
+                                <div class="card-value" id="activeUsersCount">-</div>
+                                <div class="card-description">当前活跃用户</div>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="card-header">
+                                    <span class="card-icon">📈</span>
+                                    <span class="card-title">今日注册</span>
+                                </div>
+                                <div class="card-value" id="todayRegistrations">-</div>
+                                <div class="card-description">今日新增用户</div>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="card-header">
+                                    <span class="card-icon">📧</span>
+                                    <span class="card-title">邮箱用户</span>
+                                </div>
+                                <div class="card-value" id="emailUsersCount">-</div>
+                                <div class="card-description">邮箱注册用户</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 用户管理操作区 -->
+                        <div class="module-toolbar">
+                            <div class="toolbar-filters">
+                                <select id="userProviderFilter" onchange="filterUsers()" class="form-input" style="width: auto;">
+                                    <option value="">所有来源</option>
+                                    <option value="email">邮箱登录</option>
+                                    <option value="google">Google</option>
+                                    <option value="github">GitHub</option>
+                                </select>
+                                <select id="userSubscriptionFilter" onchange="filterUsers()" class="form-input" style="width: auto;">
+                                    <option value="">订阅状态</option>
+                                    <option value="true">已订阅</option>
+                                    <option value="false">未订阅</option>
+                                </select>
+                                <select id="userLocationFilter" onchange="filterUsers()" class="form-input" style="width: auto;">
+                                    <option value="">所有地区</option>
+                                    <option value="中国">中国</option>
+                                    <option value="全球">全球</option>
+                                    <option value="美国">美国</option>
+                                    <option value="本地环境">本地环境</option>
+                                    <option value="其他地区">其他地区</option>
+                                </select>
+                                <select id="userStatusFilter" onchange="filterUsers()" class="form-input" style="width: auto;">
+                                    <option value="">所有状态</option>
+                                    <option value="true">活跃</option>
+                                    <option value="false">禁用</option>
+                                </select>
+                                <input type="text" id="userSearchInput" placeholder="搜索用户..." onkeyup="filterUsers()" class="form-input" style="width: 150px;">
+                                <input type="date" id="userDateFilter" onchange="filterUsers()" class="form-input" style="width: auto;">
+                            </div>
+                            <div class="toolbar-actions">
+                                <button class="btn-secondary" onclick="exportUsers()">📥 导出用户</button>
+                                <button class="btn-primary" onclick="refreshUsers()">🔄 刷新</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 用户列表 -->
+                        <div id="usersTableContainer">
+                            <div class="loading-spinner"></div>
+                            <span style="margin-left: 10px;">加载用户数据...</span>
                         </div>
                     </div>
                 </div>
@@ -1017,7 +1153,7 @@
             const titles = {
                 dashboard: { title: '仪表板', subtitle: 'SVTR 平台运营概览' },
                 content: { title: '内容创作', subtitle: '管理AI周报和投资洞察内容' },
-                subscription: { title: '订阅管理', subtitle: '管理AI周报订阅用户' },
+                subscription: { title: '订阅管理', subtitle: '管理AI周报订阅用户和邮件列表' },
                 projects: { title: '项目管理', subtitle: '管理投资项目和申请' },
                 users: { title: '用户管理', subtitle: '管理平台用户和权限' },
                 analytics: { title: '数据分析', subtitle: '平台运营数据和投资统计' },
@@ -1036,7 +1172,10 @@
             if (moduleId === 'projects') {
                 loadProjectsData();
             } else if (moduleId === 'subscription') {
+                console.log('[模块切换] 正在切换到订阅管理模块');
                 loadSubscriptionsData();
+            } else if (moduleId === 'users') {
+                loadUsersData();
             }
 
             // 关闭移动端侧边栏
@@ -1097,33 +1236,43 @@
 
         async function loadSubscriptionsData() {
             try {
-                console.log('加载订阅数据...');
+                console.log('[订阅管理] 开始加载订阅数据...');
                 
                 // 获取订阅统计
                 const statsResponse = await fetch('/api/subscribe?action=stats');
+                console.log('[订阅管理] 统计API响应状态:', statsResponse.status);
+                
                 if (statsResponse.ok) {
                     const stats = await statsResponse.json();
-                    console.log('订阅统计数据:', stats);
+                    console.log('[订阅管理] 统计数据:', stats);
                     updateSubscriptionStats(stats);
+                } else {
+                    console.error('[订阅管理] 统计API失败:', statsResponse.status, statsResponse.statusText);
                 }
                 
                 // 获取订阅者列表
                 const listResponse = await fetch('/api/subscribe?action=list');
+                console.log('[订阅管理] 列表API响应状态:', listResponse.status);
+                
                 if (listResponse.ok) {
                     const subscribers = await listResponse.json();
-                    console.log('订阅者列表:', subscribers);
+                    console.log('[订阅管理] 订阅者列表:', subscribers);
                     subscriptionsData = Array.isArray(subscribers) ? subscribers : [];
                     filteredSubscriptionsData = [...subscriptionsData];
+                    console.log('[订阅管理] 准备渲染表格，数据数量:', filteredSubscriptionsData.length);
                     renderSubscriptionsTable();
+                } else {
+                    console.error('[订阅管理] 列表API失败:', listResponse.status, listResponse.statusText);
                 }
                 
             } catch (error) {
-                console.error('加载订阅数据失败:', error);
+                console.error('[订阅管理] 加载数据失败:', error);
                 document.getElementById('subscriptionsTableContainer').innerHTML = `
                     <div class="error-message">
                         <div style="color: #dc3545; text-align: center; padding: 20px;">
                             <div>❌ 加载订阅数据失败</div>
-                            <div style="font-size: 14px; margin-top: 5px;">请检查网络连接后重试</div>
+                            <div style="font-size: 14px; margin-top: 5px;">错误: ${error.message}</div>
+                            <button class="btn-primary" onclick="loadSubscriptionsData()" style="margin-top: 10px;">重试</button>
                         </div>
                     </div>
                 `;
@@ -1131,8 +1280,9 @@
         }
 
         function updateSubscriptionStats(stats) {
+            // 更新统计卡片数据
             document.getElementById('subscription-total-subscribers').textContent = stats.totalSubscribers || 0;
-            document.getElementById('subscription-growth').textContent = `+${stats.todaySubscribers || 0}`;
+            document.getElementById('subscription-today-new').textContent = stats.todaySubscribers || 0;
             
             const zhUsers = stats.languageDistribution?.['zh-CN'] || 0;
             const enUsers = stats.languageDistribution?.['en-US'] || 0;
@@ -1142,7 +1292,13 @@
             document.getElementById('subscription-en-users').textContent = enUsers;
             document.getElementById('subscription-zh-percentage').textContent = `${Math.round(zhUsers / total * 100)}%`;
             document.getElementById('subscription-en-percentage').textContent = `${Math.round(enUsers / total * 100)}%`;
-            document.getElementById('subscription-today-new').textContent = stats.todaySubscribers || 0;
+            
+            console.log('[订阅统计] 数据已更新:', {
+                total: stats.totalSubscribers,
+                today: stats.todaySubscribers,
+                zh: zhUsers,
+                en: enUsers
+            });
         }
 
         function renderSubscriptionsTable() {
@@ -1629,6 +1785,361 @@
             } catch (error) {
                 return '无效日期';
             }
+        }
+
+        // 用户管理相关函数
+        let usersData = [];
+        let filteredUsersData = [];
+
+        async function loadUsersData() {
+            try {
+                console.log('加载用户数据...');
+                
+                // 获取用户统计
+                const statsResponse = await fetch('/api/users?action=stats');
+                if (statsResponse.ok) {
+                    const stats = await statsResponse.json();
+                    console.log('用户统计数据:', stats);
+                    updateUserStats(stats);
+                }
+                
+                // 获取用户列表
+                const listResponse = await fetch('/api/users?action=list');
+                if (listResponse.ok) {
+                    const users = await listResponse.json();
+                    console.log('用户列表:', users);
+                    usersData = Array.isArray(users) ? users : [];
+                    filteredUsersData = [...usersData];
+                    renderUsersTable();
+                }
+                
+            } catch (error) {
+                console.error('加载用户数据失败:', error);
+                document.getElementById('usersTableContainer').innerHTML = `
+                    <div class="error-message">
+                        <div style="color: #dc3545; text-align: center; padding: 20px;">
+                            <div>❌ 加载用户数据失败</div>
+                            <div style="font-size: 14px; margin-top: 5px;">请检查网络连接后重试</div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function updateUserStats(stats) {
+            document.getElementById('totalUsersCount').textContent = stats.totalUsers || 0;
+            document.getElementById('activeUsersCount').textContent = stats.activeUsers || 0;
+            document.getElementById('todayRegistrations').textContent = stats.todayRegistrations || 0;
+            document.getElementById('emailUsersCount').textContent = stats.providerDistribution?.email || 0;
+        }
+
+        function renderUsersTable() {
+            const container = document.getElementById('usersTableContainer');
+            
+            if (filteredUsersData.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">👤</div>
+                        <h3>暂无用户数据</h3>
+                        <p>还没有用户注册</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const tableHTML = `
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>用户信息</th>
+                                <th>登录方式</th>
+                                <th>订阅状态</th>
+                                <th>地理位置</th>
+                                <th>注册时间</th>
+                                <th>最后登录</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${filteredUsersData.map(user => `
+                                <tr>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <img src="${user.avatar}" alt="头像" style="width: 32px; height: 32px; border-radius: 50%; background: #f0f0f0;" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || user.email)}&background=FA8C32&color=fff'">
+                                            <div>
+                                                <div style="font-weight: 500;">${user.name || '未设置'}</div>
+                                                <div style="font-size: 0.85rem; color: #666;">${user.email}</div>
+                                                <div style="font-size: 0.75rem; color: #999;">${user.id}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            ${getProviderIcon(user.provider)}
+                                            <span>${getProviderName(user.provider)}</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="subscription-badge ${user.isSubscriber ? 'subscribed' : 'not-subscribed'}">
+                                            ${user.isSubscriber ? '✅ 已订阅' : '❌ 未订阅'}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 6px;">
+                                            <span class="location-icon">${getLocationIcon(user.location)}</span>
+                                            <span class="location-text">${user.location || '未知'}</span>
+                                        </div>
+                                    </td>
+                                    <td class="date-cell">${formatDateTime(user.createdAt)}</td>
+                                    <td class="date-cell">${formatDateTime(user.lastLoginAt)}</td>
+                                    <td>
+                                        <span class="status-badge ${user.isActive ? 'status-active' : 'status-inactive'}">
+                                            ${user.isActive ? '活跃' : '禁用'}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn-small btn-info" onclick="viewUserDetails('${user.id}')" title="查看详情">
+                                                👁️
+                                            </button>
+                                            <button class="btn-small ${user.isActive ? 'btn-danger' : 'status-active'}" 
+                                                    onclick="toggleUserStatus('${user.id}', ${!user.isActive})" 
+                                                    title="${user.isActive ? '禁用用户' : '激活用户'}">
+                                                ${user.isActive ? '🚫' : '✅'}
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-info">
+                    <span>共 ${filteredUsersData.length} 个用户 (总计 ${usersData.length} 个)</span>
+                </div>
+            `;
+            
+            container.innerHTML = tableHTML;
+        }
+
+        function filterUsers() {
+            const providerFilter = document.getElementById('userProviderFilter').value;
+            const subscriptionFilter = document.getElementById('userSubscriptionFilter').value;
+            const locationFilter = document.getElementById('userLocationFilter').value;
+            const statusFilter = document.getElementById('userStatusFilter').value;
+            const searchInput = document.getElementById('userSearchInput').value.toLowerCase();
+            const dateFilter = document.getElementById('userDateFilter').value;
+            
+            filteredUsersData = usersData.filter(user => {
+                const matchesProvider = !providerFilter || user.provider === providerFilter;
+                const matchesSubscription = !subscriptionFilter || user.isSubscriber.toString() === subscriptionFilter;
+                const matchesLocation = !locationFilter || user.location === locationFilter;
+                const matchesStatus = !statusFilter || user.isActive.toString() === statusFilter;
+                const matchesSearch = !searchInput || 
+                    user.email.toLowerCase().includes(searchInput) ||
+                    user.name?.toLowerCase().includes(searchInput) ||
+                    user.id.toLowerCase().includes(searchInput);
+                const matchesDate = !dateFilter || user.createdAt.startsWith(dateFilter);
+                
+                return matchesProvider && matchesSubscription && matchesLocation && matchesStatus && matchesSearch && matchesDate;
+            });
+            
+            renderUsersTable();
+        }
+
+        function refreshUsers() {
+            loadUsersData();
+        }
+
+        function exportUsers() {
+            try {
+                const csvContent = [
+                    ['用户ID', '邮箱地址', '用户名', '登录方式', '订阅状态', '地理位置', '注册时间', '最后登录', '状态'],
+                    ...filteredUsersData.map(user => [
+                        user.id,
+                        user.email,
+                        user.name || '',
+                        user.provider,
+                        user.isSubscriber ? '已订阅' : '未订阅',
+                        user.location || '未知',
+                        user.createdAt,
+                        user.lastLoginAt,
+                        user.isActive ? '活跃' : '禁用'
+                    ])
+                ].map(row => row.map(field => `"${String(field).replace(/"/g, '""')}"`).join(',')).join('\n');
+                
+                const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `SVTR用户数据_${new Date().toISOString().split('T')[0]}.csv`;
+                link.click();
+                
+                console.log('用户数据导出成功');
+            } catch (error) {
+                console.error('导出失败:', error);
+                alert('导出失败，请重试');
+            }
+        }
+
+        function viewUserDetails(userId) {
+            const user = usersData.find(u => u.id === userId);
+            if (!user) return;
+            
+            const detailsHTML = `
+                <div style="text-align: left;">
+                    <h3 style="margin-bottom: 20px;">用户详情</h3>
+                    <div style="display: grid; gap: 15px;">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                            <img src="${user.avatar}" alt="头像" style="width: 60px; height: 60px; border-radius: 50%;" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || user.email)}&background=FA8C32&color=fff'">
+                            <div>
+                                <div style="font-size: 1.2rem; font-weight: 600;">${user.name || '未设置姓名'}</div>
+                                <div style="color: #666; margin-top: 5px;">${user.email}</div>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 120px 1fr; gap: 10px; align-items: center;">
+                            <label style="font-weight: 500;">用户ID:</label>
+                            <span style="font-family: monospace; background: #f5f5f5; padding: 4px 8px; border-radius: 4px;">${user.id}</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 120px 1fr; gap: 10px; align-items: center;">
+                            <label style="font-weight: 500;">登录方式:</label>
+                            <span style="display: flex; align-items: center; gap: 8px;">
+                                ${getProviderIcon(user.provider)}
+                                ${getProviderName(user.provider)}
+                            </span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 120px 1fr; gap: 10px; align-items: center;">
+                            <label style="font-weight: 500;">注册时间:</label>
+                            <span>${formatDateTime(user.createdAt)}</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 120px 1fr; gap: 10px; align-items: center;">
+                            <label style="font-weight: 500;">最后登录:</label>
+                            <span>${formatDateTime(user.lastLoginAt)}</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 120px 1fr; gap: 10px; align-items: center;">
+                            <label style="font-weight: 500;">订阅状态:</label>
+                            <span class="subscription-badge ${user.isSubscriber ? 'subscribed' : 'not-subscribed'}">
+                                ${user.isSubscriber ? '✅ 已订阅' : '❌ 未订阅'}
+                            </span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 120px 1fr; gap: 10px; align-items: center;">
+                            <label style="font-weight: 500;">地理位置:</label>
+                            <span style="display: flex; align-items: center; gap: 8px;">
+                                <span>${getLocationIcon(user.location)}</span>
+                                <span>${user.location || '未知'}</span>
+                            </span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 120px 1fr; gap: 10px; align-items: center;">
+                            <label style="font-weight: 500;">账户状态:</label>
+                            <span class="status-badge ${user.isActive ? 'status-active' : 'status-inactive'}">
+                                ${user.isActive ? '✅ 活跃' : '🚫 禁用'}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            showModal('用户详情', detailsHTML);
+        }
+
+        async function toggleUserStatus(userId, newStatus) {
+            const user = usersData.find(u => u.id === userId);
+            if (!user) return;
+            
+            const action = newStatus ? '激活' : '禁用';
+            if (!confirm(`确定要${action}用户 ${user.email} 吗？`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/users', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'update_status',
+                        userId: userId,
+                        isActive: newStatus
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert(`用户状态已${action}`);
+                    loadUsersData(); // 重新加载数据
+                } else {
+                    alert(`${action}失败：` + (result.message || '未知错误'));
+                }
+            } catch (error) {
+                alert(`${action}失败：` + error.message);
+            }
+        }
+
+        function getProviderIcon(provider) {
+            const icons = {
+                'email': '📧',
+                'google': '🔍',
+                'github': '🐙'
+            };
+            return icons[provider] || '❓';
+        }
+
+        function getProviderName(provider) {
+            const names = {
+                'email': '邮箱',
+                'google': 'Google',
+                'github': 'GitHub'
+            };
+            return names[provider] || provider;
+        }
+
+        function getLocationIcon(location) {
+            const icons = {
+                '中国': '🇨🇳',
+                '全球': '🌍',
+                '美国': '🇺🇸',
+                '本地环境': '💻',
+                '平台内部': '🏠',
+                '测试环境': '🧪',
+                '待定位': '📍',
+                '其他地区': '🌐',
+                '未知': '❓'
+            };
+            return icons[location] || '🌐';
+        }
+
+        // 简单的模态框函数
+        function showModal(title, content) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.5); display: flex; align-items: center; 
+                justify-content: center; z-index: 2000;
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: white; padding: 30px; border-radius: 15px; 
+                max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            `;
+            
+            modalContent.innerHTML = `
+                ${content}
+                <div style="text-align: center; margin-top: 25px;">
+                    <button onclick="this.closest('[data-modal]').remove()" class="btn-primary">关闭</button>
+                </div>
+            `;
+            
+            modal.setAttribute('data-modal', 'true');
+            modal.appendChild(modalContent);
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.remove();
+            });
+            
+            document.body.appendChild(modal);
         }
     </script>
 </body>

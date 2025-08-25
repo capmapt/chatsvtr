@@ -140,7 +140,11 @@ class AWSEmailService {
       
       return response.MessageId ? true : false;
     } catch (error) {
-      console.error('AWS SES API调用失败:', error);
+      console.error('[AWS SES] API调用失败:', {
+        error: error.message || String(error),
+        stack: error.stack,
+        to: emailData.to
+      });
       return false;
     }
   }
@@ -170,6 +174,12 @@ class AWSEmailService {
 
     if (!response.ok) {
       const errorText = await response.text();
+      console.error('[AWS SES] HTTP错误:', {
+        status: response.status,
+        statusText: response.statusText,
+        body: errorText,
+        url: `https://${host}/`
+      });
       throw new Error(`SES API错误: ${response.status} ${errorText}`);
     }
 

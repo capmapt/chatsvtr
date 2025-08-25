@@ -1,7 +1,7 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// .wrangler/tmp/bundle-TGYKaw/checked-fetch.js
+// .wrangler/tmp/bundle-3iXkIi/checked-fetch.js
 var urls = /* @__PURE__ */ new Set();
 function checkURL(request, init) {
   const url = request instanceof URL ? request : new URL(
@@ -27,7 +27,7 @@ globalThis.fetch = new Proxy(globalThis.fetch, {
   }
 });
 
-// .wrangler/tmp/pages-OJR4sx/functionsWorker-0.7537226325309159.mjs
+// .wrangler/tmp/pages-qv7jGR/functionsWorker-0.29531778118147045.mjs
 var __defProp2 = Object.defineProperty;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __name2 = /* @__PURE__ */ __name((target, value) => __defProp2(target, "name", { value, configurable: true }), "__name");
@@ -56,7 +56,7 @@ function checkURL2(request, init) {
 __name(checkURL2, "checkURL");
 var urls2;
 var init_checked_fetch = __esm({
-  "../.wrangler/tmp/bundle-fSEAcT/checked-fetch.js"() {
+  "../.wrangler/tmp/bundle-Qty2ha/checked-fetch.js"() {
     "use strict";
     urls2 = /* @__PURE__ */ new Set();
     __name2(checkURL2, "checkURL");
@@ -293,7 +293,7 @@ __name(onRequestOptions, "onRequestOptions");
 var init_github = __esm({
   "api/auth/github.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
     __name2(getGitHubPrimaryEmail, "getGitHubPrimaryEmail");
     __name2(createOrUpdateGitHubUser, "createOrUpdateGitHubUser");
@@ -490,7 +490,7 @@ __name(onRequestOptions2, "onRequestOptions2");
 var init_google = __esm({
   "api/auth/google.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
     __name2(createOrUpdateGoogleUser, "createOrUpdateGoogleUser");
     __name2(createUserSession2, "createUserSession");
@@ -702,7 +702,7 @@ __name(onRequestOptions3, "onRequestOptions3");
 var init_linkedin = __esm({
   "api/auth/linkedin.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
     __name2(createOrUpdateLinkedInUser, "createOrUpdateLinkedInUser");
     __name2(createUserSession3, "createUserSession");
@@ -711,243 +711,109 @@ var init_linkedin = __esm({
     __name2(onRequestOptions3, "onRequestOptions");
   }
 });
-var email_service_exports = {};
-__export(email_service_exports, {
-  AWSEmailService: /* @__PURE__ */ __name(() => AWSEmailService, "AWSEmailService")
+var simple_ses_exports = {};
+__export(simple_ses_exports, {
+  SimpleSES: /* @__PURE__ */ __name(() => SimpleSES, "SimpleSES")
 });
-var AWSEmailService;
-var init_email_service = __esm({
-  "lib/email-service.ts"() {
+var SimpleSES;
+var init_simple_ses = __esm({
+  "lib/simple-ses.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
-    AWSEmailService = class {
+    SimpleSES = class {
       static {
-        __name(this, "AWSEmailService");
+        __name(this, "SimpleSES");
       }
       static {
-        __name2(this, "AWSEmailService");
+        __name2(this, "SimpleSES");
       }
       config;
       constructor(config) {
         this.config = config;
       }
-      /**
-       * 发送验证码邮件
-       */
-      async sendVerificationCode(data) {
+      async sendEmail(to, subject, body) {
         try {
-          const { email, code, userName, language } = data;
-          const subject = language === "zh-CN" ? `[SVTR] \u60A8\u7684\u767B\u5F55\u9A8C\u8BC1\u7801: ${code}` : `[SVTR] Your Login Verification Code: ${code}`;
-          const htmlBody = this.generateVerificationEmailHTML(data);
-          const textBody = this.generateVerificationEmailText(data);
-          const success = await this.sendEmail({
-            to: email,
-            subject,
-            htmlBody,
-            textBody
-          });
-          if (success) {
-            console.log(`\u9A8C\u8BC1\u7801\u90AE\u4EF6\u53D1\u9001\u6210\u529F: ${email}`);
-          } else {
-            console.error(`\u9A8C\u8BC1\u7801\u90AE\u4EF6\u53D1\u9001\u5931\u8D25: ${email}`);
-          }
-          return success;
-        } catch (error) {
-          console.error("\u53D1\u9001\u9A8C\u8BC1\u7801\u90AE\u4EF6\u5931\u8D25:", error);
-          return false;
-        }
-      }
-      /**
-       * 发送Magic Link邮件
-       */
-      async sendMagicLink(data) {
-        try {
-          const { email, magicLink, userName, language } = data;
-          const subject = language === "zh-CN" ? "[SVTR] \u60A8\u7684\u4E00\u952E\u767B\u5F55\u94FE\u63A5" : "[SVTR] Your Magic Login Link";
-          const htmlBody = this.generateMagicLinkEmailHTML(data);
-          const textBody = this.generateMagicLinkEmailText(data);
-          const success = await this.sendEmail({
-            to: email,
-            subject,
-            htmlBody,
-            textBody
-          });
-          if (success) {
-            console.log(`Magic Link\u90AE\u4EF6\u53D1\u9001\u6210\u529F: ${email}`);
-          } else {
-            console.error(`Magic Link\u90AE\u4EF6\u53D1\u9001\u5931\u8D25: ${email}`);
-          }
-          return success;
-        } catch (error) {
-          console.error("\u53D1\u9001Magic Link\u90AE\u4EF6\u5931\u8D25:", error);
-          return false;
-        }
-      }
-      /**
-       * 使用AWS SES发送邮件
-       */
-      async sendEmail(emailData) {
-        try {
-          const { to, subject, htmlBody, textBody } = emailData;
-          const sesRequest = {
-            Destination: {
-              ToAddresses: [to]
+          console.log("[SimpleSES] \u5F00\u59CB\u53D1\u9001\u90AE\u4EF6\u5230:", to);
+          const params = new URLSearchParams();
+          params.append("Action", "SendEmail");
+          params.append("Version", "2010-12-01");
+          params.append("Source", this.config.fromEmail);
+          params.append("Destination.ToAddresses.member.1", to);
+          params.append("Message.Subject.Data", subject);
+          params.append("Message.Subject.Charset", "UTF-8");
+          params.append("Message.Body.Text.Data", body);
+          params.append("Message.Body.Text.Charset", "UTF-8");
+          console.log("[SimpleSES] \u8BF7\u6C42\u53C2\u6570\u6784\u5EFA\u5B8C\u6210");
+          const host = `email.${this.config.region}.amazonaws.com`;
+          const url = `https://${host}/`;
+          const now = /* @__PURE__ */ new Date();
+          const amzDate = now.toISOString().replace(/[:\-]|\.\d{3}/g, "");
+          const dateStamp = now.toISOString().split("T")[0].replace(/-/g, "");
+          console.log("[SimpleSES] \u65F6\u95F4\u6233\u751F\u6210:", { amzDate, dateStamp });
+          const payloadString = params.toString();
+          const payloadHash = await this.sha256(payloadString);
+          console.log("[SimpleSES] Payload hash\u8BA1\u7B97\u5B8C\u6210");
+          const canonicalRequest = [
+            "POST",
+            "/",
+            "",
+            `content-type:application/x-www-form-urlencoded`,
+            `host:${host}`,
+            `x-amz-date:${amzDate}`,
+            "",
+            "content-type;host;x-amz-date",
+            payloadHash
+          ].join("\n");
+          const canonicalRequestHash = await this.sha256(canonicalRequest);
+          const stringToSign = [
+            "AWS4-HMAC-SHA256",
+            amzDate,
+            `${dateStamp}/${this.config.region}/ses/aws4_request`,
+            canonicalRequestHash
+          ].join("\n");
+          console.log("[SimpleSES] String to sign\u6784\u5EFA\u5B8C\u6210");
+          const signature = await this.calculateSignature(
+            this.config.secretAccessKey,
+            dateStamp,
+            this.config.region,
+            "ses",
+            stringToSign
+          );
+          console.log("[SimpleSES] \u7B7E\u540D\u8BA1\u7B97\u5B8C\u6210");
+          const authorizationHeader = `AWS4-HMAC-SHA256 Credential=${this.config.accessKeyId}/${dateStamp}/${this.config.region}/ses/aws4_request, SignedHeaders=content-type;host;x-amz-date, Signature=${signature}`;
+          console.log("[SimpleSES] \u51C6\u5907\u53D1\u9001HTTP\u8BF7\u6C42");
+          const response = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "Host": host,
+              "X-Amz-Date": amzDate,
+              "Authorization": authorizationHeader
             },
-            Message: {
-              Body: {
-                Html: {
-                  Charset: "UTF-8",
-                  Data: htmlBody
-                },
-                Text: {
-                  Charset: "UTF-8",
-                  Data: textBody
-                }
-              },
-              Subject: {
-                Charset: "UTF-8",
-                Data: subject
-              }
-            },
-            Source: this.config.fromEmail
-          };
-          const response = await this.callSESAPI("SendEmail", sesRequest);
-          return response.MessageId ? true : false;
+            body: payloadString
+          });
+          console.log("[SimpleSES] HTTP\u54CD\u5E94\u72B6\u6001:", response.status);
+          const responseText = await response.text();
+          console.log("[SimpleSES] \u54CD\u5E94\u5185\u5BB9:", responseText.substring(0, 500));
+          if (!response.ok) {
+            console.error("[SimpleSES] SES API\u9519\u8BEF:", response.status, responseText);
+            return false;
+          }
+          const hasMessageId = responseText.includes("<MessageId>");
+          console.log("[SimpleSES] \u90AE\u4EF6\u53D1\u9001\u7ED3\u679C:", hasMessageId ? "\u6210\u529F" : "\u5931\u8D25");
+          return hasMessageId;
         } catch (error) {
-          console.error("AWS SES API\u8C03\u7528\u5931\u8D25:", error);
+          console.error("[SimpleSES] \u53D1\u9001\u5931\u8D25:", error);
           return false;
         }
       }
-      /**
-       * 调用AWS SES API
-       */
-      async callSESAPI(action, payload) {
-        const host = `email.${this.config.region}.amazonaws.com`;
-        const service = "ses";
-        const method = "POST";
-        const { headers, body } = await this.generateAWSSignature(
-          host,
-          service,
-          method,
-          action,
-          payload
-        );
-        const response = await fetch(`https://${host}/`, {
-          method,
-          headers,
-          body
-        });
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`SES API\u9519\u8BEF: ${response.status} ${errorText}`);
-        }
-        const responseText = await response.text();
-        return this.parseXMLResponse(responseText);
-      }
-      /**
-       * 生成AWS API签名
-       */
-      async generateAWSSignature(host, service, method, action, payload) {
-        const now = /* @__PURE__ */ new Date();
-        const dateStamp = now.toISOString().split("T")[0].replace(/-/g, "");
-        const amzDate = now.toISOString().replace(/[:\-]|\.\d{3}/g, "");
-        const formData = new URLSearchParams();
-        formData.append("Action", action);
-        formData.append("Version", "2010-12-01");
-        this.addObjectToFormData(formData, payload, "");
-        const payloadString = formData.toString();
-        const payloadHash = await this.sha256(payloadString);
-        const canonicalHeaders = [
-          `content-type:application/x-www-form-urlencoded`,
-          `host:${host}`,
-          `x-amz-date:${amzDate}`
-        ].join("\n");
-        const signedHeaders = "content-type;host;x-amz-date";
-        const canonicalRequest = [
-          method,
-          "/",
-          "",
-          canonicalHeaders,
-          "",
-          signedHeaders,
-          payloadHash
-        ].join("\n");
-        const algorithm = "AWS4-HMAC-SHA256";
-        const credentialScope = `${dateStamp}/${this.config.region}/${service}/aws4_request`;
-        const stringToSign = [
-          algorithm,
-          amzDate,
-          credentialScope,
-          await this.sha256(canonicalRequest)
-        ].join("\n");
-        const signature = await this.calculateSignature(
-          this.config.secretAccessKey,
-          dateStamp,
-          this.config.region,
-          service,
-          stringToSign
-        );
-        const authorization = `${algorithm} Credential=${this.config.accessKeyId}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`;
-        return {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Host": host,
-            "X-Amz-Date": amzDate,
-            "Authorization": authorization
-          },
-          body: payloadString
-        };
-      }
-      /**
-       * 递归添加对象到FormData
-       */
-      addObjectToFormData(formData, obj, prefix) {
-        for (const key in obj) {
-          if (obj.hasOwnProperty(key)) {
-            const value = obj[key];
-            const formKey = prefix ? `${prefix}.${key}` : key;
-            if (typeof value === "object" && value !== null) {
-              if (Array.isArray(value)) {
-                value.forEach((item, index) => {
-                  if (typeof item === "object") {
-                    this.addObjectToFormData(formData, item, `${formKey}.${index + 1}`);
-                  } else {
-                    formData.append(`${formKey}.${index + 1}`, String(item));
-                  }
-                });
-              } else {
-                this.addObjectToFormData(formData, value, formKey);
-              }
-            } else {
-              formData.append(formKey, String(value));
-            }
-          }
-        }
-      }
-      /**
-       * 计算AWS签名
-       */
-      async calculateSignature(secretKey, dateStamp, region, service, stringToSign) {
-        const kDate = await this.hmacSha256(`AWS4${secretKey}`, dateStamp);
-        const kRegion = await this.hmacSha256(kDate, region);
-        const kService = await this.hmacSha256(kRegion, service);
-        const kSigning = await this.hmacSha256(kService, "aws4_request");
-        const signature = await this.hmacSha256(kSigning, stringToSign);
-        return Array.from(new Uint8Array(signature)).map((b) => b.toString(16).padStart(2, "0")).join("");
-      }
-      /**
-       * SHA256哈希
-       */
       async sha256(message) {
         const msgBuffer = new TextEncoder().encode(message);
         const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
       }
-      /**
-       * HMAC-SHA256
-       */
       async hmacSha256(key, message) {
         const keyBuffer = typeof key === "string" ? new TextEncoder().encode(key) : key;
         const messageBuffer = new TextEncoder().encode(message);
@@ -960,286 +826,13 @@ var init_email_service = __esm({
         );
         return await crypto.subtle.sign("HMAC", cryptoKey, messageBuffer);
       }
-      /**
-       * 解析XML响应
-       */
-      parseXMLResponse(xmlString) {
-        const messageIdMatch = xmlString.match(/<MessageId>([^<]+)<\/MessageId>/);
-        const errorMatch = xmlString.match(/<Error>.*?<Code>([^<]+)<\/Code>.*?<Message>([^<]+)<\/Message>/s);
-        if (errorMatch) {
-          throw new Error(`AWS SES\u9519\u8BEF: ${errorMatch[1]} - ${errorMatch[2]}`);
-        }
-        return {
-          MessageId: messageIdMatch ? messageIdMatch[1] : null
-        };
-      }
-      /**
-       * 生成验证码邮件HTML模板
-       */
-      generateVerificationEmailHTML(data) {
-        const { code, userName, language } = data;
-        const name = userName || (language === "zh-CN" ? "\u7528\u6237" : "User");
-        if (language === "zh-CN") {
-          return `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVTR\u767B\u5F55\u9A8C\u8BC1\u7801</title>
-</head>
-<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 10px; text-align: center; margin-bottom: 30px;">
-    <h1 style="color: white; margin: 0; font-size: 28px;">SVTR</h1>
-    <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0; font-size: 16px;">\u7845\u8C37\u79D1\u6280\u8BC4\u8BBA</p>
-  </div>
-  
-  <div style="background: #f8f9fa; padding: 30px; border-radius: 10px; margin-bottom: 20px;">
-    <h2 style="color: #333; margin-top: 0;">\u60A8\u597D\uFF0C${name}\uFF01</h2>
-    <p style="font-size: 16px; color: #666;">\u60A8\u6B63\u5728\u767B\u5F55SVTR\u5E73\u53F0\uFF0C\u8BF7\u4F7F\u7528\u4EE5\u4E0B\u9A8C\u8BC1\u7801\u5B8C\u6210\u767B\u5F55\uFF1A</p>
-    
-    <div style="background: #fff; padding: 25px; border-radius: 8px; text-align: center; margin: 25px 0; border: 2px dashed #667eea;">
-      <p style="font-size: 14px; color: #666; margin: 0 0 10px;">\u60A8\u7684\u9A8C\u8BC1\u7801</p>
-      <p style="font-size: 32px; font-weight: bold; color: #667eea; margin: 0; letter-spacing: 3px;">${code}</p>
-    </div>
-    
-    <p style="font-size: 14px; color: #999;">
-      \u2022 \u9A8C\u8BC1\u78015\u5206\u949F\u5185\u6709\u6548<br>
-      \u2022 \u8BF7\u52FF\u5C06\u9A8C\u8BC1\u7801\u6CC4\u9732\u7ED9\u4ED6\u4EBA<br>
-      \u2022 \u5982\u975E\u672C\u4EBA\u64CD\u4F5C\uFF0C\u8BF7\u5FFD\u7565\u6B64\u90AE\u4EF6
-    </p>
-  </div>
-  
-  <div style="text-align: center; color: #999; font-size: 12px;">
-    <p>\u6B64\u90AE\u4EF6\u7531 SVTR \u7CFB\u7EDF\u81EA\u52A8\u53D1\u9001\uFF0C\u8BF7\u52FF\u56DE\u590D</p>
-    <p>\xA9 2025 SVTR - Silicon Valley Tech Review</p>
-  </div>
-</body>
-</html>`;
-        } else {
-          return `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVTR Login Verification Code</title>
-</head>
-<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 10px; text-align: center; margin-bottom: 30px;">
-    <h1 style="color: white; margin: 0; font-size: 28px;">SVTR</h1>
-    <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0; font-size: 16px;">Silicon Valley Tech Review</p>
-  </div>
-  
-  <div style="background: #f8f9fa; padding: 30px; border-radius: 10px; margin-bottom: 20px;">
-    <h2 style="color: #333; margin-top: 0;">Hello, ${name}!</h2>
-    <p style="font-size: 16px; color: #666;">You're logging into SVTR platform. Please use the verification code below to complete your login:</p>
-    
-    <div style="background: #fff; padding: 25px; border-radius: 8px; text-align: center; margin: 25px 0; border: 2px dashed #667eea;">
-      <p style="font-size: 14px; color: #666; margin: 0 0 10px;">Your Verification Code</p>
-      <p style="font-size: 32px; font-weight: bold; color: #667eea; margin: 0; letter-spacing: 3px;">${code}</p>
-    </div>
-    
-    <p style="font-size: 14px; color: #999;">
-      \u2022 Code expires in 5 minutes<br>
-      \u2022 Do not share this code with anyone<br>
-      \u2022 If this wasn't you, please ignore this email
-    </p>
-  </div>
-  
-  <div style="text-align: center; color: #999; font-size: 12px;">
-    <p>This email was sent automatically by SVTR system, please do not reply</p>
-    <p>\xA9 2025 SVTR - Silicon Valley Tech Review</p>
-  </div>
-</body>
-</html>`;
-        }
-      }
-      /**
-       * 生成验证码邮件纯文本版本
-       */
-      generateVerificationEmailText(data) {
-        const { code, userName, language } = data;
-        const name = userName || (language === "zh-CN" ? "\u7528\u6237" : "User");
-        if (language === "zh-CN") {
-          return `
-SVTR \u767B\u5F55\u9A8C\u8BC1\u7801
-
-\u60A8\u597D\uFF0C${name}\uFF01
-
-\u60A8\u6B63\u5728\u767B\u5F55SVTR\u5E73\u53F0\uFF0C\u8BF7\u4F7F\u7528\u4EE5\u4E0B\u9A8C\u8BC1\u7801\u5B8C\u6210\u767B\u5F55\uFF1A
-
-\u9A8C\u8BC1\u7801\uFF1A${code}
-
-\u6CE8\u610F\u4E8B\u9879\uFF1A
-\u2022 \u9A8C\u8BC1\u78015\u5206\u949F\u5185\u6709\u6548
-\u2022 \u8BF7\u52FF\u5C06\u9A8C\u8BC1\u7801\u6CC4\u9732\u7ED9\u4ED6\u4EBA
-\u2022 \u5982\u975E\u672C\u4EBA\u64CD\u4F5C\uFF0C\u8BF7\u5FFD\u7565\u6B64\u90AE\u4EF6
-
-\u6B64\u90AE\u4EF6\u7531 SVTR \u7CFB\u7EDF\u81EA\u52A8\u53D1\u9001\uFF0C\u8BF7\u52FF\u56DE\u590D
-\xA9 2025 SVTR - Silicon Valley Tech Review
-`;
-        } else {
-          return `
-SVTR Login Verification Code
-
-Hello, ${name}!
-
-You're logging into SVTR platform. Please use the verification code below to complete your login:
-
-Verification Code: ${code}
-
-Important Notes:
-\u2022 Code expires in 5 minutes
-\u2022 Do not share this code with anyone
-\u2022 If this wasn't you, please ignore this email
-
-This email was sent automatically by SVTR system, please do not reply
-\xA9 2025 SVTR - Silicon Valley Tech Review
-`;
-        }
-      }
-      /**
-       * 生成Magic Link邮件HTML模板
-       */
-      generateMagicLinkEmailHTML(data) {
-        const { magicLink, userName, language } = data;
-        const name = userName || (language === "zh-CN" ? "\u7528\u6237" : "User");
-        if (language === "zh-CN") {
-          return `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVTR\u4E00\u952E\u767B\u5F55</title>
-</head>
-<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 10px; text-align: center; margin-bottom: 30px;">
-    <h1 style="color: white; margin: 0; font-size: 28px;">SVTR</h1>
-    <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0; font-size: 16px;">\u7845\u8C37\u79D1\u6280\u8BC4\u8BBA</p>
-  </div>
-  
-  <div style="background: #f8f9fa; padding: 30px; border-radius: 10px; margin-bottom: 20px;">
-    <h2 style="color: #333; margin-top: 0;">\u60A8\u597D\uFF0C${name}\uFF01</h2>
-    <p style="font-size: 16px; color: #666;">\u70B9\u51FB\u4E0B\u65B9\u6309\u94AE\u5373\u53EF\u5FEB\u901F\u767B\u5F55SVTR\u5E73\u53F0\uFF1A</p>
-    
-    <div style="text-align: center; margin: 30px 0;">
-      <a href="${magicLink}" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; padding: 15px 30px; border-radius: 8px; font-weight: bold; font-size: 16px;">
-        \u{1F680} \u7ACB\u5373\u767B\u5F55 SVTR
-      </a>
-    </div>
-    
-    <p style="font-size: 14px; color: #999;">
-      \u2022 \u767B\u5F55\u94FE\u63A510\u5206\u949F\u5185\u6709\u6548<br>
-      \u2022 \u6B64\u94FE\u63A5\u53EA\u80FD\u4F7F\u7528\u4E00\u6B21<br>
-      \u2022 \u5982\u975E\u672C\u4EBA\u64CD\u4F5C\uFF0C\u8BF7\u5FFD\u7565\u6B64\u90AE\u4EF6
-    </p>
-    
-    <div style="background: #fff; padding: 15px; border-radius: 6px; border-left: 4px solid #667eea; margin-top: 20px;">
-      <p style="font-size: 12px; color: #666; margin: 0;">
-        \u5982\u679C\u6309\u94AE\u65E0\u6CD5\u70B9\u51FB\uFF0C\u8BF7\u590D\u5236\u4EE5\u4E0B\u94FE\u63A5\u5230\u6D4F\u89C8\u5668\u5730\u5740\u680F\uFF1A<br>
-        <span style="word-break: break-all; color: #667eea;">${magicLink}</span>
-      </p>
-    </div>
-  </div>
-  
-  <div style="text-align: center; color: #999; font-size: 12px;">
-    <p>\u6B64\u90AE\u4EF6\u7531 SVTR \u7CFB\u7EDF\u81EA\u52A8\u53D1\u9001\uFF0C\u8BF7\u52FF\u56DE\u590D</p>
-    <p>\xA9 2025 SVTR - Silicon Valley Tech Review</p>
-  </div>
-</body>
-</html>`;
-        } else {
-          return `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVTR Magic Login</title>
-</head>
-<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
-  <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 10px; text-align: center; margin-bottom: 30px;">
-    <h1 style="color: white; margin: 0; font-size: 28px;">SVTR</h1>
-    <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0; font-size: 16px;">Silicon Valley Tech Review</p>
-  </div>
-  
-  <div style="background: #f8f9fa; padding: 30px; border-radius: 10px; margin-bottom: 20px;">
-    <h2 style="color: #333; margin-top: 0;">Hello, ${name}!</h2>
-    <p style="font-size: 16px; color: #666;">Click the button below to quickly login to SVTR platform:</p>
-    
-    <div style="text-align: center; margin: 30px 0;">
-      <a href="${magicLink}" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; padding: 15px 30px; border-radius: 8px; font-weight: bold; font-size: 16px;">
-        \u{1F680} Login to SVTR Now
-      </a>
-    </div>
-    
-    <p style="font-size: 14px; color: #999;">
-      \u2022 Link expires in 10 minutes<br>
-      \u2022 This link can only be used once<br>
-      \u2022 If this wasn't you, please ignore this email
-    </p>
-    
-    <div style="background: #fff; padding: 15px; border-radius: 6px; border-left: 4px solid #667eea; margin-top: 20px;">
-      <p style="font-size: 12px; color: #666; margin: 0;">
-        If the button doesn't work, please copy and paste this link into your browser:<br>
-        <span style="word-break: break-all; color: #667eea;">${magicLink}</span>
-      </p>
-    </div>
-  </div>
-  
-  <div style="text-align: center; color: #999; font-size: 12px;">
-    <p>This email was sent automatically by SVTR system, please do not reply</p>
-    <p>\xA9 2025 SVTR - Silicon Valley Tech Review</p>
-  </div>
-</body>
-</html>`;
-        }
-      }
-      /**
-       * 生成Magic Link邮件纯文本版本
-       */
-      generateMagicLinkEmailText(data) {
-        const { magicLink, userName, language } = data;
-        const name = userName || (language === "zh-CN" ? "\u7528\u6237" : "User");
-        if (language === "zh-CN") {
-          return `
-SVTR \u4E00\u952E\u767B\u5F55
-
-\u60A8\u597D\uFF0C${name}\uFF01
-
-\u70B9\u51FB\u4EE5\u4E0B\u94FE\u63A5\u5373\u53EF\u5FEB\u901F\u767B\u5F55SVTR\u5E73\u53F0\uFF1A
-
-${magicLink}
-
-\u6CE8\u610F\u4E8B\u9879\uFF1A
-\u2022 \u767B\u5F55\u94FE\u63A510\u5206\u949F\u5185\u6709\u6548
-\u2022 \u6B64\u94FE\u63A5\u53EA\u80FD\u4F7F\u7528\u4E00\u6B21
-\u2022 \u5982\u975E\u672C\u4EBA\u64CD\u4F5C\uFF0C\u8BF7\u5FFD\u7565\u6B64\u90AE\u4EF6
-
-\u6B64\u90AE\u4EF6\u7531 SVTR \u7CFB\u7EDF\u81EA\u52A8\u53D1\u9001\uFF0C\u8BF7\u52FF\u56DE\u590D
-\xA9 2025 SVTR - Silicon Valley Tech Review
-`;
-        } else {
-          return `
-SVTR Magic Login
-
-Hello, ${name}!
-
-Click the following link to quickly login to SVTR platform:
-
-${magicLink}
-
-Important Notes:
-\u2022 Link expires in 10 minutes
-\u2022 This link can only be used once
-\u2022 If this wasn't you, please ignore this email
-
-This email was sent automatically by SVTR system, please do not reply
-\xA9 2025 SVTR - Silicon Valley Tech Review
-`;
-        }
+      async calculateSignature(secretKey, dateStamp, region, service, stringToSign) {
+        const kDate = await this.hmacSha256(`AWS4${secretKey}`, dateStamp);
+        const kRegion = await this.hmacSha256(kDate, region);
+        const kService = await this.hmacSha256(kRegion, service);
+        const kSigning = await this.hmacSha256(kService, "aws4_request");
+        const signature = await this.hmacSha256(kSigning, stringToSign);
+        return Array.from(new Uint8Array(signature)).map((b) => b.toString(16).padStart(2, "0")).join("");
       }
     };
   }
@@ -1290,19 +883,33 @@ __name(isValidEmail, "isValidEmail");
 async function sendVerificationEmail(env, email, code, type, language = "zh-CN") {
   try {
     if (env.AWS_ACCESS_KEY_ID && env.AWS_SECRET_ACCESS_KEY && env.AWS_REGION && env.FROM_EMAIL) {
-      const { AWSEmailService: AWSEmailService2 } = await Promise.resolve().then(() => (init_email_service(), email_service_exports));
-      const emailService = new AWSEmailService2({
+      const { SimpleSES: SimpleSES2 } = await Promise.resolve().then(() => (init_simple_ses(), simple_ses_exports));
+      const emailService = new SimpleSES2({
         accessKeyId: env.AWS_ACCESS_KEY_ID,
         secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
         region: env.AWS_REGION,
         fromEmail: env.FROM_EMAIL
       });
       if (type === "code") {
-        const success = await emailService.sendVerificationCode({
-          email,
-          code,
-          language
-        });
+        const subject = language === "zh-CN" ? `[SVTR] \u60A8\u7684\u767B\u5F55\u9A8C\u8BC1\u7801: ${code}` : `[SVTR] Your Login Verification Code: ${code}`;
+        const body = language === "zh-CN" ? `\u60A8\u597D\uFF01
+
+\u60A8\u7684\u767B\u5F55\u9A8C\u8BC1\u7801\u662F: ${code}
+
+\u9A8C\u8BC1\u78015\u5206\u949F\u5185\u6709\u6548\uFF0C\u8BF7\u53CA\u65F6\u4F7F\u7528\u3002
+
+\u5982\u679C\u60A8\u6CA1\u6709\u8BF7\u6C42\u6B64\u9A8C\u8BC1\u7801\uFF0C\u8BF7\u5FFD\u7565\u6B64\u90AE\u4EF6\u3002
+
+\u2014\u2014SVTR\u56E2\u961F` : `Hello!
+
+Your login verification code is: ${code}
+
+The code is valid for 5 minutes, please use it promptly.
+
+If you didn't request this code, please ignore this email.
+
+\u2014\u2014SVTR Team`;
+        const success = await emailService.sendEmail(email, subject, body);
         if (success) {
           console.log(`AWS SES\u9A8C\u8BC1\u7801\u90AE\u4EF6\u53D1\u9001\u6210\u529F: ${email}`);
         } else {
@@ -1311,11 +918,27 @@ async function sendVerificationEmail(env, email, code, type, language = "zh-CN")
         return success;
       } else {
         const magicLink = `https://svtr.ai/api/auth?action=verify_magic_link&token=${code}`;
-        const success = await emailService.sendMagicLink({
-          email,
-          magicLink,
-          language
-        });
+        const subject = language === "zh-CN" ? `[SVTR] \u60A8\u7684\u767B\u5F55\u94FE\u63A5` : `[SVTR] Your Login Link`;
+        const body = language === "zh-CN" ? `\u60A8\u597D\uFF01
+
+\u70B9\u51FB\u4EE5\u4E0B\u94FE\u63A5\u5373\u53EF\u767B\u5F55SVTR:
+${magicLink}
+
+\u6B64\u94FE\u63A510\u5206\u949F\u5185\u6709\u6548\uFF0C\u8BF7\u53CA\u65F6\u4F7F\u7528\u3002
+
+\u5982\u679C\u60A8\u6CA1\u6709\u8BF7\u6C42\u6B64\u767B\u5F55\u94FE\u63A5\uFF0C\u8BF7\u5FFD\u7565\u6B64\u90AE\u4EF6\u3002
+
+\u2014\u2014SVTR\u56E2\u961F` : `Hello!
+
+Click the following link to log in to SVTR:
+${magicLink}
+
+This link is valid for 10 minutes, please use it promptly.
+
+If you didn't request this login link, please ignore this email.
+
+\u2014\u2014SVTR Team`;
+        const success = await emailService.sendEmail(email, subject, body);
         if (success) {
           console.log(`AWS SES Magic Link\u90AE\u4EF6\u53D1\u9001\u6210\u529F: ${email}`);
         } else {
@@ -1326,6 +949,17 @@ async function sendVerificationEmail(env, email, code, type, language = "zh-CN")
     } else {
       console.log(`[\u6A21\u62DF\u53D1\u9001] ${type === "code" ? "\u9A8C\u8BC1\u7801" : "Magic Link"}\u90AE\u4EF6\u5230: ${email}`);
       console.log(`[\u6A21\u62DF\u5185\u5BB9] ${type === "code" ? `\u9A8C\u8BC1\u7801: ${code}` : `Magic Link: https://svtr.ai/api/auth?action=verify_magic_link&token=${code}`}`);
+      if (type === "code") {
+        await env.SVTR_CACHE.put(`dev_code_${email}`, code, {
+          expirationTtl: 300
+          // 5分钟
+        });
+      } else {
+        await env.SVTR_CACHE.put(`dev_magic_${email}`, code, {
+          expirationTtl: 300
+          // 5分钟
+        });
+      }
       return true;
     }
   } catch (error) {
@@ -1552,35 +1186,141 @@ async function onRequestGet4(context) {
     const action = url.searchParams.get("action");
     const token = url.searchParams.get("token");
     console.log("GET\u8BA4\u8BC1\u8BF7\u6C42:", action, token);
-    if (action === "verify_magic_link" && token) {
-      const email = await env.SVTR_CACHE.get(`magic_token_${token}`);
+    if (action === "debug_codes") {
+      const email = url.searchParams.get("email");
       if (!email) {
         return new Response(JSON.stringify({
           success: false,
-          message: "\u767B\u5F55\u94FE\u63A5\u65E0\u6548\u6216\u5DF2\u8FC7\u671F"
+          message: "\u8BF7\u63D0\u4F9B\u90AE\u7BB1\u53C2\u6570"
         }), {
           status: 400,
           headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
         });
       }
-      await env.SVTR_CACHE.delete(`magic_token_${token}`);
-      const user = await createOrUpdateUser(env, email, { provider: "email" });
-      const sessionToken = await createUserSession4(env, user);
+      const verificationCode = await env.SVTR_CACHE.get(`dev_code_${email}`);
+      const magicToken = await env.SVTR_CACHE.get(`dev_magic_${email}`);
+      const storedCode = await env.SVTR_CACHE.get(`email_code_${email}`);
+      const storedMagic = await env.SVTR_CACHE.get(`magic_token_${magicToken || ""}`);
       return new Response(JSON.stringify({
         success: true,
-        message: "\u767B\u5F55\u6210\u529F",
+        debug: true,
+        message: "\u5F00\u53D1\u73AF\u5883\u8C03\u8BD5\u4FE1\u606F",
         data: {
-          user: {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            avatar: user.avatar
-          },
-          token: sessionToken
+          email,
+          verificationCode: verificationCode || "\u65E0\u9A8C\u8BC1\u7801",
+          magicToken: magicToken || "\u65E0Magic Link",
+          storedCode: storedCode || "\u7F13\u5B58\u4E2D\u65E0\u9A8C\u8BC1\u7801",
+          storedMagic: storedMagic || "\u7F13\u5B58\u4E2D\u65E0Magic Link",
+          magicLink: magicToken ? `https://svtr.ai/api/auth?action=verify_magic_link&token=${magicToken}` : "\u65E0"
         }
       }), {
         status: 200,
         headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+      });
+    }
+    if (action === "verify_magic_link" && token) {
+      const email = await env.SVTR_CACHE.get(`magic_token_${token}`);
+      if (!email) {
+        return new Response(`
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>\u767B\u5F55\u5931\u8D25 - SVTR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui; text-align: center; padding: 50px; background: #f8f9fa; }
+    .container { max-width: 400px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .error { color: #dc3545; font-size: 48px; margin-bottom: 20px; }
+    .message { font-size: 18px; margin-bottom: 30px; color: #666; }
+    .btn { display: inline-block; padding: 12px 24px; background: #007bff; color: white; text-decoration: none; border-radius: 6px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="error">\u274C</div>
+    <h1>\u767B\u5F55\u94FE\u63A5\u65E0\u6548</h1>
+    <p class="message">\u6B64\u767B\u5F55\u94FE\u63A5\u5DF2\u8FC7\u671F\u6216\u5DF2\u88AB\u4F7F\u7528</p>
+    <a href="https://svtr.ai/" class="btn">\u8FD4\u56DE\u9996\u9875</a>
+  </div>
+</body>
+</html>`, {
+          status: 400,
+          headers: { "Content-Type": "text/html; charset=utf-8" }
+        });
+      }
+      await env.SVTR_CACHE.delete(`magic_token_${token}`);
+      const user = await createOrUpdateUser(env, email, { provider: "email" });
+      const sessionToken = await createUserSession4(env, user);
+      const redirectHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>\u767B\u5F55\u6210\u529F - SVTR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui; text-align: center; padding: 50px; background: #f8f9fa; }
+    .container { max-width: 400px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .success { color: #28a745; font-size: 48px; margin-bottom: 20px; }
+    .message { font-size: 18px; margin-bottom: 30px; color: #333; }
+    .user-info { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+    .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #007bff; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .btn { display: inline-block; padding: 12px 24px; background: #007bff; color: white; text-decoration: none; border-radius: 6px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="success">\u2705</div>
+    <h1>\u767B\u5F55\u6210\u529F\uFF01</h1>
+    <p class="message">\u6B22\u8FCE\u56DE\u6765\uFF0C${user.name.split(" ")[0] || user.name}\uFF01</p>
+    <div class="user-info">
+      <div><strong>${user.name}</strong></div>
+      <div>${user.email}</div>
+    </div>
+    <div class="spinner"></div>
+    <p>\u6B63\u5728\u8DF3\u8F6C\u5230\u4E3B\u9875...</p>
+    <a href="https://svtr.ai/" class="btn">\u7ACB\u5373\u524D\u5F80\u4E3B\u9875</a>
+  </div>
+  
+  <script>
+    // \u8BBE\u7F6E\u767B\u5F55\u72B6\u6001\u5230localStorage
+    const userData = ${JSON.stringify({
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        avatar: user.avatar
+      })};
+    const sessionToken = '${sessionToken}';
+    
+    localStorage.setItem('svtr_user', JSON.stringify(userData));
+    localStorage.setItem('svtr_token', sessionToken);
+    
+    // \u89E6\u53D1\u767B\u5F55\u72B6\u6001\u66F4\u65B0\u4E8B\u4EF6
+    if (window.opener || window.parent !== window) {
+      // \u5982\u679C\u662F\u5728\u5F39\u7A97\u6216iframe\u4E2D\uFF0C\u901A\u77E5\u7236\u7A97\u53E3
+      if (window.opener) {
+        window.opener.postMessage({ 
+          type: 'MAGIC_LINK_LOGIN_SUCCESS', 
+          user: userData, 
+          token: sessionToken 
+        }, 'https://svtr.ai');
+      }
+    }
+    
+    // 3\u79D2\u540E\u8DF3\u8F6C\u5230\u4E3B\u9875
+    setTimeout(() => {
+      window.location.href = 'https://svtr.ai/?login=success';
+    }, 3000);
+    
+    console.log('Magic Link \u767B\u5F55\u6210\u529F:', userData);
+  <\/script>
+</body>
+</html>`;
+      return new Response(redirectHtml, {
+        status: 200,
+        headers: { "Content-Type": "text/html; charset=utf-8" }
       });
     }
     if (action === "verify_session" && token) {
@@ -1662,7 +1402,7 @@ __name(onRequestOptions4, "onRequestOptions4");
 var init_auth = __esm({
   "api/auth.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
     __name2(getCorsHeaders, "getCorsHeaders");
     __name2(generateVerificationCode, "generateVerificationCode");
@@ -1686,7 +1426,7 @@ var HybridRAGService;
 var init_hybrid_rag_service = __esm({
   "lib/hybrid-rag-service.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
     HybridRAGService = class {
       static {
@@ -2669,7 +2409,7 @@ var BASE_SYSTEM_PROMPT;
 var init_chat = __esm({
   "api/chat.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
     init_hybrid_rag_service();
     BASE_SYSTEM_PROMPT = `\u4F60\u662FSVTR AI\u521B\u6295\u5E93\u7684\u4E13\u4E1A\u6570\u636E\u67E5\u8BE2\u52A9\u624B\u3002
@@ -2752,7 +2492,7 @@ var CompanyAnalysisFormatter;
 var init_company_analysis_formatter = __esm({
   "lib/company-analysis-formatter.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
     CompanyAnalysisFormatter = class {
       static {
@@ -3351,7 +3091,7 @@ var ENHANCED_SYSTEM_PROMPT;
 var init_chat_optimized = __esm({
   "api/chat-optimized.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
     init_hybrid_rag_service();
     init_company_analysis_formatter();
@@ -3540,7 +3280,7 @@ __name(onRequestGet5, "onRequestGet5");
 var init_feishu_webhook = __esm({
   "api/feishu-webhook.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
     __name2(onRequestPost4, "onRequestPost");
     __name2(handleFeishuEvent, "handleFeishuEvent");
@@ -3919,7 +3659,7 @@ __name(onRequestOptions7, "onRequestOptions7");
 var init_projects = __esm({
   "api/projects.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
     __name2(generateProjectId, "generateProjectId");
     __name2(validateProjectData, "validateProjectData");
@@ -3937,7 +3677,7 @@ var FreeTierManager;
 var init_free_tier_manager = __esm({
   "lib/free-tier-manager.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
     FreeTierManager = class {
       static {
@@ -4132,7 +3872,7 @@ __name(onRequestGet7, "onRequestGet7");
 var init_quota_status = __esm({
   "api/quota-status.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
     init_free_tier_manager();
     __name2(onRequestGet7, "onRequestGet");
@@ -4177,6 +3917,8 @@ async function onRequestPost6(context) {
       preferences,
       subscribedAt: (/* @__PURE__ */ new Date()).toISOString(),
       ipAddress: request.headers.get("CF-Connecting-IP"),
+      cfCountry: request.headers.get("CF-IPCountry"),
+      // Cloudflare提供的国家代码
       userAgent: request.headers.get("User-Agent"),
       language
     };
@@ -4261,7 +4003,9 @@ async function onRequestGet8(context) {
       if (action === "stats") {
         return new Response(JSON.stringify({
           totalSubscribers: 0,
+          todaySubscribers: 0,
           recentSubscribers: 0,
+          languageDistribution: { "zh-CN": 0, "en-US": 0 },
           languageBreakdown: { "zh-CN": 0, "en-US": 0 },
           note: "KV\u5B58\u50A8\u672A\u914D\u7F6E\uFF0C\u663E\u793A\u6A21\u62DF\u6570\u636E"
         }), {
@@ -4279,13 +4023,24 @@ async function onRequestGet8(context) {
     if (action === "stats") {
       const subscribersList = await env.SVTR_CACHE.get("subscribers_list");
       const subscribers = subscribersList ? JSON.parse(subscribersList) : [];
+      const today = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
       const stats = {
         totalSubscribers: subscribers.length,
+        todaySubscribers: subscribers.filter((sub) => {
+          const subDate = new Date(sub.subscribedAt);
+          const subToday = subDate.toISOString().split("T")[0];
+          return subToday === today;
+        }).length,
         recentSubscribers: subscribers.filter((sub) => {
           const subDate = new Date(sub.subscribedAt);
           const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1e3);
           return subDate > weekAgo;
         }).length,
+        languageDistribution: subscribers.reduce((acc, sub) => {
+          acc[sub.language] = (acc[sub.language] || 0) + 1;
+          return acc;
+        }, { "zh-CN": 0, "en-US": 0 }),
+        // 保持向后兼容
         languageBreakdown: subscribers.reduce((acc, sub) => {
           acc[sub.language] = (acc[sub.language] || 0) + 1;
           return acc;
@@ -4405,7 +4160,7 @@ __name(onRequestOptions8, "onRequestOptions8");
 var init_subscribe = __esm({
   "api/subscribe.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
     __name2(isValidEmail2, "isValidEmail");
     __name2(generateSubscriptionId, "generateSubscriptionId");
@@ -4419,7 +4174,7 @@ var ConversationContextManager;
 var init_conversation_context = __esm({
   "lib/conversation-context.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
     ConversationContextManager = class {
       static {
@@ -5000,7 +4755,7 @@ __name(getDefaultSuggestions, "getDefaultSuggestions");
 var init_suggestions = __esm({
   "api/suggestions.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
     init_conversation_context();
     __name2(onRequestGet9, "onRequestGet");
@@ -5009,7 +4764,320 @@ var init_suggestions = __esm({
     __name2(getDefaultSuggestions, "getDefaultSuggestions");
   }
 });
+async function onRequestGet10(context) {
+  try {
+    const { request, env } = context;
+    const url = new URL(request.url);
+    const action = url.searchParams.get("action") || "list";
+    console.log("[Users API] \u8BF7\u6C42\u64CD\u4F5C:", action);
+    if (action === "list") {
+      const users = await getAllUsers(env);
+      return new Response(JSON.stringify(users), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
+    }
+    if (action === "stats") {
+      const users = await getAllUsers(env);
+      const now = /* @__PURE__ */ new Date();
+      const today = now.toISOString().split("T")[0];
+      const thisMonth = now.toISOString().slice(0, 7);
+      const stats = {
+        totalUsers: users.length,
+        activeUsers: users.filter((user) => user.isActive).length,
+        todayRegistrations: users.filter(
+          (user) => user.createdAt.startsWith(today)
+        ).length,
+        monthlyRegistrations: users.filter(
+          (user) => user.createdAt.startsWith(thisMonth)
+        ).length,
+        providerDistribution: {
+          email: users.filter((user) => user.provider === "email").length,
+          google: users.filter((user) => user.provider === "google").length,
+          github: users.filter((user) => user.provider === "github").length
+        },
+        recentUsers: users.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).slice(0, 10)
+      };
+      return new Response(JSON.stringify(stats), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
+    }
+    if (action === "search") {
+      const query = url.searchParams.get("q")?.toLowerCase() || "";
+      const users = await getAllUsers(env);
+      const filteredUsers = users.filter(
+        (user) => user.email.toLowerCase().includes(query) || user.name?.toLowerCase().includes(query) || user.id.toLowerCase().includes(query)
+      );
+      return new Response(JSON.stringify(filteredUsers), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
+        }
+      });
+    }
+    return new Response(JSON.stringify({
+      success: false,
+      message: "\u4E0D\u652F\u6301\u7684\u64CD\u4F5C"
+    }), {
+      status: 400,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      }
+    });
+  } catch (error) {
+    console.error("[Users API] \u9519\u8BEF:", error);
+    return new Response(JSON.stringify({
+      success: false,
+      message: "\u83B7\u53D6\u7528\u6237\u6570\u636E\u5931\u8D25",
+      error: error.message
+    }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      }
+    });
+  }
+}
+__name(onRequestGet10, "onRequestGet10");
 async function onRequestPost8(context) {
+  try {
+    const { request, env } = context;
+    const requestData = await request.json();
+    const { action } = requestData;
+    console.log("[Users API] POST\u64CD\u4F5C:", action, requestData);
+    if (action === "update_status") {
+      const { userId, isActive } = requestData;
+      if (!userId || typeof isActive !== "boolean") {
+        return new Response(JSON.stringify({
+          success: false,
+          message: "\u53C2\u6570\u9519\u8BEF\uFF1A\u9700\u8981userId\u548CisActive"
+        }), {
+          status: 400,
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      }
+      const updated = await updateUserStatus(env, userId, isActive);
+      if (updated) {
+        return new Response(JSON.stringify({
+          success: true,
+          message: `\u7528\u6237\u72B6\u6001\u5DF2\u66F4\u65B0\u4E3A${isActive ? "\u6D3B\u8DC3" : "\u7981\u7528"}`
+        }), {
+          status: 200,
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      } else {
+        return new Response(JSON.stringify({
+          success: false,
+          message: "\u7528\u6237\u4E0D\u5B58\u5728\u6216\u66F4\u65B0\u5931\u8D25"
+        }), {
+          status: 404,
+          headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }
+        });
+      }
+    }
+    return new Response(JSON.stringify({
+      success: false,
+      message: "\u4E0D\u652F\u6301\u7684\u64CD\u4F5C"
+    }), {
+      status: 400,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      }
+    });
+  } catch (error) {
+    console.error("[Users API] POST\u9519\u8BEF:", error);
+    return new Response(JSON.stringify({
+      success: false,
+      message: "\u64CD\u4F5C\u5931\u8D25",
+      error: error.message
+    }), {
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*"
+      }
+    });
+  }
+}
+__name(onRequestPost8, "onRequestPost8");
+async function onRequestOptions10() {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      "Access-Control-Max-Age": "86400"
+    }
+  });
+}
+__name(onRequestOptions10, "onRequestOptions10");
+async function getAllUsers(env) {
+  try {
+    const users = [];
+    const listResult = await env.SVTR_CACHE.list({ prefix: "user_", limit: 1e3 });
+    console.log(`[Users API] \u627E\u5230 ${listResult.keys.length} \u4E2A\u7528\u6237key`);
+    const subscribersList = await env.SVTR_CACHE.get("subscribers_list");
+    const subscribers = subscribersList ? JSON.parse(subscribersList) : [];
+    const subscriberEmails = new Set(subscribers.map((sub) => sub.email));
+    console.log(`[Users API] \u627E\u5230 ${subscribers.length} \u4E2A\u8BA2\u9605\u8005`);
+    const userPromises = listResult.keys.filter((key) => key.name.startsWith("user_") && key.name.includes("@")).map(async (key) => {
+      try {
+        const userData = await env.SVTR_CACHE.get(key.name);
+        if (userData) {
+          const user = JSON.parse(userData);
+          const isSubscriber = subscriberEmails.has(user.email);
+          const location = await getLocationFromUserData(user, subscribers);
+          return {
+            ...user,
+            isSubscriber,
+            location
+          };
+        }
+        return null;
+      } catch (error) {
+        console.error(`[Users API] \u89E3\u6790\u7528\u6237\u6570\u636E\u5931\u8D25 ${key.name}:`, error);
+        return null;
+      }
+    });
+    const userResults = await Promise.all(userPromises);
+    const validUsers = userResults.filter((user) => user !== null);
+    validUsers.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    console.log(`[Users API] \u6210\u529F\u83B7\u53D6 ${validUsers.length} \u4E2A\u6709\u6548\u7528\u6237`);
+    return validUsers;
+  } catch (error) {
+    console.error("[Users API] \u83B7\u53D6\u7528\u6237\u5217\u8868\u5931\u8D25:", error);
+    return [];
+  }
+}
+__name(getAllUsers, "getAllUsers");
+async function getLocationFromUserData(user, subscribers) {
+  try {
+    const subscriberInfo = subscribers.find((sub) => sub.email === user.email);
+    if (subscriberInfo && subscriberInfo.ipAddress) {
+      const location = getLocationFromIP(subscriberInfo.ipAddress, subscriberInfo.cfCountry);
+      if (location && location !== "\u672A\u77E5\u5730\u533A") {
+        return location;
+      }
+    }
+    const emailDomain = user.email.split("@")[1];
+    return getLocationFromEmailDomain(emailDomain);
+  } catch (error) {
+    console.error(`[Users API] \u83B7\u53D6\u7528\u6237\u5730\u7406\u4F4D\u7F6E\u5931\u8D25 ${user.email}:`, error);
+    return "\u672A\u77E5";
+  }
+}
+__name(getLocationFromUserData, "getLocationFromUserData");
+function getLocationFromIP(ip, cfCountry) {
+  if (ip === "127.0.0.1" || ip === "::1" || ip.startsWith("192.168.") || ip.startsWith("10.")) {
+    return "\u672C\u5730\u73AF\u5883";
+  }
+  if (cfCountry && cfCountry !== "XX") {
+    const countryMap = {
+      "CN": "\u4E2D\u56FD",
+      "US": "\u7F8E\u56FD",
+      "JP": "\u65E5\u672C",
+      "KR": "\u97E9\u56FD",
+      "SG": "\u65B0\u52A0\u5761",
+      "HK": "\u9999\u6E2F",
+      "TW": "\u53F0\u6E7E",
+      "GB": "\u82F1\u56FD",
+      "DE": "\u5FB7\u56FD",
+      "FR": "\u6CD5\u56FD",
+      "CA": "\u52A0\u62FF\u5927",
+      "AU": "\u6FB3\u5927\u5229\u4E9A",
+      "IN": "\u5370\u5EA6",
+      "BR": "\u5DF4\u897F",
+      "MX": "\u58A8\u897F\u54E5",
+      "RU": "\u4FC4\u7F57\u65AF"
+    };
+    return countryMap[cfCountry] || `${cfCountry}\u5730\u533A`;
+  }
+  if (ip.includes(".")) {
+    const segments = ip.split(".").map(Number);
+    const firstSegment = segments[0];
+    if (firstSegment >= 1 && firstSegment <= 126 && firstSegment !== 127 || firstSegment >= 202 && firstSegment <= 203 || firstSegment >= 210 && firstSegment <= 222) {
+      return "\u4E2D\u56FD";
+    }
+    if (firstSegment >= 3 && firstSegment <= 99 || firstSegment >= 128 && firstSegment <= 191) {
+      return "\u7F8E\u56FD";
+    }
+  }
+  return "\u672A\u77E5\u5730\u533A";
+}
+__name(getLocationFromIP, "getLocationFromIP");
+function getLocationFromEmailDomain(domain) {
+  const domainLocationMap = {
+    "qq.com": "\u4E2D\u56FD",
+    "163.com": "\u4E2D\u56FD",
+    "126.com": "\u4E2D\u56FD",
+    "sina.com": "\u4E2D\u56FD",
+    "sina.cn": "\u4E2D\u56FD",
+    "sohu.com": "\u4E2D\u56FD",
+    "foxmail.com": "\u4E2D\u56FD",
+    "gmail.com": "\u5168\u7403",
+    "yahoo.com": "\u7F8E\u56FD",
+    "hotmail.com": "\u7F8E\u56FD",
+    "outlook.com": "\u7F8E\u56FD",
+    "live.com": "\u7F8E\u56FD",
+    "msn.com": "\u7F8E\u56FD",
+    "svtr.ai": "\u5E73\u53F0\u5185\u90E8",
+    "example.com": "\u6D4B\u8BD5\u73AF\u5883"
+  };
+  return domainLocationMap[domain.toLowerCase()] || "\u5176\u4ED6\u5730\u533A";
+}
+__name(getLocationFromEmailDomain, "getLocationFromEmailDomain");
+async function updateUserStatus(env, userId, isActive) {
+  try {
+    const userData = await env.SVTR_CACHE.get(`user_id_${userId}`);
+    if (!userData) {
+      console.log(`[Users API] \u7528\u6237\u4E0D\u5B58\u5728: ${userId}`);
+      return false;
+    }
+    const user = JSON.parse(userData);
+    const updatedUser = {
+      ...user,
+      isActive,
+      lastLoginAt: (/* @__PURE__ */ new Date()).toISOString()
+      // 更新最后操作时间
+    };
+    await env.SVTR_CACHE.put(`user_${user.email}`, JSON.stringify(updatedUser));
+    await env.SVTR_CACHE.put(`user_id_${userId}`, JSON.stringify(updatedUser));
+    console.log(`[Users API] \u7528\u6237\u72B6\u6001\u66F4\u65B0\u6210\u529F: ${userId} -> ${isActive}`);
+    return true;
+  } catch (error) {
+    console.error(`[Users API] \u66F4\u65B0\u7528\u6237\u72B6\u6001\u5931\u8D25 ${userId}:`, error);
+    return false;
+  }
+}
+__name(updateUserStatus, "updateUserStatus");
+var init_users = __esm({
+  "api/users.ts"() {
+    "use strict";
+    init_functionsRoutes_0_7135655131370733();
+    init_checked_fetch();
+    __name2(onRequestGet10, "onRequestGet");
+    __name2(onRequestPost8, "onRequestPost");
+    __name2(onRequestOptions10, "onRequestOptions");
+    __name2(getAllUsers, "getAllUsers");
+    __name2(getLocationFromUserData, "getLocationFromUserData");
+    __name2(getLocationFromIP, "getLocationFromIP");
+    __name2(getLocationFromEmailDomain, "getLocationFromEmailDomain");
+    __name2(updateUserStatus, "updateUserStatus");
+  }
+});
+async function onRequestPost9(context) {
   const { request, env } = context;
   try {
     const body = await request.json();
@@ -5060,7 +5128,7 @@ async function onRequestPost8(context) {
     return new Response("Internal error", { status: 500 });
   }
 }
-__name(onRequestPost8, "onRequestPost8");
+__name(onRequestPost9, "onRequestPost9");
 function verifySignature(body, signature, secret) {
   return true;
 }
@@ -5068,13 +5136,13 @@ __name(verifySignature, "verifySignature");
 var init_feishu = __esm({
   "webhook/feishu.js"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
-    __name2(onRequestPost8, "onRequestPost");
+    __name2(onRequestPost9, "onRequestPost");
     __name2(verifySignature, "verifySignature");
   }
 });
-async function onRequestPost9(context) {
+async function onRequestPost10(context) {
   try {
     const { request, env } = context;
     const authHeader = request.headers.get("Authorization");
@@ -5125,7 +5193,7 @@ async function onRequestPost9(context) {
     });
   }
 }
-__name(onRequestPost9, "onRequestPost9");
+__name(onRequestPost10, "onRequestPost10");
 async function performScheduledSync(env) {
   try {
     const feishuAppId = env.FEISHU_APP_ID;
@@ -5207,9 +5275,9 @@ __name(sendSyncNotification, "sendSyncNotification");
 var init_scheduled_sync = __esm({
   "scheduled-sync.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
-    __name2(onRequestPost9, "onRequestPost");
+    __name2(onRequestPost10, "onRequestPost");
     __name2(performScheduledSync, "performScheduledSync");
     __name2(triggerGitHubSync, "triggerGitHubSync");
     __name2(sendSyncNotification, "sendSyncNotification");
@@ -5219,7 +5287,7 @@ var onRequest;
 var init_middleware = __esm({
   "_middleware.ts"() {
     "use strict";
-    init_functionsRoutes_0_8041946199199985();
+    init_functionsRoutes_0_7135655131370733();
     init_checked_fetch();
     onRequest = /* @__PURE__ */ __name2(async (context) => {
       const response = await context.next();
@@ -5274,8 +5342,8 @@ var init_middleware = __esm({
   }
 });
 var routes;
-var init_functionsRoutes_0_8041946199199985 = __esm({
-  "../.wrangler/tmp/pages-OJR4sx/functionsRoutes-0.8041946199199985.mjs"() {
+var init_functionsRoutes_0_7135655131370733 = __esm({
+  "../.wrangler/tmp/pages-qv7jGR/functionsRoutes-0.7135655131370733.mjs"() {
     "use strict";
     init_github();
     init_github();
@@ -5304,6 +5372,9 @@ var init_functionsRoutes_0_8041946199199985 = __esm({
     init_suggestions();
     init_suggestions();
     init_suggestions();
+    init_users();
+    init_users();
+    init_users();
     init_feishu();
     init_scheduled_sync();
     init_middleware();
@@ -5498,18 +5569,39 @@ var init_functionsRoutes_0_8041946199199985 = __esm({
         modules: [onRequestPost7]
       },
       {
+        routePath: "/api/users",
+        mountPath: "/api",
+        method: "GET",
+        middlewares: [],
+        modules: [onRequestGet10]
+      },
+      {
+        routePath: "/api/users",
+        mountPath: "/api",
+        method: "OPTIONS",
+        middlewares: [],
+        modules: [onRequestOptions10]
+      },
+      {
+        routePath: "/api/users",
+        mountPath: "/api",
+        method: "POST",
+        middlewares: [],
+        modules: [onRequestPost8]
+      },
+      {
         routePath: "/webhook/feishu",
         mountPath: "/webhook",
         method: "POST",
         middlewares: [],
-        modules: [onRequestPost8]
+        modules: [onRequestPost9]
       },
       {
         routePath: "/scheduled-sync",
         mountPath: "/",
         method: "POST",
         middlewares: [],
-        modules: [onRequestPost9]
+        modules: [onRequestPost10]
       },
       {
         routePath: "/",
@@ -5521,13 +5613,13 @@ var init_functionsRoutes_0_8041946199199985 = __esm({
     ];
   }
 });
-init_functionsRoutes_0_8041946199199985();
+init_functionsRoutes_0_7135655131370733();
 init_checked_fetch();
-init_functionsRoutes_0_8041946199199985();
+init_functionsRoutes_0_7135655131370733();
 init_checked_fetch();
-init_functionsRoutes_0_8041946199199985();
+init_functionsRoutes_0_7135655131370733();
 init_checked_fetch();
-init_functionsRoutes_0_8041946199199985();
+init_functionsRoutes_0_7135655131370733();
 init_checked_fetch();
 function lexer(str) {
   var tokens = [];
@@ -5983,7 +6075,7 @@ var cloneResponse = /* @__PURE__ */ __name2((response) => (
     response
   )
 ), "cloneResponse");
-init_functionsRoutes_0_8041946199199985();
+init_functionsRoutes_0_7135655131370733();
 init_checked_fetch();
 var drainBody = /* @__PURE__ */ __name2(async (request, env, _ctx, middlewareCtx) => {
   try {
@@ -6001,7 +6093,7 @@ var drainBody = /* @__PURE__ */ __name2(async (request, env, _ctx, middlewareCtx
   }
 }, "drainBody");
 var middleware_ensure_req_body_drained_default = drainBody;
-init_functionsRoutes_0_8041946199199985();
+init_functionsRoutes_0_7135655131370733();
 init_checked_fetch();
 function reduceError(e) {
   return {
@@ -6030,7 +6122,7 @@ var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_miniflare3_json_error_default
 ];
 var middleware_insertion_facade_default = pages_template_worker_default;
-init_functionsRoutes_0_8041946199199985();
+init_functionsRoutes_0_7135655131370733();
 init_checked_fetch();
 var __facade_middleware__ = [];
 function __facade_register__(...args) {
@@ -6189,7 +6281,7 @@ function transformRoutingRuleToRegExp(rule) {
 }
 __name(transformRoutingRuleToRegExp, "transformRoutingRuleToRegExp");
 
-// .wrangler/tmp/pages-OJR4sx/hz10vb0iz8.js
+// .wrangler/tmp/pages-qv7jGR/x179b3olkgs.js
 var define_ROUTES_default = {
   version: 1,
   include: [
@@ -6270,7 +6362,7 @@ var jsonError2 = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx
 }, "jsonError");
 var middleware_miniflare3_json_error_default2 = jsonError2;
 
-// .wrangler/tmp/bundle-TGYKaw/middleware-insertion-facade.js
+// .wrangler/tmp/bundle-3iXkIi/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__2 = [
   middleware_ensure_req_body_drained_default2,
   middleware_miniflare3_json_error_default2
@@ -6302,7 +6394,7 @@ function __facade_invoke__2(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__2, "__facade_invoke__");
 
-// .wrangler/tmp/bundle-TGYKaw/middleware-loader.entry.ts
+// .wrangler/tmp/bundle-3iXkIi/middleware-loader.entry.ts
 var __Facade_ScheduledController__2 = class ___Facade_ScheduledController__2 {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;
@@ -6402,4 +6494,4 @@ export {
   __INTERNAL_WRANGLER_MIDDLEWARE__2 as __INTERNAL_WRANGLER_MIDDLEWARE__,
   middleware_loader_entry_default2 as default
 };
-//# sourceMappingURL=hz10vb0iz8.js.map
+//# sourceMappingURL=x179b3olkgs.js.map
