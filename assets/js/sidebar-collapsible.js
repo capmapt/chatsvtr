@@ -49,6 +49,9 @@
       // 设置嵌套子菜单的显示/隐藏行为
       this.setupNestedMenus();
 
+      // 初始化完成，添加CSS类以显示toggle图标
+      document.body.classList.add('sidebar-accordion-initialized');
+
       console.log(`[SidebarAccordion] 已初始化手风琴式菜单，共 ${collapsibleHeaders.length} 个菜单组`);
     }
 
