@@ -37,7 +37,7 @@ interface User {
   email: string;
   name?: string;
   avatar?: string;
-  provider: 'email' | 'google' | 'github';
+  provider: 'email' | 'google' | 'github' | 'linkedin';
   createdAt: string;
   lastLoginAt: string;
   isActive: boolean;
@@ -82,9 +82,9 @@ async function sendVerificationEmail(env: any, email: string, code: string, type
   try {
     // 检查是否配置了AWS SES
     if (env.AWS_ACCESS_KEY_ID && env.AWS_SECRET_ACCESS_KEY && env.AWS_REGION && env.FROM_EMAIL) {
-      const { AWSEmailService } = await import('../lib/email-service');
+      const { SimpleSES } = await import('../lib/simple-ses');
       
-      const emailService = new AWSEmailService({
+      const emailService = new SimpleSES({
         accessKeyId: env.AWS_ACCESS_KEY_ID,
         secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
         region: env.AWS_REGION,
@@ -93,11 +93,15 @@ async function sendVerificationEmail(env: any, email: string, code: string, type
       
       if (type === 'code') {
         // 发送验证码邮件
-        const success = await emailService.sendVerificationCode({
-          email,
-          code,
-          language
-        });
+        const subject = language === 'zh-CN' 
+          ? `[SVTR] 您的登录验证码: ${code}`
+          : `[SVTR] Your Login Verification Code: ${code}`;
+        
+        const body = language === 'zh-CN'
+          ? `您好！\n\n您的登录验证码是: ${code}\n\n验证码5分钟内有效，请及时使用。\n\n如果您没有请求此验证码，请忽略此邮件。\n\n——SVTR团队`
+          : `Hello!\n\nYour login verification code is: ${code}\n\nThe code is valid for 5 minutes, please use it promptly.\n\nIf you didn't request this code, please ignore this email.\n\n——SVTR Team`;
+        
+        const success = await emailService.sendEmail(email, subject, body);
         
         if (success) {
           console.log(`AWS SES验证码邮件发送成功: ${email}`);
@@ -109,11 +113,15 @@ async function sendVerificationEmail(env: any, email: string, code: string, type
       } else {
         // 发送Magic Link邮件
         const magicLink = `https://svtr.ai/api/auth?action=verify_magic_link&token=${code}`;
-        const success = await emailService.sendMagicLink({
-          email,
-          magicLink,
-          language
-        });
+        const subject = language === 'zh-CN' 
+          ? `[SVTR] 您的登录链接`
+          : `[SVTR] Your Login Link`;
+        
+        const body = language === 'zh-CN'
+          ? `您好！\n\n点击以下链接即可登录SVTR:\n${magicLink}\n\n此链接10分钟内有效，请及时使用。\n\n如果您没有请求此登录链接，请忽略此邮件。\n\n——SVTR团队`
+          : `Hello!\n\nClick the following link to log in to SVTR:\n${magicLink}\n\nThis link is valid for 10 minutes, please use it promptly.\n\nIf you didn't request this login link, please ignore this email.\n\n——SVTR Team`;
+        
+        const success = await emailService.sendEmail(email, subject, body);
         
         if (success) {
           console.log(`AWS SES Magic Link邮件发送成功: ${email}`);
@@ -127,6 +135,17 @@ async function sendVerificationEmail(env: any, email: string, code: string, type
       // 模拟发送（开发环境）
       console.log(`[模拟发送] ${type === 'code' ? '验证码' : 'Magic Link'}邮件到: ${email}`);
       console.log(`[模拟内容] ${type === 'code' ? `验证码: ${code}` : `Magic Link: https://svtr.ai/api/auth?action=verify_magic_link&token=${code}`}`);
+      
+      // 开发环境：将验证码存储到特殊key用于调试
+      if (type === 'code') {
+        await env.SVTR_CACHE.put(`dev_code_${email}`, code, {
+          expirationTtl: 300 // 5分钟
+        });
+      } else {
+        await env.SVTR_CACHE.put(`dev_magic_${email}`, code, {
+          expirationTtl: 300 // 5分钟
+        });
+      }
       
       return true;
     }
@@ -409,17 +428,74 @@ export async function onRequestGet(context: any): Promise<Response> {
     
     console.log('GET认证请求:', action, token);
     
+    // 开发环境调试端点 - 查看验证码
+    if (action === 'debug_codes') {
+      const email = url.searchParams.get('email');
+      if (!email) {
+        return new Response(JSON.stringify({
+          success: false,
+          message: '请提供邮箱参数'
+        }), {
+          status: 400,
+          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+        });
+      }
+      
+      // 获取开发环境验证码和magic link
+      const verificationCode = await env.SVTR_CACHE.get(`dev_code_${email}`);
+      const magicToken = await env.SVTR_CACHE.get(`dev_magic_${email}`);
+      const storedCode = await env.SVTR_CACHE.get(`email_code_${email}`);
+      const storedMagic = await env.SVTR_CACHE.get(`magic_token_${magicToken || ''}`);
+      
+      return new Response(JSON.stringify({
+        success: true,
+        debug: true,
+        message: '开发环境调试信息',
+        data: {
+          email,
+          verificationCode: verificationCode || '无验证码',
+          magicToken: magicToken || '无Magic Link',
+          storedCode: storedCode || '缓存中无验证码',
+          storedMagic: storedMagic || '缓存中无Magic Link',
+          magicLink: magicToken ? `https://svtr.ai/api/auth?action=verify_magic_link&token=${magicToken}` : '无'
+        }
+      }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+      });
+    }
+    
     if (action === 'verify_magic_link' && token) {
       // 验证Magic Link
       const email = await env.SVTR_CACHE.get(`magic_token_${token}`);
       
       if (!email) {
-        return new Response(JSON.stringify({
-          success: false,
-          message: '登录链接无效或已过期'
-        }), {
+        return new Response(`
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>登录失败 - SVTR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui; text-align: center; padding: 50px; background: #f8f9fa; }
+    .container { max-width: 400px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .error { color: #dc3545; font-size: 48px; margin-bottom: 20px; }
+    .message { font-size: 18px; margin-bottom: 30px; color: #666; }
+    .btn { display: inline-block; padding: 12px 24px; background: #007bff; color: white; text-decoration: none; border-radius: 6px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="error">❌</div>
+    <h1>登录链接无效</h1>
+    <p class="message">此登录链接已过期或已被使用</p>
+    <a href="https://svtr.ai/" class="btn">返回首页</a>
+  </div>
+</body>
+</html>`, {
           status: 400,
-          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+          headers: { 'Content-Type': 'text/html; charset=utf-8' }
         });
       }
       
@@ -432,21 +508,77 @@ export async function onRequestGet(context: any): Promise<Response> {
       // 创建会话
       const sessionToken = await createUserSession(env, user);
       
-      return new Response(JSON.stringify({
-        success: true,
-        message: '登录成功',
-        data: {
-          user: {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            avatar: user.avatar
-          },
-          token: sessionToken
-        }
-      }), {
+      // Magic Link登录成功，返回用户友好的HTML页面并自动设置登录状态
+      const redirectHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>登录成功 - SVTR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui; text-align: center; padding: 50px; background: #f8f9fa; }
+    .container { max-width: 400px; margin: 0 auto; background: white; padding: 40px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .success { color: #28a745; font-size: 48px; margin-bottom: 20px; }
+    .message { font-size: 18px; margin-bottom: 30px; color: #333; }
+    .user-info { background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+    .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #007bff; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .btn { display: inline-block; padding: 12px 24px; background: #007bff; color: white; text-decoration: none; border-radius: 6px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="success">✅</div>
+    <h1>登录成功！</h1>
+    <p class="message">欢迎回来，${user.name.split(' ')[0] || user.name}！</p>
+    <div class="user-info">
+      <div><strong>${user.name}</strong></div>
+      <div>${user.email}</div>
+    </div>
+    <div class="spinner"></div>
+    <p>正在跳转到主页...</p>
+    <a href="https://svtr.ai/" class="btn">立即前往主页</a>
+  </div>
+  
+  <script>
+    // 设置登录状态到localStorage
+    const userData = ${JSON.stringify({
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      avatar: user.avatar
+    })};
+    const sessionToken = '${sessionToken}';
+    
+    localStorage.setItem('svtr_user', JSON.stringify(userData));
+    localStorage.setItem('svtr_token', sessionToken);
+    
+    // 触发登录状态更新事件
+    if (window.opener || window.parent !== window) {
+      // 如果是在弹窗或iframe中，通知父窗口
+      if (window.opener) {
+        window.opener.postMessage({ 
+          type: 'MAGIC_LINK_LOGIN_SUCCESS', 
+          user: userData, 
+          token: sessionToken 
+        }, 'https://svtr.ai');
+      }
+    }
+    
+    // 3秒后跳转到主页
+    setTimeout(() => {
+      window.location.href = 'https://svtr.ai/?login=success';
+    }, 3000);
+    
+    console.log('Magic Link 登录成功:', userData);
+  </script>
+</body>
+</html>`;
+      
+      return new Response(redirectHtml, {
         status: 200,
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+        headers: { 'Content-Type': 'text/html; charset=utf-8' }
       });
     }
     

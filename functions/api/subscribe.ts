@@ -55,6 +55,7 @@ export async function onRequestPost(context: any): Promise<Response> {
       preferences,
       subscribedAt: new Date().toISOString(),
       ipAddress: request.headers.get('CF-Connecting-IP'),
+      cfCountry: request.headers.get('CF-IPCountry'), // Cloudflare提供的国家代码
       userAgent: request.headers.get('User-Agent'),
       language
     };
@@ -164,7 +165,9 @@ export async function onRequestGet(context: any): Promise<Response> {
       if (action === 'stats') {
         return new Response(JSON.stringify({
           totalSubscribers: 0,
+          todaySubscribers: 0,
           recentSubscribers: 0,
+          languageDistribution: { 'zh-CN': 0, 'en-US': 0 },
           languageBreakdown: { 'zh-CN': 0, 'en-US': 0 },
           note: 'KV存储未配置，显示模拟数据'
         }), {
@@ -186,13 +189,24 @@ export async function onRequestGet(context: any): Promise<Response> {
       const subscribersList = await env.SVTR_CACHE.get('subscribers_list');
       const subscribers = subscribersList ? JSON.parse(subscribersList) : [];
       
+      const today = new Date().toISOString().split('T')[0];
       const stats = {
         totalSubscribers: subscribers.length,
+        todaySubscribers: subscribers.filter((sub: any) => {
+          const subDate = new Date(sub.subscribedAt);
+          const subToday = subDate.toISOString().split('T')[0];
+          return subToday === today;
+        }).length,
         recentSubscribers: subscribers.filter((sub: any) => {
           const subDate = new Date(sub.subscribedAt);
           const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
           return subDate > weekAgo;
         }).length,
+        languageDistribution: subscribers.reduce((acc: any, sub: any) => {
+          acc[sub.language] = (acc[sub.language] || 0) + 1;
+          return acc;
+        }, { 'zh-CN': 0, 'en-US': 0 }),
+        // 保持向后兼容
         languageBreakdown: subscribers.reduce((acc: any, sub: any) => {
           acc[sub.language] = (acc[sub.language] || 0) + 1;
           return acc;
