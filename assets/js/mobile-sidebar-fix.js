@@ -12,6 +12,11 @@ class MobileSidebarFix {
     this.touchSupported = 'ontouchstart' in window;
     this.isMobile = this.detectMobile();
 
+    // 键盘和交互状态
+    this.keyboardIsOpen = false;
+    this.disableOverlayClose = false;
+    this.keyboardDetectionSetup = false;
+
     // 状态管理
     this.state = {
       isOpen: false,
@@ -156,11 +161,18 @@ class MobileSidebarFix {
       }, 150);
 
       const safeClose = this.debounce((e) => {
+        // 检查是否禁用了overlay关闭功能（键盘弹出时）
+        if (this.disableOverlayClose) {
+          console.log('[MobileSidebarFix] 键盘弹出保护模式，不关闭侧边栏');
+          return;
+        }
+        
         // 检查点击是否来自订阅相关元素
         if (this.isSubscriptionElement(e.target)) {
           console.log('[MobileSidebarFix] 订阅元素点击，不关闭侧边栏');
           return;
         }
+        
         this.safeCloseSidebar();
       }, 100);
 
@@ -481,6 +493,68 @@ class MobileSidebarFix {
     return false;
   }
 
+  // 移动端键盘处理
+  handleMobileKeyboard(isKeyboardOpen) {
+    try {
+      if (!this.isMobile) return;
+      
+      if (isKeyboardOpen) {
+        // 键盘弹出时，防止侧边栏关闭
+        this.keyboardIsOpen = true;
+        console.log('[MobileSidebarFix] 检测到键盘弹出，启用保护模式');
+        
+        // 临时禁用overlay关闭功能
+        this.disableOverlayClose = true;
+        
+        // 监听窗口大小变化以检测键盘收起
+        this.setupKeyboardDetection();
+        
+      } else {
+        // 键盘收起时，恢复正常功能
+        this.keyboardIsOpen = false;
+        console.log('[MobileSidebarFix] 键盘已收起，恢复正常模式');
+        
+        // 延迟恢复overlay关闭功能，避免误触
+        setTimeout(() => {
+          this.disableOverlayClose = false;
+        }, 300);
+      }
+    } catch (error) {
+      console.warn('[MobileSidebarFix] 键盘处理失败:', error);
+    }
+  }
+
+  // 键盘检测机制
+  setupKeyboardDetection() {
+    if (this.keyboardDetectionSetup) return;
+    this.keyboardDetectionSetup = true;
+    
+    let initialViewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+    
+    const handleViewportChange = () => {
+      const currentHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      const heightDiff = initialViewportHeight - currentHeight;
+      
+      // 如果视口高度减少超过150px，认为是键盘弹出
+      const isKeyboardVisible = heightDiff > 150;
+      
+      if (!isKeyboardVisible && this.keyboardIsOpen) {
+        // 键盘已收起，但焦点事件可能还没触发
+        setTimeout(() => {
+          if (!document.activeElement || document.activeElement.tagName !== 'INPUT') {
+            this.handleMobileKeyboard(false);
+          }
+        }, 100);
+      }
+    };
+    
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleViewportChange);
+    } else {
+      window.addEventListener('resize', handleViewportChange);
+    }
+  }
+
   // 订阅表单保护机制
   setupSubscriptionProtection() {
     try {
@@ -495,11 +569,19 @@ class MobileSidebarFix {
           e.stopPropagation();
         }, { capture: true, passive: false });
         
-        // 为输入框添加焦点保护
+        // 为输入框添加焦点保护和键盘弹出保护
         if (element.tagName === 'INPUT') {
           element.addEventListener('focus', (e) => {
             console.log('[MobileSidebarFix] 输入框获得焦点，阻止冒泡');
             e.stopPropagation();
+            // 键盘弹出保护
+            this.handleMobileKeyboard(true);
+          }, { capture: true, passive: false });
+          
+          element.addEventListener('blur', (e) => {
+            console.log('[MobileSidebarFix] 输入框失去焦点');
+            // 键盘收起保护
+            this.handleMobileKeyboard(false);
           }, { capture: true, passive: false });
         }
       });

@@ -13,13 +13,11 @@
     -webkit-backdrop-filter: blur(10px) !important;
   }
 
-  /* 侧边栏打开时，主内容区层叠在下方并模糊 */
+  /* 侧边栏打开时，主内容区层叠在下方（移除模糊效果） */
   .sidebar.open ~ .content,
   .sidebar.open ~ main {
     margin-left: 0 !important; /* 不推移内容，而是覆盖 */
-    filter: blur(3px) !important;
-    -webkit-filter: blur(3px) !important;
-    transition: filter 0.3s ease !important;
+    /* 移除模糊效果以改善用户体验 */
     pointer-events: none !important; /* 禁用交互 */
   }
 
