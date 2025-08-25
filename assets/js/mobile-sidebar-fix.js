@@ -30,7 +30,17 @@ class MobileSidebarFix {
   detectMobile() {
     const userAgent = navigator.userAgent;
     const mobileRegex = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-    return mobileRegex.test(userAgent) || window.innerWidth <= 768;
+    const isMobileViewport = window.innerWidth <= 768;
+    
+    // 开发环境下优先使用viewport检测，方便调试
+    const isDevEnvironment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    
+    if (isDevEnvironment && isMobileViewport) {
+      console.log('[MobileSidebarFix] 开发环境下检测到移动端viewport');
+      return true;
+    }
+    
+    return mobileRegex.test(userAgent) || isMobileViewport;
   }
 
   init() {
@@ -623,7 +633,16 @@ function initializeMobileSidebarFix() {
       return;
     }
 
-    window.mobileSidebarFix = new MobileSidebarFix();
+    // 开发环境下强制初始化（用于调试移动端）
+    const isDevEnvironment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const isMobileViewport = window.innerWidth <= 768;
+    
+    if (isDevEnvironment && isMobileViewport) {
+      console.log('[MobileSidebarFix] 开发环境强制初始化移动端修复器');
+      window.mobileSidebarFix = new MobileSidebarFix();
+    } else {
+      window.mobileSidebarFix = new MobileSidebarFix();
+    }
 
     // 健康检查
     setInterval(() => {
