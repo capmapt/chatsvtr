@@ -119,13 +119,13 @@
                 <label for="projectCategory" data-i18n="project_category">项目类别</label>
                 <select id="projectCategory" required>
                   <option value="">请选择类别</option>
-                  <option value="ai">人工智能</option>
-                  <option value="fintech">金融科技</option>
-                  <option value="healthcare">医疗健康</option>
-                  <option value="education">教育科技</option>
-                  <option value="enterprise">企业服务</option>
-                  <option value="consumer">消费科技</option>
-                  <option value="other">其他</option>
+                  <option value="ai">人工智能 (AI)</option>
+                  <option value="fintech">金融科技 (Fintech)</option>
+                  <option value="healthcare">医疗健康 (Healthcare)</option>
+                  <option value="ecommerce">电子商务 (E-commerce)</option>
+                  <option value="enterprise">企业服务 (Enterprise)</option>
+                  <option value="consumer">消费科技 (Consumer)</option>
+                  <option value="other">其他 (Other)</option>
                 </select>
               </div>
               <div class="form-group">
@@ -373,25 +373,91 @@
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       
+      const submitBtn = form.querySelector('.btn-submit');
+      const originalText = submitBtn.textContent;
+      
+      // 显示提交中状态
+      submitBtn.textContent = '提交中...';
+      submitBtn.disabled = true;
+      
       const formData = {
-        projectName: document.getElementById('projectName').value,
-        projectUrl: document.getElementById('projectUrl').value,
-        projectCategory: document.getElementById('projectCategory').value,
-        projectDescription: document.getElementById('projectDescription').value,
-        contactEmail: document.getElementById('contactEmail').value,
+        name: document.getElementById('projectName').value.trim(),
+        description: document.getElementById('projectDescription').value.trim(),
+        category: mapCategoryToAPI(document.getElementById('projectCategory').value),
+        founder: extractNameFromEmail(document.getElementById('contactEmail').value),
+        founderEmail: document.getElementById('contactEmail').value.trim(),
+        fundingGoal: 1000000, // 默认融资目标1M
+        stage: 'seed', // 默认种子轮
+        tags: [document.getElementById('projectCategory').value],
+        website: document.getElementById('projectUrl').value.trim() || '',
         submittedAt: new Date().toISOString()
       };
 
-      // 模拟提交成功
-      console.log('项目提交数据:', formData);
-      
-      // 显示成功消息
-      alert('项目提交成功！我们将尽快联系您。');
-      closeModal();
-
-      // TODO: 集成实际的提交API
-      // submitProject(formData);
+      // 提交到项目API
+      submitProject(formData)
+        .then(response => {
+          if (response.success) {
+            // 显示成功消息
+            alert('项目提交成功！我们将尽快联系您。项目ID: ' + response.data.projectId);
+            closeModal();
+          } else {
+            throw new Error(response.message || '提交失败');
+          }
+        })
+        .catch(error => {
+          console.error('项目提交失败:', error);
+          alert('提交失败: ' + error.message + '\n请检查网络连接或稍后重试。');
+        })
+        .finally(() => {
+          // 恢复按钮状态
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        });
     });
+
+    // 辅助函数：映射类别到API格式
+    function mapCategoryToAPI(category) {
+      const categoryMap = {
+        'ai': 'AI',
+        'fintech': 'Fintech',
+        'healthcare': 'Healthcare',
+        'ecommerce': 'E-commerce',
+        'enterprise': 'Enterprise',
+        'consumer': 'Consumer',
+        'other': 'Other'
+      };
+      return categoryMap[category] || 'Other';
+    }
+
+    // 辅助函数：从邮箱提取用户名作为创始人姓名
+    function extractNameFromEmail(email) {
+      const username = email.split('@')[0];
+      return username.replace(/[._]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    }
+
+    // 项目提交API调用
+    async function submitProject(projectData) {
+      try {
+        const response = await fetch('/api/projects', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(projectData)
+        });
+
+        const result = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(result.message || `HTTP ${response.status}`);
+        }
+
+        return result;
+      } catch (error) {
+        console.error('API调用失败:', error);
+        throw error;
+      }
+    }
   }
 
   /**

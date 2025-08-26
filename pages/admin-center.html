@@ -302,6 +302,9 @@
             padding: 20px 25px;
             border-bottom: 1px solid #e1e5e9;
             background: #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .module-title {
@@ -846,8 +849,16 @@
                 <!-- 项目管理模块 -->
                 <div id="projects-module" class="content-module">
                     <div class="module-header">
-                        <div class="module-title">投资项目管理</div>
-                        <div class="module-subtitle">管理平台上的所有投资项目和申请</div>
+                        <div>
+                            <div class="module-title">投资项目管理</div>
+                            <div class="module-subtitle">管理平台上的所有投资项目和申请</div>
+                        </div>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <button class="btn-secondary" onclick="loadProjectsData()" style="padding: 8px 16px; font-size: 14px;">
+                                🔄 刷新数据
+                            </button>
+                            <small id="lastUpdateTime" style="color: #666; font-size: 12px;"></small>
+                        </div>
                     </div>
                     <div class="module-content">
                         <!-- 项目统计卡片 -->
@@ -1481,6 +1492,14 @@
             try {
                 console.log('加载项目数据...');
                 
+                // 显示加载状态
+                const refreshBtn = document.querySelector('button[onclick="loadProjectsData()"]');
+                const originalText = refreshBtn?.textContent;
+                if (refreshBtn) {
+                    refreshBtn.textContent = '🔄 加载中...';
+                    refreshBtn.disabled = true;
+                }
+                
                 // 获取项目统计
                 const statsResponse = await fetch('/api/projects?action=stats');
                 if (statsResponse.ok) {
@@ -1497,6 +1516,14 @@
                     renderProjectsTable();
                 }
                 
+                // 更新最后更新时间
+                const lastUpdateElement = document.getElementById('lastUpdateTime');
+                if (lastUpdateElement) {
+                    lastUpdateElement.textContent = `最后更新: ${new Date().toLocaleString('zh-CN')}`;
+                }
+                
+                console.log(`项目数据加载完成，共 ${projectsData.length} 个项目`);
+                
             } catch (error) {
                 console.error('加载项目数据失败:', error);
                 document.getElementById('projectsTableContainer').innerHTML = `
@@ -1506,6 +1533,13 @@
                         <button class="btn-primary" onclick="loadProjectsData()">重新加载</button>
                     </div>
                 `;
+            } finally {
+                // 恢复按钮状态
+                const refreshBtn = document.querySelector('button[onclick="loadProjectsData()"]');
+                if (refreshBtn && originalText) {
+                    refreshBtn.textContent = originalText;
+                    refreshBtn.disabled = false;
+                }
             }
         }
 
