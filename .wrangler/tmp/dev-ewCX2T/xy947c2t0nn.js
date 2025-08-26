@@ -56,7 +56,7 @@ function checkURL2(request, init) {
 __name(checkURL2, "checkURL");
 var urls2;
 var init_checked_fetch = __esm({
-  "../.wrangler/tmp/bundle-AvOCCB/checked-fetch.js"() {
+  "../.wrangler/tmp/bundle-I2OBIm/checked-fetch.js"() {
     "use strict";
     urls2 = /* @__PURE__ */ new Set();
     __name2(checkURL2, "checkURL");
@@ -3300,8 +3300,8 @@ function validateProjectData(data) {
   if (!data.name || data.name.trim().length < 2) {
     errors.push("\u9879\u76EE\u540D\u79F0\u81F3\u5C11\u9700\u89812\u4E2A\u5B57\u7B26");
   }
-  if (!data.description || data.description.trim().length < 10) {
-    errors.push("\u9879\u76EE\u63CF\u8FF0\u81F3\u5C11\u9700\u898110\u4E2A\u5B57\u7B26");
+  if (!data.description || data.description.trim().length < 5) {
+    errors.push("\u9879\u76EE\u63CF\u8FF0\u81F3\u5C11\u9700\u89815\u4E2A\u5B57\u7B26");
   }
   if (!data.founder || data.founder.trim().length < 2) {
     errors.push("\u521B\u59CB\u4EBA\u59D3\u540D\u81F3\u5C11\u9700\u89812\u4E2A\u5B57\u7B26");

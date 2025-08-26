@@ -9,7 +9,7 @@ var __export = (target, all) => {
     __defProp(target, name, { get: all[name], enumerable: true });
 };
 
-// ../.wrangler/tmp/bundle-AvOCCB/checked-fetch.js
+// ../.wrangler/tmp/bundle-I2OBIm/checked-fetch.js
 function checkURL(request, init) {
   const url = request instanceof URL ? request : new URL(
     (typeof request === "string" ? new Request(request, init) : request).url
@@ -27,7 +27,7 @@ function checkURL(request, init) {
 }
 var urls;
 var init_checked_fetch = __esm({
-  "../.wrangler/tmp/bundle-AvOCCB/checked-fetch.js"() {
+  "../.wrangler/tmp/bundle-I2OBIm/checked-fetch.js"() {
     "use strict";
     urls = /* @__PURE__ */ new Set();
     __name(checkURL, "checkURL");
@@ -3236,8 +3236,8 @@ function validateProjectData(data) {
   if (!data.name || data.name.trim().length < 2) {
     errors.push("\u9879\u76EE\u540D\u79F0\u81F3\u5C11\u9700\u89812\u4E2A\u5B57\u7B26");
   }
-  if (!data.description || data.description.trim().length < 10) {
-    errors.push("\u9879\u76EE\u63CF\u8FF0\u81F3\u5C11\u9700\u898110\u4E2A\u5B57\u7B26");
+  if (!data.description || data.description.trim().length < 5) {
+    errors.push("\u9879\u76EE\u63CF\u8FF0\u81F3\u5C11\u9700\u89815\u4E2A\u5B57\u7B26");
   }
   if (!data.founder || data.founder.trim().length < 2) {
     errors.push("\u521B\u59CB\u4EBA\u59D3\u540D\u81F3\u5C11\u9700\u89812\u4E2A\u5B57\u7B26");
@@ -5556,11 +5556,11 @@ var init_functionsRoutes_0_6198621217307858 = __esm({
   }
 });
 
-// ../.wrangler/tmp/bundle-AvOCCB/middleware-loader.entry.ts
+// ../.wrangler/tmp/bundle-I2OBIm/middleware-loader.entry.ts
 init_functionsRoutes_0_6198621217307858();
 init_checked_fetch();
 
-// ../.wrangler/tmp/bundle-AvOCCB/middleware-insertion-facade.js
+// ../.wrangler/tmp/bundle-I2OBIm/middleware-insertion-facade.js
 init_functionsRoutes_0_6198621217307858();
 init_checked_fetch();
 
@@ -6061,7 +6061,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// ../.wrangler/tmp/bundle-AvOCCB/middleware-insertion-facade.js
+// ../.wrangler/tmp/bundle-I2OBIm/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -6095,7 +6095,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// ../.wrangler/tmp/bundle-AvOCCB/middleware-loader.entry.ts
+// ../.wrangler/tmp/bundle-I2OBIm/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;

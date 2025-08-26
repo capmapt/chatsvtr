@@ -152,7 +152,7 @@
               </div>
               <div class="form-group">
                 <label for="projectDescription" data-i18n="project_description">项目描述</label>
-                <textarea id="projectDescription" rows="4" required placeholder="请简要描述您的项目"></textarea>
+                <textarea id="projectDescription" rows="4" required placeholder="请详细描述您的项目（至少5个字符）"></textarea>
               </div>
               <div class="form-group">
                 <label for="contactEmail" data-i18n="contact_email">联系邮箱</label>

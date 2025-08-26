@@ -43,8 +43,8 @@ function validateProjectData(data: any): { valid: boolean; errors: string[] } {
     errors.push('项目名称至少需要2个字符');
   }
   
-  if (!data.description || data.description.trim().length < 10) {
-    errors.push('项目描述至少需要10个字符');
+  if (!data.description || data.description.trim().length < 5) {
+    errors.push('项目描述至少需要5个字符');
   }
   
   if (!data.founder || data.founder.trim().length < 2) {
