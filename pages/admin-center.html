@@ -1573,10 +1573,11 @@
                             <th>项目名称</th>
                             <th>创始人</th>
                             <th>类别</th>
+                            <th>需求</th>
+                            <th>附件</th>
                             <th>阶段</th>
                             <th>状态</th>
                             <th>融资目标</th>
-                            <th>当前融资</th>
                             <th>创建时间</th>
                             <th>操作</th>
                         </tr>
@@ -1599,6 +1600,20 @@
                                         ${project.category}
                                     </span>
                                 </td>
+                                <td>
+                                    ${project.needs && project.needs.length > 0 ? 
+                                        project.needs.map(need => 
+                                            `<span style="background: #f3e5f5; color: #7b1fa2; padding: 2px 6px; border-radius: 10px; font-size: 0.75rem; margin: 1px; display: inline-block;">${need}</span>`
+                                        ).join('') : 
+                                        '<span style="color: #999; font-size: 0.8rem;">无</span>'
+                                    }
+                                </td>
+                                <td>
+                                    ${project.files && project.files.length > 0 ? 
+                                        `<span style="color: #4caf50; font-size: 0.8rem;">📎 ${project.files.length} 个文件</span>` : 
+                                        '<span style="color: #999; font-size: 0.8rem;">无附件</span>'
+                                    }
+                                </td>
                                 <td>${formatStage(project.stage)}</td>
                                 <td>
                                     <span class="status-badge ${getStatusClass(project.status)}">
@@ -1606,12 +1621,6 @@
                                     </span>
                                 </td>
                                 <td>${formatCurrency(project.fundingGoal)}</td>
-                                <td>
-                                    ${formatCurrency(project.currentFunding)}
-                                    <div style="font-size: 0.8rem; color: #666;">
-                                        ${project.investorCount} 投资人
-                                    </div>
-                                </td>
                                 <td>${formatDateTime(project.createdAt)}</td>
                                 <td>
                                     <button onclick="viewProjectDetails('${project.id}')" class="btn-secondary" style="padding: 4px 8px; font-size: 0.8rem; margin-right: 5px;">查看</button>

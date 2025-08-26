@@ -112,8 +112,30 @@
                 <input type="text" id="projectName" required placeholder="请输入项目名称">
               </div>
               <div class="form-group">
-                <label for="projectUrl" data-i18n="project_url">项目链接</label>
-                <input type="url" id="projectUrl" placeholder="https://example.com">
+                <label for="projectNeeds" data-i18n="project_needs">项目需求</label>
+                <div class="checkbox-group">
+                  <label class="checkbox-item">
+                    <input type="checkbox" name="projectNeeds" value="找人" id="needPeople">
+                    <span class="checkmark"></span>
+                    找人
+                  </label>
+                  <label class="checkbox-item">
+                    <input type="checkbox" name="projectNeeds" value="找钱" id="needMoney">
+                    <span class="checkmark"></span>
+                    找钱
+                  </label>
+                  <label class="checkbox-item">
+                    <input type="checkbox" name="projectNeeds" value="找方向" id="needDirection">
+                    <span class="checkmark"></span>
+                    找方向
+                  </label>
+                  <label class="checkbox-item">
+                    <input type="checkbox" name="projectNeeds" value="其他" id="needOther">
+                    <span class="checkmark"></span>
+                    其他
+                  </label>
+                </div>
+                <input type="text" id="otherNeed" placeholder="请描述其他需求..." style="display: none; margin-top: 8px;" class="form-input">
               </div>
               <div class="form-group">
                 <label for="projectCategory" data-i18n="project_category">项目类别</label>
@@ -135,6 +157,18 @@
               <div class="form-group">
                 <label for="contactEmail" data-i18n="contact_email">联系邮箱</label>
                 <input type="email" id="contactEmail" required placeholder="you@company.com">
+              </div>
+              <div class="form-group">
+                <label for="projectFiles" data-i18n="project_files">上传附件</label>
+                <div class="file-upload-area" id="fileUploadArea">
+                  <input type="file" id="projectFiles" multiple accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.jpg,.png" style="display: none;">
+                  <div class="upload-placeholder">
+                    <div class="upload-icon">📎</div>
+                    <div class="upload-text">点击或拖拽上传附件</div>
+                    <div class="upload-hint">支持 PDF, DOC, PPT, TXT, 图片等格式，最多5个文件</div>
+                  </div>
+                  <div class="uploaded-files" id="uploadedFiles"></div>
+                </div>
               </div>
               <div class="form-actions">
                 <button type="button" class="btn-cancel" data-i18n="cancel">取消</button>
@@ -310,6 +344,115 @@
           background: #e17a28;
         }
         
+        .checkbox-group {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          margin-top: 6px;
+        }
+        
+        .checkbox-item {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          font-size: 14px;
+          position: relative;
+          padding: 8px 12px;
+          border: 1px solid #ddd;
+          border-radius: 6px;
+          transition: all 0.2s ease;
+        }
+        
+        .checkbox-item:hover {
+          border-color: var(--primary-color);
+          background: rgba(250, 140, 50, 0.05);
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+          margin-right: 6px;
+          transform: scale(1.1);
+        }
+        
+        .checkbox-item input[type="checkbox"]:checked + .checkmark {
+          color: var(--primary-color);
+        }
+        
+        .file-upload-area {
+          border: 2px dashed #ddd;
+          border-radius: 8px;
+          padding: 20px;
+          text-align: center;
+          transition: all 0.3s ease;
+          cursor: pointer;
+        }
+        
+        .file-upload-area:hover,
+        .file-upload-area.dragover {
+          border-color: var(--primary-color);
+          background: rgba(250, 140, 50, 0.05);
+        }
+        
+        .upload-placeholder {
+          color: #666;
+        }
+        
+        .upload-icon {
+          font-size: 2rem;
+          margin-bottom: 8px;
+        }
+        
+        .upload-text {
+          font-size: 16px;
+          font-weight: 500;
+          margin-bottom: 4px;
+        }
+        
+        .upload-hint {
+          font-size: 12px;
+          color: #999;
+        }
+        
+        .uploaded-files {
+          margin-top: 12px;
+          text-align: left;
+        }
+        
+        .uploaded-file {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 8px 12px;
+          background: #f8f9fa;
+          border: 1px solid #e9ecef;
+          border-radius: 4px;
+          margin-bottom: 8px;
+          font-size: 14px;
+        }
+        
+        .file-info {
+          display: flex;
+          align-items: center;
+        }
+        
+        .file-icon {
+          margin-right: 8px;
+          font-size: 16px;
+        }
+        
+        .file-remove {
+          background: none;
+          border: none;
+          color: #dc3545;
+          cursor: pointer;
+          font-size: 18px;
+          padding: 2px 6px;
+          border-radius: 4px;
+        }
+        
+        .file-remove:hover {
+          background: rgba(220, 53, 69, 0.1);
+        }
+        
         @keyframes fadeIn {
           to { opacity: 1; }
         }
@@ -349,6 +492,162 @@
     const overlay = modal.querySelector('.modal-overlay');
     const form = document.getElementById('projectSubmitForm');
 
+    // 初始化文件上传和复选框功能
+    initializeFormControls();
+
+    // 初始化表单控件功能
+    function initializeFormControls() {
+      // "其他"选项的显示/隐藏逻辑
+      const otherCheckbox = document.getElementById('needOther');
+      const otherInput = document.getElementById('otherNeed');
+      
+      otherCheckbox.addEventListener('change', function() {
+        if (this.checked) {
+          otherInput.style.display = 'block';
+          otherInput.required = true;
+        } else {
+          otherInput.style.display = 'none';
+          otherInput.required = false;
+          otherInput.value = '';
+        }
+      });
+
+      // 文件上传功能
+      initializeFileUpload();
+    }
+
+    // 初始化文件上传功能
+    function initializeFileUpload() {
+      const fileInput = document.getElementById('projectFiles');
+      const uploadArea = document.getElementById('fileUploadArea');
+      const uploadedFilesContainer = document.getElementById('uploadedFiles');
+      const uploadPlaceholder = uploadArea.querySelector('.upload-placeholder');
+      
+      let selectedFiles = [];
+
+      // 点击上传区域触发文件选择
+      uploadArea.addEventListener('click', function(e) {
+        if (!e.target.classList.contains('file-remove')) {
+          fileInput.click();
+        }
+      });
+
+      // 文件选择处理
+      fileInput.addEventListener('change', function(e) {
+        handleFiles(e.target.files);
+      });
+
+      // 拖拽上传
+      uploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+      });
+
+      uploadArea.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+      });
+
+      uploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        handleFiles(e.dataTransfer.files);
+      });
+
+      // 处理文件选择
+      function handleFiles(files) {
+        const allowedTypes = ['.pdf', '.doc', '.docx', '.ppt', '.pptx', '.txt', '.jpg', '.jpeg', '.png'];
+        const maxFiles = 5;
+        
+        // 检查文件数量限制
+        if (selectedFiles.length + files.length > maxFiles) {
+          alert(`最多只能上传 ${maxFiles} 个文件`);
+          return;
+        }
+
+        for (let file of files) {
+          // 检查文件类型
+          const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+          if (!allowedTypes.includes(fileExtension)) {
+            alert(`不支持的文件类型: ${file.name}\n请上传以下格式的文件: ${allowedTypes.join(', ')}`);
+            continue;
+          }
+
+          // 检查文件大小 (10MB限制)
+          if (file.size > 10 * 1024 * 1024) {
+            alert(`文件 ${file.name} 过大，请选择小于10MB的文件`);
+            continue;
+          }
+
+          selectedFiles.push(file);
+        }
+
+        updateFileDisplay();
+      }
+
+      // 更新文件显示
+      function updateFileDisplay() {
+        uploadedFilesContainer.innerHTML = '';
+        
+        if (selectedFiles.length > 0) {
+          uploadPlaceholder.style.display = 'none';
+          
+          selectedFiles.forEach((file, index) => {
+            const fileDiv = document.createElement('div');
+            fileDiv.className = 'uploaded-file';
+            
+            const fileIcon = getFileIcon(file.name);
+            const fileSize = formatFileSize(file.size);
+            
+            fileDiv.innerHTML = `
+              <div class="file-info">
+                <span class="file-icon">${fileIcon}</span>
+                <span>${file.name} (${fileSize})</span>
+              </div>
+              <button type="button" class="file-remove" onclick="removeFile(${index})">×</button>
+            `;
+            
+            uploadedFilesContainer.appendChild(fileDiv);
+          });
+        } else {
+          uploadPlaceholder.style.display = 'block';
+        }
+      }
+
+      // 移除文件
+      window.removeFile = function(index) {
+        selectedFiles.splice(index, 1);
+        updateFileDisplay();
+      };
+
+      // 获取文件图标
+      function getFileIcon(fileName) {
+        const ext = fileName.split('.').pop().toLowerCase();
+        const iconMap = {
+          'pdf': '📄',
+          'doc': '📝', 'docx': '📝',
+          'ppt': '📊', 'pptx': '📊',
+          'txt': '📃',
+          'jpg': '🖼️', 'jpeg': '🖼️', 'png': '🖼️'
+        };
+        return iconMap[ext] || '📎';
+      }
+
+      // 格式化文件大小
+      function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+      }
+
+      // 获取选中的文件（供表单提交使用）
+      window.getSelectedFiles = function() {
+        return selectedFiles;
+      };
+    }
+
     // 关闭模态框的函数
     function closeModal() {
       modal.style.opacity = '0';
@@ -380,6 +679,20 @@
       submitBtn.textContent = '提交中...';
       submitBtn.disabled = true;
       
+      // 收集项目需求
+      const needs = [];
+      const needCheckboxes = document.querySelectorAll('input[name="projectNeeds"]:checked');
+      needCheckboxes.forEach(checkbox => {
+        if (checkbox.value === '其他') {
+          const otherNeed = document.getElementById('otherNeed').value.trim();
+          if (otherNeed) {
+            needs.push(`其他: ${otherNeed}`);
+          }
+        } else {
+          needs.push(checkbox.value);
+        }
+      });
+
       const formData = {
         name: document.getElementById('projectName').value.trim(),
         description: document.getElementById('projectDescription').value.trim(),
@@ -389,7 +702,12 @@
         fundingGoal: 1000000, // 默认融资目标1M
         stage: 'seed', // 默认种子轮
         tags: [document.getElementById('projectCategory').value],
-        website: document.getElementById('projectUrl').value.trim() || '',
+        needs: needs, // 项目需求数组
+        files: window.getSelectedFiles ? window.getSelectedFiles().map(file => ({
+          name: file.name,
+          size: file.size,
+          type: file.type
+        })) : [],
         submittedAt: new Date().toISOString()
       };
 

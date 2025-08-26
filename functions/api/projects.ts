@@ -19,6 +19,15 @@ interface Project {
   updatedAt: string;
   tags: string[];
   documents: string[];
+  needs: string[]; // 新增：项目需求数组
+  files: FileInfo[]; // 新增：文件信息数组
+}
+
+interface FileInfo {
+  name: string;
+  size: number;
+  type: string;
+  uploadedAt?: string;
 }
 
 // 生成项目ID
@@ -118,7 +127,14 @@ export async function onRequestPost(context: any): Promise<Response> {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       tags: projectData.tags || [],
-      documents: projectData.documents || []
+      documents: projectData.documents || [],
+      needs: projectData.needs || [], // 项目需求
+      files: (projectData.files || []).map((file: any) => ({
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        uploadedAt: new Date().toISOString()
+      }))
     };
     
     // 保存项目到KV存储
@@ -231,7 +247,11 @@ export async function onRequestGet(context: any): Promise<Response> {
             createdAt: '2024-01-15T10:00:00Z',
             updatedAt: '2024-08-15T14:30:00Z',
             tags: ['AI', '医疗', '诊断'],
-            documents: []
+            documents: [],
+            needs: ['找钱', '找人'],
+            files: [
+              { name: '商业计划书.pdf', size: 2048576, type: 'application/pdf', uploadedAt: '2024-01-15T10:00:00Z' }
+            ]
           },
           {
             id: 'proj_2',
@@ -248,7 +268,9 @@ export async function onRequestGet(context: any): Promise<Response> {
             createdAt: '2024-08-10T09:15:00Z',
             updatedAt: '2024-08-10T09:15:00Z',
             tags: ['物流', 'AI', '优化'],
-            documents: []
+            documents: [],
+            needs: ['找钱', '找方向'],
+            files: []
           }
         ];
         

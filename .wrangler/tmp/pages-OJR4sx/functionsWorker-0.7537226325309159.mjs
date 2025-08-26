@@ -9,7 +9,7 @@ var __export = (target, all) => {
     __defProp(target, name, { get: all[name], enumerable: true });
 };
 
-// ../.wrangler/tmp/bundle-rceBHe/checked-fetch.js
+// ../.wrangler/tmp/bundle-AnLtC6/checked-fetch.js
 function checkURL(request, init) {
   const url = request instanceof URL ? request : new URL(
     (typeof request === "string" ? new Request(request, init) : request).url
@@ -27,7 +27,7 @@ function checkURL(request, init) {
 }
 var urls;
 var init_checked_fetch = __esm({
-  "../.wrangler/tmp/bundle-rceBHe/checked-fetch.js"() {
+  "../.wrangler/tmp/bundle-AnLtC6/checked-fetch.js"() {
     "use strict";
     urls = /* @__PURE__ */ new Set();
     __name(checkURL, "checkURL");
@@ -3306,7 +3306,15 @@ async function onRequestPost5(context) {
       createdAt: (/* @__PURE__ */ new Date()).toISOString(),
       updatedAt: (/* @__PURE__ */ new Date()).toISOString(),
       tags: projectData.tags || [],
-      documents: projectData.documents || []
+      documents: projectData.documents || [],
+      needs: projectData.needs || [],
+      // 项目需求
+      files: (projectData.files || []).map((file) => ({
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        uploadedAt: (/* @__PURE__ */ new Date()).toISOString()
+      }))
     };
     await env.SVTR_CACHE.put(`project_${projectId}`, JSON.stringify(project));
     const projectsList = await env.SVTR_CACHE.get("projects_list");
@@ -3400,7 +3408,11 @@ async function onRequestGet6(context) {
             createdAt: "2024-01-15T10:00:00Z",
             updatedAt: "2024-08-15T14:30:00Z",
             tags: ["AI", "\u533B\u7597", "\u8BCA\u65AD"],
-            documents: []
+            documents: [],
+            needs: ["\u627E\u94B1", "\u627E\u4EBA"],
+            files: [
+              { name: "\u5546\u4E1A\u8BA1\u5212\u4E66.pdf", size: 2048576, type: "application/pdf", uploadedAt: "2024-01-15T10:00:00Z" }
+            ]
           },
           {
             id: "proj_2",
@@ -3417,7 +3429,9 @@ async function onRequestGet6(context) {
             createdAt: "2024-08-10T09:15:00Z",
             updatedAt: "2024-08-10T09:15:00Z",
             tags: ["\u7269\u6D41", "AI", "\u4F18\u5316"],
-            documents: []
+            documents: [],
+            needs: ["\u627E\u94B1", "\u627E\u65B9\u5411"],
+            files: []
           }
         ];
         return new Response(JSON.stringify(mockProjects), {
@@ -5533,11 +5547,11 @@ var init_functionsRoutes_0_8041946199199985 = __esm({
   }
 });
 
-// ../.wrangler/tmp/bundle-rceBHe/middleware-loader.entry.ts
+// ../.wrangler/tmp/bundle-AnLtC6/middleware-loader.entry.ts
 init_functionsRoutes_0_8041946199199985();
 init_checked_fetch();
 
-// ../.wrangler/tmp/bundle-rceBHe/middleware-insertion-facade.js
+// ../.wrangler/tmp/bundle-AnLtC6/middleware-insertion-facade.js
 init_functionsRoutes_0_8041946199199985();
 init_checked_fetch();
 
@@ -6038,7 +6052,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// ../.wrangler/tmp/bundle-rceBHe/middleware-insertion-facade.js
+// ../.wrangler/tmp/bundle-AnLtC6/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -6072,7 +6086,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// ../.wrangler/tmp/bundle-rceBHe/middleware-loader.entry.ts
+// ../.wrangler/tmp/bundle-AnLtC6/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;

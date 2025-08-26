@@ -56,7 +56,7 @@ function checkURL2(request, init) {
 __name(checkURL2, "checkURL");
 var urls2;
 var init_checked_fetch = __esm({
-  "../.wrangler/tmp/bundle-rceBHe/checked-fetch.js"() {
+  "../.wrangler/tmp/bundle-AnLtC6/checked-fetch.js"() {
     "use strict";
     urls2 = /* @__PURE__ */ new Set();
     __name2(checkURL2, "checkURL");
@@ -3371,7 +3371,15 @@ async function onRequestPost5(context) {
       createdAt: (/* @__PURE__ */ new Date()).toISOString(),
       updatedAt: (/* @__PURE__ */ new Date()).toISOString(),
       tags: projectData.tags || [],
-      documents: projectData.documents || []
+      documents: projectData.documents || [],
+      needs: projectData.needs || [],
+      // 项目需求
+      files: (projectData.files || []).map((file) => ({
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        uploadedAt: (/* @__PURE__ */ new Date()).toISOString()
+      }))
     };
     await env.SVTR_CACHE.put(`project_${projectId}`, JSON.stringify(project));
     const projectsList = await env.SVTR_CACHE.get("projects_list");
@@ -3466,7 +3474,11 @@ async function onRequestGet6(context) {
             createdAt: "2024-01-15T10:00:00Z",
             updatedAt: "2024-08-15T14:30:00Z",
             tags: ["AI", "\u533B\u7597", "\u8BCA\u65AD"],
-            documents: []
+            documents: [],
+            needs: ["\u627E\u94B1", "\u627E\u4EBA"],
+            files: [
+              { name: "\u5546\u4E1A\u8BA1\u5212\u4E66.pdf", size: 2048576, type: "application/pdf", uploadedAt: "2024-01-15T10:00:00Z" }
+            ]
           },
           {
             id: "proj_2",
@@ -3483,7 +3495,9 @@ async function onRequestGet6(context) {
             createdAt: "2024-08-10T09:15:00Z",
             updatedAt: "2024-08-10T09:15:00Z",
             tags: ["\u7269\u6D41", "AI", "\u4F18\u5316"],
-            documents: []
+            documents: [],
+            needs: ["\u627E\u94B1", "\u627E\u65B9\u5411"],
+            files: []
           }
         ];
         return new Response(JSON.stringify(mockProjects), {
