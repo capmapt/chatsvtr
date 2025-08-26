@@ -26,80 +26,31 @@ export async function onRequestGet(context: any): Promise<Response> {
     if (!env.SVTR_CACHE) {
       console.warn('KV存储未配置，返回模拟文件');
       
-      // 返回一个模拟的PDF文件
-      const mockPdfContent = `%PDF-1.4
-1 0 obj
-<<
-/Type /Catalog
-/Pages 2 0 R
->>
-endobj
+      // 返回一个简单的文本文件
+      const mockContent = `SVTR 项目管理系统 - 示例文档
 
-2 0 obj
-<<
-/Type /Pages
-/Kids [3 0 R]
-/Count 1
->>
-endobj
+这是一个示例文档文件。
 
-3 0 obj
-<<
-/Type /Page
-/Parent 2 0 R
-/MediaBox [0 0 612 792]
-/Contents 4 0 R
-/Resources <<
-/Font <<
-/F1 5 0 R
->>
->>
->>
-endobj
+文档编号: ${fileIndex}
+生成时间: ${new Date().toLocaleString('zh-CN')}
 
-4 0 obj
-<<
-/Length 44
->>
-stream
-BT
-/F1 12 Tf
-100 700 Td
-(这是一个示例文档) Tj
-ET
-endstream
-endobj
+注意：实际的项目文档需要通过项目申请表单上传。
+此文件仅为演示目的。
 
-5 0 obj
-<<
-/Type /Font
-/Subtype /Type1
-/BaseFont /Helvetica
->>
-endobj
-
-xref
-0 6
-0000000000 65535 f 
-0000000009 00000 n 
-0000000058 00000 n 
-0000000115 00000 n 
-0000000274 00000 n 
-0000000369 00000 n 
-trailer
-<<
-/Size 6
-/Root 1 0 R
->>
-startxref
-449
-%%EOF`;
+---
+SVTR 硅谷科技评论
+AI创投生态系统
+`;
       
-      return new Response(mockPdfContent, {
+      const encoder = new TextEncoder();
+      const contentBytes = encoder.encode(mockContent);
+      
+      return new Response(contentBytes, {
         status: 200,
         headers: {
-          'Content-Type': 'application/pdf',
-          'Content-Disposition': `attachment; filename="示例文档_${fileIndex}.pdf"`,
+          'Content-Type': 'text/plain; charset=utf-8',
+          'Content-Disposition': `attachment; filename="${encodeURIComponent(`示例文档_${fileIndex}.txt`)}"`,
+          'Content-Length': contentBytes.length.toString(),
           'Access-Control-Allow-Origin': '*',
           'Cache-Control': 'public, max-age=3600'
         }
@@ -140,25 +91,34 @@ startxref
         const storedFile = JSON.parse(fileData);
         
         // 将Base64数据转换为二进制
-        const binaryData = atob(storedFile.data);
-        const arrayBuffer = new ArrayBuffer(binaryData.length);
-        const uint8Array = new Uint8Array(arrayBuffer);
-        
-        for (let i = 0; i < binaryData.length; i++) {
-          uint8Array[i] = binaryData.charCodeAt(i);
-        }
-
-        return new Response(arrayBuffer, {
-          status: 200,
-          headers: {
-            'Content-Type': storedFile.type || 'application/octet-stream',
-            'Content-Disposition': `attachment; filename="${storedFile.originalName || storedFile.name}"`,
-            'Content-Length': storedFile.size.toString(),
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Headers': 'Content-Type',
-            'Cache-Control': 'public, max-age=3600'
+        try {
+          const binaryString = atob(storedFile.data);
+          const bytes = new Uint8Array(binaryString.length);
+          for (let i = 0; i < binaryString.length; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
           }
-        });
+
+          return new Response(bytes.buffer, {
+            status: 200,
+            headers: {
+              'Content-Type': storedFile.type || 'application/octet-stream',
+              'Content-Disposition': `attachment; filename="${encodeURIComponent(storedFile.originalName || storedFile.name)}"`,
+              'Content-Length': storedFile.size.toString(),
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Headers': 'Content-Type',
+              'Cache-Control': 'public, max-age=3600'
+            }
+          });
+        } catch (error) {
+          console.error('Base64解码失败:', error);
+          return new Response(JSON.stringify({
+            success: false,
+            message: '文件数据损坏，无法解码'
+          }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+          });
+        }
       }
     }
 
@@ -172,82 +132,50 @@ startxref
 
     switch (fileExtension) {
       case 'pdf':
-        // 生成示例PDF
-        content = `%PDF-1.4
-1 0 obj
-<<
-/Type /Catalog
-/Pages 2 0 R
->>
-endobj
-
-2 0 obj
-<<
-/Type /Pages
-/Kids [3 0 R]
-/Count 1
->>
-endobj
-
-3 0 obj
-<<
-/Type /Page
-/Parent 2 0 R
-/MediaBox [0 0 612 792]
-/Contents 4 0 R
-/Resources <<
-/Font <<
-/F1 5 0 R
->>
->>
->>
-endobj
-
-4 0 obj
-<<
-/Length 120
->>
-stream
-BT
-/F1 16 Tf
-50 750 Td
-(项目: ${project.name || '示例项目'}) Tj
-0 -30 Td
-(创始人: ${project.founder || '创始人'}) Tj
-0 -30 Td
-(文件: ${fileName}) Tj
-0 -30 Td
-(生成时间: ${new Date().toLocaleString('zh-CN')}) Tj
-ET
-endstream
-endobj
-
-5 0 obj
-<<
-/Type /Font
-/Subtype /Type1
-/BaseFont /Helvetica
->>
-endobj
-
-xref
-0 6
-0000000000 65535 f 
-0000000009 00000 n 
-0000000058 00000 n 
-0000000115 00000 n 
-0000000274 00000 n 
-0000000445 00000 n 
-trailer
-<<
-/Size 6
-/Root 1 0 R
->>
-startxref
-525
-%%EOF`;
-        contentType = 'application/pdf';
-        finalFileName = fileName.endsWith('.pdf') ? fileName : `${fileName}.pdf`;
+        // 由于PDF格式复杂且容易出现编码问题，改为生成HTML格式但保持.pdf扩展名
+        content = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>SVTR 项目文档 - ${project.name || '示例项目'}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        h1 { color: #667eea; border-bottom: 2px solid #667eea; padding-bottom: 10px; }
+        h2 { color: #4a5568; margin-top: 30px; }
+        .info-table { background: #f7fafc; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .info-row { margin: 10px 0; }
+        .label { font-weight: bold; color: #2d3748; }
+        .footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid #e2e8f0; color: #718096; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <h1>SVTR 项目文档</h1>
+    
+    <div class="info-table">
+        <div class="info-row"><span class="label">项目名称:</span> ${project.name || '示例项目'}</div>
+        <div class="info-row"><span class="label">创始人:</span> ${project.founder || '创始人'}</div>
+        <div class="info-row"><span class="label">项目类别:</span> ${project.category || '未分类'}</div>
+        <div class="info-row"><span class="label">项目状态:</span> ${project.status || '未知'}</div>
+        <div class="info-row"><span class="label">创建时间:</span> ${project.createdAt || new Date().toISOString()}</div>
+    </div>
+    
+    <h2>项目描述</h2>
+    <p>${project.description || '这是一个示例项目文档。实际的项目文档内容需要通过项目申请表单上传。'}</p>
+    
+    <h2>需求清单</h2>
+    ${project.needs && project.needs.length > 0 ? 
+      `<ul>${project.needs.map((need: string) => `<li>${need}</li>`).join('')}</ul>` : 
+      '<p>暂无需求信息</p>'
+    }
+    
+    <div class="footer">
+        <p>此文档生成于: ${new Date().toLocaleString('zh-CN')}</p>
+        <p>SVTR 硅谷科技评论 - AI创投生态系统</p>
+    </div>
+</body>
+</html>`;
+        contentType = 'text/html; charset=utf-8';
+        finalFileName = fileName.endsWith('.pdf') ? fileName.replace('.pdf', '.html') : `${fileName}.html`;
         break;
 
       case 'txt':
@@ -287,11 +215,16 @@ SVTR 硅谷科技评论 - AI创投生态系统
         break;
     }
 
-    return new Response(content, {
+    // 将内容转换为UTF-8字节数组
+    const encoder = new TextEncoder();
+    const contentBytes = encoder.encode(content);
+    
+    return new Response(contentBytes, {
       status: 200,
       headers: {
         'Content-Type': contentType,
-        'Content-Disposition': `attachment; filename="${finalFileName}"`,
+        'Content-Disposition': `attachment; filename="${encodeURIComponent(finalFileName)}"`,
+        'Content-Length': contentBytes.length.toString(),
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Content-Type',
         'Cache-Control': 'public, max-age=3600'
