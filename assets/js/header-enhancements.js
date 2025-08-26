@@ -711,6 +711,9 @@
         submittedAt: new Date().toISOString()
       };
 
+      // 调试信息
+      console.log('准备提交项目数据:', formData);
+
       // 提交到项目API
       submitProject(formData)
         .then(response => {
@@ -724,7 +727,15 @@
         })
         .catch(error => {
           console.error('项目提交失败:', error);
-          alert('提交失败: ' + error.message + '\n请检查网络连接或稍后重试。');
+          
+          let errorMessage = '提交失败: ' + error.message;
+          
+          // 如果有详细错误信息，显示出来
+          if (error.response && error.response.debug) {
+            errorMessage += '\n\n调试信息:\n' + JSON.stringify(error.response.debug, null, 2);
+          }
+          
+          alert(errorMessage + '\n请检查网络连接或稍后重试。');
         })
         .finally(() => {
           // 恢复按钮状态
@@ -767,7 +778,9 @@
         const result = await response.json();
         
         if (!response.ok) {
-          throw new Error(result.message || `HTTP ${response.status}`);
+          const error = new Error(result.message || `HTTP ${response.status}`);
+          error.response = result; // 保存完整响应用于调试
+          throw error;
         }
 
         return result;

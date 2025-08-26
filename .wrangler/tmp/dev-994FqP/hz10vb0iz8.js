@@ -56,7 +56,7 @@ function checkURL2(request, init) {
 __name(checkURL2, "checkURL");
 var urls2;
 var init_checked_fetch = __esm({
-  "../.wrangler/tmp/bundle-AnLtC6/checked-fetch.js"() {
+  "../.wrangler/tmp/bundle-DQi6U8/checked-fetch.js"() {
     "use strict";
     urls2 = /* @__PURE__ */ new Set();
     __name2(checkURL2, "checkURL");
@@ -3329,11 +3329,20 @@ async function onRequestPost5(context) {
     const projectData = await request.json();
     console.log("\u6536\u5230\u9879\u76EE\u521B\u5EFA\u8BF7\u6C42:", projectData);
     const validation = validateProjectData(projectData);
+    console.log("\u6570\u636E\u9A8C\u8BC1\u7ED3\u679C:", validation);
     if (!validation.valid) {
+      console.error("\u9A8C\u8BC1\u5931\u8D25\u8BE6\u60C5:", {
+        projectData,
+        errors: validation.errors
+      });
       return new Response(JSON.stringify({
         success: false,
         message: "\u9879\u76EE\u6570\u636E\u9A8C\u8BC1\u5931\u8D25",
-        errors: validation.errors
+        errors: validation.errors,
+        debug: {
+          receivedData: projectData,
+          validationDetails: validation
+        }
       }), {
         status: 400,
         headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" }

@@ -82,11 +82,20 @@ export async function onRequestPost(context: any): Promise<Response> {
     
     // 验证项目数据
     const validation = validateProjectData(projectData);
+    console.log('数据验证结果:', validation);
     if (!validation.valid) {
+      console.error('验证失败详情:', {
+        projectData,
+        errors: validation.errors
+      });
       return new Response(JSON.stringify({
         success: false,
         message: '项目数据验证失败',
-        errors: validation.errors
+        errors: validation.errors,
+        debug: {
+          receivedData: projectData,
+          validationDetails: validation
+        }
       }), {
         status: 400,
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
