@@ -1610,7 +1610,15 @@
                                 </td>
                                 <td>
                                     ${project.files && project.files.length > 0 ? 
-                                        `<span style="color: #4caf50; font-size: 0.8rem;">📎 ${project.files.length} 个文件</span>` : 
+                                        `<div>
+                                            <span style="color: #4caf50; font-size: 0.8rem; cursor: pointer;" onclick="showProjectFiles('${project.id}')">📎 ${project.files.length} 个文件</span>
+                                            <div style="font-size: 0.7rem; color: #666; margin-top: 2px;">
+                                                ${project.files.slice(0, 2).map(file => 
+                                                    `<div>${file.name.length > 20 ? file.name.substring(0, 20) + '...' : file.name}</div>`
+                                                ).join('')}
+                                                ${project.files.length > 2 ? `<div>+${project.files.length - 2} 个更多...</div>` : ''}
+                                            </div>
+                                         </div>` : 
                                         '<span style="color: #999; font-size: 0.8rem;">无附件</span>'
                                     }
                                 </td>
@@ -1661,39 +1669,66 @@
             const modalContent = document.createElement('div');
             modalContent.style.cssText = `
                 background: white; padding: 30px; border-radius: 15px; 
-                max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto;
+                max-width: 700px; width: 90%; max-height: 90vh; overflow-y: auto;
                 box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             `;
             
             modalContent.innerHTML = `
-                <h3 style="margin-bottom: 20px; color: #333;">📝 创建新项目</h3>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                    <h3 style="margin: 0; color: #333;">📝 创建新项目</h3>
+                    <button onclick="this.closest('[data-modal]').remove()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #999;">&times;</button>
+                </div>
                 <form id="createProjectForm" onsubmit="return false;">
                     <div class="form-group">
                         <label class="form-label">项目名称 *</label>
-                        <input type="text" name="name" class="form-input" required>
+                        <input type="text" id="projectName" name="name" class="form-input" required placeholder="请输入项目名称（至少2个字符）">
+                        <small class="form-help" style="display: none; color: #666;">项目名称至少需要2个字符</small>
+                        <small class="form-error" style="display: none; color: #e74c3c;"></small>
                     </div>
+                    
                     <div class="form-group">
-                        <label class="form-label">项目描述 *</label>
-                        <textarea name="description" class="form-input form-textarea" required></textarea>
+                        <label class="form-label">项目需求 *</label>
+                        <div class="checkbox-group" style="display: flex; gap: 15px; margin-top: 8px;">
+                            <label class="checkbox-item" style="display: flex; align-items: center; cursor: pointer;">
+                                <input type="checkbox" name="projectNeeds" value="找人" style="margin-right: 8px;">
+                                <span>找人</span>
+                            </label>
+                            <label class="checkbox-item" style="display: flex; align-items: center; cursor: pointer;">
+                                <input type="checkbox" name="projectNeeds" value="找钱" style="margin-right: 8px;">
+                                <span>找钱</span>
+                            </label>
+                            <label class="checkbox-item" style="display: flex; align-items: center; cursor: pointer;">
+                                <input type="checkbox" name="projectNeeds" value="找方向" style="margin-right: 8px;">
+                                <span>找方向</span>
+                            </label>
+                            <label class="checkbox-item" style="display: flex; align-items: center; cursor: pointer;">
+                                <input type="checkbox" name="projectNeeds" value="其他" id="needOther" style="margin-right: 8px;">
+                                <span>其他</span>
+                            </label>
+                        </div>
+                        <input type="text" id="otherNeed" placeholder="请描述其他需求..." style="display: none; margin-top: 8px; width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                        <small class="form-error" style="display: none; color: #e74c3c;">至少选择一个项目需求</small>
                     </div>
+                    
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                         <div class="form-group">
                             <label class="form-label">项目类别 *</label>
-                            <select name="category" class="form-input" required>
-                                <option value="">请选择</option>
-                                <option value="AI">AI</option>
-                                <option value="Fintech">金融科技</option>
-                                <option value="Healthcare">医疗健康</option>
-                                <option value="E-commerce">电子商务</option>
-                                <option value="Enterprise">企业服务</option>
-                                <option value="Consumer">消费者</option>
-                                <option value="Other">其他</option>
+                            <select id="projectCategory" name="category" class="form-input" required>
+                                <option value="">请选择类别</option>
+                                <option value="ai">人工智能 (AI)</option>
+                                <option value="fintech">金融科技 (Fintech)</option>
+                                <option value="healthcare">医疗健康 (Healthcare)</option>
+                                <option value="ecommerce">电子商务 (E-commerce)</option>
+                                <option value="enterprise">企业服务 (Enterprise)</option>
+                                <option value="consumer">消费科技 (Consumer)</option>
+                                <option value="other">其他 (Other)</option>
                             </select>
+                            <small class="form-error" style="display: none; color: #e74c3c;">请选择有效的项目类别</small>
                         </div>
                         <div class="form-group">
                             <label class="form-label">融资阶段 *</label>
-                            <select name="stage" class="form-input" required>
-                                <option value="">请选择</option>
+                            <select id="projectStage" name="stage" class="form-input" required>
+                                <option value="">请选择阶段</option>
                                 <option value="idea">创意阶段</option>
                                 <option value="seed">种子轮</option>
                                 <option value="series-a">A轮</option>
@@ -1701,25 +1736,53 @@
                                 <option value="series-c">C轮</option>
                                 <option value="ipo">IPO</option>
                             </select>
+                            <small class="form-error" style="display: none; color: #e74c3c;">请选择有效的融资阶段</small>
                         </div>
                     </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">项目描述 *</label>
+                        <textarea id="projectDescription" name="description" class="form-input form-textarea" required placeholder="请详细描述您的项目（至少5个字符）" rows="4"></textarea>
+                        <small class="form-help" style="display: none; color: #666;">项目描述至少需要5个字符</small>
+                        <small class="form-error" style="display: none; color: #e74c3c;"></small>
+                    </div>
+                    
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
                         <div class="form-group">
                             <label class="form-label">创始人姓名 *</label>
-                            <input type="text" name="founder" class="form-input" required>
+                            <input type="text" id="founderName" name="founder" class="form-input" required placeholder="请输入创始人姓名（至少2个字符）">
+                            <small class="form-error" style="display: none; color: #e74c3c;">创始人姓名至少需要2个字符</small>
                         </div>
                         <div class="form-group">
                             <label class="form-label">创始人邮箱 *</label>
-                            <input type="email" name="founderEmail" class="form-input" required>
+                            <input type="email" id="founderEmail" name="founderEmail" class="form-input" required placeholder="you@company.com">
+                            <small class="form-error" style="display: none; color: #e74c3c;">请提供有效的邮箱地址</small>
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         <label class="form-label">融资目标 (USD) *</label>
-                        <input type="number" name="fundingGoal" class="form-input" min="1" required>
+                        <input type="number" id="fundingGoal" name="fundingGoal" class="form-input" min="1" required placeholder="例如：1000000">
+                        <small class="form-help" style="color: #666;">请输入融资目标金额（美元）</small>
+                        <small class="form-error" style="display: none; color: #e74c3c;">融资目标必须大于0</small>
                     </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">上传附件</label>
+                        <div class="file-upload-area" id="fileUploadArea" style="border: 2px dashed #ddd; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s ease;">
+                            <input type="file" id="projectFiles" multiple accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.jpg,.png" style="display: none;">
+                            <div class="upload-placeholder">
+                                <div class="upload-icon" style="font-size: 2rem; margin-bottom: 10px;">📎</div>
+                                <div class="upload-text" style="font-weight: 500; margin-bottom: 5px;">点击或拖拽上传附件</div>
+                                <div class="upload-hint" style="font-size: 0.9rem; color: #666;">支持 PDF, DOC, PPT, TXT, 图片等格式，最多5个文件</div>
+                            </div>
+                            <div class="uploaded-files" id="uploadedFiles"></div>
+                        </div>
+                    </div>
+                    
                     <div style="text-align: center; margin-top: 25px;">
                         <button type="button" onclick="this.closest('[data-modal]').remove()" class="btn-secondary" style="margin-right: 10px;">取消</button>
-                        <button type="button" onclick="createProject()" class="btn-primary">创建项目</button>
+                        <button type="button" onclick="createProject()" class="btn-primary" id="createProjectBtn">创建项目</button>
                     </div>
                 </form>
             `;
@@ -1732,17 +1795,294 @@
             });
             
             document.body.appendChild(modal);
+            
+            // 初始化表单验证和文件上传功能
+            initializeAdminFormValidation();
+        }
+
+        // 表单验证和文件上传功能初始化
+        function initializeAdminFormValidation() {
+            // "其他"选项的显示/隐藏逻辑
+            const otherCheckbox = document.getElementById('needOther');
+            const otherInput = document.getElementById('otherNeed');
+            
+            if (otherCheckbox && otherInput) {
+                otherCheckbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        otherInput.style.display = 'block';
+                        otherInput.focus();
+                    } else {
+                        otherInput.style.display = 'none';
+                        otherInput.value = '';
+                    }
+                });
+            }
+            
+            // 文件上传功能
+            const fileUploadArea = document.getElementById('fileUploadArea');
+            const fileInput = document.getElementById('projectFiles');
+            const uploadedFiles = document.getElementById('uploadedFiles');
+            
+            let selectedFiles = [];
+            
+            if (fileUploadArea && fileInput) {
+                // 点击上传区域触发文件选择
+                fileUploadArea.addEventListener('click', () => fileInput.click());
+                
+                // 拖拽上传
+                fileUploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    fileUploadArea.style.borderColor = '#FA8C32';
+                    fileUploadArea.style.backgroundColor = '#fef9f5';
+                });
+                
+                fileUploadArea.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    fileUploadArea.style.borderColor = '#ddd';
+                    fileUploadArea.style.backgroundColor = 'transparent';
+                });
+                
+                fileUploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    fileUploadArea.style.borderColor = '#ddd';
+                    fileUploadArea.style.backgroundColor = 'transparent';
+                    
+                    const files = Array.from(e.dataTransfer.files);
+                    handleFileSelection(files);
+                });
+                
+                // 文件选择
+                fileInput.addEventListener('change', (e) => {
+                    const files = Array.from(e.target.files);
+                    handleFileSelection(files);
+                });
+                
+                function handleFileSelection(files) {
+                    const allowedTypes = ['.pdf', '.doc', '.docx', '.ppt', '.pptx', '.txt', '.jpg', '.jpeg', '.png'];
+                    const maxFiles = 5;
+                    const maxFileSize = 10 * 1024 * 1024; // 10MB
+                    
+                    files.forEach(file => {
+                        if (selectedFiles.length >= maxFiles) {
+                            alert(`最多只能上传${maxFiles}个文件`);
+                            return;
+                        }
+                        
+                        if (file.size > maxFileSize) {
+                            alert(`文件 "${file.name}" 超过10MB大小限制`);
+                            return;
+                        }
+                        
+                        const fileExt = '.' + file.name.split('.').pop().toLowerCase();
+                        if (!allowedTypes.includes(fileExt)) {
+                            alert(`文件 "${file.name}" 格式不支持。支持的格式：${allowedTypes.join(', ')}`);
+                            return;
+                        }
+                        
+                        selectedFiles.push(file);
+                    });
+                    
+                    updateFilesList();
+                }
+                
+                function updateFilesList() {
+                    if (selectedFiles.length === 0) {
+                        uploadedFiles.innerHTML = '';
+                        return;
+                    }
+                    
+                    const filesHTML = selectedFiles.map((file, index) => `
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #f8f9fa; border-radius: 4px; margin-top: 8px;">
+                            <div>
+                                <strong>${file.name}</strong>
+                                <span style="color: #666; margin-left: 10px;">(${formatFileSize(file.size)})</span>
+                            </div>
+                            <button type="button" onclick="removeFile(${index})" style="background: #e74c3c; color: white; border: none; border-radius: 4px; padding: 4px 8px; cursor: pointer; font-size: 12px;">
+                                删除
+                            </button>
+                        </div>
+                    `).join('');
+                    
+                    uploadedFiles.innerHTML = filesHTML;
+                }
+                
+                window.removeFile = function(index) {
+                    selectedFiles.splice(index, 1);
+                    updateFileSelection();
+                    updateFilesList();
+                }
+                
+                function updateFileSelection() {
+                    const dt = new DataTransfer();
+                    selectedFiles.forEach(file => dt.items.add(file));
+                    fileInput.files = dt.files;
+                }
+                
+                window.getAdminSelectedFiles = function() {
+                    return selectedFiles;
+                }
+            }
+            
+            // 实时验证
+            setupFieldValidation('projectName', validateName);
+            setupFieldValidation('projectDescription', validateDescription);
+            setupFieldValidation('founderName', validateFounder);
+            setupFieldValidation('founderEmail', validateEmail);
+            setupFieldValidation('fundingGoal', validateFundingGoal);
+            
+            function setupFieldValidation(fieldId, validator) {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    field.addEventListener('input', () => {
+                        const result = validator(field.value.trim());
+                        showFieldValidation(field, result);
+                    });
+                    
+                    field.addEventListener('blur', () => {
+                        const result = validator(field.value.trim());
+                        showFieldValidation(field, result);
+                    });
+                }
+            }
+            
+            function showFieldValidation(field, result) {
+                const formGroup = field.closest('.form-group');
+                const helpText = formGroup.querySelector('.form-help');
+                const errorText = formGroup.querySelector('.form-error');
+                
+                field.style.borderColor = result.valid ? '#28a745' : '#e74c3c';
+                
+                if (helpText) {
+                    helpText.style.display = result.valid && result.showHelp ? 'block' : 'none';
+                }
+                
+                if (errorText) {
+                    if (result.valid) {
+                        errorText.style.display = 'none';
+                    } else {
+                        errorText.style.display = 'block';
+                        errorText.textContent = result.message;
+                    }
+                }
+            }
+        }
+        
+        // 验证函数
+        function validateName(value) {
+            if (!value || value.length < 2) {
+                return { valid: false, message: '项目名称至少需要2个字符' };
+            }
+            return { valid: true, showHelp: true };
+        }
+        
+        function validateDescription(value) {
+            if (!value || value.length < 5) {
+                return { valid: false, message: '项目描述至少需要5个字符' };
+            }
+            return { valid: true, showHelp: true };
+        }
+        
+        function validateFounder(value) {
+            if (!value || value.length < 2) {
+                return { valid: false, message: '创始人姓名至少需要2个字符' };
+            }
+            return { valid: true };
+        }
+        
+        function validateEmail(value) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!value || !emailRegex.test(value)) {
+                return { valid: false, message: '请提供有效的邮箱地址' };
+            }
+            return { valid: true };
+        }
+        
+        function validateFundingGoal(value) {
+            const num = Number(value);
+            if (!value || isNaN(num) || num <= 0) {
+                return { valid: false, message: '融资目标必须大于0' };
+            }
+            return { valid: true };
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        function mapCategoryToAPI(category) {
+            const categoryMap = {
+                'ai': 'AI',
+                'fintech': 'Fintech',
+                'healthcare': 'Healthcare',
+                'ecommerce': 'E-commerce',
+                'enterprise': 'Enterprise',
+                'consumer': 'Consumer',
+                'other': 'Other'
+            };
+            return categoryMap[category] || 'Other';
+        }
+        
+        function extractNameFromEmail(email) {
+            const username = email.split('@')[0];
+            return username.replace(/[._]/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
         }
 
         async function createProject() {
-            const form = document.getElementById('createProjectForm');
-            const formData = new FormData(form);
-            const projectData = Object.fromEntries(formData.entries());
+            const submitBtn = document.getElementById('createProjectBtn');
+            const originalText = submitBtn.textContent;
             
-            // 转换数字字段
-            projectData.fundingGoal = Number(projectData.fundingGoal);
+            // 显示提交中状态
+            submitBtn.textContent = '创建中...';
+            submitBtn.disabled = true;
             
             try {
+                // 收集项目需求
+                const needs = [];
+                const needCheckboxes = document.querySelectorAll('input[name="projectNeeds"]:checked');
+                needCheckboxes.forEach(checkbox => {
+                    if (checkbox.value === '其他') {
+                        const otherNeed = document.getElementById('otherNeed').value.trim();
+                        if (otherNeed) {
+                            needs.push(`其他: ${otherNeed}`);
+                        }
+                    } else {
+                        needs.push(checkbox.value);
+                    }
+                });
+                
+                // 检查项目需求
+                if (needs.length === 0) {
+                    alert('请至少选择一个项目需求');
+                    return;
+                }
+                
+                const form = document.getElementById('createProjectForm');
+                const formData = new FormData(form);
+                
+                const projectData = {
+                    name: document.getElementById('projectName').value.trim(),
+                    description: document.getElementById('projectDescription').value.trim(),
+                    category: mapCategoryToAPI(document.getElementById('projectCategory').value),
+                    founder: document.getElementById('founderName').value.trim() || extractNameFromEmail(document.getElementById('founderEmail').value),
+                    founderEmail: document.getElementById('founderEmail').value.trim(),
+                    fundingGoal: Number(document.getElementById('fundingGoal').value),
+                    stage: document.getElementById('projectStage').value,
+                    tags: [document.getElementById('projectCategory').value],
+                    needs: needs,
+                    files: window.getAdminSelectedFiles ? window.getAdminSelectedFiles().map(file => ({
+                        name: file.name,
+                        size: file.size,
+                        type: file.type
+                    })) : [],
+                    submittedAt: new Date().toISOString()
+                };
+                
+                console.log('准备创建项目数据:', projectData);
+                
                 const response = await fetch('/api/projects', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -1752,14 +2092,29 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    alert('项目创建成功！');
+                    alert('项目创建成功！项目ID: ' + result.data.projectId);
                     document.querySelector('[data-modal]').remove();
                     loadProjectsData(); // 重新加载数据
                 } else {
-                    alert('创建失败：' + (result.message || '未知错误'));
+                    let errorMessage = '创建失败: ' + (result.message || '未知错误');
+                    
+                    if (result.errors && result.errors.length > 0) {
+                        errorMessage += '\n\n详细错误：\n' + result.errors.join('\n');
+                    }
+                    
+                    if (result.debug) {
+                        errorMessage += '\n\n调试信息：\n' + JSON.stringify(result.debug, null, 2);
+                    }
+                    
+                    alert(errorMessage);
                 }
             } catch (error) {
-                alert('创建失败：' + error.message);
+                console.error('项目创建失败:', error);
+                alert('创建失败: ' + error.message + '\n请检查网络连接或稍后重试。');
+            } finally {
+                // 恢复按钮状态
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
             }
         }
 
@@ -1770,11 +2125,311 @@
                 return;
             }
             
-            alert(`项目详情：${project.name}\n\n功能开发中，敬请期待...`);
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.5); display: flex; align-items: center; 
+                justify-content: center; z-index: 2000; overflow-y: auto;
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: white; border-radius: 15px; 
+                max-width: 900px; width: 95%; max-height: 90vh; overflow-y: auto;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            `;
+            
+            // 项目状态样式映射
+            const statusStyles = {
+                '申请中': { bg: '#fef3c7', color: '#d97706', icon: '⏳' },
+                '已通过': { bg: '#d1fae5', color: '#059669', icon: '✅' },
+                '已拒绝': { bg: '#fee2e2', color: '#dc2626', icon: '❌' },
+                '进行中': { bg: '#dbeafe', color: '#2563eb', icon: '🚀' },
+                '已完成': { bg: '#f3e8ff', color: '#7c3aed', icon: '🎯' }
+            };
+            
+            const status = statusStyles[project.status] || { bg: '#f3f4f6', color: '#6b7280', icon: '📋' };
+            
+            modalContent.innerHTML = `
+                <div style="padding: 0; border-radius: 15px; overflow: hidden;">
+                    <!-- 项目头部 -->
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div style="flex: 1;">
+                                <h2 style="font-size: 2rem; font-weight: 700; margin-bottom: 10px; line-height: 1.2;">${project.name}</h2>
+                                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                                    <span style="background: ${status.bg}; color: ${status.color}; padding: 6px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                                        ${status.icon} ${project.status}
+                                    </span>
+                                    <span style="background: rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: 500;">
+                                        📁 ${project.category}
+                                    </span>
+                                </div>
+                                <div style="display: flex; flex-wrap: wrap; gap: 15px; font-size: 0.95rem; opacity: 0.9;">
+                                    <span><strong>创始人:</strong> ${project.founder}</span>
+                                    <span><strong>申请时间:</strong> ${project.submitTime}</span>
+                                    <span><strong>项目ID:</strong> ${project.id}</span>
+                                </div>
+                            </div>
+                            <button onclick="this.closest('[data-modal]').remove()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: background 0.3s;">×</button>
+                        </div>
+                    </div>
+                    
+                    <!-- 项目内容 -->
+                    <div style="padding: 30px;">
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px; margin-bottom: 30px;">
+                            <!-- 左侧详情 -->
+                            <div>
+                                <div style="margin-bottom: 25px;">
+                                    <h3 style="color: #1f2937; font-size: 1.3rem; font-weight: 600; margin-bottom: 15px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">📝 项目描述</h3>
+                                    <p style="color: #4b5563; line-height: 1.6; font-size: 1rem; background: #f9fafb; padding: 20px; border-radius: 10px; border-left: 4px solid #667eea;">${project.description || '暂无描述'}</p>
+                                </div>
+                                
+                                <div style="margin-bottom: 25px;">
+                                    <h3 style="color: #1f2937; font-size: 1.3rem; font-weight: 600; margin-bottom: 15px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">🎯 需求清单</h3>
+                                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                        ${(project.needs || []).map(need => `
+                                            <span style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 8px 16px; border-radius: 25px; font-size: 0.9rem; font-weight: 500; display: inline-block; box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);">${need}</span>
+                                        `).join('')}
+                                        ${(!project.needs || project.needs.length === 0) ? '<span style="color: #9ca3af; font-style: italic;">暂无需求信息</span>' : ''}
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 style="color: #1f2937; font-size: 1.3rem; font-weight: 600; margin-bottom: 15px; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">📎 项目附件</h3>
+                                    <div id="projectFilesContainer">
+                                        ${project.files && project.files.length > 0 ? 
+                                            project.files.map((file, index) => `
+                                                <div style="background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 10px; padding: 15px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; transition: all 0.3s;">
+                                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                                        <div style="width: 40px; height: 40px; background: #667eea; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.9rem;">
+                                                            ${file.name.split('.').pop().toUpperCase()}
+                                                        </div>
+                                                        <div>
+                                                            <div style="font-weight: 600; color: #1f2937; margin-bottom: 2px;">${file.name}</div>
+                                                            <div style="font-size: 0.85rem; color: #6b7280;">上传时间: ${file.uploadTime || '未知'}</div>
+                                                        </div>
+                                                    </div>
+                                                    <button onclick="downloadProjectFile('${project.id}', ${index})" style="background: #667eea; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: background 0.3s;">📥 下载</button>
+                                                </div>
+                                            `).join('') : 
+                                            '<div style="text-align: center; color: #9ca3af; padding: 30px; font-style: italic;">📋 暂无上传文件</div>'
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 右侧操作面板 -->
+                            <div>
+                                <div style="background: #f8fafc; border-radius: 15px; padding: 25px; border: 1px solid #e2e8f0;">
+                                    <h3 style="color: #1f2937; font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; text-align: center;">⚙️ 管理操作</h3>
+                                    
+                                    <div style="space-y: 15px;">
+                                        <button onclick="editProject('${project.id}')" style="width: 100%; background: #667eea; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; margin-bottom: 10px; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                            ✏️ 编辑项目
+                                        </button>
+                                        
+                                        <button onclick="changeProjectStatus('${project.id}')" style="width: 100%; background: #059669; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; margin-bottom: 10px; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                            🔄 更改状态
+                                        </button>
+                                        
+                                        <button onclick="addProjectComment('${project.id}')" style="width: 100%; background: #7c3aed; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; margin-bottom: 10px; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                            💬 添加备注
+                                        </button>
+                                        
+                                        <button onclick="exportProjectData('${project.id}')" style="width: 100%; background: #0891b2; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; margin-bottom: 15px; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                            📊 导出数据
+                                        </button>
+                                        
+                                        <hr style="border: none; height: 1px; background: #e2e8f0; margin: 20px 0;">
+                                        
+                                        <button onclick="deleteProject('${project.id}')" style="width: 100%; background: #dc2626; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                            🗑️ 删除项目
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- 项目统计信息 -->
+                                <div style="background: #f0f9ff; border-radius: 15px; padding: 20px; margin-top: 20px; border: 1px solid #bae6fd;">
+                                    <h4 style="color: #0c4a6e; font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; text-align: center;">📈 项目统计</h4>
+                                    <div style="display: grid; grid-template-columns: 1fr; gap: 10px;">
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span style="color: #0369a1;">文件数量:</span>
+                                            <strong style="color: #0c4a6e;">${project.files ? project.files.length : 0}</strong>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span style="color: #0369a1;">需求数量:</span>
+                                            <strong style="color: #0c4a6e;">${project.needs ? project.needs.length : 0}</strong>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span style="color: #0369a1;">申请天数:</span>
+                                            <strong style="color: #0c4a6e;">${calculateDaysSinceSubmit(project.submitTime)}</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.setAttribute('data-modal', 'project-details');
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+            
+            // 点击背景关闭模态框
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
         }
 
         function editProject(projectId) {
-            alert(`编辑项目：${projectId}\n\n功能开发中，敬请期待...`);
+            const project = projectsData.find(p => p.id === projectId);
+            if (!project) {
+                alert('项目不存在');
+                return;
+            }
+            
+            // 关闭详情模态框
+            const detailsModal = document.querySelector('[data-modal="project-details"]');
+            if (detailsModal) {
+                detailsModal.remove();
+            }
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.5); display: flex; align-items: center; 
+                justify-content: center; z-index: 2000; overflow-y: auto;
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: white; border-radius: 15px; 
+                max-width: 800px; width: 95%; max-height: 90vh; overflow-y: auto;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            `;
+            
+            modalContent.innerHTML = `
+                <div style="padding: 0; border-radius: 15px; overflow: hidden;">
+                    <!-- 编辑头部 -->
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px 30px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h2 style="font-size: 1.6rem; font-weight: 700; margin-bottom: 8px;">✏️ 编辑项目</h2>
+                                <p style="opacity: 0.9; font-size: 1rem;">项目ID: ${project.id}</p>
+                            </div>
+                            <button onclick="this.closest('[data-modal]').remove()" style="background: rgba(255,255,255,0.2); border: none; color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center;">×</button>
+                        </div>
+                    </div>
+                    
+                    <!-- 编辑表单 -->
+                    <div style="padding: 30px;">
+                        <form id="editProjectForm" onsubmit="saveProjectChanges(event, '${project.id}')">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
+                                <div>
+                                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #374151;">项目名称 *</label>
+                                    <input type="text" id="editProjectName" value="${project.name}" required 
+                                        style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; outline: none;" 
+                                        onfocus="this.style.borderColor='#667eea'" onblur="this.style.borderColor='#e5e7eb'">
+                                </div>
+                                
+                                <div>
+                                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #374151;">创始人 *</label>
+                                    <input type="text" id="editProjectFounder" value="${project.founder}" required
+                                        style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem; transition: border-color 0.3s; outline: none;"
+                                        onfocus="this.style.borderColor='#667eea'" onblur="this.style.borderColor='#e5e7eb'">
+                                </div>
+                                
+                                <div>
+                                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #374151;">项目类别 *</label>
+                                    <select id="editProjectCategory" required
+                                        style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem; background: white; transition: border-color 0.3s; outline: none;"
+                                        onfocus="this.style.borderColor='#667eea'" onblur="this.style.borderColor='#e5e7eb'">
+                                        <option value="">请选择类别</option>
+                                        <option value="AI技术" ${project.category === 'AI技术' ? 'selected' : ''}>AI技术</option>
+                                        <option value="区块链" ${project.category === '区块链' ? 'selected' : ''}>区块链</option>
+                                        <option value="金融科技" ${project.category === '金融科技' ? 'selected' : ''}>金融科技</option>
+                                        <option value="企业服务" ${project.category === '企业服务' ? 'selected' : ''}>企业服务</option>
+                                        <option value="消费电子" ${project.category === '消费电子' ? 'selected' : ''}>消费电子</option>
+                                        <option value="医疗健康" ${project.category === '医疗健康' ? 'selected' : ''}>医疗健康</option>
+                                        <option value="教育科技" ${project.category === '教育科技' ? 'selected' : ''}>教育科技</option>
+                                        <option value="其他" ${project.category === '其他' ? 'selected' : ''}>其他</option>
+                                    </select>
+                                </div>
+                                
+                                <div>
+                                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #374151;">项目状态 *</label>
+                                    <select id="editProjectStatus" required
+                                        style="width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem; background: white; transition: border-color 0.3s; outline: none;"
+                                        onfocus="this.style.borderColor='#667eea'" onblur="this.style.borderColor='#e5e7eb'">
+                                        <option value="申请中" ${project.status === '申请中' ? 'selected' : ''}>⏳ 申请中</option>
+                                        <option value="已通过" ${project.status === '已通过' ? 'selected' : ''}>✅ 已通过</option>
+                                        <option value="已拒绝" ${project.status === '已拒绝' ? 'selected' : ''}>❌ 已拒绝</option>
+                                        <option value="进行中" ${project.status === '进行中' ? 'selected' : ''}>🚀 进行中</option>
+                                        <option value="已完成" ${project.status === '已完成' ? 'selected' : ''}>🎯 已完成</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-bottom: 25px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #374151;">项目描述</label>
+                                <textarea id="editProjectDescription" rows="4" placeholder="请详细描述项目内容、目标、优势等..."
+                                    style="width: 100%; padding: 15px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem; line-height: 1.5; resize: vertical; transition: border-color 0.3s; outline: none;"
+                                    onfocus="this.style.borderColor='#667eea'" onblur="this.style.borderColor='#e5e7eb'">${project.description || ''}</textarea>
+                            </div>
+                            
+                            <div style="margin-bottom: 25px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #374151;">需求清单</label>
+                                <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; padding: 15px;">
+                                    <div style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
+                                        <input type="text" id="newNeedInput" placeholder="添加新需求..." 
+                                            style="flex: 1; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 0.9rem; outline: none;"
+                                            onkeypress="if(event.key==='Enter'){event.preventDefault();addProjectNeed();}">
+                                        <button type="button" onclick="addProjectNeed()" 
+                                            style="background: #667eea; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 500;">+ 添加</button>
+                                    </div>
+                                    <div id="editProjectNeeds" style="display: flex; flex-wrap: wrap; gap: 8px; min-height: 40px;">
+                                        ${(project.needs || []).map((need, index) => `
+                                            <span style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 6px;">
+                                                ${need}
+                                                <button type="button" onclick="removeProjectNeed(${index})" style="background: rgba(255,255,255,0.3); border: none; color: white; width: 18px; height: 18px; border-radius: 50%; cursor: pointer; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; line-height: 1;">×</button>
+                                            </span>
+                                        `).join('')}
+                                        ${(!project.needs || project.needs.length === 0) ? '<span style="color: #9ca3af; font-style: italic; padding: 8px 0;">暂无需求，点击上方添加...</span>' : ''}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 操作按钮 -->
+                            <div style="display: flex; gap: 12px; justify-content: flex-end; padding-top: 20px; border-top: 1px solid #e5e7eb;">
+                                <button type="button" onclick="this.closest('[data-modal]').remove()" 
+                                    style="background: #6b7280; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600;">取消</button>
+                                <button type="submit" id="saveProjectBtn"
+                                    style="background: #059669; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                    💾 保存更改
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+            
+            modal.setAttribute('data-modal', 'edit-project');
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+            
+            // 存储原始需求数据以便编辑
+            window.editingProjectNeeds = [...(project.needs || [])];
+            
+            // 点击背景关闭模态框
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
         }
 
         // 工具函数
@@ -2184,6 +2839,578 @@
             
             document.body.appendChild(modal);
         }
+
+        // 显示项目文件详情
+        function showProjectFiles(projectId) {
+            const project = projectsData.find(p => p.id === projectId);
+            if (!project || !project.files || project.files.length === 0) {
+                alert('该项目没有上传任何文件');
+                return;
+            }
+
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.5); display: flex; align-items: center; 
+                justify-content: center; z-index: 2000; overflow-y: auto;
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: white; padding: 30px; border-radius: 15px; 
+                max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            `;
+            
+            const filesListHTML = project.files.map((file, index) => `
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 10px;">
+                    <div style="flex: 1;">
+                        <div style="font-weight: 500; color: #333; margin-bottom: 5px;">
+                            📄 ${file.name}
+                        </div>
+                        <div style="font-size: 0.8rem; color: #666;">
+                            <span>类型: ${file.type}</span> | 
+                            <span>大小: ${formatFileSize(file.size)}</span>
+                            ${file.uploadedAt ? `| <span>上传: ${formatDateTime(file.uploadedAt)}</span>` : ''}
+                        </div>
+                    </div>
+                    <div style="font-size: 1.2rem; color: #ccc;">
+                        ${getFileIcon(file.type)}
+                    </div>
+                </div>
+            `).join('');
+            
+            modalContent.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 style="margin: 0; color: #333;">📎 项目附件</h3>
+                    <button onclick="this.closest('div[style*=\"position: fixed\"]').remove()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #999;">&times;</button>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <strong>${project.name}</strong>
+                    <div style="font-size: 0.9rem; color: #666;">共 ${project.files.length} 个文件</div>
+                </div>
+                ${filesListHTML}
+                <div style="text-align: center; margin-top: 20px;">
+                    <button onclick="this.closest('div[style*=\"position: fixed\"]').remove()" class="btn-secondary">关闭</button>
+                </div>
+            `;
+            
+            modal.appendChild(modalContent);
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.remove();
+            });
+            
+            document.body.appendChild(modal);
+        }
+
+        // 根据文件类型返回图标
+        function getFileIcon(fileType) {
+            if (fileType.includes('pdf')) return '📕';
+            if (fileType.includes('doc')) return '📘';
+            if (fileType.includes('image')) return '🖼️';
+            if (fileType.includes('text')) return '📄';
+            if (fileType.includes('presentation') || fileType.includes('ppt')) return '📊';
+            return '📁';
+        }
+        // 项目管理辅助函数
+        
+        // 计算申请天数
+        function calculateDaysSinceSubmit(submitTime) {
+            try {
+                const submitDate = new Date(submitTime);
+                const currentDate = new Date();
+                const diffTime = Math.abs(currentDate - submitDate);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                return diffDays + ' 天';
+            } catch (error) {
+                return '未知';
+            }
+        }
+        
+        // 添加项目需求
+        function addProjectNeed() {
+            const input = document.getElementById('newNeedInput');
+            const need = input.value.trim();
+            
+            if (!need) {
+                alert('请输入需求内容');
+                return;
+            }
+            
+            if (window.editingProjectNeeds.includes(need)) {
+                alert('该需求已存在');
+                return;
+            }
+            
+            window.editingProjectNeeds.push(need);
+            input.value = '';
+            renderProjectNeeds();
+        }
+        
+        // 移除项目需求
+        function removeProjectNeed(index) {
+            window.editingProjectNeeds.splice(index, 1);
+            renderProjectNeeds();
+        }
+        
+        // 渲染项目需求
+        function renderProjectNeeds() {
+            const container = document.getElementById('editProjectNeeds');
+            if (!container) return;
+            
+            if (window.editingProjectNeeds.length === 0) {
+                container.innerHTML = '<span style="color: #9ca3af; font-style: italic; padding: 8px 0;">暂无需求，点击上方添加...</span>';
+                return;
+            }
+            
+            container.innerHTML = window.editingProjectNeeds.map((need, index) => `
+                <span style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 6px;">
+                    ${need}
+                    <button type="button" onclick="removeProjectNeed(${index})" style="background: rgba(255,255,255,0.3); border: none; color: white; width: 18px; height: 18px; border-radius: 50%; cursor: pointer; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; line-height: 1;">×</button>
+                </span>
+            `).join('');
+        }
+        
+        // 保存项目更改
+        async function saveProjectChanges(event, projectId) {
+            event.preventDefault();
+            
+            const saveBtn = document.getElementById('saveProjectBtn');
+            const originalText = saveBtn.innerHTML;
+            saveBtn.disabled = true;
+            saveBtn.innerHTML = '💾 保存中...';
+            
+            try {
+                const formData = {
+                    id: projectId,
+                    name: document.getElementById('editProjectName').value.trim(),
+                    founder: document.getElementById('editProjectFounder').value.trim(),
+                    category: document.getElementById('editProjectCategory').value,
+                    status: document.getElementById('editProjectStatus').value,
+                    description: document.getElementById('editProjectDescription').value.trim(),
+                    needs: window.editingProjectNeeds || []
+                };
+                
+                // 验证必填字段
+                if (!formData.name || !formData.founder || !formData.category || !formData.status) {
+                    alert('请填写所有必填字段');
+                    return;
+                }
+                
+                // 发送更新请求
+                const response = await fetch('/api/projects', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // 更新本地数据
+                    const projectIndex = projectsData.findIndex(p => p.id === projectId);
+                    if (projectIndex !== -1) {
+                        projectsData[projectIndex] = { ...projectsData[projectIndex], ...formData };
+                    }
+                    
+                    // 刷新表格
+                    filterProjects();
+                    
+                    // 关闭模态框
+                    document.querySelector('[data-modal="edit-project"]').remove();
+                    
+                    // 显示成功消息
+                    showNotification('项目更新成功！', 'success');
+                } else {
+                    alert('更新失败: ' + (result.message || '未知错误'));
+                }
+                
+            } catch (error) {
+                console.error('更新项目失败:', error);
+                alert('更新失败: ' + error.message);
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = originalText;
+            }
+        }
+        
+        // 更改项目状态
+        function changeProjectStatus(projectId) {
+            const project = projectsData.find(p => p.id === projectId);
+            if (!project) {
+                alert('项目不存在');
+                return;
+            }
+            
+            const statusOptions = [
+                { value: '申请中', label: '⏳ 申请中', color: '#d97706' },
+                { value: '已通过', label: '✅ 已通过', color: '#059669' },
+                { value: '已拒绝', label: '❌ 已拒绝', color: '#dc2626' },
+                { value: '进行中', label: '🚀 进行中', color: '#2563eb' },
+                { value: '已完成', label: '🎯 已完成', color: '#7c3aed' }
+            ];
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.5); display: flex; align-items: center; 
+                justify-content: center; z-index: 2000;
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: white; border-radius: 15px; padding: 30px;
+                max-width: 400px; width: 90%; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            `;
+            
+            modalContent.innerHTML = `
+                <div>
+                    <h3 style="margin-bottom: 20px; color: #1f2937; font-size: 1.3rem; font-weight: 600; text-align: center;">🔄 更改项目状态</h3>
+                    <p style="margin-bottom: 20px; color: #6b7280; text-align: center;">项目: ${project.name}</p>
+                    <p style="margin-bottom: 20px; color: #6b7280; text-align: center;">当前状态: <strong>${project.status}</strong></p>
+                    
+                    <div style="display: grid; gap: 10px; margin-bottom: 25px;">
+                        ${statusOptions.map(option => `
+                            <button onclick="updateProjectStatus('${projectId}', '${option.value}')" 
+                                style="width: 100%; padding: 12px; border: 2px solid ${option.value === project.status ? option.color : '#e5e7eb'}; 
+                                background: ${option.value === project.status ? option.color : 'white'}; 
+                                color: ${option.value === project.status ? 'white' : '#374151'}; 
+                                border-radius: 8px; cursor: pointer; font-weight: 600; text-align: left; transition: all 0.3s;">
+                                ${option.label}
+                            </button>
+                        `).join('')}
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; justify-content: center;">
+                        <button onclick="this.closest('[data-modal]').remove()" 
+                            style="background: #6b7280; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600;">取消</button>
+                    </div>
+                </div>
+            `;
+            
+            modal.setAttribute('data-modal', 'change-status');
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+            
+            // 点击背景关闭
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+        
+        // 更新项目状态
+        async function updateProjectStatus(projectId, newStatus) {
+            try {
+                const response = await fetch('/api/projects', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: projectId, status: newStatus })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // 更新本地数据
+                    const project = projectsData.find(p => p.id === projectId);
+                    if (project) {
+                        project.status = newStatus;
+                    }
+                    
+                    // 刷新显示
+                    filterProjects();
+                    
+                    // 关闭模态框
+                    document.querySelector('[data-modal="change-status"]').remove();
+                    
+                    // 如果详情模态框打开，也关闭并重新打开以刷新状态显示
+                    const detailsModal = document.querySelector('[data-modal="project-details"]');
+                    if (detailsModal) {
+                        detailsModal.remove();
+                        setTimeout(() => viewProjectDetails(projectId), 100);
+                    }
+                    
+                    showNotification('项目状态更新成功！', 'success');
+                } else {
+                    alert('状态更新失败: ' + (result.message || '未知错误'));
+                }
+                
+            } catch (error) {
+                console.error('更新状态失败:', error);
+                alert('状态更新失败: ' + error.message);
+            }
+        }
+        
+        // 添加项目备注
+        function addProjectComment(projectId) {
+            const project = projectsData.find(p => p.id === projectId);
+            if (!project) {
+                alert('项目不存在');
+                return;
+            }
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.5); display: flex; align-items: center; 
+                justify-content: center; z-index: 2000;
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background: white; border-radius: 15px; padding: 30px;
+                max-width: 500px; width: 90%; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            `;
+            
+            modalContent.innerHTML = `
+                <div>
+                    <h3 style="margin-bottom: 20px; color: #1f2937; font-size: 1.3rem; font-weight: 600; text-align: center;">💬 添加项目备注</h3>
+                    <p style="margin-bottom: 15px; color: #6b7280;">项目: <strong>${project.name}</strong></p>
+                    
+                    <textarea id="commentInput" rows="4" placeholder="请输入备注内容..." 
+                        style="width: 100%; padding: 15px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem; line-height: 1.5; resize: vertical; outline: none; margin-bottom: 20px;"
+                        onfocus="this.style.borderColor='#667eea'" onblur="this.style.borderColor='#e5e7eb'"></textarea>
+                    
+                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                        <button onclick="this.closest('[data-modal]').remove()" 
+                            style="background: #6b7280; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600;">取消</button>
+                        <button onclick="saveProjectComment('${projectId}')"
+                            style="background: #7c3aed; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600;">保存备注</button>
+                    </div>
+                </div>
+            `;
+            
+            modal.setAttribute('data-modal', 'add-comment');
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+            
+            // 点击背景关闭
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+        
+        // 保存项目备注
+        async function saveProjectComment(projectId) {
+            const comment = document.getElementById('commentInput').value.trim();
+            if (!comment) {
+                alert('请输入备注内容');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/projects/comment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        projectId: projectId, 
+                        comment: comment,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    document.querySelector('[data-modal="add-comment"]').remove();
+                    showNotification('备注添加成功！', 'success');
+                } else {
+                    alert('备注保存失败: ' + (result.message || '未知错误'));
+                }
+                
+            } catch (error) {
+                console.error('保存备注失败:', error);
+                alert('备注保存失败: ' + error.message);
+            }
+        }
+        
+        // 导出项目数据
+        function exportProjectData(projectId) {
+            const project = projectsData.find(p => p.id === projectId);
+            if (!project) {
+                alert('项目不存在');
+                return;
+            }
+            
+            const exportData = {
+                基本信息: {
+                    项目名称: project.name,
+                    创始人: project.founder,
+                    项目类别: project.category,
+                    项目状态: project.status,
+                    申请时间: project.submitTime,
+                    项目ID: project.id
+                },
+                项目描述: project.description || '暂无描述',
+                需求清单: project.needs || [],
+                文件信息: (project.files || []).map(file => ({
+                    文件名: file.name,
+                    上传时间: file.uploadTime || '未知'
+                })),
+                统计信息: {
+                    文件数量: project.files ? project.files.length : 0,
+                    需求数量: project.needs ? project.needs.length : 0,
+                    申请天数: calculateDaysSinceSubmit(project.submitTime)
+                },
+                导出时间: new Date().toLocaleString('zh-CN')
+            };
+            
+            // 创建并下载JSON文件
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `项目数据_${project.name}_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            showNotification('项目数据导出成功！', 'success');
+        }
+        
+        // 删除项目
+        function deleteProject(projectId) {
+            const project = projectsData.find(p => p.id === projectId);
+            if (!project) {
+                alert('项目不存在');
+                return;
+            }
+            
+            const confirmed = confirm(`确定要删除项目"${project.name}"吗？\n\n此操作不可恢复，请谨慎操作！`);
+            if (!confirmed) return;
+            
+            // 二次确认
+            const doubleConfirm = confirm(`最后确认：真的要删除项目"${project.name}"吗？\n\n项目ID: ${project.id}\n创始人: ${project.founder}`);
+            if (!doubleConfirm) return;
+            
+            deleteProjectConfirmed(projectId);
+        }
+        
+        // 确认删除项目
+        async function deleteProjectConfirmed(projectId) {
+            try {
+                const response = await fetch('/api/projects', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: projectId })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // 从本地数据中移除
+                    projectsData = projectsData.filter(p => p.id !== projectId);
+                    filteredProjectsData = filteredProjectsData.filter(p => p.id !== projectId);
+                    
+                    // 刷新表格
+                    renderProjectsTable();
+                    
+                    // 关闭详情模态框
+                    const detailsModal = document.querySelector('[data-modal="project-details"]');
+                    if (detailsModal) {
+                        detailsModal.remove();
+                    }
+                    
+                    showNotification('项目删除成功！', 'success');
+                } else {
+                    alert('删除失败: ' + (result.message || '未知错误'));
+                }
+                
+            } catch (error) {
+                console.error('删除项目失败:', error);
+                alert('删除失败: ' + error.message);
+            }
+        }
+        
+        // 下载项目文件
+        async function downloadProjectFile(projectId, fileIndex) {
+            const project = projectsData.find(p => p.id === projectId);
+            if (!project || !project.files || !project.files[fileIndex]) {
+                alert('文件不存在');
+                return;
+            }
+            
+            const file = project.files[fileIndex];
+            
+            try {
+                const response = await fetch(`/api/projects/file/${projectId}/${fileIndex}`);
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = file.name;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                    
+                    showNotification('文件下载开始...', 'success');
+                } else {
+                    alert('文件下载失败');
+                }
+            } catch (error) {
+                console.error('下载文件失败:', error);
+                alert('文件下载失败: ' + error.message);
+            }
+        }
+        
+        // 显示通知消息
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            const colors = {
+                success: { bg: '#d1fae5', color: '#065f46', icon: '✅' },
+                error: { bg: '#fee2e2', color: '#991b1b', icon: '❌' },
+                info: { bg: '#dbeafe', color: '#1e40af', icon: 'ℹ️' }
+            };
+            const style = colors[type] || colors.info;
+            
+            notification.style.cssText = `
+                position: fixed; top: 20px; right: 20px; z-index: 3000;
+                background: ${style.bg}; color: ${style.color}; padding: 15px 20px;
+                border-radius: 8px; border-left: 4px solid ${style.color};
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 300px;
+                font-weight: 600; display: flex; align-items: center; gap: 10px;
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            notification.innerHTML = `${style.icon} ${message}`;
+            document.body.appendChild(notification);
+            
+            // 3秒后自动消失
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-in';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+        
+        // 添加动画样式
+        if (!document.getElementById('notificationStyles')) {
+            const style = document.createElement('style');
+            style.id = 'notificationStyles';
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
     </script>
 </body>
 </html>
