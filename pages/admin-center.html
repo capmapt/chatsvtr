@@ -3337,27 +3337,77 @@
             }
             
             const file = project.files[fileIndex];
+            console.log('开始下载文件:', { projectId, fileIndex, fileName: file.name });
             
             try {
-                const response = await fetch(`/api/projects/file/${projectId}/${fileIndex}`);
+                // 显示下载中状态
+                showNotification('正在准备下载...', 'info');
+                
+                // 使用正确的API路径
+                const downloadUrl = `/api/projects/${projectId}/files/${fileIndex}`;
+                console.log('下载URL:', downloadUrl);
+                
+                const response = await fetch(downloadUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': '*/*',
+                    }
+                });
+                
+                console.log('下载响应状态:', response.status, response.statusText);
+                
                 if (response.ok) {
                     const blob = await response.blob();
+                    console.log('文件blob大小:', blob.size, 'bytes', '类型:', blob.type);
+                    
+                    // 获取文件名（从响应头或使用默认名称）
+                    const contentDisposition = response.headers.get('content-disposition');
+                    let fileName = file.name || `项目文件_${fileIndex + 1}`;
+                    
+                    if (contentDisposition) {
+                        const fileNameMatch = contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
+                        if (fileNameMatch && fileNameMatch[1]) {
+                            fileName = fileNameMatch[1].replace(/['"]/g, '');
+                        }
+                    }
+                    
+                    // 创建下载链接
                     const url = URL.createObjectURL(blob);
                     const link = document.createElement('a');
                     link.href = url;
-                    link.download = file.name;
+                    link.download = fileName;
+                    link.style.display = 'none';
+                    
+                    // 添加到DOM，点击，然后移除
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
-                    URL.revokeObjectURL(url);
                     
-                    showNotification('文件下载开始...', 'success');
+                    // 清理URL对象
+                    setTimeout(() => {
+                        URL.revokeObjectURL(url);
+                    }, 1000);
+                    
+                    showNotification(`文件 "${fileName}" 下载成功！`, 'success');
+                    console.log('文件下载完成:', fileName);
+                    
                 } else {
-                    alert('文件下载失败');
+                    // 尝试解析错误响应
+                    let errorMessage = '文件下载失败';
+                    try {
+                        const errorData = await response.json();
+                        errorMessage = errorData.message || errorMessage;
+                    } catch (e) {
+                        errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+                    }
+                    
+                    console.error('下载失败:', errorMessage);
+                    showNotification(errorMessage, 'error');
                 }
+                
             } catch (error) {
                 console.error('下载文件失败:', error);
-                alert('文件下载失败: ' + error.message);
+                showNotification('网络错误，文件下载失败', 'error');
             }
         }
         
