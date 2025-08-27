@@ -88,14 +88,14 @@
 
     submitBtn.addEventListener('click', function() {
       // 显示项目提交模态框或跳转到提交页面
-      showProjectSubmitModal();
+      showProjectSubmissionModal();
     });
   }
 
   /**
    * 显示项目提交模态框
    */
-  function showProjectSubmitModal() {
+  function showProjectSubmissionModal() {
     // 创建模态框HTML
     const modalHTML = `
       <div class="project-submit-modal" id="projectSubmitModal">
@@ -492,8 +492,9 @@
     const overlay = modal.querySelector('.modal-overlay');
     const form = document.getElementById('projectSubmitForm');
 
-    // 初始化文件上传和复选框功能
+    // 初始化文件上传、复选框功能和实时验证
     initializeFormControls();
+    setupRealTimeValidation();
 
     // 初始化表单控件功能
     function initializeFormControls() {
@@ -788,6 +789,167 @@
         console.error('API调用失败:', error);
         throw error;
       }
+    }
+
+    // 设置实时验证
+    function setupRealTimeValidation() {
+      const modal = document.getElementById('projectSubmitModal');
+      if (!modal) return;
+
+      const nameInput = modal.querySelector('#projectName');
+      const emailInput = modal.querySelector('#contactEmail');
+      const descriptionInput = modal.querySelector('#projectDescription');
+      const categorySelect = modal.querySelector('#projectCategory');
+      const needsCheckboxes = modal.querySelectorAll('input[name="projectNeeds"]');
+
+      // 创建提示元素
+      function createHintElement(inputElement, hintText) {
+        const existingHint = inputElement.parentNode.querySelector('.validation-hint');
+        if (existingHint) {
+          existingHint.remove();
+        }
+
+        const hint = document.createElement('div');
+        hint.className = 'validation-hint';
+        hint.style.cssText = `
+          font-size: 12px;
+          color: #666;
+          margin-top: 4px;
+          padding: 4px 8px;
+          background: #f8f9fa;
+          border-left: 3px solid #FA8C32;
+          border-radius: 0 4px 4px 0;
+          display: none;
+        `;
+        hint.textContent = hintText;
+        inputElement.parentNode.insertBefore(hint, inputElement.nextSibling);
+        return hint;
+      }
+
+      // 显示/隐藏提示
+      function showHint(hint, isError = false) {
+        hint.style.display = 'block';
+        hint.style.borderLeftColor = isError ? '#f44336' : '#FA8C32';
+        hint.style.color = isError ? '#f44336' : '#666';
+      }
+
+      function hideHint(hint) {
+        hint.style.display = 'none';
+      }
+
+      // 项目名称验证
+      if (nameInput) {
+        const nameHint = createHintElement(nameInput, '项目名称至少需要2个字符');
+        
+        nameInput.addEventListener('input', () => {
+          const value = nameInput.value.trim();
+          if (value.length === 0) {
+            hideHint(nameHint);
+          } else if (value.length < 2) {
+            nameHint.textContent = '项目名称至少需要2个字符';
+            showHint(nameHint, true);
+          } else {
+            nameHint.textContent = '✓ 项目名称符合要求';
+            showHint(nameHint, false);
+          }
+        });
+
+        nameInput.addEventListener('blur', () => {
+          if (nameInput.value.trim().length >= 2) {
+            hideHint(nameHint);
+          }
+        });
+      }
+
+      // 邮箱验证
+      if (emailInput) {
+        const emailHint = createHintElement(emailInput, '请输入有效的邮箱地址');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        emailInput.addEventListener('input', () => {
+          const value = emailInput.value.trim();
+          if (value.length === 0) {
+            hideHint(emailHint);
+          } else if (!emailRegex.test(value)) {
+            emailHint.textContent = '请输入有效的邮箱地址，如: your@company.com';
+            showHint(emailHint, true);
+          } else {
+            emailHint.textContent = '✓ 邮箱格式正确';
+            showHint(emailHint, false);
+          }
+        });
+
+        emailInput.addEventListener('blur', () => {
+          if (emailRegex.test(emailInput.value.trim())) {
+            hideHint(emailHint);
+          }
+        });
+      }
+
+      // 项目描述验证
+      if (descriptionInput) {
+        const descHint = createHintElement(descriptionInput, '项目描述至少需要5个字符');
+        
+        descriptionInput.addEventListener('input', () => {
+          const value = descriptionInput.value.trim();
+          if (value.length === 0) {
+            hideHint(descHint);
+          } else if (value.length < 5) {
+            descHint.textContent = `项目描述至少需要5个字符（当前${value.length}个字符）`;
+            showHint(descHint, true);
+          } else if (value.length >= 5 && value.length < 20) {
+            descHint.textContent = `✓ 描述符合要求，建议再详细一些（当前${value.length}个字符）`;
+            showHint(descHint, false);
+          } else {
+            descHint.textContent = '✓ 项目描述详细充分';
+            showHint(descHint, false);
+          }
+        });
+
+        descriptionInput.addEventListener('blur', () => {
+          if (descriptionInput.value.trim().length >= 20) {
+            hideHint(descHint);
+          }
+        });
+      }
+
+      // 项目类别验证
+      if (categorySelect) {
+        const categoryHint = createHintElement(categorySelect, '请选择项目类别');
+        
+        categorySelect.addEventListener('change', () => {
+          if (categorySelect.value && categorySelect.value !== '') {
+            categoryHint.textContent = '✓ 已选择项目类别';
+            showHint(categoryHint, false);
+            setTimeout(() => hideHint(categoryHint), 2000);
+          } else {
+            categoryHint.textContent = '请选择最符合的项目类别';
+            showHint(categoryHint, true);
+          }
+        });
+      }
+
+      // 项目需求验证
+      if (needsCheckboxes.length > 0) {
+        const needsContainer = needsCheckboxes[0].closest('.form-group') || needsCheckboxes[0].parentNode;
+        const needsHint = createHintElement(needsContainer, '请选择至少一个项目需求');
+        
+        needsCheckboxes.forEach(checkbox => {
+          checkbox.addEventListener('change', () => {
+            const checkedBoxes = modal.querySelectorAll('input[name="projectNeeds"]:checked');
+            if (checkedBoxes.length === 0) {
+              needsHint.textContent = '请选择至少一个项目需求（找人、找钱、找方向等）';
+              showHint(needsHint, true);
+            } else {
+              needsHint.textContent = `✓ 已选择 ${checkedBoxes.length} 个需求类型`;
+              showHint(needsHint, false);
+              setTimeout(() => hideHint(needsHint), 2000);
+            }
+          });
+        });
+      }
+
+      console.log('✅ 实时验证功能已启用');
     }
   }
 
