@@ -4,7 +4,7 @@
  * 增强版：集成查询扩展和语义优化
  */
 
-// 移除不存在的依赖服务，使用内联实现
+import { createAdvancedRetrieval } from './advanced-retrieval-service';
 
 interface HybridRAGConfig {
   useOpenAI: boolean;
@@ -20,6 +20,7 @@ export class HybridRAGService {
   private ai: any;
   private openaiApiKey?: string;
   private requestContext?: Request;
+  private advancedRetrieval: any;
 
   constructor(vectorize: any, ai: any, openaiApiKey?: string, kvNamespace?: any, webSearchConfig?: any, requestContext?: Request) {
     this.vectorize = vectorize;
@@ -35,6 +36,9 @@ export class HybridRAGService {
       useWebSearch: true, // 启用改进的网络搜索
       fallbackEnabled: true
     };
+    
+    // 初始化2025年增强检索服务
+    this.advancedRetrieval = createAdvancedRetrieval(vectorize, ai, openaiApiKey);
   }
 
   /**
@@ -58,6 +62,53 @@ export class HybridRAGService {
         options.strictFiltering = true;
       }
       
+      // 2025年升级: 优先使用高级自适应检索
+      let retrievalResults;
+      
+      try {
+        console.log('🔍 使用关键词搜索系统（确保RAG质量）');
+        // 直接使用关键词搜索确保质量
+        const keywordResults = await this.keywordSearch(query, {
+          topK: options.topK || 8,
+          threshold: options.threshold || 0.7
+        });
+        
+        retrievalResults = {
+          matches: keywordResults.matches || [],
+          metadata: { strategy: 'keyword', searchTime: Date.now() - startTime }
+        };
+        
+        if (retrievalResults.matches.length > 0) {
+          console.log(`✅ 高级检索成功: ${retrievalResults.matches.length}条结果`);
+          console.log(`📊 检索统计:`, retrievalResults.metadata);
+          
+          // 直接使用高级检索结果
+          const finalResults = {
+            matches: retrievalResults.matches,
+            sources: retrievalResults.matches.map(m => m.source),
+            confidence: this.calculateConfidence(retrievalResults.matches),
+            strategies: 1,
+            searchQuery: query,
+            fromCache: false,
+            responseTime: Date.now() - startTime,
+            enhancedFeatures: {
+              multiStrategyRetrieval: true,
+              advancedRetrieval: true,
+              graphEnhanced: retrievalResults.matches.some(m => m.graphContext),
+              successfulStrategies: 1,
+              totalStrategies: 1,
+              metadata: retrievalResults.metadata
+            }
+          };
+          
+          return finalResults;
+        }
+      } catch (advancedError) {
+        console.warn('高级检索失败，回退到传统混合策略:', advancedError.message);
+      }
+      
+      // 回退到传统混合策略
+      console.log('🔄 使用传统混合检索策略');
       const strategies = [];
       
       // 策略1: 向量检索（如果可用）

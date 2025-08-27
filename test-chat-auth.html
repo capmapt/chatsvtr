@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>聊天认证测试 - SVTR</title>
+  <link rel="stylesheet" href="assets/css/chat-login-overlay.css">
+  <link rel="stylesheet" href="assets/css/chat-auth-styles.css">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .test-info {
+      background: #e3f2fd;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border-left: 4px solid #2196F3;
+    }
+    
+    .auth-status {
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: 600;
+    }
+    
+    .auth-status.logged-in {
+      background: #e8f5e8;
+      color: #4caf50;
+      border-left: 4px solid #4caf50;
+    }
+    
+    .auth-status.logged-out {
+      background: #fff3e0;
+      color: #ff9800;
+      border-left: 4px solid #ff9800;
+    }
+    
+    .debug-panel {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🔐 SVTR 聊天认证测试</h1>
+      <p>测试聊天系统的登录要求功能</p>
+    </div>
+    
+    <div class="test-info">
+      <h3>📋 测试说明</h3>
+      <ul>
+        <li>聊天功能现在需要用户登录才能使用</li>
+        <li>未登录用户将看到登录提示遮罩</li>
+        <li>支持邮箱验证码登录和Magic Link登录</li>
+        <li>登录后可正常使用AI助手功能</li>
+      </ul>
+    </div>
+    
+    <div id="auth-status" class="auth-status logged-out">
+      🔄 正在检查登录状态...
+    </div>
+    
+    <div id="user-info" style="display: none;">
+      <h3>👤 用户信息</h3>
+      <div id="user-details"></div>
+    </div>
+    
+    <div id="debug-panel" class="debug-panel">
+      <h4>🛠️ 调试信息</h4>
+      <div id="debug-info">加载中...</div>
+    </div>
+    
+    <!-- 聊天容器 -->
+    <h3>💬 聊天测试区域</h3>
+    <div id="svtr-chat-container"></div>
+    
+    <div style="margin-top: 30px; text-align: center;">
+      <button id="refresh-btn" onclick="location.reload()" 
+              style="background: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer;">
+        🔄 刷新页面
+      </button>
+    </div>
+  </div>
+
+  <!-- 加载认证系统 -->
+  <script src="assets/js/chat-auth-manager.js"></script>
+  <script src="assets/js/chat-optimized-auth.js"></script>
+  
+  <script>
+    // 调试和状态显示
+    function updateAuthStatus() {
+      const statusEl = document.getElementById('auth-status');
+      const userInfoEl = document.getElementById('user-info');
+      const userDetailsEl = document.getElementById('user-details');
+      const debugEl = document.getElementById('debug-info');
+      
+      // 检查认证管理器
+      if (window.chatAuthManager) {
+        const isLoggedIn = window.chatAuthManager.isLoggedIn();
+        const user = window.chatAuthManager.getCurrentUser();
+        const token = window.chatAuthManager.getCurrentToken();
+        
+        if (isLoggedIn && user) {
+          statusEl.className = 'auth-status logged-in';
+          statusEl.innerHTML = `✅ 已登录 - 欢迎，${user.name}！`;
+          
+          userInfoEl.style.display = 'block';
+          userDetailsEl.innerHTML = `
+            <p><strong>姓名:</strong> ${user.name}</p>
+            <p><strong>邮箱:</strong> ${user.email}</p>
+            <p><strong>用户ID:</strong> ${user.id}</p>
+            <p><strong>登录方式:</strong> ${user.provider}</p>
+            <p><strong>最后登录:</strong> ${new Date(user.lastLoginAt).toLocaleString()}</p>
+          `;
+        } else {
+          statusEl.className = 'auth-status logged-out';
+          statusEl.innerHTML = '❌ 未登录 - 请先登录以使用聊天功能';
+          userInfoEl.style.display = 'none';
+        }
+        
+        // 调试信息
+        debugEl.innerHTML = `
+          <strong>认证管理器状态:</strong> ✅ 已加载<br>
+          <strong>登录状态:</strong> ${isLoggedIn ? '✅ 已登录' : '❌ 未登录'}<br>
+          <strong>Token存在:</strong> ${token ? '✅ 是' : '❌ 否'}<br>
+          <strong>用户数据:</strong> ${user ? '✅ 已加载' : '❌ 无'}<br>
+          <strong>localStorage:</strong> ${localStorage.getItem('svtr_user') ? '✅ 有用户数据' : '❌ 无用户数据'}<br>
+          <strong>当前时间:</strong> ${new Date().toLocaleString()}
+        `;
+      } else {
+        statusEl.className = 'auth-status logged-out';
+        statusEl.innerHTML = '⏳ 认证系统加载中...';
+        
+        debugEl.innerHTML = `
+          <strong>认证管理器状态:</strong> ❌ 未加载<br>
+          <strong>重试中...</strong> 请稍候
+        `;
+        
+        // 重试
+        setTimeout(updateAuthStatus, 500);
+      }
+    }
+    
+    // 监听认证事件
+    window.addEventListener('chatAuthLogin', (event) => {
+      console.log('🎉 收到登录事件:', event.detail);
+      setTimeout(updateAuthStatus, 100);
+    });
+    
+    window.addEventListener('chatAuthLogout', () => {
+      console.log('👋 收到退出事件');
+      setTimeout(updateAuthStatus, 100);
+    });
+    
+    // 页面加载完成后检查状态
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(updateAuthStatus, 500);
+      
+      // 定期更新状态
+      setInterval(updateAuthStatus, 5000);
+    });
+    
+    console.log('🧪 聊天认证测试页面已加载');
+  </script>
+</body>
+</html>
