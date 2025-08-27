@@ -21,10 +21,10 @@
     },
 
     waitForSystems() {
-      if (window.svtrChat && window.chatAuthManager) {
+      if (window.svtrChat) {
         this.integrateAuth();
       } else {
-        console.log('⏳ 等待聊天系统和认证管理器加载...');
+        console.log('⏳ 等待聊天系统加载...');
         setTimeout(() => this.waitForSystems(), 200);
       }
     },
@@ -49,12 +49,52 @@
     },
 
     checkAuthState() {
-      if (!window.chatAuthManager.isLoggedIn()) {
+      const user = this.getCurrentUser();
+      if (!user) {
         this.showLoginOverlay();
       } else {
         this.hideLoginOverlay();
         this.showUserInfo();
       }
+    },
+
+    getCurrentUser() {
+      try {
+        const userStr = localStorage.getItem('svtr_user');
+        const token = localStorage.getItem('svtr_token');
+        
+        if (userStr && token) {
+          return JSON.parse(userStr);
+        }
+      } catch (error) {
+        console.warn('读取用户信息失败:', error);
+        // 清理无效数据
+        localStorage.removeItem('svtr_user');
+        localStorage.removeItem('svtr_token');
+      }
+      return null;
+    },
+
+    getCurrentToken() {
+      return localStorage.getItem('svtr_token');
+    },
+
+    isLoggedIn() {
+      return !!this.getCurrentUser();
+    },
+
+    getAuthHeaders() {
+      const token = this.getCurrentToken();
+      const user = this.getCurrentUser();
+      
+      if (!token || !user) {
+        return {};
+      }
+
+      return {
+        'Authorization': `Bearer ${token}`,
+        'X-User-ID': user.id || ''
+      };
     },
 
     showLoginOverlay() {
@@ -68,7 +108,7 @@
       const existingOverlay = chatContainer.querySelector('.chat-login-overlay');
       if (existingOverlay) existingOverlay.remove();
 
-      // 创建登录遮罩
+      // 创建登录引导遮罩
       const overlay = document.createElement('div');
       overlay.className = 'chat-login-overlay';
       overlay.innerHTML = `
@@ -80,11 +120,8 @@
           </p>
           
           <div class="chat-login-buttons">
-            <button class="chat-login-btn primary" onclick="authIntegration.showEmailLogin()">
-              📧 邮箱验证码登录
-            </button>
-            <button class="chat-login-btn secondary" onclick="authIntegration.showMagicLinkLogin()">
-              🔗 Magic Link登录
+            <button class="chat-login-btn primary" onclick="authIntegration.openSidebarLogin()">
+              👈 点击左侧登录
             </button>
           </div>
 
@@ -109,6 +146,13 @@
               </div>
             </div>
           </div>
+          
+          <div class="login-guide">
+            <p style="font-size: 0.9rem; color: #666; margin-top: 1.5rem; text-align: center;">
+              💡 点击页面左上角 <strong>"登录"</strong> 按钮<br>
+              或点击左侧边栏进行用户登录
+            </p>
+          </div>
         </div>
       `;
 
@@ -129,7 +173,7 @@
     },
 
     showUserInfo() {
-      const user = window.chatAuthManager.getCurrentUser();
+      const user = this.getCurrentUser();
       if (!user) return;
 
       const chatContainer = document.getElementById('svtr-chat-container');
@@ -191,7 +235,7 @@
       
       // 替换为带认证检查的版本
       window.svtrChat.sendMessage = () => {
-        if (!window.chatAuthManager.isLoggedIn()) {
+        if (!this.isLoggedIn()) {
           this.showToast('请先登录以使用聊天功能', 'error');
           return;
         }
@@ -210,7 +254,7 @@
       // 替换为带认证头的版本
       window.svtrChat.tryRealAPIFirst = async (a, b) => {
         try {
-          const authHeaders = window.chatAuthManager.getAuthHeaders();
+          const authHeaders = this.getAuthHeaders();
           
           const response = await fetch(window.svtrChat.apiEndpoint, {
             method: 'POST',
@@ -246,25 +290,60 @@
       console.log('🔐 认证错误，需要重新登录');
       
       // 清除认证信息
-      window.chatAuthManager.logout();
+      localStorage.removeItem('svtr_user');
+      localStorage.removeItem('svtr_token');
+      
+      // 显示登录遮罩
+      this.showLoginOverlay();
       
       // 显示错误
       this.showToast(message || '登录已过期，请重新登录', 'error');
     },
 
     listenAuthEvents() {
-      window.addEventListener('chatAuthLogin', (event) => {
-        console.log('👤 用户登录');
-        this.hideLoginOverlay();
-        this.showUserInfo();
-        this.showToast(`欢迎回来，${event.detail.user.name.split(' ')[0] || event.detail.user.name}！`, 'success');
+      // 监听localStorage变化（跨标签页同步）
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'svtr_user' || e.key === 'svtr_token') {
+          console.log('🔄 检测到登录状态变化');
+          setTimeout(() => this.checkAuthState(), 100);
+        }
       });
 
-      window.addEventListener('chatAuthLogout', () => {
-        console.log('👋 用户退出');
-        this.removeUserInfo();
-        this.showLoginOverlay();
-      });
+      // 监听同一页面内的登录状态变化
+      const originalSetItem = localStorage.setItem;
+      const originalRemoveItem = localStorage.removeItem;
+      
+      localStorage.setItem = (key, value) => {
+        originalSetItem.call(localStorage, key, value);
+        if (key === 'svtr_user' || key === 'svtr_token') {
+          setTimeout(() => {
+            if (key === 'svtr_user' && value) {
+              try {
+                const user = JSON.parse(value);
+                console.log('👤 用户登录:', user.name);
+                this.hideLoginOverlay();
+                this.showUserInfo();
+                this.showToast(`欢迎回来，${user.name.split(' ')[0] || user.name}！`, 'success');
+              } catch (e) {
+                console.warn('解析用户信息失败:', e);
+              }
+            }
+          }, 100);
+        }
+      };
+      
+      localStorage.removeItem = (key) => {
+        originalRemoveItem.call(localStorage, key);
+        if (key === 'svtr_user' || key === 'svtr_token') {
+          setTimeout(() => {
+            if (key === 'svtr_user') {
+              console.log('👋 用户退出');
+              this.removeUserInfo();
+              this.showLoginOverlay();
+            }
+          }, 100);
+        }
+      };
     },
 
     removeUserInfo() {
@@ -272,23 +351,43 @@
       if (userInfo) userInfo.remove();
     },
 
-    // 登录相关方法 (代理到认证管理器)
-    showEmailLogin() {
-      if (window.chatAuthManager) {
-        window.chatAuthManager.showEmailLogin();
+    // 引导用户到左侧登录
+    openSidebarLogin() {
+      // 尝试点击左侧的会员登录按钮
+      const memberLoginBtn = document.querySelector('.btn-member-login');
+      if (memberLoginBtn) {
+        memberLoginBtn.click();
+        this.showToast('已为您打开登录界面', 'info');
+      } else {
+        // 如果找不到按钮，显示引导信息
+        this.showToast('请点击页面左上角或左侧边栏的"登录"按钮', 'info');
+        
+        // 尝试高亮显示登录按钮
+        this.highlightLoginButton();
       }
     },
 
-    showMagicLinkLogin() {
-      if (window.chatAuthManager) {
-        window.chatAuthManager.showMagicLinkLogin();
+    highlightLoginButton() {
+      const loginButton = document.querySelector('.btn-member-login');
+      if (loginButton) {
+        loginButton.style.boxShadow = '0 0 20px rgba(250, 140, 50, 0.8)';
+        loginButton.style.animation = 'pulse 2s infinite';
+        
+        // 3秒后移除高亮
+        setTimeout(() => {
+          loginButton.style.boxShadow = '';
+          loginButton.style.animation = '';
+        }, 3000);
       }
     },
 
     logout() {
-      if (window.chatAuthManager) {
-        window.chatAuthManager.logout();
-      }
+      // 清除认证信息
+      localStorage.removeItem('svtr_user');
+      localStorage.removeItem('svtr_token');
+      
+      // 显示退出通知
+      this.showToast('已退出登录', 'info');
     },
 
     showToast(message, type = 'info') {
