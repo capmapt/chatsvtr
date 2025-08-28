@@ -103,7 +103,7 @@ const translations = {
     join_btn: '加入候补名单',
     input_placeholder: '请输入你的问题...',
     send_btn: '发送',
-    footer_text: '© 2025 SVTR. All rights reserved.',
+    footer_text: '',
     // Chat bot translations
     chat_input_placeholder: '问我关于AI创投的任何问题...',
     chat_welcome_title: '您好！我是凯瑞(Kerry)，硅谷科技评论的AI助手，专注于AI创投生态系统分析。',
@@ -230,7 +230,7 @@ const translations = {
     email_placeholder: 'Enter your email',
     input_placeholder: 'Type your question...',
     send_btn: 'Send',
-    footer_text: '© 2025 SVTR. All rights reserved.',
+    footer_text: '',
     // Chat bot translations
     chat_input_placeholder: 'Ask me anything about AI venture capital...',
     chat_welcome_title: 'Hello! I\'m Kerry, SVTR assistant, specializing in AI venture capital ecosystem analysis.',
