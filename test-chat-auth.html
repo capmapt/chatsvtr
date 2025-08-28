@@ -101,7 +101,25 @@
     
     <!-- 聊天容器 -->
     <h3>💬 聊天测试区域</h3>
-    <div id="svtr-chat-container"></div>
+    <div style="background: #f8f9fa; border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin: 20px 0;">
+      <p><strong>测试说明：</strong></p>
+      <ul>
+        <li>现在登录提示只在用户点击输入框时显示</li>
+        <li>提示界面更加紧凑和美观</li>
+        <li>登录后不在聊天区重复显示用户信息</li>
+        <li>点击下方输入框测试登录提示效果</li>
+      </ul>
+    </div>
+    <div id="svtr-chat-container">
+      <div style="margin: 20px 0;">
+        <input type="text" id="svtr-chat-input" placeholder="试试点击这里或输入文字..." 
+               style="width: 70%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; margin-right: 10px;">
+        <button id="svtr-chat-send" 
+                style="padding: 12px 20px; background: #FA8C32; color: white; border: none; border-radius: 6px; cursor: pointer;">
+          发送
+        </button>
+      </div>
+    </div>
     
     <div style="margin-top: 30px; text-align: center;">
       <button id="refresh-btn" onclick="location.reload()" 

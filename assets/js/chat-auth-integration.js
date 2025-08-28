@@ -51,10 +51,11 @@
     checkAuthState() {
       const user = this.getCurrentUser();
       if (!user) {
-        this.showLoginOverlay();
+        // 不立即显示登录遮罩，等用户尝试输入时再显示
+        this.setupInputTrigger();
       } else {
         this.hideLoginOverlay();
-        this.showUserInfo();
+        // 不在聊天区显示用户信息，避免重复
       }
     },
 
@@ -83,6 +84,40 @@
       return !!this.getCurrentUser();
     },
 
+    setupInputTrigger() {
+      const chatInput = document.getElementById('svtr-chat-input');
+      const sendBtn = document.getElementById('svtr-chat-send');
+      
+      if (chatInput && !chatInput.dataset.authTriggerSetup) {
+        chatInput.dataset.authTriggerSetup = 'true';
+        
+        // 监听输入框的点击和聚焦事件
+        const showLoginIfNeeded = (e) => {
+          if (!this.isLoggedIn()) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.openSidebarLogin();
+          }
+        };
+        
+        chatInput.addEventListener('focus', showLoginIfNeeded);
+        chatInput.addEventListener('click', showLoginIfNeeded);
+        chatInput.addEventListener('input', showLoginIfNeeded);
+      }
+      
+      if (sendBtn && !sendBtn.dataset.authTriggerSetup) {
+        sendBtn.dataset.authTriggerSetup = 'true';
+        
+        sendBtn.addEventListener('click', (e) => {
+          if (!this.isLoggedIn()) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.openSidebarLogin();
+          }
+        });
+      }
+    },
+
     getAuthHeaders() {
       const token = this.getCurrentToken();
       const user = this.getCurrentUser();
@@ -97,70 +132,7 @@
       };
     },
 
-    showLoginOverlay() {
-      const chatContainer = document.getElementById('svtr-chat-container');
-      if (!chatContainer) return;
 
-      // 确保容器有相对定位
-      chatContainer.style.position = 'relative';
-
-      // 移除现有遮罩
-      const existingOverlay = chatContainer.querySelector('.chat-login-overlay');
-      if (existingOverlay) existingOverlay.remove();
-
-      // 创建登录引导遮罩
-      const overlay = document.createElement('div');
-      overlay.className = 'chat-login-overlay';
-      overlay.innerHTML = `
-        <div class="chat-login-card">
-          <span class="chat-login-icon">🔐</span>
-          <h3 class="chat-login-title">登录解锁AI助手</h3>
-          <p class="chat-login-description">
-            请先登录以使用SVTR AI创投智能助手，享受专业的AI创投市场分析和投资洞察服务。
-          </p>
-          
-          <div class="chat-login-buttons">
-            <button class="chat-login-btn primary" onclick="authIntegration.openSidebarLogin()">
-              👈 点击左侧登录
-            </button>
-          </div>
-
-          <div class="chat-login-features">
-            <h4>专属功能</h4>
-            <div class="chat-login-feature-list">
-              <div class="chat-login-feature-item">
-                <span class="chat-login-feature-icon">✨</span>
-                个性化AI创投分析
-              </div>
-              <div class="chat-login-feature-item">
-                <span class="chat-login-feature-icon">📊</span>
-                实时市场数据查询
-              </div>
-              <div class="chat-login-feature-item">
-                <span class="chat-login-feature-icon">💼</span>
-                投资机会挖掘
-              </div>
-              <div class="chat-login-feature-item">
-                <span class="chat-login-feature-icon">🎯</span>
-                精准投资建议
-              </div>
-            </div>
-          </div>
-          
-          <div class="login-guide">
-            <p style="font-size: 0.9rem; color: #666; margin-top: 1.5rem; text-align: center;">
-              💡 点击页面左上角 <strong>"登录"</strong> 按钮<br>
-              或点击左侧边栏进行用户登录
-            </p>
-          </div>
-        </div>
-      `;
-
-      chatContainer.appendChild(overlay);
-
-      // 禁用输入
-      this.disableChat();
-    },
 
     hideLoginOverlay() {
       const overlay = document.querySelector('.chat-login-overlay');
@@ -172,44 +144,12 @@
       this.enableChat();
     },
 
-    showUserInfo() {
-      const user = this.getCurrentUser();
-      if (!user) return;
-
-      const chatContainer = document.getElementById('svtr-chat-container');
-      if (!chatContainer) return;
-
-      // 移除现有用户信息
-      const existingInfo = chatContainer.querySelector('.chat-user-info');
-      if (existingInfo) existingInfo.remove();
-
-      // 创建用户信息栏
-      const userInfo = document.createElement('div');
-      userInfo.className = 'chat-user-info';
-      userInfo.innerHTML = `
-        <img src="${user.avatar}" alt="用户头像" class="chat-user-avatar" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=FA8C32&color=fff'">
-        <div class="chat-user-details">
-          <p class="chat-user-name">${user.name}</p>
-          <p class="chat-user-email">${user.email}</p>
-        </div>
-        <button class="chat-logout-btn" onclick="authIntegration.logout()">退出</button>
-      `;
-
-      // 插入到聊天容器顶部
-      chatContainer.insertBefore(userInfo, chatContainer.firstChild);
-    },
-
     disableChat() {
+      // 不禁用输入框，让用户可以点击触发登录
       const chatInput = document.getElementById('svtr-chat-input');
-      const sendBtn = document.getElementById('svtr-chat-send');
       
       if (chatInput) {
-        chatInput.disabled = true;
-        chatInput.placeholder = '请先登录以使用AI助手...';
-      }
-      
-      if (sendBtn) {
-        sendBtn.disabled = true;
+        chatInput.placeholder = '点击这里登录使用AI助手...';
       }
     },
 
@@ -293,8 +233,7 @@
       localStorage.removeItem('svtr_user');
       localStorage.removeItem('svtr_token');
       
-      // 显示登录遮罩
-      this.showLoginOverlay();
+      // 不显示登录遮罩
       
       // 显示错误
       this.showToast(message || '登录已过期，请重新登录', 'error');
@@ -322,7 +261,7 @@
                 const user = JSON.parse(value);
                 console.log('👤 用户登录:', user.name);
                 this.hideLoginOverlay();
-                this.showUserInfo();
+                // 不在聊天区显示用户信息，避免重复
                 this.showToast(`欢迎回来，${user.name.split(' ')[0] || user.name}！`, 'success');
               } catch (e) {
                 console.warn('解析用户信息失败:', e);
@@ -338,17 +277,12 @@
           setTimeout(() => {
             if (key === 'svtr_user') {
               console.log('👋 用户退出');
-              this.removeUserInfo();
-              this.showLoginOverlay();
+              // 用户退出时设置输入触发器，不立即显示登录遮罩
+              this.setupInputTrigger();
             }
           }, 100);
         }
       };
-    },
-
-    removeUserInfo() {
-      const userInfo = document.querySelector('.chat-user-info');
-      if (userInfo) userInfo.remove();
     },
 
     // 引导用户到左侧登录

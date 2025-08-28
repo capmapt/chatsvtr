@@ -269,3 +269,118 @@
 .dark-mode .chat-user-email {
   color: #b0b0b0;
 }
+
+/* 紧凑登录提示样式 */
+.chat-compact-login {
+  max-width: 280px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.compact-login-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.compact-login-icon {
+  font-size: 1.2rem;
+}
+
+.compact-login-text {
+  color: #555;
+  flex: 1;
+  min-width: 120px;
+}
+
+.compact-login-btn {
+  background: #FA8C32;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.compact-login-btn:hover {
+  background: #E8731A;
+}
+
+.compact-login-close {
+  background: transparent;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+  transition: background-color 0.2s;
+}
+
+.compact-login-close:hover {
+  background: #f0f0f0;
+  color: #666;
+}
+
+/* 紧凑提示动画效果 */
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* 紧凑提示响应式设计 */
+@media (max-width: 768px) {
+  .chat-compact-login {
+    max-width: 240px;
+    top: 5px !important;
+    right: 5px !important;
+  }
+  
+  .compact-login-content {
+    gap: 6px;
+  }
+  
+  .compact-login-text {
+    font-size: 0.85rem;
+    min-width: 100px;
+  }
+}
+
+/* 紧凑提示深色模式 */
+.dark-mode .chat-compact-login {
+  background: #2a2a2a !important;
+  border-color: #555 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark-mode .compact-login-text {
+  color: #e0e0e0;
+}
+
+.dark-mode .compact-login-close {
+  color: #aaa;
+}
+
+.dark-mode .compact-login-close:hover {
+  background: #3a3a3a;
+  color: #ccc;
+}

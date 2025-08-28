@@ -69,12 +69,12 @@ class ChatAuthManager {
         console.log('✅ 发现现有登录状态:', user.name);
         this.handleLoginSuccess(user, token, false);
       } else {
-        console.log('❌ 未找到登录状态，显示登录界面');
-        this.showLoginOverlay();
+        console.log('❌ 未找到登录状态');
+        // 不自动显示登录界面，等用户点击输入框时再提示
       }
     } catch (error) {
       console.error('🚨 检查登录状态失败:', error);
-      this.showLoginOverlay();
+      // 不自动显示登录界面，等用户点击输入框时再提示
     }
   }
 
@@ -180,12 +180,12 @@ class ChatAuthManager {
         this.showCodeVerification(email);
       } else {
         alert(result.message || '验证码发送失败');
-        this.showLoginOverlay();
+        // 不显示登录遮罩
       }
     } catch (error) {
       console.error('🚨 发送验证码失败:', error);
       alert('网络错误，请稍后重试');
-      this.showLoginOverlay();
+      // 不显示登录遮罩
     }
   }
 
@@ -215,12 +215,12 @@ class ChatAuthManager {
         this.showMagicLinkSent(email);
       } else {
         alert(result.message || 'Magic Link发送失败');
-        this.showLoginOverlay();
+        // 不显示登录遮罩
       }
     } catch (error) {
       console.error('🚨 发送Magic Link失败:', error);
       alert('网络错误，请稍后重试');
-      this.showLoginOverlay();
+      // 不显示登录遮罩
     }
   }
 
@@ -426,8 +426,7 @@ class ChatAuthManager {
       userInfo.remove();
     }
 
-    // 显示登录遮罩
-    this.showLoginOverlay();
+    // 不显示登录遮罩
 
     // 显示退出通知
     this.showToast('已退出登录', 'info');
