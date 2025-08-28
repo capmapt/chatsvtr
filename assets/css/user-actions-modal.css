@@ -1088,32 +1088,46 @@
 
 /* 当侧边栏打开时，将对话框移动到右侧内容区域的正中间 */
 .sidebar.open ~ * .user-action-modal,
-body.sidebar-open .user-action-modal {
-  left: 240px;
-  width: calc(100% - 240px);
+body.sidebar-open .user-action-modal,
+html body.sidebar-open .user-action-modal {
+  left: 240px !important;
+  width: calc(100% - 240px) !important;
+  position: fixed !important;
+  top: 0 !important;
+  height: 100% !important;
+  z-index: 9999 !important;
 }
 
 /* 不同屏幕尺寸下的侧边栏适配 */
 @media (min-width: 1200px) {
   .sidebar.open ~ * .user-action-modal,
-  body.sidebar-open .user-action-modal {
-    left: 280px;
-    width: calc(100% - 280px);
+  body.sidebar-open .user-action-modal,
+  html body.sidebar-open .user-action-modal {
+    left: 280px !important;
+    width: calc(100% - 280px) !important;
   }
 }
 
 @media (min-width: 769px) and (max-width: 1199px) {
   .sidebar.open ~ * .user-action-modal,
-  body.sidebar-open .user-action-modal {
-    left: 240px;
-    width: calc(100% - 240px);
+  body.sidebar-open .user-action-modal,
+  html body.sidebar-open .user-action-modal {
+    left: 240px !important;
+    width: calc(100% - 240px) !important;
   }
 }
 
 @media (max-width: 768px) {
   .sidebar.open ~ * .user-action-modal,
-  body.sidebar-open .user-action-modal {
-    left: 200px;
-    width: calc(100% - 200px);
+  body.sidebar-open .user-action-modal,
+  html body.sidebar-open .user-action-modal {
+    left: 200px !important;
+    width: calc(100% - 200px) !important;
   }
+}
+
+/* 确保模态框在关闭侧边栏时回到正常位置 */
+body:not(.sidebar-open) .user-action-modal {
+  left: 0 !important;
+  width: 100% !important;
 }
