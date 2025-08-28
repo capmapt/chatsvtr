@@ -43,6 +43,7 @@
         if (isOpen) {
           // 关闭侧边栏 - 移到屏幕外
           sidebar.classList.remove('open');
+          document.body.classList.remove('sidebar-open');
           console.log('[DesktopToggleFix] 移除open类成功');
           sidebar.style.setProperty('left', '-261px', 'important');  // 强制隐藏
           console.log('[DesktopToggleFix] 设置left=-261px成功，当前left:', sidebar.style.left);
@@ -52,6 +53,7 @@
         } else {
           // 打开侧边栏 - 移到可见位置
           sidebar.classList.add('open');
+          document.body.classList.add('sidebar-open');
           console.log('[DesktopToggleFix] 添加open类成功');
           sidebar.style.setProperty('left', '0px', 'important');     // 强制显示
           console.log('[DesktopToggleFix] 设置left=0px成功，当前left:', sidebar.style.left);
@@ -144,10 +146,12 @@
         const isOpen = sidebar.classList.contains('open');
         if (isOpen) {
           sidebar.classList.remove('open');
+          document.body.classList.remove('sidebar-open');
           overlay.classList.remove('active');
           content.classList.remove('shifted');
         } else {
           sidebar.classList.add('open');
+          document.body.classList.add('sidebar-open');
           overlay.classList.add('active');
           content.classList.add('shifted');
         }

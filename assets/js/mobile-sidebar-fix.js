@@ -93,6 +93,7 @@ class MobileSidebarFix {
 
       // 移除open类和shifted类
       this.elements.sidebar.classList.remove('open');
+      document.body.classList.remove('sidebar-open');
       if (this.elements.content) {
         this.elements.content.classList.remove('shifted');
       }
@@ -331,6 +332,7 @@ class MobileSidebarFix {
 
       // 原子操作：同时设置所有状态
       this.elements.sidebar.classList.add('open');
+      document.body.classList.add('sidebar-open');
       this.elements.overlay.classList.add('active');
       if (this.elements.content) {
         this.elements.content.classList.add('shifted');
@@ -361,6 +363,7 @@ class MobileSidebarFix {
 
       // 原子操作：同时移除所有状态
       this.elements.sidebar.classList.remove('open');
+      document.body.classList.remove('sidebar-open');
       this.elements.overlay.classList.remove('active');
       if (this.elements.content) {
         this.elements.content.classList.remove('shifted');
