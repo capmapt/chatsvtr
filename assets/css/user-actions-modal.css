@@ -1126,8 +1126,23 @@ html body.sidebar-open .user-action-modal {
   }
 }
 
-/* 确保模态框在关闭侧边栏时回到正常位置 */
-body:not(.sidebar-open) .user-action-modal {
+/* 确保模态框在关闭侧边栏时回到正常位置并完全居中 */
+body:not(.sidebar-open) .user-action-modal,
+.user-action-modal:not(.sidebar-adjusted) {
   left: 0 !important;
   width: 100% !important;
+  position: fixed !important;
+  top: 0 !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* 强制覆盖任何可能的偏左定位 */
+html body .user-action-modal {
+  transform: none !important;
+  margin: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
 }
