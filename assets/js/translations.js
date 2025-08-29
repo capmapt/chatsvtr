@@ -15,10 +15,10 @@ const translations = {
     sub_investors: '机构概览',
     sub_people: '人员概览',
     // Navigation group headers
-    nav_data_products: '数据产品',
+    nav_data_products: '数据榜单',
     nav_ai_vc_database: 'AI创投库',
-    nav_vc_community: '创投社区',
-    nav_professional_services: '专业服务',
+    nav_vc_community: '内容社区',
+    nav_professional_services: '投资孵化',
     nav_about_us: '关于我们',
 
     // Data products navigation
@@ -94,9 +94,9 @@ const translations = {
     tag_meetup_text: 'AI创投会',
     tag_camp_text: 'AI创投营',
     // 优化的标签图标 - 与widget风格一致
-    tag_data_products_text: '数据产品',
-    tag_vc_community_text: '创投社区',
-    tag_professional_services_text: '专业服务',
+    tag_data_products_text: '数据榜单',
+    tag_vc_community_text: '内容社区',
+    tag_professional_services_text: '投资孵化',
     menu_toggle_aria_label: '打开/关闭菜单',
     logo_alt_text: 'SVTR 商标',
     qr_alt_text: '添加好友二维码',
