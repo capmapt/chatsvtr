@@ -178,9 +178,11 @@ class MobileSidebarFix {
           return;
         }
         
-        // 检查点击是否来自订阅相关元素
-        if (this.isSubscriptionElement(e.target)) {
-          console.log('[MobileSidebarFix] 订阅元素点击，不关闭侧边栏');
+        // 检查点击是否来自订阅相关元素或其容器
+        if (this.isSubscriptionElement(e.target) || this.isSubscriptionArea(e.target)) {
+          console.log('[MobileSidebarFix] 订阅区域点击，不关闭侧边栏');
+          e.preventDefault();
+          e.stopPropagation();
           return;
         }
         
@@ -482,6 +484,26 @@ class MobileSidebarFix {
     }
   }
 
+  // 检查是否在订阅区域内
+  isSubscriptionArea(element) {
+    if (!element) return false;
+    
+    let currentElement = element;
+    while (currentElement && currentElement !== document.body) {
+      // 检查是否在订阅区域容器内
+      if (currentElement.closest && 
+          (currentElement.closest('.subscribe-section') ||
+           currentElement.closest('.subscribe-form-inline') ||
+           currentElement.closest('#subscribeForm'))) {
+        return true;
+      }
+      
+      currentElement = currentElement.parentElement;
+    }
+    
+    return false;
+  }
+
   // 订阅元素检查方法
   isSubscriptionElement(element) {
     if (!element) return false;
@@ -496,7 +518,11 @@ class MobileSidebarFix {
       if (className.includes('subscription') || 
           className.includes('subscribe') || 
           id.includes('subscribe') ||
-          currentElement.tagName === 'INPUT' && currentElement.type === 'email') {
+          id.includes('subscribeEmail') ||
+          id.includes('subscribeForm') ||
+          className.includes('subscribe-form-inline') ||
+          className.includes('btn-subscribe-submit') ||
+          (currentElement.tagName === 'INPUT' && currentElement.type === 'email')) {
         return true;
       }
       
@@ -571,8 +597,8 @@ class MobileSidebarFix {
   // 订阅表单保护机制
   setupSubscriptionProtection() {
     try {
-      // 查找所有订阅相关元素
-      const subscriptionElements = this.elements.sidebar.querySelectorAll(
+      // 查找所有订阅相关元素（包括主内容区的）
+      const subscriptionElements = document.querySelectorAll(
         '.subscription-section, .subscribe-form-inline, #subscribeEmail, #subscribeForm, [data-i18n*="subscribe"]'
       );
       
@@ -593,8 +619,16 @@ class MobileSidebarFix {
           
           element.addEventListener('blur', (e) => {
             console.log('[MobileSidebarFix] 输入框失去焦点');
-            // 键盘收起保护
-            this.handleMobileKeyboard(false);
+            // 键盘收起保护  
+            setTimeout(() => {
+              this.handleMobileKeyboard(false);
+            }, 100);
+          }, { capture: true, passive: false });
+          
+          // 添加touchstart和touchend保护
+          element.addEventListener('touchstart', (e) => {
+            console.log('[MobileSidebarFix] 输入框触摸开始，阻止冒泡');
+            e.stopPropagation();
           }, { capture: true, passive: false });
         }
       });

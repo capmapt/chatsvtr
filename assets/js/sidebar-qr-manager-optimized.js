@@ -2,9 +2,18 @@ class SidebarQRManager{
   constructor(){
     this.currentLanguage=document.documentElement.lang||'zh-CN',this.isAnimating=!1,this.animationDuration=300,this.init();
   }init(){
-    this.cacheDOMElements(),this.setupEventListeners(),this.initializeQRDisplay();
+    if(!this.cacheDOMElements()) return;
+    this.setupEventListeners();
+    this.initializeQRDisplay();
   }cacheDOMElements(){
-    return this.wechatQR=document.querySelector('.wechat-qr'),this.discordQR=document.querySelector('.discord-qr'),this.qrContainer=document.querySelector('.qr-container'),!(!this.wechatQR||!this.discordQR)||(console.warn('QR Manager: QR code elements not found'),!1);
+    this.wechatQR=document.querySelector('.wechat-qr');
+    this.discordQR=document.querySelector('.discord-qr');
+    this.qrContainer=document.querySelector('.qr-container');
+    if(!this.wechatQR||!this.discordQR){
+      console.debug('QR Manager: QR code elements not found, skipping initialization');
+      return false;
+    }
+    return true;
   }setupEventListeners(){
     document.addEventListener('languageChanged',e=>{
       this.handleLanguageChange(e.detail.language);

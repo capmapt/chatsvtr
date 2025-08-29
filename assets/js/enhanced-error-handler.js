@@ -193,4 +193,3 @@ if (typeof window !== 'undefined') {
   window.errorHandler = new EnhancedErrorHandler();
 }
 
-export default EnhancedErrorHandler;
