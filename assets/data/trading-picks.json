@@ -3,7 +3,7 @@
     "title": "交易精选",
     "description": "精选优质创业公司与投资机会分析",
     "totalCompanies": 18,
-    "lastUpdated": "2025-08-29T18:27:49.620Z",
+    "lastUpdated": "2025-08-30T18:47:25.547Z",
     "source": "SVTR飞书知识库",
     "dataVersion": "2.0"
   },
@@ -527,7 +527,7 @@
       "deepResearch": ""
     },
     {
-      "id": 19,
+      "id": 18,
       "name": "Canva",
       "sector": "🎯 垂直模型",
       "stage": "超级独角兽 · 初创期",
@@ -552,7 +552,7 @@
       "deepResearch": ""
     },
     {
-      "id": 20,
+      "id": 19,
       "name": "Polymarket",
       "sector": "💰 金融科技",
       "stage": "独角兽 · 成长期",
