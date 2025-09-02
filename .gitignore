@@ -12,7 +12,8 @@ yarn-debug.log*
 yarn-error.log*
 .eslintcache
 *.tmp
-*.log.wrangler/
+*.log
+.wrangler/
 .playwright-mcp/
 node_modules/
 superdesign-mcp-claude-code/

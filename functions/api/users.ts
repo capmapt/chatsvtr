@@ -12,6 +12,13 @@ interface User {
   createdAt: string;
   lastLoginAt: string;
   isActive: boolean;
+  geoLocation?: {
+    city: string;
+    region: string;
+    country: string;
+    timezone: string;
+  };
+  ipAddress?: string;
 }
 
 // 处理GET请求 - 获取用户列表和统计
@@ -269,18 +276,42 @@ async function getAllUsers(env: any): Promise<User[]> {
 // 从用户数据获取地理位置信息
 async function getLocationFromUserData(user: any, subscribers: any[]): Promise<string> {
   try {
-    // 先从订阅数据中查找该用户的IP信息
-    const subscriberInfo = subscribers.find((sub: any) => sub.email === user.email);
-    
-    if (subscriberInfo && subscriberInfo.ipAddress) {
-      // 基于IP地址进行简单的地理位置推断
-      const location = getLocationFromIP(subscriberInfo.ipAddress, subscriberInfo.cfCountry);
-      if (location && location !== '未知地区') {
-        return location;
+    // 优先使用用户自身的地理位置信息（新注册用户）
+    if (user.geoLocation) {
+      const geo = user.geoLocation;
+      if (geo.city && geo.city !== '未知') {
+        return `${geo.city}, ${geo.region || geo.country}`;
+      }
+      if (geo.country && geo.country !== '未知') {
+        return geo.country;
       }
     }
     
-    // 如果没有IP信息，尝试从邮箱域名推断地理区域
+    // 其次从订阅数据中查找该用户的详细地理位置信息
+    const subscriberInfo = subscribers.find((sub: any) => sub.email === user.email);
+    
+    if (subscriberInfo) {
+      // 使用订阅时的地理位置信息
+      if (subscriberInfo.geoLocation) {
+        const geo = subscriberInfo.geoLocation;
+        if (geo.city && geo.city !== '未知') {
+          return `${geo.city}, ${geo.region || geo.country}`;
+        }
+        if (geo.country && geo.country !== '未知') {
+          return geo.country;
+        }
+      }
+      
+      // 回退到原有的IP地址推断逻辑
+      if (subscriberInfo.ipAddress) {
+        const location = getLocationFromIP(subscriberInfo.ipAddress, subscriberInfo.cfCountry);
+        if (location && location !== '未知地区') {
+          return location;
+        }
+      }
+    }
+    
+    // 如果没有地理位置信息，尝试从邮箱域名推断地理区域
     const emailDomain = user.email.split('@')[1];
     return getLocationFromEmailDomain(emailDomain);
     

@@ -48,16 +48,62 @@ export async function onRequestPost(context: any): Promise<Response> {
       });
     }
     
+    // 获取详细地理位置信息
+    const ipAddress = request.headers.get('CF-Connecting-IP') || '127.0.0.1';
+    let geoLocation = {
+      city: '未知',
+      region: '未知',
+      country: '未知',
+      timezone: '未知'
+    };
+
+    try {
+      // 使用ipapi.co获取详细地理位置（免费1000次/天）
+      if (ipAddress && ipAddress !== '127.0.0.1' && !ipAddress.startsWith('192.168.')) {
+        console.log(`[Subscribe] 获取IP地理位置: ${ipAddress}`);
+        const geoResponse = await fetch(`https://ipapi.co/${ipAddress}/json/`, {
+          headers: { 'User-Agent': 'SVTR-GeoLocation/1.0' },
+          timeout: 5000 // 5秒超时
+        });
+        
+        if (geoResponse.ok) {
+          const geoData = await geoResponse.json();
+          if (geoData && geoData.city) {
+            geoLocation = {
+              city: geoData.city || '未知',
+              region: geoData.region || '未知', 
+              country: geoData.country_name || '未知',
+              timezone: geoData.timezone || '未知'
+            };
+            console.log(`[Subscribe] 地理位置获取成功:`, geoLocation);
+          }
+        }
+      }
+    } catch (error) {
+      console.warn(`[Subscribe] 地理位置获取失败: ${error.message}`);
+      // 使用Cloudflare fallback
+      const cfCountry = request.headers.get('CF-IPCountry');
+      if (cfCountry && cfCountry !== 'XX') {
+        const countryMap: { [key: string]: string } = {
+          'CN': '中国', 'US': '美国', 'JP': '日本', 'KR': '韩国', 
+          'SG': '新加坡', 'HK': '香港', 'TW': '台湾', 'GB': '英国'
+        };
+        geoLocation.country = countryMap[cfCountry] || cfCountry;
+      }
+    }
+
     // 生成订阅数据
     const subscriptionId = generateSubscriptionId(email);
     const subscriptionData = {
       email,
       preferences,
       subscribedAt: new Date().toISOString(),
-      ipAddress: request.headers.get('CF-Connecting-IP'),
-      cfCountry: request.headers.get('CF-IPCountry'), // Cloudflare提供的国家代码
+      ipAddress,
+      cfCountry: request.headers.get('CF-IPCountry'), // 保留原有字段
       userAgent: request.headers.get('User-Agent'),
-      language
+      language,
+      // 新增详细地理位置信息
+      geoLocation
     };
     
     console.log('保存订阅数据:', subscriptionData);
@@ -224,16 +270,33 @@ export async function onRequestGet(context: any): Promise<Response> {
       const subscribersList = await env.SVTR_CACHE.get('subscribers_list');
       const subscribers = subscribersList ? JSON.parse(subscribersList) : [];
       
-      const publicList = subscribers.map((sub: any) => ({
-        id: sub.id,
-        email: sub.email, // 返回完整邮箱用于管理面板
-        emailDomain: sub.email.split('@')[1],
-        preferences: sub.preferences,
-        subscribedAt: sub.subscribedAt,
-        language: sub.language,
-        ipAddress: sub.ipAddress,
-        userAgent: sub.userAgent
-      }));
+      const publicList = subscribers.map((sub: any) => {
+        // 格式化地理位置信息
+        let locationInfo = '未知地区';
+        if (sub.geoLocation) {
+          const geo = sub.geoLocation;
+          if (geo.city && geo.city !== '未知') {
+            locationInfo = `${geo.city}, ${geo.region || geo.country}`;
+          } else if (geo.country && geo.country !== '未知') {
+            locationInfo = geo.country;
+          }
+        } else if (sub.ipAddress) {
+          // 后备逻辑：基于IP推断位置
+          locationInfo = getLocationFromIPAddress(sub.ipAddress, sub.cfCountry);
+        }
+        
+        return {
+          id: sub.id,
+          email: sub.email, // 返回完整邮箱用于管理面板
+          emailDomain: sub.email.split('@')[1],
+          preferences: sub.preferences,
+          subscribedAt: sub.subscribedAt,
+          language: sub.language,
+          location: locationInfo, // 替换ipAddress为location
+          geoLocation: sub.geoLocation, // 保留完整地理位置信息
+          userAgent: sub.userAgent
+        };
+      });
       
       return new Response(JSON.stringify(publicList), {
         status: 200,
@@ -326,6 +389,58 @@ export async function onRequestDelete(context: any): Promise<Response> {
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
     });
   }
+}
+
+// 基于IP地址获取位置信息的辅助函数
+function getLocationFromIPAddress(ip: string, cfCountry?: string): string {
+  // 本地/测试环境IP
+  if (ip === '127.0.0.1' || ip === '::1' || ip.startsWith('192.168.') || ip.startsWith('10.')) {
+    return '本地环境';
+  }
+  
+  // 优先使用Cloudflare的国家代码
+  if (cfCountry && cfCountry !== 'XX') {
+    const countryMap: { [key: string]: string } = {
+      'CN': '中国',
+      'US': '美国',
+      'JP': '日本',
+      'KR': '韩国',
+      'SG': '新加坡',
+      'HK': '香港',
+      'TW': '台湾',
+      'GB': '英国',
+      'DE': '德国',
+      'FR': '法国',
+      'CA': '加拿大',
+      'AU': '澳大利亚',
+      'IN': '印度',
+      'BR': '巴西',
+      'MX': '墨西哥',
+      'RU': '俄罗斯'
+    };
+    return countryMap[cfCountry] || `${cfCountry}地区`;
+  }
+  
+  // 基于IP段的简单推断
+  if (ip.includes('.')) {
+    const segments = ip.split('.').map(Number);
+    const firstSegment = segments[0];
+    
+    // 中国大陆常见IP段
+    if ((firstSegment >= 1 && firstSegment <= 126 && firstSegment !== 127) ||
+        (firstSegment >= 202 && firstSegment <= 203) ||
+        (firstSegment >= 210 && firstSegment <= 222)) {
+      return '中国';
+    }
+    
+    // 美国常见IP段
+    if ((firstSegment >= 3 && firstSegment <= 99) ||
+        (firstSegment >= 128 && firstSegment <= 191)) {
+      return '美国';
+    }
+  }
+  
+  return '未知地区';
 }
 
 // 处理OPTIONS请求 - CORS

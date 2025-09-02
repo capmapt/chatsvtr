@@ -4,6 +4,8 @@
  * 多域名支持: svtr.ai, svtrai.com, svtr.cn, svtrglobal.com
  */
 
+import { getGeoLocationFromIP } from '../lib/geolocation-service';
+
 // 多域名CORS配置
 function getCorsHeaders(request: Request): Record<string, string> {
   const origin = request.headers.get('Origin') || '';
@@ -41,6 +43,13 @@ interface User {
   createdAt: string;
   lastLoginAt: string;
   isActive: boolean;
+  geoLocation?: {
+    city: string;
+    region: string;
+    country: string;
+    timezone: string;
+  };
+  ipAddress?: string;
 }
 
 interface AuthSession {
@@ -156,7 +165,7 @@ async function sendVerificationEmail(env: any, email: string, code: string, type
 }
 
 // 创建或更新用户
-async function createOrUpdateUser(env: any, email: string, userData: Partial<User>): Promise<User> {
+async function createOrUpdateUser(env: any, email: string, userData: Partial<User>, request?: Request): Promise<User> {
   const existingUserData = await env.SVTR_CACHE.get(`user_${email}`);
   
   if (existingUserData) {
@@ -173,6 +182,29 @@ async function createOrUpdateUser(env: any, email: string, userData: Partial<Use
     
     return updatedUser;
   } else {
+    // 获取用户IP地址和地理位置信息
+    const ipAddress = request?.headers.get('CF-Connecting-IP') || '127.0.0.1';
+    const cfCountry = request?.headers.get('CF-IPCountry') || undefined;
+    
+    let geoLocation: {
+      city: string;
+      region: string;
+      country: string;
+      timezone: string;
+    };
+    try {
+      geoLocation = await getGeoLocationFromIP(ipAddress, cfCountry);
+      console.log(`[Auth] 新用户地理位置获取成功: ${email}`, geoLocation);
+    } catch (error) {
+      console.warn(`[Auth] 地理位置获取失败: ${email}`, error);
+      geoLocation = {
+        city: '未知',
+        region: '未知',
+        country: '未知',
+        timezone: '未知'
+      };
+    }
+    
     // 创建新用户
     const newUser: User = {
       id: generateUserId(),
@@ -182,7 +214,9 @@ async function createOrUpdateUser(env: any, email: string, userData: Partial<Use
       provider: userData.provider || 'email',
       createdAt: new Date().toISOString(),
       lastLoginAt: new Date().toISOString(),
-      isActive: true
+      isActive: true,
+      geoLocation,
+      ipAddress
     };
     
     await env.SVTR_CACHE.put(`user_${email}`, JSON.stringify(newUser));
@@ -374,7 +408,7 @@ export async function onRequestPost(context: any): Promise<Response> {
       await env.SVTR_CACHE.delete(`email_code_${email}`);
       
       // 创建或更新用户
-      const user = await createOrUpdateUser(env, email, { provider: 'email' });
+      const user = await createOrUpdateUser(env, email, { provider: 'email' }, request);
       
       // 创建会话
       const sessionToken = await createUserSession(env, user);
@@ -503,7 +537,7 @@ export async function onRequestGet(context: any): Promise<Response> {
       await env.SVTR_CACHE.delete(`magic_token_${token}`);
       
       // 创建或更新用户
-      const user = await createOrUpdateUser(env, email, { provider: 'email' });
+      const user = await createOrUpdateUser(env, email, { provider: 'email' }, request);
       
       // 创建会话
       const sessionToken = await createUserSession(env, user);

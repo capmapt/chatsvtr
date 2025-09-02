@@ -1335,7 +1335,7 @@
                                 <th>订阅偏好</th>
                                 <th>语言</th>
                                 <th>订阅时间</th>
-                                <th>IP地址</th>
+                                <th>地理位置</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
@@ -1361,7 +1361,7 @@
                                         </span>
                                     </td>
                                     <td class="date-cell">${formatSubscriptionDate(subscriber.subscribedAt)}</td>
-                                    <td class="ip-cell">${subscriber.ipAddress || '--'}</td>
+                                    <td class="location-cell">${subscriber.location || '未知地区'}</td>
                                     <td>
                                         <div class="action-buttons">
                                             <button class="btn-small btn-info" onclick="viewSubscriptionDetails('${subscriber.email}')" title="查看详情">
@@ -1408,13 +1408,13 @@
         function exportSubscriptions() {
             try {
                 const csvContent = [
-                    ['邮箱地址', '订阅偏好', '语言', '订阅时间', 'IP地址', 'User Agent'],
+                    ['邮箱地址', '订阅偏好', '语言', '订阅时间', '地理位置', 'User Agent'],
                     ...filteredSubscriptionsData.map(sub => [
                         sub.email,
                         (sub.preferences || []).join('; '),
                         sub.language,
                         sub.subscribedAt,
-                        sub.ipAddress || '',
+                        sub.location || '未知地区',
                         sub.userAgent || ''
                     ])
                 ].map(row => row.map(field => `"${String(field).replace(/"/g, '""')}"`).join(',')).join('\n');
@@ -1457,8 +1457,8 @@
                             <span>${formatSubscriptionDate(subscriber.subscribedAt)}</span>
                         </div>
                         <div class="detail-item">
-                            <label>IP地址:</label>
-                            <span>${subscriber.ipAddress || '未记录'}</span>
+                            <label>地理位置:</label>
+                            <span>${subscriber.location || '未知地区'}</span>
                         </div>
                         <div class="detail-item">
                             <label>浏览器:</label>

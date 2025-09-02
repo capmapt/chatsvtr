@@ -564,7 +564,7 @@
                         <p><strong>邮箱地址:</strong> ${subscriber.email || '*@' + subscriber.emailDomain}</p>
                         <p><strong>订阅时间:</strong> ${formatDate(subscriber.subscribedAt)}</p>
                         <p><strong>语言偏好:</strong> ${subscriber.language === 'zh-CN' ? '中文' : 'English'}</p>
-                        <p><strong>IP地址:</strong> ${subscriber.ipAddress || '未记录'}</p>
+                        <p><strong>地理位置:</strong> ${subscriber.location || '未知地区'}</p>
                         <p><strong>用户代理:</strong> ${subscriber.userAgent ? subscriber.userAgent.substring(0, 60) + '...' : '未记录'}</p>
                     </div>
                     <div style="background: #e3f2fd; padding: 15px; border-radius: 8px;">
