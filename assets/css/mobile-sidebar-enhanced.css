@@ -135,7 +135,7 @@
   /* 调整页面顶部menu-toggle按钮位置，与侧边栏logo对齐 */
   .menu-toggle {
     position: fixed !important;
-    top: 14px !important; /* 调整到与sidebar-header中心对齐 (30px - 16px = 14px) */
+    top: 10px !important; /* 调整到与sidebar-header中心对齐，优化上移位置 */
     left: 16px !important;
     width: 32px !important;
     height: 32px !important;

@@ -396,7 +396,7 @@ html[lang="en"] .discord-qr {
 /* Menu Toggle */
 .menu-toggle {
   position: fixed; 
-  top: 20px; 
+  top: 12px; 
   left: 20px;
   background: none; 
   border: none; 
