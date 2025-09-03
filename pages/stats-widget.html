@@ -298,17 +298,25 @@ function updateLang(lang){
   currentLang=lang;
   document.documentElement.lang=lang;
   const t=translations[lang];
-  elements.liveSpans.forEach(el=>el.textContent=t.live);
-  elements.labels[0].textContent=t.members;
-  elements.labels[1].textContent=t.companies;
-  elements.labels[2].textContent=t.vip;
-  elements.icons[0].setAttribute('aria-label',t.members);
-  elements.icons[1].setAttribute('aria-label',t.companies);
-  elements.icons[2].setAttribute('aria-label',t.vip);
-  // 更新图标显示
-  elements.icons[0].textContent = '🌐'; // 全球社区
-  elements.icons[1].textContent = '🚀'; // 创业飞行
-  elements.icons[2].textContent = '💰'; // 投资网络
+  
+  // 重新获取元素以确保最新
+  const labels = document.querySelectorAll('.stat-label');
+  const icons = document.querySelectorAll('.stat-icon');
+  
+  // 更新标签文本
+  if(labels && labels.length >= 3) {
+    labels[0].textContent = t.members;
+    labels[1].textContent = t.companies;
+    labels[2].textContent = t.vip;
+  }
+  
+  // 更新图标属性
+  if(icons && icons.length >= 3) {
+    icons[0].setAttribute('aria-label', t.members);
+    icons[1].setAttribute('aria-label', t.companies);
+    icons[2].setAttribute('aria-label', t.vip);
+  }
+  
   paint();
 }
 
@@ -402,7 +410,13 @@ function stopContinuousAnimation() {
 function init(){
   cacheElements();
   const params=new URLSearchParams(location.search);
-  updateLang(params.get('lang')||'zh-CN');
+  const lang = params.get('lang')||'zh-CN';
+  
+  // 确保DOM就绪后再更新语言
+  setTimeout(() => {
+    updateLang(lang);
+  }, 100);
+  
   // 启动连续数字增长动画
   startContinuousAnimation();
   adjustIframeHeight();
