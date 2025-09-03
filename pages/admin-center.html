@@ -723,26 +723,13 @@
                         <div class="dashboard-card">
                             <div class="card-header">
                                 <span class="card-icon">👥</span>
-                                <span class="card-title">总用户数</span>
+                                <span class="card-title">注册用户</span>
                             </div>
                             <div class="card-value" id="totalUsers">-</div>
-                            <div class="card-description">注册用户总数</div>
+                            <div class="card-description">平台注册用户总数</div>
                             <div class="card-trend trend-up">
                                 <span>↗ +12%</span>
                                 <span>本月增长</span>
-                            </div>
-                        </div>
-                        
-                        <div class="dashboard-card">
-                            <div class="card-header">
-                                <span class="card-icon">💼</span>
-                                <span class="card-title">活跃项目</span>
-                            </div>
-                            <div class="card-value" id="activeProjects">-</div>
-                            <div class="card-description">正在进行的投资项目</div>
-                            <div class="card-trend trend-up">
-                                <span>↗ +8%</span>
-                                <span>本月新增</span>
                             </div>
                         </div>
                         
@@ -752,10 +739,23 @@
                                 <span class="card-title">订阅用户</span>
                             </div>
                             <div class="card-value" id="subscribers">-</div>
-                            <div class="card-description">AI周报订阅用户</div>
+                            <div class="card-description">AI周报订阅用户数</div>
                             <div class="card-trend trend-up">
                                 <span>↗ +24%</span>
                                 <span>本周增长</span>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <span class="card-icon">💼</span>
+                                <span class="card-title">总项目数</span>
+                            </div>
+                            <div class="card-value" id="totalProjects">-</div>
+                            <div class="card-description">平台所有项目总数</div>
+                            <div class="card-trend trend-up">
+                                <span>↗ +8%</span>
+                                <span>本月新增</span>
                             </div>
                         </div>
                         
@@ -1135,16 +1135,57 @@
         // 加载仪表板数据
         async function loadDashboardData() {
             try {
-                // 获取订阅数据
-                const subscriptionResponse = await fetch('/api/subscribe?action=stats');
-                if (subscriptionResponse.ok) {
-                    const subscriptionData = await subscriptionResponse.json();
-                    document.getElementById('subscribers').textContent = subscriptionData.totalSubscribers || 0;
+                console.log('[仪表板] 开始加载数据...');
+                
+                // 1. 获取用户统计数据
+                try {
+                    const userStatsResponse = await fetch('/api/users?action=stats');
+                    if (userStatsResponse.ok) {
+                        const userStats = await userStatsResponse.json();
+                        document.getElementById('totalUsers').textContent = userStats.totalUsers || 0;
+                        console.log('[仪表板] 用户数据加载成功:', userStats.totalUsers);
+                    } else {
+                        console.warn('[仪表板] 用户统计API失败:', userStatsResponse.status);
+                        document.getElementById('totalUsers').textContent = '0';
+                    }
+                } catch (userError) {
+                    console.error('[仪表板] 获取用户数据失败:', userError);
+                    document.getElementById('totalUsers').textContent = '0';
                 }
 
-                // 模拟其他数据
-                document.getElementById('totalUsers').textContent = '2,847';
-                document.getElementById('activeProjects').textContent = '156';
+                // 2. 获取订阅数据
+                try {
+                    const subscriptionResponse = await fetch('/api/subscribe?action=stats');
+                    if (subscriptionResponse.ok) {
+                        const subscriptionData = await subscriptionResponse.json();
+                        document.getElementById('subscribers').textContent = subscriptionData.totalSubscribers || 0;
+                        console.log('[仪表板] 订阅数据加载成功:', subscriptionData.totalSubscribers);
+                    } else {
+                        console.warn('[仪表板] 订阅统计API失败:', subscriptionResponse.status);
+                        document.getElementById('subscribers').textContent = '0';
+                    }
+                } catch (subscriptionError) {
+                    console.error('[仪表板] 获取订阅数据失败:', subscriptionError);
+                    document.getElementById('subscribers').textContent = '0';
+                }
+
+                // 3. 获取项目统计数据
+                try {
+                    const projectStatsResponse = await fetch('/api/projects?action=stats');
+                    if (projectStatsResponse.ok) {
+                        const projectStats = await projectStatsResponse.json();
+                        document.getElementById('totalProjects').textContent = projectStats.totalProjects || 0;
+                        console.log('[仪表板] 项目数据加载成功:', projectStats.totalProjects);
+                    } else {
+                        console.warn('[仪表板] 项目统计API失败:', projectStatsResponse.status);
+                        document.getElementById('totalProjects').textContent = '0';
+                    }
+                } catch (projectError) {
+                    console.error('[仪表板] 获取项目数据失败:', projectError);
+                    document.getElementById('totalProjects').textContent = '0';
+                }
+
+                // 保留投资总额的模拟数据
                 document.getElementById('totalInvestment').textContent = '$42.8M';
 
                 // 模拟最近活动
