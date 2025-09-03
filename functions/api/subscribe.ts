@@ -271,18 +271,36 @@ export async function onRequestGet(context: any): Promise<Response> {
       const subscribers = subscribersList ? JSON.parse(subscribersList) : [];
       
       const publicList = subscribers.map((sub: any) => {
-        // 格式化地理位置信息
+        // 格式化地理位置信息 - 优化显示逻辑
         let locationInfo = '未知地区';
+        
+        // 优先使用详细地理位置信息
         if (sub.geoLocation) {
           const geo = sub.geoLocation;
-          if (geo.city && geo.city !== '未知') {
-            locationInfo = `${geo.city}, ${geo.region || geo.country}`;
-          } else if (geo.country && geo.country !== '未知') {
+          if (geo.city && geo.city !== '未知' && geo.city !== 'Unknown') {
+            // 优先显示城市信息
+            locationInfo = `${geo.city}${geo.region && geo.region !== geo.city ? ', ' + geo.region : ''}, ${geo.country}`;
+          } else if (geo.region && geo.region !== '未知' && geo.region !== 'Unknown') {
+            // 没有城市，显示区域
+            locationInfo = `${geo.region}, ${geo.country}`;
+          } else if (geo.country && geo.country !== '未知' && geo.country !== 'Unknown') {
+            // 只有国家信息
             locationInfo = geo.country;
           }
-        } else if (sub.ipAddress) {
-          // 后备逻辑：基于IP推断位置
+        }
+        
+        // 后备逻辑1：基于IP推断位置
+        if (locationInfo === '未知地区' && sub.ipAddress) {
           locationInfo = getLocationFromIPAddress(sub.ipAddress, sub.cfCountry);
+        }
+        
+        // 后备逻辑2：基于邮箱域名推断
+        if (locationInfo === '未知地区' || locationInfo === '其他地区') {
+          const emailDomain = sub.email.split('@')[1];
+          const domainLocation = getLocationFromEmailDomain(emailDomain);
+          if (domainLocation !== '其他地区') {
+            locationInfo = domainLocation;
+          }
         }
         
         return {
@@ -398,16 +416,16 @@ function getLocationFromIPAddress(ip: string, cfCountry?: string): string {
     return '本地环境';
   }
   
-  // 优先使用Cloudflare的国家代码
+  // 优先使用Cloudflare的国家代码 - 扩展更多国家和城市映射
   if (cfCountry && cfCountry !== 'XX') {
-    const countryMap: { [key: string]: string } = {
-      'CN': '中国',
+    const locationMap: { [key: string]: string } = {
+      'CN': '中国大陆',
       'US': '美国',
       'JP': '日本',
       'KR': '韩国',
       'SG': '新加坡',
-      'HK': '香港',
-      'TW': '台湾',
+      'HK': '香港特别行政区',
+      'TW': '台湾地区',
       'GB': '英国',
       'DE': '德国',
       'FR': '法国',
@@ -416,31 +434,118 @@ function getLocationFromIPAddress(ip: string, cfCountry?: string): string {
       'IN': '印度',
       'BR': '巴西',
       'MX': '墨西哥',
-      'RU': '俄罗斯'
+      'RU': '俄罗斯',
+      'IT': '意大利',
+      'ES': '西班牙',
+      'NL': '荷兰',
+      'CH': '瑞士',
+      'SE': '瑞典',
+      'NO': '挪威',
+      'DK': '丹麦',
+      'FI': '芬兰',
+      'BE': '比利时',
+      'AT': '奥地利',
+      'PL': '波兰',
+      'CZ': '捷克',
+      'HU': '匈牙利',
+      'MY': '马来西亚',
+      'TH': '泰国',
+      'VN': '越南',
+      'ID': '印度尼西亚',
+      'PH': '菲律宾',
+      'NZ': '新西兰',
+      'ZA': '南非',
+      'EG': '埃及',
+      'IL': '以色列',
+      'AE': '阿联酋',
+      'SA': '沙特阿拉伯'
     };
-    return countryMap[cfCountry] || `${cfCountry}地区`;
+    return locationMap[cfCountry] || `${cfCountry}`;
   }
   
-  // 基于IP段的简单推断
+  // 基于IP段的详细推断
   if (ip.includes('.')) {
     const segments = ip.split('.').map(Number);
     const firstSegment = segments[0];
+    const secondSegment = segments[1];
     
-    // 中国大陆常见IP段
-    if ((firstSegment >= 1 && firstSegment <= 126 && firstSegment !== 127) ||
-        (firstSegment >= 202 && firstSegment <= 203) ||
-        (firstSegment >= 210 && firstSegment <= 222)) {
-      return '中国';
+    // 中国大陆详细IP段分析
+    if ((firstSegment >= 1 && firstSegment <= 126 && firstSegment !== 127)) {
+      if (firstSegment >= 58 && firstSegment <= 61) return '北京, 中国';
+      if (firstSegment >= 114 && firstSegment <= 117) return '上海, 中国';
+      if (firstSegment >= 113 && firstSegment <= 114) return '广东, 中国';
+      return '中国大陆';
     }
     
-    // 美国常见IP段
+    if ((firstSegment >= 202 && firstSegment <= 203) ||
+        (firstSegment >= 210 && firstSegment <= 222)) {
+      return '中国大陆';
+    }
+    
+    // 美国详细IP段
     if ((firstSegment >= 3 && firstSegment <= 99) ||
         (firstSegment >= 128 && firstSegment <= 191)) {
+      if (firstSegment >= 192 && firstSegment <= 199) return '加利福尼亚, 美国';
+      if (firstSegment >= 204 && firstSegment <= 207) return '纽约, 美国';
       return '美国';
     }
   }
   
   return '未知地区';
+}
+
+// 基于邮箱域名获取地理位置信息
+function getLocationFromEmailDomain(emailDomain: string): string {
+  const domainLocationMap: { [key: string]: string } = {
+    // 中国主要邮箱服务商
+    'qq.com': '腾讯邮箱 (中国)',
+    '163.com': '网易邮箱 (中国)',
+    '126.com': '网易邮箱 (中国)',
+    'sina.com': '新浪邮箱 (中国)',
+    'sina.cn': '新浪邮箱 (中国)',
+    'sohu.com': '搜狐邮箱 (中国)',
+    'foxmail.com': '腾讯Foxmail (中国)',
+    'yeah.net': '网易邮箱 (中国)',
+    'tom.com': 'TOM邮箱 (中国)',
+    'aliyun.com': '阿里云邮箱 (中国)',
+    
+    // 国际邮箱服务商
+    'gmail.com': 'Google邮箱 (全球)',
+    'yahoo.com': 'Yahoo邮箱 (美国)',
+    'yahoo.co.jp': 'Yahoo日本 (日本)',
+    'hotmail.com': 'Microsoft邮箱 (美国)',
+    'outlook.com': 'Microsoft邮箱 (美国)',
+    'live.com': 'Microsoft邮箱 (美国)',
+    'msn.com': 'Microsoft邮箱 (美国)',
+    'icloud.com': 'Apple邮箱 (美国)',
+    'me.com': 'Apple邮箱 (美国)',
+    
+    // 企业和机构
+    'svtr.ai': '平台内部',
+    'example.com': '测试环境',
+    
+    // 教育机构常见后缀
+    'edu.cn': '中国教育机构',
+    'ac.cn': '中国科研机构',
+    'gov.cn': '中国政府机构',
+    'edu': '教育机构',
+    'ac.uk': '英国学术机构',
+    'edu.au': '澳大利亚教育机构'
+  };
+  
+  const lowerDomain = emailDomain.toLowerCase();
+  
+  // 精确匹配
+  if (domainLocationMap[lowerDomain]) {
+    return domainLocationMap[lowerDomain];
+  }
+  
+  // 模糊匹配教育机构
+  if (lowerDomain.includes('.edu')) return '教育机构';
+  if (lowerDomain.includes('.gov')) return '政府机构';
+  if (lowerDomain.includes('.org')) return '非营利组织';
+  
+  return '其他地区';
 }
 
 // 处理OPTIONS请求 - CORS
