@@ -241,7 +241,7 @@ async function getAllUsers(env: any): Promise<User[]> {
             // 增加订阅状态
             const isSubscriber = subscriberEmails.has(user.email);
             
-            // 增加地理位置信息（从IP获取基本位置信息）
+            // 增加地理位置信息（使用统一的格式化服务）
             const location = await getLocationFromUserData(user, subscribers);
             
             return {
@@ -273,51 +273,28 @@ async function getAllUsers(env: any): Promise<User[]> {
   }
 }
 
-// 从用户数据获取地理位置信息
+// 从用户数据获取地理位置信息 - 使用统一格式化服务
 async function getLocationFromUserData(user: any, subscribers: any[]): Promise<string> {
   try {
-    // 优先使用用户自身的地理位置信息（新注册用户）
-    if (user.geoLocation) {
-      const geo = user.geoLocation;
-      if (geo.city && geo.city !== '未知') {
-        return `${geo.city}, ${geo.region || geo.country}`;
-      }
-      if (geo.country && geo.country !== '未知') {
-        return geo.country;
-      }
-    }
+    // 导入统一的地理位置格式化服务
+    const { formatRegisteredUserLocation } = await import('../lib/location-formatter');
     
-    // 其次从订阅数据中查找该用户的详细地理位置信息
-    const subscriberInfo = subscribers.find((sub: any) => sub.email === user.email);
-    
-    if (subscriberInfo) {
-      // 使用订阅时的地理位置信息
-      if (subscriberInfo.geoLocation) {
-        const geo = subscriberInfo.geoLocation;
-        if (geo.city && geo.city !== '未知') {
-          return `${geo.city}, ${geo.region || geo.country}`;
-        }
-        if (geo.country && geo.country !== '未知') {
-          return geo.country;
-        }
-      }
-      
-      // 回退到原有的IP地址推断逻辑
-      if (subscriberInfo.ipAddress) {
-        const location = getLocationFromIP(subscriberInfo.ipAddress, subscriberInfo.cfCountry);
-        if (location && location !== '未知地区') {
-          return location;
-        }
-      }
-    }
-    
-    // 如果没有地理位置信息，尝试从邮箱域名推断地理区域
-    const emailDomain = user.email.split('@')[1];
-    return getLocationFromEmailDomain(emailDomain);
+    return formatRegisteredUserLocation(user, subscribers);
     
   } catch (error) {
     console.error(`[Users API] 获取用户地理位置失败 ${user.email}:`, error);
-    return '未知';
+    
+    // 如果统一服务不可用，使用简化的后备逻辑
+    if (user.geoLocation?.city && user.geoLocation.city !== '未知') {
+      return `${user.geoLocation.city}, ${user.geoLocation.country}`;
+    }
+    if (user.geoLocation?.country && user.geoLocation.country !== '未知') {
+      return user.geoLocation.country;
+    }
+    
+    // 最后的后备：邮箱域名推断
+    const emailDomain = user.email.split('@')[1];
+    return getLocationFromEmailDomain(emailDomain);
   }
 }
 

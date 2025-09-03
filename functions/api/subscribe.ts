@@ -270,37 +270,16 @@ export async function onRequestGet(context: any): Promise<Response> {
       const subscribersList = await env.SVTR_CACHE.get('subscribers_list');
       const subscribers = subscribersList ? JSON.parse(subscribersList) : [];
       
-      const publicList = subscribers.map((sub: any) => {
-        // 格式化地理位置信息 - 优化显示逻辑
+      const publicList = await Promise.all(subscribers.map(async (sub: any) => {
+        // 使用统一的地理位置格式化服务
         let locationInfo = '未知地区';
-        
-        // 优先使用详细地理位置信息
-        if (sub.geoLocation) {
-          const geo = sub.geoLocation;
-          if (geo.city && geo.city !== '未知' && geo.city !== 'Unknown') {
-            // 优先显示城市信息
-            locationInfo = `${geo.city}${geo.region && geo.region !== geo.city ? ', ' + geo.region : ''}, ${geo.country}`;
-          } else if (geo.region && geo.region !== '未知' && geo.region !== 'Unknown') {
-            // 没有城市，显示区域
-            locationInfo = `${geo.region}, ${geo.country}`;
-          } else if (geo.country && geo.country !== '未知' && geo.country !== 'Unknown') {
-            // 只有国家信息
-            locationInfo = geo.country;
-          }
-        }
-        
-        // 后备逻辑1：基于IP推断位置
-        if (locationInfo === '未知地区' && sub.ipAddress) {
+        try {
+          const { formatSubscriberLocation } = await import('../lib/location-formatter');
+          locationInfo = formatSubscriberLocation(sub);
+        } catch (error) {
+          console.error('[Subscribe API] 地理位置格式化失败:', error);
+          // 回退到原有逻辑
           locationInfo = getLocationFromIPAddress(sub.ipAddress, sub.cfCountry);
-        }
-        
-        // 后备逻辑2：基于邮箱域名推断
-        if (locationInfo === '未知地区' || locationInfo === '其他地区') {
-          const emailDomain = sub.email.split('@')[1];
-          const domainLocation = getLocationFromEmailDomain(emailDomain);
-          if (domainLocation !== '其他地区') {
-            locationInfo = domainLocation;
-          }
         }
         
         return {
@@ -314,7 +293,7 @@ export async function onRequestGet(context: any): Promise<Response> {
           geoLocation: sub.geoLocation, // 保留完整地理位置信息
           userAgent: sub.userAgent
         };
-      });
+      }));
       
       return new Response(JSON.stringify(publicList), {
         status: 200,
