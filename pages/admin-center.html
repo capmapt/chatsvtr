@@ -344,6 +344,44 @@
             font-size: 0.9rem;
         }
         
+        /* 可排序表头样式 */
+        .sortable-header {
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+            transition: background-color 0.2s ease;
+        }
+        
+        .sortable-header:hover {
+            background-color: #e9ecef;
+        }
+        
+        .sortable-header::after {
+            content: '';
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-bottom: 6px solid #999;
+            opacity: 0.5;
+        }
+        
+        .sortable-header.sort-asc::after {
+            border-bottom: 6px solid #007bff;
+            border-top: none;
+            opacity: 1;
+        }
+        
+        .sortable-header.sort-desc::after {
+            border-top: 6px solid #007bff;
+            border-bottom: none;
+            opacity: 1;
+        }
+        
         .data-table tr:hover {
             background: #f8f9fa;
         }
@@ -1331,11 +1369,11 @@
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>邮箱地址</th>
-                                <th>订阅偏好</th>
-                                <th>语言</th>
-                                <th>订阅时间</th>
-                                <th>地理位置</th>
+                                <th class="sortable-header" onclick="sortSubscriptions('email')">邮箱地址</th>
+                                <th class="sortable-header" onclick="sortSubscriptions('preferences')">订阅偏好</th>
+                                <th class="sortable-header" onclick="sortSubscriptions('language')">语言</th>
+                                <th class="sortable-header" onclick="sortSubscriptions('subscribedAt')">订阅时间</th>
+                                <th class="sortable-header" onclick="sortSubscriptions('location')">地理位置</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
@@ -1383,6 +1421,87 @@
             `;
             
             container.innerHTML = tableHTML;
+        }
+
+        // 订阅管理表格排序功能
+        let subscriptionsSortField = null;
+        let subscriptionsSortDirection = 'asc';
+
+        function sortSubscriptions(field) {
+            // 更新排序状态
+            if (subscriptionsSortField === field) {
+                subscriptionsSortDirection = subscriptionsSortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                subscriptionsSortField = field;
+                subscriptionsSortDirection = 'asc';
+            }
+
+            // 执行排序
+            filteredSubscriptionsData.sort((a, b) => {
+                let valueA, valueB;
+                
+                switch (field) {
+                    case 'email':
+                        valueA = a.email.toLowerCase();
+                        valueB = b.email.toLowerCase();
+                        break;
+                    case 'preferences':
+                        valueA = (a.preferences || []).join('');
+                        valueB = (b.preferences || []).join('');
+                        break;
+                    case 'language':
+                        valueA = a.language || '';
+                        valueB = b.language || '';
+                        break;
+                    case 'subscribedAt':
+                        valueA = new Date(a.subscribedAt).getTime();
+                        valueB = new Date(b.subscribedAt).getTime();
+                        break;
+                    case 'location':
+                        valueA = (a.location || '').toLowerCase();
+                        valueB = (b.location || '').toLowerCase();
+                        break;
+                    default:
+                        return 0;
+                }
+
+                if (valueA < valueB) return subscriptionsSortDirection === 'asc' ? -1 : 1;
+                if (valueA > valueB) return subscriptionsSortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            // 重新渲染表格
+            renderSubscriptionsTable();
+
+            // 更新表头样式
+            updateSubscriptionsSortHeaders();
+        }
+
+        function updateSubscriptionsSortHeaders() {
+            // 清除所有排序样式
+            const headers = document.querySelectorAll('#subscription-module .sortable-header');
+            headers.forEach(header => {
+                header.classList.remove('sort-asc', 'sort-desc');
+            });
+
+            // 添加当前排序样式
+            if (subscriptionsSortField) {
+                const fieldMap = {
+                    'email': 0,
+                    'preferences': 1,
+                    'language': 2,
+                    'subscribedAt': 3,
+                    'location': 4
+                };
+                
+                const headerIndex = fieldMap[subscriptionsSortField];
+                if (headerIndex !== undefined) {
+                    const header = headers[headerIndex];
+                    if (header) {
+                        header.classList.add(subscriptionsSortDirection === 'asc' ? 'sort-asc' : 'sort-desc');
+                    }
+                }
+            }
         }
 
         function filterSubscriptions() {
@@ -1570,15 +1689,15 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>项目名称</th>
-                            <th>创始人</th>
-                            <th>类别</th>
-                            <th>需求</th>
+                            <th class="sortable-header" onclick="sortProjects('name')">项目名称</th>
+                            <th class="sortable-header" onclick="sortProjects('founder')">创始人</th>
+                            <th class="sortable-header" onclick="sortProjects('category')">类别</th>
+                            <th class="sortable-header" onclick="sortProjects('need')">需求</th>
                             <th>附件</th>
-                            <th>阶段</th>
-                            <th>状态</th>
-                            <th>融资目标</th>
-                            <th>创建时间</th>
+                            <th class="sortable-header" onclick="sortProjects('stage')">阶段</th>
+                            <th class="sortable-header" onclick="sortProjects('status')">状态</th>
+                            <th class="sortable-header" onclick="sortProjects('fundingGoal')">融资目标</th>
+                            <th class="sortable-header" onclick="sortProjects('createdAt')">创建时间</th>
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -1641,6 +1760,102 @@
             `;
             
             container.innerHTML = tableHTML;
+        }
+
+        // 项目管理表格排序功能
+        let projectsSortField = null;
+        let projectsSortDirection = 'asc';
+
+        function sortProjects(field) {
+            // 更新排序状态
+            if (projectsSortField === field) {
+                projectsSortDirection = projectsSortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                projectsSortField = field;
+                projectsSortDirection = 'asc';
+            }
+
+            // 执行排序
+            filteredProjectsData.sort((a, b) => {
+                let valueA, valueB;
+                
+                switch (field) {
+                    case 'name':
+                        valueA = (a.name || '').toLowerCase();
+                        valueB = (b.name || '').toLowerCase();
+                        break;
+                    case 'founder':
+                        valueA = (a.founder || '').toLowerCase();
+                        valueB = (b.founder || '').toLowerCase();
+                        break;
+                    case 'category':
+                        valueA = a.category || '';
+                        valueB = b.category || '';
+                        break;
+                    case 'need':
+                        valueA = a.need || '';
+                        valueB = b.need || '';
+                        break;
+                    case 'stage':
+                        valueA = a.stage || '';
+                        valueB = b.stage || '';
+                        break;
+                    case 'status':
+                        valueA = a.status || '';
+                        valueB = b.status || '';
+                        break;
+                    case 'fundingGoal':
+                        valueA = parseFloat(a.fundingGoal) || 0;
+                        valueB = parseFloat(b.fundingGoal) || 0;
+                        break;
+                    case 'createdAt':
+                        valueA = new Date(a.createdAt).getTime();
+                        valueB = new Date(b.createdAt).getTime();
+                        break;
+                    default:
+                        return 0;
+                }
+
+                if (valueA < valueB) return projectsSortDirection === 'asc' ? -1 : 1;
+                if (valueA > valueB) return projectsSortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            // 重新渲染表格
+            renderProjectsTable();
+
+            // 更新表头样式
+            updateProjectsSortHeaders();
+        }
+
+        function updateProjectsSortHeaders() {
+            // 清除所有排序样式
+            const headers = document.querySelectorAll('#projects-module .sortable-header');
+            headers.forEach(header => {
+                header.classList.remove('sort-asc', 'sort-desc');
+            });
+
+            // 添加当前排序样式
+            if (projectsSortField) {
+                const fieldMap = {
+                    'name': 0,
+                    'founder': 1,
+                    'category': 2,
+                    'need': 3,
+                    'stage': 5,  // 跳过附件列
+                    'status': 6,
+                    'fundingGoal': 7,
+                    'createdAt': 8
+                };
+                
+                const headerIndex = fieldMap[projectsSortField];
+                if (headerIndex !== undefined) {
+                    const header = headers[headerIndex];
+                    if (header) {
+                        header.classList.add(projectsSortDirection === 'asc' ? 'sort-asc' : 'sort-desc');
+                    }
+                }
+            }
         }
 
         function filterProjects() {
@@ -2550,13 +2765,13 @@
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>用户信息</th>
-                                <th>登录方式</th>
-                                <th>订阅状态</th>
-                                <th>地理位置</th>
-                                <th>注册时间</th>
-                                <th>最后登录</th>
-                                <th>状态</th>
+                                <th class="sortable-header" onclick="sortUsers('email')">用户信息</th>
+                                <th class="sortable-header" onclick="sortUsers('provider')">登录方式</th>
+                                <th class="sortable-header" onclick="sortUsers('isSubscriber')">订阅状态</th>
+                                <th class="sortable-header" onclick="sortUsers('location')">地理位置</th>
+                                <th class="sortable-header" onclick="sortUsers('createdAt')">注册时间</th>
+                                <th class="sortable-header" onclick="sortUsers('lastLoginAt')">最后登录</th>
+                                <th class="sortable-header" onclick="sortUsers('isActive')">状态</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
@@ -2620,6 +2835,94 @@
             `;
             
             container.innerHTML = tableHTML;
+        }
+
+        // 用户表格排序功能
+        let usersSortField = null;
+        let usersSortDirection = 'asc';
+
+        function sortUsers(field) {
+            // 更新排序状态
+            if (usersSortField === field) {
+                usersSortDirection = usersSortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                usersSortField = field;
+                usersSortDirection = 'asc';
+            }
+
+            // 执行排序
+            filteredUsersData.sort((a, b) => {
+                let valueA, valueB;
+                
+                switch (field) {
+                    case 'email':
+                        valueA = a.email.toLowerCase();
+                        valueB = b.email.toLowerCase();
+                        break;
+                    case 'provider':
+                        valueA = a.provider;
+                        valueB = b.provider;
+                        break;
+                    case 'isSubscriber':
+                        valueA = a.isSubscriber ? 1 : 0;
+                        valueB = b.isSubscriber ? 1 : 0;
+                        break;
+                    case 'location':
+                        valueA = (a.location || '').toLowerCase();
+                        valueB = (b.location || '').toLowerCase();
+                        break;
+                    case 'createdAt':
+                    case 'lastLoginAt':
+                        valueA = new Date(a[field]).getTime();
+                        valueB = new Date(b[field]).getTime();
+                        break;
+                    case 'isActive':
+                        valueA = a.isActive ? 1 : 0;
+                        valueB = b.isActive ? 1 : 0;
+                        break;
+                    default:
+                        return 0;
+                }
+
+                if (valueA < valueB) return usersSortDirection === 'asc' ? -1 : 1;
+                if (valueA > valueB) return usersSortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            // 重新渲染表格
+            renderUsersTable();
+
+            // 更新表头样式
+            updateUsersSortHeaders();
+        }
+
+        function updateUsersSortHeaders() {
+            // 清除所有排序样式
+            const headers = document.querySelectorAll('#users-module .sortable-header');
+            headers.forEach(header => {
+                header.classList.remove('sort-asc', 'sort-desc');
+            });
+
+            // 添加当前排序样式
+            if (usersSortField) {
+                const fieldMap = {
+                    'email': 0,
+                    'provider': 1,
+                    'isSubscriber': 2,
+                    'location': 3,
+                    'createdAt': 4,
+                    'lastLoginAt': 5,
+                    'isActive': 6
+                };
+                
+                const headerIndex = fieldMap[usersSortField];
+                if (headerIndex !== undefined) {
+                    const header = headers[headerIndex];
+                    if (header) {
+                        header.classList.add(usersSortDirection === 'asc' ? 'sort-asc' : 'sort-desc');
+                    }
+                }
+            }
         }
 
         function filterUsers() {
