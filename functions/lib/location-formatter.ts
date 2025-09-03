@@ -47,11 +47,11 @@ export function formatUserLocation(user: UserLocationInfo): string {
     locationInfo = getLocationFromIPAddress(user.ipAddress, user.cfCountry);
   }
   
-  // 后备逻辑2：基于邮箱域名推断
-  if (locationInfo === '未知地区' || locationInfo === '其他地区') {
+  // 后备逻辑2：基于邮箱域名推断（只在完全没有信息时使用）
+  if (locationInfo === '未知地区') {
     const emailDomain = user.email.split('@')[1];
     const domainLocation = getLocationFromEmailDomain(emailDomain);
-    if (domainLocation !== '其他地区') {
+    if (domainLocation !== '未知地区') {
       locationInfo = domainLocation;
     }
   }
@@ -146,44 +146,39 @@ function getLocationFromIPAddress(ip: string, cfCountry?: string): string {
 }
 
 /**
- * 基于邮箱域名获取地理位置信息
+ * 基于邮箱域名推断地理位置 - 只返回真实地理位置
  */
 function getLocationFromEmailDomain(emailDomain: string): string {
   const domainLocationMap: { [key: string]: string } = {
-    // 中国主要邮箱服务商
-    'qq.com': '腾讯邮箱 (中国)',
-    '163.com': '网易邮箱 (中国)',
-    '126.com': '网易邮箱 (中国)',
-    'sina.com': '新浪邮箱 (中国)',
-    'sina.cn': '新浪邮箱 (中国)',
-    'sohu.com': '搜狐邮箱 (中国)',
-    'foxmail.com': '腾讯Foxmail (中国)',
-    'yeah.net': '网易邮箱 (中国)',
-    'tom.com': 'TOM邮箱 (中国)',
-    'aliyun.com': '阿里云邮箱 (中国)',
+    // 中国主要邮箱服务商 - 只显示地理位置
+    'qq.com': '中国',
+    '163.com': '中国',
+    '126.com': '中国',
+    'sina.com': '中国',
+    'sina.cn': '中国',
+    'sohu.com': '中国',
+    'foxmail.com': '中国',
+    'yeah.net': '中国',
+    'tom.com': '中国',
+    'aliyun.com': '中国',
     
-    // 国际邮箱服务商
-    'gmail.com': 'Google邮箱 (全球)',
-    'yahoo.com': 'Yahoo邮箱 (美国)',
-    'yahoo.co.jp': 'Yahoo日本 (日本)',
-    'hotmail.com': 'Microsoft邮箱 (美国)',
-    'outlook.com': 'Microsoft邮箱 (美国)',
-    'live.com': 'Microsoft邮箱 (美国)',
-    'msn.com': 'Microsoft邮箱 (美国)',
-    'icloud.com': 'Apple邮箱 (美国)',
-    'me.com': 'Apple邮箱 (美国)',
+    // 国际邮箱服务商 - 根据总部位置
+    'gmail.com': '全球用户',
+    'yahoo.com': '美国',
+    'yahoo.co.jp': '日本',
+    'hotmail.com': '美国',
+    'outlook.com': '美国',
+    'live.com': '美国',
+    'msn.com': '美国',
+    'icloud.com': '美国',
+    'me.com': '美国',
     
-    // 企业和机构
-    'svtr.ai': '平台内部',
-    'example.com': '测试环境',
-    
-    // 教育机构常见后缀
-    'edu.cn': '中国教育机构',
-    'ac.cn': '中国科研机构',
-    'gov.cn': '中国政府机构',
-    'edu': '教育机构',
-    'ac.uk': '英国学术机构',
-    'edu.au': '澳大利亚教育机构'
+    // 教育机构地理位置
+    'edu.cn': '中国',
+    'ac.cn': '中国',
+    'gov.cn': '中国',
+    'ac.uk': '英国',
+    'edu.au': '澳大利亚'
   };
   
   const lowerDomain = emailDomain.toLowerCase();
@@ -193,12 +188,19 @@ function getLocationFromEmailDomain(emailDomain: string): string {
     return domainLocationMap[lowerDomain];
   }
   
-  // 模糊匹配教育机构
-  if (lowerDomain.includes('.edu')) return '教育机构';
-  if (lowerDomain.includes('.gov')) return '政府机构';
-  if (lowerDomain.includes('.org')) return '非营利组织';
+  // 基于顶级域名的地理推断
+  if (lowerDomain.endsWith('.cn')) return '中国';
+  if (lowerDomain.endsWith('.jp')) return '日本';
+  if (lowerDomain.endsWith('.uk')) return '英国';
+  if (lowerDomain.endsWith('.de')) return '德国';
+  if (lowerDomain.endsWith('.fr')) return '法国';
+  if (lowerDomain.endsWith('.au')) return '澳大利亚';
+  if (lowerDomain.endsWith('.ca')) return '加拿大';
+  if (lowerDomain.endsWith('.kr')) return '韩国';
+  if (lowerDomain.endsWith('.in')) return '印度';
+  if (lowerDomain.endsWith('.sg')) return '新加坡';
   
-  return '其他地区';
+  return '未知地区';
 }
 
 /**
