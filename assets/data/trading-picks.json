@@ -2,8 +2,8 @@
   "meta": {
     "title": "交易精选",
     "description": "精选优质创业公司与投资机会分析",
-    "totalCompanies": 20,
-    "lastUpdated": "2025-09-03T18:39:46.795Z",
+    "totalCompanies": 19,
+    "lastUpdated": "2025-09-04T18:29:45.168Z",
     "source": "SVTR飞书知识库",
     "dataVersion": "2.0"
   },
@@ -45,41 +45,6 @@
     },
     {
       "id": 2,
-      "name": "Anthropic",
-      "sector": "🤖 大语言模型",
-      "stage": "超级独角兽 · 成长期",
-      "description": "Anthropic，正筹集高达 100 亿美元的资金，该轮融资由 Iconiq Capital 领投，TPG、Lightspeed、Spark、Menlo 和主权基金支持，这是之前报告的金额的两倍多。",
-      "fundingAmount": "35.0亿美元融资 · 估值615亿美元",
-      "lastFundingDate": "2025年8月",
-      "valuation": "615亿美元",
-      "investors": [
-        "Lightspeed Venture Partners",
-        "Bessemer Venture Partners",
-        "Cisco Investments等"
-      ],
-      "founder": "Dario Amodei",
-      "website": "https://www.anthropic.com/",
-      "location": "美国旧金山",
-      "foundedYear": "2021",
-      "employees": "750",
-      "arr": "14.0亿美元",
-      "tags": [
-        "多模态",
-        "AI100",
-        "Unicorn",
-        "AI50",
-        "高收入"
-      ],
-      "analysisPoints": [
-        "🏆 超级独角兽企业，估值615亿美元，行业领军地位",
-        "💰 年化收入14.0亿美元，商业模式成熟",
-        "💎 单轮融资35.0亿美元，资本高度认可"
-      ],
-      "businessModel": "人工智能技术",
-      "deepResearch": "Anthropic，OpenAI宫斗背后的公司"
-    },
-    {
-      "id": 3,
       "name": "Surge AI",
       "sector": "💾 数据服务",
       "stage": "超级独角兽 · 成长期",
@@ -107,7 +72,7 @@
       "deepResearch": ""
     },
     {
-      "id": 4,
+      "id": 3,
       "name": "Anysphere（Cursor）",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 成长期",
@@ -140,7 +105,7 @@
       "deepResearch": ""
     },
     {
-      "id": 5,
+      "id": 4,
       "name": "Cerebras Systems",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -174,7 +139,7 @@
       "deepResearch": ""
     },
     {
-      "id": 6,
+      "id": 5,
       "name": "Crusoe",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -208,7 +173,7 @@
       "deepResearch": ""
     },
     {
-      "id": 7,
+      "id": 6,
       "name": "Lambda",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -243,7 +208,7 @@
       "deepResearch": ""
     },
     {
-      "id": 8,
+      "id": 7,
       "name": "Runway",
       "sector": "🎯 垂直模型",
       "stage": "· 成熟期",
@@ -275,7 +240,7 @@
       "deepResearch": ""
     },
     {
-      "id": 9,
+      "id": 8,
       "name": "Vercel",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 成熟期",
@@ -309,7 +274,7 @@
       "deepResearch": ""
     },
     {
-      "id": 10,
+      "id": 9,
       "name": "Rivos",
       "sector": "⚙️ AI基础设施",
       "stage": "· 成长期",
@@ -342,7 +307,7 @@
       "deepResearch": ""
     },
     {
-      "id": 11,
+      "id": 10,
       "name": "Abridge",
       "sector": "🧬 生命科学",
       "stage": "独角兽 · 成熟期",
@@ -378,7 +343,7 @@
       "deepResearch": ""
     },
     {
-      "id": 12,
+      "id": 11,
       "name": "Lovable",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 初创期",
@@ -413,7 +378,7 @@
       "deepResearch": ""
     },
     {
-      "id": 13,
+      "id": 12,
       "name": "Reflection AI",
       "sector": "👨‍💻 开发者工具",
       "stage": "准独角兽 · 初创期",
@@ -448,7 +413,7 @@
       "deepResearch": ""
     },
     {
-      "id": 14,
+      "id": 13,
       "name": "Vast Data",
       "sector": "💾 数据服务",
       "stage": "独角兽 · 成熟期",
@@ -479,7 +444,7 @@
       "deepResearch": ""
     },
     {
-      "id": 15,
+      "id": 14,
       "name": "n8n",
       "sector": "👨‍💻 开发者工具",
       "stage": "准独角兽 · 成熟期",
@@ -510,7 +475,7 @@
       "deepResearch": ""
     },
     {
-      "id": 16,
+      "id": 15,
       "name": "Fireworks AI",
       "sector": "🤖 AI模型",
       "stage": "准独角兽 · 成长期",
@@ -544,7 +509,7 @@
       "deepResearch": ""
     },
     {
-      "id": 17,
+      "id": 16,
       "name": "LangChain",
       "sector": "🤖 AI模型",
       "stage": "· 初创期",
@@ -572,7 +537,7 @@
       "deepResearch": ""
     },
     {
-      "id": 18,
+      "id": 17,
       "name": "Substack",
       "sector": "🏢 企业服务",
       "stage": "· 成熟期",
@@ -596,7 +561,7 @@
       "deepResearch": ""
     },
     {
-      "id": 23,
+      "id": 22,
       "name": "Canva",
       "sector": "🎯 垂直模型",
       "stage": "超级独角兽 · 初创期",
@@ -621,7 +586,7 @@
       "deepResearch": ""
     },
     {
-      "id": 24,
+      "id": 23,
       "name": "Polymarket",
       "sector": "💰 金融科技",
       "stage": "独角兽 · 成长期",
