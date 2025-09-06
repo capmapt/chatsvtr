@@ -88,6 +88,7 @@
   <link rel="preload" href="assets/css/style-optimized.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   
   
+  
   <link rel="stylesheet" href="assets/css/sidebar-optimized.css">
   <link rel="stylesheet" href="assets/css/sidebar-resizable.css">
   <link rel="stylesheet" href="assets/css/touch-optimized.css">
@@ -522,6 +523,27 @@
         });
       }
     }
+  </script>
+
+  <!-- 标签栏点击跳转脚本 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 为内容社区标签添加点击事件
+      const contentCommunityTag = document.querySelector('.tag-vc-community');
+      
+      if (contentCommunityTag) {
+        contentCommunityTag.addEventListener('click', function() {
+          // 直接跳转到内容社区页面
+          window.location.href = 'pages/content-community.html';
+        });
+        
+        // 添加鼠标悬停提示
+        contentCommunityTag.title = '点击进入内容社区';
+        
+        // 增强视觉反馈
+        contentCommunityTag.style.cursor = 'pointer';
+      }
+    });
   </script>
 </body>
 </html>

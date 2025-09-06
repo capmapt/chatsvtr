@@ -1,0 +1,1973 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes,viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#FA8C32">
+  
+  <title>内容社区 - SVTR | AI创投生态内容平台</title>
+  <meta name="description" content="SVTR内容社区，汇聚全球AI创投优质内容，按初创公司、上市公司、行业分析、投资机构分类，助您深度了解AI创投生态。">
+  <meta name="keywords" content="AI创投,内容社区,初创公司,投资机构,行业分析,创投资讯">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://svtr.ai/pages/content-community.html">
+  <meta property="og:title" content="内容社区 - SVTR | AI创投生态内容平台">
+  <meta property="og:description" content="汇聚全球AI创投优质内容，按初创公司、上市公司、行业分析、投资机构分类">
+  <meta property="og:image" content="https://svtr.ai/assets/images/community-og.webp">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../assets/css/style-optimized.css">
+  <link rel="stylesheet" href="../assets/css/chat-login-overlay.css">
+  <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+  
+  <style>
+    /* 主站高级登录界面样式 */
+    .user-action-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .modal-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-content {
+      position: relative;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      max-width: 480px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: slideUp 0.3s ease-out;
+    }
+
+    .modal-header {
+      padding: 2rem 2rem 1rem;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      color: #333;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #666;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+
+    .modal-close:hover {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .modal-body {
+      padding: 2rem;
+    }
+
+    .social-login-section {
+      margin-bottom: 2rem;
+    }
+
+    .social-login-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .btn-oauth {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 20px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      background: white;
+      color: #333;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn-oauth:hover {
+      border-color: var(--primary-color, #FA8C32);
+      color: var(--primary-color, #FA8C32);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(250, 140, 50, 0.2);
+    }
+
+    .login-divider {
+      display: flex;
+      align-items: center;
+      margin: 2rem 0;
+      color: #999;
+      font-size: 0.9rem;
+    }
+
+    .login-divider::before,
+    .login-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e0e0e0;
+    }
+
+    .login-divider span {
+      margin: 0 1rem;
+    }
+
+    .login-method-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .method-tab {
+      flex: 1;
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      background: white;
+      color: #666;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .method-tab.active {
+      border-color: var(--primary-color, #FA8C32);
+      background: var(--primary-color, #FA8C32);
+      color: white;
+    }
+
+    .login-method-content {
+      display: none;
+    }
+
+    .login-method-content.active {
+      display: block;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .input-group input {
+      flex: 1;
+      padding: 14px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--primary-color, #FA8C32);
+    }
+
+    .btn-send-code,
+    .btn-send-magic {
+      padding: 14px 20px;
+      border: none;
+      border-radius: 8px;
+      background: var(--primary-color, #FA8C32);
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .btn-send-code:hover,
+    .btn-send-magic:hover {
+      background: #E8731A;
+      transform: translateY(-1px);
+    }
+
+    .verification-input {
+      margin-top: 1rem;
+    }
+
+    .code-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      text-align: center;
+      letter-spacing: 0.2em;
+      margin-bottom: 1rem;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary-color, #FA8C32), #FF7519);
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(250, 140, 50, 0.4);
+    }
+
+    .success-message {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .success-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .member-benefits {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .member-benefits h4 {
+      margin: 0 0 1rem;
+      color: #333;
+      font-size: 1.1rem;
+    }
+
+    .member-benefits ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .member-benefits li {
+      padding: 0.5rem 0;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      z-index: 10001;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: all 0.3s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .toast-success {
+      background: #28a745;
+    }
+
+    .toast-error {
+      background: #dc3545;
+    }
+
+    .toast-info {
+      background: #17a2b8;
+    }
+
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 内容社区专用样式 */
+    .community-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 60px 20px 40px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .community-title {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    
+    .community-subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .category-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin: 40px 0;
+      padding: 0 20px;
+    }
+    
+    .category-btn {
+      background: white;
+      border: 2px solid #e1e8ed;
+      color: #333;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .category-btn:hover, .category-btn.active {
+      background: #FA8C32;
+      color: white;
+      border-color: #FA8C32;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(250, 140, 50, 0.3);
+    }
+    
+    .category-icon {
+      font-size: 1.1em;
+    }
+    
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 25px;
+      padding: 0 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .article-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid #f0f0f0;
+    }
+    
+    .article-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .article-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: linear-gradient(45deg, #f0f2f5, #e1e8ed);
+    }
+    
+    .article-content {
+      padding: 20px;
+    }
+    
+    .article-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    
+    .tag {
+      padding: 4px 12px;
+      border-radius: 15px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    
+    .tag-primary {
+      background: #FF6B35;
+      color: white;
+    }
+    
+    .tag-secondary {
+      background: #667eea;
+      color: white;
+    }
+    
+    .tag-tech {
+      background: #28a745;
+      color: white;
+    }
+    
+    .tag-stage {
+      background: #6f42c1;
+      color: white;
+    }
+    
+    .article-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #2c3e50;
+      line-height: 1.4;
+    }
+    
+    .article-excerpt {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 15px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .article-meta {
+      display: flex;
+      justify-content: between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: #888;
+      padding-top: 15px;
+      border-top: 1px solid #f0f0f0;
+    }
+    
+    .article-author {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .author-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #FA8C32;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
+    .filters-section {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 0 20px 30px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .filters-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #333;
+    }
+    
+    .filter-group {
+      margin-bottom: 15px;
+    }
+    
+    .filter-label {
+      display: inline-block;
+      margin-right: 15px;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #555;
+      min-width: 80px;
+    }
+    
+    .filter-options {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    
+    .filter-option {
+      padding: 6px 16px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+    
+    .filter-option:hover, .filter-option.active {
+      background: #FA8C32;
+      color: white;
+      border-color: #FA8C32;
+    }
+    
+    .search-bar {
+      width: 100%;
+      max-width: 500px;
+      padding: 12px 20px;
+      border: 2px solid #e1e8ed;
+      border-radius: 25px;
+      font-size: 1rem;
+      margin: 0 auto 30px;
+      display: block;
+    }
+    
+    .search-bar:focus {
+      outline: none;
+      border-color: #FA8C32;
+      box-shadow: 0 0 0 3px rgba(250, 140, 50, 0.1);
+    }
+    
+    .featured-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      margin: 40px 20px;
+      border-radius: 16px;
+      padding: 40px 30px;
+      color: white;
+      text-align: center;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .featured-title {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    
+    .featured-description {
+      font-size: 1.1rem;
+      opacity: 0.95;
+      margin-bottom: 25px;
+    }
+    
+    .cta-button {
+      background: #FA8C32;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+    
+    .cta-button:hover {
+      background: #e67e22;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+    
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(255,255,255,0.95);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: #333;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+    
+    .back-button:hover {
+      background: white;
+      transform: scale(1.05);
+    }
+    
+    @media (max-width: 768px) {
+      .community-title {
+        font-size: 2rem;
+      }
+      
+      .category-nav {
+        gap: 10px;
+      }
+      
+      .category-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+      }
+      
+      .content-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 15px;
+      }
+      
+      .filters-section {
+        margin: 0 15px 25px;
+        padding: 15px;
+      }
+      
+      .filter-label {
+        display: block;
+        margin-bottom: 8px;
+      }
+      
+      .featured-section {
+        margin: 30px 15px;
+        padding: 30px 20px;
+      }
+      
+      .featured-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <button class="back-button" onclick="window.history.back()" title="返回">
+    ←
+  </button>
+
+  <div class="community-header">
+    <h1 class="community-title">SVTR 内容社区</h1>
+    <p class="community-subtitle">汇聚全球AI创投优质内容，深度洞察行业趋势，连接创业者与投资人</p>
+  </div>
+
+  <div class="container">
+    <!-- 搜索栏 -->
+    <input type="text" class="search-bar" id="searchInput" placeholder="搜索文章、公司、投资机构...">
+
+    <!-- 分类导航 -->
+    <nav class="category-nav">
+      <a href="#" class="category-btn active" data-category="all">
+        <span class="category-icon">🏠</span>精选内容
+      </a>
+      <a href="#" class="category-btn" data-category="startups">
+        <span class="category-icon">🚀</span>AI初创公司
+      </a>
+      <a href="#" class="category-btn" data-category="public">
+        <span class="category-icon">📈</span>AI上市公司
+      </a>
+      <a href="#" class="category-btn" data-category="analysis">
+        <span class="category-icon">🔬</span>AI行业分析
+      </a>
+      <a href="#" class="category-btn" data-category="investors">
+        <span class="category-icon">💰</span>AI投资机构
+      </a>
+      <a href="#" class="category-btn" data-category="authors">
+        <span class="category-icon">👥</span>作者中心
+      </a>
+    </nav>
+
+    <!-- 筛选器 -->
+    <div class="filters-section" id="filtersSection">
+      <div class="filters-title">智能筛选</div>
+      
+      <div class="filter-group">
+        <span class="filter-label">公司阶段:</span>
+        <div class="filter-options">
+          <span class="filter-option" data-filter="stage" data-value="early">早期阶段</span>
+          <span class="filter-option" data-filter="stage" data-value="growth">成长期</span>
+          <span class="filter-option" data-filter="stage" data-value="unicorn">独角兽</span>
+          <span class="filter-option" data-filter="stage" data-value="public">上市公司</span>
+        </div>
+      </div>
+      
+      <div class="filter-group">
+        <span class="filter-label">行业层次:</span>
+        <div class="filter-options">
+          <span class="filter-option" data-filter="layer" data-value="infrastructure">基础层</span>
+          <span class="filter-option" data-filter="layer" data-value="model">模型层</span>
+          <span class="filter-option" data-filter="layer" data-value="application">应用层</span>
+        </div>
+      </div>
+      
+      <div class="filter-group">
+        <span class="filter-label">投资类型:</span>
+        <div class="filter-options">
+          <span class="filter-option" data-filter="investment" data-value="angel">天使投资</span>
+          <span class="filter-option" data-filter="investment" data-value="vc">VC风投</span>
+          <span class="filter-option" data-filter="investment" data-value="pe">PE私募</span>
+          <span class="filter-option" data-filter="investment" data-value="cvc">CVC企业风投</span>
+          <span class="filter-option" data-filter="investment" data-value="lp">LP有限合伙人</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 内容网格 -->
+    <div class="content-grid" id="contentGrid">
+      <!-- 示例文章卡片 -->
+      <article class="article-card" data-category="startups" data-stage="unicorn" data-layer="model">
+        <img src="../assets/images/placeholder-article.webp" alt="OpenAI融资" class="article-image" onerror="this.style.display='none'">
+        <div class="article-content">
+          <div class="article-tags">
+            <span class="tag tag-primary">独角兽</span>
+            <span class="tag tag-secondary">模型层</span>
+            <span class="tag tag-tech">大语言模型</span>
+          </div>
+          <h3 class="article-title">OpenAI完成65亿美元融资，估值达1570亿美元</h3>
+          <p class="article-excerpt">OpenAI在新一轮融资中获得65亿美元投资，公司估值达到创纪录的1570亿美元。此轮融资由Thrive Capital领投，微软、NVIDIA等科技巨头参与投资...</p>
+          <div class="article-meta">
+            <div class="article-author">
+              <div class="author-avatar">S</div>
+              <span>SVTR编辑部</span>
+            </div>
+            <span>2024-10-15</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="article-card" data-category="public" data-stage="public" data-layer="infrastructure">
+        <img src="../assets/images/placeholder-article.webp" alt="NVIDIA财报" class="article-image" onerror="this.style.display='none'">
+        <div class="article-content">
+          <div class="article-tags">
+            <span class="tag tag-primary">上市公司</span>
+            <span class="tag tag-secondary">基础层</span>
+            <span class="tag tag-tech">芯片算力</span>
+          </div>
+          <h3 class="article-title">NVIDIA Q3财报：数据中心收入达309亿美元</h3>
+          <p class="article-excerpt">NVIDIA发布2024年第三季度财报，数据中心业务收入达到309亿美元，同比增长112%，AI芯片需求持续强劲推动公司业绩创新高...</p>
+          <div class="article-meta">
+            <div class="article-author">
+              <div class="author-avatar">A</div>
+              <span>AI分析师</span>
+            </div>
+            <span>2024-10-14</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="article-card" data-category="investors" data-investment="vc" data-layer="application">
+        <img src="../assets/images/placeholder-article.webp" alt="红杉投资" class="article-image" onerror="this.style.display='none'">
+        <div class="article-content">
+          <div class="article-tags">
+            <span class="tag tag-stage">A轮</span>
+            <span class="tag tag-secondary">应用层</span>
+            <span class="tag tag-tech">医疗AI</span>
+          </div>
+          <h3 class="article-title">红杉资本领投AI医疗初创公司A轮5000万美元</h3>
+          <p class="article-excerpt">红杉资本中国基金领投AI医疗诊断公司A轮融资，金额达5000万美元。该公司专注于利用深度学习技术提升医疗影像诊断准确率...</p>
+          <div class="article-meta">
+            <div class="article-author">
+              <div class="author-avatar">V</div>
+              <span>投资观察</span>
+            </div>
+            <span>2024-10-13</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="article-card" data-category="analysis" data-layer="model" data-stage="growth">
+        <img src="../assets/images/placeholder-article.webp" alt="多模态模型" class="article-image" onerror="this.style.display='none'">
+        <div class="article-content">
+          <div class="article-tags">
+            <span class="tag tag-secondary">模型层</span>
+            <span class="tag tag-tech">多模态</span>
+            <span class="tag tag-primary">行业分析</span>
+          </div>
+          <h3 class="article-title">多模态AI模型竞争加剧：从GPT-4V到Claude 3.5</h3>
+          <p class="article-excerpt">多模态AI模型成为新的竞争焦点，从OpenAI的GPT-4V到Anthropic的Claude 3.5，各大厂商在视觉理解能力上展开激烈竞争...</p>
+          <div class="article-meta">
+            <div class="article-author">
+              <div class="author-avatar">T</div>
+              <span>技术评测</span>
+            </div>
+            <span>2024-10-12</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="article-card" data-category="startups" data-stage="early" data-layer="application">
+        <img src="../assets/images/placeholder-article.webp" alt="AI初创" class="article-image" onerror="this.style.display='none'">
+        <div class="article-content">
+          <div class="article-tags">
+            <span class="tag tag-stage">种子轮</span>
+            <span class="tag tag-secondary">应用层</span>
+            <span class="tag tag-tech">教育科技</span>
+          </div>
+          <h3 class="article-title">AI教育初创公司完成1200万美元种子轮融资</h3>
+          <p class="article-excerpt">专注于个性化学习的AI教育平台获得1200万美元种子轮投资，将用于扩大产品开发团队和市场推广，目标是革新传统教育模式...</p>
+          <div class="article-meta">
+            <div class="article-author">
+              <div class="author-avatar">E</div>
+              <span>创业报道</span>
+            </div>
+            <span>2024-10-11</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="article-card" data-category="investors" data-investment="cvc" data-layer="infrastructure">
+        <img src="../assets/images/placeholder-article.webp" alt="企业风投" class="article-image" onerror="this.style.display='none'">
+        <div class="article-content">
+          <div class="article-tags">
+            <span class="tag tag-primary">CVC企业风投</span>
+            <span class="tag tag-secondary">基础层</span>
+            <span class="tag tag-tech">云服务</span>
+          </div>
+          <h3 class="article-title">谷歌风投布局AI云基础设施，投资三家初创公司</h3>
+          <p class="article-excerpt">Google Ventures近期密集投资三家AI云基础设施初创公司，总投资额超过1亿美元，显示出科技巨头对AI基础设施的重视...</p>
+          <div class="article-meta">
+            <div class="article-author">
+              <div class="author-avatar">C</div>
+              <span>CVC观察</span>
+            </div>
+            <span>2024-10-10</span>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- 精选板块 -->
+    <section class="featured-section">
+      <h2 class="featured-title">加入SVTR内容社区</h2>
+      <p class="featured-description">获取最新AI创投资讯，连接全球创业者和投资人，共建AI创投生态</p>
+      <button id="joinCommunityBtn" class="cta-button">立即加入社区</button>
+    </section>
+  </div>
+
+  <script>
+    // 内容社区交互脚本
+    document.addEventListener('DOMContentLoaded', function() {
+      const categoryBtns = document.querySelectorAll('.category-btn');
+      const filterOptions = document.querySelectorAll('.filter-option');
+      const searchInput = document.getElementById('searchInput');
+      const contentGrid = document.getElementById('contentGrid');
+      const articleCards = document.querySelectorAll('.article-card');
+      
+      let activeFilters = {
+        category: 'all',
+        stage: null,
+        layer: null,
+        investment: null
+      };
+
+      // 分类按钮点击处理
+      categoryBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          categoryBtns.forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          
+          activeFilters.category = this.dataset.category;
+          filterArticles();
+        });
+      });
+
+      // 筛选器点击处理
+      filterOptions.forEach(option => {
+        option.addEventListener('click', function() {
+          const filterType = this.dataset.filter;
+          const filterValue = this.dataset.value;
+          
+          // 切换激活状态
+          if (this.classList.contains('active')) {
+            this.classList.remove('active');
+            activeFilters[filterType] = null;
+          } else {
+            // 移除同类型其他激活状态
+            document.querySelectorAll(`[data-filter="${filterType}"]`).forEach(opt => {
+              opt.classList.remove('active');
+            });
+            this.classList.add('active');
+            activeFilters[filterType] = filterValue;
+          }
+          
+          filterArticles();
+        });
+      });
+
+      // 搜索功能
+      searchInput.addEventListener('input', function() {
+        filterArticles();
+      });
+
+      // 文章筛选函数
+      function filterArticles() {
+        const searchTerm = searchInput.value.toLowerCase();
+        
+        articleCards.forEach(card => {
+          let visible = true;
+          
+          // 分类筛选
+          if (activeFilters.category !== 'all') {
+            const cardCategory = card.dataset.category;
+            if (cardCategory !== activeFilters.category) {
+              visible = false;
+            }
+          }
+          
+          // 阶段筛选
+          if (activeFilters.stage && card.dataset.stage !== activeFilters.stage) {
+            visible = false;
+          }
+          
+          // 层次筛选
+          if (activeFilters.layer && card.dataset.layer !== activeFilters.layer) {
+            visible = false;
+          }
+          
+          // 投资类型筛选
+          if (activeFilters.investment && card.dataset.investment !== activeFilters.investment) {
+            visible = false;
+          }
+          
+          // 搜索筛选
+          if (searchTerm) {
+            const title = card.querySelector('.article-title').textContent.toLowerCase();
+            const excerpt = card.querySelector('.article-excerpt').textContent.toLowerCase();
+            const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase());
+            
+            if (!title.includes(searchTerm) && 
+                !excerpt.includes(searchTerm) && 
+                !tags.some(tag => tag.includes(searchTerm))) {
+              visible = false;
+            }
+          }
+          
+          // 显示/隐藏文章
+          if (visible) {
+            card.style.display = 'block';
+            // 添加动画效果
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+              card.style.transition = 'all 0.3s ease';
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            }, 50);
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      // 文章卡片点击处理
+      articleCards.forEach(card => {
+        card.addEventListener('click', function() {
+          // 这里可以跳转到文章详情页
+          const title = this.querySelector('.article-title').textContent;
+          console.log('点击文章:', title);
+          // 将来实现：window.location.href = '/article/' + articleId;
+        });
+      });
+
+      // 平滑滚动到锚点
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+
+      // 懒加载图片
+      const images = document.querySelectorAll('.article-image');
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.removeAttribute('data-src');
+            }
+            observer.unobserve(img);
+          }
+        });
+      });
+
+      images.forEach(img => imageObserver.observe(img));
+
+      // 加入社区按钮功能
+      const joinCommunityBtn = document.getElementById('joinCommunityBtn');
+      if (joinCommunityBtn) {
+        joinCommunityBtn.addEventListener('click', function() {
+          // 检查用户是否已登录
+          const token = localStorage.getItem('svtr_token');
+          const user = localStorage.getItem('svtr_user');
+          
+          if (token && user) {
+            // 已登录用户显示成功消息
+            showLoginSuccess(JSON.parse(user));
+          } else {
+            // 未登录用户显示登录界面
+            showLoginOverlay();
+          }
+        });
+      }
+    });
+
+    // 显示登录遮罩层
+    function showLoginOverlay() {
+      // 创建高级登录界面（与主站保持一致）
+      const modal = document.createElement('div');
+      modal.className = 'user-action-modal';
+      modal.innerHTML = `
+        <div class="modal-backdrop" onclick="this.parentElement.remove()"></div>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>🚀 登录 SVTR</h3>
+            <button class="modal-close" onclick="this.closest('.user-action-modal').remove()">×</button>
+          </div>
+          <div class="modal-body">
+            <!-- 社交登录按钮 -->
+            <div class="social-login-section">
+              <div class="social-login-buttons">
+                <button class="btn-oauth btn-google" onclick="showToast('Google 登录功能开发中', 'info')">
+                  <svg width="18" height="18" viewBox="0 0 24 24" style="margin-right: 8px;">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                  </svg>
+                  使用 Google 登录
+                </button>
+                
+                <button class="btn-oauth btn-github" onclick="showToast('GitHub 登录功能开发中', 'info')">
+                  <svg width="18" height="18" viewBox="0 0 24 24" style="margin-right: 8px;">
+                    <path fill="currentColor" d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                  使用 GitHub 登录
+                </button>
+                
+                <button class="btn-oauth btn-linkedin" onclick="showToast('LinkedIn 登录功能开发中', 'info')">
+                  <svg width="18" height="18" viewBox="0 0 24 24" style="margin-right: 8px;">
+                    <path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                  使用 LinkedIn 登录
+                </button>
+              </div>
+            </div>
+
+            <!-- 分割线 -->
+            <div class="login-divider">
+              <span>或</span>
+            </div>
+
+            <!-- 邮箱验证码登录 -->
+            <div class="email-login-section">
+              <div class="login-method-tabs">
+                <button class="method-tab active" data-method="code">
+                  📧 验证码登录
+                </button>
+                <button class="method-tab" data-method="magic">
+                  🔗 Magic Link
+                </button>
+              </div>
+
+              <!-- 验证码登录 -->
+              <div class="login-method-content active" data-method="code">
+                <form class="email-code-form">
+                  <div class="input-group">
+                    <input type="email" placeholder="输入邮箱地址" required>
+                    <button type="button" class="btn-send-code">
+                      发送验证码
+                    </button>
+                  </div>
+                  <div class="verification-input" style="display: none;">
+                    <input type="text" placeholder="输入6位验证码" maxlength="6" class="code-input">
+                    <button type="submit" class="btn-primary btn-verify">
+                      验证登录
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- Magic Link登录 -->
+              <div class="login-method-content" data-method="magic">
+                <form class="magic-link-form">
+                  <div class="input-group">
+                    <input type="email" placeholder="输入邮箱地址" required>
+                    <button type="submit" class="btn-send-magic">
+                      发送登录链接
+                    </button>
+                  </div>
+                  <div class="magic-link-sent" style="display: none;">
+                    <div class="success-message">
+                      <div class="success-icon">✅</div>
+                      <p>登录链接已发送到您的邮箱</p>
+                      <small>请查看邮箱并点击链接登录</small>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            
+            <!-- 会员权益说明 -->
+            <div class="member-benefits">
+              <h4>🎯 会员专享权益</h4>
+              <ul>
+                <li>📊 高级数据分析报告</li>
+                <li>🎯 个性化投资机会推送</li>
+                <li>🤝 专属社群和活动</li>
+                <li>💼 一对一咨询服务</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(modal);
+      
+      // 绑定高级登录界面事件
+      bindAdvancedLoginEvents(modal);
+    }
+
+    // 绑定高级登录界面事件（与主站保持一致）
+    function bindAdvancedLoginEvents(modal) {
+      // 绑定登录方式切换
+      const methodTabs = modal.querySelectorAll('.method-tab');
+      const methodContents = modal.querySelectorAll('.login-method-content');
+
+      methodTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          const method = tab.dataset.method;
+
+          // 更新标签状态
+          methodTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+
+          // 更新内容显示
+          methodContents.forEach(content => {
+            content.classList.remove('active');
+            if (content.dataset.method === method) {
+              content.classList.add('active');
+            }
+          });
+        });
+      });
+
+      // 绑定邮箱验证码登录（简化版本，用于演示）
+      const emailCodeForm = modal.querySelector('.email-code-form');
+      const sendCodeBtn = modal.querySelector('.btn-send-code');
+      const verificationInput = modal.querySelector('.verification-input');
+      const codeInput = modal.querySelector('.code-input');
+
+      sendCodeBtn.addEventListener('click', async () => {
+        const emailInput = emailCodeForm.querySelector('input[type="email"]');
+        const email = emailInput.value.trim();
+
+        if (!email || !isValidEmail(email)) {
+          showToast('请输入有效的邮箱地址', 'error');
+          return;
+        }
+
+        try {
+          setButtonLoading(sendCodeBtn, true);
+          
+          // 模拟发送验证码
+          setTimeout(() => {
+            showToast('验证码已发送到您的邮箱', 'success');
+            emailInput.disabled = true;
+            verificationInput.style.display = 'block';
+            sendCodeBtn.textContent = '已发送';
+            sendCodeBtn.disabled = true;
+
+            // 60秒倒计时
+            startCountdown(sendCodeBtn, 60);
+            setButtonLoading(sendCodeBtn, false);
+          }, 1500);
+
+        } catch (error) {
+          showToast('发送失败，请重试', 'error');
+          setButtonLoading(sendCodeBtn, false);
+        }
+      });
+
+      // 验证码输入自动格式化
+      codeInput.addEventListener('input', (e) => {
+        e.target.value = e.target.value.replace(/\D/g, ''); // 只允许数字
+        if (e.target.value.length === 6) {
+          // 自动验证
+          emailCodeForm.dispatchEvent(new Event('submit'));
+        }
+      });
+
+      // 绑定验证码验证
+      emailCodeForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const emailInput = emailCodeForm.querySelector('input[type="email"]');
+        const email = emailInput.value.trim();
+        const code = codeInput.value.trim();
+
+        if (!code || code.length !== 6) {
+          showToast('请输入6位验证码', 'error');
+          return;
+        }
+
+        try {
+          const verifyBtn = modal.querySelector('.btn-verify');
+          setButtonLoading(verifyBtn, true);
+
+          // 模拟验证登录
+          setTimeout(() => {
+            const mockUser = {
+              id: Date.now(),
+              name: email.split('@')[0],
+              email: email,
+              avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${email}`,
+              company: 'SVTR Community',
+              joinDate: new Date().toISOString()
+            };
+
+            const mockToken = 'mock_token_' + Date.now();
+
+            // 保存到localStorage
+            localStorage.setItem('svtr_user', JSON.stringify(mockUser));
+            localStorage.setItem('svtr_token', mockToken);
+
+            handleLoginSuccess(mockUser, modal);
+            setButtonLoading(verifyBtn, false);
+          }, 2000);
+
+        } catch (error) {
+          showToast('登录失败，请重试', 'error');
+        }
+      });
+
+      // 绑定Magic Link发送
+      const magicLinkForm = modal.querySelector('.magic-link-form');
+      magicLinkForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const emailInput = magicLinkForm.querySelector('input[type="email"]');
+        const email = emailInput.value.trim();
+
+        if (!email || !isValidEmail(email)) {
+          showToast('请输入有效的邮箱地址', 'error');
+          return;
+        }
+
+        try {
+          const sendMagicBtn = modal.querySelector('.btn-send-magic');
+          setButtonLoading(sendMagicBtn, true);
+
+          // 模拟发送Magic Link
+          setTimeout(() => {
+            showToast('登录链接已发送', 'success');
+
+            // 显示发送成功状态
+            const inputGroup = magicLinkForm.querySelector('.input-group');
+            const sentMessage = magicLinkForm.querySelector('.magic-link-sent');
+
+            inputGroup.style.display = 'none';
+            sentMessage.style.display = 'block';
+            setButtonLoading(sendMagicBtn, false);
+          }, 1500);
+
+        } catch (error) {
+          showToast('发送失败，请重试', 'error');
+          setButtonLoading(sendMagicBtn, false);
+        }
+      });
+    }
+
+    // 处理登录成功
+    function handleLoginSuccess(user, modal) {
+      // 显示成功消息
+      showToast(`欢迎回来，${user.name}！`, 'success');
+
+      // 关闭模态框
+      modal.remove();
+
+      // 更新按钮状态
+      const joinBtn = document.getElementById('joinCommunityBtn');
+      if (joinBtn) {
+        joinBtn.textContent = '已加入社区 ✓';
+        joinBtn.style.background = '#28a745';
+      }
+
+      // 显示欢迎消息
+      showLoginSuccess(user);
+    }
+
+    // 辅助函数
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    function setButtonLoading(button, loading) {
+      if (loading) {
+        button.classList.add('loading');
+        button.disabled = true;
+      } else {
+        button.classList.remove('loading');
+        button.disabled = false;
+      }
+    }
+
+    function startCountdown(button, seconds) {
+      let remaining = seconds;
+      const originalText = button.textContent;
+
+      const timer = setInterval(() => {
+        button.textContent = `重新发送 (${remaining}s)`;
+        remaining--;
+
+        if (remaining < 0) {
+          clearInterval(timer);
+          button.textContent = originalText;
+          button.disabled = false;
+        }
+      }, 1000);
+    }
+
+    function showToast(message, type = 'info') {
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.textContent = message;
+
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.add('show');
+      }, 100);
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // 关闭登录遮罩层
+    function closeLoginOverlay() {
+      const overlay = document.getElementById('authOverlay');
+      if (overlay) {
+        overlay.remove();
+      }
+    }
+
+    // 切换认证标签页
+    function switchAuthTab(tab) {
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const tabs = document.querySelectorAll('.auth-tab');
+      
+      tabs.forEach(t => t.classList.remove('active'));
+      
+      if (tab === 'login') {
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        tabs[0].classList.add('active');
+      } else {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+        tabs[1].classList.add('active');
+      }
+    }
+
+    // 设置认证表单事件
+    function setupAuthForms() {
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      
+      // 登录表单
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        
+        // 简化的登录逻辑（实际项目中需要调用API）
+        simulateLogin(email, password);
+      });
+      
+      // 注册表单
+      registerForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('registerName').value;
+        const email = document.getElementById('registerEmail').value;
+        const password = document.getElementById('registerPassword').value;
+        const company = document.getElementById('registerCompany').value;
+        
+        // 简化的注册逻辑
+        simulateRegister(name, email, password, company);
+      });
+    }
+
+    // 模拟登录（实际项目中应该调用真实API）
+    function simulateLogin(email, password) {
+      // 显示加载状态
+      const submitBtn = document.querySelector('#loginForm .auth-submit');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = '登录中...';
+      submitBtn.disabled = true;
+      
+      // 模拟API调用
+      setTimeout(() => {
+        const mockUser = {
+          id: Date.now(),
+          name: email.split('@')[0],
+          email: email,
+          company: 'SVTR Community',
+          joinDate: new Date().toISOString()
+        };
+        
+        const mockToken = 'mock_token_' + Date.now();
+        
+        // 保存到localStorage
+        localStorage.setItem('svtr_user', JSON.stringify(mockUser));
+        localStorage.setItem('svtr_token', mockToken);
+        
+        // 显示成功消息
+        showLoginSuccess(mockUser);
+        closeLoginOverlay();
+        
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }, 1500);
+    }
+
+    // 模拟注册
+    function simulateRegister(name, email, password, company) {
+      const submitBtn = document.querySelector('#registerForm .auth-submit');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = '注册中...';
+      submitBtn.disabled = true;
+      
+      setTimeout(() => {
+        const mockUser = {
+          id: Date.now(),
+          name: name,
+          email: email,
+          company: company || 'SVTR Community',
+          joinDate: new Date().toISOString()
+        };
+        
+        const mockToken = 'mock_token_' + Date.now();
+        
+        localStorage.setItem('svtr_user', JSON.stringify(mockUser));
+        localStorage.setItem('svtr_token', mockToken);
+        
+        showLoginSuccess(mockUser);
+        closeLoginOverlay();
+        
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }, 2000);
+    }
+
+    // 显示登录成功消息
+    function showLoginSuccess(user) {
+      const successDiv = document.createElement('div');
+      successDiv.className = 'success-message';
+      successDiv.innerHTML = `
+        <div class="success-content">
+          <div class="success-icon">🎉</div>
+          <h3>欢迎加入 SVTR 内容社区！</h3>
+          <p>您好 ${user.name}，感谢加入我们的AI创投生态社区！</p>
+          <p>您现在可以：</p>
+          <ul>
+            <li>浏览所有优质AI创投内容</li>
+            <li>收藏感兴趣的文章</li>
+            <li>关注专业作者</li>
+            <li>参与社区讨论</li>
+          </ul>
+          <button onclick="closeSuccessMessage()" class="success-close">开始探索</button>
+        </div>
+      `;
+      
+      document.body.appendChild(successDiv);
+      
+      // 更新按钮文本
+      const joinBtn = document.getElementById('joinCommunityBtn');
+      if (joinBtn) {
+        joinBtn.textContent = '已加入社区 ✓';
+        joinBtn.style.background = '#28a745';
+      }
+    }
+
+    // 关闭成功消息
+    function closeSuccessMessage() {
+      const successMsg = document.querySelector('.success-message');
+      if (successMsg) {
+        successMsg.remove();
+      }
+    }
+
+    // 页面加载时检查登录状态
+    window.addEventListener('load', function() {
+      const token = localStorage.getItem('svtr_token');
+      const user = localStorage.getItem('svtr_user');
+      
+      if (token && user) {
+        const joinBtn = document.getElementById('joinCommunityBtn');
+        if (joinBtn) {
+          joinBtn.textContent = '已加入社区 ✓';
+          joinBtn.style.background = '#28a745';
+        }
+      }
+    });
+  </script>
+
+  <!-- 继承主站登录界面样式 -->
+  <style>
+    /* 遮罩层样式 - 与主站保持一致 */
+    .auth-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      animation: fadeInOverlay 0.3s ease-out;
+    }
+
+    /* 登录卡片样式 - 与主站保持一致 */
+    .auth-modal {
+      background: white;
+      padding: 3rem 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      max-width: 450px;
+      width: 90%;
+      border: 2px solid rgba(250, 140, 50, 0.2);
+      position: relative;
+      animation: slideUp 0.3s ease;
+    }
+
+    .auth-header {
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .auth-close {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #666;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .auth-close:hover {
+      border-color: #FA8C32;
+      color: #FA8C32;
+      transform: scale(1.05);
+    }
+
+    .auth-icon {
+      font-size: 3.5rem;
+      color: #FA8C32;
+      margin-bottom: 1.5rem;
+      display: block;
+      animation: pulse 2s infinite;
+    }
+
+    .auth-header h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin: 0 0 1rem;
+      line-height: 1.3;
+    }
+
+    .auth-description {
+      color: #666;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    /* 标签页样式优化 */
+    .auth-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 2rem;
+      background: #f8f9fa;
+      padding: 4px;
+      border-radius: 8px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 12px 16px;
+      background: transparent;
+      border: none;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      color: #666;
+    }
+
+    .auth-tab.active {
+      background: #FA8C32;
+      color: white;
+      box-shadow: 0 2px 8px rgba(250, 140, 50, 0.3);
+    }
+
+    .auth-content {
+      text-align: left;
+    }
+
+    .auth-form {
+      padding: 0;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e1e8ed;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: #fafafa;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #FA8C32;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(250, 140, 50, 0.1);
+      transform: translateY(-1px);
+    }
+
+    .auth-submit {
+      width: 100%;
+      background: linear-gradient(135deg, #FA8C32, #FF7519);
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(250, 140, 50, 0.3);
+      min-height: 48px;
+    }
+
+    .auth-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(250, 140, 50, 0.4);
+    }
+
+    .auth-submit:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .auth-footer {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #f0f0f0;
+      text-align: center;
+    }
+
+    .auth-footer h4 {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .auth-footer ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: left;
+      margin: 0;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .auth-footer li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .auth-footer li::before {
+      content: "✓";
+      color: #FA8C32;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    /* 成功消息样式优化 */
+    .success-message {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10001;
+      animation: fadeInOverlay 0.3s ease;
+    }
+
+    .success-content {
+      background: white;
+      border-radius: 16px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      max-width: 500px;
+      margin: 20px;
+      animation: slideUp 0.3s ease;
+      border: 2px solid rgba(40, 167, 69, 0.2);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .success-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      display: block;
+      animation: bounce 1s ease;
+    }
+
+    .success-content h3 {
+      color: #28a745;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .success-content p {
+      color: #666;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .success-content ul {
+      text-align: left;
+      margin: 15px 0 25px;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .success-content li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    .success-content li::before {
+      content: "✅";
+      font-size: 1rem;
+    }
+
+    .success-close {
+      background: linear-gradient(135deg, #FA8C32, #FF7519);
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(250, 140, 50, 0.3);
+    }
+
+    .success-close:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(250, 140, 50, 0.4);
+    }
+
+    /* 动画效果 */
+    @keyframes fadeInOverlay {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { 
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      .auth-modal {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+        max-width: 95%;
+      }
+      
+      .auth-header h3 {
+        font-size: 1.3rem;
+      }
+
+      .auth-close {
+        top: -15px;
+        right: -15px;
+        width: 30px;
+        height: 30px;
+        font-size: 1.1rem;
+      }
+      
+      .success-content {
+        padding: 2.5rem 2rem;
+        margin: 1rem;
+      }
+
+      .success-icon {
+        font-size: 3.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .auth-modal {
+        padding: 1.5rem 1.25rem;
+        margin: 0.5rem;
+      }
+
+      .form-group input {
+        padding: 12px 14px;
+      }
+
+      .auth-submit {
+        padding: 12px 20px;
+      }
+
+      .success-content {
+        padding: 2rem 1.5rem;
+        margin: 0.5rem;
+      }
+
+      .success-icon {
+        font-size: 3rem;
+      }
+
+      .success-content h3 {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</body>
+</html>

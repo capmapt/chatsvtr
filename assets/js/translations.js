@@ -18,6 +18,7 @@ const translations = {
     nav_data_products: '数据榜单',
     nav_ai_vc_database: 'AI创投库',
     nav_vc_community: '内容社区',
+    nav_content_community: '内容社区',
     nav_professional_services: '投资孵化',
     nav_about_us: '关于我们',
 
@@ -144,6 +145,7 @@ const translations = {
     nav_data_products: 'Database',
     nav_ai_vc_database: 'AI VC Database',
     nav_vc_community: 'VC Community',
+    nav_content_community: 'Content Community',
     nav_professional_services: 'Professional Services',
     nav_about_us: 'About Us',
 
