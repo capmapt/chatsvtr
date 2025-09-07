@@ -415,6 +415,50 @@ export async function onRequestGet(context: any): Promise<Response> {
       const heatmapKey = `heatmap:${date}:${page}`;
       const heatmapData = await env.USER_BEHAVIOR_KV.get(heatmapKey, 'json');
       responseData = { clicks: heatmapData?.clicks || [] };
+      
+    } else if (type === 'session_detail' && sessionId) {
+      // 查询会话详情
+      const listOptions = {
+        prefix: `session:`,
+        limit: 1000
+      };
+      const sessionList = await env.USER_BEHAVIOR_KV.list(listOptions);
+      
+      let sessionDetail = null;
+      for (const key of sessionList.keys) {
+        if (key.name.includes(sessionId)) {
+          sessionDetail = await env.USER_BEHAVIOR_KV.get(key.name, 'json');
+          break;
+        }
+      }
+      responseData = { session: sessionDetail };
+      
+    } else if (type === 'page_detail' && page && date) {
+      // 查询页面详情
+      const pageKey = `page_stats:${date}:${page}`;
+      const pageStats = await env.USER_BEHAVIOR_KV.get(pageKey, 'json');
+      
+      // 同时获取该页面的用户活动
+      const activityListOptions = {
+        prefix: `raw:${date}:`,
+        limit: 500
+      };
+      const activityList = await env.USER_BEHAVIOR_KV.list(activityListOptions);
+      
+      const pageActivities = [];
+      for (const key of activityList.keys) {
+        const activity = await env.USER_BEHAVIOR_KV.get(key.name, 'json');
+        if (activity && (activity.page === page || activity.url === page)) {
+          pageActivities.push(activity);
+        }
+      }
+      
+      responseData = { 
+        page: {
+          ...pageStats,
+          activities: pageActivities.sort((a, b) => b.timestamp - a.timestamp).slice(0, 50)
+        }
+      };
     }
 
     // 如果没有数据，返回空数据而不是null
