@@ -358,14 +358,26 @@ export async function onRequestGet(context: any): Promise<Response> {
   const userId = url.searchParams.get('userId');
   const date = url.searchParams.get('date');
   const sessionId = url.searchParams.get('sessionId');
+  const page = url.searchParams.get('page');
 
   try {
-    let data = null;
+    let responseData = null;
 
-    if (type === 'session' && sessionId && userId) {
-      // 查询会话摘要
-      const sessionKey = `session:${userId}:${sessionId}`;
-      data = await env.USER_BEHAVIOR_KV.get(sessionKey, 'json');
+    if (type === 'session' && date) {
+      // 查询会话数据
+      const listOptions = {
+        prefix: `session:`,
+        limit: 50
+      };
+      const sessionList = await env.USER_BEHAVIOR_KV.list(listOptions);
+      
+      const sessions = [];
+      for (const key of sessionList.keys) {
+        const session = await env.USER_BEHAVIOR_KV.get(key.name, 'json');
+        if (session) sessions.push(session);
+      }
+      responseData = { sessions };
+      
     } else if (type === 'page_stats' && date) {
       // 查询页面统计
       const listOptions = {
@@ -373,21 +385,46 @@ export async function onRequestGet(context: any): Promise<Response> {
       };
       const pageStatsList = await env.USER_BEHAVIOR_KV.list(listOptions);
       
-      const pageStats = [];
+      const pages = [];
       for (const key of pageStatsList.keys) {
         const stats = await env.USER_BEHAVIOR_KV.get(key.name, 'json');
-        if (stats) pageStats.push(stats);
+        if (stats) pages.push(stats);
       }
-      data = pageStats;
-    } else if (type === 'user_activity' && userId && date) {
-      // 查询用户活动
-      const activityKey = `user_activity:${date}:${userId}`;
-      data = await env.USER_BEHAVIOR_KV.get(activityKey, 'json');
+      responseData = { pages };
+      
+    } else if (type === 'user_activity' && date) {
+      // 查询用户活动 - 实时活动数据
+      const listOptions = {
+        prefix: `raw:${date}:`,
+        limit: 100
+      };
+      const activityList = await env.USER_BEHAVIOR_KV.list(listOptions);
+      
+      const activities = [];
+      for (const key of activityList.keys) {
+        const activity = await env.USER_BEHAVIOR_KV.get(key.name, 'json');
+        if (activity) activities.push(activity);
+      }
+      
+      // 按时间倒序排列
+      activities.sort((a, b) => b.timestamp - a.timestamp);
+      responseData = { activities: activities.slice(0, 20) }; // 返回最近20条
+      
+    } else if (type === 'heatmap' && page && date) {
+      // 查询热力图数据
+      const heatmapKey = `heatmap:${date}:${page}`;
+      const heatmapData = await env.USER_BEHAVIOR_KV.get(heatmapKey, 'json');
+      responseData = { clicks: heatmapData?.clicks || [] };
+    }
+
+    // 如果没有数据，返回空数据而不是null
+    if (!responseData) {
+      responseData = { activities: [], sessions: [], pages: [], clicks: [] };
     }
 
     return new Response(JSON.stringify({
       success: true,
-      data: data
+      ...responseData
     }), {
       status: 200,
       headers: {
@@ -397,9 +434,14 @@ export async function onRequestGet(context: any): Promise<Response> {
     });
 
   } catch (error) {
+    console.error('获取用户行为数据失败:', error);
     return new Response(JSON.stringify({
       success: false,
-      error: error.message
+      error: error.message,
+      activities: [],
+      sessions: [],
+      pages: [],
+      clicks: []
     }), {
       status: 500,
       headers: {
