@@ -145,6 +145,8 @@ class SVTRSidebarManager {
     this.sidebar = document.querySelector('.sidebar');
     this.toggleButton = document.querySelector('.sidebar-toggle');
     this.overlay = document.querySelector('.sidebar-overlay');
+    this.sidebarLogo = document.querySelector('.sidebar-logo');
+    this.headerLogo = document.querySelector('.header-logo');
     
     if (this.sidebar && this.toggleButton) {
       this.init();
@@ -168,11 +170,44 @@ class SVTRSidebarManager {
           this.overlay, 'click', this.close.bind(this)
         );
       }
+      
+      // Logo点击事件处理
+      if (this.sidebarLogo) {
+        window.svtrStabilizer.registerEventListener(
+          this.sidebarLogo, 'click', this.handleLogoClick.bind(this)
+        );
+      }
+      
+      if (this.headerLogo) {
+        window.svtrStabilizer.registerEventListener(
+          this.headerLogo, 'click', this.handleLogoClick.bind(this)
+        );
+      }
     } else {
       this.toggleButton.addEventListener('click', this.toggle.bind(this));
       if (this.overlay) {
         this.overlay.addEventListener('click', this.close.bind(this));
       }
+      
+      // Logo点击事件处理
+      if (this.sidebarLogo) {
+        this.sidebarLogo.addEventListener('click', this.handleLogoClick.bind(this));
+      }
+      
+      if (this.headerLogo) {
+        this.headerLogo.addEventListener('click', this.handleLogoClick.bind(this));
+      }
+    }
+  }
+
+  handleLogoClick(event) {
+    // Ctrl+点击或Cmd+点击打开管理中心
+    if (event.ctrlKey || event.metaKey) {
+      event.preventDefault();
+      window.open('/pages/admin-center.html', '_blank');
+    } else {
+      // 普通点击切换侧边栏
+      this.toggle();
     }
   }
 
@@ -272,12 +307,31 @@ class SVTRMainController {
 }
 
 // 全局初始化
-window.svtrStats = new SVTRMainController();
+const mainController = new SVTRMainController();
+window.svtrStats = mainController;
+// 为兼容性保持旧的命名
+window.svtrApp = {
+  ...mainController,
+  domElements: {
+    sidebar: mainController.sidebarManager?.sidebar,
+    overlay: mainController.sidebarManager?.overlay,
+    toggle: mainController.sidebarManager?.toggleButton,
+    content: document.querySelector('.content')
+  },
+  // 保持向后兼容的方法
+  openSidebar: () => mainController.sidebarManager?.open(),
+  closeSidebar: () => mainController.sidebarManager?.close(),
+  toggleSidebar: () => mainController.sidebarManager?.toggle(),
+  isSidebarOpen: () => mainController.sidebarManager?.isOpen(),
+  paintStats: () => mainController.statsManager?.paintInitialStats(),
+  updateProgressBars: () => {}, // 占位符方法
+  cleanup: () => mainController.destroy()
+};
 
 // 页面卸载时清理
 window.addEventListener('beforeunload', () => {
-  if (window.svtrStats) {
-    window.svtrStats.destroy();
+  if (mainController) {
+    mainController.destroy();
   }
 });
 
