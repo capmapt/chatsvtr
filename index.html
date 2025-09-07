@@ -479,7 +479,11 @@
   <script src="assets/js/user-actions.js" defer></script>
   <script src="assets/js/sidebar-qr-manager-optimized.js" defer></script>
   <script src="assets/js/i18n-optimized.js"></script>
-  <script src="assets/js/main-optimized.js" defer></script>
+  <!-- 性能稳定器 - 必须先加载 -->
+  <script src="assets/js/performance-stabilizer.js" defer></script>
+  
+  <!-- 主页功能脚本 - 性能优化版 -->
+  <script src="assets/js/main-performance-optimized.js" defer></script>
   <!-- 桌面端折叠按钮修复 -->
   <script src="assets/js/desktop-toggle-fix.js" defer></script>
   <!-- Native Chat Component with Authentication -->

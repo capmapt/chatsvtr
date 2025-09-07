@@ -160,10 +160,15 @@ class SVTRUserBehaviorTracker {
    * 设置数据批量发送
    */
   setupBehaviorDataFlush() {
-    // 定时发送数据
-    setInterval(() => {
+    // 使用性能稳定器管理定时器
+    const flushTimer = setInterval(() => {
       this.flushBehaviorData();
     }, this.config.flushInterval);
+    
+    if (window.svtrStabilizer) {
+      window.svtrStabilizer.registerTimer(flushTimer);
+    }
+    this.flushTimer = flushTimer;
 
     // 页面卸载时发送剩余数据
     window.addEventListener('beforeunload', () => {
@@ -197,8 +202,12 @@ class SVTRUserBehaviorTracker {
       }, 5000); // 5秒无操作视为不活跃
     }, { passive: true });
 
-    // 定期更新活跃时间
-    setInterval(updateActiveTime, 1000);
+    // 使用性能稳定器管理活跃时间更新定时器
+    const activeTimer = setInterval(updateActiveTime, 1000);
+    if (window.svtrStabilizer) {
+      window.svtrStabilizer.registerTimer(activeTimer);
+    }
+    this.activeTimer = activeTimer;
 
     // 保存活跃时间到会话数据
     this.getActiveTime = () => activeTime;
@@ -638,6 +647,36 @@ class SVTRUserBehaviorTracker {
       maxScrollDepth: this.scrollData.maxDepth,
       scrollMilestones: this.scrollData.milestones.length
     };
+  }
+
+  /**
+   * 暂停非必要功能（页面隐藏时）
+   */
+  pauseNonEssential() {
+    if (this.activeTimer) {
+      clearInterval(this.activeTimer);
+      this.activeTimer = null;
+    }
+    console.log('⏸️ 用户行为跟踪：已暂停非必要功能');
+  }
+
+  /**
+   * 恢复非必要功能（页面显示时）
+   */
+  resumeNonEssential() {
+    if (!this.activeTimer) {
+      const updateActiveTime = () => {
+        if (this.isActive) {
+          this.activeTime = (this.activeTime || 0) + 1000;
+        }
+      };
+      
+      this.activeTimer = setInterval(updateActiveTime, 1000);
+      if (window.svtrStabilizer) {
+        window.svtrStabilizer.registerTimer(this.activeTimer);
+      }
+    }
+    console.log('▶️ 用户行为跟踪：已恢复非必要功能');
   }
 
   /**
