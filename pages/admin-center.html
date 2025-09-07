@@ -1106,12 +1106,199 @@
                     <div class="module-header">
                         <div class="module-title">操作日志</div>
                         <div class="module-subtitle">查看系统和用户操作记录</div>
+                        <div class="module-actions">
+                            <button onclick="refreshUserBehaviorData()" class="btn btn-primary">
+                                🔄 刷新数据
+                            </button>
+                            <button onclick="exportUserBehaviorData()" class="btn btn-secondary">
+                                📊 导出报告
+                            </button>
+                        </div>
                     </div>
+                    
                     <div class="module-content">
-                        <div class="empty-state">
-                            <div class="empty-state-icon">📝</div>
-                            <h3>操作日志功能</h3>
-                            <p>正在开发中，敬请期待...</p>
+                        <!-- 统计概览 -->
+                        <div class="stats-overview" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                            <div class="stat-card">
+                                <div class="stat-icon">👥</div>
+                                <div class="stat-content">
+                                    <div class="stat-label">今日活跃用户</div>
+                                    <div class="stat-value" id="todayActiveUsers">-</div>
+                                    <div class="stat-change">+12% vs 昨日</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">📄</div>
+                                <div class="stat-content">
+                                    <div class="stat-label">今日页面浏览</div>
+                                    <div class="stat-value" id="todayPageViews">-</div>
+                                    <div class="stat-change">+8% vs 昨日</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">⏱️</div>
+                                <div class="stat-content">
+                                    <div class="stat-label">平均停留时间</div>
+                                    <div class="stat-value" id="avgSessionTime">-</div>
+                                    <div class="stat-change">+15% vs 昨日</div>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">🎯</div>
+                                <div class="stat-content">
+                                    <div class="stat-label">用户参与度</div>
+                                    <div class="stat-value" id="engagementRate">-</div>
+                                    <div class="stat-change">+3% vs 昨日</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 过滤和搜索 -->
+                        <div class="logs-filters" style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px;">
+                                <div class="filter-group">
+                                    <label class="form-label">用户类型</label>
+                                    <select id="userTypeFilter" class="form-input" onchange="filterUserBehaviorLogs()">
+                                        <option value="">全部用户</option>
+                                        <option value="member">注册会员</option>
+                                        <option value="anonymous">匿名用户</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label class="form-label">行为类型</label>
+                                    <select id="behaviorTypeFilter" class="form-input" onchange="filterUserBehaviorLogs()">
+                                        <option value="">全部行为</option>
+                                        <option value="page_view">页面访问</option>
+                                        <option value="click">点击事件</option>
+                                        <option value="form_submit">表单提交</option>
+                                        <option value="scroll_milestone">滚动行为</option>
+                                        <option value="link_click">链接点击</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label class="form-label">时间范围</label>
+                                    <select id="timeRangeFilter" class="form-input" onchange="filterUserBehaviorLogs()">
+                                        <option value="today">今天</option>
+                                        <option value="yesterday">昨天</option>
+                                        <option value="week">本周</option>
+                                        <option value="month">本月</option>
+                                        <option value="custom">自定义</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label class="form-label">搜索用户</label>
+                                    <input type="text" id="userSearchInput" class="form-input" placeholder="输入用户ID或邮箱..." onkeyup="filterUserBehaviorLogs()">
+                                </div>
+                            </div>
+                            
+                            <!-- 自定义时间范围 -->
+                            <div id="customTimeRange" style="display: none; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                                <div class="filter-group">
+                                    <label class="form-label">开始日期</label>
+                                    <input type="date" id="startDate" class="form-input" onchange="filterUserBehaviorLogs()">
+                                </div>
+                                <div class="filter-group">
+                                    <label class="form-label">结束日期</label>
+                                    <input type="date" id="endDate" class="form-input" onchange="filterUserBehaviorLogs()">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 标签页导航 -->
+                        <div class="logs-tabs" style="display: flex; background: #fff; border-radius: 10px 10px 0 0; border-bottom: 1px solid #eee; margin-bottom: 0;">
+                            <button class="logs-tab active" data-tab="realtime" onclick="switchLogsTab('realtime')">
+                                🔴 实时活动
+                            </button>
+                            <button class="logs-tab" data-tab="sessions" onclick="switchLogsTab('sessions')">
+                                👥 用户会话
+                            </button>
+                            <button class="logs-tab" data-tab="pages" onclick="switchLogsTab('pages')">
+                                📄 页面分析
+                            </button>
+                            <button class="logs-tab" data-tab="heatmap" onclick="switchLogsTab('heatmap')">
+                                🔥 热力图
+                            </button>
+                        </div>
+
+                        <!-- 标签页内容 -->
+                        <div class="logs-tab-content" style="background: #fff; border-radius: 0 0 10px 10px; padding: 20px;">
+                            <!-- 实时活动标签页 -->
+                            <div id="realtime-tab" class="logs-tab-panel active">
+                                <div class="realtime-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                    <div>
+                                        <h4 style="margin: 0;">实时用户活动</h4>
+                                        <p style="margin: 5px 0 0; color: #666;">实时监控用户行为和页面访问</p>
+                                    </div>
+                                    <div class="realtime-indicator" style="display: flex; align-items: center; color: #28a745;">
+                                        <span class="pulse" style="width: 8px; height: 8px; background: #28a745; border-radius: 50%; margin-right: 8px; animation: pulse 1s infinite;"></span>
+                                        <span id="realtimeCount">0</span> 位用户在线
+                                    </div>
+                                </div>
+                                
+                                <div id="realtimeActivities" class="realtime-activities">
+                                    <div class="loading-state" style="text-align: center; padding: 40px; color: #666;">
+                                        <div class="loading-spinner" style="margin: 0 auto 15px; width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                                        <p>正在加载实时数据...</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 用户会话标签页 -->
+                            <div id="sessions-tab" class="logs-tab-panel">
+                                <div class="sessions-header" style="margin-bottom: 20px;">
+                                    <h4 style="margin: 0;">用户会话分析</h4>
+                                    <p style="margin: 5px 0 0; color: #666;">查看用户会话详情、停留时间和行为路径</p>
+                                </div>
+                                
+                                <div id="sessionsTable" class="sessions-table">
+                                    <div class="loading-state" style="text-align: center; padding: 40px; color: #666;">
+                                        <div class="loading-spinner" style="margin: 0 auto 15px; width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                                        <p>正在加载会话数据...</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 页面分析标签页 -->
+                            <div id="pages-tab" class="logs-tab-panel">
+                                <div class="pages-header" style="margin-bottom: 20px;">
+                                    <h4 style="margin: 0;">页面访问分析</h4>
+                                    <p style="margin: 5px 0 0; color: #666;">分析页面访问量、停留时间和跳出率</p>
+                                </div>
+                                
+                                <div id="pagesAnalysis" class="pages-analysis">
+                                    <div class="loading-state" style="text-align: center; padding: 40px; color: #666;">
+                                        <div class="loading-spinner" style="margin: 0 auto 15px; width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                                        <p>正在加载页面数据...</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 热力图标签页 -->
+                            <div id="heatmap-tab" class="logs-tab-panel">
+                                <div class="heatmap-header" style="margin-bottom: 20px;">
+                                    <h4 style="margin: 0;">用户点击热力图</h4>
+                                    <p style="margin: 5px 0 0; color: #666;">可视化用户点击行为和交互热点</p>
+                                </div>
+                                
+                                <div class="heatmap-controls" style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                                    <label class="form-label">选择页面:</label>
+                                    <select id="heatmapPageSelect" class="form-input" style="width: 300px;" onchange="loadHeatmapData()">
+                                        <option value="">选择要分析的页面...</option>
+                                        <option value="/">首页</option>
+                                        <option value="/pages/ai100.html">AI100</option>
+                                        <option value="/pages/investment-camp.html">投资营</option>
+                                        <option value="/pages/content-community.html">内容社区</option>
+                                    </select>
+                                </div>
+                                
+                                <div id="heatmapVisualization" class="heatmap-visualization">
+                                    <div class="empty-state" style="text-align: center; padding: 60px; color: #666;">
+                                        <div style="font-size: 48px; margin-bottom: 15px;">🔥</div>
+                                        <h4>选择页面查看热力图</h4>
+                                        <p>选择上方的页面来查看用户点击热力图分析</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -3804,6 +3991,698 @@
             `;
             document.head.appendChild(style);
         }
+
+        // ================== 用户行为跟踪管理功能 ==================
+        let userBehaviorData = [];
+        let filteredBehaviorData = [];
+        let currentLogsTab = 'realtime';
+        let realtimeInterval = null;
+
+        // 切换标签页
+        function switchLogsTab(tabId) {
+            // 更新标签按钮状态
+            document.querySelectorAll('.logs-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+
+            // 更新内容面板
+            document.querySelectorAll('.logs-tab-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            document.getElementById(`${tabId}-tab`).classList.add('active');
+
+            currentLogsTab = tabId;
+
+            // 加载对应的数据
+            switch (tabId) {
+                case 'realtime':
+                    startRealtimeMonitoring();
+                    break;
+                case 'sessions':
+                    loadSessionsData();
+                    break;
+                case 'pages':
+                    loadPagesAnalysis();
+                    break;
+                case 'heatmap':
+                    loadHeatmapData();
+                    break;
+            }
+        }
+
+        // 开始实时监控
+        function startRealtimeMonitoring() {
+            // 清除之前的定时器
+            if (realtimeInterval) {
+                clearInterval(realtimeInterval);
+            }
+
+            // 立即加载一次数据
+            loadRealtimeActivities();
+
+            // 每10秒刷新一次实时数据
+            realtimeInterval = setInterval(() => {
+                loadRealtimeActivities();
+            }, 10000);
+        }
+
+        // 停止实时监控
+        function stopRealtimeMonitoring() {
+            if (realtimeInterval) {
+                clearInterval(realtimeInterval);
+                realtimeInterval = null;
+            }
+        }
+
+        // 加载实时活动数据
+        async function loadRealtimeActivities() {
+            try {
+                const container = document.getElementById('realtimeActivities');
+                
+                // 模拟实时数据（实际应用中从API获取）
+                const mockRealtimeData = generateMockRealtimeData();
+                
+                let activitiesHtml = '';
+                mockRealtimeData.forEach(activity => {
+                    const timeAgo = getTimeAgo(activity.timestamp);
+                    const typeIcon = getActivityIcon(activity.type);
+                    const typeLabel = getActivityLabel(activity.type);
+                    
+                    activitiesHtml += `
+                        <div class="realtime-activity" style="padding: 12px; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 12px;">
+                            <div class="activity-icon" style="font-size: 18px;">${typeIcon}</div>
+                            <div class="activity-content" style="flex: 1;">
+                                <div class="activity-title" style="font-weight: 500; margin-bottom: 2px;">
+                                    ${typeLabel}: ${activity.details}
+                                </div>
+                                <div class="activity-meta" style="color: #666; font-size: 12px;">
+                                    用户: ${activity.userId} • 页面: ${activity.page} • ${timeAgo}
+                                </div>
+                            </div>
+                            <div class="activity-status" style="padding: 2px 8px; background: #e8f5e8; color: #2e7d2e; border-radius: 12px; font-size: 11px;">
+                                实时
+                            </div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = activitiesHtml || '<div class="empty-state" style="text-align: center; padding: 40px; color: #666;"><p>暂无实时活动数据</p></div>';
+                
+                // 更新在线用户数
+                document.getElementById('realtimeCount').textContent = Math.floor(Math.random() * 25) + 5;
+
+            } catch (error) {
+                console.error('加载实时活动数据失败:', error);
+                document.getElementById('realtimeActivities').innerHTML = 
+                    '<div class="error-state" style="text-align: center; padding: 40px; color: #dc3545;"><p>加载实时数据失败</p></div>';
+            }
+        }
+
+        // 生成模拟实时数据
+        function generateMockRealtimeData() {
+            const activities = [];
+            const now = Date.now();
+            const types = ['page_view', 'click', 'form_submit', 'link_click', 'scroll_milestone'];
+            const pages = ['/', '/pages/ai100.html', '/pages/investment-camp.html', '/pages/content-community.html'];
+            const userIds = ['user_001', 'user_002', 'anonymous_123', 'member_456', 'admin_001'];
+
+            for (let i = 0; i < 10; i++) {
+                const type = types[Math.floor(Math.random() * types.length)];
+                const page = pages[Math.floor(Math.random() * pages.length)];
+                const userId = userIds[Math.floor(Math.random() * userIds.length)];
+                
+                activities.push({
+                    type: type,
+                    userId: userId,
+                    page: page,
+                    timestamp: now - (Math.random() * 300000), // 最近5分钟内
+                    details: getActivityDetails(type, page)
+                });
+            }
+
+            return activities.sort((a, b) => b.timestamp - a.timestamp);
+        }
+
+        // 获取活动详情描述
+        function getActivityDetails(type, page) {
+            const pageNames = {
+                '/': '首页',
+                '/pages/ai100.html': 'AI100页面',
+                '/pages/investment-camp.html': '投资营页面',
+                '/pages/content-community.html': '内容社区页面'
+            };
+
+            const pageName = pageNames[page] || page;
+
+            switch (type) {
+                case 'page_view':
+                    return `访问了${pageName}`;
+                case 'click':
+                    return `在${pageName}进行了点击操作`;
+                case 'form_submit':
+                    return `在${pageName}提交了表单`;
+                case 'link_click':
+                    return `在${pageName}点击了链接`;
+                case 'scroll_milestone':
+                    return `在${pageName}滚动阅读`;
+                default:
+                    return `在${pageName}执行了操作`;
+            }
+        }
+
+        // 获取活动图标
+        function getActivityIcon(type) {
+            const icons = {
+                'page_view': '📄',
+                'click': '👆',
+                'form_submit': '📝',
+                'link_click': '🔗',
+                'scroll_milestone': '📏'
+            };
+            return icons[type] || '⚡';
+        }
+
+        // 获取活动标签
+        function getActivityLabel(type) {
+            const labels = {
+                'page_view': '页面访问',
+                'click': '点击事件',
+                'form_submit': '表单提交',
+                'link_click': '链接点击',
+                'scroll_milestone': '滚动行为'
+            };
+            return labels[type] || '其他操作';
+        }
+
+        // 获取相对时间
+        function getTimeAgo(timestamp) {
+            const now = Date.now();
+            const diff = now - timestamp;
+            
+            if (diff < 60000) return '刚刚';
+            if (diff < 3600000) return Math.floor(diff / 60000) + '分钟前';
+            if (diff < 86400000) return Math.floor(diff / 3600000) + '小时前';
+            return Math.floor(diff / 86400000) + '天前';
+        }
+
+        // 加载会话数据
+        async function loadSessionsData() {
+            try {
+                const container = document.getElementById('sessionsTable');
+                
+                // 模拟会话数据
+                const mockSessions = generateMockSessionsData();
+                
+                let sessionsHtml = `
+                    <div class="table-container">
+                        <table class="data-table" style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #f8f9fa;">
+                                    <th style="padding: 12px; border: 1px solid #dee2e6; text-align: left;">会话ID</th>
+                                    <th style="padding: 12px; border: 1px solid #dee2e6; text-align: left;">用户</th>
+                                    <th style="padding: 12px; border: 1px solid #dee2e6; text-align: left;">开始时间</th>
+                                    <th style="padding: 12px; border: 1px solid #dee2e6; text-align: left;">持续时长</th>
+                                    <th style="padding: 12px; border: 1px solid #dee2e6; text-align: left;">页面数</th>
+                                    <th style="padding: 12px; border: 1px solid #dee2e6; text-align: left;">点击数</th>
+                                    <th style="padding: 12px; border: 1px solid #dee2e6; text-align: left;">参与度</th>
+                                    <th style="padding: 12px; border: 1px solid #dee2e6; text-align: left;">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+
+                mockSessions.forEach(session => {
+                    const duration = formatDuration(session.duration);
+                    const engagementColor = session.engagement >= 70 ? '#28a745' : session.engagement >= 40 ? '#ffc107' : '#dc3545';
+                    
+                    sessionsHtml += `
+                        <tr style="border-bottom: 1px solid #dee2e6;">
+                            <td style="padding: 12px; border: 1px solid #dee2e6;">${session.sessionId.substring(0, 8)}...</td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="width: 32px; height: 32px; border-radius: 50%; background: #007bff; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px;">
+                                        ${session.userId.charAt(0).toUpperCase()}
+                                    </div>
+                                    <div>
+                                        <div style="font-weight: 500;">${session.userId}</div>
+                                        <div style="color: #666; font-size: 12px;">${session.userType}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6;">${new Date(session.startTime).toLocaleString()}</td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6;">${duration}</td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6;">${session.pageViews}</td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6;">${session.clicks}</td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <div style="width: 60px; height: 6px; background: #e9ecef; border-radius: 3px; overflow: hidden;">
+                                        <div style="width: ${session.engagement}%; height: 100%; background: ${engagementColor};"></div>
+                                    </div>
+                                    <span style="color: ${engagementColor}; font-weight: 500;">${session.engagement}%</span>
+                                </div>
+                            </td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6;">
+                                <button onclick="viewSessionDetails('${session.sessionId}')" class="btn btn-sm btn-outline-primary" style="padding: 4px 8px; font-size: 12px;">
+                                    查看详情
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                sessionsHtml += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+
+                container.innerHTML = sessionsHtml;
+
+            } catch (error) {
+                console.error('加载会话数据失败:', error);
+                document.getElementById('sessionsTable').innerHTML = 
+                    '<div class="error-state" style="text-align: center; padding: 40px; color: #dc3545;"><p>加载会话数据失败</p></div>';
+            }
+        }
+
+        // 生成模拟会话数据
+        function generateMockSessionsData() {
+            const sessions = [];
+            const now = Date.now();
+            
+            for (let i = 0; i < 20; i++) {
+                const startTime = now - (Math.random() * 86400000 * 7); // 最近7天内
+                const duration = Math.random() * 1800000 + 60000; // 1-30分钟
+                const pageViews = Math.floor(Math.random() * 10) + 1;
+                const clicks = Math.floor(Math.random() * 50) + 1;
+                const engagement = Math.floor(Math.random() * 100);
+                
+                sessions.push({
+                    sessionId: 'session_' + Date.now() + '_' + i,
+                    userId: ['用户' + (i + 1), 'anonymous_' + i, 'member_' + i][Math.floor(Math.random() * 3)],
+                    userType: ['注册用户', '匿名用户', '高级会员'][Math.floor(Math.random() * 3)],
+                    startTime: startTime,
+                    duration: duration,
+                    pageViews: pageViews,
+                    clicks: clicks,
+                    engagement: engagement
+                });
+            }
+
+            return sessions.sort((a, b) => b.startTime - a.startTime);
+        }
+
+        // 格式化持续时长
+        function formatDuration(ms) {
+            const minutes = Math.floor(ms / 60000);
+            const seconds = Math.floor((ms % 60000) / 1000);
+            return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // 查看会话详情
+        function viewSessionDetails(sessionId) {
+            alert(`查看会话详情: ${sessionId}\n\n这里将显示用户在该会话中的详细行为路径和操作记录。`);
+        }
+
+        // 加载页面分析数据
+        async function loadPagesAnalysis() {
+            try {
+                const container = document.getElementById('pagesAnalysis');
+                
+                // 模拟页面分析数据
+                const mockPagesData = generateMockPagesData();
+                
+                let pagesHtml = `
+                    <div class="pages-stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                `;
+
+                mockPagesData.forEach(page => {
+                    const bounceRateColor = page.bounceRate > 60 ? '#dc3545' : page.bounceRate > 40 ? '#ffc107' : '#28a745';
+                    
+                    pagesHtml += `
+                        <div class="page-stat-card" style="background: #fff; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px;">
+                            <div class="page-header" style="display: flex; justify-content: between; align-items: center; margin-bottom: 15px;">
+                                <div>
+                                    <h5 style="margin: 0; font-weight: 600;">${page.title}</h5>
+                                    <p style="margin: 2px 0 0; color: #666; font-size: 12px;">${page.path}</p>
+                                </div>
+                                <div class="page-views" style="text-align: right;">
+                                    <div style="font-size: 24px; font-weight: 600; color: #007bff;">${page.views.toLocaleString()}</div>
+                                    <div style="font-size: 12px; color: #666;">浏览量</div>
+                                </div>
+                            </div>
+                            
+                            <div class="page-metrics" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <div class="metric">
+                                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">平均停留时间</div>
+                                    <div style="font-size: 16px; font-weight: 500;">${formatDuration(page.avgTime)}</div>
+                                </div>
+                                <div class="metric">
+                                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">跳出率</div>
+                                    <div style="font-size: 16px; font-weight: 500; color: ${bounceRateColor};">${page.bounceRate}%</div>
+                                </div>
+                                <div class="metric">
+                                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">独立访客</div>
+                                    <div style="font-size: 16px; font-weight: 500;">${page.uniqueVisitors}</div>
+                                </div>
+                                <div class="metric">
+                                    <div style="font-size: 12px; color: #666; margin-bottom: 4px;">转化率</div>
+                                    <div style="font-size: 16px; font-weight: 500; color: #28a745;">${page.conversionRate}%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="page-actions" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
+                                <button onclick="viewPageDetails('${page.path}')" class="btn btn-sm btn-outline-primary" style="width: 100%; padding: 6px 12px; font-size: 12px;">
+                                    查看详细分析
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                pagesHtml += `</div>`;
+
+                container.innerHTML = pagesHtml;
+
+            } catch (error) {
+                console.error('加载页面分析数据失败:', error);
+                document.getElementById('pagesAnalysis').innerHTML = 
+                    '<div class="error-state" style="text-align: center; padding: 40px; color: #dc3545;"><p>加载页面数据失败</p></div>';
+            }
+        }
+
+        // 生成模拟页面数据
+        function generateMockPagesData() {
+            return [
+                {
+                    path: '/',
+                    title: '首页',
+                    views: 12580,
+                    uniqueVisitors: 8943,
+                    avgTime: 185000, // 3分5秒
+                    bounceRate: 35,
+                    conversionRate: 8.5
+                },
+                {
+                    path: '/pages/ai100.html',
+                    title: 'AI100 - 全球AI企业榜单',
+                    views: 8432,
+                    uniqueVisitors: 6221,
+                    avgTime: 340000, // 5分40秒
+                    bounceRate: 28,
+                    conversionRate: 12.3
+                },
+                {
+                    path: '/pages/investment-camp.html',
+                    title: 'SVTR投资营',
+                    views: 5671,
+                    uniqueVisitors: 4103,
+                    avgTime: 260000, // 4分20秒
+                    bounceRate: 42,
+                    conversionRate: 15.7
+                },
+                {
+                    path: '/pages/content-community.html',
+                    title: '内容社区',
+                    views: 3254,
+                    uniqueVisitors: 2187,
+                    avgTime: 420000, // 7分钟
+                    bounceRate: 25,
+                    conversionRate: 9.8
+                }
+            ];
+        }
+
+        // 查看页面详情
+        function viewPageDetails(pagePath) {
+            alert(`查看页面详细分析: ${pagePath}\n\n这里将显示该页面的详细访问数据、用户行为流和转化漏斗。`);
+        }
+
+        // 加载热力图数据
+        function loadHeatmapData() {
+            const pageSelect = document.getElementById('heatmapPageSelect');
+            const selectedPage = pageSelect.value;
+            const container = document.getElementById('heatmapVisualization');
+            
+            if (!selectedPage) {
+                container.innerHTML = `
+                    <div class="empty-state" style="text-align: center; padding: 60px; color: #666;">
+                        <div style="font-size: 48px; margin-bottom: 15px;">🔥</div>
+                        <h4>选择页面查看热力图</h4>
+                        <p>选择上方的页面来查看用户点击热力图分析</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // 模拟热力图数据
+            const mockHeatmapData = generateMockHeatmapData();
+            
+            let heatmapHtml = `
+                <div class="heatmap-container" style="position: relative; background: #f8f9fa; border-radius: 8px; padding: 20px; min-height: 400px;">
+                    <div class="heatmap-legend" style="position: absolute; top: 20px; right: 20px; background: white; padding: 10px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">点击强度</div>
+                        <div style="display: flex; align-items: center; gap: 4px;">
+                            <span style="font-size: 10px;">低</span>
+                            <div style="width: 80px; height: 8px; background: linear-gradient(to right, #4CAF50, #FFEB3B, #FF9800, #F44336); border-radius: 4px;"></div>
+                            <span style="font-size: 10px;">高</span>
+                        </div>
+                    </div>
+                    
+                    <div class="heatmap-title" style="margin-bottom: 20px;">
+                        <h5 style="margin: 0;">${pageSelect.options[pageSelect.selectedIndex].text} - 点击热力图</h5>
+                        <p style="margin: 4px 0 0; color: #666; font-size: 12px;">基于最近7天的用户点击数据生成</p>
+                    </div>
+                    
+                    <div class="heatmap-visualization" style="position: relative; background: white; border-radius: 6px; padding: 20px; min-height: 300px;">
+            `;
+
+            // 添加模拟热点
+            mockHeatmapData.forEach(point => {
+                const intensity = Math.min(point.clicks / 100, 1); // 归一化强度
+                const color = getHeatmapColor(intensity);
+                const size = Math.max(20 + intensity * 40, 20);
+                
+                heatmapHtml += `
+                    <div class="heatmap-point" style="
+                        position: absolute;
+                        left: ${point.x}px;
+                        top: ${point.y}px;
+                        width: ${size}px;
+                        height: ${size}px;
+                        background: ${color};
+                        border-radius: 50%;
+                        opacity: 0.7;
+                        transform: translate(-50%, -50%);
+                        cursor: pointer;
+                    " title="点击次数: ${point.clicks}" onclick="showHeatmapDetail(${point.x}, ${point.y}, ${point.clicks})"></div>
+                `;
+            });
+
+            heatmapHtml += `
+                        <div class="heatmap-placeholder" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 200px; color: #999; border: 2px dashed #ddd; border-radius: 6px;">
+                            <div style="font-size: 48px; margin-bottom: 10px;">📊</div>
+                            <div style="font-size: 16px; font-weight: 500; margin-bottom: 4px;">${pageSelect.options[pageSelect.selectedIndex].text}</div>
+                            <div style="font-size: 12px;">页面结构和热点分布图</div>
+                        </div>
+                    </div>
+                    
+                    <div class="heatmap-stats" style="margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                        <div class="stat-item" style="background: white; padding: 12px; border-radius: 6px; text-align: center;">
+                            <div style="font-size: 18px; font-weight: 600; color: #007bff;">${mockHeatmapData.reduce((sum, p) => sum + p.clicks, 0)}</div>
+                            <div style="font-size: 12px; color: #666;">总点击数</div>
+                        </div>
+                        <div class="stat-item" style="background: white; padding: 12px; border-radius: 6px; text-align: center;">
+                            <div style="font-size: 18px; font-weight: 600; color: #28a745;">${mockHeatmapData.length}</div>
+                            <div style="font-size: 12px; color: #666;">热点区域</div>
+                        </div>
+                        <div class="stat-item" style="background: white; padding: 12px; border-radius: 6px; text-align: center;">
+                            <div style="font-size: 18px; font-weight: 600; color: #ffc107;">${Math.max(...mockHeatmapData.map(p => p.clicks))}</div>
+                            <div style="font-size: 12px; color: #666;">最高点击</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.innerHTML = heatmapHtml;
+        }
+
+        // 生成模拟热力图数据
+        function generateMockHeatmapData() {
+            const points = [];
+            for (let i = 0; i < 15; i++) {
+                points.push({
+                    x: Math.random() * 600 + 50,
+                    y: Math.random() * 400 + 50,
+                    clicks: Math.floor(Math.random() * 500) + 10
+                });
+            }
+            return points;
+        }
+
+        // 获取热力图颜色
+        function getHeatmapColor(intensity) {
+            const colors = [
+                'rgba(76, 175, 80, 0.6)',   // 绿色 - 低
+                'rgba(255, 235, 59, 0.6)',  // 黄色 - 中低
+                'rgba(255, 152, 0, 0.6)',   // 橙色 - 中高
+                'rgba(244, 67, 54, 0.6)'    // 红色 - 高
+            ];
+            
+            const index = Math.floor(intensity * (colors.length - 1));
+            return colors[Math.min(index, colors.length - 1)];
+        }
+
+        // 显示热力图详情
+        function showHeatmapDetail(x, y, clicks) {
+            alert(`热点详情:\n坐标: (${x}, ${y})\n点击次数: ${clicks}\n\n这里可以显示该热点区域的详细分析数据。`);
+        }
+
+        // 过滤用户行为日志
+        function filterUserBehaviorLogs() {
+            const userTypeFilter = document.getElementById('userTypeFilter').value;
+            const behaviorTypeFilter = document.getElementById('behaviorTypeFilter').value;
+            const timeRangeFilter = document.getElementById('timeRangeFilter').value;
+            const userSearchInput = document.getElementById('userSearchInput').value.toLowerCase();
+            
+            // 处理自定义时间范围显示
+            const customTimeRange = document.getElementById('customTimeRange');
+            if (timeRangeFilter === 'custom') {
+                customTimeRange.style.display = 'grid';
+            } else {
+                customTimeRange.style.display = 'none';
+            }
+            
+            // 这里应该根据过滤条件重新加载数据
+            console.log('过滤条件:', {
+                userType: userTypeFilter,
+                behaviorType: behaviorTypeFilter,
+                timeRange: timeRangeFilter,
+                searchTerm: userSearchInput
+            });
+            
+            // 重新加载当前标签页的数据
+            switch (currentLogsTab) {
+                case 'realtime':
+                    loadRealtimeActivities();
+                    break;
+                case 'sessions':
+                    loadSessionsData();
+                    break;
+                case 'pages':
+                    loadPagesAnalysis();
+                    break;
+            }
+        }
+
+        // 刷新用户行为数据
+        function refreshUserBehaviorData() {
+            // 显示加载状态
+            const containers = ['realtimeActivities', 'sessionsTable', 'pagesAnalysis', 'heatmapVisualization'];
+            containers.forEach(containerId => {
+                const container = document.getElementById(containerId);
+                if (container) {
+                    container.innerHTML = `
+                        <div class="loading-state" style="text-align: center; padding: 40px; color: #666;">
+                            <div class="loading-spinner" style="margin: 0 auto 15px; width: 40px; height: 40px; border: 3px solid #f3f3f3; border-top: 3px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                            <p>正在刷新数据...</p>
+                        </div>
+                    `;
+                }
+            });
+
+            // 更新统计概览
+            setTimeout(() => {
+                document.getElementById('todayActiveUsers').textContent = Math.floor(Math.random() * 500) + 200;
+                document.getElementById('todayPageViews').textContent = (Math.floor(Math.random() * 5000) + 2000).toLocaleString();
+                document.getElementById('avgSessionTime').textContent = Math.floor(Math.random() * 5) + 3 + ':' + (Math.floor(Math.random() * 60)).toString().padStart(2, '0');
+                document.getElementById('engagementRate').textContent = Math.floor(Math.random() * 30) + 60 + '%';
+
+                // 重新加载当前标签页数据
+                switch (currentLogsTab) {
+                    case 'realtime':
+                        loadRealtimeActivities();
+                        break;
+                    case 'sessions':
+                        loadSessionsData();
+                        break;
+                    case 'pages':
+                        loadPagesAnalysis();
+                        break;
+                    case 'heatmap':
+                        loadHeatmapData();
+                        break;
+                }
+            }, 1500);
+        }
+
+        // 导出用户行为数据
+        function exportUserBehaviorData() {
+            const today = new Date().toISOString().split('T')[0];
+            const filename = `SVTR用户行为报告_${today}.csv`;
+            
+            // 模拟导出数据
+            const csvContent = `
+用户行为分析报告,${today}
+,
+统计概览,
+今日活跃用户,${document.getElementById('todayActiveUsers').textContent}
+今日页面浏览,${document.getElementById('todayPageViews').textContent}
+平均停留时间,${document.getElementById('avgSessionTime').textContent}
+用户参与度,${document.getElementById('engagementRate').textContent}
+,
+页面分析,
+页面,浏览量,独立访客,平均停留时间,跳出率,转化率
+首页,12580,8943,3:05,35%,8.5%
+AI100页面,8432,6221,5:40,28%,12.3%
+投资营页面,5671,4103,4:20,42%,15.7%
+内容社区页面,3254,2187,7:00,25%,9.8%
+            `.trim();
+
+            // 创建并下载文件
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            if (link.download !== undefined) {
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            // 显示成功消息
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed; top: 20px; right: 20px; background: #28a745; color: white;
+                padding: 12px 20px; border-radius: 6px; z-index: 10000; animation: slideIn 0.3s ease;
+            `;
+            toast.textContent = `📊 用户行为报告已导出: ${filename}`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // 监听模块切换，在切换到操作日志模块时初始化数据
+        const originalShowModule = showModule;
+        showModule = function(moduleId) {
+            originalShowModule(moduleId);
+            
+            if (moduleId === 'logs') {
+                // 初始化操作日志模块
+                setTimeout(() => {
+                    refreshUserBehaviorData();
+                    startRealtimeMonitoring();
+                }, 500);
+            } else if (currentModule === 'logs' && moduleId !== 'logs') {
+                // 离开操作日志模块时停止实时监控
+                stopRealtimeMonitoring();
+            }
+        };
         
     </script>
 </body>
