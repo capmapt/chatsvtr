@@ -621,6 +621,362 @@
             100% { transform: rotate(360deg); }
         }
         
+        /* 内容管理系统样式 */
+        .module-actions {
+            display: flex;
+            gap: 10px;
+            margin-left: auto;
+        }
+        
+        .content-management-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 4px;
+            margin: 20px 25px;
+            gap: 4px;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 12px 16px;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #666;
+        }
+        
+        .tab-btn.active {
+            background: white;
+            color: #FA8C32;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .tab-btn:hover:not(.active) {
+            background: rgba(255,255,255,0.7);
+        }
+        
+        .tab-icon {
+            font-size: 1rem;
+        }
+        
+        .content-filters {
+            padding: 0 25px 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .filter-row {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .filter-select, .filter-input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            background: white;
+            transition: border-color 0.3s ease;
+        }
+        
+        .filter-select:focus, .filter-input:focus {
+            outline: none;
+            border-color: #FA8C32;
+        }
+        
+        .search-input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            background: white;
+            width: 250px;
+            margin-left: auto;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #FA8C32;
+            box-shadow: 0 0 0 3px rgba(250, 140, 50, 0.1);
+        }
+        
+        .content-list-container {
+            margin: 20px 25px;
+        }
+        
+        .content-tab-panel {
+            display: none;
+        }
+        
+        .content-tab-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .content-table-container {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .content-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+        
+        .content-table thead {
+            background: #f8f9fa;
+        }
+        
+        .content-table th {
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .content-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #f8f9fa;
+            vertical-align: middle;
+            font-size: 0.9rem;
+        }
+        
+        .content-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .content-title {
+            font-weight: 600;
+            color: #2c3e50;
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .content-title:hover {
+            color: #FA8C32;
+        }
+        
+        .content-author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .author-avatar-small {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #FA8C32;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        
+        .content-category {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            background: #e9ecef;
+            color: #495057;
+        }
+        
+        .category-startups { background: #d4edda; color: #155724; }
+        .category-public { background: #cce5ff; color: #004085; }
+        .category-analysis { background: #fff3cd; color: #856404; }
+        .category-investors { background: #f8d7da; color: #721c24; }
+        .category-weekly { background: #d1ecf1; color: #0c5460; }
+        
+        .content-status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-published { background: #d4edda; color: #155724; }
+        .status-draft { background: #e2e3e5; color: #383d41; }
+        .status-rejected { background: #f8d7da; color: #721c24; }
+        
+        .content-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-btn-small {
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .action-btn-small:hover {
+            background: #f8f9fa;
+        }
+        
+        .btn-approve { border-color: #28a745; color: #28a745; }
+        .btn-approve:hover { background: #28a745; color: white; }
+        
+        .btn-reject { border-color: #dc3545; color: #dc3545; }
+        .btn-reject:hover { background: #dc3545; color: white; }
+        
+        .btn-edit { border-color: #007bff; color: #007bff; }
+        .btn-edit:hover { background: #007bff; color: white; }
+        
+        .batch-actions {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 0 0 8px 8px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .batch-actions::before {
+            content: "选中项目操作:";
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .btn-warning:hover {
+            background: #e0a800;
+        }
+        
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .pagination-info {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .pagination-btn {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .pagination-btn:hover:not(:disabled) {
+            background: #FA8C32;
+            color: white;
+            border-color: #FA8C32;
+        }
+        
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination-numbers {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .page-number {
+            padding: 6px 10px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .page-number:hover {
+            background: #f8f9fa;
+        }
+        
+        .page-number.active {
+            background: #FA8C32;
+            color: white;
+            border-color: #FA8C32;
+        }
+        
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -1182,13 +1538,166 @@
                 <div id="content-module" class="content-module">
                     <div class="module-header">
                         <div class="module-title">内容创作管理</div>
-                        <div class="module-subtitle">管理AI周报、投资洞察等内容创作</div>
+                        <div class="module-subtitle">管理平台所有内容的创作、审核和发布</div>
+                        <div class="module-actions">
+                            <button class="btn-secondary" onclick="refreshContentList()">🔄 刷新列表</button>
+                            <button class="btn-primary" onclick="openContentEditor()">✏️ 创建内容</button>
+                        </div>
                     </div>
-                    <div class="module-content">
-                        <div class="empty-state">
-                            <div class="empty-state-icon">✍️</div>
-                            <h3>内容创作功能</h3>
-                            <p>正在开发中，敬请期待...</p>
+                    
+                    <div class="content-management-tabs">
+                        <button class="tab-btn active" onclick="switchContentTab('pending')">
+                            <span class="tab-icon">⏳</span>
+                            <span>待审核 (<span id="pendingCount">0</span>)</span>
+                        </button>
+                        <button class="tab-btn" onclick="switchContentTab('published')">
+                            <span class="tab-icon">✅</span>
+                            <span>已发布 (<span id="publishedCount">0</span>)</span>
+                        </button>
+                        <button class="tab-btn" onclick="switchContentTab('drafts')">
+                            <span class="tab-icon">📄</span>
+                            <span>草稿 (<span id="draftsCount">0</span>)</span>
+                        </button>
+                        <button class="tab-btn" onclick="switchContentTab('rejected')">
+                            <span class="tab-icon">❌</span>
+                            <span>已拒绝 (<span id="rejectedCount">0</span>)</span>
+                        </button>
+                    </div>
+
+                    <!-- 筛选和搜索 -->
+                    <div class="content-filters">
+                        <div class="filter-row">
+                            <select class="filter-select" id="categoryFilter" onchange="applyFilters()">
+                                <option value="">所有分类</option>
+                                <option value="startups">AI初创公司</option>
+                                <option value="public">AI上市公司</option>
+                                <option value="analysis">AI行业分析</option>
+                                <option value="investors">AI投资机构</option>
+                                <option value="weekly">AI周报</option>
+                            </select>
+                            <select class="filter-select" id="authorFilter" onchange="applyFilters()">
+                                <option value="">所有作者</option>
+                            </select>
+                            <input type="date" class="filter-input" id="dateFilter" onchange="applyFilters()">
+                            <input type="search" class="search-input" id="contentSearch" placeholder="搜索标题或内容..." onkeyup="searchContent()">
+                        </div>
+                    </div>
+
+                    <!-- 内容列表 -->
+                    <div class="content-list-container">
+                        <div id="pending-content" class="content-tab-panel active">
+                            <div class="content-table-container">
+                                <table class="content-table">
+                                    <thead>
+                                        <tr>
+                                            <th width="5%"><input type="checkbox" id="selectAllPending" onchange="toggleSelectAll('pending')"></th>
+                                            <th width="35%">标题</th>
+                                            <th width="12%">作者</th>
+                                            <th width="10%">分类</th>
+                                            <th width="12%">提交时间</th>
+                                            <th width="10%">状态</th>
+                                            <th width="16%">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="pendingTableBody">
+                                        <!-- 动态生成内容 -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="batch-actions" id="pendingBatchActions" style="display: none;">
+                                <button class="btn-success" onclick="batchApprove()">批量通过</button>
+                                <button class="btn-danger" onclick="batchReject()">批量拒绝</button>
+                                <button class="btn-secondary" onclick="batchAssign()">批量分配</button>
+                            </div>
+                        </div>
+
+                        <div id="published-content" class="content-tab-panel">
+                            <div class="content-table-container">
+                                <table class="content-table">
+                                    <thead>
+                                        <tr>
+                                            <th width="5%"><input type="checkbox" id="selectAllPublished" onchange="toggleSelectAll('published')"></th>
+                                            <th width="35%">标题</th>
+                                            <th width="12%">作者</th>
+                                            <th width="10%">分类</th>
+                                            <th width="12%">发布时间</th>
+                                            <th width="8%">阅读量</th>
+                                            <th width="18%">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="publishedTableBody">
+                                        <!-- 动态生成内容 -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="batch-actions" id="publishedBatchActions" style="display: none;">
+                                <button class="btn-warning" onclick="batchUnpublish()">批量下线</button>
+                                <button class="btn-secondary" onclick="batchFeature()">批量推荐</button>
+                            </div>
+                        </div>
+
+                        <div id="drafts-content" class="content-tab-panel">
+                            <div class="content-table-container">
+                                <table class="content-table">
+                                    <thead>
+                                        <tr>
+                                            <th width="5%"><input type="checkbox" id="selectAllDrafts" onchange="toggleSelectAll('drafts')"></th>
+                                            <th width="35%">标题</th>
+                                            <th width="12%">作者</th>
+                                            <th width="10%">分类</th>
+                                            <th width="12%">最后编辑</th>
+                                            <th width="10%">字数</th>
+                                            <th width="16%">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="draftsTableBody">
+                                        <!-- 动态生成内容 -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="batch-actions" id="draftsBatchActions" style="display: none;">
+                                <button class="btn-danger" onclick="batchDeleteDrafts()">批量删除</button>
+                                <button class="btn-secondary" onclick="batchAssignDrafts()">批量分配</button>
+                            </div>
+                        </div>
+
+                        <div id="rejected-content" class="content-tab-panel">
+                            <div class="content-table-container">
+                                <table class="content-table">
+                                    <thead>
+                                        <tr>
+                                            <th width="5%"><input type="checkbox" id="selectAllRejected" onchange="toggleSelectAll('rejected')"></th>
+                                            <th width="30%">标题</th>
+                                            <th width="12%">作者</th>
+                                            <th width="10%">分类</th>
+                                            <th width="12%">拒绝时间</th>
+                                            <th width="15%">拒绝原因</th>
+                                            <th width="16%">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="rejectedTableBody">
+                                        <!-- 动态生成内容 -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="batch-actions" id="rejectedBatchActions" style="display: none;">
+                                <button class="btn-primary" onclick="batchResubmit()">批量重新审核</button>
+                                <button class="btn-danger" onclick="batchDeleteRejected()">批量删除</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 分页 -->
+                    <div class="pagination-container">
+                        <div class="pagination-info">
+                            <span>显示 <span id="currentRange">1-10</span> 条，共 <span id="totalItems">0</span> 条</span>
+                        </div>
+                        <div class="pagination-controls">
+                            <button class="pagination-btn" id="prevBtn" onclick="changePage(-1)" disabled>上一页</button>
+                            <div class="pagination-numbers" id="paginationNumbers">
+                                <!-- 动态生成页码 -->
+                            </div>
+                            <button class="pagination-btn" id="nextBtn" onclick="changePage(1)" disabled>下一页</button>
                         </div>
                     </div>
                 </div>
@@ -4691,23 +5200,23 @@
                 </div>
 
                 <div class="conversion-metrics" style="background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #e9ecef; margin-bottom: 30px;">
-                    <h5 style="margin: 0 0 15px 0; color: #495057;">转化指标</h5>
-                    <div style="display: flex; align-items: center; justify-content: center; gap: 30px;">
-                        <div style="text-align: center;">
+                    <h5 style="margin: 0 0 15px 0; color: #495057; text-align: center;">转化指标</h5>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap; width: 100%;">
+                        <div style="text-align: center; flex-shrink: 0;">
                             <div style="font-size: 14px; color: #666; margin-bottom: 8px;">转化率</div>
                             <div style="font-size: 36px; font-weight: 700; color: #28a745;">${conversionRate}%</div>
                         </div>
-                        <div style="width: 100px; height: 100px; position: relative; margin: 0 20px;">
-                            <svg width="100" height="100" style="transform: rotate(-90deg);">
+                        <div style="width: 100px; height: 100px; position: relative; margin: 0 auto; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+                            <svg width="100" height="100" style="transform: rotate(-90deg); display: block;">
                                 <circle cx="50" cy="50" r="45" fill="none" stroke="#e9ecef" stroke-width="6"></circle>
                                 <circle cx="50" cy="50" r="45" fill="none" stroke="#28a745" stroke-width="6" 
-                                    stroke-dasharray="${2 * Math.PI * 45}" 
-                                    stroke-dashoffset="${2 * Math.PI * 45 * (1 - conversionRate / 100)}"
+                                    stroke-dasharray="${(2 * Math.PI * 45).toFixed(2)}" 
+                                    stroke-dashoffset="${(2 * Math.PI * 45 * (1 - Math.max(0, Math.min(100, conversionRate)) / 100)).toFixed(2)}"
                                     style="transition: stroke-dashoffset 0.5s;"></circle>
                             </svg>
-                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 12px; color: #666;">转化</div>
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 12px; color: #666; pointer-events: none;">转化</div>
                         </div>
-                        <div style="text-align: center;">
+                        <div style="text-align: center; flex-shrink: 0;">
                             <div style="font-size: 14px; color: #666; margin-bottom: 8px;">访客价值</div>
                             <div style="font-size: 24px; font-weight: 600; color: #495057;">优秀</div>
                         </div>
@@ -5357,12 +5866,384 @@ AI100页面,8432,6221,5:40,28%,12.3%
             }, 3000);
         }
 
+        // 内容管理系统功能
+        let currentContentTab = 'pending';
+        let currentPage = 1;
+        let contentsData = {};
+        
+        // 切换内容标签页
+        function switchContentTab(tabName) {
+            // 更新标签页状态
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // 更新内容面板
+            document.querySelectorAll('.content-tab-panel').forEach(panel => panel.classList.remove('active'));
+            document.getElementById(tabName + '-content').classList.add('active');
+            
+            currentContentTab = tabName;
+            currentPage = 1;
+            loadContentData(tabName);
+        }
+
+        // 加载内容数据
+        async function loadContentData(status = 'pending') {
+            try {
+                showLoadingState(status);
+                
+                const response = await fetch(`/api/content-management/contents?status=${status}&page=${currentPage}&limit=20`);
+                const data = await response.json();
+                
+                contentsData[status] = data;
+                renderContentTable(status, data.contents);
+                updatePagination(data.pagination);
+                updateContentStats(data.stats);
+                
+            } catch (error) {
+                console.error('加载内容数据失败:', error);
+                showErrorMessage('加载内容数据失败，请重试');
+            }
+        }
+
+        // 渲染内容表格
+        function renderContentTable(status, contents) {
+            const tableBody = document.getElementById(status + 'TableBody');
+            
+            if (contents.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 60px 20px; color: #666;">
+                            <div style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;">📝</div>
+                            <div>暂无${getStatusText(status)}内容</div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tableBody.innerHTML = contents.map(content => {
+                const categoryClass = `category-${content.category}`;
+                const statusClass = `status-${content.status}`;
+                
+                return `
+                    <tr data-content-id="${content.id}">
+                        <td><input type="checkbox" class="content-checkbox" value="${content.id}" onchange="toggleBatchActions('${status}')"></td>
+                        <td>
+                            <div class="content-title" onclick="viewContentDetail('${content.id}')" title="${content.title}">
+                                ${content.title}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="content-author">
+                                <div class="author-avatar-small">${content.authorName.charAt(0)}</div>
+                                <div>${content.authorName}</div>
+                            </div>
+                        </td>
+                        <td><span class="content-category ${categoryClass}">${getCategoryText(content.category)}</span></td>
+                        <td>${formatDate(content.createdAt)}</td>
+                        ${status === 'published' ? 
+                            `<td>${content.views.toLocaleString()}</td>` : 
+                            `<td><span class="content-status ${statusClass}">${getStatusText(content.status)}</span></td>`
+                        }
+                        <td>
+                            <div class="content-actions">
+                                ${getActionButtons(content, status)}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // 获取操作按钮
+        function getActionButtons(content, status) {
+            const buttons = [];
+            
+            buttons.push(`<button class="action-btn-small btn-edit" onclick="editContent('${content.id}')" title="编辑">编辑</button>`);
+            
+            if (status === 'pending') {
+                buttons.push(`<button class="action-btn-small btn-approve" onclick="reviewContent('${content.id}', 'approve')" title="通过">通过</button>`);
+                buttons.push(`<button class="action-btn-small btn-reject" onclick="reviewContent('${content.id}', 'reject')" title="拒绝">拒绝</button>`);
+            } else if (status === 'published') {
+                buttons.push(`<button class="action-btn-small" onclick="viewContent('${content.id}')" title="查看">查看</button>`);
+                buttons.push(`<button class="action-btn-small" onclick="shareContent('${content.id}')" title="分享">分享</button>`);
+            } else if (status === 'rejected') {
+                buttons.push(`<button class="action-btn-small btn-approve" onclick="resubmitContent('${content.id}')" title="重新提交">重新提交</button>`);
+            }
+            
+            buttons.push(`<button class="action-btn-small btn-reject" onclick="deleteContent('${content.id}')" title="删除">删除</button>`);
+            
+            return buttons.join('');
+        }
+
+        // 显示加载状态
+        function showLoadingState(status) {
+            const tableBody = document.getElementById(status + 'TableBody');
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="7" style="text-align: center; padding: 40px;">
+                        <div class="loading-spinner" style="display: inline-block; margin-right: 10px;"></div>
+                        加载中...
+                    </td>
+                </tr>
+            `;
+        }
+
+        // 审核内容
+        async function reviewContent(contentId, action) {
+            let reason = '';
+            if (action === 'reject') {
+                reason = prompt('请输入拒绝原因:');
+                if (!reason) return;
+            }
+
+            try {
+                const response = await fetch(`/api/content-management/contents/${contentId}/review`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action,
+                        reason,
+                        reviewerId: 'admin-001',
+                        reviewerName: '管理员'
+                    })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    showSuccessMessage(result.message);
+                    loadContentData(currentContentTab);
+                } else {
+                    showErrorMessage(result.error || '操作失败');
+                }
+            } catch (error) {
+                showErrorMessage('网络请求失败，请重试');
+            }
+        }
+
+        // 批量操作
+        async function batchApprove() {
+            const selectedIds = getSelectedContentIds();
+            if (selectedIds.length === 0) {
+                showErrorMessage('请先选择要操作的内容');
+                return;
+            }
+
+            if (confirm(`确定要批量通过 ${selectedIds.length} 个内容吗？`)) {
+                await performBatchOperation('approve', selectedIds);
+            }
+        }
+
+        async function batchReject() {
+            const selectedIds = getSelectedContentIds();
+            if (selectedIds.length === 0) {
+                showErrorMessage('请先选择要操作的内容');
+                return;
+            }
+
+            const reason = prompt('请输入批量拒绝原因:');
+            if (!reason) return;
+
+            await performBatchOperation('reject', selectedIds, { reason });
+        }
+
+        async function performBatchOperation(operation, contentIds, data = {}) {
+            try {
+                const response = await fetch('/api/content-management/contents/batch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ operation, contentIds, data })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    showSuccessMessage(result.message);
+                    loadContentData(currentContentTab);
+                    clearAllSelections();
+                } else {
+                    showErrorMessage(result.error || '批量操作失败');
+                }
+            } catch (error) {
+                showErrorMessage('网络请求失败，请重试');
+            }
+        }
+
+        // 获取选中的内容ID
+        function getSelectedContentIds() {
+            return Array.from(document.querySelectorAll('.content-checkbox:checked')).map(cb => cb.value);
+        }
+
+        // 切换批量操作按钮显示
+        function toggleBatchActions(status) {
+            const selectedCount = getSelectedContentIds().length;
+            const batchActions = document.getElementById(status + 'BatchActions');
+            
+            if (selectedCount > 0) {
+                batchActions.style.display = 'flex';
+            } else {
+                batchActions.style.display = 'none';
+            }
+        }
+
+        // 全选/取消全选
+        function toggleSelectAll(status) {
+            const selectAll = document.getElementById('selectAll' + status.charAt(0).toUpperCase() + status.slice(1));
+            const checkboxes = document.querySelectorAll('.content-checkbox');
+            
+            checkboxes.forEach(cb => {
+                cb.checked = selectAll.checked;
+            });
+            
+            toggleBatchActions(status);
+        }
+
+        // 清除所有选择
+        function clearAllSelections() {
+            document.querySelectorAll('.content-checkbox').forEach(cb => cb.checked = false);
+            document.querySelectorAll('[id$="BatchActions"]').forEach(ba => ba.style.display = 'none');
+        }
+
+        // 更新统计数据
+        function updateContentStats(stats) {
+            document.getElementById('pendingCount').textContent = stats.pending;
+            document.getElementById('publishedCount').textContent = stats.published;
+            document.getElementById('draftsCount').textContent = stats.draft;
+            document.getElementById('rejectedCount').textContent = stats.rejected;
+        }
+
+        // 更新分页
+        function updatePagination(pagination) {
+            document.getElementById('currentRange').textContent = 
+                `${(pagination.page - 1) * pagination.limit + 1}-${Math.min(pagination.page * pagination.limit, pagination.total)}`;
+            document.getElementById('totalItems').textContent = pagination.total;
+
+            // 更新分页按钮
+            document.getElementById('prevBtn').disabled = pagination.page <= 1;
+            document.getElementById('nextBtn').disabled = pagination.page >= pagination.pages;
+
+            // 生成页码
+            const paginationNumbers = document.getElementById('paginationNumbers');
+            paginationNumbers.innerHTML = '';
+            
+            const startPage = Math.max(1, pagination.page - 2);
+            const endPage = Math.min(pagination.pages, pagination.page + 2);
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = `page-number ${i === pagination.page ? 'active' : ''}`;
+                pageBtn.textContent = i;
+                pageBtn.onclick = () => {
+                    currentPage = i;
+                    loadContentData(currentContentTab);
+                };
+                paginationNumbers.appendChild(pageBtn);
+            }
+        }
+
+        // 分页控制
+        function changePage(direction) {
+            currentPage += direction;
+            loadContentData(currentContentTab);
+        }
+
+        // 筛选功能
+        function applyFilters() {
+            const category = document.getElementById('categoryFilter').value;
+            const author = document.getElementById('authorFilter').value;
+            const date = document.getElementById('dateFilter').value;
+            
+            // 这里可以添加筛选逻辑
+            console.log('应用筛选:', { category, author, date });
+        }
+
+        // 搜索功能
+        let searchTimeout;
+        function searchContent() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const query = document.getElementById('contentSearch').value;
+                // 这里可以添加搜索逻辑
+                console.log('搜索内容:', query);
+            }, 500);
+        }
+
+        // 刷新内容列表
+        function refreshContentList() {
+            loadContentData(currentContentTab);
+        }
+
+        // 打开内容编辑器
+        function openContentEditor() {
+            // 这里可以打开内容编辑器模态框或跳转到编辑页面
+            window.open('/pages/author-center.html', '_blank');
+        }
+
+        // 工具函数
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': '待审核',
+                'published': '已发布',
+                'draft': '草稿',
+                'rejected': '已拒绝'
+            };
+            return statusMap[status] || status;
+        }
+
+        function getCategoryText(category) {
+            const categoryMap = {
+                'startups': 'AI初创',
+                'public': 'AI上市',
+                'analysis': '行业分析',
+                'investors': '投资机构',
+                'weekly': 'AI周报'
+            };
+            return categoryMap[category] || category;
+        }
+
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString('zh-CN');
+        }
+
+        function showSuccessMessage(message) {
+            showToast(message, 'success');
+        }
+
+        function showErrorMessage(message) {
+            showToast(message, 'error');
+        }
+
+        function showToast(message, type = 'info') {
+            const colors = {
+                success: '#28a745',
+                error: '#dc3545',
+                info: '#17a2b8'
+            };
+
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed; top: 20px; right: 20px; 
+                background: ${colors[type]}; color: white;
+                padding: 12px 20px; border-radius: 6px; z-index: 10000;
+                animation: slideIn 0.3s ease; font-weight: 500;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => toast.remove(), 3000);
+        }
+
         // 监听模块切换，在切换到操作日志模块时初始化数据
         const originalShowModule = showModule;
         showModule = function(moduleId) {
             originalShowModule(moduleId);
             
-            if (moduleId === 'logs') {
+            if (moduleId === 'content') {
+                // 初始化内容管理模块
+                setTimeout(() => {
+                    loadContentData('pending');
+                    loadAuthors();
+                }, 500);
+            } else if (moduleId === 'logs') {
                 // 初始化操作日志模块
                 setTimeout(() => {
                     refreshUserBehaviorData();
@@ -5373,6 +6254,26 @@ AI100页面,8432,6221,5:40,28%,12.3%
                 stopRealtimeMonitoring();
             }
         };
+
+        // 加载作者列表
+        async function loadAuthors() {
+            try {
+                const response = await fetch('/api/content-management/authors');
+                const authors = await response.json();
+                
+                const authorFilter = document.getElementById('authorFilter');
+                authorFilter.innerHTML = '<option value="">所有作者</option>';
+                
+                authors.forEach(author => {
+                    const option = document.createElement('option');
+                    option.value = author.id;
+                    option.textContent = `${author.name} (${author.publishedArticles})`;
+                    authorFilter.appendChild(option);
+                });
+            } catch (error) {
+                console.error('加载作者列表失败:', error);
+            }
+        }
         
     </script>
 </body>
