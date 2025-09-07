@@ -632,6 +632,399 @@
             margin-bottom: 20px;
             opacity: 0.5;
         }
+
+        /* 操作日志页面样式优化 */
+        .logs-tabs {
+            display: flex;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .logs-tab {
+            flex: 1;
+            padding: 16px 20px;
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.7);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 14px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .logs-tab:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .logs-tab.active {
+            color: #fff;
+            background: rgba(255,255,255,0.15);
+        }
+        
+        .logs-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #fff;
+        }
+        
+        .logs-tab-content {
+            background: #fff;
+            border-radius: 0 0 12px 12px;
+            padding: 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+            border-top: none;
+        }
+        
+        .logs-tab-panel {
+            display: none;
+            padding: 25px;
+            min-height: 500px;
+        }
+        
+        .logs-tab-panel.active {
+            display: block;
+        }
+        
+        /* 实时活动样式优化 */
+        .realtime-activity {
+            padding: 16px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.2s ease;
+            border-radius: 8px;
+            margin-bottom: 1px;
+        }
+        
+        .realtime-activity:hover {
+            background: #f8f9fa;
+            border-color: #dee2e6;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transform: translateY(-1px);
+        }
+        
+        .realtime-activity:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        .activity-icon {
+            font-size: 20px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+        
+        .activity-meta {
+            color: #7f8c8d;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .activity-status {
+            padding: 4px 12px;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 6px rgba(46, 204, 113, 0.3);
+        }
+        
+        /* 统计概览卡片优化 */
+        .stat-card {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .stat-icon {
+            font-size: 32px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        
+        .stat-content {
+            flex: 1;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 4px;
+        }
+        
+        .stat-change {
+            font-size: 12px;
+            color: #28a745;
+            font-weight: 600;
+        }
+        
+        /* 过滤器区域优化 */
+        .logs-filters {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+            padding: 24px !important;
+            border-radius: 12px !important;
+            margin-bottom: 20px !important;
+            border: 1px solid #dee2e6 !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important;
+        }
+        
+        .filter-group label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 6px;
+            display: block;
+        }
+        
+        .filter-group select,
+        .filter-group input {
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+            padding: 10px 12px;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+        
+        .filter-group select:focus,
+        .filter-group input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+        
+        /* 脉冲动画 */
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* 加载动画 */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-spinner {
+            margin: 0 auto 15px;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        /* 会话表格优化 */
+        .sessions-table .table-container {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+        }
+        
+        .sessions-table table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+        
+        .sessions-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+        }
+        
+        .sessions-table td {
+            padding: 16px 12px;
+            border-bottom: 1px solid #e9ecef;
+            border-left: none;
+            border-right: none;
+            vertical-align: middle;
+        }
+        
+        .sessions-table tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+        
+        .sessions-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* 页面分析卡片网格优化 */
+        .pages-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+        
+        .page-stat-card {
+            background: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .page-stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .page-stat-card .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .page-stat-card h5 {
+            margin: 0;
+            font-weight: 700;
+            color: #2c3e50;
+            font-size: 18px;
+        }
+        
+        .page-stat-card .page-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .page-stat-card .metric {
+            text-align: center;
+            padding: 12px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        /* 热力图控制区域优化 */
+        .heatmap-controls {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        /* 响应式优化 */
+        @media (max-width: 768px) {
+            .logs-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .logs-tab {
+                min-width: 50%;
+                font-size: 13px;
+                padding: 12px 16px;
+            }
+            
+            .stat-card {
+                padding: 20px;
+                gap: 12px;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .stat-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+            
+            .stat-value {
+                font-size: 24px;
+            }
+            
+            .pages-stats-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .sessions-table {
+                overflow-x: auto;
+            }
+            
+            .sessions-table table {
+                min-width: 800px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -4075,19 +4468,26 @@
                 
                 let activitiesHtml = '';
                 realtimeData.forEach(activity => {
-                    const timeAgo = getTimeAgo(activity.timestamp);
-                    const typeIcon = getActivityIcon(activity.type);
-                    const typeLabel = getActivityLabel(activity.type);
+                    // 安全处理可能为undefined的字段
+                    const timestamp = activity.timestamp || Date.now();
+                    const activityType = activity.type || 'unknown';
+                    const userId = activity.userId || 'anonymous';
+                    const page = activity.page || activity.url || '/';
+                    const details = activity.details || getActivityDetails(activityType, page);
+                    
+                    const timeAgo = getTimeAgo(timestamp);
+                    const typeIcon = getActivityIcon(activityType);
+                    const typeLabel = getActivityLabel(activityType);
                     
                     activitiesHtml += `
                         <div class="realtime-activity" style="padding: 12px; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 12px;">
                             <div class="activity-icon" style="font-size: 18px;">${typeIcon}</div>
                             <div class="activity-content" style="flex: 1;">
                                 <div class="activity-title" style="font-weight: 500; margin-bottom: 2px;">
-                                    ${typeLabel}: ${activity.details}
+                                    ${typeLabel}: ${details}
                                 </div>
                                 <div class="activity-meta" style="color: #666; font-size: 12px;">
-                                    用户: ${activity.userId} • 页面: ${activity.page} • ${timeAgo}
+                                    用户: ${userId} • 页面: ${page} • ${timeAgo}
                                 </div>
                             </div>
                             <div class="activity-status" style="padding: 2px 8px; background: #e8f5e8; color: #2e7d2e; border-radius: 12px; font-size: 11px;">
@@ -4249,37 +4649,62 @@
                 `;
 
                 sessionsData.forEach(session => {
-                    const duration = formatDuration(session.duration);
-                    const engagementColor = session.engagement >= 70 ? '#28a745' : session.engagement >= 40 ? '#ffc107' : '#dc3545';
+                    // 安全处理可能为undefined的字段
+                    const sessionId = session.sessionId || 'unknown';
+                    const userId = session.userId || 'anonymous';
+                    const userType = session.userType || '访客';
+                    const startTime = session.startTime || Date.now();
+                    const duration = formatDuration(session.totalDuration || session.duration || 0);
+                    const pageViews = session.pageViews || 0;
+                    const clicks = session.clicks || 0;
+                    
+                    // 计算参与度
+                    let engagement = 0;
+                    if (session.engagement && typeof session.engagement === 'object') {
+                        // 基于多种因素计算参与度
+                        const formSubmissions = session.engagement.formSubmissions || 0;
+                        const linkClicks = session.engagement.linkClicks || 0;
+                        const scrollMilestones = session.engagement.scrollMilestones || 0;
+                        engagement = Math.min(100, (formSubmissions * 20) + (linkClicks * 10) + (scrollMilestones * 5) + (pageViews * 10) + Math.min(clicks * 2, 30));
+                    } else if (typeof session.engagement === 'number') {
+                        engagement = session.engagement;
+                    } else {
+                        // 基础参与度计算
+                        engagement = Math.min(100, (pageViews * 10) + Math.min(clicks * 2, 30));
+                    }
+                    
+                    const engagementColor = engagement >= 70 ? '#28a745' : engagement >= 40 ? '#ffc107' : '#dc3545';
                     
                     sessionsHtml += `
                         <tr style="border-bottom: 1px solid #dee2e6;">
-                            <td style="padding: 12px; border: 1px solid #dee2e6;">${session.sessionId.substring(0, 8)}...</td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6;">
+                                <span title="${sessionId}">${sessionId.substring(0, 8)}...</span>
+                            </td>
                             <td style="padding: 12px; border: 1px solid #dee2e6;">
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <div style="width: 32px; height: 32px; border-radius: 50%; background: #007bff; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px;">
-                                        ${session.userId.charAt(0).toUpperCase()}
+                                        ${userId.charAt(0).toUpperCase()}
                                     </div>
                                     <div>
-                                        <div style="font-weight: 500;">${session.userId}</div>
-                                        <div style="color: #666; font-size: 12px;">${session.userType}</div>
+                                        <div style="font-weight: 500;">${userId}</div>
+                                        <div style="color: #666; font-size: 12px;">${userType}</div>
                                     </div>
                                 </div>
                             </td>
-                            <td style="padding: 12px; border: 1px solid #dee2e6;">${new Date(session.startTime).toLocaleString()}</td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6;">${new Date(startTime).toLocaleString()}</td>
                             <td style="padding: 12px; border: 1px solid #dee2e6;">${duration}</td>
-                            <td style="padding: 12px; border: 1px solid #dee2e6;">${session.pageViews}</td>
-                            <td style="padding: 12px; border: 1px solid #dee2e6;">${session.clicks}</td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6;">${pageViews}</td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6;">${clicks}</td>
                             <td style="padding: 12px; border: 1px solid #dee2e6;">
                                 <div style="display: flex; align-items: center; gap: 8px;">
                                     <div style="width: 60px; height: 6px; background: #e9ecef; border-radius: 3px; overflow: hidden;">
-                                        <div style="width: ${session.engagement}%; height: 100%; background: ${engagementColor};"></div>
+                                        <div style="width: ${engagement}%; height: 100%; background: ${engagementColor};"></div>
                                     </div>
-                                    <span style="color: ${engagementColor}; font-weight: 500;">${session.engagement}%</span>
+                                    <span style="color: ${engagementColor}; font-weight: 500;">${Math.round(engagement)}%</span>
                                 </div>
                             </td>
                             <td style="padding: 12px; border: 1px solid #dee2e6;">
-                                <button onclick="viewSessionDetails('${session.sessionId}')" class="btn btn-sm btn-outline-primary" style="padding: 4px 8px; font-size: 12px;">
+                                <button onclick="viewSessionDetails('${sessionId}')" class="btn btn-sm btn-outline-primary" style="padding: 4px 8px; font-size: 12px;">
                                     查看详情
                                 </button>
                             </td>
@@ -4378,43 +4803,52 @@
                 `;
 
                 pagesData.forEach(page => {
-                    const bounceRateColor = page.bounceRate > 60 ? '#dc3545' : page.bounceRate > 40 ? '#ffc107' : '#28a745';
+                    // 安全处理可能为undefined的字段
+                    const title = page.title || page.name || '未知页面';
+                    const path = page.path || page.url || '/unknown';
+                    const views = page.views || page.pageViews || 0;
+                    const avgTime = page.avgTime || page.averageTime || 0;
+                    const bounceRate = page.bounceRate || 0;
+                    const uniqueVisitors = page.uniqueVisitors || page.unique_visitors || Math.ceil(views * 0.7);
+                    const conversionRate = page.conversionRate || page.conversion_rate || 0;
+                    
+                    const bounceRateColor = bounceRate > 60 ? '#dc3545' : bounceRate > 40 ? '#ffc107' : '#28a745';
                     
                     pagesHtml += `
-                        <div class="page-stat-card" style="background: #fff; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px;">
-                            <div class="page-header" style="display: flex; justify-content: between; align-items: center; margin-bottom: 15px;">
+                        <div class="page-stat-card" style="background: #fff; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                                 <div>
-                                    <h5 style="margin: 0; font-weight: 600;">${page.title}</h5>
-                                    <p style="margin: 2px 0 0; color: #666; font-size: 12px;">${page.path}</p>
+                                    <h5 style="margin: 0; font-weight: 600; color: #333;">${title}</h5>
+                                    <p style="margin: 2px 0 0; color: #666; font-size: 12px;">${path}</p>
                                 </div>
                                 <div class="page-views" style="text-align: right;">
-                                    <div style="font-size: 24px; font-weight: 600; color: #007bff;">${page.views.toLocaleString()}</div>
+                                    <div style="font-size: 24px; font-weight: 600; color: #007bff;">${views.toLocaleString()}</div>
                                     <div style="font-size: 12px; color: #666;">浏览量</div>
                                 </div>
                             </div>
                             
-                            <div class="page-metrics" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                                <div class="metric">
+                            <div class="page-metrics" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                                <div class="metric" style="text-align: center; padding: 10px; background: #f8f9fa; border-radius: 6px;">
                                     <div style="font-size: 12px; color: #666; margin-bottom: 4px;">平均停留时间</div>
-                                    <div style="font-size: 16px; font-weight: 500;">${formatDuration(page.avgTime)}</div>
+                                    <div style="font-size: 16px; font-weight: 500; color: #495057;">${formatDuration(avgTime)}</div>
                                 </div>
-                                <div class="metric">
+                                <div class="metric" style="text-align: center; padding: 10px; background: #f8f9fa; border-radius: 6px;">
                                     <div style="font-size: 12px; color: #666; margin-bottom: 4px;">跳出率</div>
-                                    <div style="font-size: 16px; font-weight: 500; color: ${bounceRateColor};">${page.bounceRate}%</div>
+                                    <div style="font-size: 16px; font-weight: 500; color: ${bounceRateColor};">${bounceRate}%</div>
                                 </div>
-                                <div class="metric">
+                                <div class="metric" style="text-align: center; padding: 10px; background: #f8f9fa; border-radius: 6px;">
                                     <div style="font-size: 12px; color: #666; margin-bottom: 4px;">独立访客</div>
-                                    <div style="font-size: 16px; font-weight: 500;">${page.uniqueVisitors}</div>
+                                    <div style="font-size: 16px; font-weight: 500; color: #495057;">${uniqueVisitors.toLocaleString()}</div>
                                 </div>
-                                <div class="metric">
+                                <div class="metric" style="text-align: center; padding: 10px; background: #f8f9fa; border-radius: 6px;">
                                     <div style="font-size: 12px; color: #666; margin-bottom: 4px;">转化率</div>
-                                    <div style="font-size: 16px; font-weight: 500; color: #28a745;">${page.conversionRate}%</div>
+                                    <div style="font-size: 16px; font-weight: 500; color: #28a745;">${conversionRate}%</div>
                                 </div>
                             </div>
                             
                             <div class="page-actions" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
-                                <button onclick="viewPageDetails('${page.path}')" class="btn btn-sm btn-outline-primary" style="width: 100%; padding: 6px 12px; font-size: 12px;">
-                                    查看详细分析
+                                <button onclick="viewPageDetails('${path}')" class="btn btn-sm btn-outline-primary" style="width: 100%; padding: 8px 12px; font-size: 13px; border-radius: 6px;">
+                                    📊 查看详细分析
                                 </button>
                             </div>
                         </div>
