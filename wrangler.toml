@@ -23,7 +23,8 @@ id = "070deb624f41469f9cf7d8dde603f8b9"
 
 [[kv_namespaces]]
 binding = "USER_BEHAVIOR_KV"
-id = "user-behavior-data-kv-production"
+id = "c1d6ce9269ac40dea434e064a1d31204"
+preview_id = "33c9f9a8b5994c6794318debe0094325"
 
 # OAuth 认证环境变量 - 多域名支持
 [vars]
