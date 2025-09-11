@@ -3,48 +3,13 @@
     "title": "交易精选",
     "description": "精选优质创业公司与投资机会分析",
     "totalCompanies": 20,
-    "lastUpdated": "2025-09-08T18:31:26.796Z",
+    "lastUpdated": "2025-09-10T18:30:28.596Z",
     "source": "SVTR飞书知识库",
     "dataVersion": "2.0"
   },
   "companies": [
     {
       "id": 1,
-      "name": "Databricks",
-      "sector": "💾 数据服务",
-      "stage": "超级独角兽 · 成熟期",
-      "description": "Databricks，正以 1000 亿美元估值 进行新一轮融资。此次交易由 Thrive Capital、Insight Partners 和 WCM Investment Management 领投，Andreessen Horowitz 也将参与。",
-      "fundingAmount": "100.0亿美元融资 · 估值620亿美元",
-      "lastFundingDate": "2025年8月",
-      "valuation": "620亿美元",
-      "investors": [
-        "Thrive Capital",
-        "Andreessen Horowitz",
-        "Insight Partners",
-        "GIC",
-        "Capital Group",
-        "WCM"
-      ],
-      "founder": "Ali Ghodsi",
-      "website": "https://www.databricks.com/",
-      "location": "美国旧金山",
-      "foundedYear": "2013",
-      "employees": "",
-      "arr": "",
-      "tags": [
-        "AI100",
-        "Unicorn",
-        "AI50"
-      ],
-      "analysisPoints": [
-        "🏆 超级独角兽企业，估值620亿美元，行业领军地位",
-        "💎 单轮融资100.0亿美元，资本高度认可"
-      ],
-      "businessModel": "提供基于云的平台，帮助企业存储、管理和分析大量数据",
-      "deepResearch": ""
-    },
-    {
-      "id": 2,
       "name": "Surge AI",
       "sector": "💾 数据服务",
       "stage": "超级独角兽 · 成长期",
@@ -72,7 +37,7 @@
       "deepResearch": ""
     },
     {
-      "id": 3,
+      "id": 2,
       "name": "Anysphere（Cursor）",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 成长期",
@@ -105,7 +70,7 @@
       "deepResearch": ""
     },
     {
-      "id": 4,
+      "id": 3,
       "name": "Cerebras Systems",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -139,7 +104,7 @@
       "deepResearch": ""
     },
     {
-      "id": 5,
+      "id": 4,
       "name": "Mistral AI",
       "sector": "🤖 大语言模型",
       "stage": "独角兽 · 初创期",
@@ -177,7 +142,7 @@
       "deepResearch": ""
     },
     {
-      "id": 6,
+      "id": 5,
       "name": "Crusoe",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -211,7 +176,7 @@
       "deepResearch": ""
     },
     {
-      "id": 7,
+      "id": 6,
       "name": "Lambda",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -246,7 +211,7 @@
       "deepResearch": ""
     },
     {
-      "id": 8,
+      "id": 7,
       "name": "Runway",
       "sector": "🎯 垂直模型",
       "stage": "· 成熟期",
@@ -278,7 +243,7 @@
       "deepResearch": ""
     },
     {
-      "id": 9,
+      "id": 8,
       "name": "Vercel",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 成熟期",
@@ -312,7 +277,7 @@
       "deepResearch": ""
     },
     {
-      "id": 10,
+      "id": 9,
       "name": "Rivos",
       "sector": "⚙️ AI基础设施",
       "stage": "· 成长期",
@@ -345,7 +310,7 @@
       "deepResearch": ""
     },
     {
-      "id": 11,
+      "id": 10,
       "name": "Abridge",
       "sector": "🧬 生命科学",
       "stage": "独角兽 · 成熟期",
@@ -381,7 +346,7 @@
       "deepResearch": ""
     },
     {
-      "id": 12,
+      "id": 11,
       "name": "Lovable",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 初创期",
@@ -416,7 +381,7 @@
       "deepResearch": ""
     },
     {
-      "id": 13,
+      "id": 12,
       "name": "Reflection AI",
       "sector": "👨‍💻 开发者工具",
       "stage": "准独角兽 · 初创期",
@@ -451,7 +416,7 @@
       "deepResearch": ""
     },
     {
-      "id": 14,
+      "id": 13,
       "name": "Vast Data",
       "sector": "💾 数据服务",
       "stage": "独角兽 · 成熟期",
@@ -482,7 +447,7 @@
       "deepResearch": ""
     },
     {
-      "id": 15,
+      "id": 14,
       "name": "Mercor",
       "sector": "🏢 企业服务",
       "stage": "独角兽 · 初创期",
@@ -519,7 +484,7 @@
       "deepResearch": "Mercor"
     },
     {
-      "id": 16,
+      "id": 15,
       "name": "n8n",
       "sector": "👨‍💻 开发者工具",
       "stage": "准独角兽 · 成熟期",
@@ -550,7 +515,7 @@
       "deepResearch": ""
     },
     {
-      "id": 17,
+      "id": 16,
       "name": "Fireworks AI",
       "sector": "🤖 AI模型",
       "stage": "准独角兽 · 成长期",
@@ -584,7 +549,7 @@
       "deepResearch": ""
     },
     {
-      "id": 18,
+      "id": 17,
       "name": "LangChain",
       "sector": "🤖 AI模型",
       "stage": "· 初创期",
@@ -612,7 +577,7 @@
       "deepResearch": ""
     },
     {
-      "id": 19,
+      "id": 18,
       "name": "Substack",
       "sector": "🏢 企业服务",
       "stage": "· 成熟期",
@@ -636,7 +601,7 @@
       "deepResearch": ""
     },
     {
-      "id": 24,
+      "id": 23,
       "name": "Canva",
       "sector": "🎯 垂直模型",
       "stage": "超级独角兽 · 初创期",
@@ -658,6 +623,31 @@
         "🏆 超级独角兽企业，估值370亿美元，行业领军地位"
       ],
       "businessModel": "",
+      "deepResearch": ""
+    },
+    {
+      "id": 24,
+      "name": "Polymarket",
+      "sector": "💰 金融科技",
+      "stage": "独角兽 · 成长期",
+      "description": "Polymarket，2020 年成立于美国纽约，基于区块链的预测市场平台，用户可就现实事件下注。目前正寻求 2 亿美元融资，Founders Fund 领投，拟投后估值 10 亿美元。若交易完成，累计融资将超 3.65 亿美元。(reuters.com, ccn.com)",
+      "fundingAmount": " · 估值10亿美元",
+      "lastFundingDate": "2025年6月",
+      "valuation": "10亿美元",
+      "investors": [],
+      "founder": "Shayne Coplan",
+      "website": "polymarket.com",
+      "location": "美国纽约",
+      "foundedYear": "2020",
+      "employees": "",
+      "arr": "",
+      "tags": [
+        "Web3"
+      ],
+      "analysisPoints": [
+        "🦄 独角兽企业，市场估值10亿美元"
+      ],
+      "businessModel": "基于区块链的预测市场平台，用户可就现实事件下注",
       "deepResearch": ""
     }
   ]
