@@ -622,7 +622,7 @@ class SVTRUserActions {
         } catch (apiError) {
           // API不可用时，使用模拟验证
           console.log('API不可用，使用模拟验证模式');
-          
+
           // 简单的演示验证逻辑
           if (code === '123456' || code.length === 6) {
             const mockUser = {
@@ -636,7 +636,7 @@ class SVTRUserActions {
             };
 
             const mockToken = 'demo_token_' + Date.now();
-            
+
             this.handleLoginSuccess({ user: mockUser, token: mockToken }, modal);
           } else {
             this.showToast('演示模式：请输入 123456 或任意6位数字', 'error');
@@ -724,6 +724,7 @@ class SVTRUserActions {
         console.error('发送Magic Link失败:', error);
         this.showToast('发送失败，请重试', 'error');
       } finally {
+        const sendMagicBtn = modal.querySelector('.btn-send-magic');
         this.setButtonLoading(sendMagicBtn, false);
       }
     });
@@ -880,9 +881,11 @@ class SVTRUserActions {
    */
   async handleLoginSubmit(event, modal) {
     event.preventDefault();
-    const form = event.target;
-    const email = form.querySelector('input[type="email"]').value;
-    const password = form.querySelector('input[type="password"]').value;
+
+    // TODO: 实现实际的登录逻辑
+    // const form = event.target;
+    // const email = form.querySelector('input[type="email"]').value;
+    // const password = form.querySelector('input[type="password"]').value;
 
     try {
       // 模拟API调用
@@ -987,8 +990,8 @@ class SVTRUserActions {
       console.log('订阅事件:', eventData);
 
       // 未来可以集成Google Analytics、Mixpanel等
-      if (typeof gtag !== 'undefined') {
-        gtag('event', eventType, {
+      if (typeof window.gtag !== 'undefined') {
+        window.gtag('event', eventType, {
           event_category: 'subscription',
           event_label: eventData.emailDomain
         });

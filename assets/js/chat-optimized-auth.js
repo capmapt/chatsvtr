@@ -10,7 +10,7 @@ class SVTRChatWithAuth {
     this.isLoading = false;
     this.apiEndpoint = '/api/chat';
     this.sessionId = this.getOrCreateSessionId();
-    
+
     // 等待认证管理器加载
     this.waitForAuth();
   }
@@ -42,7 +42,7 @@ class SVTRChatWithAuth {
     });
 
     window.addEventListener('chatAuthLogout', () => {
-      console.log('👋 用户退出，重置聊天界面');  
+      console.log('👋 用户退出，重置聊天界面');
       this.onUserLogout();
     });
   }
@@ -88,7 +88,7 @@ class SVTRChatWithAuth {
       sendBtn.disabled = false;
       clearBtn.disabled = false;
       shareBtn.disabled = false;
-      
+
       // 显示欢迎消息
       if (this.messages.length === 0) {
         this.showWelcomeMessage();
@@ -165,7 +165,9 @@ class SVTRChatWithAuth {
   }
 
   showLoginSuccessMessage(user) {
-    if (this.messages.length > 0) return; // 避免重复显示
+    if (this.messages.length > 0) {
+      return;
+    } // 避免重复显示
 
     const loginMessage = {
       role: 'assistant',
@@ -190,7 +192,9 @@ class SVTRChatWithAuth {
     const chatInput = document.getElementById('chat-input');
     const content = chatInput?.value?.trim();
 
-    if (!content || this.isLoading) return;
+    if (!content || this.isLoading) {
+      return;
+    }
 
     // 检查登录状态
     if (!this.authManager?.isLoggedIn()) {
@@ -230,7 +234,7 @@ class SVTRChatWithAuth {
   async callChatAPI(loadingMessageEl) {
     try {
       const authHeaders = this.authManager?.getAuthHeaders() || {};
-      
+
       const response = await fetch(this.apiEndpoint, {
         method: 'POST',
         headers: {
@@ -266,24 +270,26 @@ class SVTRChatWithAuth {
 
   handleAuthError(message) {
     console.log('🔐 认证错误，需要重新登录');
-    
+
     // 清除本地认证信息
     this.authManager?.logout();
-    
+
     // 显示错误消息
     this.showToast(message || '登录已过期，请重新登录', 'error');
-    
+
     // 移除加载消息
     const loadingMsg = document.querySelector('.loading-message');
-    if (loadingMsg) loadingMsg.remove();
-    
+    if (loadingMsg) {
+      loadingMsg.remove();
+    }
+
     this.setLoading(false);
   }
 
   async handleStreamingResponse(response, loadingMessageEl) {
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
-    
+
     const assistantMessage = {
       role: 'assistant',
       content: '',
@@ -295,10 +301,13 @@ class SVTRChatWithAuth {
     let hasStarted = false;
 
     try {
+      // eslint-disable-next-line no-constant-condition
       while (true) {
         const { done, value } = await reader.read();
-        
-        if (done) break;
+
+        if (done) {
+          break;
+        }
 
         const chunk = decoder.decode(value, { stream: true });
         const lines = chunk.split('\n');
@@ -307,7 +316,9 @@ class SVTRChatWithAuth {
           if (line.trim() && line.startsWith('data: ')) {
             try {
               const data = line.slice(6).trim();
-              if (data === '[DONE]') break;
+              if (data === '[DONE]') {
+                break;
+              }
 
               const parsed = JSON.parse(data);
               if (parsed.response && typeof parsed.response === 'string') {
@@ -321,7 +332,7 @@ class SVTRChatWithAuth {
 
                 // 累积内容
                 assistantMessage.content += parsed.response;
-                
+
                 // 更新显示
                 if (contentElement) {
                   contentElement.innerHTML = this.formatMessage(assistantMessage.content);
@@ -349,7 +360,7 @@ class SVTRChatWithAuth {
   renderMessage(message) {
     const messagesContainer = document.getElementById('chat-messages');
     const messageEl = document.createElement('div');
-    
+
     messageEl.className = `chat-message ${message.role}`;
     messageEl.innerHTML = `
       <div class="message-header">
@@ -372,14 +383,14 @@ class SVTRChatWithAuth {
 
     messagesContainer.appendChild(messageEl);
     this.scrollToBottom();
-    
+
     return messageEl;
   }
 
   showLoadingMessage() {
     const messagesContainer = document.getElementById('chat-messages');
     const loadingEl = document.createElement('div');
-    
+
     loadingEl.className = 'chat-message assistant loading-message';
     loadingEl.innerHTML = `
       <div class="message-header">
@@ -400,7 +411,7 @@ class SVTRChatWithAuth {
 
     messagesContainer.appendChild(loadingEl);
     this.scrollToBottom();
-    
+
     return loadingEl;
   }
 
@@ -460,7 +471,9 @@ class SVTRChatWithAuth {
   }
 
   clearChat() {
-    if (!confirm('确定要清空所有对话吗？')) return;
+    if (!confirm('确定要清空所有对话吗？')) {
+      return;
+    }
 
     this.messages = [];
     this.clearChatUI();

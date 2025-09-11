@@ -28,7 +28,9 @@ class SVTRChat{
                   this.scrollToBottom();
                 });
               }
-            }catch(e){}
+            }catch(e){
+              // 忽略JSON解析错误
+            }
           }
         }
       }

@@ -12,7 +12,7 @@ class SVTREnhancedChat {
     this.apiEndpoint = '/api/chat';
     this.sessionId = this.getOrCreateSessionId();
     this.streamingStats = { chunks: 0, thinkingSteps: 0, sources: 0 };
-    
+
     this.init();
   }
 
@@ -97,17 +97,20 @@ class SVTREnhancedChat {
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
     const message = { role: 'assistant', content: '', timestamp: new Date(), sources: [] };
-    
+
     let messageElement = null;
     let contentElement = null;
     let hasRendered = false;
-    let thinkingShown = false;
+    // const thinkingShown = false; // 暂时未使用
 
     try {
+      // eslint-disable-next-line no-constant-condition
       while (true) {
         const { done, value } = await reader.read();
-        
-        if (done) break;
+
+        if (done) {
+          break;
+        }
 
         const chunk = decoder.decode(value, { stream: true });
         const lines = chunk.split('\n');
@@ -116,17 +119,40 @@ class SVTREnhancedChat {
           if (line.trim() && line.startsWith('data: ')) {
             try {
               const dataStr = line.slice(6).trim();
-              if (dataStr === '[DONE]') break;
+              if (dataStr === '[DONE]') {
+                break;
+              }
 
               const data = JSON.parse(dataStr);
-              
+
               // 处理不同类型的流式数据
               switch (data.type) {
-                case 'thinking':
-                  await this.handleThinkingChunk(data);
-                  break;
-                  
-                case 'content':
+              case 'thinking':
+                await this.handleThinkingChunk(data);
+                break;
+
+              case 'content':
+                if (!hasRendered) {
+                  this.removeLoadingMessage(loadingElement);
+                  this.hideThinking();
+                  messageElement = this.renderMessage(message);
+                  contentElement = messageElement.querySelector('.message-content');
+                  hasRendered = true;
+                }
+                await this.handleContentChunk(data, message, contentElement);
+                break;
+
+              case 'sources':
+                await this.handleSourcesChunk(data, message, messageElement);
+                break;
+
+              case 'metadata':
+                this.handleMetadataChunk(data);
+                break;
+
+              default:
+                // 兼容旧格式
+                if (data.response) {
                   if (!hasRendered) {
                     this.removeLoadingMessage(loadingElement);
                     this.hideThinking();
@@ -134,31 +160,10 @@ class SVTREnhancedChat {
                     contentElement = messageElement.querySelector('.message-content');
                     hasRendered = true;
                   }
-                  await this.handleContentChunk(data, message, contentElement);
-                  break;
-                  
-                case 'sources':
-                  await this.handleSourcesChunk(data, message, messageElement);
-                  break;
-                  
-                case 'metadata':
-                  this.handleMetadataChunk(data);
-                  break;
-                  
-                default:
-                  // 兼容旧格式
-                  if (data.response) {
-                    if (!hasRendered) {
-                      this.removeLoadingMessage(loadingElement);
-                      this.hideThinking();
-                      messageElement = this.renderMessage(message);
-                      contentElement = messageElement.querySelector('.message-content');
-                      hasRendered = true;
-                    }
-                    message.content += data.response;
-                    contentElement.innerHTML = this.formatMessage(message.content);
-                    this.scrollToBottom();
-                  }
+                  message.content += data.response;
+                  contentElement.innerHTML = this.formatMessage(message.content);
+                  this.scrollToBottom();
+                }
               }
             } catch (e) {
               console.debug('解析流式数据失败:', e);
@@ -177,7 +182,7 @@ class SVTREnhancedChat {
       this.showShareButton();
       this.updateStats();
     }
-    
+
     this.setLoading(false);
   }
 
@@ -186,18 +191,18 @@ class SVTREnhancedChat {
    */
   async handleThinkingChunk(data) {
     this.streamingStats.thinkingSteps++;
-    
+
     const overlay = document.getElementById('svtr-thinking-overlay');
     const textElement = document.getElementById('thinking-text');
     const progressElement = document.getElementById('thinking-progress');
-    
+
     overlay.style.display = 'flex';
     textElement.textContent = data.data;
-    
+
     if (data.metadata && data.metadata.progress) {
       progressElement.style.width = (data.metadata.progress * 100) + '%';
     }
-    
+
     // 添加打字机效果
     await this.typewriterEffect(textElement, data.data, 50);
   }
@@ -207,19 +212,19 @@ class SVTREnhancedChat {
    */
   async handleContentChunk(data, message, contentElement) {
     this.streamingStats.chunks++;
-    
+
     const response = data.data?.response || data.data;
     message.content += response;
-    
+
     // 智能格式化内容
     const formattedContent = this.formatMessage(message.content);
     contentElement.innerHTML = formattedContent;
-    
+
     // 添加置信度指示器
     if (data.metadata?.confidence) {
       this.updateConfidenceIndicator(contentElement, data.metadata.confidence);
     }
-    
+
     requestAnimationFrame(() => this.scrollToBottom());
   }
 
@@ -229,12 +234,12 @@ class SVTREnhancedChat {
   async handleSourcesChunk(data, message, messageElement) {
     this.streamingStats.sources++;
     message.sources = data.data.sources;
-    
+
     // 在消息末尾添加源信息
     const sourcesElement = document.createElement('div');
     sourcesElement.className = 'message-sources';
     sourcesElement.innerHTML = this.formatSources(data.data);
-    
+
     messageElement.appendChild(sourcesElement);
     this.scrollToBottom();
   }
@@ -275,7 +280,7 @@ class SVTREnhancedChat {
       indicator.className = 'confidence-indicator';
       element.appendChild(indicator);
     }
-    
+
     const percentage = Math.round(confidence * 100);
     indicator.innerHTML = `<span class="confidence-badge" data-confidence="${confidence}">置信度: ${percentage}%</span>`;
   }
@@ -284,12 +289,14 @@ class SVTREnhancedChat {
    * 格式化源信息
    */
   formatSources(sourcesData) {
-    if (!sourcesData.sources || sourcesData.sources.length === 0) return '';
-    
-    const sourcesList = sourcesData.sources.map(source => 
+    if (!sourcesData.sources || sourcesData.sources.length === 0) {
+      return '';
+    }
+
+    const sourcesList = sourcesData.sources.map(source =>
       `<li><strong>${source.title}</strong> (置信度: ${Math.round((source.confidence || 0.8) * 100)}%)</li>`
     ).join('');
-    
+
     return `
       <div class="sources-section">
         <h5>📚 数据来源:</h5>
@@ -308,23 +315,25 @@ class SVTREnhancedChat {
   async sendMessage() {
     const input = document.getElementById('svtr-chat-input');
     const query = input.value.trim();
-    
-    if (!query || this.isLoading) return;
+
+    if (!query || this.isLoading) {
+      return;
+    }
 
     // 添加用户消息
     const userMessage = { role: 'user', content: query, timestamp: new Date };
     this.messages.push(userMessage);
     this.renderMessage(userMessage);
-    
+
     // 清空输入
     input.value = '';
     input.style.height = '44px';
-    
+
     this.setLoading(true);
-    
+
     // 显示加载状态
     const loadingElement = this.showLoadingMessage();
-    
+
     try {
       const response = await fetch(this.apiEndpoint, {
         method: 'POST',
@@ -365,7 +374,7 @@ class SVTREnhancedChat {
   showStats() {
     const panel = document.getElementById('svtr-stats-panel');
     const dataElement = document.getElementById('stats-data');
-    
+
     const stats = {
       totalMessages: this.messages.length,
       assistantMessages: this.messages.filter(m => m.role === 'assistant').length,
@@ -373,7 +382,7 @@ class SVTREnhancedChat {
       streamingStats: this.streamingStats,
       sessionDuration: Date.now() - (this.messages[0]?.timestamp?.getTime() || Date.now())
     };
-    
+
     dataElement.innerHTML = `
       <div class="stats-grid">
         <div class="stat-item">
@@ -394,7 +403,7 @@ class SVTREnhancedChat {
         </div>
       </div>
     `;
-    
+
     panel.style.display = 'block';
   }
 
@@ -412,7 +421,7 @@ class SVTREnhancedChat {
     shareBtn.addEventListener('click', () => this.shareConversation());
     clearBtn.addEventListener('click', () => this.clearChat());
     statsBtn.addEventListener('click', () => this.showStats());
-    
+
     input.addEventListener('keypress', (e) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
@@ -437,11 +446,11 @@ class SVTREnhancedChat {
     const messagesContainer = document.getElementById('svtr-chat-messages');
     const messageElement = document.createElement('div');
     messageElement.className = `svtr-message ${message.role} enhanced`;
-    
+
     const isUser = message.role === 'user';
     const avatar = isUser ? 'U' : 'AI';
     const name = isUser ? '您' : '凯瑞 (Kerry)';
-    
+
     messageElement.innerHTML = `
       <div class="message-header">
         <div class="message-avatar ${message.role}">${avatar}</div>
@@ -450,7 +459,7 @@ class SVTREnhancedChat {
       </div>
       <div class="message-content">${this.formatMessage(message.content)}</div>
     `;
-    
+
     messagesContainer.appendChild(messageElement);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
     return messageElement;
@@ -460,7 +469,7 @@ class SVTREnhancedChat {
     const messagesContainer = document.getElementById('svtr-chat-messages');
     const loadingElement = document.createElement('div');
     loadingElement.className = 'svtr-message assistant loading enhanced';
-    
+
     loadingElement.innerHTML = `
       <div class="message-header">
         <div class="message-avatar assistant">AI</div>
@@ -478,7 +487,7 @@ class SVTREnhancedChat {
         </div>
       </div>
     `;
-    
+
     messagesContainer.appendChild(loadingElement);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
     return loadingElement;
@@ -506,10 +515,10 @@ class SVTREnhancedChat {
     this.isLoading = loading;
     const sendBtn = document.getElementById('svtr-chat-send');
     const input = document.getElementById('svtr-chat-input');
-    
+
     sendBtn.disabled = loading;
     input.disabled = loading;
-    
+
     if (loading) {
       sendBtn.innerHTML = '<div class="loading-spinner"></div>';
     } else {
@@ -546,7 +555,7 @@ class SVTREnhancedChat {
 请问您想了解什么？`,
       timestamp: new Date()
     };
-    
+
     this.messages.push(welcomeMessage);
     this.renderMessage(welcomeMessage);
   }
@@ -561,9 +570,11 @@ class SVTREnhancedChat {
   shareConversation() {
     const lastUser = this.messages.filter(m => m.role === 'user').pop();
     const lastAssistant = this.messages.filter(m => m.role === 'assistant').pop();
-    
-    if (!lastUser || !lastAssistant) return;
-    
+
+    if (!lastUser || !lastAssistant) {
+      return;
+    }
+
     const shareText = `💡 来自SVTR的AI创投洞察：
 
 🔍 问题：${lastUser.content}
@@ -586,7 +597,7 @@ class SVTREnhancedChat {
     toast.className = 'svtr-toast enhanced';
     toast.textContent = message;
     document.body.appendChild(toast);
-    
+
     setTimeout(() => toast.remove(), 3000);
   }
 
