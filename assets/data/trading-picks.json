@@ -2,8 +2,8 @@
   "meta": {
     "title": "交易精选",
     "description": "精选优质创业公司与投资机会分析",
-    "totalCompanies": 18,
-    "lastUpdated": "2025-09-14T18:34:59.582Z",
+    "totalCompanies": 19,
+    "lastUpdated": "2025-09-15T18:30:24.542Z",
     "source": "SVTR飞书知识库",
     "dataVersion": "2.0"
   },
@@ -309,6 +309,40 @@
     },
     {
       "id": 10,
+      "name": "ElevenLabs",
+      "sector": "🎯 垂直模型",
+      "stage": "独角兽 · 成长期",
+      "description": "ElevenLabs，2022年成立于美国纽约，提供生成逼真 AI 音色与语音的技术。正在进行最高1亿美元的员工股权要约收购（Secondary），投资方为 Sequoia、Iconiq。本轮估值为66亿美元，累计融资2.81亿美元。(Reuters, ElevenLabs)",
+      "fundingAmount": "1.8亿美元融资 · 估值33亿美元",
+      "lastFundingDate": "2025年9月",
+      "valuation": "33亿美元",
+      "investors": [
+        "ICONIQ Growth",
+        "Andreessen Horowitz"
+      ],
+      "founder": "Mati Staniszewski",
+      "website": "https://elevenlabs.io/",
+      "location": "美国布鲁克林",
+      "foundedYear": "2022",
+      "employees": "130",
+      "arr": "1.0亿美元",
+      "tags": [
+        "音频",
+        "AI100",
+        "AI Native",
+        "Unicorn",
+        "ET30"
+      ],
+      "analysisPoints": [
+        "🦄 独角兽企业，市场估值33亿美元",
+        "💰 年化收入1.0亿美元，商业模式成熟",
+        "💎 单轮融资1.8亿美元，资本高度认可"
+      ],
+      "businessModel": "开发可以生成多种语言、口音和情感的语音软件",
+      "deepResearch": ""
+    },
+    {
+      "id": 11,
       "name": "Lovable",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 初创期",
@@ -343,7 +377,7 @@
       "deepResearch": ""
     },
     {
-      "id": 11,
+      "id": 12,
       "name": "Vast Data",
       "sector": "💾 数据服务",
       "stage": "独角兽 · 成熟期",
@@ -374,7 +408,7 @@
       "deepResearch": ""
     },
     {
-      "id": 12,
+      "id": 13,
       "name": "Mercor",
       "sector": "🏢 企业服务",
       "stage": "独角兽 · 初创期",
@@ -411,7 +445,7 @@
       "deepResearch": "Mercor"
     },
     {
-      "id": 13,
+      "id": 14,
       "name": "n8n",
       "sector": "👨‍💻 开发者工具",
       "stage": "准独角兽 · 成熟期",
@@ -442,7 +476,7 @@
       "deepResearch": ""
     },
     {
-      "id": 14,
+      "id": 15,
       "name": "Fireworks AI",
       "sector": "🤖 AI模型",
       "stage": "准独角兽 · 成长期",
@@ -476,7 +510,7 @@
       "deepResearch": ""
     },
     {
-      "id": 15,
+      "id": 16,
       "name": "LangChain",
       "sector": "🤖 AI模型",
       "stage": "· 初创期",
@@ -504,7 +538,7 @@
       "deepResearch": ""
     },
     {
-      "id": 16,
+      "id": 17,
       "name": "Substack",
       "sector": "🏢 企业服务",
       "stage": "· 成熟期",
@@ -528,7 +562,7 @@
       "deepResearch": ""
     },
     {
-      "id": 21,
+      "id": 22,
       "name": "Canva",
       "sector": "🎯 垂直模型",
       "stage": "超级独角兽 · 初创期",
@@ -553,7 +587,7 @@
       "deepResearch": ""
     },
     {
-      "id": 22,
+      "id": 23,
       "name": "Polymarket",
       "sector": "💰 金融科技",
       "stage": "独角兽 · 成长期",
