@@ -94,29 +94,36 @@
   }
 }
 
-/* 确保在侧边栏打开时内容完整可见 */
+/* 移动端侧边栏完全展开，不限制高度，无滚动条 */
 @media (max-width: 768px) {
   .sidebar.open {
-    overflow-y: auto;
-    max-height: 100vh;
-    padding-bottom: 60px; /* 添加底部安全空间 */
+    overflow-y: visible !important;
+    max-height: none !important;
+    height: auto !important;
+    padding-bottom: 60px;
+    /* 确保完全展开，不使用滚动 */
   }
 
-  /* 滚动条样式优化 */
+  /* 完全隐藏滚动条 */
   .sidebar.open::-webkit-scrollbar {
-    width: 4px;
+    display: none !important;
+    width: 0 !important;
   }
 
-  .sidebar.open::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.1);
+  .sidebar {
+    overflow: visible !important;
+    scrollbar-width: none !important; /* Firefox */
+    -ms-overflow-style: none !important; /* IE/Edge */
   }
 
-  .sidebar.open::-webkit-scrollbar-thumb {
-    background: rgba(250, 140, 50, 0.5);
-    border-radius: 2px;
-  }
-
-  .sidebar.open::-webkit-scrollbar-thumb:hover {
-    background: rgba(250, 140, 50, 0.7);
+  /* 确保侧边栏容器不限制高度 */
+  .sidebar.open {
+    min-height: 100vh;
+    height: auto !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: auto !important;
+    z-index: 1000 !important;
   }
 }
