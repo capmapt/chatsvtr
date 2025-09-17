@@ -1,0 +1,34 @@
+{
+  "allowedTools": [
+    "mcp__filesystem__*",
+    "mcp__github__*",
+    "mcp__firecrawl__firecrawl_scrape",
+    "mcp__firecrawl__firecrawl_search",
+    "mcp__exa__web_search_exa",
+    "Bash",
+    "Read",
+    "Write",
+    "Edit",
+    "MultiEdit",
+    "Glob",
+    "Grep",
+    "WebFetch",
+    "WebSearch"
+  ],
+  "disallowedTools": [
+    "mcp__playwright__*",
+    "mcp__shadcn-ui__*",
+    "mcp__memory__*"
+  ],
+  "mcpServers": {
+    "priorityServers": ["filesystem", "github", "firecrawl", "exa"],
+    "disabledServers": ["playwright", "shadcn-ui", "memory"]
+  },
+  "contextOptimization": {
+    "enableTokenWarning": true,
+    "maxMcpToolsTokens": 25000,
+    "preferredMcpServers": ["filesystem", "github", "firecrawl"]
+  },
+  "projectType": "web-development",
+  "description": "ChatSVTR AI创投生态系统平台 - 专注于必要的开发工具"
+}

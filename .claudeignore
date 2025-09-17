@@ -36,3 +36,14 @@ optimization-plan.md
 phase2-planning.md
 feishu-api-enhancement-plan.md
 next-optimization-strategy.md
+
+# Exclude MCP server artifacts and large tool contexts
+**/*mcp*/**
+**/mcp-**
+.vscode/settings.json
+.ide/**
+
+# Exclude heavy development dependencies documentation
+README*.md
+CHANGELOG*.md
+LICENSE*

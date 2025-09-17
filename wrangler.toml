@@ -38,12 +38,20 @@ LINKEDIN_CLIENT_ID = "86fimn7a7dwvmr"
 AWS_REGION = "us-west-2"
 FROM_EMAIL = "noreply@svtr.ai"
 
+# Staging环境配置
+[env.staging]
+name = "chatsvtr-staging"
+compatibility_date = "2024-07-16"
+
+[env.staging.vars]
+APP_URL = "https://staging.svtr.ai"
+
 # Secrets 通过wrangler secret命令设置
 # OAuth secrets:
 # wrangler pages secret put GOOGLE_CLIENT_SECRET
 # wrangler pages secret put GITHUB_CLIENT_SECRET
 # wrangler pages secret put LINKEDIN_CLIENT_SECRET
 # AWS SES secrets:
-# wrangler pages secret put AWS_ACCESS_KEY_ID  
+# wrangler pages secret put AWS_ACCESS_KEY_ID
 # wrangler pages secret put AWS_SECRET_ACCESS_KEY
 
