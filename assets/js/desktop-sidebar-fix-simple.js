@@ -15,9 +15,12 @@
     const content = document.querySelector('.content');
 
     if (!sidebar || !toggle) {
-      console.warn('[DesktopSidebarFix] 找不到必要元素');
+      console.warn('[DesktopSidebarFix] 找不到必要元素，1秒后重试');
+      setTimeout(initSidebarToggle, 1000);
       return;
     }
+
+    console.log('[DesktopSidebarFix] 找到所有必要元素，开始绑定事件');
 
     // 检测设备类型
     const isMobile = () => window.innerWidth <= 768;
@@ -61,12 +64,27 @@
       }
     }
 
-    // 移除所有现有的事件监听器（如果有的话）
+    // 强力清除所有可能的事件监听器
     const newToggle = toggle.cloneNode(true);
     toggle.parentNode.replaceChild(newToggle, toggle);
 
-    // 绑定新的事件监听器
-    newToggle.addEventListener('click', toggleSidebar);
+    // 多重绑定确保生效
+    newToggle.addEventListener('click', toggleSidebar, false);
+    newToggle.addEventListener('touchstart', toggleSidebar, false);
+    newToggle.onclick = toggleSidebar;
+
+    // 添加调试信息
+    newToggle.addEventListener('click', function() {
+      console.log('[DesktopSidebarFix] 检测到点击事件');
+    });
+
+    // 强制设置按钮可见性
+    newToggle.style.display = 'block';
+    newToggle.style.pointerEvents = 'auto';
+    newToggle.style.zIndex = '9999';
+
+    // 全局导出供调试
+    window.debugSidebarToggle = toggleSidebar;
 
     // 确保在桌面端默认显示
     if (!isMobile() && !sidebar.hasAttribute('data-user-toggled')) {

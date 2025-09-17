@@ -492,7 +492,51 @@
   <script src="assets/js/sidebar-unified-controller.js" defer></script>
 
   <!-- 简化的桌面端侧边栏修复 - 最后加载确保优先级 -->
-  <script src="assets/js/desktop-sidebar-fix-simple.js" defer></script>
+  <script src="assets/js/desktop-sidebar-fix-simple.js?v=20250917-fix" defer></script>
+
+  <!-- 立即执行的强制修复 -->
+  <script>
+    // 立即修复侧边栏按钮（不等待其他脚本）
+    (function() {
+      function forceFixSidebar() {
+        const toggle = document.querySelector('.menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+
+        if (toggle && sidebar && window.innerWidth > 768) {
+          console.log('[ImmediateFix] 立即修复桌面端侧边栏');
+
+          // 强制重新绑定点击事件
+          const newToggle = toggle.cloneNode(true);
+          toggle.parentNode.replaceChild(newToggle, toggle);
+
+          newToggle.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('[ImmediateFix] 侧边栏按钮被点击');
+
+            const isOpen = sidebar.classList.contains('open');
+            if (isOpen) {
+              sidebar.classList.remove('open');
+              sidebar.style.transform = 'translateX(-100%)';
+            } else {
+              sidebar.classList.add('open');
+              sidebar.style.transform = 'translateX(0)';
+            }
+          };
+
+          console.log('[ImmediateFix] 立即修复完成');
+        } else {
+          setTimeout(forceFixSidebar, 500);
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', forceFixSidebar);
+      } else {
+        forceFixSidebar();
+      }
+    })();
+  </script>
   <!-- Native Chat Component with Authentication -->
   <link rel="stylesheet" href="assets/css/chat-optimized.css">
   <link rel="stylesheet" href="assets/css/chat-login-overlay.css">
