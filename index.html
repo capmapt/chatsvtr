@@ -488,54 +488,74 @@
   <!-- 桌面端折叠按钮修复 - 已被统一控制器替代 -->
   <!-- <script src="assets/js/desktop-toggle-fix.js" defer></script> -->
   
-  <!-- 统一侧边栏控制器 - 修复开关按钮失灵问题 -->
-  <script src="assets/js/sidebar-unified-controller.js" defer></script>
+  <!-- 统一侧边栏控制器 - 暂时禁用避免冲突 -->
+  <!-- <script src="assets/js/sidebar-unified-controller.js" defer></script> -->
 
-  <!-- 简化的桌面端侧边栏修复 - 最后加载确保优先级 -->
-  <script src="assets/js/desktop-sidebar-fix-simple.js?v=20250917-fix" defer></script>
+  <!-- 简化的桌面端侧边栏修复 - 暂时禁用避免冲突 -->
+  <!-- <script src="assets/js/desktop-sidebar-fix-simple.js?v=20250917-fix" defer></script> -->
 
-  <!-- 立即执行的强制修复 -->
+  <!-- 终极修复：最简单直接的方案 -->
   <script>
-    // 立即修复侧边栏按钮（不等待其他脚本）
-    (function() {
-      function forceFixSidebar() {
+    // 等待页面完全加载后执行
+    window.addEventListener('load', function() {
+      console.log('[UltimateFix] 开始终极修复');
+
+      setTimeout(function() {
         const toggle = document.querySelector('.menu-toggle');
         const sidebar = document.querySelector('.sidebar');
 
-        if (toggle && sidebar && window.innerWidth > 768) {
-          console.log('[ImmediateFix] 立即修复桌面端侧边栏');
-
-          // 强制重新绑定点击事件
-          const newToggle = toggle.cloneNode(true);
-          toggle.parentNode.replaceChild(newToggle, toggle);
-
-          newToggle.onclick = function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('[ImmediateFix] 侧边栏按钮被点击');
-
-            const isOpen = sidebar.classList.contains('open');
-            if (isOpen) {
-              sidebar.classList.remove('open');
-              sidebar.style.transform = 'translateX(-100%)';
-            } else {
-              sidebar.classList.add('open');
-              sidebar.style.transform = 'translateX(0)';
-            }
-          };
-
-          console.log('[ImmediateFix] 立即修复完成');
-        } else {
-          setTimeout(forceFixSidebar, 500);
+        if (!toggle || !sidebar) {
+          console.warn('[UltimateFix] 找不到元素');
+          return;
         }
-      }
 
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', forceFixSidebar);
-      } else {
-        forceFixSidebar();
-      }
-    })();
+        // 只在桌面端执行
+        if (window.innerWidth <= 768) {
+          console.log('[UltimateFix] 移动端，跳过修复');
+          return;
+        }
+
+        console.log('[UltimateFix] 桌面端，开始修复按钮');
+
+        // 完全替换按钮
+        const newButton = document.createElement('button');
+        newButton.className = toggle.className;
+        newButton.setAttribute('aria-label', toggle.getAttribute('aria-label') || '切换侧边栏');
+        newButton.innerHTML = toggle.innerHTML;
+        newButton.style.cssText = toggle.style.cssText;
+
+        // 简单直接的切换逻辑
+        newButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          console.log('[UltimateFix] 按钮被点击，当前状态:', sidebar.classList.contains('open'));
+
+          if (sidebar.classList.contains('open')) {
+            // 关闭
+            sidebar.classList.remove('open');
+            sidebar.style.setProperty('transform', 'translateX(-100%)', 'important');
+            console.log('[UltimateFix] 侧边栏已关闭');
+          } else {
+            // 打开
+            sidebar.classList.add('open');
+            sidebar.style.setProperty('transform', 'translateX(0)', 'important');
+            console.log('[UltimateFix] 侧边栏已打开');
+          }
+        });
+
+        // 替换旧按钮
+        toggle.parentNode.replaceChild(newButton, toggle);
+
+        console.log('[UltimateFix] 按钮替换完成');
+
+        // 全局调试函数
+        window.testSidebarToggle = function() {
+          newButton.click();
+        };
+
+      }, 2000); // 延迟2秒确保所有脚本都加载完
+    });
   </script>
   <!-- Native Chat Component with Authentication -->
   <link rel="stylesheet" href="assets/css/chat-optimized.css">
