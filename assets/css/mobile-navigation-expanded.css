@@ -1,0 +1,122 @@
+/**
+ * 移动端导航菜单完全展开修复
+ * 确保在移动端所有导航菜单默认为展开状态，方便用户查看完整目录
+ */
+
+/* 移动端导航菜单默认展开 */
+@media (max-width: 768px) {
+
+  /* 强制所有子菜单在移动端展开 */
+  .sidebar .sub-list {
+    max-height: none !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    overflow: visible !important;
+  }
+
+  /* 移除collapsed类的限制 */
+  .sidebar .sub-list.collapsed {
+    max-height: none !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  /* 确保子菜单项可见 */
+  .sidebar .sub-list li {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+    transition: none !important;
+  }
+
+  /* 切换图标在移动端显示为展开状态 */
+  .sidebar .toggle-icon {
+    transform: rotate(90deg) !important;
+    color: #fa8c32 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* 三级菜单在移动端也展开 */
+  .sidebar .sub-list .sub-list {
+    max-height: none !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    margin-top: 4px !important;
+    overflow: visible !important;
+  }
+
+  /* 确保组标题在移动端始终可见 */
+  .sidebar .group-header.collapsible {
+    background: linear-gradient(135deg, rgba(250, 140, 50, 0.15), rgba(255, 221, 0, 0.08)) !important;
+    border-color: rgba(250, 140, 50, 0.3) !important;
+  }
+
+  /* 优化移动端菜单项间距 */
+  .sidebar .nav-group {
+    margin-bottom: 1rem;
+  }
+
+  /* 确保内容不被遮挡 */
+  .sidebar .sub-list a {
+    padding: 8px 12px;
+    margin-bottom: 2px;
+    display: block;
+    border-radius: 6px;
+  }
+
+  /* 增强三级菜单的可见性 */
+  .sidebar .sub-list .sub-list a {
+    padding: 6px 10px;
+    margin-bottom: 1px;
+    margin-left: 8px;
+    border-left: 3px solid rgba(250, 140, 50, 0.3);
+  }
+}
+
+/* 超小屏幕优化 */
+@media (max-width: 480px) {
+  .sidebar .sub-list a {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+
+  .sidebar .sub-list .sub-list a {
+    padding: 5px 8px;
+    font-size: 0.8rem;
+  }
+
+  .sidebar .nav-group {
+    margin-bottom: 0.8rem;
+  }
+}
+
+/* 确保在侧边栏打开时内容完整可见 */
+@media (max-width: 768px) {
+  .sidebar.open {
+    overflow-y: auto;
+    max-height: 100vh;
+    padding-bottom: 60px; /* 添加底部安全空间 */
+  }
+
+  /* 滚动条样式优化 */
+  .sidebar.open::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .sidebar.open::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  .sidebar.open::-webkit-scrollbar-thumb {
+    background: rgba(250, 140, 50, 0.5);
+    border-radius: 2px;
+  }
+
+  .sidebar.open::-webkit-scrollbar-thumb:hover {
+    background: rgba(250, 140, 50, 0.7);
+  }
+}
