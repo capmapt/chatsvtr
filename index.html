@@ -549,68 +549,64 @@
         }
       }
 
-      // 方案1：完全替换按钮
-      const newButton = document.createElement('button');
-      newButton.className = toggle.className;
-      newButton.setAttribute('aria-label', '切换侧边栏');
-      newButton.innerHTML = toggle.innerHTML;
-      newButton.style.cssText = toggle.style.cssText;
-      newButton.style.zIndex = '9999';
-      newButton.style.pointerEvents = 'auto';
+      // 修复原始按钮而不是替换
+      console.log('[SuperFix] 修复原始按钮');
 
-      // 多重事件绑定
-      newButton.onclick = function(e) {
+      // 清除所有现有事件监听器
+      const newToggle = toggle.cloneNode(true);
+      toggle.parentNode.replaceChild(newToggle, toggle);
+
+      // 强化按钮样式确保可点击
+      newToggle.style.setProperty('position', 'fixed', 'important');
+      newToggle.style.setProperty('top', '20px', 'important');
+      newToggle.style.setProperty('left', '20px', 'important');
+      newToggle.style.setProperty('z-index', '9999', 'important');
+      newToggle.style.setProperty('pointer-events', 'auto', 'important');
+      newToggle.style.setProperty('background', 'rgba(250, 140, 50, 0.1)', 'important');
+      newToggle.style.setProperty('border', '1px solid rgba(250, 140, 50, 0.3)', 'important');
+      newToggle.style.setProperty('border-radius', '4px', 'important');
+      newToggle.style.setProperty('padding', '8px', 'important');
+      newToggle.style.setProperty('cursor', 'pointer', 'important');
+      newToggle.style.setProperty('display', 'block', 'important');
+      newToggle.style.setProperty('visibility', 'visible', 'important');
+
+      // 多重事件绑定到原始按钮
+      newToggle.onclick = function(e) {
         e.preventDefault();
         e.stopPropagation();
-        toggleSidebar('onclick');
+        console.log('[SuperFix] 原始按钮onclick触发');
+        toggleSidebar('original-onclick');
       };
 
-      newButton.addEventListener('click', function(e) {
+      newToggle.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        toggleSidebar('addEventListener');
+        console.log('[SuperFix] 原始按钮addEventListener触发');
+        toggleSidebar('original-click');
       }, true);
 
-      newButton.addEventListener('mousedown', function(e) {
+      newToggle.addEventListener('mousedown', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        toggleSidebar('mousedown');
+        console.log('[SuperFix] 原始按钮mousedown触发');
+        toggleSidebar('original-mousedown');
       });
 
-      // 替换按钮
-      toggle.parentNode.replaceChild(newButton, toggle);
-      console.log('[SuperFix] 按钮已替换');
-
-      // 方案2：为原按钮区域添加透明覆盖层
-      const overlay = document.createElement('div');
-      overlay.style.cssText = `
-        position: fixed;
-        top: 16px;
-        left: 16px;
-        width: 44px;
-        height: 44px;
-        z-index: 10000;
-        background: rgba(255,0,0,0.1);
-        cursor: pointer;
-        border: 2px solid red;
-        border-radius: 4px;
-      `;
-
-      overlay.onclick = function(e) {
+      newToggle.addEventListener('touchstart', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        toggleSidebar('overlay');
-      };
+        console.log('[SuperFix] 原始按钮touchstart触发');
+        toggleSidebar('original-touch');
+      });
 
-      document.body.appendChild(overlay);
-      console.log('[SuperFix] 覆盖层已添加');
+      console.log('[SuperFix] 原始按钮修复完成');
 
       // 全局调试函数
       window.superToggle = function() {
         toggleSidebar('manual');
       };
 
-      // 键盘快捷键
+      // 键盘快捷键（保留，但不显示红色覆盖层）
       document.addEventListener('keydown', function(e) {
         if (e.ctrlKey && e.key === 'b') {
           e.preventDefault();
@@ -618,7 +614,7 @@
         }
       });
 
-      console.log('[SuperFix] 修复完成！调试：按Ctrl+B或运行 superToggle()');
+      console.log('[SuperFix] 修复完成！原始按钮现在应该可以正常工作，调试：按Ctrl+B或运行 superToggle()');
     }
 
     // 多重触发机制
