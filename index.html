@@ -556,19 +556,15 @@
       const newToggle = toggle.cloneNode(true);
       toggle.parentNode.replaceChild(newToggle, toggle);
 
-      // 强化按钮样式确保可点击
-      newToggle.style.setProperty('position', 'fixed', 'important');
-      newToggle.style.setProperty('top', '20px', 'important');
-      newToggle.style.setProperty('left', '20px', 'important');
+      // 保持原始样式，只强化必要的属性确保可点击
       newToggle.style.setProperty('z-index', '9999', 'important');
       newToggle.style.setProperty('pointer-events', 'auto', 'important');
-      newToggle.style.setProperty('background', 'rgba(250, 140, 50, 0.1)', 'important');
-      newToggle.style.setProperty('border', '1px solid rgba(250, 140, 50, 0.3)', 'important');
-      newToggle.style.setProperty('border-radius', '4px', 'important');
-      newToggle.style.setProperty('padding', '8px', 'important');
       newToggle.style.setProperty('cursor', 'pointer', 'important');
       newToggle.style.setProperty('display', 'block', 'important');
       newToggle.style.setProperty('visibility', 'visible', 'important');
+
+      // 确保按钮不被其他元素遮挡，但保持原始位置和样式
+      console.log('[SuperFix] 保持原始样式，仅强化必要属性');
 
       // 多重事件绑定到原始按钮
       newToggle.onclick = function(e) {
