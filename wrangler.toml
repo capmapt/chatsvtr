@@ -38,13 +38,13 @@ LINKEDIN_CLIENT_ID = "86fimn7a7dwvmr"
 AWS_REGION = "us-west-2"
 FROM_EMAIL = "noreply@svtr.ai"
 
-# Staging环境配置
-[env.staging]
-name = "chatsvtr-staging"
+# Preview环境配置 (Cloudflare Pages支持的环境名称)
+[env.preview]
+name = "chatsvtr-preview"
 compatibility_date = "2024-07-16"
 
-[env.staging.vars]
-APP_URL = "https://staging.svtr.ai"
+[env.preview.vars]
+APP_URL = "https://preview.svtr.ai"
 
 # Secrets 通过wrangler secret命令设置
 # OAuth secrets:

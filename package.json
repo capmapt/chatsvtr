@@ -21,7 +21,7 @@
     "deploy:cloudflare": "./scripts/deploy-cloudflare.sh",
     "backup": "node scripts/backup.js",
     "rollback": "node scripts/rollback.js",
-    "deploy:staging": "wrangler pages deploy . --env staging",
+    "deploy:preview": "wrangler pages deploy . --env preview",
     "deploy:production": "wrangler pages deploy .",
     "branch:create": "git checkout -b",
     "branch:list": "git branch -a",
