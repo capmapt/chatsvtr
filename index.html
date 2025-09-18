@@ -7,6 +7,11 @@
   <meta name="theme-color" content="#FA8C32"/>
   
   <!-- 安全策略现在通过服务器端_headers文件配置 -->
+
+  <!-- 强制缓存清除 -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -452,7 +457,6 @@
   <!-- 🚀 参考ChatGPT方案：移除自动关闭，完全用户控制 -->
 
   <!-- Load performance optimization -->
-  <!-- <script src="assets/js/image-optimizer.js"></script> -->
   <script src="assets/js/cache-manager.js"></script>
 
   <!-- Load UX enhancements -->
@@ -469,10 +473,9 @@
   
   <!-- Enhanced error handling and monitoring -->
   <!-- 开发环境禁用错误报告避免405错误 -->
-  <!-- <script src="assets/js/enhanced-error-handler.js"></script> -->
   
   <!-- Image optimization and accessibility -->
-  <script src="assets/js/image-optimizer-enhanced.js"></script>
+  <script src="assets/js/image-optimizer-enhanced.js?v=20250917-fix"></script>
   <script src="assets/js/accessibility-enhancer.js"></script>
   
   <!-- Load translations and scripts -->
@@ -762,7 +765,6 @@
   
   <!-- 用户行为跟踪系统 -->
   <!-- 开发环境禁用用户行为跟踪避免405错误 -->
-  <!-- <script src="assets/js/user-behavior-tracker.js" defer></script> -->
   
   <!-- Service Worker 注册 -->
   <script>
