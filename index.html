@@ -642,40 +642,87 @@
     })();
   </script>
 
-  <!-- 侧边栏Logo Ctrl+点击功能 - 独立脚本 -->
+  <!-- 侧边栏Logo Ctrl+点击功能 - 强制版本 v20250917-2302 -->
   <script>
     (function() {
       'use strict';
+      console.log('🔄 Logo脚本开始执行 - v20250917-2302');
 
       function initLogoClick() {
         const sidebarLogo = document.querySelector('.sidebar-logo');
+        const sidebarLogoImg = document.querySelector('.sidebar-logo img');
 
-        if (sidebarLogo) {
-          sidebarLogo.addEventListener('click', function(e) {
-            if (e.ctrlKey || e.metaKey) {
-              e.preventDefault();
-              e.stopPropagation();
-              console.log('🚀 Logo Ctrl+点击: 打开管理后台');
-              window.open('/pages/admin-center.html', '_blank');
-            }
+        console.log('🔍 Logo元素查找结果:', {
+          picture: !!sidebarLogo,
+          img: !!sidebarLogoImg,
+          pictureTag: sidebarLogo ? sidebarLogo.tagName : 'not found',
+          imgTag: sidebarLogoImg ? sidebarLogoImg.tagName : 'not found'
+        });
+
+        function logoClickHandler(e) {
+          console.log('👆 Logo被点击:', {
+            ctrlKey: e.ctrlKey,
+            metaKey: e.metaKey,
+            target: e.target.tagName,
+            type: e.type
           });
 
+          if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('🚀 Logo Ctrl+点击: 打开管理后台');
+            window.open('/pages/admin-center.html', '_blank');
+          }
+        }
+
+        // 双重绑定确保事件被捕获
+        if (sidebarLogo) {
+          // 移除可能的旧监听器
+          sidebarLogo.removeEventListener('click', logoClickHandler);
+          // 添加新监听器
+          sidebarLogo.addEventListener('click', logoClickHandler, true); // 使用捕获阶段
           sidebarLogo.style.cursor = 'pointer';
           sidebarLogo.title = 'Ctrl+点击打开管理后台';
-          console.log('✅ Logo Ctrl+点击功能已初始化');
+          console.log('✅ Picture元素事件绑定完成');
+        }
+
+        if (sidebarLogoImg) {
+          // 移除可能的旧监听器
+          sidebarLogoImg.removeEventListener('click', logoClickHandler);
+          // 添加新监听器
+          sidebarLogoImg.addEventListener('click', logoClickHandler, true); // 使用捕获阶段
+          sidebarLogoImg.style.cursor = 'pointer';
+          sidebarLogoImg.title = 'Ctrl+点击打开管理后台';
+          console.log('✅ Img元素事件绑定完成');
+        }
+
+        if (sidebarLogo || sidebarLogoImg) {
+          console.log('✅ Logo Ctrl+点击功能已初始化 - v20250917-2302');
+
+          // 创建全局测试函数
+          window.testLogoClick = function() {
+            console.log('🧪 手动测试Logo点击功能');
+            if (sidebarLogo) {
+              sidebarLogo.click();
+            }
+          };
+          console.log('🔧 调试: 使用 window.testLogoClick() 测试点击');
         } else {
-          console.log('⚠️ 未找到侧边栏Logo元素，将稍后重试');
+          console.log('⚠️ 未找到任何Logo元素，将稍后重试');
         }
       }
 
-      // 多次尝试初始化，确保DOM加载完成
+      // 强制多次初始化
+      console.log('📋 DOM readyState:', document.readyState);
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initLogoClick);
-      } else {
-        initLogoClick();
       }
-      setTimeout(initLogoClick, 100);
+      initLogoClick(); // 立即执行一次
+      setTimeout(initLogoClick, 50);
+      setTimeout(initLogoClick, 200);
       setTimeout(initLogoClick, 500);
+      setTimeout(initLogoClick, 1000);
+      setTimeout(initLogoClick, 2000);
     })();
   </script>
 
