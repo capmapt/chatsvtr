@@ -80,15 +80,15 @@
    */
   function initializeProjectSubmit() {
     const submitBtn = document.querySelector('.btn-submit-project');
-    
+
     if (!submitBtn) {
       console.warn('项目提交按钮未找到');
       return;
     }
 
     submitBtn.addEventListener('click', function() {
-      // 显示项目提交模态框或跳转到提交页面
-      showProjectSubmissionModal();
+      // 直接跳转到飞书表单
+      window.open('https://svtrglobal.feishu.cn/share/base/form/shrcn7Y68KNvvcIvnh396IJIc3b', '_blank');
     });
   }
 
