@@ -51,8 +51,45 @@
       tags: ['数据分析', '商业智能', '企业服务'],
       investedAt: '2025-01-16T16:15:00Z',
       investors: ['启明创投', '华创资本']
+    },
+    {
+      id: 'fd005',
+      companyName: 'NeuralCloud',
+      stage: 'Series A',
+      amount: 18000000,
+      currency: 'USD',
+      description: '云端AI推理平台，为中小企业提供低成本AI计算服务，已服务超过1000家企业客户。',
+      tags: ['云计算', 'AI推理', '企业服务'],
+      investedAt: '2025-01-16T14:20:00Z',
+      investors: ['GGV纪源资本', '蓝驰创投']
+    },
+    {
+      id: 'fd006',
+      companyName: 'RoboFarm Tech',
+      stage: 'Seed',
+      amount: 6000000,
+      currency: 'USD',
+      description: '农业机器人技术公司，开发智能农业设备，提高农业生产效率，已在多个农业基地试点。',
+      tags: ['农业科技', '机器人', '智能农业'],
+      investedAt: '2025-01-16T10:30:00Z',
+      investors: ['创新工场', '险峰长青']
+    },
+    {
+      id: 'fd007',
+      companyName: 'VoiceAI Pro',
+      stage: 'Pre-A',
+      amount: 9000000,
+      currency: 'USD',
+      description: '语音AI技术公司，专注多语言语音识别和合成，为客服、教育等行业提供解决方案。',
+      tags: ['语音AI', '多语言', '客服'],
+      investedAt: '2025-01-15T16:45:00Z',
+      investors: ['五源资本', '源码资本']
     }
   ];
+
+  // 🌊 瀑布流相关变量
+  let currentDisplayCount = 3; // 当前显示的数量
+  let isLoadingMore = false; // 是否正在加载更多
 
   // 🎨 融资阶段标签映射
   const stageLabels = {
@@ -126,7 +163,7 @@
   }
 
   // 📊 加载融资数据
-  async function loadFundingData() {
+  async function loadFundingData(reset = true) {
     const container = document.getElementById('fundingHighlights');
 
     if (!container) {
@@ -135,15 +172,40 @@
     }
 
     try {
-      // 模拟API延迟
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // 如果是重置，显示加载状态
+      if (reset) {
+        container.innerHTML = `
+          <div class="funding-loading">
+            <span class="loading-icon">⏳</span>
+            <span data-i18n="funding_loading">正在加载最新融资信息...</span>
+          </div>
+        `;
 
-      // 实际项目中应该调用真实API
-      // const response = await fetch('/api/funding-daily');
-      // const data = await response.json();
+        // 重置显示数量
+        currentDisplayCount = 3;
+      }
 
-      // 使用模拟数据，显示前3条最新消息
-      const recentFunding = mockFundingData.slice(0, 3);
+      // 从飞书API获取真实数据
+      let fundingData = [];
+
+      try {
+        const response = await fetch('/api/funding-daily-sync');
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          fundingData = result.data;
+          console.log(`✅ 从${result.source}获取到 ${result.count} 条融资数据`);
+        } else {
+          throw new Error(result.message || '数据获取失败');
+        }
+      } catch (apiError) {
+        console.warn('⚠️ API数据获取失败，使用备用数据:', apiError);
+        // 如果API失败，fallback到模拟数据
+        fundingData = mockFundingData;
+      }
+
+      // 按时间排序并截取当前显示数量
+      const recentFunding = fundingData.slice(0, currentDisplayCount);
 
       if (recentFunding.length === 0) {
         container.innerHTML = `
@@ -157,10 +219,21 @@
 
       // 生成HTML
       const fundingHTML = recentFunding.map(createFundingItemHTML).join('');
-      container.innerHTML = fundingHTML;
 
-      // 更新时间戳
-      updateTimestamp();
+      // 添加加载更多按钮（如果还有更多数据）
+      const loadMoreHTML = currentDisplayCount < fundingData.length ? `
+        <div class="funding-load-more">
+          <button class="load-more-btn" onclick="window.fundingDaily.loadMoreFunding()">
+            <span class="load-more-icon">➕</span>
+            <span data-i18n="funding_load_more">查看更多融资信息</span>
+          </button>
+        </div>
+      ` : '';
+
+      // 将当前数据存储到全局变量，供loadMoreFunding使用
+      window.currentFundingData = fundingData;
+
+      container.innerHTML = fundingHTML + loadMoreHTML;
 
       // 添加点击事件
       addFundingItemClickHandlers();
@@ -179,26 +252,38 @@
     }
   }
 
-  // 🕒 更新时间戳
-  function updateTimestamp() {
-    const timeElement = document.getElementById('fundingUpdateTime');
-    if (timeElement) {
-      const now = new Date();
-      const timeString = now.toLocaleString('zh-CN', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
+  // 🌊 加载更多融资信息
+  async function loadMoreFunding() {
+    if (isLoadingMore) return;
 
-      // 保留多语言支持的前缀部分
-      const prefix = timeElement.querySelector('[data-i18n="funding_update_time"]');
-      if (prefix) {
-        timeElement.innerHTML = prefix.outerHTML + timeString;
-      } else {
-        timeElement.innerHTML = `<span data-i18n="funding_update_time">更新时间：</span>${timeString}`;
-      }
+    isLoadingMore = true;
+    const loadMoreBtn = document.querySelector('.load-more-btn');
+
+    if (loadMoreBtn) {
+      loadMoreBtn.innerHTML = `
+        <span class="loading-icon">⏳</span>
+        <span>加载中...</span>
+      `;
+      loadMoreBtn.disabled = true;
+    }
+
+    try {
+      // 模拟加载延迟
+      await new Promise(resolve => setTimeout(resolve, 800));
+
+      // 使用当前存储的数据或fallback到模拟数据
+      const availableData = window.currentFundingData || mockFundingData;
+
+      // 增加显示数量
+      currentDisplayCount = Math.min(currentDisplayCount + 3, availableData.length);
+
+      // 重新渲染（不重置）
+      await loadFundingData(false);
+
+    } catch (error) {
+      console.error('❌ 加载更多融资信息失败:', error);
+    } finally {
+      isLoadingMore = false;
     }
   }
 
@@ -229,7 +314,9 @@
 
   // 📱 融资卡片点击处理
   function handleFundingItemClick(fundingId) {
-    const fundingItem = mockFundingData.find(item => item.id === fundingId);
+    // 使用当前存储的数据或fallback到模拟数据
+    const availableData = window.currentFundingData || mockFundingData;
+    const fundingItem = availableData.find(item => item.id === fundingId);
 
     if (!fundingItem) {
       console.error('未找到融资信息:', fundingId);
@@ -254,7 +341,8 @@
   // 🔄 刷新数据
   function refreshFundingData() {
     console.log('🔄 刷新创投日报数据...');
-    loadFundingData();
+    currentDisplayCount = 3; // 重置为3条
+    loadFundingData(true);
   }
 
   // 🚀 初始化函数
@@ -269,7 +357,7 @@
     }
 
     // 立即加载数据
-    loadFundingData();
+    loadFundingData(true);
 
     // 设置定时刷新（每30分钟）
     const refreshInterval = 30 * 60 * 1000; // 30分钟
@@ -281,6 +369,7 @@
   // 🌐 暴露公共接口
   window.fundingDaily = {
     loadFundingData,
+    loadMoreFunding,
     refreshFundingData,
     initialize: initializeFundingDaily
   };

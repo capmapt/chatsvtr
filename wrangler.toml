@@ -38,6 +38,10 @@ LINKEDIN_CLIENT_ID = "86fimn7a7dwvmr"
 AWS_REGION = "us-west-2"
 FROM_EMAIL = "noreply@svtr.ai"
 
+# 飞书API配置（开发环境）
+FEISHU_APP_ID = "cli_a8e2014cbe7d9013"
+FEISHU_APP_SECRET = "tysHBj6njxwafO92dwO1DdttVvqvesf0"
+
 # Preview环境配置 (Cloudflare Pages支持的环境名称)
 [env.preview]
 name = "chatsvtr-preview"
@@ -45,6 +49,13 @@ compatibility_date = "2024-07-16"
 
 [env.preview.vars]
 APP_URL = "https://preview.svtr.ai"
+
+# 定时任务配置 - 融资日报每日自动更新
+[triggers]
+crons = [
+  # 每天北京时间09:00 (UTC+8) = UTC 01:00 执行融资数据更新
+  "0 1 * * *"
+]
 
 # Secrets 通过wrangler secret命令设置
 # OAuth secrets:
@@ -54,4 +65,7 @@ APP_URL = "https://preview.svtr.ai"
 # AWS SES secrets:
 # wrangler pages secret put AWS_ACCESS_KEY_ID
 # wrangler pages secret put AWS_SECRET_ACCESS_KEY
+# Feishu API secrets:
+# wrangler pages secret put FEISHU_APP_ID
+# wrangler pages secret put FEISHU_APP_SECRET
 

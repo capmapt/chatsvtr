@@ -13,7 +13,7 @@
 .funding-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 1.5rem;
   padding: 0 1rem;
   flex-wrap: wrap;
@@ -27,24 +27,30 @@
 }
 
 .funding-title {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
   margin: 0;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #2c3e50;
   line-height: 1.2;
 }
 
-.funding-icon {
-  font-size: 1.6rem;
-  animation: pulse-glow 2s ease-in-out infinite;
+.funding-title-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #fa8c32, #ff9f40);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  box-shadow:
+    0 4px 12px rgba(250, 140, 50, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes pulse-glow {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.05); opacity: 0.8; }
+.funding-title-badge:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 20px rgba(250, 140, 50, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .funding-update-time {
@@ -57,24 +63,32 @@
 }
 
 .funding-view-more {
-  background: linear-gradient(135deg, #fa8c32, #ff9f40);
-  color: white;
+  background: rgba(250, 140, 50, 0.08);
+  color: #fa8c32;
   text-decoration: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.8rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(250, 140, 50, 0.3);
-  border: none;
+  border: 1px solid rgba(250, 140, 50, 0.2);
   cursor: pointer;
   align-self: flex-start;
+  position: relative;
+  overflow: hidden;
+}
+
+.funding-view-more::before {
+  content: "📊";
+  margin-right: 0.4rem;
+  font-size: 0.75rem;
 }
 
 .funding-view-more:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(250, 140, 50, 0.4);
-  background: linear-gradient(135deg, #ff9f40, #fa8c32);
+  background: rgba(250, 140, 50, 0.15);
+  border-color: rgba(250, 140, 50, 0.4);
+  color: #e07b2a;
+  transform: translateX(2px);
 }
 
 /* 📰 融资信息展示区域 */
@@ -232,6 +246,56 @@
   font-weight: 500;
 }
 
+/* 🌊 加载更多按钮 */
+.funding-load-more {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e1e5e9;
+}
+
+.load-more-btn {
+  background: linear-gradient(135deg, #f8fafc, #ffffff);
+  border: 2px solid rgba(250, 140, 50, 0.2);
+  border-radius: 12px;
+  padding: 1rem 2rem;
+  color: #fa8c32;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0 auto;
+  min-width: 200px;
+  box-shadow: 0 2px 8px rgba(250, 140, 50, 0.1);
+}
+
+.load-more-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #fa8c32, #ff9f40);
+  color: white;
+  border-color: #fa8c32;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(250, 140, 50, 0.25);
+}
+
+.load-more-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.load-more-icon {
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.load-more-btn:hover:not(:disabled) .load-more-icon {
+  transform: scale(1.1);
+}
+
 /* 📱 响应式设计 */
 @media (max-width: 768px) {
   .funding-daily {
@@ -245,14 +309,20 @@
     gap: 1rem;
   }
 
-  .funding-title {
-    font-size: 1.5rem;
+  .funding-title-badge {
+    font-size: 1.2rem;
+    padding: 0.6rem 1.2rem;
   }
 
   .funding-view-more {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.75rem;
     align-self: center;
+  }
+
+  .funding-view-more::before {
+    font-size: 0.7rem;
+    margin-right: 0.3rem;
   }
 
   .funding-highlights {
@@ -277,15 +347,18 @@
   .funding-tags {
     justify-content: center;
   }
+
+  .load-more-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    min-width: 180px;
+  }
 }
 
 @media (max-width: 480px) {
-  .funding-title {
-    font-size: 1.3rem;
-  }
-
-  .funding-icon {
-    font-size: 1.4rem;
+  .funding-title-badge {
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
   }
 
   .funding-company {
@@ -309,8 +382,9 @@
 
 /* 🌓 暗色主题支持 */
 @media (prefers-color-scheme: dark) {
-  .funding-title {
-    color: #e2e8f0;
+  .funding-title-badge {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40);
+    /* 保持亮色，因为它本身就是品牌色 */
   }
 
   .funding-highlights {
@@ -355,19 +429,19 @@
 
 /* ♿ 减少动画模式 */
 @media (prefers-reduced-motion: reduce) {
-  .funding-icon,
+  .funding-title-badge,
   .loading-icon,
   .funding-item,
-  .funding-view-more {
+  .funding-view-more,
+  .load-more-btn {
     animation: none;
     transition: none;
   }
 
-  .funding-item:hover {
-    transform: none;
-  }
-
-  .funding-view-more:hover {
+  .funding-title-badge:hover,
+  .funding-item:hover,
+  .funding-view-more:hover,
+  .load-more-btn:hover {
     transform: none;
   }
 }
