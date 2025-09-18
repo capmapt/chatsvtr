@@ -67,6 +67,11 @@ const translations = {
     subscribe_email_placeholder: 'you@company.com',
     subscribe_submit: '订阅AI周报',
     collapse_sidebar: '折叠侧边栏',
+    // 创投日报翻译
+    funding_daily_title: '今日融资速递',
+    funding_update_time: '更新时间：',
+    funding_view_more: '查看完整日报 →',
+    funding_loading: '正在加载最新融资信息...',
     member_center: '进入会员中心',
     sub_email: '📧 邮箱联系',
     sub_linkedin: '💼 LinkedIn',
@@ -194,6 +199,11 @@ const translations = {
     subscribe_email_placeholder: 'you@company.com',
     subscribe_submit: 'Subscribe to AI Weekly',
     collapse_sidebar: 'Collapse Sidebar',
+    // Funding Daily translations
+    funding_daily_title: 'Today\'s Funding News',
+    funding_update_time: 'Updated: ',
+    funding_view_more: 'View Full Report →',
+    funding_loading: 'Loading latest funding information...',
     member_center: 'Member Center',
     sub_email: '📧 Email',
     sub_linkedin: '💼 LinkedIn',

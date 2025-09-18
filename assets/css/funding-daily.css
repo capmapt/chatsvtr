@@ -1,0 +1,373 @@
+/**
+ * 创投日报样式 - 主页融资信息展示
+ * 设计目标：突出时效性，提升可读性，保持品牌一致性
+ */
+
+/* 🔥 创投日报容器 */
+.funding-daily {
+  margin: 2rem 0;
+  padding: 0;
+}
+
+/* 🎯 标题区域 */
+.funding-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  padding: 0 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.funding-title-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.funding-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c3e50;
+  line-height: 1.2;
+}
+
+.funding-icon {
+  font-size: 1.6rem;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+}
+
+.funding-update-time {
+  font-size: 0.85rem;
+  color: #7f8c8d;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.funding-view-more {
+  background: linear-gradient(135deg, #fa8c32, #ff9f40);
+  color: white;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(250, 140, 50, 0.3);
+  border: none;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.funding-view-more:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(250, 140, 50, 0.4);
+  background: linear-gradient(135deg, #ff9f40, #fa8c32);
+}
+
+/* 📰 融资信息展示区域 */
+.funding-highlights {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.08),
+    0 1px 4px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(250, 140, 50, 0.1);
+}
+
+/* 🔄 加载状态 */
+.funding-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  color: #7f8c8d;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.loading-icon {
+  font-size: 1.2rem;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 💰 单条融资信息卡片 */
+.funding-item {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid #e1e5e9;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.funding-item:last-child {
+  margin-bottom: 0;
+}
+
+.funding-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  border-color: rgba(250, 140, 50, 0.3);
+}
+
+.funding-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(135deg, #fa8c32, #ff9f40);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.funding-item:hover::before {
+  opacity: 1;
+}
+
+/* 🏢 公司信息 */
+.funding-company {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.company-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.company-stage {
+  background: rgba(250, 140, 50, 0.1);
+  color: #fa8c32;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* 💵 融资金额 */
+.funding-amount {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #27ae60;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.amount-currency {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+/* 📝 公司描述 */
+.funding-description {
+  color: #5a6c7d;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+}
+
+/* 🏷️ 标签和元信息 */
+.funding-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f1f3f4;
+}
+
+.funding-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.funding-tag {
+  background: #f8f9fa;
+  color: #495057;
+  padding: 0.25rem 0.6rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid #e9ecef;
+}
+
+.funding-time {
+  color: #868e96;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* 📱 响应式设计 */
+@media (max-width: 768px) {
+  .funding-daily {
+    margin: 1.5rem 0;
+  }
+
+  .funding-header {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 0.5rem;
+    gap: 1rem;
+  }
+
+  .funding-title {
+    font-size: 1.5rem;
+  }
+
+  .funding-view-more {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+    align-self: center;
+  }
+
+  .funding-highlights {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .funding-item {
+    padding: 1rem;
+  }
+
+  .funding-amount {
+    font-size: 1.1rem;
+  }
+
+  .funding-meta {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .funding-tags {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .funding-title {
+    font-size: 1.3rem;
+  }
+
+  .funding-icon {
+    font-size: 1.4rem;
+  }
+
+  .funding-company {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .company-name {
+    font-size: 1rem;
+  }
+
+  .funding-amount {
+    font-size: 1rem;
+  }
+
+  .funding-item {
+    padding: 0.75rem;
+  }
+}
+
+/* 🌓 暗色主题支持 */
+@media (prefers-color-scheme: dark) {
+  .funding-title {
+    color: #e2e8f0;
+  }
+
+  .funding-highlights {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-color: rgba(250, 140, 50, 0.2);
+  }
+
+  .funding-item {
+    background: #2d3748;
+    border-color: #4a5568;
+  }
+
+  .company-name {
+    color: #e2e8f0;
+  }
+
+  .funding-description {
+    color: #a0aec0;
+  }
+
+  .funding-tag {
+    background: #4a5568;
+    color: #e2e8f0;
+    border-color: #5a6c7d;
+  }
+}
+
+/* 🎨 高对比度模式 */
+@media (prefers-contrast: high) {
+  .funding-item {
+    border: 2px solid #000;
+  }
+
+  .funding-view-more {
+    border: 2px solid #000;
+  }
+
+  .company-stage {
+    border: 1px solid #fa8c32;
+  }
+}
+
+/* ♿ 减少动画模式 */
+@media (prefers-reduced-motion: reduce) {
+  .funding-icon,
+  .loading-icon,
+  .funding-item,
+  .funding-view-more {
+    animation: none;
+    transition: none;
+  }
+
+  .funding-item:hover {
+    transform: none;
+  }
+
+  .funding-view-more:hover {
+    transform: none;
+  }
+}

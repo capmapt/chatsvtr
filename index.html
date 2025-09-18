@@ -105,6 +105,7 @@
   <link rel="stylesheet" href="assets/css/user-actions.css">
   <link rel="stylesheet" href="assets/css/user-actions-modal.css">
   <link rel="stylesheet" href="assets/css/mobile-sidebar-enhanced.css">
+  <link rel="stylesheet" href="assets/css/funding-daily.css">
   <link rel="stylesheet" href="assets/css/header-enhancements.css">
   
   <!-- Preload critical images (WebP preferred) -->
@@ -421,7 +422,34 @@
             class="stats-widget-iframe"></iframe>
   </section>
   <!-- 🚀 统计卡片 END -->
-    
+
+    <!-- 🔥 创投日报 START -->
+    <section class="funding-daily wrapper">
+      <div class="funding-header">
+        <div class="funding-title-section">
+          <h2 class="funding-title">
+            <span class="funding-icon">🔥</span>
+            <span data-i18n="funding_daily_title">今日融资速递</span>
+          </h2>
+          <span class="funding-update-time" id="fundingUpdateTime">
+            <span data-i18n="funding_update_time">更新时间：</span>2025-01-18 09:00
+          </span>
+        </div>
+        <a href="pages/funding-daily.html" class="funding-view-more" data-i18n="funding_view_more">
+          查看完整日报 →
+        </a>
+      </div>
+
+      <div class="funding-highlights" id="fundingHighlights">
+        <!-- 融资信息动态加载 -->
+        <div class="funding-loading">
+          <span class="loading-icon">⏳</span>
+          <span data-i18n="funding_loading">正在加载最新融资信息...</span>
+        </div>
+      </div>
+    </section>
+    <!-- 🔥 创投日报 END -->
+
     <!-- Native Chat BEGIN -->
     <section class="chatbox wrapper">
       <h2 class="chat-header" data-i18n="chat_header">
@@ -481,6 +509,7 @@
   <!-- Load translations and scripts -->
   <script src="assets/js/translations.js"></script>
   <script src="assets/js/header-enhancements.js"></script>
+  <script src="assets/js/funding-daily.js"></script>
   <script src="assets/js/user-actions.js" defer></script>
   <script src="assets/js/sidebar-qr-manager-optimized.js" defer></script>
   <script src="assets/js/i18n-optimized.js"></script>
