@@ -706,7 +706,33 @@
               sidebarLogo.click();
             }
           };
-          console.log('🔧 调试: 使用 window.testLogoClick() 测试点击');
+
+          // 创建直接的Ctrl+点击测试
+          window.testLogoCtrlClick = function() {
+            console.log('🧪 模拟Ctrl+点击Logo');
+            if (sidebarLogo) {
+              const event = new MouseEvent('click', {
+                ctrlKey: true,
+                metaKey: false,
+                bubbles: true,
+                cancelable: true
+              });
+              sidebarLogo.dispatchEvent(event);
+            } else {
+              console.log('❌ 未找到Logo元素');
+            }
+          };
+
+          // 创建直接打开管理后台的函数
+          window.openAdminCenter = function() {
+            console.log('🚀 直接打开管理后台');
+            window.open('/pages/admin-center.html', '_blank');
+          };
+
+          console.log('🔧 调试函数:');
+          console.log('   window.testLogoClick() - 测试普通点击');
+          console.log('   window.testLogoCtrlClick() - 测试Ctrl+点击');
+          console.log('   window.openAdminCenter() - 直接打开管理后台');
         } else {
           console.log('⚠️ 未找到任何Logo元素，将稍后重试');
         }
