@@ -439,11 +439,11 @@
   <!-- Load security utilities -->
   <script src="assets/js/security-utils.js"></script>
   
-  <!-- 🚀 侧边栏状态初始化（最高优先级） -->
-  <script src="assets/js/sidebar-desktop-mobile-init.js"></script>
+  <!-- 🚀 侧边栏状态初始化（最高优先级） - 暂时禁用避免冲突 -->
+  <!-- <script src="assets/js/sidebar-desktop-mobile-init.js"></script> -->
 
-  <!-- 🚀 移动端侧边栏修复器（优先加载） -->
-  <script src="assets/js/mobile-sidebar-fix.js"></script>
+  <!-- 🚀 移动端侧边栏修复器（优先加载） - 暂时禁用避免冲突 -->
+  <!-- <script src="assets/js/mobile-sidebar-fix.js"></script> -->
 
   <!-- 🚀 移动端侧边栏交互调试工具 -->
   <!-- 临时移除调试文件以避免冲突 -->
@@ -462,9 +462,9 @@
   <!-- 移动端触摸优化 -->
   <script src="assets/js/touch-enhancer.js"></script>
 
-  <!-- 侧边栏功能 -->
-  <script src="assets/js/sidebar-resizer.js"></script>
-  <script src="assets/js/sidebar-integration.js"></script>
+  <!-- 侧边栏功能 - 暂时禁用避免冲突 -->
+  <!-- <script src="assets/js/sidebar-resizer.js"></script> -->
+  <!-- <script src="assets/js/sidebar-integration.js"></script> -->
   <script src="assets/js/sidebar-collapsible.js"></script>
   
   <!-- Enhanced error handling and monitoring -->
@@ -483,8 +483,8 @@
   <!-- 性能稳定器 - 必须先加载 -->
   <script src="assets/js/performance-stabilizer.js" defer></script>
   
-  <!-- 主页功能脚本 - 性能优化版 -->
-  <script src="assets/js/main-performance-optimized.js" defer></script>
+  <!-- 主页功能脚本 - 性能优化版 - 暂时禁用避免侧边栏冲突 -->
+  <!-- <script src="assets/js/main-performance-optimized.js" defer></script> -->
   <!-- 桌面端折叠按钮修复 - 已被统一控制器替代 -->
   <!-- <script src="assets/js/desktop-toggle-fix.js" defer></script> -->
   
@@ -494,141 +494,152 @@
   <!-- 简化的桌面端侧边栏修复 - 暂时禁用避免冲突 -->
   <!-- <script src="assets/js/desktop-sidebar-fix-simple.js?v=20250917-fix" defer></script> -->
 
-  <!-- 超级修复：多重机制确保在任何环境都生效 -->
+  <!-- 极简侧边栏切换修复 - 最高优先级 -->
   <script>
-    console.log('[SuperFix] 脚本开始执行 - 时间戳:', Date.now());
+    (function() {
+      console.log('🔧 [PRIORITY] 初始化侧边栏控制器');
 
-    // 立即尝试修复
-    function attemptFix() {
-      console.log('[SuperFix] 尝试修复 - DOM状态:', document.readyState);
+      // 禁用其他侧边栏脚本
+      window.sidebarInitialized = true;
+      window.mobileSidebarDisabled = true;
 
-      const toggle = document.querySelector('.menu-toggle');
-      const sidebar = document.querySelector('.sidebar');
+      let initialized = false;
 
-      console.log('[SuperFix] 元素查找结果:', {
-        toggle: !!toggle,
-        sidebar: !!sidebar,
-        width: window.innerWidth
-      });
-
-      if (!toggle || !sidebar) {
-        console.log('[SuperFix] 元素未找到，500ms后重试');
-        setTimeout(attemptFix, 500);
-        return;
-      }
-
-      // 只在桌面端执行
-      if (window.innerWidth <= 768) {
-        console.log('[SuperFix] 移动端，跳过修复');
-        return;
-      }
-
-      console.log('[SuperFix] 开始修复桌面端按钮');
-
-      // 创建新的切换函数
-      function toggleSidebar(source) {
-        console.log('[SuperFix] 切换触发，来源:', source);
-
-        const isOpen = sidebar.classList.contains('open');
-        console.log('[SuperFix] 当前状态:', isOpen ? '打开' : '关闭');
-
-        if (isOpen) {
-          // 关闭侧边栏
-          sidebar.classList.remove('open');
-          sidebar.style.setProperty('transform', 'translateX(-100%)', 'important');
-          sidebar.style.setProperty('left', '-280px', 'important');
-          document.body.classList.remove('sidebar-open');
-          console.log('[SuperFix] 侧边栏已关闭');
-        } else {
-          // 打开侧边栏
-          sidebar.classList.add('open');
-          sidebar.style.setProperty('transform', 'translateX(0)', 'important');
-          sidebar.style.setProperty('left', '0px', 'important');
-          document.body.classList.add('sidebar-open');
-          console.log('[SuperFix] 侧边栏已打开');
+      function setupSidebar() {
+        if (initialized) {
+          console.log('🚫 侧边栏已初始化，跳过重复设置');
+          return;
         }
-      }
 
-      // 修复原始按钮而不是替换
-      console.log('[SuperFix] 修复原始按钮');
+        const toggle = document.querySelector('.menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.overlay');
 
-      // 清除所有现有事件监听器
-      const newToggle = toggle.cloneNode(true);
-      toggle.parentNode.replaceChild(newToggle, toggle);
+        console.log('📍 查找元素:', {
+          toggle: !!toggle,
+          sidebar: !!sidebar,
+          overlay: !!overlay,
+          toggleVisible: toggle ? getComputedStyle(toggle).display !== 'none' : false
+        });
 
-      // 保持原始样式，只强化必要的属性确保可点击
-      newToggle.style.setProperty('z-index', '9999', 'important');
-      newToggle.style.setProperty('pointer-events', 'auto', 'important');
-      newToggle.style.setProperty('cursor', 'pointer', 'important');
-      newToggle.style.setProperty('display', 'block', 'important');
-      newToggle.style.setProperty('visibility', 'visible', 'important');
+        if (!toggle || !sidebar) {
+          console.log('⏰ 重试中...');
+          setTimeout(setupSidebar, 200);
+          return;
+        }
 
-      // 确保按钮不被其他元素遮挡，但保持原始位置和样式
-      console.log('[SuperFix] 保持原始样式，仅强化必要属性');
+        initialized = true;
+        console.log('✅ [PRIORITY] 开始设置侧边栏控制器');
 
-      // 多重事件绑定到原始按钮
-      newToggle.onclick = function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('[SuperFix] 原始按钮onclick触发');
-        toggleSidebar('original-onclick');
-      };
+        // 强制移除所有现有事件监听器
+        const newToggle = toggle.cloneNode(true);
+        toggle.parentNode.replaceChild(newToggle, toggle);
 
-      newToggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('[SuperFix] 原始按钮addEventListener触发');
-        toggleSidebar('original-click');
-      }, true);
+        // 初始状态 - 只使用CSS类，不用内联样式
+        sidebar.classList.remove('open');
+        if (overlay) {
+          overlay.classList.remove('active');
+        }
 
-      newToggle.addEventListener('mousedown', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('[SuperFix] 原始按钮mousedown触发');
-        toggleSidebar('original-mousedown');
-      });
+        // 切换函数
+        function toggleSidebar() {
+          const isOpen = sidebar.classList.contains('open');
+          console.log('🔄 [ACTION] 侧边栏切换:', isOpen ? '关闭' : '打开');
 
-      newToggle.addEventListener('touchstart', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('[SuperFix] 原始按钮touchstart触发');
-        toggleSidebar('original-touch');
-      });
+          if (isOpen) {
+            // 关闭侧边栏
+            sidebar.classList.remove('open');
+            // 强制设置变换
+            sidebar.style.setProperty('transform', 'translateX(-100%)', 'important');
+            if (overlay) {
+              overlay.classList.remove('active');
+            }
+            console.log('✅ 侧边栏已关闭 - 强制变换');
+          } else {
+            // 打开侧边栏
+            sidebar.classList.add('open');
+            // 强制设置变换
+            sidebar.style.setProperty('transform', 'translateX(0)', 'important');
+            if (overlay) {
+              overlay.classList.add('active');
+            }
+            console.log('✅ 侧边栏已打开 - 强制变换');
+          }
 
-      console.log('[SuperFix] 原始按钮修复完成');
+          // 延迟检查最终状态
+          setTimeout(() => {
+            console.log('📊 最终侧边栏状态:', {
+              classList: Array.from(sidebar.classList),
+              computedTransform: getComputedStyle(sidebar).transform,
+              inlineTransform: sidebar.style.transform,
+              boundingRect: sidebar.getBoundingClientRect(),
+              position: {
+                left: sidebar.getBoundingClientRect().left,
+                right: sidebar.getBoundingClientRect().right,
+                width: sidebar.getBoundingClientRect().width
+              }
+            });
+          }, 100);
+        }
 
-      // 全局调试函数
-      window.superToggle = function() {
-        toggleSidebar('manual');
-      };
-
-      // 键盘快捷键（保留，但不显示红色覆盖层）
-      document.addEventListener('keydown', function(e) {
-        if (e.ctrlKey && e.key === 'b') {
+        // 绑定按钮事件 - 使用多种方式确保生效
+        newToggle.onclick = function(e) {
           e.preventDefault();
-          toggleSidebar('keyboard');
+          e.stopPropagation();
+          console.log('🔘 [CLICK] 按钮点击事件触发');
+          toggleSidebar();
+          return false;
+        };
+
+        newToggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('🔘 [LISTENER] 按钮监听器触发');
+          toggleSidebar();
+          return false;
+        }, { capture: true });
+
+        // 覆盖层点击关闭
+        if (overlay) {
+          overlay.onclick = function(e) {
+            e.preventDefault();
+            console.log('🔘 覆盖层点击关闭');
+            if (sidebar.classList.contains('open')) {
+              toggleSidebar();
+            }
+          };
         }
-      });
 
-      console.log('[SuperFix] 修复完成！原始按钮现在应该可以正常工作，调试：按Ctrl+B或运行 superToggle()');
-    }
+        // 添加按钮样式确保可点击
+        newToggle.style.cursor = 'pointer';
+        newToggle.style.pointerEvents = 'auto';
+        newToggle.style.position = 'relative';
+        newToggle.style.zIndex = '9999';
 
-    // 多重触发机制
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', attemptFix);
-    } else {
-      attemptFix();
-    }
+        // 全局调试函数
+        window.sidebarToggle = toggleSidebar;
+        window.sidebarDebug = {
+          toggle: newToggle,
+          sidebar: sidebar,
+          overlay: overlay,
+          isOpen: () => sidebar.classList.contains('open'),
+          forceToggle: toggleSidebar
+        };
 
-    window.addEventListener('load', function() {
-      setTimeout(attemptFix, 1000);
-      setTimeout(attemptFix, 3000);
-    });
+        console.log('✅ [PRIORITY] 侧边栏控制器设置完成');
+        console.log('🔧 调试: 使用 window.sidebarToggle() 手动切换');
+      }
 
-    // 强制延迟执行
-    setTimeout(attemptFix, 100);
-    setTimeout(attemptFix, 1000);
-    setTimeout(attemptFix, 5000);
+      // 立即执行和延迟执行
+      setupSidebar();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupSidebar);
+      }
+      setTimeout(setupSidebar, 50);
+      setTimeout(setupSidebar, 200);
+      setTimeout(setupSidebar, 500);
+      setTimeout(setupSidebar, 1000);
+    })();
   </script>
   <!-- Native Chat Component with Authentication -->
   <link rel="stylesheet" href="assets/css/chat-optimized.css">
