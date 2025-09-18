@@ -11,6 +11,15 @@
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.3) !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
+    /* 关键修复：移除滚动条，改为自适应高度 */
+    overflow-y: visible !important;
+    overflow-x: hidden !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    position: fixed !important;
+    bottom: auto !important;
+    /* 确保内容可以正常显示 */
+    padding-bottom: 100px !important;
   }
 
   /* 侧边栏打开时，主内容区层叠在下方（移除模糊效果） */
@@ -70,9 +79,21 @@
     pointer-events: auto;
   }
 
-  /* 优化侧边栏内部滚动 */
+  /* 优化侧边栏内部布局 - 移除滚动，展示所有内容 */
   .sidebar nav {
     padding-bottom: 100px; /* 为底部登录按钮预留更多空间 */
+    overflow: visible !important; /* 确保所有内容都可见 */
+    height: auto !important; /* 自适应高度 */
+    max-height: none !important; /* 移除最大高度限制 */
+  }
+
+  /* 确保侧边栏内容容器不限制高度 */
+  .sidebar-content,
+  .sidebar .nav-list,
+  .sidebar .sidebar-section {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
   }
 
   /* 移动端登录按钮优化 */

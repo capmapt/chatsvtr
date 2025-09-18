@@ -130,14 +130,19 @@ body[data-debug="true"] .sidebar[data-mobile-fixed="true"][data-error="true"]::b
   user-select: none;
 }
 
-/* 🚀 优化滚动性能 */
-.sidebar nav {
-  /* 改善移动端滚动 */
-  -webkit-overflow-scrolling: touch;
-  overflow-scrolling: touch;
-  
-  /* 减少滚动时的重绘 */
-  will-change: scroll-position;
+/* 🚀 优化移动端布局性能 - 移除滚动，展示所有内容 */
+@media (max-width: 768px) {
+  .sidebar nav {
+    /* 移除滚动，改为全展示 */
+    overflow: visible !important;
+    -webkit-overflow-scrolling: auto;
+    overflow-scrolling: auto;
+
+    /* 优化渲染性能 */
+    will-change: auto;
+    height: auto !important;
+    max-height: none !important;
+  }
 }
 
 /* 🚀 内存优化：隐藏时释放GPU资源 */
