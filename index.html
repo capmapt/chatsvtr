@@ -686,6 +686,7 @@
           // 添加新监听器
           sidebarLogo.addEventListener('click', logoClickHandler, true); // 使用捕获阶段
           sidebarLogo.style.cursor = 'pointer';
+          sidebarLogo.style.pointerEvents = 'auto'; // 确保可点击
           sidebarLogo.title = 'Ctrl+点击打开管理后台';
           console.log('✅ Picture元素事件绑定完成');
         }
@@ -733,10 +734,24 @@
             window.open('/pages/admin-center.html', '_blank');
           };
 
+          // 添加全局键盘快捷键作为备用方案
+          if (!window.adminShortcutAdded) {
+            document.addEventListener('keydown', function(e) {
+              // Ctrl+Shift+A 打开管理后台
+              if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
+                e.preventDefault();
+                console.log('⌨️ 键盘快捷键: Ctrl+Shift+A 打开管理后台');
+                window.open('/pages/admin-center.html', '_blank');
+              }
+            });
+            window.adminShortcutAdded = true;
+          }
+
           console.log('🔧 调试函数:');
           console.log('   window.testLogoClick() - 测试普通点击');
           console.log('   window.testLogoCtrlClick() - 测试Ctrl+点击');
           console.log('   window.openAdminCenter() - 直接打开管理后台');
+          console.log('   Ctrl+Shift+A - 键盘快捷键打开管理后台');
         } else {
           console.log('⚠️ 未找到任何Logo元素，将稍后重试');
         }
