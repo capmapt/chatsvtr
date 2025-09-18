@@ -747,6 +747,33 @@
             window.adminShortcutAdded = true;
           }
 
+          // 添加全局点击监听器捕获Logo区域点击
+          if (!window.globalLogoListener) {
+            document.addEventListener('click', function(e) {
+              if ((e.ctrlKey || e.metaKey)) {
+                // 检查是否点击了Logo区域
+                const logoContainer = document.querySelector('.sidebar-header');
+                const logoElement = document.querySelector('.sidebar-logo');
+
+                if (logoContainer && logoElement) {
+                  const logoRect = logoContainer.getBoundingClientRect();
+                  const clickX = e.clientX;
+                  const clickY = e.clientY;
+
+                  // 如果点击位置在Logo容器区域内
+                  if (clickX >= logoRect.left && clickX <= logoRect.right &&
+                      clickY >= logoRect.top && clickY <= logoRect.bottom) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🎯 全局Logo区域Ctrl+点击检测到');
+                    window.open('/pages/admin-center.html', '_blank');
+                  }
+                }
+              }
+            }, true); // 使用捕获阶段
+            window.globalLogoListener = true;
+          }
+
           console.log('🔧 调试函数:');
           console.log('   window.testLogoClick() - 测试普通点击');
           console.log('   window.testLogoCtrlClick() - 测试Ctrl+点击');
