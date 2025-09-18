@@ -641,6 +641,44 @@
       setTimeout(setupSidebar, 1000);
     })();
   </script>
+
+  <!-- 侧边栏Logo Ctrl+点击功能 - 独立脚本 -->
+  <script>
+    (function() {
+      'use strict';
+
+      function initLogoClick() {
+        const sidebarLogo = document.querySelector('.sidebar-logo');
+
+        if (sidebarLogo) {
+          sidebarLogo.addEventListener('click', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log('🚀 Logo Ctrl+点击: 打开管理后台');
+              window.open('/pages/admin-center.html', '_blank');
+            }
+          });
+
+          sidebarLogo.style.cursor = 'pointer';
+          sidebarLogo.title = 'Ctrl+点击打开管理后台';
+          console.log('✅ Logo Ctrl+点击功能已初始化');
+        } else {
+          console.log('⚠️ 未找到侧边栏Logo元素，将稍后重试');
+        }
+      }
+
+      // 多次尝试初始化，确保DOM加载完成
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initLogoClick);
+      } else {
+        initLogoClick();
+      }
+      setTimeout(initLogoClick, 100);
+      setTimeout(initLogoClick, 500);
+    })();
+  </script>
+
   <!-- Native Chat Component with Authentication -->
   <link rel="stylesheet" href="assets/css/chat-optimized.css">
   <link rel="stylesheet" href="assets/css/chat-login-overlay.css">
