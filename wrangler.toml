@@ -51,11 +51,13 @@ compatibility_date = "2024-07-16"
 APP_URL = "https://preview.svtr.ai"
 
 # 定时任务配置 - 融资日报每日自动更新
-[triggers]
-crons = [
-  # 每天北京时间09:00 (UTC+8) = UTC 01:00 执行融资数据更新
-  "0 1 * * *"
-]
+# 注意：Cloudflare Pages不支持cron triggers
+# 定时任务需要单独创建Worker处理
+# [triggers]
+# crons = [
+#   # 每天北京时间09:00 (UTC+8) = UTC 01:00 执行融资数据更新
+#   "0 1 * * *"
+# ]
 
 # Secrets 通过wrangler secret命令设置
 # OAuth secrets:
