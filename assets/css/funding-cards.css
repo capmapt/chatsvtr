@@ -44,7 +44,7 @@
   padding: 1.25rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   background: white;
-  border: 1px solid #e1e5e9;
+  border: none;
   display: flex;
   flex-direction: column;
   overflow: hidden;
