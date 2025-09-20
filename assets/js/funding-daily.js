@@ -17,7 +17,27 @@
       description: '专注医疗AI诊断的创新公司，其AI影像识别技术已在多家三甲医院部署使用，准确率达95%以上。',
       tags: ['医疗AI', '影像识别', '诊断'],
       investedAt: '2025-01-17T15:30:00Z',
-      investors: ['红杉资本中国', 'IDG资本']
+      investors: ['红杉资本中国', 'IDG资本'],
+      website: 'https://mindbridge-ai.com',
+      category: '医疗科技',
+      subCategory: 'AI诊断',
+      teamInfo: '团队核心成员来自斯坦福医学院、MIT计算机科学系，拥有15年+医疗AI研发经验。',
+      founders: [
+        {
+          name: '张明华',
+          title: 'CEO',
+          background: '前Google Health技术总监',
+          linkedin: 'https://linkedin.com/in/zhang-minghua',
+          email: 'minghua@mindbridge-ai.com'
+        },
+        {
+          name: 'Dr. Sarah Chen',
+          title: 'CTO',
+          background: '斯坦福医学院AI实验室主任',
+          linkedin: 'https://linkedin.com/in/sarah-chen-md',
+          email: 'sarah@mindbridge-ai.com'
+        }
+      ]
     },
     {
       id: 'fd002',
@@ -28,7 +48,27 @@
       description: '量子加密通信技术领军企业，为金融机构提供下一代安全通信解决方案。',
       tags: ['量子技术', '网络安全', '金融科技'],
       investedAt: '2025-01-17T11:20:00Z',
-      investors: ['经纬中国', '真格基金']
+      investors: ['经纬中国', '真格基金'],
+      website: 'https://quantumsecure.tech',
+      category: '网络安全',
+      subCategory: '量子加密',
+      teamInfo: '创始团队来自中科院量子信息重点实验室，在量子通信领域有10年+研究经验。',
+      founders: [
+        {
+          name: '李量子',
+          title: 'CEO',
+          background: '中科院量子信息实验室研究员',
+          linkedin: 'https://linkedin.com/in/li-quantum',
+          email: 'quantum@quantumsecure.tech'
+        },
+        {
+          name: '王安全',
+          title: 'CTO',
+          background: '前华为网络安全首席架构师',
+          linkedin: 'https://linkedin.com/in/wang-anquan',
+          email: 'anquan@quantumsecure.tech'
+        }
+      ]
     },
     {
       id: 'fd003',
@@ -39,7 +79,27 @@
       description: '智能物流平台，通过AI优化配送路线，已帮助客户降低30%物流成本，覆盖全国200+城市。',
       tags: ['智能物流', 'AI优化', '绿色配送'],
       investedAt: '2025-01-17T09:45:00Z',
-      investors: ['高瓴资本', '顺为资本', '小米集团']
+      investors: ['高瓴资本', '顺为资本', '小米集团'],
+      website: 'https://ecologistics.pro',
+      category: '物流科技',
+      subCategory: '智能配送',
+      teamInfo: '团队拥有丰富的物流和AI算法经验，核心成员来自菜鸟网络、美团配送等知名企业。',
+      founders: [
+        {
+          name: '陈物流',
+          title: 'CEO',
+          background: '前菜鸟网络技术VP',
+          linkedin: 'https://linkedin.com/in/chen-wuliu',
+          email: 'wuliu@ecologistics.pro'
+        },
+        {
+          name: '赵配送',
+          title: 'COO',
+          background: '前美团配送运营总监',
+          linkedin: 'https://linkedin.com/in/zhao-peisong',
+          email: 'peisong@ecologistics.pro'
+        }
+      ]
     },
     {
       id: 'fd004',
@@ -140,23 +200,99 @@
     const timeAgo = formatTimeAgo(item.investedAt);
     const tagsHTML = item.tags.map(tag => `<span class="funding-tag">${tag}</span>`).join('');
 
+    // 生成公司名称（带官网链接）
+    const companyNameHTML = item.website
+      ? `<h3 class="company-name" onclick="window.open('${item.website}', '_blank')" title="点击访问官网">${item.companyName}</h3>`
+      : `<h3 class="company-name">${item.companyName}</h3>`;
+
+    // 生成创始人列表
+    const foundersHTML = item.founders?.map(founder => {
+      const contactLinks = [];
+      if (founder.linkedin) {
+        contactLinks.push(`<a href="${founder.linkedin}" target="_blank" class="contact-link" title="LinkedIn">💼</a>`);
+      }
+      if (founder.email) {
+        contactLinks.push(`<a href="mailto:${founder.email}" class="contact-link" title="发送邮件">📧</a>`);
+      }
+
+      return `
+        <div class="founder-item">
+          <div class="founder-info">
+            <div class="founder-name" onclick="window.open('${founder.linkedin || `mailto:${founder.email}`}', '_blank')" title="点击联系">${founder.name}</div>
+            <div style="font-size: 0.75rem; color: #6c757d;">${founder.title} | ${founder.background}</div>
+          </div>
+          <div class="founder-contact">
+            ${contactLinks.join('')}
+          </div>
+        </div>
+      `;
+    }).join('') || '<p style="color: #6c757d; font-style: italic;">团队信息暂未收录</p>';
+
+    // 生成团队信息背面内容
+    const teamBackContent = `
+      <div class="team-info-content">
+        <div class="team-header">
+          <h3>👥 ${item.companyName} 团队</h3>
+        </div>
+
+        <div class="team-section">
+          <h4>🏢 公司概况</h4>
+          <p><strong>行业领域：</strong>${item.category || '未分类'} - ${item.subCategory || '其他'}</p>
+          <p><strong>团队背景：</strong>${item.teamInfo || '团队信息暂未收录，期待更多详情。'}</p>
+        </div>
+
+        <div class="team-section">
+          <h4>👨‍💼 核心团队</h4>
+          <div class="founders-list">
+            ${foundersHTML}
+          </div>
+        </div>
+
+        ${item.website ? `
+        <div class="company-links">
+          <a href="${item.website}" target="_blank" class="company-link">
+            🌐 访问官网
+          </a>
+        </div>
+        ` : ''}
+
+        <div class="flip-back-btn">
+          <button class="flip-back-button" onclick="flipCard(this)">
+            ← 返回融资信息
+          </button>
+        </div>
+      </div>
+    `;
+
     return `
-      <div class="funding-item" data-funding-id="${item.id}">
-        <div class="funding-company">
-          <h3 class="company-name">${item.companyName}</h3>
-          <span class="company-stage">${stageLabel}</span>
-        </div>
+      <div class="funding-item funding-card" data-funding-id="${item.id}" onclick="flipCard(this)">
+        <div class="card-inner">
+          <!-- 卡片正面 -->
+          <div class="card-front">
+            <div class="funding-company">
+              ${companyNameHTML}
+              <span class="company-stage">${stageLabel}</span>
+            </div>
 
-        <div class="funding-amount">
-          <span class="amount-currency">${item.currency}</span>
-          ${formattedAmount}
-        </div>
+            <div class="funding-amount">
+              <span class="amount-currency">${item.currency}</span>
+              ${formattedAmount}
+            </div>
 
-        <p class="funding-description">${item.description}</p>
+            <p class="funding-description">${item.description}</p>
 
-        <div class="funding-meta">
-          <div class="funding-tags">${tagsHTML}</div>
-          <span class="funding-time">${timeAgo}</span>
+            <div class="funding-meta">
+              <div class="funding-tags">${tagsHTML}</div>
+              <span class="funding-time">${timeAgo}</span>
+            </div>
+
+            <div class="flip-hint">点击查看团队 →</div>
+          </div>
+
+          <!-- 卡片背面 -->
+          <div class="card-back">
+            ${teamBackContent}
+          </div>
         </div>
       </div>
     `;
@@ -287,27 +423,50 @@
     }
   }
 
+  // 🔄 卡片翻转功能
+  function flipCard(element) {
+    // 阻止事件冒泡，避免嵌套点击
+    if (event) {
+      event.stopPropagation();
+    }
+
+    // 找到最近的卡片容器
+    const card = element.closest('.funding-card');
+    if (card) {
+      card.classList.toggle('flipped');
+
+      // 更新可访问性
+      const isFlipped = card.classList.contains('flipped');
+      card.setAttribute('aria-label', isFlipped ? '团队信息视图，点击返回融资信息' : '融资信息视图，点击查看团队');
+    }
+  }
+
   // 🖱️ 添加融资卡片点击事件
   function addFundingItemClickHandlers() {
-    const fundingItems = document.querySelectorAll('.funding-item');
+    const fundingCards = document.querySelectorAll('.funding-card');
 
-    fundingItems.forEach(item => {
-      item.addEventListener('click', function() {
-        const fundingId = this.dataset.fundingId;
-        handleFundingItemClick(fundingId);
-      });
+    fundingCards.forEach(card => {
+      // 移除旧的点击事件，使用新的翻转逻辑
+      card.removeEventListener('click', handleFundingItemClick);
 
       // 增强可访问性
-      item.setAttribute('role', 'button');
-      item.setAttribute('tabindex', '0');
-      item.setAttribute('aria-label', `查看 ${item.querySelector('.company-name').textContent} 的融资详情`);
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', `${card.querySelector('.company-name').textContent} 融资信息，点击查看团队详情`);
 
       // 键盘支持
-      item.addEventListener('keydown', function(e) {
+      card.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          this.click();
+          flipCard(this);
         }
+      });
+    });
+
+    // 阻止内部链接点击时触发翻转
+    document.querySelectorAll('.funding-card .company-name, .funding-card .contact-link, .funding-card .company-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.stopPropagation();
       });
     });
   }
@@ -373,6 +532,9 @@
     refreshFundingData,
     initialize: initializeFundingDaily
   };
+
+  // 🔄 暴露翻转函数到全局作用域
+  window.flipCard = flipCard;
 
   // 📱 DOM就绪时初始化
   if (document.readyState === 'loading') {
