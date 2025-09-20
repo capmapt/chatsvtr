@@ -377,13 +377,9 @@
     const fontSize = calculateFontSize(fullDescription.length);
     const lineHeight = calculateLineHeight(fullDescription.length);
 
-    // 生成团队信息
-    const teamInfo = item.teamInfo || generateTeamInfo(item);
+    // 直接使用源数据中的团队信息，不再生成描述
 
-    // 提取和生成创始人信息（基于描述推断）
-    const foundersInfo = generateFoundersInfo(item);
-
-    // 生成团队信息背面内容
+    // 生成团队信息背面内容（仅显示源数据中的团队背景信息）
     const teamBackContent = `
       <div class="team-info-content">
         <div class="team-header">
@@ -391,12 +387,25 @@
         </div>
 
         <div class="team-section">
-          <p><strong>💰 融资情况：</strong>${stageLabel} (${formattedAmount})</p>
-          <p><strong>🏦 主要投资方：</strong>${item.investors?.slice(0, 3).join('、') || '投资方信息待更新'}</p>
-          <p><strong>👨‍💼 团队背景：</strong>${teamInfo}</p>
-          <div class="founders-list">
-            ${foundersInfo}
-          </div>
+          ${item.founder || item.founders ? `
+            <p><strong>👨‍💼 创始人：</strong>${item.founder || item.founders}</p>
+          ` : ''}
+
+          ${item.workExperience ? `
+            <p><strong>💼 工作经历：</strong>${item.workExperience}</p>
+          ` : ''}
+
+          ${item.education ? `
+            <p><strong>🎓 教育背景：</strong>${item.education}</p>
+          ` : ''}
+
+          ${item.teamBackground ? `
+            <p><strong>🏢 团队背景：</strong>${item.teamBackground}</p>
+          ` : ''}
+
+          ${!item.founder && !item.founders && !item.workExperience && !item.education && !item.teamBackground ? `
+            <p class="no-team-info">团队背景信息待补充</p>
+          ` : ''}
         </div>
 
         ${websiteUrl ? `
