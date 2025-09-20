@@ -227,25 +227,22 @@
     return `${teamLevel}，在${item.tags?.[0] || 'AI'}领域有深入布局。投资方包括${item.investors?.slice(0, 3).join('、') || '知名投资机构'}等。`;
   }
 
-  // 📝 智能压缩描述文本
-  function compressDescription(description, maxLength = 120) {
-    if (description.length <= maxLength) return description;
+  // 📏 根据文本长度计算合适的字体大小
+  function calculateFontSize(textLength) {
+    // 基础字体大小：短文本用大字体，长文本用小字体
+    if (textLength <= 80) return '0.9rem';        // 短文本
+    else if (textLength <= 150) return '0.85rem'; // 中等文本
+    else if (textLength <= 250) return '0.8rem';  // 较长文本
+    else if (textLength <= 350) return '0.75rem'; // 长文本
+    else return '0.7rem';                          // 超长文本
+  }
 
-    // 移除括号内容和来源信息
-    let compressed = description
-      .replace(/\([^)]*\)/g, '') // 移除括号内容
-      .replace(/（[^）]*）/g, '') // 移除中文括号内容
-      .replace(/\s*\([\w\s]*\)\s*$/g, '') // 移除末尾来源
-      .trim();
-
-    if (compressed.length <= maxLength) return compressed;
-
-    // 截取到最后一个句号或逗号
-    const cutPoint = compressed.lastIndexOf('。', maxLength) ||
-                    compressed.lastIndexOf('，', maxLength) ||
-                    maxLength;
-
-    return compressed.substring(0, cutPoint) + '...';
+  // 📐 计算合适的行高
+  function calculateLineHeight(textLength) {
+    // 长文本使用较小的行高以容纳更多内容
+    if (textLength <= 150) return '1.4';
+    else if (textLength <= 300) return '1.3';
+    else return '1.2';
   }
 
   // 👨‍💼 生成创始人信息
@@ -306,8 +303,10 @@
       ? `<h3 class="company-name clickable" onclick="window.open('${websiteUrl}', '_blank')" title="点击访问官网">${item.companyName}</h3>`
       : `<h3 class="company-name">${item.companyName}</h3>`;
 
-    // 压缩描述
-    const compressedDescription = compressDescription(item.description || '暂无描述信息');
+    // 保持完整描述信息，并计算合适的字体样式
+    const fullDescription = item.description || '暂无描述信息';
+    const fontSize = calculateFontSize(fullDescription.length);
+    const lineHeight = calculateLineHeight(fullDescription.length);
 
     // 生成团队信息
     const teamInfo = item.teamInfo || generateTeamInfo(item);
@@ -366,7 +365,7 @@
               ${formattedAmount}
             </div>
 
-            <p class="funding-description">${compressedDescription}</p>
+            <p class="funding-description" style="font-size: ${fontSize}; line-height: ${lineHeight};">${fullDescription}</p>
 
             <div class="funding-meta">
               <div class="funding-tags">${tagsHTML}</div>

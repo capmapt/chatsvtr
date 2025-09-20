@@ -7,7 +7,7 @@
 .funding-card {
   position: relative;
   width: 100%;
-  height: 320px; /* 增加高度确保内容显示完整 */
+  height: 360px; /* 进一步增加高度以容纳完整文本信息 */
   perspective: 1000px;
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -484,11 +484,10 @@
 
   .funding-description {
     font-size: 0.85rem;
-    /* 限制行数避免溢出 */
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+    /* 移除行数限制，允许完整显示 */
     overflow: hidden;
+    word-break: break-word;
+    hyphens: auto;
   }
 
   .team-section p {
@@ -585,16 +584,14 @@
   font-style: italic;
 }
 
-/* 描述文本优化 */
+/* 描述文本优化 - 自适应字体大小显示完整信息 */
 .funding-description {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.5;
-  height: 4.5em; /* 固定3行高度 */
+  line-height: 1.3;
   margin-bottom: 1rem;
+  /* 根据文本长度自动调整字体大小 - 移除clamp让JS控制 */
+  word-break: break-word;
+  hyphens: auto;
+  /* 移除所有高度和显示限制，确保完整显示 */
 }
 
 /* 标签容器优化 */
@@ -650,7 +647,10 @@
 
   .funding-description {
     font-size: 0.9rem;
-    -webkit-line-clamp: 2; /* 移动端显示2行 */
-    height: 3em;
+    /* 移动端也允许完整显示，通过字体大小控制 */
+    word-break: break-word;
+    hyphens: auto;
+    height: auto;
+    min-height: 3em;
   }
 }
