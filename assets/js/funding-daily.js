@@ -403,7 +403,11 @@
             <p><strong>🏢 团队背景：</strong>${item.teamBackground}</p>
           ` : ''}
 
-          ${!item.founder && !item.founders && !item.workExperience && !item.education && !item.teamBackground ? `
+          ${!item.founder && !item.founders && !item.workExperience && !item.education && !item.teamBackground && item.description ? `
+            <p><strong>📋 公司信息：</strong>${item.description}</p>
+          ` : ''}
+
+          ${!item.founder && !item.founders && !item.workExperience && !item.education && !item.teamBackground && !item.description ? `
             <p class="no-team-info">团队背景信息待补充</p>
           ` : ''}
         </div>
