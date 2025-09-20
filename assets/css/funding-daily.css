@@ -130,7 +130,7 @@
   border-radius: 12px;
   padding: 1.25rem;
   margin-bottom: 1rem;
-  border: none;
+  border: none !important;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -331,6 +331,7 @@
 
   .funding-item {
     padding: 1rem;
+    border: none !important;
   }
 
   .funding-amount {
@@ -376,6 +377,7 @@
 
   .funding-item {
     padding: 0.75rem;
+    border: none !important;
   }
 }
 
@@ -393,7 +395,7 @@
 
   .funding-item {
     background: #2d3748;
-    border-color: #4a5568;
+    border: none !important;
   }
 
   .company-name {
@@ -414,7 +416,7 @@
 /* 🎨 高对比度模式 */
 @media (prefers-contrast: high) {
   .funding-item {
-    border: 2px solid #000;
+    border: none !important;
   }
 
   .funding-view-more {
