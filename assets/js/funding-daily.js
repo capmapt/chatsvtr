@@ -282,7 +282,6 @@
 
             <div class="funding-meta">
               <div class="funding-tags">${tagsHTML}</div>
-              <span class="funding-time">${timeAgo}</span>
             </div>
 
             <div class="flip-hint">点击查看团队 →</div>
@@ -330,6 +329,9 @@
         if (result.success && result.data) {
           fundingData = result.data;
           console.log(`✅ 从${result.source}获取到 ${result.count} 条融资数据`);
+
+          // 更新时间显示
+          updateFundingTimestamp(result.lastUpdate);
         } else {
           throw new Error(result.message || '数据获取失败');
         }
@@ -337,6 +339,9 @@
         console.warn('⚠️ API数据获取失败，使用备用数据:', apiError);
         // 如果API失败，fallback到模拟数据
         fundingData = mockFundingData;
+
+        // 设置默认更新时间
+        updateFundingTimestamp(null);
       }
 
       // 按时间排序并截取当前显示数量
@@ -531,6 +536,42 @@
     refreshFundingData,
     initialize: initializeFundingDaily
   };
+
+  // ⏰ 更新时间显示函数
+  function updateFundingTimestamp(lastUpdate) {
+    const timestampElement = document.getElementById('fundingUpdateTime');
+    if (!timestampElement) return;
+
+    try {
+      let formattedTime;
+      if (lastUpdate) {
+        const updateDate = new Date(lastUpdate);
+        const now = new Date();
+        const diffHours = Math.floor((now - updateDate) / (1000 * 60 * 60));
+
+        if (diffHours < 1) {
+          formattedTime = '刚刚更新';
+        } else if (diffHours < 24) {
+          formattedTime = `${diffHours}小时前更新`;
+        } else {
+          const options = {
+            month: 'numeric',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          };
+          formattedTime = updateDate.toLocaleDateString('zh-CN', options) + ' 更新';
+        }
+      } else {
+        formattedTime = '今日更新';
+      }
+
+      timestampElement.textContent = `⏰ 更新时间：${formattedTime}`;
+    } catch (error) {
+      console.warn('更新时间格式化失败:', error);
+      timestampElement.textContent = '⏰ 更新时间：今日更新';
+    }
+  }
 
   // 🔄 暴露翻转函数到全局作用域
   window.flipCard = flipCard;
