@@ -214,17 +214,58 @@
 
   // 🏢 生成基于投资信息的团队背景
   function generateTeamInfo(item) {
-    const topInvestors = ['红杉资本', 'IDG资本', 'Sequoia Capital', 'Andreessen Horowitz', 'Benchmark', 'Accel', 'Khosla Ventures'];
+    const topInvestors = ['红杉资本', 'IDG资本', 'Sequoia Capital', 'Andreessen Horowitz', 'Benchmark', 'Accel', 'Khosla Ventures', '真格基金', '经纬中国', '华创资本', 'GGV纪源资本'];
     const hasTopInvestor = item.investors?.some(investor =>
       topInvestors.some(top => investor.includes(top.replace(/\s+/g, '')))
     );
 
-    let teamLevel = '初创团队';
-    if (item.amount >= 50000000) teamLevel = '核心团队来自知名科技企业';
-    else if (item.amount >= 10000000) teamLevel = '经验丰富的团队';
-    else if (hasTopInvestor) teamLevel = '拥有顶级投资背景的团队';
+    // 根据融资金额和投资方判断团队规模和背景
+    let teamLevel = '';
+    let teamDescription = '';
 
-    return `${teamLevel}，在${item.tags?.[0] || 'AI'}领域有深入布局。投资方包括${item.investors?.slice(0, 3).join('、') || '知名投资机构'}等。`;
+    if (item.amount >= 100000000) {
+      teamLevel = '成熟企业团队';
+      teamDescription = '拥有丰富的行业经验和成功的商业化记录，团队成员多数来自知名科技公司或有成功创业经历';
+    } else if (item.amount >= 50000000) {
+      teamLevel = '经验丰富的核心团队';
+      teamDescription = '团队在相关领域深耕多年，具备强大的技术实力和市场洞察力';
+    } else if (item.amount >= 10000000) {
+      teamLevel = '专业团队';
+      teamDescription = '拥有扎实的技术基础和清晰的产品愿景，在垂直领域有独特优势';
+    } else if (hasTopInvestor) {
+      teamLevel = '潜力团队';
+      teamDescription = '虽处早期阶段，但获得了顶级投资机构的认可，展现出强大的发展潜力';
+    } else {
+      teamLevel = '初创团队';
+      teamDescription = '在创新领域积极探索，具备敏锐的市场嗅觉和执行能力';
+    }
+
+    // 基于行业标签补充专业描述
+    const primaryTag = item.tags?.[0] || 'AI';
+    let industryExpertise = '';
+    switch(primaryTag) {
+      case 'AI':
+      case '人工智能':
+        industryExpertise = '在人工智能算法研发、模型训练和应用落地方面具备深厚的技术积累';
+        break;
+      case '大模型':
+      case 'LLM':
+        industryExpertise = '专注于大语言模型技术，在NLP和生成式AI领域有重要贡献';
+        break;
+      case '自动驾驶':
+        industryExpertise = '在自动驾驶技术栈、感知算法和车路协同方面有丰富的研发经验';
+        break;
+      case '机器人':
+        industryExpertise = '结合AI技术与机械工程，在智能机器人控制和应用场景拓展上有独特见解';
+        break;
+      case '医疗AI':
+        industryExpertise = '将人工智能技术与医疗健康结合，在疾病诊断和精准医疗方面有专业背景';
+        break;
+      default:
+        industryExpertise = `在${primaryTag}领域有深入的技术研究和产业化经验`;
+    }
+
+    return `${teamLevel}，${teamDescription}。${industryExpertise}，致力于推动行业创新发展。`;
   }
 
   // 📏 根据文本长度计算合适的字体大小
@@ -285,11 +326,39 @@
     `;
   }
 
+  // 🏷️ 规范化公司名称显示
+  function normalizeCompanyName(companyName) {
+    const nameRules = {
+      'Upscaleai': 'Upscale AI',
+      'upscaleai': 'Upscale AI',
+      'UPSCALEAI': 'Upscale AI',
+      'OpenAI': 'OpenAI',
+      'DeepMind': 'DeepMind',
+      'ChatGPT': 'ChatGPT',
+      'TikTok': 'TikTok',
+      'YouTube': 'YouTube',
+      'LinkedIn': 'LinkedIn',
+      'GitHub': 'GitHub'
+    };
+
+    // 检查是否需要规范化
+    for (const [oldName, newName] of Object.entries(nameRules)) {
+      if (companyName === oldName) {
+        return newName;
+      }
+    }
+
+    return companyName;
+  }
+
   // 🏗️ 生成融资信息卡片HTML
   function createFundingItemHTML(item) {
     const formattedAmount = formatAmount(item.amount, item.currency);
     const stageLabel = stageLabels[item.stage] || item.stage;
     const timeAgo = formatTimeAgo(item.investedAt);
+
+    // 规范化公司名称
+    const normalizedCompanyName = normalizeCompanyName(item.companyName);
 
     // 过滤并显示前3个有效标签
     const validTags = item.tags?.filter(tag => tag && tag !== '0' && tag !== 'AI创投日报') || [];
@@ -300,8 +369,8 @@
 
     // 生成公司名称（带官网链接）
     const companyNameHTML = websiteUrl
-      ? `<h3 class="company-name clickable" onclick="window.open('${websiteUrl}', '_blank')" title="点击访问官网">${item.companyName}</h3>`
-      : `<h3 class="company-name">${item.companyName}</h3>`;
+      ? `<h3 class="company-name clickable" onclick="window.open('${websiteUrl}', '_blank')" title="点击访问官网">${normalizedCompanyName}</h3>`
+      : `<h3 class="company-name">${normalizedCompanyName}</h3>`;
 
     // 保持完整描述信息，并计算合适的字体样式
     const fullDescription = item.description || '暂无描述信息';
@@ -318,18 +387,13 @@
     const teamBackContent = `
       <div class="team-info-content">
         <div class="team-header">
-          <h3>👥 ${item.companyName} 团队</h3>
+          <h3>👥 ${normalizedCompanyName} 团队</h3>
         </div>
 
         <div class="team-section">
-          <h4>🏢 公司概况</h4>
-          <p><strong>融资轮次：</strong>${stageLabel} (${formattedAmount})</p>
-          <p><strong>主要投资方：</strong>${item.investors?.slice(0, 3).join('、') || '投资方信息待更新'}</p>
-          <p><strong>团队背景：</strong>${teamInfo}</p>
-        </div>
-
-        <div class="team-section">
-          <h4>👨‍💼 核心信息</h4>
+          <p><strong>💰 融资情况：</strong>${stageLabel} (${formattedAmount})</p>
+          <p><strong>🏦 主要投资方：</strong>${item.investors?.slice(0, 3).join('、') || '投资方信息待更新'}</p>
+          <p><strong>👨‍💼 团队背景：</strong>${teamInfo}</p>
           <div class="founders-list">
             ${foundersInfo}
           </div>
