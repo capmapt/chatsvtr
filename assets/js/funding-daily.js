@@ -275,7 +275,6 @@
             </div>
 
             <div class="funding-amount">
-              <span class="amount-currency">${item.currency}</span>
               ${formattedAmount}
             </div>
 
