@@ -25,7 +25,7 @@ interface Env {
 // 新的Bitable配置 - AI创投日报
 const NEW_BITABLE_CONFIG = {
   APP_TOKEN: 'DsQHbrYrLab84NspgnWcmj44nYe', // 更新的Bitable App Token
-  TABLE_ID: 'tbla6FjsU3duJ8Bg', // AI创投日报表格ID (需要确认)
+  TABLE_ID: 'tblLP6uUyPTKxfyx', // AI创投日报表格ID (从URL获取)
   BASE_URL: 'https://open.feishu.cn/open-apis'
 };
 

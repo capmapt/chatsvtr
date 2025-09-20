@@ -7,6 +7,7 @@ require('dotenv').config();
 
 const NEW_BITABLE_CONFIG = {
   APP_TOKEN: 'DsQHbrYrLab84NspgnWcmj44nYe',
+  TABLE_ID: 'tblLP6uUyPTKxfyx',
   BASE_URL: 'https://open.feishu.cn/open-apis'
 };
 
@@ -108,23 +109,52 @@ async function sampleTableData(accessToken, tableId, tableName) {
   }
 }
 
+async function testSpecificTable(accessToken) {
+  console.log(`\n🎯 重点测试指定表格...`);
+  console.log(`📋 Table ID: ${NEW_BITABLE_CONFIG.TABLE_ID}`);
+
+  try {
+    // 测试字段结构
+    await exploreTableFields(accessToken, NEW_BITABLE_CONFIG.TABLE_ID, '目标表格');
+
+    // 测试数据样本
+    await sampleTableData(accessToken, NEW_BITABLE_CONFIG.TABLE_ID, '目标表格');
+
+    console.log('✅ 指定表格测试成功！');
+    return true;
+  } catch (error) {
+    console.error('❌ 指定表格测试失败:', error);
+    return false;
+  }
+}
+
 async function main() {
   try {
     console.log('🚀 开始探索新的Feishu Bitable数据源...');
     console.log(`📦 App Token: ${NEW_BITABLE_CONFIG.APP_TOKEN}`);
+    console.log(`📋 Table ID: ${NEW_BITABLE_CONFIG.TABLE_ID}`);
 
     // 获取访问令牌
     const accessToken = await getAccessToken();
     console.log('✅ 成功获取访问令牌');
 
-    // 列出所有表格
-    const tables = await listTables(accessToken);
+    // 首先测试指定的表格
+    const specificTableSuccess = await testSpecificTable(accessToken);
 
-    // 对每个表格进行探索
-    for (const table of tables) {
-      await exploreTableFields(accessToken, table.table_id, table.name);
-      await sampleTableData(accessToken, table.table_id, table.name);
-      console.log('\n' + '='.repeat(80));
+    if (specificTableSuccess) {
+      console.log('\n🎉 目标表格访问成功，可以使用这个配置！');
+    } else {
+      console.log('\n🔍 目标表格访问失败，探索所有可用表格...');
+
+      // 列出所有表格
+      const tables = await listTables(accessToken);
+
+      // 对每个表格进行探索
+      for (const table of tables) {
+        await exploreTableFields(accessToken, table.table_id, table.name);
+        await sampleTableData(accessToken, table.table_id, table.name);
+        console.log('\n' + '='.repeat(80));
+      }
     }
 
     console.log('✅ 数据源探索完成！');
