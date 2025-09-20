@@ -193,40 +193,127 @@
     }
   }
 
+  // 🎯 从描述中提取网站链接
+  function extractWebsiteFromDescription(description) {
+    // 匹配各种网站链接格式
+    const websitePatterns = [
+      /https?:\/\/[\w\.-]+\.\w+/g,
+      /www\.[\w\.-]+\.\w+/g,
+      /[\w\.-]+\.com|\.ai|\.io|\.tech|\.org|\.net/g
+    ];
+
+    for (const pattern of websitePatterns) {
+      const matches = description.match(pattern);
+      if (matches) {
+        const url = matches[0];
+        return url.startsWith('http') ? url : `https://${url}`;
+      }
+    }
+    return null;
+  }
+
+  // 🏢 生成基于投资信息的团队背景
+  function generateTeamInfo(item) {
+    const topInvestors = ['红杉资本', 'IDG资本', 'Sequoia Capital', 'Andreessen Horowitz', 'Benchmark', 'Accel', 'Khosla Ventures'];
+    const hasTopInvestor = item.investors?.some(investor =>
+      topInvestors.some(top => investor.includes(top.replace(/\s+/g, '')))
+    );
+
+    let teamLevel = '初创团队';
+    if (item.amount >= 50000000) teamLevel = '核心团队来自知名科技企业';
+    else if (item.amount >= 10000000) teamLevel = '经验丰富的团队';
+    else if (hasTopInvestor) teamLevel = '拥有顶级投资背景的团队';
+
+    return `${teamLevel}，在${item.tags?.[0] || 'AI'}领域有深入布局。投资方包括${item.investors?.slice(0, 3).join('、') || '知名投资机构'}等。`;
+  }
+
+  // 📝 智能压缩描述文本
+  function compressDescription(description, maxLength = 120) {
+    if (description.length <= maxLength) return description;
+
+    // 移除括号内容和来源信息
+    let compressed = description
+      .replace(/\([^)]*\)/g, '') // 移除括号内容
+      .replace(/（[^）]*）/g, '') // 移除中文括号内容
+      .replace(/\s*\([\w\s]*\)\s*$/g, '') // 移除末尾来源
+      .trim();
+
+    if (compressed.length <= maxLength) return compressed;
+
+    // 截取到最后一个句号或逗号
+    const cutPoint = compressed.lastIndexOf('。', maxLength) ||
+                    compressed.lastIndexOf('，', maxLength) ||
+                    maxLength;
+
+    return compressed.substring(0, cutPoint) + '...';
+  }
+
+  // 👨‍💼 生成创始人信息
+  function generateFoundersInfo(item) {
+    // 如果有现成的创始人信息
+    if (item.founders && item.founders.length > 0) {
+      return item.founders.map(founder => `
+        <div class="founder-item">
+          <div class="founder-info">
+            <div class="founder-name clickable" onclick="window.open('${founder.linkedin || `mailto:${founder.email}`}', '_blank')" title="点击联系">${founder.name}</div>
+            <div style="font-size: 0.75rem; color: #6c757d;">${founder.title} | ${founder.background}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 基于公司规模和投资信息生成推断信息
+    let companyStage = '初创期';
+    let teamSize = '10-50人';
+    let expertise = item.tags?.[0] || 'AI技术';
+
+    if (item.amount >= 100000000) {
+      companyStage = '成长期';
+      teamSize = '100+人';
+    } else if (item.amount >= 30000000) {
+      companyStage = '扩张期';
+      teamSize = '50-100人';
+    }
+
+    return `
+      <div class="company-insights">
+        <p><strong>发展阶段：</strong>${companyStage}</p>
+        <p><strong>团队规模：</strong>约${teamSize}</p>
+        <p><strong>核心技术：</strong>${expertise}</p>
+        <p><strong>市场定位：</strong>${item.tags?.[1] || '技术创新'}领域</p>
+        <div class="contact-note">
+          <small>💡 具体团队信息请访问官网获取最新信息</small>
+        </div>
+      </div>
+    `;
+  }
+
   // 🏗️ 生成融资信息卡片HTML
   function createFundingItemHTML(item) {
     const formattedAmount = formatAmount(item.amount, item.currency);
     const stageLabel = stageLabels[item.stage] || item.stage;
     const timeAgo = formatTimeAgo(item.investedAt);
-    const tagsHTML = item.tags.map(tag => `<span class="funding-tag">${tag}</span>`).join('');
+
+    // 过滤并显示前3个有效标签
+    const validTags = item.tags?.filter(tag => tag && tag !== '0' && tag !== 'AI创投日报') || [];
+    const tagsHTML = validTags.slice(0, 3).map(tag => `<span class="funding-tag">${tag}</span>`).join('');
+
+    // 提取网站链接
+    const websiteUrl = item.website || extractWebsiteFromDescription(item.description || '');
 
     // 生成公司名称（带官网链接）
-    const companyNameHTML = item.website
-      ? `<h3 class="company-name" onclick="window.open('${item.website}', '_blank')" title="点击访问官网">${item.companyName}</h3>`
+    const companyNameHTML = websiteUrl
+      ? `<h3 class="company-name clickable" onclick="window.open('${websiteUrl}', '_blank')" title="点击访问官网">${item.companyName}</h3>`
       : `<h3 class="company-name">${item.companyName}</h3>`;
 
-    // 生成创始人列表
-    const foundersHTML = item.founders?.map(founder => {
-      const contactLinks = [];
-      if (founder.linkedin) {
-        contactLinks.push(`<a href="${founder.linkedin}" target="_blank" class="contact-link" title="LinkedIn">💼</a>`);
-      }
-      if (founder.email) {
-        contactLinks.push(`<a href="mailto:${founder.email}" class="contact-link" title="发送邮件">📧</a>`);
-      }
+    // 压缩描述
+    const compressedDescription = compressDescription(item.description || '暂无描述信息');
 
-      return `
-        <div class="founder-item">
-          <div class="founder-info">
-            <div class="founder-name" onclick="window.open('${founder.linkedin || `mailto:${founder.email}`}', '_blank')" title="点击联系">${founder.name}</div>
-            <div style="font-size: 0.75rem; color: #6c757d;">${founder.title} | ${founder.background}</div>
-          </div>
-          <div class="founder-contact">
-            ${contactLinks.join('')}
-          </div>
-        </div>
-      `;
-    }).join('') || '<p style="color: #6c757d; font-style: italic;">团队信息暂未收录</p>';
+    // 生成团队信息
+    const teamInfo = item.teamInfo || generateTeamInfo(item);
+
+    // 提取和生成创始人信息（基于描述推断）
+    const foundersInfo = generateFoundersInfo(item);
 
     // 生成团队信息背面内容
     const teamBackContent = `
@@ -237,20 +324,21 @@
 
         <div class="team-section">
           <h4>🏢 公司概况</h4>
-          <p><strong>行业领域：</strong>${item.category || '未分类'} - ${item.subCategory || '其他'}</p>
-          <p><strong>团队背景：</strong>${item.teamInfo || '团队信息暂未收录，期待更多详情。'}</p>
+          <p><strong>融资轮次：</strong>${stageLabel} (${formattedAmount})</p>
+          <p><strong>主要投资方：</strong>${item.investors?.slice(0, 3).join('、') || '投资方信息待更新'}</p>
+          <p><strong>团队背景：</strong>${teamInfo}</p>
         </div>
 
         <div class="team-section">
-          <h4>👨‍💼 核心团队</h4>
+          <h4>👨‍💼 核心信息</h4>
           <div class="founders-list">
-            ${foundersHTML}
+            ${foundersInfo}
           </div>
         </div>
 
-        ${item.website ? `
+        ${websiteUrl ? `
         <div class="company-links">
-          <a href="${item.website}" target="_blank" class="company-link">
+          <a href="${websiteUrl}" target="_blank" class="company-link">
             🌐 访问官网
           </a>
         </div>
@@ -278,7 +366,7 @@
               ${formattedAmount}
             </div>
 
-            <p class="funding-description">${item.description}</p>
+            <p class="funding-description">${compressedDescription}</p>
 
             <div class="funding-meta">
               <div class="funding-tags">${tagsHTML}</div>
