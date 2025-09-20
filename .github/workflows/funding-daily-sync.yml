@@ -2,8 +2,8 @@ name: 💰 AI创投日报每日同步
 
 on:
   schedule:
-    # 每天北京时间上午9:00 (UTC 01:00) 执行
-    - cron: '0 1 * * *'
+    # 每天北京时间上午6:00 (UTC 22:00前一天) 执行
+    - cron: '0 22 * * *'
   # 允许手动触发
   workflow_dispatch:
     inputs:
@@ -142,7 +142,7 @@ jobs:
 
           echo "" >> funding_sync_report.md
           echo "### 下次同步" >> funding_sync_report.md
-          echo "- 定时任务: 每天北京时间上午9:00" >> funding_sync_report.md
+          echo "- 定时任务: 每天北京时间上午6:00" >> funding_sync_report.md
           echo "- 手动触发: 支持手动执行" >> funding_sync_report.md
 
           cat funding_sync_report.md
