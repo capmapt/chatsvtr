@@ -325,7 +325,7 @@
       let fundingData = [];
 
       try {
-        const response = await fetch('/api/funding-daily-sync');
+        const response = await fetch('/api/wiki-funding-sync');
         const result = await response.json();
 
         if (result.success && result.data) {

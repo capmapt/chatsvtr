@@ -1,0 +1,155 @@
+name: 💰 AI创投日报每日同步
+
+on:
+  schedule:
+    # 每天北京时间上午9:00 (UTC 01:00) 执行
+    - cron: '0 1 * * *'
+  # 允许手动触发
+  workflow_dispatch:
+    inputs:
+      sync_type:
+        description: '同步类型'
+        required: true
+        default: 'auto'
+        type: choice
+        options:
+        - auto
+        - force_refresh
+        - test_mode
+
+env:
+  # 飞书API配置
+  FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
+  FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  sync-funding-daily:
+    name: 🔄 同步AI创投日报数据
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ github.token }}
+          fetch-depth: 0
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📦 Install Dependencies
+        run: |
+          npm ci
+          npm install --save dotenv node-fetch
+
+      - name: 🔐 Setup Environment
+        run: |
+          echo "FEISHU_APP_ID=${{ secrets.FEISHU_APP_ID }}" > .env
+          echo "FEISHU_APP_SECRET=${{ secrets.FEISHU_APP_SECRET }}" >> .env
+
+      - name: 💰 Sync Funding Daily Data
+        id: sync_funding
+        run: |
+          echo "🚀 开始同步AI创投日报数据..."
+
+          # 创建同步脚本
+          cat > sync-funding-daily.js << 'EOF'
+          const fetch = require('node-fetch');
+          require('dotenv').config();
+
+          const FUNDING_API_URL = 'https://svtr.ai/api/wiki-funding-sync?refresh=true';
+
+          async function syncFundingData() {
+            try {
+              console.log('🔍 正在从API获取最新融资数据...');
+
+              const response = await fetch(FUNDING_API_URL);
+              const result = await response.json();
+
+              if (result.success && result.data) {
+                console.log(`✅ 成功获取 ${result.count} 条融资数据`);
+                console.log(`📊 数据源: ${result.source}`);
+                console.log(`⏰ 更新时间: ${result.lastUpdate}`);
+
+                // 输出统计信息
+                console.log(`funding_count=${result.count}` >> process.env.GITHUB_OUTPUT || '');
+                console.log(`data_source=${result.source}` >> process.env.GITHUB_OUTPUT || '');
+                console.log(`last_update=${result.lastUpdate}` >> process.env.GITHUB_OUTPUT || '');
+
+                return result.data;
+              } else {
+                throw new Error(`同步失败: ${result.message}`);
+              }
+            } catch (error) {
+              console.error('❌ 同步失败:', error);
+              throw error;
+            }
+          }
+
+          // 执行同步
+          syncFundingData()
+            .then(data => {
+              console.log('✅ AI创投日报数据同步完成');
+              process.exit(0);
+            })
+            .catch(error => {
+              console.error('❌ 同步失败:', error);
+              process.exit(1);
+            });
+          EOF
+
+          # 执行同步脚本
+          node sync-funding-daily.js
+
+      - name: 🎯 Trigger Cloudflare Cache Update
+        if: success()
+        run: |
+          echo "🔄 触发Cloudflare缓存更新..."
+
+          # 通过访问API强制刷新缓存
+          curl -s "https://svtr.ai/api/wiki-funding-sync?refresh=true" \
+            -H "User-Agent: GitHub-Actions-Funding-Sync" \
+            || echo "⚠️ 缓存刷新请求失败，但同步继续"
+
+      - name: 📈 Generate Sync Report
+        if: always()
+        run: |
+          echo "## 💰 AI创投日报同步报告" > funding_sync_report.md
+          echo "**时间**: $(date '+%Y-%m-%d %H:%M:%S UTC')" >> funding_sync_report.md
+          echo "**同步类型**: ${{ github.event.inputs.sync_type || 'auto' }}" >> funding_sync_report.md
+          echo "**状态**: ${{ job.status }}" >> funding_sync_report.md
+          echo "" >> funding_sync_report.md
+
+          if [ -n "${{ steps.sync_funding.outputs.funding_count }}" ]; then
+            echo "### 数据统计" >> funding_sync_report.md
+            echo "- 融资记录数量: ${{ steps.sync_funding.outputs.funding_count }}" >> funding_sync_report.md
+            echo "- 数据源: ${{ steps.sync_funding.outputs.data_source }}" >> funding_sync_report.md
+            echo "- 最后更新: ${{ steps.sync_funding.outputs.last_update }}" >> funding_sync_report.md
+          fi
+
+          echo "" >> funding_sync_report.md
+          echo "### API端点" >> funding_sync_report.md
+          echo "- 生产环境: https://svtr.ai/api/wiki-funding-sync" >> funding_sync_report.md
+          echo "- 数据源: 飞书新Bitable AI创投日报" >> funding_sync_report.md
+          echo "- 缓存策略: 24小时自动过期" >> funding_sync_report.md
+
+          echo "" >> funding_sync_report.md
+          echo "### 下次同步" >> funding_sync_report.md
+          echo "- 定时任务: 每天北京时间上午9:00" >> funding_sync_report.md
+          echo "- 手动触发: 支持手动执行" >> funding_sync_report.md
+
+          cat funding_sync_report.md
+
+      - name: 🚀 Optional Deploy Notification
+        if: success()
+        run: |
+          echo "✅ AI创投日报数据同步成功完成"
+          echo "🌐 数据已更新到生产环境: https://svtr.ai"
+          echo "📊 用户将在页面刷新后看到最新的融资信息"
