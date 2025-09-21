@@ -143,6 +143,13 @@
   overflow: hidden;
 }
 
+/* 🔄 3D翻转卡片特殊处理 - 移除冲突样式 */
+.funding-item.funding-card {
+  overflow: visible; /* 允许3D变换显示 */
+  background: transparent; /* 背景由内部card-front/card-back控制 */
+  padding: 0; /* 内边距由内部卡片控制 */
+}
+
 .funding-item:last-child {
   margin-bottom: 0;
 }
@@ -150,6 +157,11 @@
 .funding-item:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* 3D翻转卡片不应用hover变换，避免与flip动画冲突 */
+.funding-item.funding-card:hover {
+  transform: translateY(-2px); /* 保持轻微悬浮效果，但不干扰flip */
 }
 
 .funding-item::before {
@@ -166,6 +178,11 @@
 
 .funding-item:hover::before {
   opacity: 1;
+}
+
+/* 3D翻转卡片不显示左侧边框装饰 */
+.funding-item.funding-card::before {
+  display: none;
 }
 
 /* 🏢 公司信息 */
