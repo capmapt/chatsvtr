@@ -13,6 +13,7 @@ interface WikiFundingRecord {
   tags: string[];
   investedAt: string;
   investors: string[];
+  teamBackground?: string;
   sourceUrl?: string;
 }
 
@@ -231,6 +232,7 @@ async function fetchNewBitableData(accessToken: string): Promise<WikiFundingReco
           tags: [...new Set(tags)], // 去重
           investedAt: investedAt,
           investors: investors,
+          teamBackground: 团队背景,
           sourceUrl: `https://svtrglobal.feishu.cn/base/ZNRsbFjNZaEEaMs4bWDcwDXZnXg?table=${NEW_BITABLE_CONFIG.TABLE_ID}&view=vew`
         };
 
