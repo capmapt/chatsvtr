@@ -2,14 +2,51 @@
   "meta": {
     "title": "交易精选",
     "description": "精选优质创业公司与投资机会分析",
-    "totalCompanies": 19,
-    "lastUpdated": "2025-09-20T18:35:04.874Z",
+    "totalCompanies": 20,
+    "lastUpdated": "2025-09-21T18:25:43.563Z",
     "source": "SVTR飞书知识库",
     "dataVersion": "2.0"
   },
   "companies": [
     {
       "id": 1,
+      "name": "Physical Intelligence",
+      "sector": "📱 AI应用",
+      "stage": "独角兽 · 初创期",
+      "description": "Physical Intelligence (Pi)，2024年成立于美国，为机器人开发AI软件，构建机器人的大脑。正在与投资者谈判，希望以 约 50 亿美元估值 进行新一轮融资。",
+      "fundingAmount": "7000万美元融资 · 估值20亿美元",
+      "lastFundingDate": "2025年",
+      "valuation": "20亿美元",
+      "investors": [
+        "Jeff Bezos",
+        "Thrive Capital",
+        "Khosla Ventures",
+        "Lux Capital",
+        "OpenAI",
+        "Sequoia Capital"
+      ],
+      "founder": "Karol Hausman",
+      "website": "https://www.xn--1xa.com/",
+      "location": "美国",
+      "foundedYear": "2024",
+      "employees": "",
+      "arr": "",
+      "tags": [
+        "投资人",
+        "AI100",
+        "Unicorn",
+        "AI Native"
+      ],
+      "analysisPoints": [
+        "🦄 独角兽企业，市场估值20亿美元",
+        "👨‍💻 创始人Karol Hausman来自顶级科技公司，技术实力雄厚",
+        "🎓 团队拥有顶级院校背景，学术实力突出"
+      ],
+      "businessModel": "为机器人开发AI软件，构建机器人的大脑",
+      "deepResearch": ""
+    },
+    {
+      "id": 2,
       "name": "Surge AI",
       "sector": "💾 数据服务",
       "stage": "超级独角兽 · 成长期",
@@ -37,7 +74,7 @@
       "deepResearch": ""
     },
     {
-      "id": 2,
+      "id": 3,
       "name": "Anysphere（Cursor）",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 成长期",
@@ -70,7 +107,7 @@
       "deepResearch": ""
     },
     {
-      "id": 3,
+      "id": 4,
       "name": "Cerebras Systems",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -104,7 +141,7 @@
       "deepResearch": ""
     },
     {
-      "id": 4,
+      "id": 5,
       "name": "Crusoe",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -138,7 +175,7 @@
       "deepResearch": ""
     },
     {
-      "id": 5,
+      "id": 6,
       "name": "Lambda",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -173,7 +210,7 @@
       "deepResearch": ""
     },
     {
-      "id": 6,
+      "id": 7,
       "name": "Runway",
       "sector": "🎯 垂直模型",
       "stage": "· 成熟期",
@@ -205,7 +242,7 @@
       "deepResearch": ""
     },
     {
-      "id": 7,
+      "id": 8,
       "name": "Vercel",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 成熟期",
@@ -239,7 +276,7 @@
       "deepResearch": ""
     },
     {
-      "id": 8,
+      "id": 9,
       "name": "Rivos",
       "sector": "⚙️ AI基础设施",
       "stage": "· 成长期",
@@ -272,7 +309,7 @@
       "deepResearch": ""
     },
     {
-      "id": 9,
+      "id": 10,
       "name": "Abridge",
       "sector": "🧬 生命科学",
       "stage": "独角兽 · 成熟期",
@@ -308,7 +345,7 @@
       "deepResearch": ""
     },
     {
-      "id": 10,
+      "id": 11,
       "name": "ElevenLabs",
       "sector": "🎯 垂直模型",
       "stage": "独角兽 · 成长期",
@@ -342,7 +379,7 @@
       "deepResearch": ""
     },
     {
-      "id": 11,
+      "id": 12,
       "name": "Lovable",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 初创期",
@@ -377,7 +414,7 @@
       "deepResearch": ""
     },
     {
-      "id": 12,
+      "id": 13,
       "name": "Vast Data",
       "sector": "💾 数据服务",
       "stage": "独角兽 · 成熟期",
@@ -408,7 +445,7 @@
       "deepResearch": ""
     },
     {
-      "id": 13,
+      "id": 14,
       "name": "Mercor",
       "sector": "🏢 企业服务",
       "stage": "独角兽 · 初创期",
@@ -445,7 +482,7 @@
       "deepResearch": "Mercor"
     },
     {
-      "id": 14,
+      "id": 15,
       "name": "n8n",
       "sector": "👨‍💻 开发者工具",
       "stage": "准独角兽 · 成熟期",
@@ -476,7 +513,7 @@
       "deepResearch": ""
     },
     {
-      "id": 15,
+      "id": 16,
       "name": "Fireworks AI",
       "sector": "🤖 AI模型",
       "stage": "准独角兽 · 成长期",
@@ -510,7 +547,7 @@
       "deepResearch": ""
     },
     {
-      "id": 16,
+      "id": 17,
       "name": "LangChain",
       "sector": "🤖 AI模型",
       "stage": "· 初创期",
@@ -538,7 +575,7 @@
       "deepResearch": ""
     },
     {
-      "id": 17,
+      "id": 18,
       "name": "Substack",
       "sector": "🏢 企业服务",
       "stage": "· 成熟期",
@@ -562,7 +599,7 @@
       "deepResearch": ""
     },
     {
-      "id": 22,
+      "id": 23,
       "name": "Canva",
       "sector": "🎯 垂直模型",
       "stage": "超级独角兽 · 初创期",
@@ -587,7 +624,7 @@
       "deepResearch": ""
     },
     {
-      "id": 23,
+      "id": 24,
       "name": "Polymarket",
       "sector": "💰 金融科技",
       "stage": "独角兽 · 成长期",
