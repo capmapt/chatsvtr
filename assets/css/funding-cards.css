@@ -7,7 +7,7 @@
 .funding-card {
   position: relative;
   width: 100%;
-  height: 360px; /* 进一步增加高度以容纳完整文本信息 */
+  height: 240px; /* 优化卡片高度以提供更紧凑的布局 */
   perspective: 1000px;
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -139,6 +139,7 @@
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+  flex: 1;
 }
 
 .funding-tag {
@@ -157,11 +158,8 @@
   font-weight: 500;
 }
 
-/* 翻转提示 */
+/* 翻转提示 - 修改为在标签栏右侧显示 */
 .flip-hint {
-  position: absolute;
-  bottom: 0.5rem;
-  right: 0.5rem;
   background: rgba(250, 140, 50, 0.1);
   color: #fa8c32;
   padding: 0.25rem 0.5rem;
@@ -169,6 +167,8 @@
   font-size: 0.7rem;
   opacity: 0.8;
   pointer-events: none;
+  white-space: nowrap;
+  margin-left: auto;
 }
 
 /* 背面：团队信息内容 */
@@ -294,6 +294,24 @@
   transform: translateY(-1px);
 }
 
+/* 创始人链接样式 */
+.founder-link {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px dotted #3498db;
+  padding: 1px 2px;
+  transition: all 0.3s ease;
+  border-radius: 3px;
+}
+
+.founder-link:hover {
+  background: rgba(52, 152, 219, 0.1);
+  color: #2980b9;
+  border-bottom: 1px solid #2980b9;
+  text-decoration: none;
+}
+
 /* 返回按钮 */
 .flip-back-btn {
   margin-top: auto;
@@ -321,7 +339,7 @@
 /* 响应式设计 */
 @media (max-width: 768px) {
   .funding-card {
-    height: 300px; /* 增加移动端高度 */
+    height: 200px; /* 优化移动端高度 */
     margin-bottom: 1.5rem;
     /* 优化触摸反馈 */
     -webkit-tap-highlight-color: rgba(250, 140, 50, 0.2);
@@ -407,12 +425,14 @@
     border-radius: 8px;
     font-size: 0.8rem;
     font-weight: 600;
+    margin-left: auto;
+    white-space: nowrap;
   }
 }
 
 @media (max-width: 480px) {
   .funding-card {
-    height: 280px; /* 小屏幕稍微增加高度 */
+    height: 190px; /* 优化小屏幕高度 */
     margin-bottom: 1rem;
   }
 
@@ -454,6 +474,8 @@
   .flip-hint {
     font-size: 0.75rem;
     padding: 0.4rem;
+    margin-left: auto;
+    white-space: nowrap;
   }
 
   .team-header h3 {
@@ -474,7 +496,7 @@
 /* 超小屏幕（如iPhone SE）优化 */
 @media (max-width: 360px) {
   .funding-card {
-    height: 260px;
+    height: 180px;
   }
 
   .card-front,
@@ -638,7 +660,7 @@
 /* 响应式优化 */
 @media (max-width: 768px) {
   .funding-card {
-    height: 340px; /* 移动端稍微增加高度 */
+    height: 220px; /* 优化移动端高度 */
   }
 
   .company-insights p {
