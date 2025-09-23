@@ -1086,8 +1086,10 @@ export async function onRequestGet(context: any): Promise<Response> {
     }), {
       status: 200,
       headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
+        'Content-Type': 'application/json; charset=utf-8',
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Content-Encoding': 'identity'
       }
     });
 
@@ -1101,8 +1103,10 @@ export async function onRequestGet(context: any): Promise<Response> {
     }), {
       status: 500,
       headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
+        'Content-Type': 'application/json; charset=utf-8',
+        'Access-Control-Allow-Origin': '*',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Content-Encoding': 'identity'
       }
     });
   }

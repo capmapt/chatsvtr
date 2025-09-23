@@ -1,4 +1,5 @@
-// Last sync: 2025-09-22T23:29:19.763Z\n/**
+// Last sync: 2025-09-22T23:29:19.763Z
+/**
  * 创投日报功能模块
  * 负责加载、显示和管理融资信息
  */
@@ -505,17 +506,55 @@
       let fundingData = [];
 
       try {
-        const response = await fetch('/api/wiki-funding-sync');
-        const result = await response.json();
+        const response = await fetch('/api/wiki-funding-sync', {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Accept-Encoding': 'identity' // 禁用压缩
+          }
+        });
 
-        if (result.success && result.data) {
+        // 检查响应是否正常
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        console.log('🔍 响应Headers:', Object.fromEntries(response.headers.entries()));
+
+        // 直接使用response.json()，让浏览器自动处理解压缩
+        let result;
+        try {
+          result = await response.json();
+          console.log('✅ JSON解析成功');
+        } catch (parseError) {
+          console.error('❌ JSON解析失败:', parseError);
+
+          // 如果JSON解析失败，尝试获取原始文本来调试
+          try {
+            const responseText = await response.text();
+            console.log('📄 响应长度:', responseText.length, 'bytes');
+            console.log('📄 响应内容前200字符:', responseText.substring(0, 200));
+
+            // 检查是否是压缩数据
+            if (responseText.charCodeAt(0) === 0x1f && responseText.charCodeAt(1) === 0x8b) {
+              console.log('⚠️ 检测到Gzip压缩数据，浏览器应该自动解压缩');
+            }
+          } catch (textError) {
+            console.error('❌ 无法读取响应文本:', textError);
+          }
+
+          throw new Error('服务器返回数据格式错误');
+        }
+
+        if (result && result.success && result.data) {
           fundingData = result.data;
           console.log(`✅ 从${result.source}获取到 ${result.count} 条融资数据`);
 
           // 更新时间显示
           updateFundingTimestamp(result.lastUpdate);
         } else {
-          throw new Error(result.message || '数据获取失败');
+          console.warn('⚠️ API返回格式不正确:', result);
+          throw new Error(result?.message || '数据获取失败');
         }
       } catch (apiError) {
         console.warn('⚠️ API数据获取失败，使用备用数据:', apiError);
