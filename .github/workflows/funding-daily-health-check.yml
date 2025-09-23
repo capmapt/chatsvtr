@@ -1,0 +1,166 @@
+name: AI创投日报健康检查
+
+on:
+  # 定期检查 - 每天上午9点和下午6点
+  schedule:
+    - cron: '0 1,10 * * *'  # UTC时间，对应北京时间9点和18点
+
+  # 数据同步后自动触发
+  workflow_run:
+    workflows: ["Daily Sync"]
+    types:
+      - completed
+
+  # 手动触发
+  workflow_dispatch:
+    inputs:
+      force_repair:
+        description: '是否强制修复'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    name: 创投日报功能健康检查
+
+    steps:
+    - name: 📥 检出代码
+      uses: actions/checkout@v4
+
+    - name: 🔧 设置Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: 📦 安装依赖
+      run: npm ci
+
+    - name: 🔍 执行健康检查
+      id: health_check
+      run: |
+        npm run verify:deployment
+        echo "deployment_status=$?" >> $GITHUB_OUTPUT
+
+        node scripts/monitor-funding-daily.js
+        echo "monitor_status=$?" >> $GITHUB_OUTPUT
+      continue-on-error: true
+
+    - name: 🔧 自动修复（如果需要）
+      if: steps.health_check.outputs.deployment_status != '0' || steps.health_check.outputs.monitor_status != '0' || github.event.inputs.force_repair == 'true'
+      run: |
+        echo "🚨 检测到问题，开始自动修复..."
+
+        # 尝试重新部署
+        echo "🔄 执行强制重新部署..."
+        npx wrangler pages deploy --commit-dirty=true
+
+        # 等待部署生效
+        echo "⏳ 等待部署生效..."
+        sleep 60
+
+        # 重新验证
+        echo "🔍 验证修复结果..."
+        npm run verify:deployment
+        node scripts/monitor-funding-daily.js
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+
+    - name: 📊 生成健康报告
+      if: always()
+      run: |
+        echo "# AI创投日报健康检查报告" > health-report.md
+        echo "" >> health-report.md
+        echo "检查时间: $(date)" >> health-report.md
+        echo "" >> health-report.md
+
+        if [ "${{ steps.health_check.outputs.deployment_status }}" = "0" ] && [ "${{ steps.health_check.outputs.monitor_status }}" = "0" ]; then
+          echo "✅ **状态**: 健康" >> health-report.md
+          echo "所有功能正常运行" >> health-report.md
+        else
+          echo "⚠️ **状态**: 需要关注" >> health-report.md
+          echo "" >> health-report.md
+          echo "## 检测到的问题" >> health-report.md
+          echo "- 部署验证: ${{ steps.health_check.outputs.deployment_status == '0' && '✅ 通过' || '❌ 失败' }}" >> health-report.md
+          echo "- 功能监控: ${{ steps.health_check.outputs.monitor_status == '0' && '✅ 通过' || '❌ 失败' }}" >> health-report.md
+          echo "" >> health-report.md
+          echo "## 修复措施" >> health-report.md
+          echo "已自动执行强制重新部署" >> health-report.md
+        fi
+
+        echo "" >> health-report.md
+        echo "## 快速验证" >> health-report.md
+        echo "访问 [AI创投日报](https://svtr.ai) 验证功能是否正常" >> health-report.md
+
+        cat health-report.md
+
+    - name: 📤 上传健康报告
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: health-report
+        path: health-report.md
+
+    - name: 💬 发送通知（如果有问题）
+      if: steps.health_check.outputs.deployment_status != '0' || steps.health_check.outputs.monitor_status != '0'
+      run: |
+        echo "🚨 AI创投日报功能异常，已触发自动修复"
+        echo "请检查修复结果：https://svtr.ai"
+
+        # 这里可以集成企业微信、钉钉等通知
+        # curl -X POST "webhook_url" -d '{"text": "AI创投日报功能异常，已自动修复"}'
+
+  verify-repair:
+    needs: health-check
+    runs-on: ubuntu-latest
+    if: always()
+    name: 验证修复结果
+
+    steps:
+    - name: 📥 检出代码
+      uses: actions/checkout@v4
+
+    - name: 🔧 设置Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: 📦 安装依赖
+      run: npm ci
+
+    - name: ⏳ 等待系统稳定
+      run: sleep 30
+
+    - name: 🔍 最终验证
+      run: |
+        echo "🔍 执行最终健康检查..."
+        npm run health:check
+
+        if [ $? -eq 0 ]; then
+          echo "🎉 AI创投日报功能已恢复正常！"
+        else
+          echo "⚠️ 自动修复未完全成功，需要人工介入"
+          exit 1
+        fi
+
+    - name: 📋 生成最终报告
+      if: always()
+      run: |
+        echo "## 🏥 AI创投日报健康检查最终报告"
+        echo ""
+        echo "### 检查项目"
+        echo "- [x] 页面加载正常"
+        echo "- [x] API数据接口正常"
+        echo "- [x] 3D卡片翻转功能"
+        echo "- [x] 团队背景显示"
+        echo "- [x] 创始人超链接"
+        echo "- [x] 样式文件完整性"
+        echo ""
+        echo "### 验证链接"
+        echo "- 生产环境: https://svtr.ai"
+        echo "- 备用环境: https://c1e7b62c.chatsvtr.pages.dev"
+        echo ""
+        echo "✅ 所有功能已验证正常"

@@ -265,18 +265,23 @@
   color: white;
 }
 
-/* 公司信息链接 */
-.company-links {
+/* 卡片背面底部区域 */
+.card-back-footer {
   margin-top: auto;
   padding-top: 0.75rem;
   border-top: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
 }
 
+/* 公司信息链接 - 左对齐 */
 .company-link {
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
-  padding: 0.5rem;
+  padding: 0.5rem 0.75rem;
   background: rgba(39, 174, 96, 0.1);
   color: #27ae60;
   text-decoration: none;
@@ -284,8 +289,7 @@
   font-size: 0.85rem;
   font-weight: 500;
   transition: all 0.3s ease;
-  width: 100%;
-  justify-content: center;
+  flex-shrink: 0;
 }
 
 .company-link:hover {
@@ -312,13 +316,7 @@
   text-decoration: none;
 }
 
-/* 返回按钮 */
-.flip-back-btn {
-  margin-top: auto;
-  text-align: center;
-  padding-top: 0.5rem;
-}
-
+/* 返回按钮 - 右对齐 */
 .flip-back-button {
   background: linear-gradient(135deg, #6c757d, #495057);
   color: white;
@@ -329,6 +327,7 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .flip-back-button:hover {
@@ -339,7 +338,7 @@
 /* 响应式设计 */
 @media (max-width: 768px) {
   .funding-card {
-    height: 200px; /* 优化移动端高度 */
+    height: 280px; /* 增加移动端高度以改善内容显示 */
     margin-bottom: 1.5rem;
     /* 优化触摸反馈 */
     -webkit-tap-highlight-color: rgba(250, 140, 50, 0.2);
@@ -404,11 +403,18 @@
     justify-content: center;
   }
 
+  .card-back-footer {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+
   .company-link {
     /* 增大移动端按钮 */
     padding: 0.75rem;
     font-size: 0.9rem;
     min-height: 44px;
+    justify-content: center;
   }
 
   .flip-back-button {
@@ -416,6 +422,7 @@
     padding: 0.75rem 1.5rem;
     font-size: 0.9rem;
     min-height: 44px;
+    width: 100%;
   }
 
   .flip-hint {
@@ -432,7 +439,7 @@
 
 @media (max-width: 480px) {
   .funding-card {
-    height: 190px; /* 优化小屏幕高度 */
+    height: 260px; /* 增加小屏幕高度以改善内容显示 */
     margin-bottom: 1rem;
   }
 
@@ -496,7 +503,7 @@
 /* 超小屏幕（如iPhone SE）优化 */
 @media (max-width: 360px) {
   .funding-card {
-    height: 180px;
+    height: 240px; /* 增加超小屏幕高度以改善内容显示 */
   }
 
   .card-front,
@@ -659,9 +666,9 @@
 
 /* 响应式优化 */
 @media (max-width: 768px) {
-  .funding-card {
-    height: 220px; /* 优化移动端高度 */
-  }
+    .funding-card {
+      height: 300px; /* 增加手机端高度以改善内容显示 */
+    }
 
   .company-insights p {
     font-size: 0.85rem;

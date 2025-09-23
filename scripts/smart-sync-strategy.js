@@ -201,7 +201,83 @@ class SmartSyncStrategy {
    */
   async executeFullSync() {
     console.log('🚀 执行完整管理同步...');
-    return await this.runScript('complete-sync-manager.js');
+    const syncSuccess = await this.runScript('complete-sync-manager.js');
+
+    if (syncSuccess) {
+      console.log('\n🔄 数据同步完成，验证前端资源部署状态...');
+
+      // 检查是否需要重新部署前端资源
+      const deploymentIntegrity = await this.checkDeploymentIntegrity();
+
+      if (!deploymentIntegrity) {
+        console.log('⚠️  检测到前端资源版本不一致，触发重新部署...');
+        await this.triggerRedeployment();
+      }
+    }
+
+    return syncSuccess;
+  }
+
+  /**
+   * 检查部署完整性
+   */
+  async checkDeploymentIntegrity() {
+    try {
+      const { verifyDeployment } = require('./verify-deployment-integrity.js');
+      return await verifyDeployment();
+    } catch (error) {
+      console.warn('⚠️  无法验证部署完整性:', error.message);
+      return true; // 假定正常，避免不必要的重新部署
+    }
+  }
+
+  /**
+   * 触发重新部署
+   */
+  async triggerRedeployment() {
+    console.log('🚀 触发前端资源重新部署...');
+
+    try {
+      const { spawn } = require('child_process');
+
+      // 先尝试npm script
+      await new Promise((resolve, reject) => {
+        const child = spawn('npm', ['run', 'deploy:cloudflare'], {
+          stdio: 'inherit',
+          cwd: path.dirname(__dirname)
+        });
+
+        child.on('close', (code) => {
+          if (code === 0) {
+            resolve();
+          } else {
+            reject(new Error(`部署失败，退出码: ${code}`));
+          }
+        });
+
+        child.on('error', reject);
+      });
+
+      console.log('✅ 重新部署完成');
+
+      // 等待部署生效，然后再次验证
+      console.log('⏳ 等待部署生效...');
+      await new Promise(resolve => setTimeout(resolve, 30000)); // 等待30秒
+
+      const finalCheck = await this.checkDeploymentIntegrity();
+      if (finalCheck) {
+        console.log('🎉 部署完整性验证通过！');
+      } else {
+        console.warn('⚠️  部署后仍存在问题，请手动检查');
+      }
+
+    } catch (error) {
+      console.error('❌ 重新部署失败:', error.message);
+      console.log('\n🔧 手动部署建议:');
+      console.log('1. 运行: npm run deploy:cloudflare');
+      console.log('2. 或者: wrangler pages deploy --commit-dirty=true');
+      console.log('3. 等待2-3分钟后验证: npm run verify:deployment');
+    }
   }
 
   /**

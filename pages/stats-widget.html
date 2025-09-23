@@ -15,6 +15,8 @@ html,body{
   height:100vh;
   width:100%;
   background:transparent;
+  margin:0;
+  padding:0;
 }
 body{display:flex;align-items:center;justify-content:center;}
 
@@ -203,44 +205,173 @@ body{display:flex;align-items:center;justify-content:center;}
   100% { transform: translateX(100%); }
 }
 
-/* 🎯 优化移动端响应式 - 渐进式布局 */
+/* 🎯 手机端专门优化 - 完全居中无空白 */
 @media (max-width: 768px) {
-  body{padding:2px}
-  .stats-container{gap:4px;padding:2px;grid-template-columns:1fr} /* 垂直布局 */
-  .stat-card{padding:8px 6px;border-radius:8px;font-size:0.85rem;display:flex;align-items:center;text-align:left}
-  .stat-card .content{flex:1}
-  .stat-icon{font-size:1.5rem;margin-bottom:0;margin-right:12px;flex-shrink:0}
-  .stat-number{font-size:1rem;margin-bottom:2px;font-weight:600;line-height:1}
-  .stat-label{font-size:0.7rem;margin-bottom:4px;line-height:1.2}
+  html,body{height:auto;min-height:auto;margin:0;padding:0;}
+  body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:auto;
+    padding:0;
+  }
+  .stats-container{
+    gap:4px;
+    padding:0;
+    margin:0;
+    grid-template-columns:repeat(3, 1fr); /* 保持三列横排 */
+    max-width:100%;
+    width:100%;
+    height:auto;
+    display:grid;
+    align-items:center;
+    justify-content:center;
+  }
+  .stat-card{
+    padding:15px 8px;
+    border-radius:10px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    min-height:110px; /* 足够的高度 */
+    font-size:1rem;
+  }
+  .stat-icon{
+    font-size:2.2rem; /* 更大的图标 */
+    margin-bottom:8px;
+    margin-right:0;
+  }
+  .stat-number{
+    font-size:1.6rem; /* 更大的数字 */
+    margin-bottom:5px;
+    font-weight:700;
+    line-height:1.1;
+  }
+  .stat-label{
+    font-size:0.85rem; /* 更大的标签 */
+    margin-bottom:0;
+    line-height:1.2;
+    font-weight:500;
+    word-break:keep-all;
+    white-space:nowrap;
+  }
   .progress-bar{height:3px;margin-bottom:4px}
-  .growth-indicator{font-size:0.65rem}
-  .live-indicator{font-size:0.55rem;top:6px;right:6px}
+  .growth-indicator{font-size:0.7rem}
+  .live-indicator{font-size:0.6rem;top:6px;right:6px}
   .live-dot{width:4px;height:4px}
 }
 
 @media (max-width: 480px) {
-  body{padding:1px}
-  .stats-container{gap:3px}
-  .stat-card{padding:6px 4px;border-radius:6px}
-  .stat-icon{font-size:1.3rem;margin-right:10px}
-  .stat-number{font-size:0.9rem;margin-bottom:1px}
-  .stat-label{font-size:0.65rem;margin-bottom:3px;line-height:1.1}
-  .progress-bar{height:2px;margin-bottom:3px}
-  .growth-indicator{font-size:0.6rem}
-  .live-indicator{font-size:0.5rem;top:4px;right:4px}
+  html,body{height:auto;min-height:auto;margin:0;padding:0;}
+  body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:auto;
+    padding:0;
+  }
+  .stats-container{
+    gap:3px;
+    padding:0;
+    margin:0;
+    grid-template-columns:repeat(3, 1fr); /* 保持三列横排 */
+    max-width:100%;
+    width:100%;
+    display:grid;
+    align-items:center;
+    justify-content:center;
+  }
+  .stat-card{
+    padding:12px 6px;
+    border-radius:8px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    min-height:95px; /* 足够的高度 */
+    font-size:0.85rem;
+  }
+  .stat-icon{
+    font-size:1.8rem; /* 更大的图标 */
+    margin-bottom:6px;
+    margin-right:0;
+  }
+  .stat-number{
+    font-size:1.3rem; /* 更大的数字 */
+    margin-bottom:4px;
+    font-weight:700;
+    line-height:1.1;
+  }
+  .stat-label{
+    font-size:0.75rem; /* 更大的标签 */
+    margin-bottom:0;
+    line-height:1.1;
+    font-weight:500;
+    word-break:keep-all;
+    white-space:nowrap;
+  }
+  .progress-bar{height:3px;margin-bottom:3px}
+  .growth-indicator{font-size:0.65rem}
+  .live-indicator{font-size:0.55rem;top:4px;right:4px}
   .live-dot{width:3px;height:3px}
 }
 
 @media (max-width: 375px) {
-  body{padding:1px}
-  .stats-container{gap:2px}
-  .stat-card{padding:5px 3px;border-radius:4px}
-  .stat-icon{font-size:1.1rem;margin-right:8px}
-  .stat-number{font-size:0.8rem;margin-bottom:1px}
-  .stat-label{font-size:0.6rem;margin-bottom:2px;line-height:1}
+  html,body{height:auto;min-height:auto;margin:0;padding:0;}
+  body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:auto;
+    padding:0;
+  }
+  .stats-container{
+    gap:2px;
+    padding:0;
+    margin:0;
+    grid-template-columns:repeat(3, 1fr); /* 保持三列横排 */
+    max-width:100%;
+    width:100%;
+    display:grid;
+    align-items:center;
+    justify-content:center;
+  }
+  .stat-card{
+    padding:10px 4px;
+    border-radius:6px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    min-height:85px; /* 足够的高度 */
+    font-size:0.8rem;
+  }
+  .stat-icon{
+    font-size:1.6rem; /* 更大的图标 */
+    margin-bottom:4px;
+    margin-right:0;
+  }
+  .stat-number{
+    font-size:1.1rem; /* 更大的数字 */
+    margin-bottom:3px;
+    font-weight:700;
+    line-height:1;
+  }
+  .stat-label{
+    font-size:0.7rem; /* 更大的标签 */
+    margin-bottom:0;
+    line-height:1.1;
+    font-weight:500;
+    word-break:keep-all;
+    white-space:nowrap;
+  }
   .progress-bar{height:2px;margin-bottom:2px}
-  .growth-indicator{font-size:0.55rem}
-  .live-indicator{font-size:0.45rem;top:3px;right:3px}
+  .growth-indicator{font-size:0.6rem}
+  .live-indicator{font-size:0.5rem;top:3px;right:3px}
   .live-dot{width:3px;height:3px}
 }
 </style>
@@ -426,28 +557,44 @@ function cleanup(){
   stopContinuousAnimation();
 }
 
-// 优化的iframe高度调整（增加缓存）
+// 优化的iframe高度调整（手机端完全贴合内容）
 let cachedHeight=0;
 function adjustIframeHeight(){
   const container=elements.statsContainer||document.querySelector('.stats-container');
   if(!container)return;
-  
-  const containerHeight=container.scrollHeight;
-  const bodyPadding=parseInt(getComputedStyle(document.body).padding)*2;
+
   const isMobile=window.innerWidth<=768;
-  const finalHeight=containerHeight+bodyPadding+(isMobile?8:20);
-  const calculatedHeight=Math.max(finalHeight,isMobile?80:120);
-  
-  // 避免重复发送相同高度
-  if(cachedHeight===calculatedHeight)return;
-  cachedHeight=calculatedHeight;
-  
-  window.parent.postMessage({type:'adjustHeight',height:calculatedHeight},'*');
+
+  if(isMobile){
+    // 手机端：完全贴合内容高度，无任何额外空白
+    const containerHeight=container.getBoundingClientRect().height;
+    const calculatedHeight=Math.ceil(containerHeight);
+
+    // 避免重复发送相同高度
+    if(cachedHeight===calculatedHeight)return;
+    cachedHeight=calculatedHeight;
+
+    window.parent.postMessage({type:'adjustHeight',height:calculatedHeight},'*');
+  } else {
+    // 桌面端：保持原有逻辑
+    const containerHeight=container.scrollHeight;
+    const bodyPadding=parseInt(getComputedStyle(document.body).padding)*2;
+    const finalHeight=containerHeight+bodyPadding+20;
+    const calculatedHeight=Math.max(finalHeight,120);
+
+    if(cachedHeight===calculatedHeight)return;
+    cachedHeight=calculatedHeight;
+
+    window.parent.postMessage({type:'adjustHeight',height:calculatedHeight},'*');
+  }
 }
 
 // 优化的事件监听器
 const eventHandlers={
-  message:e=>{if(e.data?.type==='setLang')updateLang(e.data.lang);},
+  message:e=>{
+    if(e.data?.type==='setLang')updateLang(e.data.lang);
+    if(e.data?.type==='requestHeight')adjustIframeHeight();
+  },
   load:init,
   resize:adjustIframeHeight,
   beforeunload:cleanup,

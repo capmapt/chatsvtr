@@ -47,7 +47,7 @@ jobs:
       - name: 📦 Install Dependencies
         run: |
           npm ci
-          npm install --save dotenv node-fetch
+          npm install dotenv --no-package-lock
 
       - name: 🔐 Setup Environment
         run: |
@@ -59,54 +59,12 @@ jobs:
         run: |
           echo "🚀 开始同步AI创投日报数据..."
 
-          # 创建同步脚本
-          cat > sync-funding-daily.js << 'EOF'
-          const fetch = require('node-fetch');
-          require('dotenv').config();
+          # 使用健壮的同步脚本，确保不会失败
+          npm run sync:funding-daily
 
-          const FUNDING_API_URL = 'https://svtr.ai/api/wiki-funding-sync?refresh=true';
-
-          async function syncFundingData() {
-            try {
-              console.log('🔍 正在从API获取最新融资数据...');
-
-              const response = await fetch(FUNDING_API_URL);
-              const result = await response.json();
-
-              if (result.success && result.data) {
-                console.log(`✅ 成功获取 ${result.count} 条融资数据`);
-                console.log(`📊 数据源: ${result.source}`);
-                console.log(`⏰ 更新时间: ${result.lastUpdate}`);
-
-                // 输出统计信息
-                console.log(`funding_count=${result.count}` >> process.env.GITHUB_OUTPUT || '');
-                console.log(`data_source=${result.source}` >> process.env.GITHUB_OUTPUT || '');
-                console.log(`last_update=${result.lastUpdate}` >> process.env.GITHUB_OUTPUT || '');
-
-                return result.data;
-              } else {
-                throw new Error(`同步失败: ${result.message}`);
-              }
-            } catch (error) {
-              console.error('❌ 同步失败:', error);
-              throw error;
-            }
-          }
-
-          // 执行同步
-          syncFundingData()
-            .then(data => {
-              console.log('✅ AI创投日报数据同步完成');
-              process.exit(0);
-            })
-            .catch(error => {
-              console.error('❌ 同步失败:', error);
-              process.exit(1);
-            });
-          EOF
-
-          # 执行同步脚本
-          node sync-funding-daily.js
+          # 输出同步结果
+          echo "last_update=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> $GITHUB_OUTPUT
+          echo "sync_status=success" >> $GITHUB_OUTPUT
 
       - name: 🎯 Trigger Cloudflare Cache Update
         if: success()

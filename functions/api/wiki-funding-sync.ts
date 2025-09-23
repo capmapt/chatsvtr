@@ -14,6 +14,8 @@ interface WikiFundingRecord {
   investedAt: string;
   investors: string[];
   teamBackground?: string;
+  companyWebsite?: string;
+  contactInfo?: string;
   sourceUrl?: string;
 }
 
@@ -27,7 +29,8 @@ interface Env {
 const NEW_BITABLE_CONFIG = {
   APP_TOKEN: 'DsQHbrYrLab84NspgnWcmj44nYe', // 更新的Bitable App Token
   TABLE_ID: 'tblLP6uUyPTKxfyx', // AI创投日报表格ID (从URL获取)
-  BASE_URL: 'https://open.feishu.cn/open-apis'
+  BASE_URL: 'https://open.feishu.cn/open-apis',
+  SOURCE_URL: 'https://svtrglobal.feishu.cn/base/DsQHbrYrLab84NspgnWcmj44nYe?from=from_copylink' // 数据源链接
 };
 
 // 字段映射配置 - 基于探索结果
@@ -131,10 +134,42 @@ async function fetchNewBitableData(accessToken: string): Promise<WikiFundingReco
         const 标签 = getFieldValue('标签');
         const sourceId = getFieldValue('SourceID');
 
-        // 从公司官网提取公司名称
+        // 从企业介绍中提取公司名称
         let companyName = '';
-        if (公司官网) {
-          // 尝试从URL中提取公司名称
+        if (企业介绍) {
+          // 尝试从企业介绍开头提取公司名称
+          // 模式1: "公司名，20XX年成立" 或 "公司名，成立于"
+          const pattern1 = /^([^，,。.!]+?)，(?=20\d{2}年?成立|成立于)/;
+          const match1 = 企业介绍.match(pattern1);
+
+          if (match1) {
+            companyName = match1[1].trim();
+          } else {
+            // 模式2: "公司名（英文名），..."
+            const pattern2 = /^([^（）(),]+?)(?:[（(][^）)]*[）)])?，/;
+            const match2 = 企业介绍.match(pattern2);
+
+            if (match2) {
+              companyName = match2[1].trim();
+            } else {
+              // 模式3: 从句首提取第一个词作为公司名
+              const pattern3 = /^([A-Za-z\u4e00-\u9fa5]+)/;
+              const match3 = 企业介绍.match(pattern3);
+
+              if (match3) {
+                companyName = match3[1].trim();
+              }
+            }
+          }
+
+          // 长度验证和清理
+          if (companyName.length > 20) {
+            companyName = companyName.substring(0, 20);
+          }
+        }
+
+        // 如果从企业介绍中提取失败，尝试从公司官网提取
+        if (!companyName && 公司官网) {
           try {
             const url = new URL(公司官网);
             const hostname = url.hostname.replace('www.', '');
@@ -233,7 +268,9 @@ async function fetchNewBitableData(accessToken: string): Promise<WikiFundingReco
           investedAt: investedAt,
           investors: investors,
           teamBackground: 团队背景,
-          sourceUrl: `https://svtrglobal.feishu.cn/base/ZNRsbFjNZaEEaMs4bWDcwDXZnXg?table=${NEW_BITABLE_CONFIG.TABLE_ID}&view=vew`
+          companyWebsite: 公司官网,
+          contactInfo: 联系方式,
+          sourceUrl: NEW_BITABLE_CONFIG.SOURCE_URL
         };
 
         fundingRecords.push(fundingRecord);

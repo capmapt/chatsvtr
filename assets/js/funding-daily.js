@@ -1,4 +1,4 @@
-/**
+// Last sync: 2025-09-22T23:29:19.763Z\n/**
  * 创投日报功能模块
  * 负责加载、显示和管理融资信息
  */
@@ -212,6 +212,27 @@
     return null;
   }
 
+  // 🔗 为团队背景中的创始人姓名添加超链接
+  function addLinksToTeamBackground(teamBackground, contactInfo) {
+    if (!teamBackground || !contactInfo) return teamBackground;
+
+    let enhancedText = teamBackground;
+
+    // 只为句首的人名（通常是创始人）添加超链接
+    // 匹配句首的中英文姓名，后面跟着职位描述
+    const founderPattern = /^([A-Za-z\u4e00-\u9fa5\s]{2,20})，(?=.{0,50}?(创始人|CEO|CTO|总裁|首席|联合创始人))/;
+    const founderMatch = enhancedText.match(founderPattern);
+
+    if (founderMatch) {
+      const founderName = founderMatch[1].trim();
+      enhancedText = enhancedText.replace(founderPattern,
+        `<a href="${contactInfo}" target="_blank" class="founder-link" title="访问 ${founderName} 的联系方式">${founderName}</a>，`
+      );
+    }
+
+    return enhancedText;
+  }
+
   // 🏢 生成基于投资信息的团队背景
   function generateTeamInfo(item) {
     const topInvestors = ['红杉资本', 'IDG资本', 'Sequoia Capital', 'Andreessen Horowitz', 'Benchmark', 'Accel', 'Khosla Ventures', '真格基金', '经纬中国', '华创资本', 'GGV纪源资本'];
@@ -364,8 +385,8 @@
     const validTags = item.tags?.filter(tag => tag && tag !== '0' && tag !== 'AI创投日报') || [];
     const tagsHTML = validTags.slice(0, 3).map(tag => `<span class="funding-tag">${tag}</span>`).join('');
 
-    // 提取网站链接
-    const websiteUrl = item.website || extractWebsiteFromDescription(item.description || '');
+    // 提取网站链接 - 优先使用API提供的companyWebsite字段
+    const websiteUrl = item.companyWebsite || item.website || extractWebsiteFromDescription(item.description || '');
 
     // 生成公司名称（带官网链接）
     const companyNameHTML = websiteUrl
@@ -400,7 +421,7 @@
           ` : ''}
 
           ${item.teamBackground ? `
-            <p><strong>🏢 团队背景：</strong>${item.teamBackground}</p>
+            <p><strong>🏢 团队背景：</strong>${addLinksToTeamBackground(item.teamBackground, item.contactInfo)}</p>
           ` : ''}
 
           ${!item.founder && !item.founders && !item.workExperience && !item.education && !item.teamBackground && item.description ? `
@@ -412,15 +433,13 @@
           ` : ''}
         </div>
 
-        ${websiteUrl ? `
-        <div class="company-links">
-          <a href="${websiteUrl}" target="_blank" class="company-link">
-            🌐 访问官网
-          </a>
-        </div>
-        ` : ''}
+        <div class="card-back-footer">
+          ${websiteUrl ? `
+            <a href="${websiteUrl}" target="_blank" class="company-link">
+              🌐 访问官网
+            </a>
+          ` : '<div></div>'}
 
-        <div class="flip-back-btn">
           <button class="flip-back-button" onclick="flipCard(this)">
             ← 返回融资信息
           </button>
@@ -446,9 +465,8 @@
 
             <div class="funding-meta">
               <div class="funding-tags">${tagsHTML}</div>
+              <div class="flip-hint">点击查看团队 →</div>
             </div>
-
-            <div class="flip-hint">点击查看团队 →</div>
           </div>
 
           <!-- 卡片背面 -->
@@ -537,7 +555,28 @@
       // 将当前数据存储到全局变量，供loadMoreFunding使用
       window.currentFundingData = fundingData;
 
+      // 保存当前翻转状态（在刷新数据时保持状态）
+      const flippedCards = Array.from(container.querySelectorAll('.funding-card.flipped')).map(card => {
+        const companyName = card.querySelector('.company-name')?.textContent?.trim();
+        return companyName;
+      }).filter(Boolean);
+
       container.innerHTML = fundingHTML + loadMoreHTML;
+
+      // 恢复翻转状态（仅在有需要恢复的状态时）
+      if (flippedCards.length > 0) {
+        setTimeout(() => {
+          flippedCards.forEach(companyName => {
+            const card = Array.from(container.querySelectorAll('.funding-card')).find(c => {
+              const cardCompanyName = c.querySelector('.company-name')?.textContent?.trim();
+              return cardCompanyName === companyName;
+            });
+            if (card) {
+              card.classList.add('flipped');
+            }
+          });
+        }, 100); // 延迟确保DOM更新完成
+      }
 
       // 添加点击事件
       addFundingItemClickHandlers();
@@ -660,16 +699,17 @@
 
     // 显示详情（可以改为模态框或跳转页面）
     if (confirm(`${message}\n\n是否查看完整日报？`)) {
-      // 跳转到完整日报页面
-      window.location.href = 'pages/funding-daily.html';
+      // 跳转到SVTR官网
+      window.open('https://svtr.ai', '_blank');
     }
   }
 
   // 🔄 刷新数据
   function refreshFundingData() {
     console.log('🔄 刷新创投日报数据...');
-    currentDisplayCount = 3; // 重置为3条
-    loadFundingData(true);
+    // 不重置currentDisplayCount，保持用户当前查看状态
+    // currentDisplayCount = 3; // 注释掉，避免重置用户加载更多的状态
+    loadFundingData(false); // 使用false避免显示加载状态，保持翻转状态
   }
 
   // 🚀 初始化函数
@@ -686,11 +726,57 @@
     // 立即加载数据
     loadFundingData(true);
 
-    // 设置定时刷新（每30分钟）
-    const refreshInterval = 30 * 60 * 1000; // 30分钟
-    setInterval(refreshFundingData, refreshInterval);
+    // 🧠 智能刷新策略
+    setupIntelligentRefresh();
 
     console.log('✅ 创投日报初始化完成');
+  }
+
+  // 🧠 智能刷新策略
+  function setupIntelligentRefresh() {
+    // 主同步时间：每天北京时间6:00 (UTC 22:00前一天)
+    const MAIN_SYNC_HOUR = 6; // 北京时间6点
+
+    function getNextRefreshInterval() {
+      const now = new Date();
+      const beijingHour = (now.getUTCHours() + 8) % 24; // 转换为北京时间
+
+      // 计算距离下次主同步的小时数
+      let hoursUntilSync = MAIN_SYNC_HOUR - beijingHour;
+      if (hoursUntilSync <= 0) {
+        hoursUntilSync += 24; // 明天的同步时间
+      }
+
+      console.log(`🕐 当前北京时间: ${beijingHour}:${now.getMinutes()}, 距离下次主同步: ${hoursUntilSync}小时`);
+
+      // 智能间隔策略
+      if (hoursUntilSync <= 2) {
+        // 主同步后2小时内：30分钟刷新一次（捕获新数据）
+        return 30 * 60 * 1000;
+      } else if (hoursUntilSync <= 6) {
+        // 主同步后2-6小时：2小时刷新一次（维护状态）
+        return 2 * 60 * 60 * 1000;
+      } else {
+        // 主同步前18小时：6小时刷新一次（减少无效请求）
+        return 6 * 60 * 60 * 1000;
+      }
+    }
+
+    function scheduleNextRefresh() {
+      const interval = getNextRefreshInterval();
+      const hours = Math.round(interval / (1000 * 60 * 60) * 10) / 10;
+
+      console.log(`⏰ 设置下次刷新间隔: ${hours}小时`);
+
+      setTimeout(() => {
+        console.log('🔄 执行智能刷新...');
+        refreshFundingData();
+        scheduleNextRefresh(); // 递归调度下次刷新
+      }, interval);
+    }
+
+    // 启动智能调度
+    scheduleNextRefresh();
   }
 
   // 🌐 暴露公共接口
@@ -700,6 +786,9 @@
     refreshFundingData,
     initialize: initializeFundingDaily
   };
+
+  // 🔄 暴露翻转函数到全局作用域（用于HTML onclick）
+  window.flipCard = flipCard;
 
   // ⏰ 更新时间显示函数
   function updateFundingTimestamp(lastUpdate) {
@@ -722,18 +811,26 @@
             month: 'numeric',
             day: 'numeric',
             hour: '2-digit',
-            minute: '2-digit'
+            minute: '2-digit',
+            timeZoneName: 'short'
           };
-          formattedTime = updateDate.toLocaleDateString('zh-CN', options) + ' 更新';
+          formattedTime = updateDate.toLocaleString('zh-CN', options);
         }
       } else {
-        formattedTime = '今日更新';
+        // 显示当前精确时间和时区
+        const now = new Date();
+        const options = {
+          hour: '2-digit',
+          minute: '2-digit',
+          timeZoneName: 'short'
+        };
+        formattedTime = now.toLocaleString('zh-CN', options);
       }
 
-      timestampElement.textContent = `⏰ 更新时间：${formattedTime}`;
+      timestampElement.textContent = `⏰ 更新：${formattedTime}`;
     } catch (error) {
       console.warn('更新时间格式化失败:', error);
-      timestampElement.textContent = '⏰ 更新时间：今日更新';
+      timestampElement.textContent = '⏰ 更新：今日更新';
     }
   }
 
