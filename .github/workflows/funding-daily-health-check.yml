@@ -98,7 +98,7 @@ jobs:
 
     - name: 📤 上传健康报告
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: health-report
         path: health-report.md
