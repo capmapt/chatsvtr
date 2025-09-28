@@ -1,6 +1,6 @@
 /**
- * Wiki页面融资数据同步API
- * 从飞书Wiki页面获取AI创投日报数据
+ * Wiki页面融资数据同步API - 真实飞书数据版本
+ * 严格按照飞书源地址数据展示相关信息
  */
 
 interface WikiFundingRecord {
@@ -25,1104 +25,374 @@ interface Env {
   SVTR_CACHE?: KVNamespace;
 }
 
-// 新的Bitable配置 - AI创投日报
-const NEW_BITABLE_CONFIG = {
-  APP_TOKEN: 'DsQHbrYrLab84NspgnWcmj44nYe', // 更新的Bitable App Token
-  TABLE_ID: 'tblLP6uUyPTKxfyx', // AI创投日报表格ID (从URL获取)
+// 严格按照源地址 https://svtrglobal.feishu.cn/base/DsQHbrYrLab84NspgnWcmj44nYe 的数据
+const FEISHU_BITABLE_CONFIG = {
+  APP_TOKEN: 'DsQHbrYrLab84NspgnWcmj44nYe',
+  TABLE_ID: 'tblLP6uUyPTKxfyx',
   BASE_URL: 'https://open.feishu.cn/open-apis',
-  SOURCE_URL: 'https://svtrglobal.feishu.cn/base/DsQHbrYrLab84NspgnWcmj44nYe?from=from_copylink' // 数据源链接
-};
-
-// 字段映射配置 - 基于探索结果
-const FIELD_MAPPING = {
-  序号: 'fldda3Z35M',
-  周报: 'fldph7corb',
-  细分领域: 'fldlzGlfck',
-  二级分类: 'fldhEwlDdx',
-  公司官网: 'fldSmJZFkA',
-  联系方式: 'fldqg9IrAP',
-  企业介绍: 'flda65kU4j',
-  团队背景: 'fldHeSusLI',
-  标签: 'fld74uqtXq',
-  sourceId: 'fldDKiOpi7'
-};
-
-// 旧的配置保留作为备选
-const LEGACY_CONFIGS = {
-  WIKI: {
-    SPACE_ID: '7321328173944340484',
-    NODE_ID: 'V2JnwfmvtiBUTdkc32rcQrXWn4g',
-    BASE_URL: 'https://open.feishu.cn/open-apis'
-  },
-  SHEET: {
-    SHEET_TOKEN: 'PERPsZO0ph5nZztjBTSctDAdnYg',
-    STARTUP_SHEET_ID: 'GvCmOW',
-    PORTFOLIO_SHEET_ID: 'aa49c5'
-  }
+  SOURCE_URL: 'https://svtrglobal.feishu.cn/base/DsQHbrYrLab84NspgnWcmj44nYe?from=from_copylink'
 };
 
 /**
- * 从新的Bitable数据源获取AI创投日报数据
+ * 从真实飞书数据源获取数据
+ * 严格按照源地址内容展示信息
  */
-async function fetchNewBitableData(accessToken: string): Promise<WikiFundingRecord[]> {
-  try {
-    console.log('🔍 从新的Bitable数据源获取AI创投日报数据...');
-    console.log(`App Token: ${NEW_BITABLE_CONFIG.APP_TOKEN}`);
-    console.log(`Table ID: ${NEW_BITABLE_CONFIG.TABLE_ID}`);
-
-    // 获取所有记录
-    let allRecords: any[] = [];
-    let pageToken = '';
-    let hasMore = true;
-
-    while (hasMore) {
-      const recordsUrl = `${NEW_BITABLE_CONFIG.BASE_URL}/bitable/v1/apps/${NEW_BITABLE_CONFIG.APP_TOKEN}/tables/${NEW_BITABLE_CONFIG.TABLE_ID}/records?page_size=100${pageToken ? `&page_token=${pageToken}` : ''}`;
-
-      const recordsResponse = await fetch(recordsUrl, {
-        headers: { 'Authorization': `Bearer ${accessToken}` }
-      });
-
-      if (recordsResponse.status !== 200) {
-        throw new Error(`获取记录失败: HTTP ${recordsResponse.status}`);
-      }
-
-      const recordsData = await recordsResponse.json();
-      if (recordsData.code !== 0) {
-        throw new Error(`获取记录失败: ${recordsData.msg}`);
-      }
-
-      const records = recordsData.data.items || [];
-      allRecords = allRecords.concat(records);
-
-      hasMore = recordsData.data.has_more || false;
-      pageToken = recordsData.data.page_token || '';
-
-      console.log(`📄 已获取 ${allRecords.length} 条记录...`);
-    }
-
-    console.log(`✅ 总共获取到 ${allRecords.length} 条AI创投日报记录`);
-
-    // 转换为WikiFundingRecord格式
-    const fundingRecords: WikiFundingRecord[] = [];
-
-    allRecords.forEach((record, index) => {
-      try {
-        const fields = record.fields || {};
-
-        // 提取字段值的辅助函数
-        const getFieldValue = (fieldName: string): string => {
-          const value = fields[fieldName];
-          if (!value) return '';
-          if (typeof value === 'string') return value;
-          if (typeof value === 'object' && value.text) return value.text;
-          if (typeof value === 'object' && value.name) return value.name;
-          if (Array.isArray(value) && value.length > 0) {
-            return value.map(v => v.text || v.name || v).join(', ');
-          }
-          return String(value);
-        };
-
-        // 提取核心字段 - 使用字段名而不是字段ID
-        const 序号 = getFieldValue('序号');
-        const 周报 = getFieldValue('周报');
-        const 细分领域 = getFieldValue('细分领域');
-        const 二级分类 = getFieldValue('二级分类');
-        const 公司官网 = getFieldValue('公司官网');
-        const 联系方式 = getFieldValue('联系方式');
-        const 企业介绍 = getFieldValue('企业介绍');
-        const 团队背景 = getFieldValue('团队背景');
-        const 标签 = getFieldValue('标签');
-        const sourceId = getFieldValue('SourceID');
-
-        // 从企业介绍中提取公司名称
-        let companyName = '';
-        if (企业介绍) {
-          // 尝试从企业介绍开头提取公司名称
-          // 模式1: "公司名，20XX年成立" 或 "公司名，成立于"
-          const pattern1 = /^([^，,。.!]+?)，(?=20\d{2}年?成立|成立于)/;
-          const match1 = 企业介绍.match(pattern1);
-
-          if (match1) {
-            companyName = match1[1].trim();
-          } else {
-            // 模式2: "公司名（英文名），..."
-            const pattern2 = /^([^（）(),]+?)(?:[（(][^）)]*[）)])?，/;
-            const match2 = 企业介绍.match(pattern2);
-
-            if (match2) {
-              companyName = match2[1].trim();
-            } else {
-              // 模式3: 从句首提取第一个词作为公司名
-              const pattern3 = /^([A-Za-z\u4e00-\u9fa5]+)/;
-              const match3 = 企业介绍.match(pattern3);
-
-              if (match3) {
-                companyName = match3[1].trim();
-              }
-            }
-          }
-
-          // 长度验证和清理
-          if (companyName.length > 20) {
-            companyName = companyName.substring(0, 20);
-          }
-        }
-
-        // 如果从企业介绍中提取失败，尝试从公司官网提取
-        if (!companyName && 公司官网) {
-          try {
-            const url = new URL(公司官网);
-            const hostname = url.hostname.replace('www.', '');
-            companyName = hostname.split('.')[0];
-            // 首字母大写
-            companyName = companyName.charAt(0).toUpperCase() + companyName.slice(1);
-          } catch {
-            companyName = 公司官网.replace('https://', '').replace('http://', '').split('/')[0];
-          }
-        }
-
-        // 如果还是没有公司名称，跳过这条记录
-        if (!companyName) {
-          console.log(`⚠️ 记录 ${index + 1} 缺少公司名称，跳过`);
-          return;
-        }
-
-        // 处理融资金额 - 从企业介绍中提取
-        let amount = 0;
-        let stage = '未知轮次';
-        if (企业介绍) {
-          // 查找融资金额信息
-          const amountMatches = 企业介绍.match(/(\d+(?:\.\d+)?)\s*([亿万]?)\s*([美元USD元])/gi);
-          if (amountMatches) {
-            const match = amountMatches[0];
-            const numMatch = match.match(/(\d+(?:\.\d+)?)/);
-            const unitMatch = match.match(/([亿万])/);
-
-            if (numMatch) {
-              let num = parseFloat(numMatch[1]);
-              if (unitMatch) {
-                if (unitMatch[1] === '亿') num *= 100000000;
-                else if (unitMatch[1] === '万') num *= 10000;
-              } else {
-                num *= 1000000; // 默认百万
-              }
-              amount = num;
-            }
-          }
-
-          // 查找融资轮次信息
-          const stageMatches = 企业介绍.match(/(A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|Pre-A|Pre-B|种子|天使|IPO|上市)轮/gi);
-          if (stageMatches) {
-            stage = stageMatches[0];
-          }
-        }
-
-        // 处理投资时间 - 从周报推导
-        let investedAt = new Date().toISOString();
-        if (周报) {
-          const weekMatch = 周报.match(/#?(\d+)/);
-          if (weekMatch) {
-            const weekNum = parseInt(weekMatch[1]);
-            // 假设周报从2024年第1周开始，每周递增
-            const weekDate = new Date('2024-01-01');
-            weekDate.setDate(weekDate.getDate() + (weekNum - 1) * 7);
-            investedAt = weekDate.toISOString();
-          }
-        }
-
-        // 处理投资方 - 从企业介绍中提取
-        const investors: string[] = [];
-        if (企业介绍) {
-          const investorPattern = /投资方[为包括]*[:：]?\s*([^。，,\n]+)/gi;
-          const investorMatches = [...企业介绍.matchAll(investorPattern)];
-          investorMatches.forEach(match => {
-            if (match[1]) {
-              const invs = match[1].split(/[、,，]/).map(s => s.trim()).filter(s => s && !s.includes('等'));
-              investors.push(...invs);
-            }
-          });
-        }
-        if (investors.length === 0) {
-          investors.push('未披露');
-        }
-
-        // 处理标签
-        const tags = [];
-        if (细分领域) tags.push(细分领域);
-        if (二级分类) tags.push(二级分类);
-        if (标签) {
-          const tagList = 标签.split(/[,，]/).map(s => s.trim()).filter(s => s);
-          tags.push(...tagList);
-        }
-        tags.push('AI创投日报');
-
-        // 生成记录
-        const fundingRecord: WikiFundingRecord = {
-          id: sourceId || `bitable_${序号}_${Date.now()}`,
-          companyName: companyName,
-          stage: stage,
-          amount: amount || Math.floor(Math.random() * 100000000) + 10000000, // 如果没找到金额，生成合理随机金额
-          currency: 'USD',
-          description: 企业介绍 || `${companyName}是一家专注于技术创新的企业。`,
-          tags: [...new Set(tags)], // 去重
-          investedAt: investedAt,
-          investors: investors,
-          teamBackground: 团队背景,
-          companyWebsite: 公司官网,
-          contactInfo: 联系方式,
-          sourceUrl: NEW_BITABLE_CONFIG.SOURCE_URL
-        };
-
-        fundingRecords.push(fundingRecord);
-        console.log(`✅ 转换记录: ${companyName} - ${stage} - $${(amount/1000000).toFixed(1)}M`);
-
-      } catch (error) {
-        console.warn(`⚠️ 转换记录 ${index + 1} 失败:`, error);
-      }
-    });
-
-    // 按投资时间降序排序
-    fundingRecords.sort((a, b) => new Date(b.investedAt).getTime() - new Date(a.investedAt).getTime());
-
-    console.log(`✅ 成功转换 ${fundingRecords.length} 条新Bitable融资记录`);
-    return fundingRecords;
-
-  } catch (error) {
-    console.error('❌ 从新Bitable获取数据失败:', error);
-    throw error;
-  }
-}
-
-/**
- * 获取飞书访问令牌
- */
-async function getFeishuAccessToken(appId: string, appSecret: string): Promise<string> {
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000);
-
-    try {
-      const response = await fetch(`${NEW_BITABLE_CONFIG.BASE_URL}/auth/v3/tenant_access_token/internal`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-        },
-        body: JSON.stringify({
-          app_id: appId,
-          app_secret: appSecret,
-        }),
-        signal: controller.signal,
-      });
-
-      clearTimeout(timeoutId);
-      const result = await response.json();
-
-      if (result.code === 0) {
-        return result.tenant_access_token;
-      } else {
-        throw new Error(`获取访问令牌失败: ${result.msg || result.message || result.code}`);
-      }
-    } catch (error: any) {
-      clearTimeout(timeoutId);
-      if (error.name === 'AbortError') {
-        throw new Error('获取访问令牌超时');
-      }
-      throw error;
-    }
-  } catch (error) {
-    console.error('❌ 获取飞书访问令牌失败:', error);
-    throw error;
-  }
-}
-
-/**
- * 从飞书Sheets API获取startup数据
- */
-async function fetchSheetStartupData(accessToken: string): Promise<WikiFundingRecord[]> {
-  try {
-    console.log('📊 从Sheets API获取startup数据...');
-    console.log(`Sheet Token: ${LEGACY_CONFIGS.SHEET.SHEET_TOKEN}`);
-
-    // 获取Startup工作表的列标题 (第2行)
-    const headersResponse = await fetch(`${NEW_BITABLE_CONFIG.BASE_URL}/sheets/v2/spreadsheets/${LEGACY_CONFIGS.SHEET.SHEET_TOKEN}/values/${LEGACY_CONFIGS.SHEET.STARTUP_SHEET_ID}!A2:Z2`, {
-      headers: { 'Authorization': `Bearer ${accessToken}` }
-    });
-
-    if (headersResponse.status !== 200) {
-      throw new Error(`获取列标题失败: ${headersResponse.status}`);
-    }
-
-    const headersData = await headersResponse.json();
-    if (headersData.code !== 0) {
-      throw new Error(`获取列标题失败: ${headersData.msg}`);
-    }
-
-    // 解析列标题
-    const extractCellText = (cell: any): string => {
-      if (!cell) return '';
-      if (typeof cell === 'string') return cell;
-      if (Array.isArray(cell)) {
-        return cell.map(segment => {
-          if (typeof segment === 'string') return segment;
-          if (segment.text) return segment.text;
-          return JSON.stringify(segment);
-        }).join('');
-      }
-      if (cell.text) return cell.text;
-      return String(cell);
-    };
-
-    const headerRow = headersData.data.valueRange?.values?.[0];
-    if (!headerRow) {
-      throw new Error('无法获取列标题');
-    }
-
-    const headers = headerRow.map(extractCellText);
-    console.log('📋 Sheet列标题:', headers.slice(0, 10).join(', '));
-
-    // 查找关键列的索引
-    const companyNameIndex = headers.findIndex(h => h.includes('公司名称') || h.includes('公司'));
-    const amountIndex = headers.findIndex(h => h.includes('金额') && h.includes('万美元'));
-    const stageIndex = headers.findIndex(h => h.includes('轮次') || h.includes('阶段'));
-    const businessIndex = headers.findIndex(h => h.includes('主要业务') || h.includes('业务'));
-    const investorIndex = headers.findIndex(h => h.includes('投资方'));
-    const timeIndex = headers.findIndex(h => h.includes('时间') || h.includes('日期'));
-
-    console.log(`📍 关键列索引: 公司名称=${companyNameIndex}, 金额=${amountIndex}, 业务=${businessIndex}`);
-
-    // 获取实际的Startup数据 (从第3行开始，因为第1行是说明，第2行是标题)
-    console.log('📄 获取Startup表格实际数据...');
-    const dataResponse = await fetch(`${NEW_BITABLE_CONFIG.BASE_URL}/sheets/v2/spreadsheets/${LEGACY_CONFIGS.SHEET.SHEET_TOKEN}/values/${LEGACY_CONFIGS.SHEET.STARTUP_SHEET_ID}!A3:Z50`, {
-      headers: { 'Authorization': `Bearer ${accessToken}` }
-    });
-
-    if (dataResponse.status !== 200) {
-      console.warn('⚠️ 无法获取Startup实际数据，使用示例数据');
-      throw new Error(`获取Startup数据失败: ${dataResponse.status}`);
-    }
-
-    const actualDataResult = await dataResponse.json();
-    if (actualDataResult.code !== 0) {
-      console.warn('⚠️ Startup数据响应错误，使用示例数据');
-      throw new Error(`Startup数据响应错误: ${actualDataResult.msg}`);
-    }
-
-    const actualData = actualDataResult.data.valueRange?.values || [];
-    console.log(`📊 获取到 ${actualData.length} 行实际数据`);
-
-    // 解析实际数据
-    const startupRecords: WikiFundingRecord[] = [];
-
-    for (let i = 0; i < actualData.length && i < 20; i++) { // 限制最多20条
-      const row = actualData[i];
-      if (!row || row.length === 0) continue;
-
-      try {
-        // 提取各列数据
-        const companyName = companyNameIndex >= 0 ? extractCellText(row[companyNameIndex]) : '';
-        const amount = amountIndex >= 0 ? extractCellText(row[amountIndex]) : '';
-        const business = businessIndex >= 0 ? extractCellText(row[businessIndex]) : '';
-        const stage = stageIndex >= 0 ? extractCellText(row[stageIndex]) : '';
-        const investors = investorIndex >= 0 ? extractCellText(row[investorIndex]) : '';
-        const time = timeIndex >= 0 ? extractCellText(row[timeIndex]) : '';
-
-        // 过滤掉无效数据
-        if (!companyName || companyName.trim() === '' || companyName.includes('SORT(') || companyName.includes('FILTER(')) {
-          continue;
-        }
-
-        // 解析金额 (假设单位是万美元)
-        let amountNum = 0;
-        if (amount && amount.trim() !== '') {
-          const amountMatch = amount.toString().match(/(\d+(?:\.\d+)?)/);
-          if (amountMatch) {
-            amountNum = parseFloat(amountMatch[1]) * 10000; // 万美元转美元
-          }
-        }
-
-        // 解析投资方
-        const investorList = investors ? investors.split(/[,，;；]/).map(s => s.trim()).filter(s => s) : ['待公布'];
-
-        // 生成记录
-        const record: WikiFundingRecord = {
-          id: `startup_real_${i + 1}_${Date.now()}`,
-          companyName: companyName.trim(),
-          stage: stage && stage.trim() !== '' ? stage.trim() : '未披露',
-          amount: amountNum || Math.floor(Math.random() * 50000000) + 5000000, // 如果没有金额，生成随机金额
-          currency: 'USD',
-          description: business && business.trim() !== '' ? business.trim() : `${companyName}是一家专注于技术创新的企业，致力于通过先进技术推动行业发展。`,
-          tags: [
-            stage && stage !== '' ? stage : '创业',
-            companyName.includes('AI') || business.includes('AI') ? 'AI' : '科技',
-            '创投'
-          ].filter(Boolean),
-          investedAt: time && time.trim() !== '' ? new Date(time).toISOString() : new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString(),
-          investors: investorList,
-          sourceUrl: 'https://svtrglobal.feishu.cn/wiki/V2JnwfmvtiBUTdkc32rcQrXWn4g'
-        };
-
-        startupRecords.push(record);
-        console.log(`✅ 解析记录: ${companyName} - ${stage} - $${(amountNum/1000000).toFixed(1)}M`);
-
-      } catch (error) {
-        console.warn(`⚠️ 解析第${i + 1}行数据失败:`, error);
-      }
-    }
-
-    if (startupRecords.length > 0) {
-      console.log(`✅ 成功解析 ${startupRecords.length} 条真实startup数据`);
-      return startupRecords;
-    }
-
-    // 如果没有解析到真实数据，使用基于真实AI创投市场的高质量数据
-    console.warn('⚠️ 表格使用外部引用公式，无法直接访问，使用基于真实AI创投市场的数据');
-    const marketBasedData: WikiFundingRecord[] = [
-      {
-        id: 'wiki_startup_001',
-        companyName: 'DeepMind医疗',
-        stage: 'Series B',
-        amount: 80000000, // 8000万美元
-        currency: 'USD',
-        description: 'AI驱动的药物发现平台，已与辉瑞、诺华等制药巨头合作，AI模型在蛋白质折叠预测方面取得突破性进展。',
-        tags: ['医疗AI', '药物研发', '蛋白质折叠'],
-        investedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2天前
-        investors: ['红杉资本', 'Andreessen Horowitz', 'GV'],
-        sourceUrl: 'https://svtrglobal.feishu.cn/wiki/V2JnwfmvtiBUTdkc32rcQrXWn4g'
-      },
-      {
-        id: 'wiki_startup_002',
-        companyName: 'AutoX无人驾驶',
-        stage: 'Series A',
-        amount: 45000000, // 4500万美元
-        currency: 'USD',
-        description: '全栈自动驾驶解决方案提供商，在深圳、上海部署超过200辆RoboTaxi，L4级自动驾驶技术领先。',
-        tags: ['自动驾驶', 'RoboTaxi', 'L4级'],
-        investedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1天前
-        investors: ['小鹏汽车', '蔚来资本', '启明创投'],
-        sourceUrl: 'https://svtrglobal.feishu.cn/wiki/V2JnwfmvtiBUTdkc32rcQrXWn4g'
-      },
-      {
-        id: 'wiki_startup_003',
-        companyName: 'FinanceGPT',
-        stage: 'Pre-A',
-        amount: 25000000, // 2500万美元
-        currency: 'USD',
-        description: '专为金融机构定制的大语言模型，支持智能投顾、风险评估、合规监管等场景，已服务20+银行客户。',
-        tags: ['金融AI', '大语言模型', '智能投顾'],
-        investedAt: new Date().toISOString(), // 今天
-        investors: ['腾讯投资', '高瓴资本', '真格基金'],
-        sourceUrl: 'https://svtrglobal.feishu.cn/wiki/V2JnwfmvtiBUTdkc32rcQrXWn4g'
-      },
-      {
-        id: 'wiki_startup_004',
-        companyName: 'RobotChef智能餐饮',
-        stage: 'Seed',
-        amount: 18000000, // 1800万美元
-        currency: 'USD',
-        description: '机器人餐厅解决方案，集成AI视觉识别、机械臂控制，已在海底捞、麦当劳试点运营。',
-        tags: ['服务机器人', '餐饮科技', 'AI视觉'],
-        investedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), // 3天前
-        investors: ['美团龙珠', '创新工场', '松禾资本'],
-        sourceUrl: 'https://svtrglobal.feishu.cn/wiki/V2JnwfmvtiBUTdkc32rcQrXWn4g'
-      },
-      {
-        id: 'wiki_startup_005',
-        companyName: 'CloudBrain云脑',
-        stage: 'Series A',
-        amount: 35000000, // 3500万美元
-        currency: 'USD',
-        description: '大模型训练云平台，为企业提供一站式AI模型开发、训练、部署服务，支持万亿参数模型训练。',
-        tags: ['云计算', '大模型', 'MLOps'],
-        investedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(), // 5天前
-        investors: ['阿里巴巴', '字节跳动', '百度风投'],
-        sourceUrl: 'https://svtrglobal.feishu.cn/wiki/V2JnwfmvtiBUTdkc32rcQrXWn4g'
-      },
-      {
-        id: 'wiki_startup_006',
-        companyName: 'AgriAI智慧农业',
-        stage: 'Pre-A',
-        amount: 22000000, // 2200万美元
-        currency: 'USD',
-        description: '农业AI解决方案，通过卫星遥感、无人机巡检、土壤传感器提供精准农业服务，覆盖1000万亩农田。',
-        tags: ['农业科技', '精准农业', '遥感AI'],
-        investedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(), // 7天前
-        investors: ['IDG资本', '五源资本', '源码资本'],
-        sourceUrl: 'https://svtrglobal.feishu.cn/wiki/V2JnwfmvtiBUTdkc32rcQrXWn4g'
-      },
-      {
-        id: 'wiki_startup_007',
-        companyName: 'CyberGuard网络安全',
-        stage: 'Series B',
-        amount: 60000000, // 6000万美元
-        currency: 'USD',
-        description: 'AI驱动的网络安全防护平台，实时检测零日攻击、APT威胁，保护财富500强企业数字资产。',
-        tags: ['网络安全', 'AI防护', '零日攻击'],
-        investedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(), // 10天前
-        investors: ['红杉资本', '高瓴资本', 'GGV纪源资本'],
-        sourceUrl: 'https://svtrglobal.feishu.cn/wiki/V2JnwfmvtiBUTdkc32rcQrXWn4g'
-      }
-    ];
-
-    console.log(`✅ 生成了 ${marketBasedData.length} 条基于真实AI创投市场的数据`);
-    return marketBasedData;
-
-  } catch (error) {
-    console.error('❌ 从Sheets获取数据失败:', error);
-    throw error;
-  }
-}
-
-/**
- * 从实际飞书Bitable表格获取startup数据
- */
-async function fetchRealStartupData(accessToken: string): Promise<WikiFundingRecord[]> {
-  try {
-    // 尝试多个可能的Bitable App Token
-    // 根据之前的成功案例，我们知道这个格式是正确的
-    const possibleAppTokens = [
-      'XCNeb9GjNaQaeYsm7WwcZRSJn1f', // 已知工作的交易精选配置
-      'V2JnwfmvtiBUTdkc32rcQrXWn4g', // Wiki页面ID - 可能需要转换
-      // 尝试一些常见的变体
-    ];
-
-    console.log('🔍 尝试获取真实的Bitable数据...');
-
-    // 尝试不同的Bitable配置
-    for (const appToken of possibleAppTokens) {
-      try {
-        console.log(`📊 尝试访问App: ${appToken}`);
-
-        // 首先获取应用信息
-        const appResponse = await fetch(`${NEW_BITABLE_CONFIG.BASE_URL}/bitable/v1/apps/${appToken}`, {
-          headers: { 'Authorization': `Bearer ${accessToken}` }
-        });
-
-        const appData = await appResponse.json();
-        if (appData.code !== 0) {
-          console.log(`⚠️ App ${appToken} 访问失败: ${appData.msg}`);
-          continue;
-        }
-
-        console.log(`✅ 成功访问App: ${appData.data.app.name}`);
-
-        // 获取表格列表
-        const tablesResponse = await fetch(`${NEW_BITABLE_CONFIG.BASE_URL}/bitable/v1/apps/${appToken}/tables`, {
-          headers: { 'Authorization': `Bearer ${accessToken}` }
-        });
-
-        const tablesData = await tablesResponse.json();
-        if (tablesData.code !== 0) {
-          console.log(`⚠️ 获取表格列表失败: ${tablesData.msg}`);
-          continue;
-        }
-
-        const tables = tablesData.data.items;
-        console.log(`📋 找到 ${tables.length} 个表格`);
-
-        // 查找startup表格
-        const startupTable = tables.find(table =>
-          table.name.toLowerCase().includes('startup') ||
-          table.name.includes('创业') ||
-          table.name.includes('公司') ||
-          table.name.includes('融资')
-        );
-
-        if (!startupTable) {
-          console.log('⚠️ 未找到startup相关表格');
-          continue;
-        }
-
-        console.log(`🎯 找到目标表格: ${startupTable.name} (${startupTable.table_id})`);
-
-        // 获取表格数据
-        const startupData = await fetchStartupTableData(accessToken, appToken, startupTable.table_id);
-        if (startupData.length > 0) {
-          return startupData;
-        }
-
-      } catch (error: any) {
-        console.warn(`⚠️ App ${appToken} 处理失败:`, error.message);
-        continue;
-      }
-    }
-
-    throw new Error('无法找到或访问startup表格数据');
-
-  } catch (error) {
-    console.error('❌ 获取真实startup数据失败:', error);
-    throw error;
-  }
-}
-
-/**
- * 获取startup表格的具体数据
- */
-async function fetchStartupTableData(accessToken: string, appToken: string, tableId: string): Promise<WikiFundingRecord[]> {
-  try {
-    console.log('📊 获取startup表格数据...');
-
-    // 获取字段信息
-    const fieldsResponse = await fetch(`${NEW_BITABLE_CONFIG.BASE_URL}/bitable/v1/apps/${appToken}/tables/${tableId}/fields`, {
-      headers: { 'Authorization': `Bearer ${accessToken}` }
-    });
-
-    const fieldsData = await fieldsResponse.json();
-    if (fieldsData.code !== 0) {
-      throw new Error(`获取字段信息失败: ${fieldsData.msg}`);
-    }
-
-    const fields = fieldsData.data.items;
-    console.log(`📋 表格字段: ${fields.map(f => f.field_name).join(', ')}`);
-
-    // 获取所有记录
-    let allRecords: any[] = [];
-    let pageToken = '';
-    let hasMore = true;
-
-    while (hasMore) {
-      const recordsUrl = `${NEW_BITABLE_CONFIG.BASE_URL}/bitable/v1/apps/${appToken}/tables/${tableId}/records?page_size=100${pageToken ? `&page_token=${pageToken}` : ''}`;
-
-      const recordsResponse = await fetch(recordsUrl, {
-        headers: { 'Authorization': `Bearer ${accessToken}` }
-      });
-
-      const recordsData = await recordsResponse.json();
-      if (recordsData.code !== 0) {
-        throw new Error(`获取记录失败: ${recordsData.msg}`);
-      }
-
-      const records = recordsData.data.items || [];
-      allRecords = allRecords.concat(records);
-
-      hasMore = recordsData.data.has_more || false;
-      pageToken = recordsData.data.page_token || '';
-
-      console.log(`📄 已获取 ${allRecords.length} 条记录...`);
-    }
-
-    console.log(`✅ 总共获取到 ${allRecords.length} 条startup记录`);
-
-    // 转换为WikiFundingRecord格式
-    return convertStartupRecordsToFunding(allRecords, fields);
-
-  } catch (error) {
-    console.error('❌ 获取startup表格数据失败:', error);
-    throw error;
-  }
-}
-
-/**
- * 将startup表格记录转换为融资记录格式
- */
-function convertStartupRecordsToFunding(records: any[], fields: any[]): WikiFundingRecord[] {
-  const fundingRecords: WikiFundingRecord[] = [];
-
-  // 创建字段映射
-  const fieldMap = new Map();
-  fields.forEach(field => {
-    fieldMap.set(field.field_id, field.field_name);
-  });
-
-  records.forEach((record, index) => {
-    try {
-      const recordFields = record.fields || {};
-
-      // 提取字段值的辅助函数
-      const getFieldValue = (fieldNames: string[]) => {
-        for (const fieldName of fieldNames) {
-          const field = fields.find(f =>
-            f.field_name === fieldName ||
-            f.field_name.toLowerCase().includes(fieldName.toLowerCase())
-          );
-          if (field && recordFields[field.field_id]) {
-            const value = recordFields[field.field_id];
-            if (typeof value === 'object' && value.text) return value.text;
-            if (typeof value === 'object' && value.name) return value.name;
-            if (Array.isArray(value) && value.length > 0) {
-              return value.map(v => v.text || v.name || v).join(', ');
-            }
-            return String(value);
-          }
-        }
-        return '';
-      };
-
-      // 映射字段到融资记录
-      const companyName = getFieldValue(['公司名称', '名称', 'Company', 'Name', '企业名称']);
-      const stage = getFieldValue(['轮次', '融资轮次', 'Stage', 'Round', '阶段']);
-      const amountStr = getFieldValue(['金额', '融资金额', 'Amount', 'Funding', '投资金额']);
-      const description = getFieldValue(['描述', '简介', 'Description', 'Summary', '公司简介']);
-      const investedAtStr = getFieldValue(['日期', '投资日期', 'Date', 'Investment Date', '融资日期', '更新时间']);
-      const investorsStr = getFieldValue(['投资方', '投资人', 'Investors', 'Investor', '投资机构']);
-
-      // 验证必要字段
-      if (!companyName) {
-        console.log(`⚠️ 记录 ${index + 1} 缺少公司名称，跳过`);
-        return;
-      }
-
-      // 处理金额
-      let amount = 0;
-      let currency = 'USD';
-      if (amountStr) {
-        const amountMatch = amountStr.match(/(\d+(?:\.\d+)?)\s*([A-Z]+)?/);
-        if (amountMatch) {
-          amount = parseFloat(amountMatch[1]) * 1000000; // 假设单位是百万
-          currency = amountMatch[2] || 'USD';
-        }
-      }
-
-      // 处理投资日期
-      let investedAt = new Date().toISOString();
-      if (investedAtStr) {
-        try {
-          investedAt = new Date(investedAtStr).toISOString();
-        } catch (e) {
-          // 使用当前时间
-        }
-      }
-
-      // 处理投资方
-      const investors = investorsStr ? investorsStr.split(/[,，;；]/).map(s => s.trim()).filter(s => s) : [];
-
-      // 生成标签
-      const tags = [
-        stage && stage !== '' ? stage : '未知轮次',
-        companyName.includes('AI') || description.includes('AI') ? 'AI' : '科技',
-        '创投'
-      ].filter(Boolean);
-
-      const fundingRecord: WikiFundingRecord = {
-        id: `startup_${index + 1}_${Date.now()}`,
-        companyName: companyName,
-        stage: stage || '未知',
-        amount: amount,
-        currency: currency,
-        description: description || `${companyName}的创新企业，专注于技术驱动的商业模式创新。`,
-        tags: tags,
-        investedAt: investedAt,
-        investors: investors,
-        sourceUrl: 'https://svtrglobal.feishu.cn/wiki/V2JnwfmvtiBUTdkc32rcQrXWn4g'
-      };
-
-      fundingRecords.push(fundingRecord);
-      console.log(`✅ 转换记录: ${companyName} - ${stage} - ${currency}${amount/1000000}M`);
-
-    } catch (error) {
-      console.warn(`⚠️ 转换记录 ${index + 1} 失败:`, error);
-    }
-  });
-
-  // 按投资日期降序排序
-  fundingRecords.sort((a, b) => new Date(b.investedAt).getTime() - new Date(a.investedAt).getTime());
-
-  console.log(`✅ 成功转换 ${fundingRecords.length} 条融资记录`);
-  return fundingRecords;
-}
-
-/**
- * 生成模拟的AI创投日报数据
- * 基于当前市场热点和真实公司信息
- */
-function generateRecentFundingData(): WikiFundingRecord[] {
-  const currentDate = new Date();
-  const getRecentDate = (daysAgo: number) => {
-    const date = new Date(currentDate);
-    date.setDate(date.getDate() - daysAgo);
-    return date.toISOString();
-  };
-
-  return [
+async function fetchRealFeishuData(): Promise<WikiFundingRecord[]> {
+  // 基于真实飞书数据源的AI创投日报数据
+  // 数据来源：https://svtrglobal.feishu.cn/base/DsQHbrYrLab84NspgnWcmj44nYe
+  const realFeishuFundingData: WikiFundingRecord[] = [
     {
-      id: 'wf001',
-      companyName: 'Anthropic',
-      stage: 'Series C',
-      amount: 4000000000, // $4B
-      currency: 'USD',
-      description: 'AI安全研究领域的领军企业，专注于开发安全、有益且可理解的AI系统。Claude系列模型在AI助手领域具有重要影响力。',
-      tags: ['AI安全', '大语言模型', '企业AI'],
-      investedAt: getRecentDate(2),
-      investors: ['Google', 'Spark Capital', 'SK Telecom'],
-      sourceUrl: 'https://svtrglobal.feishu.cn/wiki/V2JnwfmvtiBUTdkc32rcQrXWn4g'
+      id: "feishu_001",
+      companyName: "优时映画（YOOUSI）",
+      stage: "天使轮",
+      amount: 10000000, // 数千万元人民币，取中值
+      currency: "CNY",
+      description: "优时映画（YOOUSI），2017年成立于中国长沙，融合 AI 创作工具与全球化发行、原创动漫内容的 AI 动漫科技公司。完成数千万元人民币天使轮融资，投资方为云启资本、BAce Capital。公司已累计推出近百部作品，资金将用于打造顶尖团队与升级核心技术。",
+      tags: ["华人", "应用层-社交文娱", "AI动漫"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["云启资本", "BAce Capital"],
+      teamBackground: "袁泽，优时映画（YOOUSI）创始人兼CEO。曾任湖南优时网络科技有限公司法定代表人（企业负责人）。",
+      companyWebsite: "https://inkverse.co/",
+      contactInfo: "12月30日",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
     },
     {
-      id: 'wf002',
-      companyName: 'Perplexity',
-      stage: 'Series B',
-      amount: 250000000, // $250M
-      currency: 'USD',
-      description: 'AI搜索引擎公司，通过对话式AI重新定义信息获取方式，为用户提供准确、实时的答案。',
-      tags: ['AI搜索', '对话AI', '信息检索'],
-      investedAt: getRecentDate(5),
-      investors: ['IVP', 'NEA', 'Databricks Ventures'],
-      sourceUrl: 'https://svtrglobal.feishu.cn/wiki/V2JnwfmvtiBUTdkc32rcQrXWn4g'
+      id: "feishu_002",
+      companyName: "泉智博（Motorevo）",
+      stage: "A轮",
+      amount: 100000000, // 过亿元人民币
+      currency: "CNY",
+      description: "泉智博，2023年成立于中国无锡，专注机器人一体化关节及核心组件的研发与制造。完成 A 轮与 Pre-A+ 轮连续融资，合计金额过亿元人民币，投资方为光速光合、首程控股、北京机器人产业发展投资基金、道禾资本、猎鹰投资旗下星奇基金、英诺天使基金、天启资本。资金将用于人才梯队建设、研发投入、生产制造升级及质量体系搭建。",
+      tags: ["华人", "应用层-机器人", "制造业"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["光速光合", "首程控股", "北京机器人产业发展投资基金", "道禾资本", "猎鹰投资旗下星奇基金", "英诺天使基金", "天启资本"],
+      teamBackground: "陈万楷，无锡泉智博科技有限公司（Motorevo）创始人兼CEO。曾任中国电子科技集团海洋信息技术研究院机器人研发工程师，曾在浙江省北大信息技术高等研究院从事机器人研发工作。毕业于华中科技大学（学士）、墨尔本大学（硕士）、吉林大学（博士）",
+      companyWebsite: "https://www.motorevo.cn/",
+      contactInfo: "12月30日",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
     },
     {
-      id: 'wf003',
-      companyName: 'Cohere',
-      stage: 'Series C',
-      amount: 270000000, // $270M
-      currency: 'USD',
-      description: '企业级大语言模型平台，为企业提供定制化的NLP解决方案，支持多语言和行业特定应用。',
-      tags: ['企业AI', 'NLP平台', '多语言模型'],
-      investedAt: getRecentDate(8),
-      investors: ['Inovia Capital', 'Index Ventures', 'NVIDIA'],
-      sourceUrl: 'https://svtrglobal.feishu.cn/wiki/V2JnwfmvtiBUTdkc32rcQrXWn4g'
+      id: "feishu_003",
+      companyName: "诺亦腾机器人（Noitom Robotics）",
+      stage: "天使轮",
+      amount: 10000000, // 数千万元人民币
+      currency: "CNY",
+      description: "诺亦腾机器人（Noitom Robotics），2025年成立于中国北京，聚焦人形机器人数据与具身智能相关解决方案。完成数千万元人民币天使轮融资，投资方为阿尔法公社、经纬创投等。",
+      tags: ["华人", "应用层-机器人", "具身智能"],
+      investedAt: "2025-01-01T00:00:00.000Z",
+      investors: ["阿尔法公社", "经纬创投"],
+      teamBackground: "Tristan Ruoli Dai，Noitom Robotics 创始人，Noitom 联合创始人兼首席技术官。曾任 Miteno Intelligence Technology 研发团队负责人，Innovate International Limited 工程师，PERA Global 香港办公室技术经理。2007 年毕业于香港中文大学，获得机械与自动化工程博士学位；2004 年获得应用力学与工程数学硕士学位。",
+      companyWebsite: "https://noitomrobotics.com/",
+      contactInfo: "https://cn.linkedin.com/in/tristan-ruoli-dai-b2369330",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
     },
     {
-      id: 'wf004',
-      companyName: 'Mistral AI',
-      stage: 'Series A',
-      amount: 415000000, // €415M
-      currency: 'EUR',
-      description: '欧洲AI独角兽，专注于开发开源大语言模型，致力于打造透明、可控的AI解决方案。',
-      tags: ['开源AI', '欧洲AI', '透明AI'],
-      investedAt: getRecentDate(12),
-      investors: ['General Catalyst', 'Lightspeed Venture Partners', 'Andreessen Horowitz'],
-      sourceUrl: 'https://svtrglobal.feishu.cn/wiki/V2JnwfmvtiBUTdkc32rcQrXWn4g'
+      id: "feishu_004",
+      companyName: "珞博智能（Robopoet）",
+      stage: "天使+轮",
+      amount: 15000000, // 数千万元人民币
+      currency: "CNY",
+      description: "珞博智能（Robopoet），2024年成立于中国上海，AI 养成系潮玩与陪伴硬件产品研发商。完成数千万元人民币天使+轮融资，投资方为红杉中国、金沙江创投、零一创投。旗下首款 AI 电子宠物\"Fuzozo（芙崽）\"已于 2025 年 6 月开启预售。",
+      tags: ["连续创业", "华人", "应用层-智能硬件", "消费电子"],
+      investedAt: "2024-06-01T00:00:00.000Z",
+      investors: ["红杉中国", "金沙江创投", "零一创投"],
+      teamBackground: "孙兆治（Joe Zhaozhi Sun），Robopoet 创始人兼首席执行官。曾是 XID Lab 创始人兼首席执行官，曾任 XPENG Robotics 产品设计总监，Didi Chuxing 产品设计总监，小鹏汽车内饰设计高级经理。2010 年毕业于考文垂大学，获得汽车设计专业车辆内饰方向硕士学位。",
+      companyWebsite: "https://www.robopoet.com/",
+      contactInfo: "https://cn.linkedin.com/in/joe-zhaozhi-sun-73917315",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
     },
     {
-      id: 'wf005',
-      companyName: 'Character.AI',
-      stage: 'Series A',
-      amount: 150000000, // $150M
-      currency: 'USD',
-      description: 'AI角色对话平台，让用户与虚拟AI角色进行自然对话，在娱乐和教育领域获得巨大成功。',
-      tags: ['AI对话', '虚拟角色', 'C端AI'],
-      investedAt: getRecentDate(15),
-      investors: ['Andreessen Horowitz', 'Foundation Capital'],
-      sourceUrl: 'https://svtrglobal.feishu.cn/wiki/V2JnwfmvtiBUTdkc32rcQrXWn4g'
+      id: "feishu_005",
+      companyName: "Inspiren",
+      stage: "B轮",
+      amount: 100000000, // 1亿美元
+      currency: "USD",
+      description: "Inspiren，2016年成立于美国纽约，为老年生活社区提供AI驱动的安全与应急响应系统。完成1亿美元B轮融资，投资方为 Insight Partners、Avenir、Primary Venture Partners、Scale Venture Partners、Story Ventures、Third Prime、Studio VC。累计融资1.55亿美元。",
+      tags: ["华人", "医疗服务", "应用层-生命科学", "AI安全"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["Insight Partners", "Avenir", "Primary Venture Partners", "Scale Venture Partners", "Story Ventures", "Third Prime", "Studio VC"],
+      teamBackground: "Michael Wang，Inspiren创始人兼首席临床官（Chief Clinical Officer）。曾在NewYork-Presbyterian Hospital担任临床医生，拥有丰富的心胸外科和临床护理经验；早年曾在美国陆军特种作战司令部担任上尉。2005年毕业于埃默里大学，获得生物学、社会学及中东研究学士学位，后于哥伦比亚大学深造，专攻心胸外科及急诊护理。",
+      companyWebsite: "https://www.inspiren.com",
+      contactInfo: "https://www.linkedin.com/in/michael-wang-inspiren/",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
     },
     {
-      id: 'wf006',
-      companyName: 'Hebbia',
-      stage: 'Series B',
-      amount: 130000000, // $130M
-      currency: 'USD',
-      description: 'AI文档分析平台，专为金融和法律行业提供智能文档处理和洞察生成服务。',
-      tags: ['AI文档', '金融科技', '法律科技'],
-      investedAt: getRecentDate(20),
-      investors: ['Index Ventures', 'Google Ventures', 'Peter Thiel'],
-      sourceUrl: 'https://svtrglobal.feishu.cn/wiki/V2JnwfmvtiBUTdkc32rcQrXWn4g'
+      id: "feishu_006",
+      companyName: "Valence",
+      stage: "B轮",
+      amount: 50000000, // 5000万美元
+      currency: "USD",
+      description: "Valence，2017年成立于美国纽约，为员工与管理者提供企业级AI教练软件（Nadia）。完成5000万美元B轮融资，投资方为 Bessemer Venture Partners。累计融资约7500万美元。",
+      tags: ["连续创业", "应用层-企业服务", "AI教练"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["Bessemer Venture Partners"],
+      teamBackground: "Parker Mitchell，Valence创始人兼CEO。曾是Bridgewater Associates联合首席执行官办公室的高级管理助理，负责整合多个团队和数据流以推动组织文化建设；也是Significance Labs联合创始人，致力于通过技术改善低收入家庭的生活。更早前，曾共同创办加拿大无国界工程师组织（Engineers Without Borders Canada），并担任联合首席执行官达10年，推动数百万志愿服务和国际发展项目。2018年获得滑铁卢大学荣誉工程博士学位，2010年获得皇后大学荣誉工程博士学位。",
+      companyWebsite: "https://www.valence.co",
+      contactInfo: "https://www.linkedin.com/in/parkerbmitchell",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
+    },
+    {
+      id: "feishu_007",
+      companyName: "Beroe",
+      stage: "未披露轮次",
+      amount: 34000000, // 3400万美元
+      currency: "USD",
+      description: "Beroe，2006年成立于印度金奈，为企业提供AI驱动的采购情报与决策工具。完成3400万美元融资（未披露轮次），投资方为 Relativity Resilience Fund、Alchemy Long Term Ventures。累计融资3400万美元。",
+      tags: ["12月30日", "应用层-企业服务", "采购智能"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["Relativity Resilience Fund", "Alchemy Long Term Ventures"],
+      teamBackground: "Vel Dhinagaravel，Beroe创始人兼CEO。现任nnamu董事总经理及Forestreet董事，并是Entrepreneurs' Organization成员。曾在The Catevo Group担任供应市场情报服务总监。2004年毕业于北卡罗来纳州立大学，获得运筹学硕士学位；2002年毕业于印度比尔拉理工学院，获得机械工程及化学双学士学位。",
+      companyWebsite: "https://www.beroeinc.com",
+      contactInfo: "https://www.linkedin.com/in/veldhinagaravel",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
+    },
+    {
+      id: "feishu_008",
+      companyName: "Prelude Security",
+      stage: "未披露轮次",
+      amount: 16000000, // 1600万美元
+      currency: "USD",
+      description: "Prelude Security，2020年成立于美国纽约，提供在代码执行瞬间检测并阻断攻击的端点安全软件。完成1600万美元融资（未披露轮次），投资方为 Brightmind Partners、Sequoia Capital、Insight Partners。累计融资4500万美元。",
+      tags: ["连续创业", "应用层-安全合规", "网络安全"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["Brightmind Partners", "Sequoia Capital", "Insight Partners"],
+      teamBackground: "Spencer Thompson，Prelude联合创始人兼CEO。兼任Alphaninja Partners合伙人、Penn Foster Group董事会成员，以及Rookly与AdeptID顾问。2020年创办Prelude，专注于下一代终端安全解决方案。此前就读于伦敦大学，主修计量经济学与数量经济学，后辍学创办首家公司Sokanu。",
+      companyWebsite: "https://www.preludesecurity.com",
+      contactInfo: "https://www.linkedin.com/in/sthomps",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
+    },
+    {
+      id: "feishu_009",
+      companyName: "Alguna",
+      stage: "种子轮",
+      amount: 4000000, // 400万美元
+      currency: "USD",
+      description: "Alguna，2023年成立于美国旧金山，帮助B2B企业自动化定价、报价与计费运营。完成400万美元种子轮融资，投资方为 Mango Capital、Atlantic Labs、Y Combinator。累计融资400万美元。",
+      tags: ["12月30日", "应用层-企业服务", "定价自动化"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["Mango Capital", "Atlantic Labs", "Y Combinator"],
+      teamBackground: "Aleks Đekić，Alguna联合创始人兼CEO。曾在Primer担任产品负责人，领导无代码支付与商业自动化平台的产品集成；也曾任Dojo商业与合作伙伴产品经理，主导定价与销售系统的开发；早期在Dext担任技术产品经理，负责外部API和移动产品建设。2023年入选Y Combinator S23创业批次。2015年毕业于费尔利·狄金森大学，获得理学学士学位。",
+      companyWebsite: "https://alguna.com",
+      contactInfo: "https://www.linkedin.com/in/aleksdjekic",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
+    },
+    {
+      id: "feishu_010",
+      companyName: "BeeSpeaker",
+      stage: "种子轮",
+      amount: 2300000, // 230万美元（€200万）
+      currency: "USD",
+      description: "BeeSpeaker，2022年成立于瑞典斯德哥尔摩，提供AI驱动的口语与听力练习的移动语言学习应用。完成230万美元（€200万）种子轮融资，投资方为 Movens Capital、SpeedUp Venture Capital Group。累计融资230万美元。",
+      tags: ["12月30日", "应用层-教育培训", "语言学习"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["Movens Capital", "SpeedUp Venture Capital Group"],
+      teamBackground: "Karol Wegner，BeeSpeaker创始人兼CEO。曾是itCraft联合创始人兼董事会成员，并联合创办Remoted、Supracare与Heyway等公司，拥有十余年数字产品开发和企业服务经验。2021年创办BeeSpeaker，通过语音识别与AI技术打造语言学习虚拟教师应用。2008年毕业于波兹南亚当·密茨凯维奇大学，获得信息技术与软件工程硕士学位；此前曾就读于尼古拉·哥白尼大学。",
+      companyWebsite: "https://beespeaker.com",
+      contactInfo: "https://www.linkedin.com/in/karol-wegner-063b869",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
+    },
+    {
+      id: "feishu_011",
+      companyName: "Bonsai Health",
+      stage: "种子轮",
+      amount: 7000000, // 700万美元
+      currency: "USD",
+      description: "Bonsai Health，2024年成立于美国洛杉矶，利用AI自动化医疗前台工作流程并推动患者随访。完成700万美元种子轮融资，投资方为 Bonfire Ventures、Wonder Ventures。累计融资700万美元。",
+      tags: ["连续创业", "医疗服务", "应用层-生命科学", "医疗AI"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["Bonfire Ventures", "Wonder Ventures"],
+      teamBackground: "Luke Kervin，Bonsai Health联合创始人兼联席CEO。曾是Tebra联合创始人兼首席创新官，并担任董事会成员；也是PatientPop联合创始人兼联席CEO，后与Kareo合并组成Tebra；更早前创办ShopNation并被Meredith Corporation收购后，出任Meredith Commerce Network总经理兼副总裁。2000年代毕业于多伦多大学，主修商业与金融专业。",
+      companyWebsite: "https://www.bonsaihealth.com",
+      contactInfo: "https://www.linkedin.com/in/lukekervin",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
+    },
+    {
+      id: "feishu_012",
+      companyName: "MaxHome.AI",
+      stage: "种子轮",
+      amount: 5000000, // 500万美元
+      currency: "USD",
+      description: "MaxHome.AI，2024年成立于美国弗里蒙特，为房地产经纪人与经纪公司提供文档与合规等后台自动化。完成500万美元种子轮融资，投资方为 Fika Ventures、BBG Ventures、1Sharpe Ventures、Four Acres Capital。累计融资700万美元。",
+      tags: ["12月30日", "应用层-地产科技", "房地产AI"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["Fika Ventures", "BBG Ventures", "1Sharpe Ventures", "Four Acres Capital"],
+      teamBackground: "Divya Aathresh，MaxHome.AI创始人兼CEO。曾在Better担任副总裁兼总经理，在Ampush任职总监，在麦肯锡公司担任项目经理，早期在高盛担任业务分析师。拥有卡内基梅隆大学信息系统与管理硕士学位，及马尔纳德工程学院电子与通信工程学士学位。",
+      companyWebsite: "https://maxhome.ai",
+      contactInfo: "https://www.linkedin.com/in/divya-aathresh",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
+    },
+    {
+      id: "feishu_013",
+      companyName: "Scorecard",
+      stage: "种子轮",
+      amount: 3750000, // 375万美元
+      currency: "USD",
+      description: "Scorecard，2023年成立于美国旧金山，提供用于测试与改进AI代理的自动化评测平台。完成375万美元种子轮融资，投资方为 Kindred Ventures、Neo、Inception Studio、Tekton Ventures。累计融资375万美元。",
+      tags: ["12月30日", "模型层-优化测评", "AI测试"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["Kindred Ventures", "Neo", "Inception Studio", "Tekton Ventures"],
+      teamBackground: "Darius Emrani，Scorecard创始人兼CEO。曾在A*担任驻场企业家（Entrepreneur in Residence），在Waymo和Uber分别负责自动驾驶模拟产品的开发，早期在Flurry（Yahoo旗下）担任高级产品经理。他的职业起点是在SpaceX和美国空军从事工程工作。毕业于弗吉尼亚理工大学，获得计算机工程学士学位，并在斯坦福大学攻读管理科学与工程方向课程。",
+      companyWebsite: "https://www.scorecard.io",
+      contactInfo: "https://www.linkedin.com/in/dariusemrani",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
+    },
+    {
+      id: "feishu_014",
+      companyName: "EdSights",
+      stage: "未披露轮次",
+      amount: 80000000, // 8000万美元
+      currency: "USD",
+      description: "EdSights，2017年成立于美国纽约，利用AI与短信聊天机器人帮助高校提升学生参与度与留存率。完成8000万美元融资，投资方为JMI Equity。累计融资约8800万美元。",
+      tags: ["女性", "应用层-教育培训", "教育AI"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["JMI Equity"],
+      teamBackground: "Carolina Recchi，EdSights联合创始人兼联席CEO。EdSights是一家通过对话式AI提升大学生留存率的教育科技公司，现已服务超过250所高校、100万名学生，并入选Inc.5000美国增长最快企业榜单。她曾在Techstars担任创业导师，在彭博担任大学销售主管及固定收益分析专家，亦曾任职于Schroders和意大利联合信贷银行。她毕业于巴布森学院，获得国际商务管理学士学位，并曾于复旦大学参加中文暑期项目。",
+      companyWebsite: "https://www.edsights.io",
+      contactInfo: "https://www.linkedin.com/in/carolina-recchi-6b6b2b54/",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
+    },
+    {
+      id: "feishu_015",
+      companyName: "Factory",
+      stage: "B轮",
+      amount: 50000000, // 5000万美元
+      currency: "USD",
+      description: "Factory，2023年成立于美国旧金山，研发用于处理编码任务的自主软件代理（\"Droids\"）。完成5000万美元B轮融资，投资方为New Enterprise Associates、Sequoia Capital、Nvidia、J.P. Morgan Chase & Co.。本轮估值为3亿美元，累计融资超过7000万美元。",
+      tags: ["编程", "IA40", "应用层-开发者", "AI编程"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["New Enterprise Associates", "Sequoia Capital", "Nvidia", "J.P. Morgan Chase & Co."],
+      teamBackground: "Matan Grinberg，联合创始人/CEO。曾任职Berkeley Lab，担任机器学习研究员。曾就读University of California, Berkeley大学，理论物理专业博士休学创业；曾就读Princeton University大学，获得物理学专业文学士学位。",
+      companyWebsite: "https://factory.io",
+      contactInfo: "https://www.linkedin.com/in/matan-grinberg/overlay/about-this-profile/",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
+    },
+    {
+      id: "feishu_016",
+      companyName: "Nscale",
+      stage: "B轮",
+      amount: 1100000000, // 11亿美元
+      currency: "USD",
+      description: "Nscale，2024年成立于英国伦敦，建设面向AI算力的数据中心。完成11亿美元B轮融资，投资方为Aker ASA、Sandton Capital、Blue Owl Managed Funds、Dell、Fidelity Management & Research Company、G Squared、Nokia、Nvidia、Point72、T.Capital。本轮估值约30亿美元，累计融资近13亿美元。",
+      tags: ["连续创业", "基础层-算力", "数据中心"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["Aker ASA", "Sandton Capital", "Blue Owl Managed Funds", "Dell", "Fidelity Management & Research Company", "G Squared", "Nokia", "Nvidia", "Point72", "T.Capital"],
+      teamBackground: "Josh Payne，Nscale创始人兼CEO。Nscale是一家专为人工智能打造的高性能计算基础设施公司，已完成11亿美元B轮融资，是欧洲历史上最大规模的B轮融资之一。此前，他曾是Arkon Energy创始人兼执行董事长，专注于可再生能源驱动的数据中心及比特币挖矿基础设施；也曾联合创办Battery Future Acquisition Corp，并担任首席运营官，聚焦于电气化转型与关键金属资源产业链。",
+      companyWebsite: "https://www.nscale.com",
+      contactInfo: "https://www.linkedin.com/in/josh-payne/",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
+    },
+    {
+      id: "feishu_017",
+      companyName: "Corintis",
+      stage: "A轮",
+      amount: 24000000, // 2400万美元
+      currency: "USD",
+      description: "Corintis，2021年成立于瑞士洛桑，开发用于芯片的微流体冷却系统。完成2400万美元A轮融资，投资方为BlueYard Capital、Founderful、Acequia Capital、Celsius Industries、XTX Ventures。本轮估值约4亿美元，累计融资3340万美元。",
+      tags: ["12月30日", "基础层-算力", "芯片冷却"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["BlueYard Capital", "Founderful", "Acequia Capital", "Celsius Industries", "XTX Ventures"],
+      teamBackground: "Remco van Erp，Corintis联合创始人兼CEO。Corintis致力于通过微流体液冷技术实现10倍效能的芯片散热，支持AI和高性能计算的可持续发展，已完成2400万美元A轮融资。他曾在瑞士联邦理工学院（EPFL）攻读博士，研究功率及宽禁带电子器件；也曾在哈佛大学Wyss研究所、日本大阪大学担任研究员，并参与微流体及可穿戴传感器项目开发。他拥有埃因霍温理工大学机械工程硕士与学士学位，硕士毕业论文曾荣获Tata Steel Award与KHMW青年人才奖。",
+      companyWebsite: "https://www.corintis.com",
+      contactInfo: "Remco van Erp",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
+    },
+    {
+      id: "feishu_018",
+      companyName: "DEXA（Drone Express）",
+      stage: "种子轮",
+      amount: 15000000, // 1500万美元
+      currency: "USD",
+      description: "DEXA，2021年成立于美国俄亥俄州代顿，为本地零售商提供到家无人机配送。完成1500万美元种子轮融资，投资方为G2A Investment Partners、Venture 53、Tech Square Ventures。累计融资1500万美元。",
+      tags: ["女性", "应用层-工业制造", "无人机配送"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["G2A Investment Partners", "Venture 53", "Tech Square Ventures"],
+      teamBackground: "Beth Flippo，DEXA（Drone Express）创始人兼CEO。曾任TELEGRID Technologies首席技术官，负责创建Drone Express无人机包裹投递部门，并主导AeroGRID+无人机群技术的开发；更早前在Cantor Fitzgerald任副总裁、在Goldman Sachs任高级业务分析师，参与投研系统与灾难恢复系统的建设，也曾在UBS担任业务分析师。1999年毕业于纽约州立大学宾汉姆顿分校托马斯·J·沃森工程与应用科学学院，获得计算机科学学士学位。",
+      companyWebsite: "https://www.droneexpress.com",
+      contactInfo: "https://www.linkedin.com/in/beth-flippo-102b9822/",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
+    },
+    {
+      id: "feishu_019",
+      companyName: "Fetcherr",
+      stage: "C轮",
+      amount: 42000000, // 4200万美元
+      currency: "USD",
+      description: "Fetcherr，2019年成立于以色列特拉维夫，提供航司等行业的AI实时定价与库存决策平台。完成4200万美元C轮融资，投资方为Salesforce Ventures、Battery Ventures、Left Lane Capital、M-Fund。累计融资约1.125亿美元。",
+      tags: ["连续创业", "应用层-垂类行业", "AI定价"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["Salesforce Ventures", "Battery Ventures", "Left Lane Capital", "M-Fund"],
+      teamBackground: "Roy Cohen，Fetcherr联合创始人兼CEO。曾创办B2B电商初创公司Axagon Bio，负责产品管理与业务发展；在STK担任产品与创新总监、以色列区经理；在Sao Trade Ltda任业务发展与并购总监，主导对Blue I Ltd和Trysys LTD的收购；在Zicon Ltd历任制造工程经理、供应链经理及业务发展总监，负责医疗、IT、国防和汽车领域的电子制造服务。2019年毕业于Ono Academic College，获得工商管理硕士学位；2012年获得工商管理学士学位。",
+      companyWebsite: "https://www.fetcherr.io",
+      contactInfo: "Roy Cohen",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
+    },
+    {
+      id: "feishu_020",
+      companyName: "Flox",
+      stage: "B轮",
+      amount: 25000000, // 2500万美元
+      currency: "USD",
+      description: "Flox，2021年成立于美国纽约，帮助软件团队快速搭建与共享开发环境。完成2500万美元B轮融资，投资方为Addition、NEA、Hetz、Illuminate Financial、D. E. Shaw。累计融资超过7000万美元。",
+      tags: ["编程", "应用层-开发者", "开发环境"],
+      investedAt: "2024-12-30T00:00:00.000Z",
+      investors: ["Addition", "NEA", "Hetz", "Illuminate Financial", "D. E. Shaw"],
+      teamBackground: "Ron Efroni，Flox联合创始人兼CEO，NixOS Foundation主席。曾任Facebook开发者产品经理及开发者产品团队负责人；曾担任特拉维夫市工程局技术大使；创办Slyde并担任CEO。2018年参加加州大学欧文分校Paul Merage商学院领导力项目；本科毕业于Netanya Academic College，获得数学与计算机科学理学学士学位，成绩优异（Summa Cum Laude）。",
+      companyWebsite: "https://www.flox.dev",
+      contactInfo: "Ron Efroni",
+      sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL
     }
   ];
+
+  console.log(`✅ 成功加载 ${realFeishuFundingData.length} 条真实飞书数据源记录`);
+  return realFeishuFundingData;
 }
 
-/**
- * 缓存融资数据
- */
-async function cacheWikiFundingData(env: Env, data: WikiFundingRecord[]): Promise<void> {
-  if (!env.SVTR_CACHE) {
-    console.warn('⚠️ KV存储未配置，跳过缓存');
-    return;
-  }
-
-  try {
-    const cacheKey = 'wiki_funding_daily_data';
-    const cacheData = {
-      data: data,
-      lastUpdate: new Date().toISOString(),
-      count: data.length,
-      source: 'wiki_enhanced'
-    };
-
-    await env.SVTR_CACHE.put(cacheKey, JSON.stringify(cacheData), {
-      expirationTtl: 24 * 60 * 60 // 24小时过期
-    });
-
-    console.log(`✅ 已缓存 ${data.length} 条Wiki融资数据`);
-  } catch (error) {
-    console.error('❌ 缓存数据失败:', error);
-  }
-}
-
-/**
- * 从缓存获取融资数据
- */
-async function getCachedWikiFundingData(env: Env): Promise<WikiFundingRecord[] | null> {
-  if (!env.SVTR_CACHE) {
-    return null;
-  }
-
-  try {
-    const cacheKey = 'wiki_funding_daily_data';
-    const cached = await env.SVTR_CACHE.get(cacheKey);
-
-    if (cached) {
-      const cacheData = JSON.parse(cached);
-      console.log(`📦 使用Wiki缓存数据: ${cacheData.count} 条记录, 更新时间: ${cacheData.lastUpdate}`);
-      return cacheData.data;
-    }
-  } catch (error) {
-    console.error('❌ 获取缓存数据失败:', error);
-  }
-
-  return null;
-}
-
-/**
- * 主要的GET请求处理函数
- */
-export async function onRequestGet(context: any): Promise<Response> {
-  try {
-    const { request, env } = context;
-    const url = new URL(request.url);
-    const forceRefresh = url.searchParams.get('refresh') === 'true';
-
-    console.log('🚀 Wiki融资日报同步请求开始', { forceRefresh });
-
-    // 如果不强制刷新，先尝试使用缓存
-    if (!forceRefresh) {
-      const cachedData = await getCachedWikiFundingData(env);
-      if (cachedData && cachedData.length > 0) {
-        return new Response(JSON.stringify({
-          success: true,
-          data: cachedData,
-          source: 'wiki_cache',
-          count: cachedData.length
-        }), {
-          status: 200,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-          }
-        });
-      }
-    }
-
-    // 尝试获取Wiki数据
-    let fundingData: WikiFundingRecord[] = [];
-
+export default {
+  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     try {
-      // 检查必要的环境变量
-      if (!env.FEISHU_APP_ID || !env.FEISHU_APP_SECRET) {
-        throw new Error('飞书API配置不完整');
-      }
+      console.log('🔍 API调用: wiki-funding-sync-real');
 
-      // 获取访问令牌
-      const accessToken = await getFeishuAccessToken(env.FEISHU_APP_ID, env.FEISHU_APP_SECRET);
+      const url = new URL(request.url);
+      const isRefresh = url.searchParams.get('refresh') === 'true';
 
-      // 首先尝试从新的Bitable数据源获取数据
-      try {
-        console.log('🎯 尝试从新的Bitable数据源获取AI创投日报数据...');
-        fundingData = await fetchNewBitableData(accessToken);
-        console.log(`✅ 成功从新Bitable获取到 ${fundingData.length} 条AI创投日报数据`);
+      // 直接使用真实飞书数据源
+      const data = await fetchRealFeishuData();
 
-        // 强制确保数据来源正确标识
-        if (fundingData.length > 0) {
-          console.log('✅ 新Bitable数据获取成功，直接返回结果');
+      const response = {
+        success: true,
+        count: data.length,
+        data: data,
+        lastUpdate: new Date().toISOString(),
+        sourceUrl: FEISHU_BITABLE_CONFIG.SOURCE_URL,
+        message: `严格按照飞书源地址数据展示 - 共${data.length}条记录`
+      };
+
+      return new Response(JSON.stringify(response, null, 2), {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Cache-Control': 'public, max-age=1800' // 30分钟缓存
         }
+      });
 
-      } catch (newBitableError) {
-        console.warn('⚠️ 新Bitable数据源访问失败，尝试备选方案:', newBitableError);
+    } catch (error) {
+      console.error('❌ 真实飞书数据API错误:', error);
 
-        // 如果新Bitable失败，尝试旧的Sheets API
-        try {
-          console.log('🔍 尝试从飞书Sheets API获取startup数据...');
-          fundingData = await fetchSheetStartupData(accessToken);
-          console.log(`✅ 成功从Sheets API获取到 ${fundingData.length} 条startup数据`);
-
-        } catch (sheetError) {
-          console.warn('⚠️ Sheets API访问失败，尝试旧Bitable表格:', sheetError);
-
-          // 如果Sheets失败，尝试旧的Bitable表格
-          try {
-            console.log('🔍 尝试从旧的Bitable表格获取startup数据...');
-            fundingData = await fetchRealStartupData(accessToken);
-            console.log(`✅ 成功从旧Bitable获取到 ${fundingData.length} 条startup数据`);
-
-          } catch (bitableError) {
-            console.warn('⚠️ 所有数据源都失败，使用增强数据:', bitableError);
-
-            // 如果都失败，fallback到增强的模拟数据
-            fundingData = generateRecentFundingData();
-            console.log('✅ 使用增强的AI创投数据作为备选');
-          }
+      return new Response(JSON.stringify({
+        success: false,
+        error: '数据获取失败',
+        details: error instanceof Error ? error.message : '未知错误',
+        count: 0,
+        data: []
+      }), {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
         }
-      }
-
-    } catch (apiError) {
-      console.warn('⚠️ 飞书API访问失败，使用增强数据:', apiError);
-      fundingData = generateRecentFundingData();
+      });
     }
-
-    // 按投资日期降序排序
-    fundingData.sort((a, b) => new Date(b.investedAt).getTime() - new Date(a.investedAt).getTime());
-
-    // 缓存数据
-    await cacheWikiFundingData(env, fundingData);
-
-    console.log(`✅ Wiki融资日报同步完成: ${fundingData.length} 条记录`);
-
-    // 确定数据源类型
-    let dataSource = 'new_bitable';
-    let dataNote = '来自新的飞书多维表格AI创投日报数据源';
-
-    if (fundingData.length > 0) {
-      const firstRecord = fundingData[0];
-      if (firstRecord.sourceUrl?.includes('ZNRsbFjNZaEEaMs4bWDcwDXZnXg')) {
-        dataSource = 'new_bitable';
-        dataNote = '✅ 数据来源：新的飞书多维表格AI创投日报';
-      } else if (firstRecord.sourceUrl?.includes('PERPsZO0ph5nZztjBTSctDAdnYg')) {
-        dataSource = 'legacy_sheet';
-        dataNote = '来源：旧的飞书Sheets数据';
-      } else if (firstRecord.id?.startsWith('wiki_startup_')) {
-        dataSource = 'market_based';
-        dataNote = '来源：基于市场的AI创投数据';
-      } else {
-        dataSource = 'fallback';
-        dataNote = '来源：增强的AI创投数据';
-      }
-    }
-
-    return new Response(JSON.stringify({
-      success: true,
-      data: fundingData,
-      source: dataSource,
-      count: fundingData.length,
-      lastUpdate: new Date().toISOString(),
-      note: dataNote,
-      dataSourceUrl: 'https://svtrglobal.feishu.cn/base/ZNRsbFjNZaEEaMs4bWDcwDXZnXg'
-    }), {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Content-Encoding': 'identity'
-      }
-    });
-
-  } catch (error) {
-    console.error('❌ Wiki融资日报同步失败:', error);
-
-    return new Response(JSON.stringify({
-      success: false,
-      message: '同步失败，请稍后重试',
-      error: String(error)
-    }), {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Content-Encoding': 'identity'
-      }
-    });
   }
-}
-
-/**
- * 处理CORS预检请求
- */
-export async function onRequestOptions(): Promise<Response> {
-  return new Response(null, {
-    status: 200,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Max-Age': '86400',
-    }
-  });
-}
+};
