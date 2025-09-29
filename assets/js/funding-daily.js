@@ -1,3 +1,4 @@
+// Last sync: 2025-09-28T21:53:55.783Z
 // Last sync: 2025-09-22T23:29:19.763Z
 /**
  * 创投日报功能模块
@@ -308,6 +309,127 @@
     else return '1.2';
   }
 
+  // 🏢 从企业介绍中提取公司名称
+  function extractCompanyName(description) {
+    const patterns = [
+      /^([^，。,\s]+)，/, // 句首到第一个逗号的部分
+      /^([A-Za-z\u4e00-\u9fa5\s]+?)（/, // 括号前的部分
+      /([A-Za-z\u4e00-\u9fa5]+)\s*，.*?成立/, // "xxx，成立"模式
+      /([A-Za-z][A-Za-z\s]*[A-Za-z])/, // 英文公司名
+    ];
+
+    for (const pattern of patterns) {
+      const match = description.match(pattern);
+      if (match && match[1] && match[1].length > 1 && match[1].length < 50) {
+        return match[1].trim();
+      }
+    }
+    return null;
+  }
+
+  // 💰 从企业介绍中提取融资金额
+  function extractAmount(description) {
+    const patterns = [
+      /(\d+(?:\.\d+)?)\s*亿美元/g,
+      /(\d+(?:\.\d+)?)\s*亿元/g,
+      /(\d+(?:\.\d+)?)\s*千万美元/g,
+      /(\d+(?:\.\d+)?)\s*千万元/g,
+      /(\d+(?:\.\d+)?)\s*万美元/g,
+      /(\d+(?:\.\d+)?)\s*万元/g,
+      /\$(\d+(?:\.\d+)?)\s*[MB]/g,
+      /(\d+(?:\.\d+)?)\s*[MB]/g,
+    ];
+
+    for (const pattern of patterns) {
+      const match = description.match(pattern);
+      if (match) {
+        const amount = parseFloat(match[1]);
+        const text = match[0];
+
+        if (text.includes('亿美元')) return amount * 100000000;
+        if (text.includes('亿元')) return amount * 100000000 / 7;
+        if (text.includes('千万美元')) return amount * 10000000;
+        if (text.includes('千万元')) return amount * 10000000 / 7;
+        if (text.includes('万美元')) return amount * 10000;
+        if (text.includes('万元')) return amount * 10000 / 7;
+        if (text.includes('$') && text.includes('M')) return amount * 1000000;
+        if (text.includes('$') && text.includes('B')) return amount * 1000000000;
+        if (text.includes('M')) return amount * 1000000;
+        if (text.includes('B')) return amount * 1000000000;
+      }
+    }
+    return 10000000; // 默认1000万美元
+  }
+
+  // 🎯 从企业介绍中提取融资轮次
+  function extractStage(description) {
+    const stagePatterns = [
+      { pattern: /天使轮|天使/, stage: 'Seed' },
+      { pattern: /种子轮/, stage: 'Seed' },
+      { pattern: /Pre-A\+?轮|PreA/, stage: 'Pre-A' },
+      { pattern: /A\+?轮融资|A轮/, stage: 'Series A' },
+      { pattern: /B\+?轮融资|B轮/, stage: 'Series B' },
+      { pattern: /C\+?轮融资|C轮/, stage: 'Series C' },
+      { pattern: /D\+?轮融资|D轮/, stage: 'Series D' },
+      { pattern: /IPO|上市/, stage: 'IPO' },
+      { pattern: /战略投资/, stage: 'Strategic' },
+    ];
+
+    for (const { pattern, stage } of stagePatterns) {
+      if (pattern.test(description)) {
+        return stage;
+      }
+    }
+    return 'Seed';
+  }
+
+  // 🏛️ 从企业介绍中提取投资方
+  function extractInvestors(description) {
+    const patterns = [
+      /投资方为\s*([^。，]+)/,
+      /投资人包括\s*([^。，]+)/,
+      /由\s*([^。，]*资本[^。，]*)\s*领投/,
+      /([^。，]*资本|[^。，]*投资|[^。，]*基金)/g,
+    ];
+
+    let investors = [];
+    for (const pattern of patterns) {
+      const matches = description.match(pattern);
+      if (matches) {
+        if (pattern.global) {
+          investors = investors.concat(matches);
+        } else {
+          investors.push(matches[1]);
+        }
+      }
+    }
+
+    // 清理和去重
+    investors = investors
+      .map(inv => inv.replace(/、|等|投资方为|由|领投/g, '').trim())
+      .filter(inv => inv.length > 1 && inv.length < 30)
+      .slice(0, 3); // 最多取3个
+
+    return investors.length > 0 ? investors : ['知名投资机构'];
+  }
+
+  // 👤 从团队背景中提取创始人信息
+  function extractFounder(teamBackground) {
+    const patterns = [
+      /([A-Za-z\u4e00-\u9fa5\s]{2,20})，.*?创始人/,
+      /([A-Za-z\u4e00-\u9fa5\s]{2,20}).*?CEO/,
+      /([A-Za-z\u4e00-\u9fa5\s]{2,20}).*?首席执行官/,
+    ];
+
+    for (const pattern of patterns) {
+      const match = teamBackground.match(pattern);
+      if (match && match[1]) {
+        return match[1].trim();
+      }
+    }
+    return null;
+  }
+
   // 👨‍💼 生成创始人信息
   function generateFoundersInfo(item) {
     // 如果有现成的创始人信息
@@ -506,7 +628,7 @@
       let fundingData = [];
 
       try {
-        const response = await fetch('/api/wiki-funding-sync', {
+        const response = await fetch('/api/wiki-funding-sync?refresh=true', {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -547,8 +669,37 @@
         }
 
         if (result && result.success && result.data) {
-          fundingData = result.data;
-          console.log(`✅ 从${result.source}获取到 ${result.count} 条融资数据`);
+          // 转换飞书API数据格式为前端期望的格式
+          fundingData = result.data.map((item, index) => {
+            // 从企业介绍中提取融资信息
+            const description = item['企业介绍'] || '';
+            const companyName = extractCompanyName(description);
+            const amount = extractAmount(description);
+            const stage = extractStage(description);
+            const investors = extractInvestors(description);
+
+            return {
+              id: item.id || `feishu_${index + 1}`,
+              companyName: companyName || `创新公司${index + 1}`,
+              stage: stage || 'Seed',
+              amount: amount || 10000000,
+              currency: 'USD',
+              description: description,
+              tags: [item['细分领域'] || 'AI', item['二级分类'] || '科技创新'],
+              investedAt: new Date().toISOString(),
+              investors: investors,
+              website: item['公司官网'] || '',
+              companyWebsite: item['公司官网'] || '',
+              contactInfo: item['联系方式'] || '',
+              teamBackground: item['团队背景'] || '',
+              category: item['细分领域'] || 'AI',
+              subCategory: item['二级分类'] || '',
+              founder: extractFounder(item['团队背景'] || ''),
+              sourceUrl: item.sourceUrl || ''
+            };
+          });
+
+          console.log(`✅ 从${result.source}获取到 ${result.count} 条融资数据，已转换格式`);
 
           // 更新时间显示
           updateFundingTimestamp(result.lastUpdate);
@@ -873,8 +1024,6 @@
     }
   }
 
-  // 🔄 暴露翻转函数到全局作用域
-  window.flipCard = flipCard;
 
   // 📱 DOM就绪时初始化
   if (document.readyState === 'loading') {
