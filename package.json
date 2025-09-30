@@ -179,6 +179,6 @@
     "wrangler": "^4.28.1"
   },
   "dependencies": {
-    "dotenv": "^17.2.2"
+    "dotenv": "^17.2.3"
   }
 }
