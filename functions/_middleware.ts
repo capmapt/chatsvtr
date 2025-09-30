@@ -66,10 +66,9 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     newResponse.headers.set(key, value);
   });
   
-  // 性能优化头
-  if (context.request.headers.get('Accept-Encoding')?.includes('gzip')) {
-    newResponse.headers.set('Content-Encoding', 'gzip');
-  }
+  // ⚠️ 移除错误的gzip标记
+  // Cloudflare自动处理压缩，不需要手动设置Content-Encoding
+  // 手动设置会导致浏览器解压缩未压缩的内容，造成数据损坏
   
   // CORS头（如果需要）
   if (pathname.startsWith('/api/')) {

@@ -161,7 +161,7 @@ async function checkFeatureMarkers() {
 // 主执行函数
 async function main() {
   console.log('🚀 AI创投日报部署完整性验证');
-  console.log('=' * 60);
+  console.log('='.repeat(60));
 
   try {
     const integrityCheck = await verifyDeployment();
@@ -172,11 +172,33 @@ async function main() {
       process.exit(0);
     } else {
       console.log('\n⚠️  部署验证发现问题，需要处理！');
-      process.exit(1);
+      console.log('🔧 建议执行修复命令:');
+      console.log('   npm run deploy:cloudflare');
+      console.log('   或者: wrangler pages deploy --commit-dirty=true');
+
+      // 在GitHub Actions环境中，不要因验证失败而退出失败
+      // 这样可以让后续的自动修复流程继续执行
+      if (process.env.GITHUB_ACTIONS === 'true') {
+        console.log('🤖 GitHub Actions环境，继续执行自动修复流程');
+        process.exit(1); // 返回错误码触发修复，但不阻止工作流
+      } else {
+        process.exit(1);
+      }
     }
 
   } catch (error) {
     console.error('❌ 验证过程出错:', error);
+
+    // 在GitHub Actions环境中提供更详细的错误信息
+    if (process.env.GITHUB_ACTIONS === 'true') {
+      console.log('🔍 错误详情:');
+      console.log(`   错误类型: ${error.name}`);
+      console.log(`   错误消息: ${error.message}`);
+      if (error.code) {
+        console.log(`   错误代码: ${error.code}`);
+      }
+    }
+
     process.exit(1);
   }
 }

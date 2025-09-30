@@ -1,4 +1,4 @@
-// 移动端缓存强制清除脚本 - 版本: 20250923-032318
+// 移动端缓存强制清除脚本 - 版本: 20250923-070227
 (function() {
   'use strict';
 
@@ -6,7 +6,7 @@
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
   if (isMobile) {
-    console.log('📱 移动端缓存清除激活 - v20250923-032318');
+    console.log('📱 移动端缓存清除激活 - v20250923-070227');
 
     // 强制清除所有类型的缓存
     if ('serviceWorker' in navigator) {
@@ -30,18 +30,18 @@
     resources.forEach(function(resource) {
       if (resource.tagName === 'LINK') {
         const href = resource.href;
-        if (href && !href.includes('v=20250923-032318')) {
-          resource.href = href + (href.includes('?') ? '&' : '?') + 'v=20250923-032318&t=' + Date.now();
+        if (href && !href.includes('v=20250923-070227')) {
+          resource.href = href + (href.includes('?') ? '&' : '?') + 'v=20250923-070227&t=' + Date.now();
         }
       } else if (resource.tagName === 'SCRIPT' && resource.src) {
         const src = resource.src;
-        if (src && !src.includes('v=20250923-032318')) {
-          resource.src = src + (src.includes('?') ? '&' : '?') + 'v=20250923-032318&t=' + Date.now();
+        if (src && !src.includes('v=20250923-070227')) {
+          resource.src = src + (src.includes('?') ? '&' : '?') + 'v=20250923-070227&t=' + Date.now();
         }
       }
     });
 
     // 显示版本信息
-    console.log('%c📱 移动端资源已更新到最新版本: 20250923-032318', 'color: #4CAF50; font-weight: bold;');
+    console.log('%c📱 移动端资源已更新到最新版本: 20250923-070227', 'color: #4CAF50; font-weight: bold;');
   }
 })();

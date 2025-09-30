@@ -327,20 +327,22 @@
     return null;
   }
 
-  // 💰 从企业介绍中提取融资金额
+  // 💰 从企业介绍中提取融资金额 - 优先提取本轮融资，避免累计融资
   function extractAmount(description) {
-    const patterns = [
-      /(\d+(?:\.\d+)?)\s*亿美元/g,
-      /(\d+(?:\.\d+)?)\s*亿元/g,
-      /(\d+(?:\.\d+)?)\s*千万美元/g,
-      /(\d+(?:\.\d+)?)\s*千万元/g,
-      /(\d+(?:\.\d+)?)\s*万美元/g,
-      /(\d+(?:\.\d+)?)\s*万元/g,
-      /\$(\d+(?:\.\d+)?)\s*[MB]/g,
-      /(\d+(?:\.\d+)?)\s*[MB]/g,
+    // 先尝试提取本轮融资金额（通常在"完成"后面，"累计"前面）
+    const currentRoundPatterns = [
+      /完成[^，。]*?(\d+(?:\.\d+)?)\s*亿美元[^，。]*?融资/,
+      /完成[^，。]*?(\d+(?:\.\d+)?)\s*亿元[^，。]*?融资/,
+      /完成[^，。]*?(\d+(?:\.\d+)?)\s*千万美元[^，。]*?融资/,
+      /完成[^，。]*?(\d+(?:\.\d+)?)\s*千万元[^，。]*?融资/,
+      /完成[^，。]*?(\d+(?:\.\d+)?)\s*万美元[^，。]*?融资/,
+      /完成[^，。]*?(\d+(?:\.\d+)?)\s*万元[^，。]*?融资/,
+      /完成[^，。]*?\$(\d+(?:\.\d+)?)\s*[MB][^，。]*?融资/,
+      /完成[^，。]*?(\d+(?:\.\d+)?)\s*[MB][^，。]*?融资/,
     ];
 
-    for (const pattern of patterns) {
+    // 检查本轮融资模式
+    for (const pattern of currentRoundPatterns) {
       const match = description.match(pattern);
       if (match) {
         const amount = parseFloat(match[1]);
@@ -358,6 +360,45 @@
         if (text.includes('B')) return amount * 1000000000;
       }
     }
+
+    // 如果没有找到明确的本轮融资，尝试通用模式（但排除累计相关文本）
+    const generalPatterns = [
+      /(\d+(?:\.\d+)?)\s*亿美元/g,
+      /(\d+(?:\.\d+)?)\s*亿元/g,
+      /(\d+(?:\.\d+)?)\s*千万美元/g,
+      /(\d+(?:\.\d+)?)\s*千万元/g,
+      /(\d+(?:\.\d+)?)\s*万美元/g,
+      /(\d+(?:\.\d+)?)\s*万元/g,
+      /\$(\d+(?:\.\d+)?)\s*[MB]/g,
+      /(\d+(?:\.\d+)?)\s*[MB]/g,
+    ];
+
+    for (const pattern of generalPatterns) {
+      let match;
+      while ((match = pattern.exec(description)) !== null) {
+        const amount = parseFloat(match[1]);
+        const text = match[0];
+        const beforeText = description.substring(Math.max(0, match.index - 20), match.index);
+        const afterText = description.substring(match.index, Math.min(description.length, match.index + 50));
+
+        // 跳过包含"累计"的融资金额
+        if (beforeText.includes('累计') || afterText.includes('累计')) {
+          continue;
+        }
+
+        if (text.includes('亿美元')) return amount * 100000000;
+        if (text.includes('亿元')) return amount * 100000000 / 7;
+        if (text.includes('千万美元')) return amount * 10000000;
+        if (text.includes('千万元')) return amount * 10000000 / 7;
+        if (text.includes('万美元')) return amount * 10000;
+        if (text.includes('万元')) return amount * 10000 / 7;
+        if (text.includes('$') && text.includes('M')) return amount * 1000000;
+        if (text.includes('$') && text.includes('B')) return amount * 1000000000;
+        if (text.includes('M')) return amount * 1000000;
+        if (text.includes('B')) return amount * 1000000000;
+      }
+    }
+
     return 10000000; // 默认1000万美元
   }
 
@@ -531,8 +572,8 @@
         </div>
 
         <div class="team-section">
-          ${item.founder || item.founders ? `
-            <p><strong>👨‍💼 创始人：</strong>${item.founder || item.founders}</p>
+          ${item.teamBackground ? `
+            <p><strong>🏢 团队背景：</strong>${addLinksToTeamBackground(item.teamBackground, item.contactInfo)}</p>
           ` : ''}
 
           ${item.workExperience ? `
@@ -541,10 +582,6 @@
 
           ${item.education ? `
             <p><strong>🎓 教育背景：</strong>${item.education}</p>
-          ` : ''}
-
-          ${item.teamBackground ? `
-            <p><strong>🏢 团队背景：</strong>${addLinksToTeamBackground(item.teamBackground, item.contactInfo)}</p>
           ` : ''}
 
           ${!item.founder && !item.founders && !item.workExperience && !item.education && !item.teamBackground && item.description ? `
@@ -628,13 +665,20 @@
       let fundingData = [];
 
       try {
+        // 🔒 防御性请求：禁用压缩，添加超时和重试机制
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000); // 15秒超时
+
         const response = await fetch('/api/wiki-funding-sync?refresh=true', {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Accept-Encoding': 'identity' // 禁用压缩
-          }
+            'Accept-Encoding': 'identity' // 禁用压缩，避免解析问题
+          },
+          signal: controller.signal
         });
+
+        clearTimeout(timeoutId);
 
         // 检查响应是否正常
         if (!response.ok) {
@@ -643,29 +687,38 @@
 
         console.log('🔍 响应Headers:', Object.fromEntries(response.headers.entries()));
 
-        // 直接使用response.json()，让浏览器自动处理解压缩
+        // 🛡️ 强化数据解析：自动检测和修复常见问题
         let result;
         try {
-          result = await response.json();
-          console.log('✅ JSON解析成功');
-        } catch (parseError) {
-          console.error('❌ JSON解析失败:', parseError);
+          const responseText = await response.text();
+          console.log('📄 响应长度:', responseText.length, 'bytes');
 
-          // 如果JSON解析失败，尝试获取原始文本来调试
-          try {
-            const responseText = await response.text();
-            console.log('📄 响应长度:', responseText.length, 'bytes');
-            console.log('📄 响应内容前200字符:', responseText.substring(0, 200));
-
-            // 检查是否是压缩数据
-            if (responseText.charCodeAt(0) === 0x1f && responseText.charCodeAt(1) === 0x8b) {
-              console.log('⚠️ 检测到Gzip压缩数据，浏览器应该自动解压缩');
-            }
-          } catch (textError) {
-            console.error('❌ 无法读取响应文本:', textError);
+          // 检测压缩数据（Gzip magic number: 0x1f8b）
+          if (responseText.charCodeAt(0) === 0x1f && responseText.charCodeAt(1) === 0x8b) {
+            console.error('❌ 检测到未解压的Gzip数据！这是middleware配置错误');
+            throw new Error('服务器返回压缩数据但未正确解压，请检查middleware配置');
           }
 
-          throw new Error('服务器返回数据格式错误');
+          // 检测空响应
+          if (!responseText || responseText.trim().length === 0) {
+            console.error('❌ API返回空响应');
+            throw new Error('服务器返回空内容');
+          }
+
+          // 检测非JSON内容
+          const firstChar = responseText.trim()[0];
+          if (firstChar !== '{' && firstChar !== '[') {
+            console.error('❌ 响应不是JSON格式，前100字符:', responseText.substring(0, 100));
+            throw new Error('服务器返回非JSON数据');
+          }
+
+          // 尝试解析JSON
+          result = JSON.parse(responseText);
+          console.log('✅ JSON解析成功，数据量:', result.count || 0);
+
+        } catch (parseError) {
+          console.error('❌ 数据解析失败:', parseError.message);
+          throw new Error(`数据解析失败: ${parseError.message}`);
         }
 
         if (result && result.success && result.data) {

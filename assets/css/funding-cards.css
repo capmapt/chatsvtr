@@ -7,7 +7,7 @@
 .funding-card {
   position: relative;
   width: 100%;
-  height: 240px; /* 优化卡片高度以提供更紧凑的布局 */
+  height: 280px; /* 桌面端固定高度，确保内容正常显示 */
   perspective: 1000px;
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -49,7 +49,7 @@
   border: none;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible; /* 修复桌面端内容消失问题 */
 }
 
 /* 卡片正面样式 */
@@ -128,8 +128,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  flex-wrap: nowrap; /* 保持单行布局 */
+  gap: 0.75rem;
   margin-top: auto;
   padding-top: 0.75rem;
   border-top: 1px solid #f1f3f4;
@@ -140,6 +140,7 @@
   gap: 0.5rem;
   flex-wrap: wrap;
   flex: 1;
+  align-items: center;
 }
 
 .funding-tag {
@@ -158,7 +159,7 @@
   font-weight: 500;
 }
 
-/* 翻转提示 - 修改为在标签栏右侧显示 */
+/* 翻转提示 - 右对齐显示 */
 .flip-hint {
   background: rgba(250, 140, 50, 0.1);
   color: #fa8c32;
@@ -168,7 +169,7 @@
   opacity: 0.8;
   pointer-events: none;
   white-space: nowrap;
-  margin-left: auto;
+  flex-shrink: 0; /* 防止压缩 */
 }
 
 /* 背面：团队信息内容 */
@@ -274,6 +275,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+  flex-wrap: nowrap; /* 保持单行布局 */
 }
 
 /* 公司信息链接 - 左对齐 */
@@ -338,7 +340,7 @@
 /* 响应式设计 */
 @media (max-width: 768px) {
   .funding-card {
-    height: 280px; /* 增加移动端高度以改善内容显示 */
+    height: 320px !important; /* 移动端固定高度 */
     margin-bottom: 1.5rem;
     /* 优化触摸反馈 */
     -webkit-tap-highlight-color: rgba(250, 140, 50, 0.2);
@@ -355,35 +357,43 @@
   }
 
   .company-name {
-    font-size: 1rem;
+    /* 保持与桌面端一致的字体大小 */
+    font-size: 1.1rem;
     /* 增加点击区域 */
     padding: 0.25rem 0;
     margin: -0.25rem 0;
   }
 
   .funding-amount {
-    font-size: 1.1rem;
+    /* 保持与桌面端一致的字体大小 */
+    font-size: 1.3rem;
   }
 
   .funding-company {
-    flex-direction: column;
-    gap: 0.5rem;
+    /* 保持与桌面端一致的水平布局 */
+    flex-direction: row;
+    justify-content: space-between;
     align-items: flex-start;
+    gap: 0.75rem;
   }
 
   .company-stage {
-    margin-left: 0;
+    /* 保持与桌面端一致的右对齐 */
+    margin-left: 0.75rem;
   }
 
   .founder-item {
-    flex-direction: column;
-    align-items: flex-start;
+    /* 保持与桌面端一致的水平布局 */
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     gap: 0.5rem;
   }
 
   .founder-contact {
-    width: 100%;
-    justify-content: flex-start;
+    /* 保持与桌面端一致的布局 */
+    display: flex;
+    gap: 0.5rem;
   }
 
   .founder-name {
@@ -404,42 +414,44 @@
   }
 
   .card-back-footer {
-    flex-direction: column;
-    gap: 0.75rem;
-    align-items: stretch;
+    flex-direction: row; /* 保持水平布局 */
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .company-link {
-    /* 增大移动端按钮 */
-    padding: 0.75rem;
-    font-size: 0.9rem;
+    /* 保持与桌面端一致的样式 */
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
     min-height: 44px;
-    justify-content: center;
+    flex-shrink: 0;
   }
 
   .flip-back-button {
-    /* 增大移动端按钮 */
-    padding: 0.75rem 1.5rem;
-    font-size: 0.9rem;
+    /* 保持与桌面端一致的布局 */
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
     min-height: 44px;
-    width: 100%;
+    flex-shrink: 0;
   }
 
   .flip-hint {
-    /* 移动端更明显的提示 */
-    background: rgba(250, 140, 50, 0.2);
-    padding: 0.5rem;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-left: auto;
+    /* 保持与桌面端一致的样式 */
+    background: rgba(250, 140, 50, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    opacity: 0.8;
+    flex-shrink: 0;
     white-space: nowrap;
   }
 }
 
 @media (max-width: 480px) {
   .funding-card {
-    height: 260px; /* 增加小屏幕高度以改善内容显示 */
+    height: 350px !important; /* 小屏幕固定高度 */
     margin-bottom: 1rem;
   }
 
@@ -479,9 +491,10 @@
   }
 
   .flip-hint {
-    font-size: 0.75rem;
-    padding: 0.4rem;
-    margin-left: auto;
+    /* 保持与桌面端一致的样式 */
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+    flex-shrink: 0;
     white-space: nowrap;
   }
 
@@ -490,25 +503,28 @@
   }
 
   .company-link {
+    /* 保持与桌面端一致的样式 */
     font-size: 0.85rem;
-    padding: 0.6rem;
+    padding: 0.5rem 0.75rem;
   }
 
   .flip-back-button {
+    /* 保持与桌面端一致的样式 */
     font-size: 0.8rem;
-    padding: 0.6rem 1.2rem;
+    padding: 0.5rem 1rem;
   }
 }
 
 /* 超小屏幕（如iPhone SE）优化 */
 @media (max-width: 360px) {
   .funding-card {
-    height: 240px; /* 增加超小屏幕高度以改善内容显示 */
+    height: 350px !important; /* 超小屏幕固定高度 */
   }
 
   .card-front,
   .card-back {
-    padding: 0.6rem;
+    /* 保持适当的内边距 */
+    padding: 0.75rem;
   }
 
   .funding-description {

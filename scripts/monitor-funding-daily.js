@@ -45,10 +45,35 @@ class FundingDailyMonitor {
       // 生成监控报告
       this.generateReport(results);
 
+      // GitHub Actions 环境下的容错处理
+      if (process.env.GITHUB_ACTIONS === 'true') {
+        if (results.overall === 'critical') {
+          console.log('\n🚨 发现严重问题，但在GitHub Actions环境下继续执行修复流程');
+          return false; // 触发修复
+        } else if (results.overall === 'degraded' || results.overall === 'warning') {
+          console.log('\n⚠️  发现部分问题，但系统基本可用');
+          return false; // 触发修复，但不阻止流程
+        } else {
+          return true; // 系统健康
+        }
+      }
+
       return results.overall === 'healthy';
 
     } catch (error) {
       console.error('❌ 监控过程出错:', error.message);
+
+      // GitHub Actions 环境下提供详细错误信息
+      if (process.env.GITHUB_ACTIONS === 'true') {
+        console.log('🔍 监控错误详情:');
+        console.log(`   错误类型: ${error.name || 'Unknown'}`);
+        console.log(`   错误消息: ${error.message}`);
+        if (error.stack) {
+          console.log(`   调用栈: ${error.stack.split('\n').slice(0, 3).join('\n')}`);
+        }
+        console.log('🔄 将继续执行自动修复流程...');
+      }
+
       return false;
     }
   }
@@ -269,28 +294,62 @@ class FundingDailyMonitor {
     return new Promise((resolve, reject) => {
       const url = `${this.baseUrl}${path}`;
 
-      https.get(url, (res) => {
+      const request = https.get(url, {
+        timeout: 15000, // 15秒超时
+        headers: {
+          'User-Agent': 'GitHub-Actions-Health-Check/1.0',
+          'Accept': '*/*',
+          'Cache-Control': 'no-cache'
+        }
+      }, (res) => {
         let data = '';
         res.on('data', chunk => data += chunk);
         res.on('end', () => {
           if (res.statusCode === 200) {
             resolve(data);
           } else {
+            console.log(`⚠️  主URL ${url} 返回 ${res.statusCode}，尝试备用URL...`);
+
             // 尝试备用URL
-            https.get(`${this.backupUrl}${path}`, (backupRes) => {
+            const backupRequest = https.get(`${this.backupUrl}${path}`, {
+              timeout: 10000,
+              headers: {
+                'User-Agent': 'GitHub-Actions-Health-Check-Backup/1.0',
+                'Accept': '*/*'
+              }
+            }, (backupRes) => {
               let backupData = '';
               backupRes.on('data', chunk => backupData += chunk);
               backupRes.on('end', () => {
                 if (backupRes.statusCode === 200) {
+                  console.log(`✅ 备用URL成功响应`);
                   resolve(backupData);
                 } else {
-                  reject(new Error(`HTTP ${res.statusCode} (备用: ${backupRes.statusCode})`));
+                  reject(new Error(`HTTP ${res.statusCode} (备用: ${backupRes.statusCode}): ${url}`));
                 }
               });
-            }).on('error', reject);
+            });
+
+            backupRequest.on('error', (backupError) => {
+              reject(new Error(`主URL: ${res.statusCode}, 备用URL错误: ${backupError.message}`));
+            });
+
+            backupRequest.on('timeout', () => {
+              backupRequest.destroy();
+              reject(new Error(`主URL: ${res.statusCode}, 备用URL超时`));
+            });
           }
         });
-      }).on('error', reject);
+      });
+
+      request.on('error', (error) => {
+        reject(new Error(`网络错误: ${error.message}`));
+      });
+
+      request.on('timeout', () => {
+        request.destroy();
+        reject(new Error(`请求超时: ${url}`));
+      });
     });
   }
 
@@ -298,8 +357,16 @@ class FundingDailyMonitor {
    * 获取JSON数据
    */
   async fetchJson(path) {
-    const content = await this.fetchContent(path);
-    return JSON.parse(content);
+    try {
+      const content = await this.fetchContent(path);
+      return JSON.parse(content);
+    } catch (error) {
+      if (error.message.includes('JSON')) {
+        throw new Error(`JSON解析失败: ${path} - ${error.message}`);
+      } else {
+        throw error; // 重新抛出网络错误
+      }
+    }
   }
 
   /**

@@ -113,13 +113,13 @@ class FundingDailySync {
 
     // 触发数据刷新的时间戳
     const timestamp = new Date().toISOString();
-    const updateMarker = `// Last sync: ${timestamp}\\n`;
+    const updateMarker = `// Last sync: ${timestamp}\n`;
 
     // 简单地添加时间戳注释来触发文件变更
     let content = fs.readFileSync(fundingFile, 'utf8');
 
     // 移除之前的同步标记
-    content = content.replace(/\/\/ Last sync: .*\\n/g, '');
+    content = content.replace(/\/\/ Last sync: .*\n/g, '');
 
     // 添加新的同步标记
     content = updateMarker + content;
