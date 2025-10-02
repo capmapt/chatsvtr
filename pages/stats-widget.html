@@ -582,14 +582,20 @@ function adjustIframeHeight(){
   const isMobile=window.innerWidth<=768;
 
   if(isMobile){
-    // 手机端：完全贴合内容高度，无任何额外空白
-    const containerHeight=container.getBoundingClientRect().height;
-    const calculatedHeight=Math.ceil(containerHeight);
+    // 手机端：使用scrollHeight获取真实内容高度，完全贴合无空白
+    const rect=container.getBoundingClientRect();
+    const styles=getComputedStyle(container);
+    const paddingTop=parseFloat(styles.paddingTop)||0;
+    const paddingBottom=parseFloat(styles.paddingBottom)||0;
+
+    // 内容高度 = 实际高度，不添加任何额外空间
+    const calculatedHeight=Math.ceil(rect.height);
 
     // 避免重复发送相同高度
     if(cachedHeight===calculatedHeight)return;
     cachedHeight=calculatedHeight;
 
+    console.log('📏 Mobile widget height:', calculatedHeight, 'px (padding:', paddingTop + paddingBottom, 'px)');
     window.parent.postMessage({type:'adjustHeight',height:calculatedHeight},'*');
   } else {
     // 桌面端：保持原有逻辑

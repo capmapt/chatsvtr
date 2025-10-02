@@ -17,13 +17,14 @@
 
   .stats-widget-iframe {
     height: auto !important;
-    min-height: 110px !important;
-    max-height: 150px !important;
+    min-height: 0 !important;
+    max-height: none !important;
     border-radius: 8px;
     overflow: hidden;
     display: block !important;
     margin: 0 !important;
     padding: 0 !important;
+    border: none !important;
   }
 }
 
@@ -33,8 +34,6 @@
   }
 
   .stats-widget-iframe {
-    min-height: 95px !important;
-    max-height: 120px !important;
     border-radius: 6px;
   }
 }
@@ -45,8 +44,6 @@
   }
 
   .stats-widget-iframe {
-    min-height: 85px !important;
-    max-height: 100px !important;
     border-radius: 4px;
   }
 }
