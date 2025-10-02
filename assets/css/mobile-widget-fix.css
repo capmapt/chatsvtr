@@ -26,6 +26,11 @@
     padding: 0 !important;
     border: none !important;
   }
+
+  /* 减少widget和创投日报之间的间距 */
+  .funding-daily {
+    margin-top: 0.5rem !important;
+  }
 }
 
 @media (max-width: 480px) {
