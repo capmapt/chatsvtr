@@ -1,0 +1,42 @@
+/**
+ * 移动端 Stats Widget 空白修复
+ * 解决移动端widget下方大片空白问题
+ */
+
+/* 移除固定高度，使用动态高度 */
+@media (max-width: 768px) {
+  .stats-wrapper {
+    margin: 10px auto;
+    padding: 0;
+  }
+
+  .stats-widget-iframe {
+    height: auto !important;
+    min-height: 120px !important;
+    max-height: none !important;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-wrapper {
+    margin: 8px auto;
+  }
+
+  .stats-widget-iframe {
+    min-height: 100px !important;
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 375px) {
+  .stats-wrapper {
+    margin: 6px auto;
+  }
+
+  .stats-widget-iframe {
+    min-height: 90px !important;
+    border-radius: 4px;
+  }
+}
