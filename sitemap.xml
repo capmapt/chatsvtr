@@ -3,10 +3,10 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   
-  <!-- 主页 -->
+  <!-- 主页 - 包含AI创投日报SSR内容 -->
   <url>
     <loc>https://svtr.ai/</loc>
-    <lastmod>2025-01-29</lastmod>
+    <lastmod>2025-10-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="zh-CN" href="https://svtr.ai/" />
@@ -14,7 +14,7 @@
     <image:image>
       <image:loc>https://svtr.ai/assets/images/banner.webp</image:loc>
       <image:title>SVTR.AI - AI创投生态系统分析平台</image:title>
-      <image:caption>专业的AI创投数据分析和市场洞察平台</image:caption>
+      <image:caption>专业的AI创投数据分析和市场洞察平台 - 每日更新最新AI融资信息</image:caption>
     </image:image>
   </url>
   
