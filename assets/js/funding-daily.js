@@ -312,16 +312,21 @@
   // 🏢 从企业介绍中提取公司名称
   function extractCompanyName(description) {
     const patterns = [
-      /^([^，。,\s]+)，/, // 句首到第一个逗号的部分
+      /^([A-Za-z][\w\s&.-]*[A-Za-z\d])，/, // 英文公司名（最优先）
+      /^([^，。,\s]{2,30})，\d{4}年/, // 中文公司名+年份模式
+      /^([^，。,\s]{2,20})，/, // 句首到第一个逗号的部分
       /^([A-Za-z\u4e00-\u9fa5\s]+?)（/, // 括号前的部分
       /([A-Za-z\u4e00-\u9fa5]+)\s*，.*?成立/, // "xxx，成立"模式
-      /([A-Za-z][A-Za-z\s]*[A-Za-z])/, // 英文公司名
     ];
 
     for (const pattern of patterns) {
       const match = description.match(pattern);
-      if (match && match[1] && match[1].length > 1 && match[1].length < 50) {
-        return match[1].trim();
+      if (match && match[1]) {
+        const name = match[1].trim();
+        // 过滤掉明显不是公司名的结果
+        if (name.length > 1 && name.length < 50 && !name.includes('年')) {
+          return name;
+        }
       }
     }
     return null;
@@ -573,7 +578,7 @@
 
         <div class="team-section">
           ${item.teamBackground ? `
-            <p><strong>🏢 团队背景：</strong>${addLinksToTeamBackground(item.teamBackground, item.contactInfo)}</p>
+            <p>${addLinksToTeamBackground(item.teamBackground, item.contactInfo)}</p>
           ` : ''}
 
           ${item.workExperience ? `
@@ -723,36 +728,65 @@
 
         if (result && result.success && result.data) {
           // 转换飞书API数据格式为前端期望的格式
-          fundingData = result.data.map((item, index) => {
-            // 从企业介绍中提取融资信息
-            const description = item['企业介绍'] || '';
-            const companyName = extractCompanyName(description);
-            const amount = extractAmount(description);
-            const stage = extractStage(description);
-            const investors = extractInvestors(description);
+          fundingData = result.data
+            .map((item, index) => {
+              // 从企业介绍中提取融资信息
+              const description = item['企业介绍'] || '';
+              const companyName = extractCompanyName(description);
+              const amount = extractAmount(description);
+              const stage = extractStage(description);
+              const investors = extractInvestors(description);
 
-            return {
-              id: item.id || `feishu_${index + 1}`,
-              companyName: companyName || `创新公司${index + 1}`,
-              stage: stage || 'Seed',
-              amount: amount || 10000000,
-              currency: 'USD',
-              description: description,
-              tags: [item['细分领域'] || 'AI', item['二级分类'] || '科技创新'],
-              investedAt: new Date().toISOString(),
-              investors: investors,
-              website: item['公司官网'] || '',
-              companyWebsite: item['公司官网'] || '',
-              contactInfo: item['联系方式'] || '',
-              teamBackground: item['团队背景'] || '',
-              category: item['细分领域'] || 'AI',
-              subCategory: item['二级分类'] || '',
-              founder: extractFounder(item['团队背景'] || ''),
-              sourceUrl: item.sourceUrl || ''
-            };
-          });
+              // 构建标签数组: 二级分类 + 标签字段(拆分)
+              const tags = [];
 
-          console.log(`✅ 从${result.source}获取到 ${result.count} 条融资数据，已转换格式`);
+              // 添加二级分类
+              if (item['二级分类'] && item['二级分类'].trim()) {
+                tags.push(item['二级分类'].trim());
+              }
+
+              // 添加标签字段(可能有多个,用逗号分隔)
+              if (item['标签'] && item['标签'].trim()) {
+                const additionalTags = item['标签'].split(',')
+                  .map(tag => tag.trim())
+                  .filter(tag => tag.length > 0);
+                tags.push(...additionalTags);
+              }
+
+              return {
+                id: item.id || `feishu_${index + 1}`,
+                companyName: companyName,
+                stage: stage || 'Seed',
+                amount: amount || 10000000,
+                currency: 'USD',
+                description: description,
+                tags: tags.length > 0 ? tags : ['科技创新'], // 如果没有任何标签,使用默认值
+                investedAt: new Date().toISOString(),
+                investors: investors,
+                website: item['公司官网'] || '',
+                companyWebsite: item['公司官网'] || '',
+                contactInfo: item['联系方式'] || '',
+                teamBackground: item['团队背景'] || '',
+                category: item['细分领域'] || item['二级分类'] || '',
+                subCategory: item['二级分类'] || '',
+                founder: extractFounder(item['团队背景'] || ''),
+                sourceUrl: item.sourceUrl || ''
+              };
+            })
+            .filter(item => {
+              // 过滤掉公司名为空、为"0"或无效的记录
+              const isValidCompanyName = item.companyName &&
+                                         item.companyName.trim() !== '' &&
+                                         item.companyName !== '0';
+
+              if (!isValidCompanyName) {
+                console.log(`⚠️ 跳过无效公司名记录: companyName="${item.companyName}"`);
+              }
+
+              return isValidCompanyName;
+            });
+
+          console.log(`✅ 从${result.source}获取到 ${result.count} 条融资数据，过滤后剩余 ${fundingData.length} 条有效数据`);
 
           // 更新时间显示
           updateFundingTimestamp(result.lastUpdate);
