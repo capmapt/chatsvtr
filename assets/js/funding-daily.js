@@ -630,7 +630,9 @@
 
             <div class="funding-meta">
               <div class="funding-tags">${tagsHTML}</div>
-              <div class="flip-hint">点击查看团队 →</div>
+              <button class="flip-back-button" onclick="flipCard(this); event.stopPropagation();">
+                点击查看团队 →
+              </button>
             </div>
           </div>
 
