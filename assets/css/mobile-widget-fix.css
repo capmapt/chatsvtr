@@ -6,7 +6,7 @@
 /* 移除固定高度，使用动态高度 */
 @media (max-width: 768px) {
   .stats-wrapper {
-    margin: 5px auto !important;
+    margin: 0.5rem auto !important;
     padding: 0 !important;
     box-shadow: none !important;
     border-radius: 0 !important;
@@ -27,7 +27,7 @@
     border: none !important;
   }
 
-  /* 减少widget和创投日报之间的间距 */
+  /* 让widget上下间距相等，实现居中 */
   .funding-daily {
     margin-top: 0.5rem !important;
   }
@@ -35,7 +35,7 @@
 
 @media (max-width: 480px) {
   .stats-wrapper {
-    margin: 3px auto !important;
+    margin: 0.5rem auto !important;
   }
 
   .stats-widget-iframe {
@@ -45,7 +45,7 @@
 
 @media (max-width: 375px) {
   .stats-wrapper {
-    margin: 2px auto !important;
+    margin: 0.5rem auto !important;
   }
 
   .stats-widget-iframe {
