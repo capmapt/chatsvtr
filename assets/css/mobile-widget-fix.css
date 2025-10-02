@@ -27,9 +27,9 @@
     border: none !important;
   }
 
-  /* 让widget上下间距相等，实现居中 */
-  .funding-daily {
-    margin-top: 0.5rem !important;
+  /* 让widget上下间距相等，实现居中 - 覆盖wrapper类的margin */
+  .funding-daily.wrapper {
+    margin: 0.5rem auto !important;
   }
 }
 
