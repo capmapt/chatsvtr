@@ -368,13 +368,14 @@
   }
 
   .funding-meta {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.75rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .funding-tags {
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .load-more-btn {
