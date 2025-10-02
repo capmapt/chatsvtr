@@ -2,10 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-# ChatSVTR - AI创投生态系统平台
+# ChatSVTR - SVTR.AI全球AI创投平台
 
 ## 项目概述
-ChatSVTR 是硅谷科技评论的官网项目，构建全球AI创投行业生态系统的统一平台。
+ChatSVTR 是硅谷科技评论(SVTR.AI)的官网项目，全球AI创投行业的统一平台。
 
 ### 核心技术栈
 - **前端**: 原生HTML5/CSS3/JavaScript (ES2022)

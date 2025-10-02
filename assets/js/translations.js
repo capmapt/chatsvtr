@@ -1,8 +1,8 @@
 // Translation configuration
 const translations = {
   'zh-CN': {
-    title: 'SVTR - 硅谷科技评论 | AI创投生态系统专业分析平台',
-    description: 'SVTR是专业的AI创投生态分析平台，追踪10,761+家全球AI公司和121,884+投资人，提供AI周报、投资分析、市场洞察和实时创投数据。',
+    title: 'SVTR.AI - 全球AI创投平台',
+    description: 'SVTR.AI - 全球AI创投平台，追踪10,761+家全球AI公司和121,884+投资人，提供AI周报、投资分析、市场洞察和实时创投数据。',
     keywords: 'AI创投,人工智能投资,创业公司,投资机构,SVTR,硅谷科技评论,AI融资,创投数据,投资分析,AI独角兽',
     sidebar_title: '硅谷科技评论',
     nav_ai100: 'AI 100',
@@ -112,7 +112,7 @@ const translations = {
     footer_text: '',
     // Chat bot translations
     chat_input_placeholder: '问我关于AI创投的任何问题...',
-    chat_welcome_title: '您好！我是凯瑞(Kerry)，硅谷科技评论的AI助手，专注于AI创投生态系统分析。',
+    chat_welcome_title: '您好！我是凯瑞(Kerry)，SVTR.AI全球AI创投平台的智能助手。',
     chat_welcome_content: `我可以为您提供：
 • 最新AI创投市场动态
 • 投资机构和初创公司分析  
