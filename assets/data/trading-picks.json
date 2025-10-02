@@ -3,7 +3,7 @@
     "title": "交易精选",
     "description": "精选优质创业公司与投资机会分析",
     "totalCompanies": 20,
-    "lastUpdated": "2025-10-01T18:28:55.991Z",
+    "lastUpdated": "2025-10-02T18:37:11.400Z",
     "source": "SVTR飞书知识库",
     "dataVersion": "2.0"
   },
@@ -101,40 +101,6 @@
     },
     {
       "id": 4,
-      "name": "Cerebras Systems",
-      "sector": "⚙️ AI基础设施",
-      "stage": "独角兽 · 成熟期",
-      "description": "Cerebras，2016年成立于美国Sunnyvale，设计制造晶圆级芯片与AI计算系统，面向高性能AI工作负载。正在筹备约10亿美元新一轮融资，投资方为Fidelity（拟领投）。本轮估值未披露，累计融资约11.4亿美元。",
-      "fundingAmount": "7.2亿美元融资 · 估值40亿美元",
-      "lastFundingDate": "2025年8月",
-      "valuation": "40亿美元",
-      "investors": [
-        "Alpha Wave Ventures",
-        "Abu Dhabi Growth Fund",
-        "G42",
-        "Sam Altman（OpenAI首席执行官兼创始人）",
-        "Ilya Sutskever等"
-      ],
-      "founder": "Andrew Feldman",
-      "website": "https://cerebras.ai/",
-      "location": "美国太阳谷",
-      "foundedYear": "2016",
-      "employees": "",
-      "arr": "",
-      "tags": [
-        "GPU",
-        "AI100",
-        "Unicorn"
-      ],
-      "analysisPoints": [
-        "🦄 独角兽企业，市场估值40亿美元",
-        "💎 单轮融资7.2亿美元，资本高度认可"
-      ],
-      "businessModel": "开发超大晶圆GPU，用于AI的训练和推理",
-      "deepResearch": ""
-    },
-    {
-      "id": 5,
       "name": "Crusoe",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -168,7 +134,7 @@
       "deepResearch": ""
     },
     {
-      "id": 6,
+      "id": 5,
       "name": "Lambda",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -203,7 +169,7 @@
       "deepResearch": ""
     },
     {
-      "id": 7,
+      "id": 6,
       "name": "Runway",
       "sector": "🎯 垂直模型",
       "stage": "· 成熟期",
@@ -235,7 +201,7 @@
       "deepResearch": ""
     },
     {
-      "id": 8,
+      "id": 7,
       "name": "Vercel",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 成熟期",
@@ -269,7 +235,7 @@
       "deepResearch": ""
     },
     {
-      "id": 9,
+      "id": 8,
       "name": "Rivos",
       "sector": "⚙️ AI基础设施",
       "stage": "· 成长期",
@@ -302,7 +268,7 @@
       "deepResearch": ""
     },
     {
-      "id": 10,
+      "id": 9,
       "name": "Abridge",
       "sector": "🧬 生命科学",
       "stage": "独角兽 · 成熟期",
@@ -338,7 +304,7 @@
       "deepResearch": ""
     },
     {
-      "id": 11,
+      "id": 10,
       "name": "Oura",
       "sector": "📱 AI应用",
       "stage": "独角兽 · 成熟期",
@@ -365,7 +331,7 @@
       "deepResearch": ""
     },
     {
-      "id": 12,
+      "id": 11,
       "name": "ElevenLabs",
       "sector": "🎯 垂直模型",
       "stage": "独角兽 · 成长期",
@@ -399,7 +365,7 @@
       "deepResearch": ""
     },
     {
-      "id": 13,
+      "id": 12,
       "name": "Lovable",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 初创期",
@@ -434,7 +400,7 @@
       "deepResearch": ""
     },
     {
-      "id": 14,
+      "id": 13,
       "name": "Vast Data",
       "sector": "💾 数据服务",
       "stage": "独角兽 · 成熟期",
@@ -465,7 +431,7 @@
       "deepResearch": ""
     },
     {
-      "id": 15,
+      "id": 14,
       "name": "Mercor",
       "sector": "🏢 企业服务",
       "stage": "独角兽 · 初创期",
@@ -502,7 +468,7 @@
       "deepResearch": "Mercor"
     },
     {
-      "id": 16,
+      "id": 15,
       "name": "Physical Intelligence",
       "sector": "📱 AI应用",
       "stage": "独角兽 · 初创期",
@@ -539,7 +505,7 @@
       "deepResearch": ""
     },
     {
-      "id": 17,
+      "id": 16,
       "name": "n8n",
       "sector": "👨‍💻 开发者工具",
       "stage": "准独角兽 · 成熟期",
@@ -570,7 +536,7 @@
       "deepResearch": ""
     },
     {
-      "id": 18,
+      "id": 17,
       "name": "Fireworks AI",
       "sector": "🤖 AI模型",
       "stage": "准独角兽 · 成长期",
@@ -604,7 +570,7 @@
       "deepResearch": ""
     },
     {
-      "id": 19,
+      "id": 18,
       "name": "LangChain",
       "sector": "🤖 AI模型",
       "stage": "· 初创期",
@@ -632,7 +598,7 @@
       "deepResearch": ""
     },
     {
-      "id": 20,
+      "id": 19,
       "name": "Substack",
       "sector": "🏢 企业服务",
       "stage": "· 成熟期",
@@ -653,6 +619,31 @@
       "tags": [],
       "analysisPoints": [],
       "businessModel": "为创作者提供发布和盈利的新闻通讯平台",
+      "deepResearch": ""
+    },
+    {
+      "id": 25,
+      "name": "Canva",
+      "sector": "🎯 垂直模型",
+      "stage": "超级独角兽 · 初创期",
+      "description": "Canva 正以 370 亿美元的估值进行 400 至 5 亿美元的二级市场交易。 这将比 2024 年 10 月二次销售的 320 亿美元估值有所增加，但仍低于 2021 年 9 月融资轮融资的 400 亿美元峰值。根据AI创投库，Canva 在 2025 年第一季度的收入为 6.6 亿美元，EBITDA 为 1.5 亿美元。",
+      "fundingAmount": " · 估值370亿美元",
+      "lastFundingDate": "2025年6月",
+      "valuation": "370亿美元",
+      "investors": [],
+      "founder": "",
+      "website": "",
+      "location": "",
+      "foundedYear": "",
+      "employees": "5000",
+      "arr": "",
+      "tags": [
+        "ET30"
+      ],
+      "analysisPoints": [
+        "🏆 超级独角兽企业，估值370亿美元，行业领军地位"
+      ],
+      "businessModel": "",
       "deepResearch": ""
     }
   ]
