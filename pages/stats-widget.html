@@ -12,13 +12,14 @@
 html,body{
   font-family:Arial,"Microsoft YaHei",sans-serif;
   overflow:hidden;
-  height:100vh;
+  height:auto;
+  min-height:100%;
   width:100%;
   background:transparent;
   margin:0;
   padding:0;
 }
-body{display:flex;align-items:center;justify-content:center;}
+body{display:flex;align-items:center;justify-content:center;min-height:0;}
 
 /* 🎯 统一布局：消除滚动条 */
 .stats-container{
@@ -27,7 +28,7 @@ body{display:flex;align-items:center;justify-content:center;}
   gap:15px;
   width:100%;
   max-width:800px;
-  margin:0;
+  margin:0 auto;
   padding:15px;
   box-sizing:border-box;
 }
@@ -207,18 +208,23 @@ body{display:flex;align-items:center;justify-content:center;}
 
 /* 🎯 手机端专门优化 - 完全居中无空白 */
 @media (max-width: 768px) {
-  html,body{height:auto;min-height:auto;margin:0;padding:0;}
+  html,body{
+    height:auto !important;
+    min-height:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
   body{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    min-height:auto;
-    padding:0;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    min-height:0 !important;
+    padding:0 !important;
   }
   .stats-container{
     gap:4px;
-    padding:0;
-    margin:0;
+    padding:10px 4px !important;
+    margin:0 auto !important;
     grid-template-columns:repeat(3, 1fr); /* 保持三列横排 */
     max-width:100%;
     width:100%;
@@ -264,18 +270,23 @@ body{display:flex;align-items:center;justify-content:center;}
 }
 
 @media (max-width: 480px) {
-  html,body{height:auto;min-height:auto;margin:0;padding:0;}
+  html,body{
+    height:auto !important;
+    min-height:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
   body{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    min-height:auto;
-    padding:0;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    min-height:0 !important;
+    padding:0 !important;
   }
   .stats-container{
     gap:3px;
-    padding:0;
-    margin:0;
+    padding:8px 3px !important;
+    margin:0 auto !important;
     grid-template-columns:repeat(3, 1fr); /* 保持三列横排 */
     max-width:100%;
     width:100%;
@@ -320,18 +331,23 @@ body{display:flex;align-items:center;justify-content:center;}
 }
 
 @media (max-width: 375px) {
-  html,body{height:auto;min-height:auto;margin:0;padding:0;}
+  html,body{
+    height:auto !important;
+    min-height:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
   body{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    min-height:auto;
-    padding:0;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    min-height:0 !important;
+    padding:0 !important;
   }
   .stats-container{
     gap:2px;
-    padding:0;
-    margin:0;
+    padding:6px 2px !important;
+    margin:0 auto !important;
     grid-template-columns:repeat(3, 1fr); /* 保持三列横排 */
     max-width:100%;
     width:100%;
