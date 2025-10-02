@@ -162,7 +162,9 @@
     'Series B': 'B轮',
     'Series C': 'C轮',
     'Series D': 'D轮',
-    'IPO': 'IPO'
+    'IPO': 'IPO',
+    'Strategic': '战略投资',
+    'Unknown': '未知'
   };
 
   // 💰 格式化金额显示
@@ -426,7 +428,7 @@
         return stage;
       }
     }
-    return 'Seed';
+    return 'Unknown';
   }
 
   // 🏛️ 从企业介绍中提取投资方
@@ -758,7 +760,7 @@
               return {
                 id: item.id || `feishu_${index + 1}`,
                 companyName: companyName,
-                stage: stage || 'Seed',
+                stage: stage || 'Unknown',
                 amount: amount || 10000000,
                 currency: 'USD',
                 description: description,
