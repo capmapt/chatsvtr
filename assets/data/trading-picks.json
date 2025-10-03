@@ -3,13 +3,78 @@
     "title": "交易精选",
     "description": "精选优质创业公司与投资机会分析",
     "totalCompanies": 20,
-    "lastUpdated": "2025-10-02T18:37:11.400Z",
+    "lastUpdated": "2025-10-03T18:27:46.695Z",
     "source": "SVTR飞书知识库",
     "dataVersion": "2.0"
   },
   "companies": [
     {
       "id": 1,
+      "name": "Legora",
+      "sector": "📱 AI应用",
+      "stage": "· 初创期",
+      "description": "Legora，2023年成立于瑞典斯德哥尔摩，用AI为律所提供合同审阅、摘要与法律检索自动化，正洽谈超1亿美元新一轮融资，预计由Bessemer Venture Partners领投，既有投资方ICONIQ、General Catalyst、Redpoint Ventures、Benchmark等参投。本轮估值为约17亿美元，累计融资超1亿美元。(sifted.eu)",
+      "fundingAmount": "8000万美元融资",
+      "lastFundingDate": "2025年10月",
+      "valuation": "",
+      "investors": [
+        "Iconiq Growth",
+        "General Catalyst",
+        "Redpoint Ventures",
+        "Benchmark",
+        "Y Combinator"
+      ],
+      "founder": "Max Junestrand",
+      "website": "https://www.leya.law/",
+      "location": "瑞典Stockholm",
+      "foundedYear": "2023",
+      "employees": "",
+      "arr": "",
+      "tags": [
+        "AI100",
+        "关注",
+        "IA40",
+        "AI Native"
+      ],
+      "analysisPoints": [],
+      "businessModel": "开发AI驱动软件协助法律专业人士起草和审阅文件",
+      "deepResearch": ""
+    },
+    {
+      "id": 2,
+      "name": "Black Forest Labs",
+      "sector": "🤖 大语言模型",
+      "stage": "· 初创期",
+      "description": "Black Forest Labs，2024年成立于德国弗赖堡，开发用于创建和编辑图像的生成式人工智能模型。正在洽谈最高3亿美元的新一轮融资，投资方为 Andreessen Horowitz（潜在领投）。本轮估值为40亿美元，累计融资约3100万美元。 (金融时报)",
+      "fundingAmount": "3100万美元融资",
+      "lastFundingDate": "2025年10月",
+      "valuation": "",
+      "investors": [
+        "Andreessen Horowitz",
+        "Brendan Iribe",
+        "Michael Ovitz",
+        "Garry Tan",
+        "Timo Aila",
+        "Vladlen Koltun"
+      ],
+      "founder": "Robin Rombach",
+      "website": "https://blackforestlabs.ai/",
+      "location": "美国旧金山",
+      "foundedYear": "2024",
+      "employees": "25",
+      "arr": "",
+      "tags": [
+        "关注",
+        "图像",
+        "ET30",
+        "AI Native"
+      ],
+      "analysisPoints": [],
+      "businessModel": "开发基础生成式人工智能模型",
+      "deepResearch": ""
+    },
+    {
+      "id": 3,
       "name": "xAI",
       "sector": "🤖 大语言模型",
       "stage": "· 初创期",
@@ -39,7 +104,7 @@
       "deepResearch": ""
     },
     {
-      "id": 2,
+      "id": 4,
       "name": "Surge AI",
       "sector": "💾 数据服务",
       "stage": "超级独角兽 · 成长期",
@@ -67,7 +132,7 @@
       "deepResearch": ""
     },
     {
-      "id": 3,
+      "id": 5,
       "name": "Anysphere（Cursor）",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 成长期",
@@ -100,7 +165,7 @@
       "deepResearch": ""
     },
     {
-      "id": 4,
+      "id": 6,
       "name": "Crusoe",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -134,7 +199,7 @@
       "deepResearch": ""
     },
     {
-      "id": 5,
+      "id": 7,
       "name": "Lambda",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -169,7 +234,7 @@
       "deepResearch": ""
     },
     {
-      "id": 6,
+      "id": 8,
       "name": "Runway",
       "sector": "🎯 垂直模型",
       "stage": "· 成熟期",
@@ -201,7 +266,7 @@
       "deepResearch": ""
     },
     {
-      "id": 7,
+      "id": 9,
       "name": "Vercel",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 成熟期",
@@ -235,7 +300,7 @@
       "deepResearch": ""
     },
     {
-      "id": 8,
+      "id": 10,
       "name": "Rivos",
       "sector": "⚙️ AI基础设施",
       "stage": "· 成长期",
@@ -268,7 +333,7 @@
       "deepResearch": ""
     },
     {
-      "id": 9,
+      "id": 11,
       "name": "Abridge",
       "sector": "🧬 生命科学",
       "stage": "独角兽 · 成熟期",
@@ -304,11 +369,11 @@
       "deepResearch": ""
     },
     {
-      "id": 10,
+      "id": 12,
       "name": "Oura",
       "sector": "📱 AI应用",
       "stage": "独角兽 · 成熟期",
-      "description": "生产广受欢迎的 Oura 智能戒指的芬兰公司 Oura Health 正在筹集 8.75 亿美元的 E 轮融资。估值约为 109 亿美元，是去年的两倍。",
+      "description": "Oura， 智能戒指的芬兰公司 Oura Health 正在筹集 8.75 亿美元的 E 轮融资。估值约为 109 亿美元，是去年的两倍。",
       "fundingAmount": "2.0亿美元融资 · 估值52亿美元",
       "lastFundingDate": "2025年9月",
       "valuation": "52亿美元",
@@ -331,7 +396,7 @@
       "deepResearch": ""
     },
     {
-      "id": 11,
+      "id": 13,
       "name": "ElevenLabs",
       "sector": "🎯 垂直模型",
       "stage": "独角兽 · 成长期",
@@ -365,7 +430,7 @@
       "deepResearch": ""
     },
     {
-      "id": 12,
+      "id": 14,
       "name": "Lovable",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 初创期",
@@ -400,7 +465,7 @@
       "deepResearch": ""
     },
     {
-      "id": 13,
+      "id": 15,
       "name": "Vast Data",
       "sector": "💾 数据服务",
       "stage": "独角兽 · 成熟期",
@@ -431,7 +496,7 @@
       "deepResearch": ""
     },
     {
-      "id": 14,
+      "id": 16,
       "name": "Mercor",
       "sector": "🏢 企业服务",
       "stage": "独角兽 · 初创期",
@@ -468,7 +533,7 @@
       "deepResearch": "Mercor"
     },
     {
-      "id": 15,
+      "id": 17,
       "name": "Physical Intelligence",
       "sector": "📱 AI应用",
       "stage": "独角兽 · 初创期",
@@ -505,7 +570,7 @@
       "deepResearch": ""
     },
     {
-      "id": 16,
+      "id": 18,
       "name": "n8n",
       "sector": "👨‍💻 开发者工具",
       "stage": "准独角兽 · 成熟期",
@@ -536,7 +601,7 @@
       "deepResearch": ""
     },
     {
-      "id": 17,
+      "id": 19,
       "name": "Fireworks AI",
       "sector": "🤖 AI模型",
       "stage": "准独角兽 · 成长期",
@@ -570,7 +635,7 @@
       "deepResearch": ""
     },
     {
-      "id": 18,
+      "id": 20,
       "name": "LangChain",
       "sector": "🤖 AI模型",
       "stage": "· 初创期",
@@ -595,55 +660,6 @@
       ],
       "analysisPoints": [],
       "businessModel": "为开发人员提供工具用于创建和部署利用大型语言模型的应用程序",
-      "deepResearch": ""
-    },
-    {
-      "id": 19,
-      "name": "Substack",
-      "sector": "🏢 企业服务",
-      "stage": "· 成熟期",
-      "description": "Substack，正以 7亿+美元估值， 寻求 5000 万至 1 亿美元融资。ARR为~4500 万美元。",
-      "fundingAmount": "1000万美元融资",
-      "lastFundingDate": "2024年11月",
-      "valuation": "",
-      "investors": [
-        "Omeed Malik",
-        "Nate Silver"
-      ],
-      "founder": "Chris Best",
-      "website": "https://substack.com/",
-      "location": "美国加州",
-      "foundedYear": "2017",
-      "employees": "",
-      "arr": "",
-      "tags": [],
-      "analysisPoints": [],
-      "businessModel": "为创作者提供发布和盈利的新闻通讯平台",
-      "deepResearch": ""
-    },
-    {
-      "id": 25,
-      "name": "Canva",
-      "sector": "🎯 垂直模型",
-      "stage": "超级独角兽 · 初创期",
-      "description": "Canva 正以 370 亿美元的估值进行 400 至 5 亿美元的二级市场交易。 这将比 2024 年 10 月二次销售的 320 亿美元估值有所增加，但仍低于 2021 年 9 月融资轮融资的 400 亿美元峰值。根据AI创投库，Canva 在 2025 年第一季度的收入为 6.6 亿美元，EBITDA 为 1.5 亿美元。",
-      "fundingAmount": " · 估值370亿美元",
-      "lastFundingDate": "2025年6月",
-      "valuation": "370亿美元",
-      "investors": [],
-      "founder": "",
-      "website": "",
-      "location": "",
-      "foundedYear": "",
-      "employees": "5000",
-      "arr": "",
-      "tags": [
-        "ET30"
-      ],
-      "analysisPoints": [
-        "🏆 超级独角兽企业，估值370亿美元，行业领军地位"
-      ],
-      "businessModel": "",
       "deepResearch": ""
     }
   ]
