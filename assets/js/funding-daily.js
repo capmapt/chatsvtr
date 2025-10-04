@@ -216,6 +216,37 @@
     return null;
   }
 
+  // 🚫 检查是否是无效的团队背景数据
+  function isInvalidTeamBackground(teamBackground) {
+    if (!teamBackground || typeof teamBackground !== 'string') return true;
+
+    const trimmed = teamBackground.trim();
+
+    // 过滤明显无效的数据
+    const invalidPatterns = [
+      /^\d+月\d+日$/,        // 纯日期格式: "12月30日"
+      /^20\d{2}年\d+月\d+日$/, // 完整日期: "2025年12月30日"
+      /^[\d月日年]+$/,        // 纯日期字符
+      /^无$|^暂无$|^待补充$/,  // 明确表示无数据
+      /^[\s\-_]+$/,           // 纯空格或分隔符
+    ];
+
+    for (const pattern of invalidPatterns) {
+      if (pattern.test(trimmed)) {
+        console.log(`⚠️ 过滤无效团队背景: "${trimmed}"`);
+        return true;
+      }
+    }
+
+    // 长度过短（少于5个字符）也视为无效
+    if (trimmed.length < 5) {
+      console.log(`⚠️ 团队背景过短: "${trimmed}"`);
+      return true;
+    }
+
+    return false;
+  }
+
   // 🔗 为团队背景中的创始人姓名添加超链接
   function addLinksToTeamBackground(teamBackground, contactInfo) {
     if (!teamBackground || !contactInfo) return teamBackground;
@@ -337,22 +368,24 @@
   // 💰 从企业介绍中提取融资金额 - 优先提取本轮融资，避免累计融资
   function extractAmount(description) {
     // 先尝试提取本轮融资金额（通常在"完成"后面，"累计"前面）
+    // 注意：支持带逗号的数字格式，如 6,400万、1,234.5万
     const currentRoundPatterns = [
-      /完成[^，。]*?(\d+(?:\.\d+)?)\s*亿美元[^，。]*?融资/,
-      /完成[^，。]*?(\d+(?:\.\d+)?)\s*亿元[^，。]*?融资/,
-      /完成[^，。]*?(\d+(?:\.\d+)?)\s*千万美元[^，。]*?融资/,
-      /完成[^，。]*?(\d+(?:\.\d+)?)\s*千万元[^，。]*?融资/,
-      /完成[^，。]*?(\d+(?:\.\d+)?)\s*万美元[^，。]*?融资/,
-      /完成[^，。]*?(\d+(?:\.\d+)?)\s*万元[^，。]*?融资/,
-      /完成[^，。]*?\$(\d+(?:\.\d+)?)\s*[MB][^，。]*?融资/,
-      /完成[^，。]*?(\d+(?:\.\d+)?)\s*[MB][^，。]*?融资/,
+      /完成[^，。]*?(\d+(?:,\d+)?(?:\.\d+)?)\s*亿美元[^，。]*?融资/,
+      /完成[^，。]*?(\d+(?:,\d+)?(?:\.\d+)?)\s*亿元[^，。]*?融资/,
+      /完成[^，。]*?(\d+(?:,\d+)?(?:\.\d+)?)\s*千万美元[^，。]*?融资/,
+      /完成[^，。]*?(\d+(?:,\d+)?(?:\.\d+)?)\s*千万元[^，。]*?融资/,
+      /完成[^，。]*?(\d+(?:,\d+)?(?:\.\d+)?)\s*万美元[^，。]*?融资/,
+      /完成[^，。]*?(\d+(?:,\d+)?(?:\.\d+)?)\s*万元[^，。]*?融资/,
+      /完成[^，。]*?\$(\d+(?:,\d+)?(?:\.\d+)?)\s*[MB][^，。]*?融资/,
+      /完成[^，。]*?(\d+(?:,\d+)?(?:\.\d+)?)\s*[MB][^，。]*?融资/,
     ];
 
     // 检查本轮融资模式
     for (const pattern of currentRoundPatterns) {
       const match = description.match(pattern);
       if (match) {
-        const amount = parseFloat(match[1]);
+        // 移除逗号后再转换为数字
+        const amount = parseFloat(match[1].replace(/,/g, ''));
         const text = match[0];
 
         if (text.includes('亿美元')) return amount * 100000000;
@@ -370,20 +403,21 @@
 
     // 如果没有找到明确的本轮融资，尝试通用模式（但排除累计相关文本）
     const generalPatterns = [
-      /(\d+(?:\.\d+)?)\s*亿美元/g,
-      /(\d+(?:\.\d+)?)\s*亿元/g,
-      /(\d+(?:\.\d+)?)\s*千万美元/g,
-      /(\d+(?:\.\d+)?)\s*千万元/g,
-      /(\d+(?:\.\d+)?)\s*万美元/g,
-      /(\d+(?:\.\d+)?)\s*万元/g,
-      /\$(\d+(?:\.\d+)?)\s*[MB]/g,
-      /(\d+(?:\.\d+)?)\s*[MB]/g,
+      /(\d+(?:,\d+)?(?:\.\d+)?)\s*亿美元/g,
+      /(\d+(?:,\d+)?(?:\.\d+)?)\s*亿元/g,
+      /(\d+(?:,\d+)?(?:\.\d+)?)\s*千万美元/g,
+      /(\d+(?:,\d+)?(?:\.\d+)?)\s*千万元/g,
+      /(\d+(?:,\d+)?(?:\.\d+)?)\s*万美元/g,
+      /(\d+(?:,\d+)?(?:\.\d+)?)\s*万元/g,
+      /\$(\d+(?:,\d+)?(?:\.\d+)?)\s*[MB]/g,
+      /(\d+(?:,\d+)?(?:\.\d+)?)\s*[MB]/g,
     ];
 
     for (const pattern of generalPatterns) {
       let match;
       while ((match = pattern.exec(description)) !== null) {
-        const amount = parseFloat(match[1]);
+        // 移除逗号后再转换为数字
+        const amount = parseFloat(match[1].replace(/,/g, ''));
         const text = match[0];
         const beforeText = description.substring(Math.max(0, match.index - 20), match.index);
         const afterText = description.substring(match.index, Math.min(description.length, match.index + 50));
@@ -579,7 +613,7 @@
         </div>
 
         <div class="team-section">
-          ${item.teamBackground ? `
+          ${item.teamBackground && !isInvalidTeamBackground(item.teamBackground) ? `
             <p>${addLinksToTeamBackground(item.teamBackground, item.contactInfo)}</p>
           ` : ''}
 
@@ -591,11 +625,11 @@
             <p><strong>🎓 教育背景：</strong>${item.education}</p>
           ` : ''}
 
-          ${!item.founder && !item.founders && !item.workExperience && !item.education && !item.teamBackground && item.description ? `
+          ${!item.founder && !item.founders && !item.workExperience && !item.education && (!item.teamBackground || isInvalidTeamBackground(item.teamBackground)) && item.description ? `
             <p><strong>📋 公司信息：</strong>${item.description}</p>
           ` : ''}
 
-          ${!item.founder && !item.founders && !item.workExperience && !item.education && !item.teamBackground && !item.description ? `
+          ${!item.founder && !item.founders && !item.workExperience && !item.education && (!item.teamBackground || isInvalidTeamBackground(item.teamBackground)) && !item.description ? `
             <p class="no-team-info">团队背景信息待补充</p>
           ` : ''}
         </div>
