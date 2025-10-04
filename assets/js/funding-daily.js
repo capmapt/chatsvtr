@@ -446,23 +446,50 @@
   // 🎯 从企业介绍中提取融资轮次
   function extractStage(description) {
     const stagePatterns = [
+      // 早期轮次
       { pattern: /天使轮|天使/, stage: 'Seed' },
       { pattern: /种子轮/, stage: 'Seed' },
-      { pattern: /Pre-A\+?轮|PreA/, stage: 'Pre-A' },
-      { pattern: /A\+?轮融资|A轮/, stage: 'Series A' },
-      { pattern: /B\+?轮融资|B轮/, stage: 'Series B' },
-      { pattern: /C\+?轮融资|C轮/, stage: 'Series C' },
-      { pattern: /D\+?轮融资|D轮/, stage: 'Series D' },
+
+      // Pre系列 + SAFE组合（最高优先级）
+      { pattern: /pre-Series\s*([A-Z])\s*SAFE/i, stage: (match) => {
+        const letter = match.match(/pre-Series\s*([A-Z])/i)[1].toUpperCase();
+        return `Pre-${letter} SAFE`;
+      }},
+
+      // 特殊融资类型
+      { pattern: /SAFE轮/i, stage: 'SAFE' },
+      { pattern: /可转债|可转换债券/, stage: '可转债' },
+      { pattern: /战略投资|战略融资/, stage: 'Strategic' },
       { pattern: /IPO|上市/, stage: 'IPO' },
-      { pattern: /战略投资/, stage: 'Strategic' },
+      { pattern: /并购|收购/, stage: 'M&A' },
+
+      // Pre系列（需要在标准轮次之前匹配）
+      { pattern: /Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i, stage: (match) => {
+        const letter = (match.match(/Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i) || [])[1] ||
+                       (match.match(/Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i) || [])[2];
+        return `Pre-${letter.toUpperCase()}`;
+      }},
+      { pattern: /Pre-[A-Z]\+?轮|PreA/i, stage: 'Pre-A' },
+
+      // 标准轮次 (A-Z轮，支持+号)
+      { pattern: /([A-Z])\+?轮融资|([A-Z])\+?轮/i, stage: (match) => {
+        const letter = (match.match(/([A-Z])\+?轮/i) || [])[1];
+        if (letter) {
+          const hasPlus = match.includes('+');
+          return hasPlus ? `${letter.toUpperCase()}+` : `${letter.toUpperCase()}轮`;
+        }
+        return 'Unknown';
+      }},
     ];
 
     for (const { pattern, stage } of stagePatterns) {
-      if (pattern.test(description)) {
-        return stage;
+      const match = description.match(pattern);
+      if (match) {
+        // 如果stage是函数，调用它来动态生成stage名称
+        return typeof stage === 'function' ? stage(match[0]) : stage;
       }
     }
-    return 'Unknown';
+    return '未知';
   }
 
   // 🏛️ 从企业介绍中提取投资方

@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0,user-scalable=yes,viewport-fit=cover"/>
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="theme-color" content="#FA8C32"/>
+  
+  <!-- 安全策略现在通过服务器端_headers文件配置 -->
+
+  <!-- 强制缓存清除 + 移动端优化 -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="cache-control" content="no-cache, no-store, must-revalidate, post-check=0, pre-check=0">
+
+  <!-- 版本控制 - 每次部署自动更新 -->
+  <meta name="version" content="20250923-070227" id="page-version">
+
+  <!-- 强制移动端浏览器刷新 -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  
+  
+  <title data-i18n="title">SVTR - 硅谷科技评论 | Silicon Valley Technology Review | Insights on Global Capital, Empowering AI Founders</title>
+  <meta name="description" content="SVTR（Silicon Valley Technology Review）硅谷科技评论，洞察全球资本，成就AI创业者。Insights on Global Capital, Empowering AI Founders. 追踪10,761+家全球AI公司和121,884+投资人，提供AI周报、投资分析、市场洞察和实时创投数据。">
+  <meta name="keywords" content="AI创投,人工智能投资,创业公司,投资机构,SVTR,硅谷科技评论,AI融资,创投数据,投资分析,AI独角兽">
+  
+  <!-- 增强SEO元数据 -->
+  <meta name="author" content="SVTR Team">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow">
+  <link rel="canonical" href="https://svtr.ai/">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://svtr.ai/">
+  <meta property="og:title" content="SVTR - Silicon Valley Technology Review | 硅谷科技评论">
+  <meta property="og:description" content="Insights on Global Capital, Empowering AI Founders. 洞察全球资本，成就AI创业者。追踪10,761+家全球AI公司和121,884+投资人，提供专业AI创投分析、实时市场数据和投资洞察。">
+  <meta property="og:image" content="https://svtr.ai/assets/images/og-banner.webp">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="SVTR">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:locale:alternate" content="en_US">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://svtr.ai/">
+  <meta name="twitter:title" content="SVTR - Silicon Valley Technology Review | 硅谷科技评论">
+  <meta name="twitter:description" content="Insights on Global Capital, Empowering AI Founders. 洞察全球资本，成就AI创业者。追踪10,761+家全球AI公司和121,884+投资人，提供专业AI创投分析、实时市场数据和投资洞察。">
+  <meta name="twitter:image" content="https://svtr.ai/assets/images/twitter-banner.webp">
+  <meta name="twitter:site" content="@SVTR_AI">
+  <meta name="twitter:creator" content="@SVTR_AI">
+  
+  <!-- 多语言和地理定位 -->
+  <meta name="geo.region" content="US-CA">
+  <meta name="geo.placename" content="Silicon Valley">
+  <meta name="geo.position" content="37.7749;-122.4194">
+  <meta name="ICBM" content="37.7749, -122.4194">
+  
+  <!-- 立即静默Chrome扩展错误 -->
+  <script type="0e08e9b581f82b691b87cdcc-text/javascript">
+  (function() {
+    'use strict';
+    // 立即捕获并静默Chrome扩展Promise错误
+    window.addEventListener('unhandledrejection', function(event) {
+      const errorText = String(event.reason || '');
+      if (errorText.includes('all-frames.js') || 
+          errorText.includes('Could not establish connection') ||
+          errorText.includes('Receiving end does not exist') ||
+          errorText.includes('chrome-extension://')) {
+        event.preventDefault();
+        return false;
+      }
+    }, true);
+    
+    // 立即捕获并静默Chrome扩展JavaScript错误
+    window.addEventListener('error', function(event) {
+      const message = event.message || '';
+      const filename = event.filename || '';
+      if (message.includes('all-frames.js') || 
+          filename.includes('all-frames.js') ||
+          filename.includes('chrome-extension://') ||
+          message.includes('Could not establish connection')) {
+        event.preventDefault();
+        return false;
+      }
+    }, true);
+  })();
+  </script>
+  
+  <!-- 加载完整错误处理器 -->
+  <script src="assets/js/error-handler.js?v=20250923-070227" type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+
+  <!-- 移动端缓存强制清除 -->
+  <script src="assets/js/mobile-cache-buster.js?v=20250923-070227" type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+  
+    <!-- Critical CSS内联 -->
+  <style>*,::after,::before{box-sizing:border-box}:root{--primary-color:#FA8C32;--secondary-color:#FFBB33;--accent-color:#FFD600;--bg-main:linear-gradient(135deg, #fff8e1, #ffe0b2);--bg-panel:#FFF;--text-primary:#000;--text-secondary:#666;--text-link:#0066cc;--text-link-hover:#004499;--border-color:rgba(0,0,0,0.1);--shadow-light:0 4px 12px rgba(0,0,0,0.1);--transition-fast:0.3s;--border-radius:6px;--border-radius-large:12px}html{scroll-behavior:smooth}body{margin:0;padding:0;min-height:100vh;background:var(--bg-main);font-family:"Helvetica Neue",Arial,sans-serif;overflow-x:hidden}header{position:relative;width:100%;z-index:1200}.banner-header{width:100%;aspect-ratio:4/1;background:#ffe0b2;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border-bottom:3px solid var(--primary-color)}.banner-content{display:flex;align-items:center;justify-content:center;gap:40px;max-width:1000px;width:100%;height:100%}.banner-logo{position:relative;width:120px;height:120px;flex-shrink:0;display:flex;align-items:center;justify-content:center}.banner-logo img{width:100px;height:100px;border-radius:50%;object-fit:cover;box-shadow:0 4px 20px rgba(250,140,50,.4),0 2px 10px rgba(0,0,0,.1);border:3px solid rgba(255,255,255,.8)}.banner-title{font-size:3rem;font-weight:700;margin:0 0 12px;line-height:1.3;color:#000;text-shadow:1px 1px 2px rgba(255,255,255,.8)}.banner-tagline{font-size:1.4rem;font-weight:400;line-height:1.4;color:#4a3429;text-shadow:1px 1px 2px rgba(255,255,255,.7);margin:0;letter-spacing:.5px;display:flex;align-items:center;gap:20px;justify-content:center}.business-tags{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:20px auto 10px;width:calc(100% - 40px);max-width:760px;padding:0 20px;justify-items:center}.business-tag{font-size:1.5rem;font-weight:800;padding:18px 44px;border-radius:32px;background:linear-gradient(90deg,#fff176 10%,#ffa726 90%);color:#333;letter-spacing:2.5px;white-space:nowrap;width:100%;border:none;text-align:center;margin:0;cursor:pointer;position:relative;box-shadow:0 0 15px 0 #ffe08288,0 2px 12px #fa8c3230}.menu-toggle{position:fixed;top:20px;left:20px;background:0 0;border:none;font-size:1.5rem;color:var(--primary-color);cursor:pointer;z-index:1100;padding:8px;border-radius:4px}.lang-toggle{position:fixed;top:20px;right:20px;display:flex;background:#fff;border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:1100;overflow:hidden;align-items:center}.lang-toggle button{padding:4px 8px;border:none;background:0 0;color:#555;font-weight:500;cursor:pointer;font-size:1rem}.lang-toggle button.active{background:var(--primary-color);color:#fff}.wrapper{width:100%;max-width:800px;margin:10px auto;border-radius:var(--border-radius);box-shadow:var(--shadow-light);overflow:hidden}.content{margin-left:0;padding:10px 20px;display:flex;flex-direction:column;align-items:center}@media (max-width:768px){.wrapper{margin:5px auto}.banner-header{aspect-ratio:2.5/1;min-height:160px}.banner-content{flex-direction:column;gap:12px;padding:20px 16px}.banner-logo{width:60px;height:60px;margin-bottom:8px}.banner-logo img{width:50px;height:50px}.banner-title{font-size:1.8rem;margin:0 0 8px}.banner-tagline{font-size:.9rem;gap:12px}.business-tags{gap:12px;margin:16px auto 8px;padding:0 16px}.business-tag{font-size:1.1rem;padding:14px 24px;letter-spacing:1.5px}.menu-toggle{top:16px;left:16px;width:36px;height:36px;font-size:18px;padding:8px;background:rgba(250,140,50,0.15);backdrop-filter:blur(8px)}.lang-toggle{top:16px;right:16px;scale:0.9;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px)}.lang-toggle button{padding:6px 10px;font-size:13px;min-height:32px}.content{padding:8px 12px}}@media (max-width:480px){.wrapper{margin:3px auto}.banner-header{aspect-ratio:5/1;min-height:100px}.banner-content{gap:4px;padding:8px}.banner-logo{width:40px;height:40px}.banner-logo img{width:32px;height:32px}.banner-title{font-size:1.2rem;margin:0 0 2px}.banner-tagline{font-size:.7rem;gap:6px}.business-tags{display:flex;flex-direction:column;gap:8px;margin:10px auto 4px;width:100%;padding:0}.business-tag{font-size:1.05rem;padding:12px 0;width:100%;margin:0}.content{padding:6px 10px}}</style>
+  
+  <!-- 异步加载完整CSS -->
+  <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="0e08e9b581f82b691b87cdcc-|49"></script><link rel="preload" href="assets/css/style-optimized.css?v=20250923-070227" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  
+  
+  <link rel="stylesheet" href="assets/css/sidebar-optimized.css?v=20250923-070227">
+  <link rel="stylesheet" href="assets/css/sidebar-resizable.css?v=20250923-070227">
+  <link rel="stylesheet" href="assets/css/touch-optimized.css?v=20250923-070227">
+  <link rel="stylesheet" href="assets/css/mobile-banner-fix.css?v=20250923-070227">
+  <link rel="stylesheet" href="assets/css/sidebar-toggle-fix.css?v=20250923-070227">
+  <link rel="stylesheet" href="assets/css/mobile-sidebar-fix.css?v=20250923-070227">
+  <link rel="stylesheet" href="assets/css/mobile-sidebar-default-fix.css?v=20250923-070227">
+  <link rel="stylesheet" href="assets/css/sidebar-accordion.css?v=20250923-070227">
+  <link rel="stylesheet" href="assets/css/mobile-navigation-expanded.css?v=20250923-070227">
+  <link rel="stylesheet" href="assets/css/user-actions.css?v=20250923-070227">
+  <link rel="stylesheet" href="assets/css/user-actions-modal.css?v=20250923-070227">
+  <link rel="stylesheet" href="assets/css/mobile-sidebar-enhanced.css?v=20250923-070227">
+  <link rel="stylesheet" href="assets/css/funding-daily.css?v=20250923-070227">
+  <link rel="stylesheet" href="assets/css/funding-cards.css?v=20250923-070227">
+  <link rel="stylesheet" href="assets/css/header-enhancements.css?v=20250923-070227">
+  
+  <!-- Preload critical images (WebP preferred) -->
+  <link rel="preload" href="assets/images/banner.avif" as="image" type="image/avif">
+  <link rel="preload" href="assets/images/banner.webp" as="image" type="image/webp">
+  <link rel="preload" href="assets/images/logo.avif" as="image" type="image/avif">
+  <link rel="preload" href="assets/images/logo.webp" as="image" type="image/webp">
+  
+  <!-- JSON-LD结构化数据 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://svtr.ai/#organization",
+        "name": "SVTR.AI",
+        "alternateName": "硅谷科技评论",
+        "url": "https://svtr.ai",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://svtr.ai/assets/images/logo.webp",
+          "width": 200,
+          "height": 200
+        },
+        "description": "专业的AI创投生态系统分析平台，追踪10,761+家全球AI公司和121,884+投资人",
+        "foundingDate": "2024",
+        "industry": "AI创投分析",
+        "location": {
+          "@type": "Place",
+          "name": "Silicon Valley",
+          "address": {
+            "@type": "PostalAddress",
+            "addressRegion": "CA",
+            "addressCountry": "US"
+          }
+        },
+        "sameAs": [
+          "https://linkedin.com/company/svtrai",
+          "https://twitter.com/SVTR_AI"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "availableLanguage": ["zh-CN", "en-US"]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://svtr.ai/#website",
+        "url": "https://svtr.ai",
+        "name": "SVTR.AI - AI创投生态系统专业分析平台",
+        "description": "追踪10,761+家全球AI公司和121,884+投资人，提供专业AI创投分析、实时市场数据和投资洞察",
+        "publisher": {
+          "@id": "https://svtr.ai/#organization"
+        },
+        "inLanguage": ["zh-CN", "en-US"],
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://svtr.ai/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://svtr.ai/#webpage",
+        "url": "https://svtr.ai",
+        "name": "SVTR.AI - 全球AI创投生态系统专业分析平台",
+        "isPartOf": {
+          "@id": "https://svtr.ai/#website"
+        },
+        "about": {
+          "@id": "https://svtr.ai/#organization"
+        },
+        "description": "追踪10,761+家全球AI公司和121,884+投资人，提供专业AI创投分析、实时市场数据和投资洞察。",
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "首页",
+              "item": "https://svtr.ai"
+            }
+          ]
+        }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://svtr.ai/#chatbot",
+        "name": "SVTR.AI ChatBot",
+        "description": "专业的AI创投智能助手，提供实时AI创投市场分析和投资洞察",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "provider": {
+          "@id": "https://svtr.ai/#organization"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body itemscope itemtype="https://schema.org/WebPage">
+  <header>
+    <button class="menu-toggle" aria-label="打开侧边栏" data-i18n-attr-aria-label="open_sidebar">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 7H21M3 12H21M3 17H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+    
+    <!-- 右上角功能区 -->
+    <div class="header-actions">
+      <!-- 项目提交按钮 -->
+      <button class="btn-submit-project" data-i18n="submit_project">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        提交项目
+      </button>
+      
+      <!-- 语言切换下拉菜单 -->
+      <div class="lang-dropdown">
+        <button class="lang-dropdown-trigger" id="langDropdownTrigger">
+          <span id="currentLang">中文</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <div class="lang-dropdown-menu" id="langDropdownMenu">
+          <button id="btnZh" class="lang-option active">中文</button>
+          <button id="btnEn" class="lang-option">English</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="overlay"></div>
+  <aside class="sidebar" role="navigation" aria-label="主导航">
+    <div class="sidebar-header">
+      <picture class="sidebar-logo">
+        <source srcset="assets/images/logo.avif" type="image/avif">
+        <source srcset="assets/images/logo.webp" type="image/webp">
+        <img src="assets/images/logo.jpg" alt="SVTR.AI logo" loading="lazy">
+      </picture>
+    </div>
+    
+    <!-- 用户操作区域 -->
+    <div class="user-actions">
+      <!-- 邮件订阅区域 -->
+      <div class="subscription-section">
+        <div class="subscribe-header">
+          <p class="subscribe-trust" data-i18n="subscribe_trust">
+            已有 10W+ 创始人/投资人订阅
+          </p>
+        </div>
+        
+        <!-- 内联订阅表单 -->
+        <form class="subscribe-form-inline" id="subscribeForm">
+          <input type="email" 
+                 id="subscribeEmail"
+                 placeholder="you@company.com"
+                 data-i18n-placeholder="subscribe_email_placeholder"
+                 required>
+          <button type="submit" class="btn-subscribe-submit" data-i18n="subscribe_submit">
+            订阅SVTR AI周报
+          </button>
+          <div class="subscribe-status" id="subscribeStatus"></div>
+        </form>
+      </div>
+    </div>
+    
+    <nav>
+      <ul class="nav-list">
+        <!-- 数据产品组 -->
+        <li class="nav-group">
+          <a href="#data-products" class="group-header collapsible" data-i18n="nav_data_products">
+            <span class="group-title">数据榜单</span>
+            <span class="toggle-icon">▶</span>
+          </a>
+          <ul class="sub-list collapsed">
+            <li>
+              <a href="https://c0uiiy15npu.feishu.cn/wiki/DI9Hw8v8tiZF2Xk13KDcDI8Bn1b?from=from_copylink" data-i18n="nav_ai_vc_ranking" target="_blank" rel="noopener noreferrer">AI创投榜</a>
+              <ul class="sub-list">
+                <li><a href="pages/ai-100.html" data-i18n="nav_ai100">AI 100</a></li>
+                <li><a href="https://svtrglobal.feishu.cn/wiki/LvTbwkBLIidV8ckRRVKccg5Enze?from=from_copylink&sheet=HPHQps" data-i18n="nav_ai_funding_ranking" target="_blank" rel="noopener noreferrer">AI融资榜</a></li>
+                <li><a href="https://svtrglobal.feishu.cn/wiki/BxOLwsEciiMkBMkJj7Hc6vqCn1c?from=from_copylink&sheet=DntCHT" data-i18n="nav_ai_investment_ranking" target="_blank" rel="noopener noreferrer">AI投资榜</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="https://c0uiiy15npu.feishu.cn/wiki/FeE4wE5kwi2BvlksekTcJvN6n1e?from=from_copylink" data-i18n="nav_ai_vc_database" target="_blank" rel="noopener noreferrer">AI创投库</a>
+              <ul class="sub-list">
+                <li><a href="https://svtrglobal.feishu.cn/wiki/IeCiwz0cxiGFNnkaGvvcnUXwn3d?from=from_copylink" data-i18n="nav_company_database" target="_blank" rel="noopener noreferrer">公司库</a></li>
+                <li><a href="https://svtrglobal.feishu.cn/wiki/IeCiwz0cxiGFNnkaGvvcnUXwn3d?from=from_copylink" data-i18n="nav_institution_database" target="_blank" rel="noopener noreferrer">机构库</a></li>
+                <li><a href="https://svtrglobal.feishu.cn/wiki/IeCiwz0cxiGFNnkaGvvcnUXwn3d?from=from_copylink" data-i18n="nav_people_database" target="_blank" rel="noopener noreferrer">人物库</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        
+        <!-- 创投社区组 -->
+        <li class="nav-group">
+          <a href="#vc-community" class="group-header collapsible" data-i18n="nav_vc_community">
+            <span class="group-title">内容社区</span>
+            <span class="toggle-icon">▶</span>
+          </a>
+          <ul class="sub-list collapsed">
+            <li><a href="pages/ai-weekly.html" data-i18n="nav_ai_weekly">AI周报</a></li>
+            <li><a href="https://c0uiiy15npu.feishu.cn/wiki/N2MIwXwClitUy4k1JtvcYqfjnoe?from=from_copylink" data-i18n="nav_ai_vc_meetup" target="_blank" rel="noopener noreferrer">AI创投会</a></li>
+            <li><a href="https://c0uiiy15npu.feishu.cn/base/SRmKb3sSAauviCsf0cocnCWdnd2?table=blkZ3RiwRz0nScoi" data-i18n="nav_ai_vc_group" target="_blank" rel="noopener noreferrer">AI创投群</a></li>
+          </ul>
+        </li>
+        
+        <!-- 专业服务组 -->
+        <li class="nav-group">
+          <a href="#professional-services" class="group-header collapsible" data-i18n="nav_professional_services">
+            <span class="group-title">投资孵化</span>
+            <span class="toggle-icon">▶</span>
+          </a>
+          <ul class="sub-list collapsed">
+            <li><a href="pages/trading-picks.html" data-i18n="nav_project_matching">项目对接</a></li>
+            <li><a href="https://svtrglobal.feishu.cn/wiki/Fr2rwSwQ2iYYz4kqOxic4Nomnud?from=from_copylink" data-i18n="nav_ai_startup_camp" target="_blank" rel="noopener noreferrer">AI创业营</a></li>
+            <li><a href="https://svtrglobal.feishu.cn/wiki/JXSRwQKxAiqQkVkV4eWcZzBtnfh?from=from_copylink" data-i18n="nav_ai_investment_camp" target="_blank" rel="noopener noreferrer">AI投资营</a></li>
+          </ul>
+        </li>
+        
+        <!-- 关于我们组 -->
+        <li class="nav-group">
+          <a href="#about-us" class="group-header collapsible" data-i18n="nav_about_us">
+            <span class="group-title">关于我们</span>
+            <span class="toggle-icon">▶</span>
+          </a>
+          <ul class="sub-list collapsed">
+            <li><a href="https://c0uiiy15npu.feishu.cn/wiki/MFl0wpCVIigeQVkIifVcsgEcnJc?from=from_copylink" data-i18n="nav_company_introduction" target="_blank" rel="noopener noreferrer">公司介绍</a></li>
+            <li><a href="#management-team" data-i18n="nav_management_team">管理团队</a></li>
+            <li><a href="#contact-us" data-i18n="nav_contact_us">联系我们</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    
+    <!-- 侧边栏底部登录按钮 -->
+    <div class="sidebar-bottom-actions">
+      <button class="btn-member-login secondary-btn" data-i18n="btn_member_login" aria-label="登录或注册会员账户">
+        👤 <span data-i18n="nav_member_login">登录 / 注册</span>
+      </button>
+      
+      <!-- 社交媒体图标 -->
+      <div class="social-media-icons">
+        <a href="https://linkedin.com/company/svtrai" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+        </a>
+        <a href="https://x.com/SVTR_AI" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </a>
+        <a href="https://discord.gg/ESJN4J7e" target="_blank" rel="noopener noreferrer" aria-label="Discord">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419-.0189 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
+          </svg>
+        </a>
+        <a href="https://mp.weixin.qq.com/s/KTWp_KPADVx44hzhTAamMg" target="_blank" rel="noopener noreferrer" aria-label="微信公众号：硅谷科技评论">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#07c160">
+            <path d="M18.9 10.9c-.8-4.2-4.9-7.3-9.4-7.3-5.4 0-9.7 3.9-9.7 8.7 0 2.8 1.4 5.3 3.7 6.9l-.6 3.1c-.1.3.2.6.5.4l3.7-1.9c.9.2 1.8.3 2.8.3.3 0 .7 0 1-.1-.2-.6-.3-1.3-.3-2 0-4.4 4.2-8 9.3-8 .3 0 .7 0 1 .1-.7-.8-1.6-1.5-2.5-2.1.1 0 .2-.1.5-.1zm-5.2-1.4c.8 0 1.4.6 1.4 1.4s-.6 1.4-1.4 1.4-1.4-.6-1.4-1.4.6-1.4 1.4-1.4zm-5.5 0c.8 0 1.4.6 1.4 1.4s-.6 1.4-1.4 1.4-1.4-.6-1.4-1.4.6-1.4 1.4-1.4zm13.3 2.6c-4.2 0-7.6 2.9-7.6 6.5s3.4 6.5 7.6 6.5c.7 0 1.4-.1 2-.3l2.9 1.5c.3.2.6-.1.4-.4l-.5-2.4c1.8-1.3 2.9-3.2 2.9-5.4 0-3.6-3.4-6-7.7-6zm-4.8 4.1c-.6 0-1.1-.5-1.1-1.1s.5-1.1 1.1-1.1 1.1.5 1.1 1.1-.5 1.1-1.1 1.1zm4.8 0c-.6 0-1.1-.5-1.1-1.1s.5-1.1 1.1-1.1 1.1.5 1.1 1.1-.5 1.1-1.1 1.1z"/>
+          </svg>
+        </a>
+        <a href="https://www.xiaohongshu.com/user/profile/6785f340000000000801ba22" target="_blank" rel="noopener noreferrer" aria-label="小红书">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#ff2442">
+            <rect width="24" height="24" rx="6" fill="#ff2442"/>
+            <path d="M6 8h12c.55 0 1 .45 1 1v6c0 .55-.45 1-1 1H6c-.55 0-1-.45-1-1V9c0-.55.45-1 1-1z" fill="white"/>
+            <path d="M7 10h2v1H7v-1zm3 0h2v1h-2v-1zm3 0h2v1h-2v-1zm-6 2h2v1H7v-1zm3 0h2v1h-2v-1zm3 0h2v1h-2v-1z" fill="#ff2442"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </aside>
+  <main id="main-content" class="content" role="main">
+    <section class="wrapper">
+      <div class="banner-header" role="banner" aria-label="首页横幅">
+        <div class="banner-content">
+          <div class="banner-logo">
+            <picture>
+        <source srcset="assets/images/logo.avif" type="image/avif">
+        <source srcset="assets/images/logo.webp" type="image/webp">
+        <img src="assets/images/logo.jpg" alt="SVTR.AI logo" loading="lazy">
+      </picture>
+          </div>
+          <div class="banner-text">
+            <h1 class="banner-title" data-i18n="banner_title">硅谷科技评论</h1>
+            <div class="banner-tagline">
+              <div data-i18n="banner_tagline_left">洞察全球资本</div>
+              <div data-i18n="banner_tagline_right">成就AI创业者</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="business-tags">
+        <span class="business-tag tag-data-products" data-i18n="tag_data_products_text">数据榜单</span>
+        <a href="https://svtr.ai/pages/content-community" class="business-tag tag-vc-community" data-i18n="tag_vc_community_text">内容社区</a>
+        <span class="business-tag tag-professional-services" data-i18n="tag_professional_services_text">投资孵化</span>
+      </div>
+    </section>
+    
+  <!-- 🚀 统计卡片 START -->
+  <section class="stats-wrapper wrapper">
+    <iframe src="./pages/stats-widget.html"
+            loading="lazy"
+            class="stats-widget-iframe"></iframe>
+  </section>
+  <!-- 🚀 统计卡片 END -->
+
+    <!-- 🔥 创投日报 START -->
+    <section class="funding-daily wrapper">
+      <div class="funding-header">
+        <div class="funding-title-section">
+          <h2 class="funding-title">
+            <span class="funding-title-badge" data-i18n="funding_daily_title">AI创投日报</span>
+          </h2>
+        </div>
+        <div class="funding-actions-section">
+          <div class="funding-update-time" id="fundingUpdateTime">
+            ⏰ 更新时间：加载中...
+          </div>
+        </div>
+      </div>
+
+      <div class="funding-highlights" id="fundingHighlights">
+        <!-- 融资信息动态加载 -->
+        <div class="funding-loading">
+          <span class="loading-icon">⏳</span>
+          <span data-i18n="funding_loading">正在加载最新融资信息...</span>
+        </div>
+      </div>
+    </section>
+    <!-- 🔥 创投日报 END -->
+
+    <!-- Native Chat BEGIN -->
+    <section class="chatbox wrapper">
+      <h2 class="chat-header" data-i18n="chat_header">
+        Chat with <a href="https://svtr.ai" target="_blank">SVTR.AI</a>
+      </h2>
+      <div id="svtr-chat-container" class="native-chat-container">
+        <!-- 原生聊天组件将在这里加载 -->
+      </div>
+    </section>
+    <!-- Native Chat END -->
+  </main>
+  <footer>
+    <div class="footer-text-container" data-i18n="footer_text"></div>
+  </footer>
+  <!-- Skip to main content link for accessibility -->
+  <a href="#main-content" class="skip-link">跳转到主要内容</a>
+  
+  <!-- 错误处理器已在head部分加载 -->
+  
+  <!-- Load security utilities -->
+  <script src="assets/js/security-utils.js?v=20250923-070227" type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+  
+  <!-- 🚀 侧边栏状态初始化（最高优先级） - 暂时禁用避免冲突 -->
+  <!-- <script src="assets/js/sidebar-desktop-mobile-init.js?v=20250923-070227"></script> -->
+
+  <!-- 🚀 移动端侧边栏修复器（优先加载） - 暂时禁用避免冲突 -->
+  <!-- <script src="assets/js/mobile-sidebar-fix.js?v=20250923-070227"></script> -->
+
+  <!-- 🚀 移动端侧边栏交互调试工具 -->
+  <!-- 临时移除调试文件以避免冲突 -->
+  <!-- <script src="assets/js/mobile-sidebar-interaction-debug.js?v=20250923-070227"></script> -->
+
+  <!-- 🚀 参考ChatGPT方案：移除自动关闭，完全用户控制 -->
+
+  <!-- Load performance optimization -->
+  <script src="assets/js/cache-manager.js?v=20250923-070227" type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+
+  <!-- Load UX enhancements -->
+  <!-- UX增强器暂时禁用，避免移动端兼容性问题 -->
+  <!-- <script src="assets/js/ux-enhancer.js?v=20250923-070227"></script> -->
+
+  <!-- 移动端触摸优化 -->
+  <script src="assets/js/touch-enhancer.js?v=20250923-070227" type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+
+  <!-- 侧边栏功能 - 暂时禁用避免冲突 -->
+  <!-- <script src="assets/js/sidebar-resizer.js?v=20250923-070227"></script> -->
+  <!-- <script src="assets/js/sidebar-integration.js?v=20250923-070227"></script> -->
+  <script src="assets/js/sidebar-collapsible.js?v=20250923-070227" type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+  
+  <!-- Enhanced error handling and monitoring -->
+  <!-- 开发环境禁用错误报告避免405错误 -->
+  
+  <!-- Image optimization and accessibility -->
+  <script src="assets/js/image-optimizer-enhanced.js?v=20250923-070227" type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+  <script src="assets/js/accessibility-enhancer.js?v=20250923-070227" type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+  
+  <!-- Load translations and scripts -->
+  <script src="assets/js/translations.js?v=20250923-070227" type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+  <script src="assets/js/header-enhancements.js?v=20250923-070227" type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+  <script src="assets/js/funding-daily.js?v=20250923-070227" type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+  <script src="assets/js/user-actions.js?v=20250923-070227" defer type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+  <script src="assets/js/sidebar-qr-manager-optimized.js?v=20250923-070227" defer type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+  <script src="assets/js/i18n-optimized.js?v=20250923-070227" type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+  <!-- 性能稳定器 - 必须先加载 -->
+  <script src="assets/js/performance-stabilizer.js?v=20250923-070227" defer type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+  
+  <!-- 主页功能脚本 - 性能优化版 - 暂时禁用避免侧边栏冲突 -->
+  <!-- <script src="assets/js/main-performance-optimized.js?v=20250923-070227" defer></script> -->
+  <!-- 桌面端折叠按钮修复 - 已被统一控制器替代 -->
+  <!-- <script src="assets/js/desktop-toggle-fix.js?v=20250923-070227" defer></script> -->
+  
+  <!-- 统一侧边栏控制器 - 暂时禁用避免冲突 -->
+  <!-- <script src="assets/js/sidebar-unified-controller.js?v=20250923-070227" defer></script> -->
+
+  <!-- 简化的桌面端侧边栏修复 - 暂时禁用避免冲突 -->
+  <!-- <script src="assets/js/desktop-sidebar-fix-simple.js?v=20250923-070227" defer></script> -->
+
+  <!-- 极简侧边栏切换修复 - 最高优先级 -->
+  <script type="0e08e9b581f82b691b87cdcc-text/javascript">
+    (function() {
+      console.log('🔧 [PRIORITY] 初始化侧边栏控制器');
+
+      // 禁用其他侧边栏脚本
+      window.sidebarInitialized = true;
+      window.mobileSidebarDisabled = true;
+
+      let initialized = false;
+
+      function setupSidebar() {
+        if (initialized) {
+          console.log('🚫 侧边栏已初始化，跳过重复设置');
+          return;
+        }
+
+        const toggle = document.querySelector('.menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.querySelector('.overlay');
+
+        console.log('📍 查找元素:', {
+          toggle: !!toggle,
+          sidebar: !!sidebar,
+          overlay: !!overlay,
+          toggleVisible: toggle ? getComputedStyle(toggle).display !== 'none' : false
+        });
+
+        if (!toggle || !sidebar) {
+          console.log('⏰ 重试中...');
+          setTimeout(setupSidebar, 200);
+          return;
+        }
+
+        initialized = true;
+        console.log('✅ [PRIORITY] 开始设置侧边栏控制器');
+
+        // 强制移除所有现有事件监听器
+        const newToggle = toggle.cloneNode(true);
+        toggle.parentNode.replaceChild(newToggle, toggle);
+
+        // 初始状态 - 只使用CSS类，不用内联样式
+        sidebar.classList.remove('open');
+        if (overlay) {
+          overlay.classList.remove('active');
+        }
+
+        // 切换函数
+        function toggleSidebar() {
+          const isOpen = sidebar.classList.contains('open');
+          console.log('🔄 [ACTION] 侧边栏切换:', isOpen ? '关闭' : '打开');
+
+          if (isOpen) {
+            // 关闭侧边栏
+            sidebar.classList.remove('open');
+            // 强制设置变换
+            sidebar.style.setProperty('transform', 'translateX(-100%)', 'important');
+            if (overlay) {
+              overlay.classList.remove('active');
+            }
+            console.log('✅ 侧边栏已关闭 - 强制变换');
+          } else {
+            // 打开侧边栏
+            sidebar.classList.add('open');
+            // 强制设置变换
+            sidebar.style.setProperty('transform', 'translateX(0)', 'important');
+            if (overlay) {
+              overlay.classList.add('active');
+            }
+            console.log('✅ 侧边栏已打开 - 强制变换');
+          }
+
+          // 延迟检查最终状态
+          setTimeout(() => {
+            console.log('📊 最终侧边栏状态:', {
+              classList: Array.from(sidebar.classList),
+              computedTransform: getComputedStyle(sidebar).transform,
+              inlineTransform: sidebar.style.transform,
+              boundingRect: sidebar.getBoundingClientRect(),
+              position: {
+                left: sidebar.getBoundingClientRect().left,
+                right: sidebar.getBoundingClientRect().right,
+                width: sidebar.getBoundingClientRect().width
+              }
+            });
+          }, 100);
+        }
+
+        // 绑定按钮事件 - 使用多种方式确保生效
+        newToggle.onclick = function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('🔘 [CLICK] 按钮点击事件触发');
+          toggleSidebar();
+          return false;
+        };
+
+        newToggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('🔘 [LISTENER] 按钮监听器触发');
+          toggleSidebar();
+          return false;
+        }, { capture: true });
+
+        // 覆盖层点击关闭
+        if (overlay) {
+          overlay.onclick = function(e) {
+            e.preventDefault();
+            console.log('🔘 覆盖层点击关闭');
+            if (sidebar.classList.contains('open')) {
+              toggleSidebar();
+            }
+          };
+        }
+
+        // 添加按钮样式确保可点击
+        newToggle.style.cursor = 'pointer';
+        newToggle.style.pointerEvents = 'auto';
+        newToggle.style.position = 'relative';
+        newToggle.style.zIndex = '9999';
+
+        // 全局调试函数
+        window.sidebarToggle = toggleSidebar;
+        window.sidebarDebug = {
+          toggle: newToggle,
+          sidebar: sidebar,
+          overlay: overlay,
+          isOpen: () => sidebar.classList.contains('open'),
+          forceToggle: toggleSidebar
+        };
+
+        console.log('✅ [PRIORITY] 侧边栏控制器设置完成');
+        console.log('🔧 调试: 使用 window.sidebarToggle() 手动切换');
+      }
+
+      // 立即执行和延迟执行
+      setupSidebar();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupSidebar);
+      }
+      setTimeout(setupSidebar, 50);
+      setTimeout(setupSidebar, 200);
+      setTimeout(setupSidebar, 500);
+      setTimeout(setupSidebar, 1000);
+    })();
+  </script>
+
+  <!-- 侧边栏Logo Ctrl+点击功能 - 强制版本 v20250917-2302 -->
+  <script type="0e08e9b581f82b691b87cdcc-text/javascript">
+    (function() {
+      'use strict';
+      console.log('🔄 Logo脚本开始执行 - v20250917-2302');
+
+      function initLogoClick() {
+        const sidebarLogo = document.querySelector('.sidebar-logo');
+        const sidebarLogoImg = document.querySelector('.sidebar-logo img');
+
+        console.log('🔍 Logo元素查找结果:', {
+          picture: !!sidebarLogo,
+          img: !!sidebarLogoImg,
+          pictureTag: sidebarLogo ? sidebarLogo.tagName : 'not found',
+          imgTag: sidebarLogoImg ? sidebarLogoImg.tagName : 'not found'
+        });
+
+        function logoClickHandler(e) {
+          console.log('👆 Logo被点击:', {
+            ctrlKey: e.ctrlKey,
+            metaKey: e.metaKey,
+            target: e.target.tagName,
+            type: e.type
+          });
+
+          if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('🚀 Logo Ctrl+点击: 打开管理后台');
+            window.open('/pages/admin-center.html', '_blank');
+          }
+        }
+
+        // 双重绑定确保事件被捕获
+        if (sidebarLogo) {
+          // 移除可能的旧监听器
+          sidebarLogo.removeEventListener('click', logoClickHandler);
+          // 添加新监听器
+          sidebarLogo.addEventListener('click', logoClickHandler, true); // 使用捕获阶段
+          sidebarLogo.style.cursor = 'pointer';
+          sidebarLogo.style.pointerEvents = 'auto'; // 确保可点击
+          sidebarLogo.title = 'Ctrl+点击打开管理后台';
+          console.log('✅ Picture元素事件绑定完成');
+        }
+
+        if (sidebarLogoImg) {
+          // 移除可能的旧监听器
+          sidebarLogoImg.removeEventListener('click', logoClickHandler);
+          // 添加新监听器
+          sidebarLogoImg.addEventListener('click', logoClickHandler, true); // 使用捕获阶段
+          sidebarLogoImg.style.cursor = 'pointer';
+          sidebarLogoImg.title = 'Ctrl+点击打开管理后台';
+          console.log('✅ Img元素事件绑定完成');
+        }
+
+        if (sidebarLogo || sidebarLogoImg) {
+          console.log('✅ Logo Ctrl+点击功能已初始化 - v20250917-2302');
+
+          // 创建全局测试函数
+          window.testLogoClick = function() {
+            console.log('🧪 手动测试Logo点击功能');
+            if (sidebarLogo) {
+              sidebarLogo.click();
+            }
+          };
+
+          // 创建直接的Ctrl+点击测试
+          window.testLogoCtrlClick = function() {
+            console.log('🧪 模拟Ctrl+点击Logo');
+            if (sidebarLogo) {
+              const event = new MouseEvent('click', {
+                ctrlKey: true,
+                metaKey: false,
+                bubbles: true,
+                cancelable: true
+              });
+              sidebarLogo.dispatchEvent(event);
+            } else {
+              console.log('❌ 未找到Logo元素');
+            }
+          };
+
+          // 创建直接打开管理后台的函数
+          window.openAdminCenter = function() {
+            console.log('🚀 直接打开管理后台');
+            window.open('/pages/admin-center.html', '_blank');
+          };
+
+          // 添加全局键盘快捷键作为备用方案
+          if (!window.adminShortcutAdded) {
+            document.addEventListener('keydown', function(e) {
+              // Ctrl+Shift+A 打开管理后台
+              if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
+                e.preventDefault();
+                console.log('⌨️ 键盘快捷键: Ctrl+Shift+A 打开管理后台');
+                window.open('/pages/admin-center.html', '_blank');
+              }
+            });
+            window.adminShortcutAdded = true;
+          }
+
+          // 添加全局点击监听器捕获Logo区域点击
+          if (!window.globalLogoListener) {
+            document.addEventListener('click', function(e) {
+              if ((e.ctrlKey || e.metaKey)) {
+                // 检查是否点击了Logo区域
+                const logoContainer = document.querySelector('.sidebar-header');
+                const logoElement = document.querySelector('.sidebar-logo');
+
+                if (logoContainer && logoElement) {
+                  const logoRect = logoContainer.getBoundingClientRect();
+                  const clickX = e.clientX;
+                  const clickY = e.clientY;
+
+                  // 如果点击位置在Logo容器区域内
+                  if (clickX >= logoRect.left && clickX <= logoRect.right &&
+                      clickY >= logoRect.top && clickY <= logoRect.bottom) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🎯 全局Logo区域Ctrl+点击检测到');
+                    window.open('/pages/admin-center.html', '_blank');
+                  }
+                }
+              }
+            }, true); // 使用捕获阶段
+            window.globalLogoListener = true;
+          }
+
+          console.log('🔧 调试函数:');
+          console.log('   window.testLogoClick() - 测试普通点击');
+          console.log('   window.testLogoCtrlClick() - 测试Ctrl+点击');
+          console.log('   window.openAdminCenter() - 直接打开管理后台');
+          console.log('   Ctrl+Shift+A - 键盘快捷键打开管理后台');
+        } else {
+          console.log('⚠️ 未找到任何Logo元素，将稍后重试');
+        }
+      }
+
+      // 强制多次初始化
+      console.log('📋 DOM readyState:', document.readyState);
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initLogoClick);
+      }
+      initLogoClick(); // 立即执行一次
+      setTimeout(initLogoClick, 50);
+      setTimeout(initLogoClick, 200);
+      setTimeout(initLogoClick, 500);
+      setTimeout(initLogoClick, 1000);
+      setTimeout(initLogoClick, 2000);
+    })();
+  </script>
+
+  <!-- Native Chat Component with Authentication -->
+  <link rel="stylesheet" href="assets/css/chat-optimized.css?v=20250923-070227">
+  <link rel="stylesheet" href="assets/css/chat-login-overlay.css?v=20250923-070227">
+  <script src="assets/js/chat-optimized.js?v=20250923-070227" defer type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+  <script src="assets/js/chat-auth-manager.js?v=20250923-070227" defer type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+  <script src="assets/js/chat-auth-integration.js?v=20250923-070227" defer type="0e08e9b581f82b691b87cdcc-text/javascript"></script>
+  
+  <!-- 用户行为跟踪系统 -->
+  <!-- 开发环境禁用用户行为跟踪避免405错误 -->
+  
+  <!-- Service Worker 注册 -->
+  <script type="0e08e9b581f82b691b87cdcc-text/javascript">
+    // 在开发环境禁用Service Worker以避免缓存问题
+    const isLocalDev = window.location.hostname === 'localhost' && window.location.port === '3000';
+    
+    if ('serviceWorker' in navigator && !isLocalDev) {
+      // 只在生产环境启用Service Worker
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('[SW] 注册成功:', registration.scope);
+            
+            // 检查更新
+            registration.addEventListener('updatefound', () => {
+              console.log('[SW] 发现更新');
+            });
+          })
+          .catch((error) => {
+            console.log('[SW] 注册失败:', error);
+          });
+      });
+    } else if (isLocalDev) {
+      console.log('[SW] 开发环境已禁用Service Worker');
+      
+      // 在开发环境清理已存在的Service Worker
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          registrations.forEach(registration => {
+            console.log('[SW] 清理开发环境Service Worker:', registration.scope);
+            registration.unregister();
+          });
+        });
+      }
+    }
+  </script>
+
+  <!-- Stats Widget 动态高度调整 -->
+  <script type="0e08e9b581f82b691b87cdcc-text/javascript">
+    // 监听来自stats widget iframe的高度调整消息
+    window.addEventListener('message', function(event) {
+      if (event.data && event.data.type === 'adjustHeight') {
+        const statsIframe = document.querySelector('.stats-widget-iframe');
+        if (statsIframe && event.source === statsIframe.contentWindow) {
+          const newHeight = event.data.height;
+          statsIframe.style.height = newHeight + 'px';
+          console.log('📏 Stats Widget高度已调整为:', newHeight + 'px');
+        }
+      }
+    });
+
+    // 确保iframe完全加载后触发高度调整
+    document.addEventListener('DOMContentLoaded', function() {
+      const statsIframe = document.querySelector('.stats-widget-iframe');
+      if (statsIframe) {
+        statsIframe.addEventListener('load', function() {
+          // 延迟触发，确保iframe内容完全渲染
+          setTimeout(() => {
+            statsIframe.contentWindow.postMessage({type: 'requestHeight'}, '*');
+          }, 100);
+        });
+      }
+    });
+  </script>
+
+  <!-- 标签栏点击跳转脚本 -->
+  <script type="0e08e9b581f82b691b87cdcc-text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+      // 为内容社区标签添加点击事件
+      const contentCommunityTag = document.querySelector('.tag-vc-community');
+      
+      if (contentCommunityTag) {
+        contentCommunityTag.addEventListener('click', function() {
+          // 直接跳转到内容社区页面
+          window.location.href = 'pages/content-community.html';
+        });
+        
+        // 添加鼠标悬停提示
+        contentCommunityTag.title = '点击进入内容社区';
+        
+        // 增强视觉反馈
+        contentCommunityTag.style.cursor = 'pointer';
+      }
+    });
+  </script>
+<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="0e08e9b581f82b691b87cdcc-|49" defer></script></body>
+</html>
