@@ -978,8 +978,8 @@
     }
 
     try {
-      // 模拟加载延迟
-      await new Promise(resolve => setTimeout(resolve, 800));
+      // 短暂延迟以提供更好的用户反馈
+      await new Promise(resolve => setTimeout(resolve, 150));
 
       // 使用当前存储的数据或fallback到模拟数据
       const availableData = window.currentFundingData || mockFundingData;
