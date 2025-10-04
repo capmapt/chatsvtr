@@ -3,7 +3,7 @@
     "title": "交易精选",
     "description": "精选优质创业公司与投资机会分析",
     "totalCompanies": 20,
-    "lastUpdated": "2025-10-03T18:27:46.695Z",
+    "lastUpdated": "2025-10-04T18:34:08.515Z",
     "source": "SVTR飞书知识库",
     "dataVersion": "2.0"
   },
@@ -267,40 +267,6 @@
     },
     {
       "id": 9,
-      "name": "Vercel",
-      "sector": "👨‍💻 开发者工具",
-      "stage": "独角兽 · 成熟期",
-      "description": "Vercel，2015年成立于美国旧金山，帮助企业在云端构建Web与AI应用。正以约90亿美元估值筹集数亿美元新一轮融资，投资方为 Accel。本轮估值为约90亿美元，是 2024 年 5 月估值的三倍，此前 ARR 翻了一番，达到 2 亿美元，核心服务毛利率为 76%，并推出了 V0 编码助手。Accel 于 2020 年首次投资 Vercel，当时它领投了 A 轮融资，继续进行一系列重大押注。...",
-      "fundingAmount": "2.5亿美元融资 · 估值32.5亿美元",
-      "lastFundingDate": "2025年8月",
-      "valuation": "32.5亿美元",
-      "investors": [
-        "Accel",
-        "之前的投资方CRV",
-        "GV（Google）",
-        "Notable Capital",
-        "Bedrock",
-        "Geodesic Capital"
-      ],
-      "founder": "Guillermo Rauch",
-      "website": "https://vercel.com/",
-      "location": "美国旧金山",
-      "foundedYear": "2015",
-      "employees": "550",
-      "arr": "",
-      "tags": [
-        "编程",
-        "ET30"
-      ],
-      "analysisPoints": [
-        "🦄 独角兽企业，市场估值32.5亿美元",
-        "💎 单轮融资2.5亿美元，资本高度认可"
-      ],
-      "businessModel": "公司业务为开发Next.js框架，为构建基于云的 Web 应用程序提供平台",
-      "deepResearch": ""
-    },
-    {
-      "id": 10,
       "name": "Rivos",
       "sector": "⚙️ AI基础设施",
       "stage": "· 成长期",
@@ -333,7 +299,7 @@
       "deepResearch": ""
     },
     {
-      "id": 11,
+      "id": 10,
       "name": "Abridge",
       "sector": "🧬 生命科学",
       "stage": "独角兽 · 成熟期",
@@ -369,7 +335,7 @@
       "deepResearch": ""
     },
     {
-      "id": 12,
+      "id": 11,
       "name": "Oura",
       "sector": "📱 AI应用",
       "stage": "独角兽 · 成熟期",
@@ -396,7 +362,7 @@
       "deepResearch": ""
     },
     {
-      "id": 13,
+      "id": 12,
       "name": "ElevenLabs",
       "sector": "🎯 垂直模型",
       "stage": "独角兽 · 成长期",
@@ -430,7 +396,7 @@
       "deepResearch": ""
     },
     {
-      "id": 14,
+      "id": 13,
       "name": "Lovable",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 初创期",
@@ -465,7 +431,7 @@
       "deepResearch": ""
     },
     {
-      "id": 15,
+      "id": 14,
       "name": "Vast Data",
       "sector": "💾 数据服务",
       "stage": "独角兽 · 成熟期",
@@ -496,7 +462,7 @@
       "deepResearch": ""
     },
     {
-      "id": 16,
+      "id": 15,
       "name": "Mercor",
       "sector": "🏢 企业服务",
       "stage": "独角兽 · 初创期",
@@ -533,7 +499,7 @@
       "deepResearch": "Mercor"
     },
     {
-      "id": 17,
+      "id": 16,
       "name": "Physical Intelligence",
       "sector": "📱 AI应用",
       "stage": "独角兽 · 初创期",
@@ -570,7 +536,7 @@
       "deepResearch": ""
     },
     {
-      "id": 18,
+      "id": 17,
       "name": "n8n",
       "sector": "👨‍💻 开发者工具",
       "stage": "准独角兽 · 成熟期",
@@ -601,7 +567,7 @@
       "deepResearch": ""
     },
     {
-      "id": 19,
+      "id": 18,
       "name": "Fireworks AI",
       "sector": "🤖 AI模型",
       "stage": "准独角兽 · 成长期",
@@ -635,7 +601,7 @@
       "deepResearch": ""
     },
     {
-      "id": 20,
+      "id": 19,
       "name": "LangChain",
       "sector": "🤖 AI模型",
       "stage": "· 初创期",
@@ -660,6 +626,30 @@
       ],
       "analysisPoints": [],
       "businessModel": "为开发人员提供工具用于创建和部署利用大型语言模型的应用程序",
+      "deepResearch": ""
+    },
+    {
+      "id": 20,
+      "name": "Substack",
+      "sector": "🏢 企业服务",
+      "stage": "· 成熟期",
+      "description": "Substack，正以 7亿+美元估值， 寻求 5000 万至 1 亿美元融资。ARR为~4500 万美元。",
+      "fundingAmount": "1000万美元融资",
+      "lastFundingDate": "2024年11月",
+      "valuation": "",
+      "investors": [
+        "Omeed Malik",
+        "Nate Silver"
+      ],
+      "founder": "Chris Best",
+      "website": "https://substack.com/",
+      "location": "美国加州",
+      "foundedYear": "2017",
+      "employees": "",
+      "arr": "",
+      "tags": [],
+      "analysisPoints": [],
+      "businessModel": "为创作者提供发布和盈利的新闻通讯平台",
       "deepResearch": ""
     }
   ]
