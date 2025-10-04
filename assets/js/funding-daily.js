@@ -964,23 +964,12 @@
 
   // 🌊 加载更多融资信息
   async function loadMoreFunding() {
+    // 防止重复点击
     if (isLoadingMore) return;
 
     isLoadingMore = true;
-    const loadMoreBtn = document.querySelector('.load-more-btn');
-
-    if (loadMoreBtn) {
-      loadMoreBtn.innerHTML = `
-        <span class="loading-icon">⏳</span>
-        <span>加载中...</span>
-      `;
-      loadMoreBtn.disabled = true;
-    }
 
     try {
-      // 短暂延迟以提供更好的用户反馈
-      await new Promise(resolve => setTimeout(resolve, 150));
-
       // 使用当前存储的数据或fallback到模拟数据
       const availableData = window.currentFundingData || mockFundingData;
 
