@@ -613,8 +613,29 @@
     // 规范化公司名称
     const normalizedCompanyName = normalizeCompanyName(item.companyName);
 
-    // 过滤并显示前3个有效标签
-    const validTags = item.tags?.filter(tag => tag && tag !== '0' && tag !== 'AI创投日报') || [];
+    // 过滤并显示前3个有效标签 - 排除无效日期和其他无效标签
+    const validTags = item.tags?.filter(tag => {
+      if (!tag || typeof tag !== 'string') return false;
+      const trimmed = tag.trim();
+
+      // 排除无效标签
+      if (trimmed === '0' || trimmed === 'AI创投日报') return false;
+
+      // 排除日期格式标签（如 1899/12/30, 2024/01/01, 12月30日 等）
+      const invalidDatePatterns = [
+        /^\d{4}\/\d{1,2}\/\d{1,2}$/,    // YYYY/MM/DD 或 YYYY/M/D
+        /^\d{1,2}\/\d{1,2}\/\d{4}$/,    // MM/DD/YYYY 或 M/D/YYYY
+        /^\d{4}-\d{1,2}-\d{1,2}$/,      // YYYY-MM-DD
+        /^\d{1,2}月\d{1,2}日$/,         // MM月DD日
+        /^20\d{2}年\d{1,2}月\d{1,2}日$/, // YYYY年MM月DD日
+      ];
+
+      for (const pattern of invalidDatePatterns) {
+        if (pattern.test(trimmed)) return false;
+      }
+
+      return true;
+    }) || [];
     const tagsHTML = validTags.slice(0, 3).map(tag => `<span class="funding-tag">${tag}</span>`).join('');
 
     // 提取网站链接 - 优先使用API提供的companyWebsite字段
