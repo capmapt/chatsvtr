@@ -1,0 +1,97 @@
+name: 🔍 融资数据质量检查
+
+on:
+  schedule:
+    # 每6小时检查一次 (北京时间: 2:00, 8:00, 14:00, 20:00)
+    - cron: '0 */6 * * *'
+
+  workflow_dispatch:  # 支持手动触发
+
+  # 数据源更新后自动检查
+  repository_dispatch:
+    types: [data_updated]
+
+jobs:
+  quality-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout代码
+        uses: actions/checkout@v4
+
+      - name: 🔧 设置Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 🔍 执行数据质量检查
+        id: check
+        run: |
+          node scripts/check-funding-data-quality.js
+          echo "check_result=$?" >> $GITHUB_OUTPUT
+
+      - name: 📊 检查结果摘要
+        if: always()
+        run: |
+          if [ "${{ steps.check.outputs.check_result }}" == "0" ]; then
+            echo "✅ 数据质量检查通过" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ 数据质量检查失败" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: 🚨 创建Issue (失败时)
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const now = new Date().toISOString();
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '⚠️ AI创投日报数据质量检查失败',
+              labels: ['data-quality', 'automated', 'bug'],
+              body: `## 🚨 数据质量检查失败
+
+            **检查时间**: ${now}
+            **工作流**: [查看日志](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})
+
+            ## 📋 可能原因
+
+            1. **缓存未刷新**: API返回旧缓存数据
+            2. **字段映射变更**: 飞书数据源字段结构改变
+            3. **提取逻辑失效**: 正则表达式无法匹配新格式
+            4. **数据源异常**: 飞书API返回空数据或错误
+
+            ## 🔧 排查步骤
+
+            ### 1. 检查飞书原始数据
+            \`\`\`bash
+            curl "https://svtr.ai/api/wiki-funding-sync?force=true&refresh=true" | jq '.source'
+            \`\`\`
+
+            应该返回 \`"real-time"\`，如果是 \`"cache"\` 说明缓存刷新失败。
+
+            ### 2. 本地运行检查脚本
+            \`\`\`bash
+            node scripts/check-funding-data-quality.js
+            \`\`\`
+
+            ### 3. 手动清除KV缓存
+            1. 访问 [Cloudflare Dashboard](https://dash.cloudflare.com/)
+            2. Workers & Pages → KV → SVTR_CACHE
+            3. 删除 key: \`wiki-funding-real-data-v3\`
+
+            ### 4. 查看详细文档
+            - [数据更新指南](./docs/FUNDING_DAILY_DATA_UPDATE_GUIDE.md)
+            - [健康监控指南](./docs/FUNDING_DAILY_HEALTH_GUIDE.md)
+
+            ---
+
+            🤖 此Issue由GitHub Actions自动创建
+            `
+            });
+
+      - name: 📢 通知成功 (可选)
+        if: success()
+        run: |
+          echo "✅ 数据质量检查通过，无需干预"

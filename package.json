@@ -67,6 +67,7 @@
     "deploy:force": "wrangler pages deploy --commit-dirty=true",
     "safe:deploy": "npm run backup && npm run deploy:cloudflare && npm run verify:deployment",
     "health:check": "npm run verify:deployment && npm run rag:test",
+    "health:funding": "node scripts/check-funding-data-quality.js",
     "emergency:restore": "npm run rollback && npm run deploy:force && npm run verify:deployment",
     "rag:test-hybrid": "node scripts/test-hybrid-rag.js",
     "chat:test": "npm run rag:test-hybrid",
