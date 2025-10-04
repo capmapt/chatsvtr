@@ -813,12 +813,16 @@
             })
             .filter(item => {
               // 过滤掉公司名为空、为"0"或无效的记录
-              const isValidCompanyName = item.companyName &&
-                                         item.companyName.trim() !== '' &&
-                                         item.companyName !== '0';
+              const companyName = item.companyName;
+              const isValidCompanyName = companyName &&
+                                         typeof companyName === 'string' &&
+                                         companyName.trim() !== '' &&
+                                         companyName.trim() !== '0' &&
+                                         companyName !== 'null' &&
+                                         companyName !== 'undefined';
 
               if (!isValidCompanyName) {
-                console.log(`⚠️ 跳过无效公司名记录: companyName="${item.companyName}"`);
+                console.log(`⚠️ 跳过无效公司名记录: companyName="${companyName}"`);
               }
 
               return isValidCompanyName;
