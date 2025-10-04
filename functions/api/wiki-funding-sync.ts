@@ -136,7 +136,8 @@ export async function onRequestGet({ request, env }: { request: Request; env: En
 
   try {
     const url = new URL(request.url);
-    const forceRefresh = url.searchParams.get('force') === 'true';
+    // 支持两种参数名: force=true 或 refresh=true
+    const forceRefresh = url.searchParams.get('force') === 'true' || url.searchParams.get('refresh') === 'true';
     const cacheKey = 'wiki-funding-real-data-v3';
 
     console.log('📊 参数信息:', { forceRefresh });
