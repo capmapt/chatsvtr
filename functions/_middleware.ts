@@ -136,59 +136,67 @@ function extractAmount(description: string): number {
 }
 
 /**
- * 从企业介绍中提取融资轮次
+ * 从企业介绍中提取融资轮次(简化版-避免函数类型参数)
  */
 function extractStage(description: string): string {
-  const stagePatterns = [
-    { pattern: /天使轮|天使/, stage: 'Seed' },
-    { pattern: /种子轮/, stage: 'Seed' },
-    { pattern: /Pre-A\+?轮|PreA/, stage: 'Pre-A' },
-    { pattern: /A\+?轮融资|A轮/, stage: 'Series A' },
-    { pattern: /B\+?轮融资|B轮/, stage: 'Series B' },
-    { pattern: /C\+?轮融资|C轮/, stage: 'Series C' },
-    { pattern: /D\+?轮融资|D轮/, stage: 'Series D' },
-    { pattern: /IPO|上市/, stage: 'IPO' },
-    { pattern: /战略投资/, stage: 'Strategic' },
-  ];
+  // 天使/种子轮
+  if (/天使轮|天使/.test(description)) return 'Seed';
+  if (/种子轮/.test(description)) return 'Seed';
 
-  for (const { pattern, stage } of stagePatterns) {
-    if (pattern.test(description)) {
-      return stage;
-    }
+  // Pre-Series
+  if (/Pre-A\+?轮|PreA/i.test(description)) return 'Pre-A';
+
+  // A-Z轮（通用匹配） - 支持G轮、H轮等所有字母
+  const roundMatch = description.match(/([A-Z])\+?轮融资|([A-Z])\+?轮/i);
+  if (roundMatch) {
+    const letter = (roundMatch[1] || roundMatch[2]).toUpperCase();
+    return `${letter}轮`;
   }
-  return 'Seed';
+
+  // 特殊融资类型
+  if (/IPO|上市/.test(description)) return 'IPO';
+  if (/战略投资|战略融资/.test(description)) return 'Strategic';
+  if (/SAFE轮/i.test(description)) return 'SAFE';
+  if (/可转债/.test(description)) return '可转债';
+
+  return '未知';
 }
 
 /**
- * 从企业介绍中提取投资方
+ * 从企业介绍中提取投资方(优化版)
  */
 function extractInvestors(description: string): string[] {
-  const patterns = [
-    /投资方为\s*([^。，]+)/,
-    /投资人包括\s*([^。，]+)/,
-    /由\s*([^。，]*资本[^。，]*)\s*领投/,
-    /([^。，]*资本|[^。，]*投资|[^。，]*基金)/g,
+  // 优先匹配完整投资方列表
+  const listPatterns = [
+    /投资方为\s*([^。]+)/,
+    /投资方包括\s*([^。]+)/,
+    /投资人为\s*([^。]+)/,
+    /投资机构为\s*([^。]+)/,
   ];
 
-  let investors: string[] = [];
-  for (const pattern of patterns) {
-    const matches = description.match(pattern);
-    if (matches) {
-      if (pattern.global) {
-        investors = investors.concat(matches);
-      } else if (matches[1]) {
-        investors.push(matches[1]);
+  for (const pattern of listPatterns) {
+    const match = description.match(pattern);
+    if (match && match[1]) {
+      // 拆分投资方（按、或，或,分隔）
+      const investors = match[1]
+        .split(/[、，,]/)
+        .map(inv => inv.trim())
+        .map(inv => inv.replace(/等|投资方为|由|领投|跟投|参投/g, '').trim())
+        .filter(inv =>
+          inv.length > 1 &&
+          inv.length < 50 &&
+          !inv.includes('完成') &&
+          !inv.includes('融资')
+        )
+        .slice(0, 5);
+
+      if (investors.length > 0) {
+        return investors;
       }
     }
   }
 
-  // 清理和去重
-  investors = investors
-    .map(inv => inv.replace(/、|等|投资方为|由|领投/g, '').trim())
-    .filter(inv => inv.length > 1 && inv.length < 30)
-    .slice(0, 3); // 最多取3个
-
-  return investors.length > 0 ? investors : [];
+  return [];
 }
 
 /**
@@ -232,7 +240,53 @@ function applySecurityHeaders(response: Response, url: URL): Response {
 }
 
 /**
- * 生成融资卡片静态HTML
+ * 生成GEO优化的FAQPage Schema
+ */
+function generateFAQSchema(record: FundingRecord): string {
+  const companyName = record.companyName || '未知公司';
+  const stage = record.stage || 'Unknown';
+  const amount = formatAmount(record.amount || 0, record.currency || 'USD');
+  const description = record.description || '';
+  const investors = Array.isArray(record.investors) && record.investors.length > 0
+    ? record.investors.join('、')
+    : '暂未公开';
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": `${companyName}获得多少融资？`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `${companyName}完成${stage}融资，金额为${amount}。${description.substring(0, 100)}...`
+        }
+      },
+      {
+        "@type": "Question",
+        "name": `${companyName}是做什么的？`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": description
+        }
+      },
+      {
+        "@type": "Question",
+        "name": `${companyName}的投资方是谁？`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `${companyName}的投资方包括：${investors}。`
+        }
+      }
+    ]
+  };
+
+  return `<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>`;
+}
+
+/**
+ * 生成融资卡片静态HTML(GEO优化版)
  */
 function generateFundingHTML(records: FundingRecord[]): string {
   return records.map(record => {
@@ -245,7 +299,7 @@ function generateFundingHTML(records: FundingRecord[]): string {
 
     const investorsHTML = Array.isArray(record.investors) && record.investors.length > 0
       ? `<div class="funding-investors">
-           <strong>投资方:</strong> ${record.investors.join(', ')}
+           <strong>投资方:</strong> ${record.investors.join('、')}
          </div>`
       : '';
 
@@ -253,9 +307,11 @@ function generateFundingHTML(records: FundingRecord[]): string {
     const companyName = record.companyName || '未知公司';
     const stage = record.stage || 'Unknown';
     const description = record.description || '';
+    const directAnswer = `${companyName}完成${stage}融资，金额为${formatAmount(record.amount || 0, record.currency || 'USD')}。`;
 
     return `
     <article class="funding-card" itemscope itemtype="http://schema.org/Organization" data-id="${record.id || ''}">
+      ${generateFAQSchema(record)}
       <div class="funding-card-inner">
         <div class="funding-card-front">
           <div class="funding-header">
@@ -267,6 +323,7 @@ function generateFundingHTML(records: FundingRecord[]): string {
               </span>
             </div>
           </div>
+          <p class="direct-answer" style="display:none;">${directAnswer}</p>
           <div class="funding-tags">
             ${tagsHTML}
           </div>
