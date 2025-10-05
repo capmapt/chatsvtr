@@ -143,15 +143,19 @@ function extractStage(description: string): string {
   if (/天使轮|天使/.test(description)) return 'Seed';
   if (/种子轮/.test(description)) return 'Seed';
 
-  // Pre-Series
+  // Pre-seed等英文轮次（必须在A-Z轮之前检查,避免"seed"中的"d"被匹配）
+  if (/Pre-seed\s*轮/i.test(description)) return 'Pre-Seed';
   if (/Pre-A\+?轮|PreA/i.test(description)) return 'Pre-A';
 
-  // A-Z轮（通用匹配） - 支持G轮、H轮等所有字母
-  const roundMatch = description.match(/([A-Z])\+?轮融资|([A-Z])\+?轮/i);
+  // A-Z轮（通用匹配） - 支持G轮、H轮等所有字母，兼容空格 "A 轮"
+  const roundMatch = description.match(/([A-Z])\+?\s*轮融资|([A-Z])\+?\s*轮/i);
   if (roundMatch) {
     const letter = (roundMatch[1] || roundMatch[2]).toUpperCase();
     return `${letter}轮`;
   }
+
+  // 单独的Seed（无"轮"字）
+  if (/完成\s*Seed\s*融资/i.test(description)) return 'Seed';
 
   // 特殊融资类型
   if (/IPO|上市/.test(description)) return 'IPO';
