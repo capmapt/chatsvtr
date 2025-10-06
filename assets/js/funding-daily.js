@@ -471,15 +471,16 @@
       // Pre系列 + SAFE组合（最高优先级）
       { pattern: /完成[^。]*?Pre-seed\s*SAFE/i, stage: 'Pre-seed SAFE' },
       { pattern: /完成[^。]*?pre-Series\s*([A-Z])\s*SAFE/i, stage: (match) => {
-        const letter = match.match(/pre-Series\s*([A-Z])/i)[1].toUpperCase();
+        const letterMatch = match[0].match(/pre-Series\s*([A-Z])/i);
+        const letter = letterMatch[1].toUpperCase();
         return `Pre-${letter} SAFE`;
       }},
 
       // Pre系列轮次
       { pattern: /完成[^。]*?Pre-seed|完成[^。]*?种子前/i, stage: 'Pre-seed' },
       { pattern: /完成[^。]*?Pre-Series\s*([A-Z])|完成[^。]*?pre-Series\s*([A-Z])/i, stage: (match) => {
-        const letter = (match.match(/Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i) || [])[1] ||
-                       (match.match(/Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i) || [])[2];
+        const letterMatch = match[0].match(/Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i);
+        const letter = letterMatch[1] || letterMatch[2];
         return `Pre-${letter.toUpperCase()}`;
       }},
       { pattern: /完成[^。]*?Pre-[A-Z]\+?轮|完成[^。]*?PreA/i, stage: 'Pre-A' },
@@ -520,15 +521,16 @@
       // Pre系列 + SAFE组合
       { pattern: /Pre-seed\s*SAFE/i, stage: 'Pre-seed SAFE' },
       { pattern: /pre-Series\s*([A-Z])\s*SAFE/i, stage: (match) => {
-        const letter = match.match(/pre-Series\s*([A-Z])/i)[1].toUpperCase();
+        const letterMatch = match[0].match(/pre-Series\s*([A-Z])/i);
+        const letter = letterMatch[1].toUpperCase();
         return `Pre-${letter} SAFE`;
       }},
 
       // Pre系列
       { pattern: /Pre-seed|种子前/i, stage: 'Pre-seed' },
       { pattern: /Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i, stage: (match) => {
-        const letter = (match.match(/Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i) || [])[1] ||
-                       (match.match(/Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i) || [])[2];
+        const letterMatch = match[0].match(/Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i);
+        const letter = letterMatch[1] || letterMatch[2];
         return `Pre-${letter.toUpperCase()}`;
       }},
       { pattern: /Pre-[A-Z]\+?轮|PreA/i, stage: 'Pre-A' },
