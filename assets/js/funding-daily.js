@@ -156,15 +156,36 @@
   // 🎨 融资阶段标签映射
   const stageLabels = {
     'Pre-Seed': '种子前',
+    'Pre-seed': '种子前',
     'Seed': '种子轮',
     'Pre-A': 'Pre-A轮',
+    'A轮': 'A轮',
+    'B轮': 'B轮',
+    'C轮': 'C轮',
+    'D轮': 'D轮',
+    'E轮': 'E轮',
+    'F轮': 'F轮',
+    'G轮': 'G轮',
+    'H轮': 'H轮',
+    'A+': 'A+轮',
+    'B+': 'B+轮',
+    'C+': 'C+轮',
+    'D+': 'D+轮',
+    'E+': 'E+轮',
+    'F+': 'F+轮',
     'Series A': 'A轮',
     'Series B': 'B轮',
     'Series C': 'C轮',
     'Series D': 'D轮',
+    'Series E': 'E轮',
+    'Series F': 'F轮',
     'IPO': 'IPO',
     'Strategic': '战略投资',
-    'Unknown': '未知'
+    'SAFE': 'SAFE',
+    'M&A': '并购',
+    '可转债': '可转债',
+    'Unknown': '未知',
+    '未知': '未知'
   };
 
   // 💰 格式化金额显示
@@ -445,25 +466,66 @@
 
   // 🎯 从企业介绍中提取融资轮次
   function extractStage(description) {
-    const stagePatterns = [
-      // 早期轮次
-      { pattern: /天使轮|天使/, stage: 'Seed' },
-      { pattern: /种子轮/, stage: 'Seed' },
-
+    // 📌 优先提取"完成XX轮"格式（最近融资轮次）
+    const currentRoundPatterns = [
       // Pre系列 + SAFE组合（最高优先级）
+      { pattern: /完成[^。]*?Pre-seed\s*SAFE/i, stage: 'Pre-seed SAFE' },
+      { pattern: /完成[^。]*?pre-Series\s*([A-Z])\s*SAFE/i, stage: (match) => {
+        const letter = match.match(/pre-Series\s*([A-Z])/i)[1].toUpperCase();
+        return `Pre-${letter} SAFE`;
+      }},
+
+      // Pre系列轮次
+      { pattern: /完成[^。]*?Pre-seed|完成[^。]*?种子前/i, stage: 'Pre-seed' },
+      { pattern: /完成[^。]*?Pre-Series\s*([A-Z])|完成[^。]*?pre-Series\s*([A-Z])/i, stage: (match) => {
+        const letter = (match.match(/Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i) || [])[1] ||
+                       (match.match(/Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i) || [])[2];
+        return `Pre-${letter.toUpperCase()}`;
+      }},
+      { pattern: /完成[^。]*?Pre-[A-Z]\+?轮|完成[^。]*?PreA/i, stage: 'Pre-A' },
+
+      // 早期轮次
+      { pattern: /完成[^。]*?天使轮|完成[^。]*?天使/, stage: 'Seed' },
+      { pattern: /完成[^。]*?种子轮/, stage: 'Seed' },
+
+      // 标准轮次 (A-Z轮，支持+号)
+      { pattern: /完成[^。]*?([A-Z])\+?轮融资|完成[^。]*?([A-Z])\+?轮/i, stage: (match) => {
+        const letterMatch = match[0].match(/([A-Z])\+?轮/i);
+        if (letterMatch) {
+          const letter = letterMatch[1];
+          const hasPlus = match[0].includes('+');
+          return hasPlus ? `${letter.toUpperCase()}+` : `${letter.toUpperCase()}轮`;
+        }
+        return 'Unknown';
+      }},
+
+      // 特殊融资类型
+      { pattern: /完成[^。]*?SAFE轮/i, stage: 'SAFE' },
+      { pattern: /完成[^。]*?可转债|完成[^。]*?可转换债券/, stage: '可转债' },
+      { pattern: /完成[^。]*?战略投资|完成[^。]*?战略融资/, stage: 'Strategic' },
+      { pattern: /完成[^。]*?IPO|完成[^。]*?上市/, stage: 'IPO' },
+      { pattern: /完成[^。]*?并购|完成[^。]*?收购/, stage: 'M&A' },
+    ];
+
+    // 🔍 先尝试匹配"完成XX轮"格式
+    for (const { pattern, stage } of currentRoundPatterns) {
+      const match = description.match(pattern);
+      if (match) {
+        return typeof stage === 'function' ? stage(match[0]) : stage;
+      }
+    }
+
+    // 🔄 如果没有"完成"关键词，使用通用模式（保留原逻辑）
+    const generalPatterns = [
+      // Pre系列 + SAFE组合
+      { pattern: /Pre-seed\s*SAFE/i, stage: 'Pre-seed SAFE' },
       { pattern: /pre-Series\s*([A-Z])\s*SAFE/i, stage: (match) => {
         const letter = match.match(/pre-Series\s*([A-Z])/i)[1].toUpperCase();
         return `Pre-${letter} SAFE`;
       }},
 
-      // 特殊融资类型
-      { pattern: /SAFE轮/i, stage: 'SAFE' },
-      { pattern: /可转债|可转换债券/, stage: '可转债' },
-      { pattern: /战略投资|战略融资/, stage: 'Strategic' },
-      { pattern: /IPO|上市/, stage: 'IPO' },
-      { pattern: /并购|收购/, stage: 'M&A' },
-
-      // Pre系列（需要在标准轮次之前匹配）
+      // Pre系列
+      { pattern: /Pre-seed|种子前/i, stage: 'Pre-seed' },
       { pattern: /Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i, stage: (match) => {
         const letter = (match.match(/Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i) || [])[1] ||
                        (match.match(/Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i) || [])[2];
@@ -471,24 +533,36 @@
       }},
       { pattern: /Pre-[A-Z]\+?轮|PreA/i, stage: 'Pre-A' },
 
-      // 标准轮次 (A-Z轮，支持+号)
+      // 早期轮次
+      { pattern: /天使轮|天使/, stage: 'Seed' },
+      { pattern: /种子轮/, stage: 'Seed' },
+
+      // 标准轮次
       { pattern: /([A-Z])\+?轮融资|([A-Z])\+?轮/i, stage: (match) => {
-        const letter = (match.match(/([A-Z])\+?轮/i) || [])[1];
-        if (letter) {
-          const hasPlus = match.includes('+');
+        const letterMatch = match[0].match(/([A-Z])\+?轮/i);
+        if (letterMatch) {
+          const letter = letterMatch[1];
+          const hasPlus = match[0].includes('+');
           return hasPlus ? `${letter.toUpperCase()}+` : `${letter.toUpperCase()}轮`;
         }
         return 'Unknown';
       }},
+
+      // 特殊类型
+      { pattern: /SAFE轮/i, stage: 'SAFE' },
+      { pattern: /可转债|可转换债券/, stage: '可转债' },
+      { pattern: /战略投资|战略融资/, stage: 'Strategic' },
+      { pattern: /IPO|上市/, stage: 'IPO' },
+      { pattern: /并购|收购/, stage: 'M&A' },
     ];
 
-    for (const { pattern, stage } of stagePatterns) {
+    for (const { pattern, stage } of generalPatterns) {
       const match = description.match(pattern);
       if (match) {
-        // 如果stage是函数，调用它来动态生成stage名称
         return typeof stage === 'function' ? stage(match[0]) : stage;
       }
     }
+
     return '未知';
   }
 
