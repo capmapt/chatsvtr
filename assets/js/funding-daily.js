@@ -472,6 +472,7 @@
       { pattern: /完成[^。]*?Pre-seed\s*SAFE/i, stage: 'Pre-seed SAFE' },
       { pattern: /完成[^。]*?pre-Series\s*([A-Z])\s*SAFE/i, stage: (match) => {
         const letterMatch = match[0].match(/pre-Series\s*([A-Z])/i);
+        if (!letterMatch || !letterMatch[1]) return 'SAFE';
         const letter = letterMatch[1].toUpperCase();
         return `Pre-${letter} SAFE`;
       }},
@@ -480,8 +481,9 @@
       { pattern: /完成[^。]*?Pre-seed|完成[^。]*?种子前/i, stage: 'Pre-seed' },
       { pattern: /完成[^。]*?Pre-Series\s*([A-Z])|完成[^。]*?pre-Series\s*([A-Z])/i, stage: (match) => {
         const letterMatch = match[0].match(/Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i);
+        if (!letterMatch) return 'Pre-A';
         const letter = letterMatch[1] || letterMatch[2];
-        return `Pre-${letter.toUpperCase()}`;
+        return letter ? `Pre-${letter.toUpperCase()}` : 'Pre-A';
       }},
       { pattern: /完成[^。]*?Pre-[A-Z]\+?轮|完成[^。]*?PreA/i, stage: 'Pre-A' },
 
@@ -522,6 +524,7 @@
       { pattern: /Pre-seed\s*SAFE/i, stage: 'Pre-seed SAFE' },
       { pattern: /pre-Series\s*([A-Z])\s*SAFE/i, stage: (match) => {
         const letterMatch = match[0].match(/pre-Series\s*([A-Z])/i);
+        if (!letterMatch || !letterMatch[1]) return 'SAFE';
         const letter = letterMatch[1].toUpperCase();
         return `Pre-${letter} SAFE`;
       }},
@@ -530,8 +533,9 @@
       { pattern: /Pre-seed|种子前/i, stage: 'Pre-seed' },
       { pattern: /Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i, stage: (match) => {
         const letterMatch = match[0].match(/Pre-Series\s*([A-Z])|pre-Series\s*([A-Z])/i);
+        if (!letterMatch) return 'Pre-A';
         const letter = letterMatch[1] || letterMatch[2];
-        return `Pre-${letter.toUpperCase()}`;
+        return letter ? `Pre-${letter.toUpperCase()}` : 'Pre-A';
       }},
       { pattern: /Pre-[A-Z]\+?轮|PreA/i, stage: 'Pre-A' },
 
