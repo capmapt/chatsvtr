@@ -514,7 +514,8 @@
     for (const { pattern, stage } of currentRoundPatterns) {
       const match = description.match(pattern);
       if (match) {
-        return typeof stage === 'function' ? stage(match[0]) : stage;
+        const extractedStage = typeof stage === 'function' ? stage(match[0]) : stage;
+        return stageLabels[extractedStage] || extractedStage;
       }
     }
 
@@ -565,7 +566,8 @@
     for (const { pattern, stage } of generalPatterns) {
       const match = description.match(pattern);
       if (match) {
-        return typeof stage === 'function' ? stage(match[0]) : stage;
+        const extractedStage = typeof stage === 'function' ? stage(match[0]) : stage;
+        return stageLabels[extractedStage] || extractedStage;
       }
     }
 
