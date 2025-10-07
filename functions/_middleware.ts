@@ -136,34 +136,49 @@ function extractAmount(description: string): number {
 }
 
 /**
+ * 融资轮次标签映射表 - 将英文标签转换为中文显示
+ */
+const stageLabels: Record<string, string> = {
+  'Seed': '种子轮',
+  'Pre-Seed': '种子前',
+  'Pre-A': 'Pre-A轮',
+  'IPO': 'IPO',
+  'Strategic': '战略投资',
+  'SAFE': 'SAFE',
+  '可转债': '可转债',
+  '未知': '未知'
+};
+
+/**
  * 从企业介绍中提取融资轮次(简化版-避免函数类型参数)
  */
 function extractStage(description: string): string {
+  let rawStage = '未知';
+
   // 天使/种子轮
-  if (/天使轮|天使/.test(description)) return 'Seed';
-  if (/种子轮/.test(description)) return 'Seed';
-
+  if (/天使轮|天使/.test(description)) rawStage = 'Seed';
+  else if (/种子轮/.test(description)) rawStage = 'Seed';
   // Pre-seed等英文轮次（必须在A-Z轮之前检查,避免"seed"中的"d"被匹配）
-  if (/Pre-seed\s*轮/i.test(description)) return 'Pre-Seed';
-  if (/Pre-A\+?轮|PreA/i.test(description)) return 'Pre-A';
-
+  else if (/Pre-seed\s*轮/i.test(description)) rawStage = 'Pre-Seed';
+  else if (/Pre-A\+?轮|PreA/i.test(description)) rawStage = 'Pre-A';
   // A-Z轮（通用匹配） - 支持G轮、H轮等所有字母，兼容空格 "A 轮"
-  const roundMatch = description.match(/([A-Z])\+?\s*轮融资|([A-Z])\+?\s*轮/i);
-  if (roundMatch) {
-    const letter = (roundMatch[1] || roundMatch[2]).toUpperCase();
-    return `${letter}轮`;
+  else {
+    const roundMatch = description.match(/([A-Z])\+?\s*轮融资|([A-Z])\+?\s*轮/i);
+    if (roundMatch) {
+      const letter = (roundMatch[1] || roundMatch[2]).toUpperCase();
+      rawStage = `${letter}轮`;
+    }
+    // 单独的Seed（无"轮"字）
+    else if (/完成\s*Seed\s*融资/i.test(description)) rawStage = 'Seed';
+    // 特殊融资类型
+    else if (/IPO|上市/.test(description)) rawStage = 'IPO';
+    else if (/战略投资|战略融资/.test(description)) rawStage = 'Strategic';
+    else if (/SAFE轮/i.test(description)) rawStage = 'SAFE';
+    else if (/可转债/.test(description)) rawStage = '可转债';
   }
 
-  // 单独的Seed（无"轮"字）
-  if (/完成\s*Seed\s*融资/i.test(description)) return 'Seed';
-
-  // 特殊融资类型
-  if (/IPO|上市/.test(description)) return 'IPO';
-  if (/战略投资|战略融资/.test(description)) return 'Strategic';
-  if (/SAFE轮/i.test(description)) return 'SAFE';
-  if (/可转债/.test(description)) return '可转债';
-
-  return '未知';
+  // 应用stageLabels映射 - 将英文标签转为中文
+  return stageLabels[rawStage] || rawStage;
 }
 
 /**
