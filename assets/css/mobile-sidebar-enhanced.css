@@ -11,13 +11,18 @@
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.3) !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
-    /* 关键修复：移除滚动条，改为自适应高度 */
-    overflow-y: visible !important;
+    /* 关键修复：启用垂直滚动 */
+    overflow-y: auto !important;
     overflow-x: hidden !important;
-    height: auto !important;
-    min-height: 100vh !important;
+    height: 100vh !important; /* 固定高度为视口高度 */
+    height: 100dvh !important; /* 动态视口高度(iOS Safari优化) */
     position: fixed !important;
-    bottom: auto !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    /* 滚动优化 */
+    -webkit-overflow-scrolling: touch !important; /* iOS流畅滚动 */
+    scroll-behavior: smooth !important; /* 平滑滚动 */
+    overscroll-behavior-y: contain !important; /* 防止滚动穿透 */
     /* 确保内容可以正常显示 */
     padding-bottom: 100px !important;
   }
@@ -79,15 +84,15 @@
     pointer-events: auto;
   }
 
-  /* 优化侧边栏内部布局 - 移除滚动，展示所有内容 */
+  /* 优化侧边栏内部布局 - 允许内容自然流动 */
   .sidebar nav {
     padding-bottom: 100px; /* 为底部登录按钮预留更多空间 */
-    overflow: visible !important; /* 确保所有内容都可见 */
+    overflow: visible !important; /* 允许内容自然溢出到父容器滚动区域 */
     height: auto !important; /* 自适应高度 */
     max-height: none !important; /* 移除最大高度限制 */
   }
 
-  /* 确保侧边栏内容容器不限制高度 */
+  /* 确保侧边栏内容容器不限制高度和滚动 */
   .sidebar-content,
   .sidebar .nav-list,
   .sidebar .sidebar-section {
@@ -366,12 +371,14 @@
       -webkit-backdrop-filter: blur(10px);
       /* 防止iOS的橡皮筋效果 */
       overscroll-behavior-y: contain;
+      /* iOS滚动优化 - 在侧边栏本身启用 */
+      -webkit-overflow-scrolling: touch !important;
+      scroll-behavior: smooth !important;
     }
 
     .sidebar nav {
-      /* iOS滚动优化 */
-      -webkit-overflow-scrolling: touch;
-      scroll-behavior: smooth;
+      /* 确保nav不阻止滚动 */
+      -webkit-overflow-scrolling: auto;
     }
   }
 }
