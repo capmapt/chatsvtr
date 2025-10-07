@@ -1,0 +1,63 @@
+#!/bin/sh
+# Pre-commit hook - 正则表达式null安全检查
+# 创建日期: 2025-10-06
+# 目的: 防止不安全的match()调用进入代码库
+
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🔍 执行pre-commit检查..."
+
+# 1. 检查JavaScript文件中的不安全match调用
+echo "📝 检查正则表达式null安全..."
+
+FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(js|ts)x?$')
+
+if [ -n "$FILES" ]; then
+  # 查找可能不安全的match调用 (直接访问match[n]而不检查null)
+  UNSAFE_MATCHES=$(echo "$FILES" | xargs grep -n '\.match(' | grep -v 'if.*match' | grep -v '?\.match' | grep 'match\[')
+
+  if [ -n "$UNSAFE_MATCHES" ]; then
+    echo "❌ 发现可能不安全的正则表达式match调用:"
+    echo "$UNSAFE_MATCHES"
+    echo ""
+    echo "💡 修复建议:"
+    echo "  选项1 - 使用if检查:"
+    echo "    const match = str.match(/pattern/);"
+    echo "    if (!match || !match[1]) return defaultValue;"
+    echo "    const value = match[1];"
+    echo ""
+    echo "  选项2 - 使用Optional Chaining:"
+    echo "    const value = str.match(/pattern/)?.[1] ?? defaultValue;"
+    echo ""
+    echo "📖 详见: docs/post-mortem/2025-10-06-extractstage-null-safety.md"
+    exit 1
+  fi
+
+  echo "✅ 正则表达式null安全检查通过"
+fi
+
+# 2. 运行ESLint
+echo "🔧 运行ESLint..."
+npm run lint --silent
+
+if [ $? -ne 0 ]; then
+  echo "❌ ESLint检查失败，请修复后再提交"
+  exit 1
+fi
+
+echo "✅ ESLint检查通过"
+
+# 3. 运行单元测试 (如果存在)
+if [ -d "tests/unit" ]; then
+  echo "🧪 运行单元测试..."
+  npm run test:unit --silent
+
+  if [ $? -ne 0 ]; then
+    echo "❌ 单元测试失败，请修复后再提交"
+    exit 1
+  fi
+
+  echo "✅ 单元测试通过"
+fi
+
+echo "🎉 所有pre-commit检查通过!"
