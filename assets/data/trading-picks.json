@@ -2,8 +2,8 @@
   "meta": {
     "title": "交易精选",
     "description": "精选优质创业公司与投资机会分析",
-    "totalCompanies": 20,
-    "lastUpdated": "2025-10-07T18:30:00.249Z",
+    "totalCompanies": 19,
+    "lastUpdated": "2025-10-08T18:38:51.818Z",
     "source": "SVTR飞书知识库",
     "dataVersion": "2.0"
   },
@@ -68,39 +68,6 @@
     },
     {
       "id": 3,
-      "name": "Anysphere（Cursor）",
-      "sector": "👨‍💻 开发者工具",
-      "stage": "独角兽 · 成长期",
-      "description": "Anysphere（Cursor），正以 180-200 亿美元估值进行融资",
-      "fundingAmount": "9.0亿美元融资 · 估值90亿美元",
-      "lastFundingDate": "2025年5月",
-      "valuation": "90亿美元",
-      "investors": [
-        "Thrive Capital",
-        "Andreessen Horowitz",
-        "Accel"
-      ],
-      "founder": "Michael Truell",
-      "website": "https://www.anysphere.co/",
-      "location": "美国旧金山",
-      "foundedYear": "2022",
-      "employees": "50",
-      "arr": "2.0亿美元",
-      "tags": [
-        "编程",
-        "Unicorn",
-        "AI Native"
-      ],
-      "analysisPoints": [
-        "🦄 独角兽企业，市场估值90亿美元",
-        "💰 年化收入2.0亿美元，商业模式成熟",
-        "💎 单轮融资9.0亿美元，资本高度认可"
-      ],
-      "businessModel": "开发AI驱动的编程助手Cursor",
-      "deepResearch": ""
-    },
-    {
-      "id": 4,
       "name": "Crusoe",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -134,7 +101,7 @@
       "deepResearch": ""
     },
     {
-      "id": 5,
+      "id": 4,
       "name": "Lambda",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -169,7 +136,7 @@
       "deepResearch": ""
     },
     {
-      "id": 6,
+      "id": 5,
       "name": "Runway",
       "sector": "🎯 垂直模型",
       "stage": "· 成熟期",
@@ -201,7 +168,7 @@
       "deepResearch": ""
     },
     {
-      "id": 7,
+      "id": 6,
       "name": "Rivos",
       "sector": "⚙️ AI基础设施",
       "stage": "· 成长期",
@@ -234,7 +201,7 @@
       "deepResearch": ""
     },
     {
-      "id": 8,
+      "id": 7,
       "name": "Abridge",
       "sector": "🧬 生命科学",
       "stage": "独角兽 · 成熟期",
@@ -270,7 +237,7 @@
       "deepResearch": ""
     },
     {
-      "id": 9,
+      "id": 8,
       "name": "Oura",
       "sector": "📱 AI应用",
       "stage": "独角兽 · 成熟期",
@@ -297,7 +264,7 @@
       "deepResearch": ""
     },
     {
-      "id": 10,
+      "id": 9,
       "name": "ElevenLabs",
       "sector": "🎯 垂直模型",
       "stage": "独角兽 · 成长期",
@@ -331,7 +298,7 @@
       "deepResearch": ""
     },
     {
-      "id": 11,
+      "id": 10,
       "name": "Lovable",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 初创期",
@@ -366,7 +333,7 @@
       "deepResearch": ""
     },
     {
-      "id": 12,
+      "id": 11,
       "name": "Vast Data",
       "sector": "💾 数据服务",
       "stage": "独角兽 · 成熟期",
@@ -397,7 +364,7 @@
       "deepResearch": ""
     },
     {
-      "id": 13,
+      "id": 12,
       "name": "Mercor",
       "sector": "🏢 企业服务",
       "stage": "独角兽 · 初创期",
@@ -434,7 +401,7 @@
       "deepResearch": "Mercor"
     },
     {
-      "id": 14,
+      "id": 13,
       "name": "Legora",
       "sector": "📱 AI应用",
       "stage": "· 初创期",
@@ -466,7 +433,7 @@
       "deepResearch": ""
     },
     {
-      "id": 15,
+      "id": 14,
       "name": "Physical Intelligence",
       "sector": "📱 AI应用",
       "stage": "独角兽 · 初创期",
@@ -503,38 +470,7 @@
       "deepResearch": ""
     },
     {
-      "id": 16,
-      "name": "n8n",
-      "sector": "👨‍💻 开发者工具",
-      "stage": "准独角兽 · 成熟期",
-      "description": "n8n，2019年成立于德国柏林，提供连接多种应用与API的低代码/自动化工作流平台。正在进行新一轮融资，投资方为Accel。本轮估值为23亿美元投前，累计融资约7,350万美元",
-      "fundingAmount": "6000万美元融资 · 估值2.7亿美元",
-      "lastFundingDate": "2025年3月",
-      "valuation": "2.7亿美元",
-      "investors": [
-        "Highland Europe",
-        "HV Capital",
-        "Sequoia",
-        "Felicis",
-        "Harpoon"
-      ],
-      "founder": "Jan Oberhauser",
-      "website": "https://n8n.io/",
-      "location": "德国柏林",
-      "foundedYear": "2019",
-      "employees": "",
-      "arr": "",
-      "tags": [
-        "投资人",
-        "自动化",
-        "开源"
-      ],
-      "analysisPoints": [],
-      "businessModel": "提供工作流自动化平台，帮助用户连接应用程序与API，自动化任务和流程",
-      "deepResearch": ""
-    },
-    {
-      "id": 17,
+      "id": 15,
       "name": "Fireworks AI",
       "sector": "🤖 AI模型",
       "stage": "准独角兽 · 成长期",
@@ -568,40 +504,7 @@
       "deepResearch": ""
     },
     {
-      "id": 18,
-      "name": "Black Forest Labs",
-      "sector": "🤖 大语言模型",
-      "stage": "· 初创期",
-      "description": "Black Forest Labs，2024年成立于德国弗赖堡，开发用于创建和编辑图像的生成式人工智能模型。正在洽谈最高3亿美元的新一轮融资，投资方为 Andreessen Horowitz（潜在领投）。本轮估值为40亿美元，累计融资约3100万美元。 (金融时报)",
-      "fundingAmount": "3100万美元融资",
-      "lastFundingDate": "2025年10月",
-      "valuation": "",
-      "investors": [
-        "Andreessen Horowitz",
-        "Brendan Iribe",
-        "Michael Ovitz",
-        "Garry Tan",
-        "Timo Aila",
-        "Vladlen Koltun"
-      ],
-      "founder": "Robin Rombach",
-      "website": "https://blackforestlabs.ai/",
-      "location": "美国旧金山",
-      "foundedYear": "2024",
-      "employees": "25",
-      "arr": "",
-      "tags": [
-        "关注",
-        "图像",
-        "ET30",
-        "AI Native"
-      ],
-      "analysisPoints": [],
-      "businessModel": "开发基础生成式人工智能模型",
-      "deepResearch": ""
-    },
-    {
-      "id": 19,
+      "id": 16,
       "name": "LangChain",
       "sector": "🤖 AI模型",
       "stage": "· 初创期",
@@ -629,7 +532,7 @@
       "deepResearch": ""
     },
     {
-      "id": 20,
+      "id": 17,
       "name": "Substack",
       "sector": "🏢 企业服务",
       "stage": "· 成熟期",
@@ -650,6 +553,56 @@
       "tags": [],
       "analysisPoints": [],
       "businessModel": "为创作者提供发布和盈利的新闻通讯平台",
+      "deepResearch": ""
+    },
+    {
+      "id": 22,
+      "name": "Canva",
+      "sector": "🎯 垂直模型",
+      "stage": "超级独角兽 · 初创期",
+      "description": "Canva 正以 370 亿美元的估值进行 400 至 5 亿美元的二级市场交易。 这将比 2024 年 10 月二次销售的 320 亿美元估值有所增加，但仍低于 2021 年 9 月融资轮融资的 400 亿美元峰值。根据AI创投库，Canva 在 2025 年第一季度的收入为 6.6 亿美元，EBITDA 为 1.5 亿美元。",
+      "fundingAmount": " · 估值370亿美元",
+      "lastFundingDate": "2025年6月",
+      "valuation": "370亿美元",
+      "investors": [],
+      "founder": "",
+      "website": "",
+      "location": "",
+      "foundedYear": "",
+      "employees": "5000",
+      "arr": "",
+      "tags": [
+        "ET30"
+      ],
+      "analysisPoints": [
+        "🏆 超级独角兽企业，估值370亿美元，行业领军地位"
+      ],
+      "businessModel": "",
+      "deepResearch": ""
+    },
+    {
+      "id": 23,
+      "name": "Polymarket",
+      "sector": "💰 金融科技",
+      "stage": "独角兽 · 成长期",
+      "description": "Polymarket，2020 年成立于美国纽约，基于区块链的预测市场平台，用户可就现实事件下注。目前正寻求 2 亿美元融资，Founders Fund 领投，拟投后估值 10 亿美元。若交易完成，累计融资将超 3.65 亿美元。(reuters.com, ccn.com)",
+      "fundingAmount": " · 估值10亿美元",
+      "lastFundingDate": "2025年6月",
+      "valuation": "10亿美元",
+      "investors": [],
+      "founder": "Shayne Coplan",
+      "website": "polymarket.com",
+      "location": "美国纽约",
+      "foundedYear": "2020",
+      "employees": "",
+      "arr": "",
+      "tags": [
+        "Web3"
+      ],
+      "analysisPoints": [
+        "🦄 独角兽企业，市场估值10亿美元"
+      ],
+      "businessModel": "基于区块链的预测市场平台，用户可就现实事件下注",
       "deepResearch": ""
     }
   ]
