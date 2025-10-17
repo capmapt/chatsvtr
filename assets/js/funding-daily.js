@@ -1101,6 +1101,13 @@
       // 添加点击事件
       addFundingItemClickHandlers();
 
+      // 初始化筛选功能（仅在重置时）
+      if (reset) {
+        setTimeout(() => {
+          initializeFilters();
+        }, 100);
+      }
+
       console.log(`✅ 创投日报加载完成，显示 ${recentFunding.length} 条融资信息`);
 
     } catch (error) {
@@ -1288,12 +1295,267 @@
     scheduleNextRefresh();
   }
 
+  // 🔍 筛选功能相关
+  let activeFilters = {
+    stage: 'all',
+    amount: 'all',
+    tags: []
+  };
+
+  // 初始化筛选栏
+  function initializeFilters() {
+    console.log('🔍 初始化筛选功能...');
+
+    const filterBar = document.getElementById('fundingFilterBar');
+    if (!filterBar) {
+      console.warn('⚠️ 筛选栏未找到');
+      return;
+    }
+
+    // 获取所有融资数据用于生成筛选选项
+    const allData = window.currentFundingData || mockFundingData;
+
+    // 生成融资轮次选项
+    generateStageFilters(allData);
+
+    // 生成标签选项
+    generateTagFilters(allData);
+
+    // 绑定筛选事件
+    bindFilterEvents();
+
+    console.log('✅ 筛选功能初始化完成');
+  }
+
+  // 生成融资轮次筛选选项
+  function generateStageFilters(data) {
+    const stageFilter = document.getElementById('stageFilter');
+    if (!stageFilter) return;
+
+    // 收集所有轮次
+    const stages = new Set();
+    data.forEach(item => {
+      const stage = stageLabels[item.stage] || item.stage;
+      if (stage && stage !== '未知') {
+        stages.add(stage);
+      }
+    });
+
+    // 排序轮次（按投资阶段顺序）
+    const sortedStages = ['Seed', '种子轮', 'Pre-A', 'A轮', 'B轮', 'C轮', 'D轮', 'E轮', 'F轮', 'IPO'];
+    const filteredStages = sortedStages.filter(stage => stages.has(stage));
+
+    // 生成HTML
+    const stageHTML = [
+      '<button class="filter-btn active" data-filter="stage" data-value="all">全部</button>',
+      ...filteredStages.map(stage =>
+        `<button class="filter-btn" data-filter="stage" data-value="${stage}">${stage}</button>`
+      )
+    ].join('');
+
+    stageFilter.innerHTML = stageHTML;
+  }
+
+  // 生成标签筛选选项
+  function generateTagFilters(data) {
+    const tagFilter = document.getElementById('tagFilter');
+    if (!tagFilter) return;
+
+    // 收集所有标签及其出现次数
+    const tagCounts = {};
+    data.forEach(item => {
+      if (item.tags && Array.isArray(item.tags)) {
+        item.tags.forEach(tag => {
+          if (tag && tag.trim()) {
+            tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+          }
+        });
+      }
+    });
+
+    // 按出现次数排序，取前10个
+    const sortedTags = Object.entries(tagCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([tag]) => tag);
+
+    // 生成HTML
+    const tagHTML = [
+      '<button class="filter-btn active" data-filter="tag" data-value="all">全部</button>',
+      ...sortedTags.map(tag =>
+        `<button class="filter-btn" data-filter="tag" data-value="${tag}">${tag}</button>`
+      )
+    ].join('');
+
+    tagFilter.innerHTML = tagHTML;
+  }
+
+  // 绑定筛选事件
+  function bindFilterEvents() {
+    // 筛选按钮点击事件
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const filterType = this.dataset.filter;
+        const filterValue = this.dataset.value;
+
+        // 更新按钮状态
+        if (filterType === 'tag' && filterValue !== 'all') {
+          // 标签支持多选
+          this.classList.toggle('active');
+          if (this.classList.contains('active')) {
+            if (!activeFilters.tags.includes(filterValue)) {
+              activeFilters.tags.push(filterValue);
+            }
+          } else {
+            activeFilters.tags = activeFilters.tags.filter(t => t !== filterValue);
+          }
+          // 取消"全部"标签的选中
+          const allTagBtn = document.querySelector('[data-filter="tag"][data-value="all"]');
+          if (allTagBtn && activeFilters.tags.length > 0) {
+            allTagBtn.classList.remove('active');
+          }
+        } else {
+          // 单选筛选（轮次和金额）
+          const filterGroup = this.closest('.filter-options');
+          filterGroup.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+
+          if (filterType === 'stage') {
+            activeFilters.stage = filterValue;
+          } else if (filterType === 'amount') {
+            activeFilters.amount = filterValue;
+          } else if (filterType === 'tag' && filterValue === 'all') {
+            activeFilters.tags = [];
+            // 取消所有标签选择
+            document.querySelectorAll('[data-filter="tag"]').forEach(b => {
+              if (b.dataset.value !== 'all') {
+                b.classList.remove('active');
+              }
+            });
+          }
+        }
+
+        // 应用筛选
+        applyFilters();
+      });
+    });
+
+    // 重置筛选按钮
+    const resetBtn = document.getElementById('resetFilters');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', resetFilters);
+    }
+  }
+
+  // 应用筛选
+  function applyFilters() {
+    console.log('🔍 应用筛选:', activeFilters);
+
+    const allData = window.currentFundingData || mockFundingData;
+
+    // 筛选数据
+    let filteredData = allData.filter(item => {
+      // 轮次筛选
+      if (activeFilters.stage !== 'all') {
+        const itemStage = stageLabels[item.stage] || item.stage;
+        if (itemStage !== activeFilters.stage) {
+          return false;
+        }
+      }
+
+      // 金额筛选
+      if (activeFilters.amount !== 'all') {
+        const amount = item.amount / 1000000; // 转换为百万美元
+        if (activeFilters.amount === '<10M' && amount >= 10) return false;
+        if (activeFilters.amount === '10M-50M' && (amount < 10 || amount >= 50)) return false;
+        if (activeFilters.amount === '50M-100M' && (amount < 50 || amount >= 100)) return false;
+        if (activeFilters.amount === '>100M' && amount < 100) return false;
+      }
+
+      // 标签筛选（任意匹配）
+      if (activeFilters.tags.length > 0) {
+        const hasMatchingTag = item.tags?.some(tag =>
+          activeFilters.tags.includes(tag)
+        );
+        if (!hasMatchingTag) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+
+    console.log(`✅ 筛选完成: ${filteredData.length} / ${allData.length} 条数据`);
+
+    // 显示筛选结果
+    displayFilteredData(filteredData);
+  }
+
+  // 显示筛选后的数据
+  function displayFilteredData(data) {
+    const container = document.getElementById('fundingHighlights');
+    if (!container) return;
+
+    if (data.length === 0) {
+      container.innerHTML = `
+        <div class="funding-empty">
+          <span>📋</span>
+          <p>没有符合筛选条件的融资信息</p>
+          <button onclick="window.fundingDaily.resetFilters()" class="retry-btn">重置筛选</button>
+        </div>
+      `;
+      return;
+    }
+
+    // 显示筛选结果信息
+    const resultInfo = `
+      <div class="filter-result-info">
+        找到 <strong>${data.length}</strong> 条符合条件的融资信息
+      </div>
+    `;
+
+    // 生成卡片HTML
+    const fundingHTML = data.map(createFundingItemHTML).join('');
+
+    container.innerHTML = resultInfo + fundingHTML;
+
+    // 添加点击事件
+    addFundingItemClickHandlers();
+  }
+
+  // 重置筛选
+  function resetFilters() {
+    console.log('🔄 重置筛选');
+
+    // 重置筛选状态
+    activeFilters = {
+      stage: 'all',
+      amount: 'all',
+      tags: []
+    };
+
+    // 重置按钮状态
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      if (btn.dataset.value === 'all') {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    // 重新加载数据
+    loadFundingData(false);
+  }
+
   // 🌐 暴露公共接口
   window.fundingDaily = {
     loadFundingData,
     loadMoreFunding,
     refreshFundingData,
-    initialize: initializeFundingDaily
+    initialize: initializeFundingDaily,
+    initializeFilters,
+    applyFilters,
+    resetFilters
   };
 
   // 🔄 暴露翻转函数到全局作用域（用于HTML onclick）

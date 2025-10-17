@@ -1,0 +1,142 @@
+/**
+ * 融资日报筛选栏样式
+ * 为创投日报添加筛选功能的样式
+ */
+
+.funding-filter-bar {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 0 0 20px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.filter-btn:hover {
+  border-color: var(--primary-color, #FA8C32);
+  color: var(--primary-color, #FA8C32);
+  background: rgba(250, 140, 50, 0.05);
+}
+
+.filter-btn.active {
+  background: var(--primary-color, #FA8C32);
+  border-color: var(--primary-color, #FA8C32);
+  color: #fff;
+  font-weight: 600;
+}
+
+.filter-reset-btn {
+  align-self: flex-end;
+  padding: 10px 24px;
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.filter-reset-btn:hover {
+  background: #f5f5f5;
+  border-color: #bbb;
+  color: #333;
+}
+
+/* 筛选结果提示 */
+.filter-result-info {
+  padding: 12px 16px;
+  background: rgba(250, 140, 50, 0.1);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+  margin: 0 0 16px 0;
+}
+
+.filter-result-info strong {
+  color: var(--primary-color, #FA8C32);
+  font-weight: 600;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .funding-filter-bar {
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .filter-group {
+    gap: 6px;
+  }
+
+  .filter-label {
+    font-size: 0.85rem;
+  }
+
+  .filter-options {
+    gap: 6px;
+  }
+
+  .filter-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  .filter-reset-btn {
+    padding: 8px 18px;
+    font-size: 0.85rem;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .funding-filter-bar {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .filter-options {
+    gap: 4px;
+  }
+
+  .filter-btn {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+  }
+}
