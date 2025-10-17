@@ -1367,7 +1367,10 @@
       if (item.tags && Array.isArray(item.tags)) {
         item.tags.forEach(tag => {
           if (tag && tag.trim()) {
-            tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+            const trimmed = tag.trim();
+            // 过滤无效标签（'0' 和 'AI创投日报'）
+            if (trimmed === '0' || trimmed === 'AI创投日报') return;
+            tagCounts[trimmed] = (tagCounts[trimmed] || 0) + 1;
           }
         });
       }
