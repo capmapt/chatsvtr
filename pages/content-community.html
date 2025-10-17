@@ -896,9 +896,30 @@
     </section>
   </div>
 
+  <!-- 引入数据加载器 -->
+  <script src="../assets/js/rich-content-renderer.js"></script>
+  <script src="../assets/js/community-data-loader.js"></script>
+
   <script>
+    // 初始化内容社区数据加载器
+    const communityLoader = new CommunityDataLoader();
+    window.communityLoader = communityLoader;
+
     // 内容社区交互脚本
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', async function() {
+      // 加载真实数据
+      console.log('📊 开始加载SVTR内容社区数据...');
+      const success = await communityLoader.init('#contentGrid');
+
+      if (success) {
+        // 渲染文章列表
+        communityLoader.renderArticles('#contentGrid');
+        console.log('✅ 内容社区数据加载完成');
+      } else {
+        console.warn('⚠️ 数据加载失败，使用模拟数据');
+      }
+
+      // 原有交互逻辑
       const categoryBtns = document.querySelectorAll('.category-btn');
       const filterOptions = document.querySelectorAll('.filter-option');
       const searchInput = document.getElementById('searchInput');
