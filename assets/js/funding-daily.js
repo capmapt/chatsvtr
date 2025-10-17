@@ -464,7 +464,7 @@
     return 10000000; // 默认1000万美元
   }
 
-  // 🎯 从企业介绍中提取融资轮次
+  // 🎯 从企业介绍中提取融资轮次 (增强版)
   function extractStage(description) {
     // 📌 优先提取"完成XX轮"格式（最近融资轮次）
     const currentRoundPatterns = [
@@ -515,6 +515,51 @@
       const match = description.match(pattern);
       if (match) {
         const extractedStage = typeof stage === 'function' ? stage(match[0]) : stage;
+        console.log(`✅ [完成模式] 成功识别轮次: ${extractedStage}`);
+        return stageLabels[extractedStage] || extractedStage;
+      }
+    }
+
+    // 🆕 新增: 支持"获得"、"宣布"、"筹集"等同义词
+    const expandedPatterns = [
+      // 获得XX轮
+      { pattern: /获得[^。]*?([A-Z])\+?轮融资/i, stage: (match) => {
+        const letterMatch = match[0].match(/([A-Z])\+?轮/i);
+        if (letterMatch) {
+          const letter = letterMatch[1].toUpperCase();
+          const hasPlus = match[0].includes('+');
+          return hasPlus ? `${letter}+` : `${letter}轮`;
+        }
+        return 'Unknown';
+      }},
+      // 宣布XX轮
+      { pattern: /宣布[^。]*?([A-Z])\+?轮融资/i, stage: (match) => {
+        const letterMatch = match[0].match(/([A-Z])\+?轮/i);
+        if (letterMatch) {
+          const letter = letterMatch[1].toUpperCase();
+          const hasPlus = match[0].includes('+');
+          return hasPlus ? `${letter}+` : `${letter}轮`;
+        }
+        return 'Unknown';
+      }},
+      // 轮次在前: "A轮融资已完成"
+      { pattern: /([A-Z])\+?轮融资[^。]*?完成/i, stage: (match) => {
+        const letterMatch = match[0].match(/([A-Z])\+?轮/i);
+        if (letterMatch) {
+          const letter = letterMatch[1].toUpperCase();
+          const hasPlus = match[0].includes('+');
+          return hasPlus ? `${letter}+` : `${letter}轮`;
+        }
+        return 'Unknown';
+      }},
+    ];
+
+    // 尝试扩展模式
+    for (const { pattern, stage } of expandedPatterns) {
+      const match = description.match(pattern);
+      if (match) {
+        const extractedStage = typeof stage === 'function' ? stage(match[0]) : stage;
+        console.log(`✅ [扩展模式] 成功识别轮次: ${extractedStage}`);
         return stageLabels[extractedStage] || extractedStage;
       }
     }
@@ -567,10 +612,36 @@
       const match = description.match(pattern);
       if (match) {
         const extractedStage = typeof stage === 'function' ? stage(match[0]) : stage;
+        console.log(`✅ [通用模式] 成功识别轮次: ${extractedStage}`);
         return stageLabels[extractedStage] || extractedStage;
       }
     }
 
+    // 🆕 智能推断: 如果所有模式都失败,根据融资金额推断轮次
+    console.log(`⚠️ 所有模式匹配失败，尝试根据金额推断轮次...`);
+    const amount = extractAmount(description);
+
+    if (amount && amount >= 10000000) { // 至少$10M才推断
+      let inferredStage = '';
+      if (amount >= 500000000) {
+        inferredStage = 'D轮以上';
+      } else if (amount >= 100000000) {
+        inferredStage = 'C轮';
+      } else if (amount >= 50000000) {
+        inferredStage = 'B轮';
+      } else if (amount >= 20000000) {
+        inferredStage = 'A轮';
+      } else if (amount >= 5000000) {
+        inferredStage = 'Pre-A';
+      } else {
+        inferredStage = 'Seed';
+      }
+
+      console.log(`💡 [金额推断] 融资金额$${(amount/1000000).toFixed(1)}M → 推断轮次: ${inferredStage}`);
+      return inferredStage;
+    }
+
+    console.log(`❌ 轮次识别失败，返回"未知"`);
     return '未知';
   }
 
