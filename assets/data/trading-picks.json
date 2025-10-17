@@ -2,8 +2,8 @@
   "meta": {
     "title": "交易精选",
     "description": "精选优质创业公司与投资机会分析",
-    "totalCompanies": 20,
-    "lastUpdated": "2025-10-16T18:37:58.104Z",
+    "totalCompanies": 19,
+    "lastUpdated": "2025-10-17T18:27:05.019Z",
     "source": "SVTR飞书知识库",
     "dataVersion": "2.0"
   },
@@ -274,33 +274,6 @@
     },
     {
       "id": 9,
-      "name": "Oura",
-      "sector": "📱 AI应用",
-      "stage": "独角兽 · 成熟期",
-      "description": "Oura， 智能戒指的芬兰公司 Oura Health 正在筹集 8.75 亿美元的 E 轮融资。估值约为 109 亿美元，是去年的两倍。",
-      "fundingAmount": "2.0亿美元融资 · 估值52亿美元",
-      "lastFundingDate": "1970年1月",
-      "valuation": "52亿美元",
-      "investors": [
-        "Fidelity Management",
-        "美国血糖监测公司Dexcom"
-      ],
-      "founder": "Tom Hale",
-      "website": "https://ouraring.com/",
-      "location": "芬兰",
-      "foundedYear": "2013",
-      "employees": "",
-      "arr": "",
-      "tags": [],
-      "analysisPoints": [
-        "🦄 独角兽企业，市场估值52亿美元",
-        "💎 单轮融资2.0亿美元，资本高度认可"
-      ],
-      "businessModel": "以智能戒指闻名的可穿戴技术公司",
-      "deepResearch": ""
-    },
-    {
-      "id": 10,
       "name": "ElevenLabs",
       "sector": "🎯 垂直模型",
       "stage": "独角兽 · 成长期",
@@ -334,7 +307,7 @@
       "deepResearch": ""
     },
     {
-      "id": 11,
+      "id": 10,
       "name": "Lovable",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 初创期",
@@ -369,7 +342,7 @@
       "deepResearch": ""
     },
     {
-      "id": 12,
+      "id": 11,
       "name": "Vast Data",
       "sector": "💾 数据服务",
       "stage": "独角兽 · 成熟期",
@@ -400,7 +373,7 @@
       "deepResearch": ""
     },
     {
-      "id": 13,
+      "id": 12,
       "name": "Mercor",
       "sector": "🏢 企业服务",
       "stage": "独角兽 · 初创期",
@@ -437,7 +410,7 @@
       "deepResearch": "Mercor"
     },
     {
-      "id": 14,
+      "id": 13,
       "name": "Legora",
       "sector": "📱 AI应用",
       "stage": "· 初创期",
@@ -469,7 +442,7 @@
       "deepResearch": ""
     },
     {
-      "id": 15,
+      "id": 14,
       "name": "Physical Intelligence",
       "sector": "📱 AI应用",
       "stage": "独角兽 · 初创期",
@@ -506,7 +479,7 @@
       "deepResearch": ""
     },
     {
-      "id": 16,
+      "id": 15,
       "name": "Fireworks AI",
       "sector": "🤖 AI模型",
       "stage": "准独角兽 · 成长期",
@@ -540,7 +513,7 @@
       "deepResearch": ""
     },
     {
-      "id": 17,
+      "id": 16,
       "name": "LangChain",
       "sector": "🤖 AI模型",
       "stage": "· 初创期",
@@ -568,7 +541,7 @@
       "deepResearch": ""
     },
     {
-      "id": 18,
+      "id": 17,
       "name": "Substack",
       "sector": "🏢 企业服务",
       "stage": "· 成熟期",
@@ -592,7 +565,7 @@
       "deepResearch": ""
     },
     {
-      "id": 19,
+      "id": 18,
       "name": "Worktrace AI",
       "sector": "🤖 AI模型",
       "stage": "· 初创期",
@@ -625,7 +598,7 @@
       "deepResearch": ""
     },
     {
-      "id": 25,
+      "id": 24,
       "name": "Canva",
       "sector": "🎯 垂直模型",
       "stage": "超级独角兽 · 初创期",
