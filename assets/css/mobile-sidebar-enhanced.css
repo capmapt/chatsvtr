@@ -86,7 +86,8 @@
 
   /* 优化侧边栏内部布局 - 允许内容自然流动 */
   .sidebar nav {
-    padding-bottom: 16px; /* 只需要少量底部间距 */
+    padding-bottom: 8px !important; /* 只需要少量底部间距 */
+    margin-bottom: 0 !important; /* 移除user-actions.css中设置的80px margin */
     overflow: visible !important; /* 允许内容自然溢出到父容器滚动区域 */
     height: auto !important; /* 自适应高度 */
     max-height: none !important; /* 移除最大高度限制 */
