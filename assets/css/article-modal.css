@@ -1,0 +1,416 @@
+/**
+ * 文章详情模态框样式
+ * 用于内容社区文章卡片点击后的详情展示
+ */
+
+/* 模态框容器 */
+.article-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.article-modal.show {
+  display: flex;
+}
+
+/* 遮罩层 */
+.article-modal .modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+/* 模态框内容容器 */
+.article-modal .modal-container {
+  position: relative;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 900px;
+  width: 90%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease-out;
+  z-index: 1;
+}
+
+/* 全屏模态框 */
+.article-modal .modal-container.modal-full {
+  max-width: 95%;
+  max-height: 95vh;
+}
+
+/* 模态框头部 */
+.article-modal .modal-header {
+  padding: 24px 30px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.article-modal .modal-title,
+.article-modal .modal-article-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+  line-height: 1.4;
+  flex: 1;
+  padding-right: 20px;
+}
+
+.article-modal .modal-close {
+  background: #f0f0f0;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #666;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.article-modal .modal-close:hover {
+  background: #FA8C32;
+  color: white;
+  transform: rotate(90deg);
+}
+
+/* 文章元信息 */
+.article-modal .modal-article-meta {
+  padding: 16px 30px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.article-modal .modal-category,
+.article-modal .modal-date,
+.article-modal .modal-author {
+  color: #666;
+}
+
+.article-modal .modal-category {
+  background: #FA8C32;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+/* 模态框主体 */
+.article-modal .modal-body {
+  padding: 30px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+/* 滚动条样式 */
+.article-modal .modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.article-modal .modal-body::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+.article-modal .modal-body::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.article-modal .modal-body::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+/* 文章内容 */
+.article-modal .modal-article-content {
+  color: #333;
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+.article-modal .modal-article-content h1,
+.article-modal .modal-article-content h2,
+.article-modal .modal-article-content h3,
+.article-modal .modal-article-content h4 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.article-modal .modal-article-content h1 {
+  font-size: 1.8rem;
+}
+
+.article-modal .modal-article-content h2 {
+  font-size: 1.5rem;
+}
+
+.article-modal .modal-article-content h3 {
+  font-size: 1.3rem;
+}
+
+.article-modal .modal-article-content h4 {
+  font-size: 1.1rem;
+}
+
+.article-modal .modal-article-content p {
+  margin-bottom: 1.2rem;
+}
+
+.article-modal .modal-article-content ul,
+.article-modal .modal-article-content ol {
+  margin-bottom: 1.2rem;
+  padding-left: 2rem;
+}
+
+.article-modal .modal-article-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.article-modal .modal-article-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.article-modal .modal-article-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.article-modal .modal-article-content th,
+.article-modal .modal-article-content td {
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.article-modal .modal-article-content th {
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* 图片占位符 */
+.article-modal .article-image-placeholder,
+.article-modal .article-media-placeholder {
+  background: #f0f2f5;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  color: #666;
+  margin: 1.5rem 0;
+  border: 2px dashed #ccc;
+}
+
+/* 模态框底部 */
+.article-modal .modal-footer {
+  padding: 20px 30px;
+  border-top: 1px solid #e0e0e0;
+  background: #f8f9fa;
+  flex-shrink: 0;
+}
+
+.article-modal .modal-article-source {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.article-modal .modal-source-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.article-modal .rich-media-hint {
+  color: #FA8C32;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.article-modal .btn-view-full,
+.article-modal .btn-open-feishu {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.article-modal .btn-view-full {
+  background: #FA8C32;
+  color: white;
+}
+
+.article-modal .btn-view-full:hover {
+  background: #e67e22;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(250, 140, 50, 0.3);
+}
+
+.article-modal .btn-open-feishu {
+  background: #0066FF;
+  color: white;
+}
+
+.article-modal .btn-open-feishu:hover {
+  background: #0052CC;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
+}
+
+/* iframe加载状态 */
+.article-modal .iframe-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #666;
+}
+
+.article-modal .loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f0f0f0;
+  border-top-color: #FA8C32;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+/* 动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .article-modal .modal-container {
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  .article-modal .modal-header {
+    padding: 20px;
+  }
+
+  .article-modal .modal-title,
+  .article-modal .modal-article-title {
+    font-size: 1.2rem;
+  }
+
+  .article-modal .modal-article-meta {
+    padding: 12px 20px;
+    font-size: 0.85rem;
+  }
+
+  .article-modal .modal-body {
+    padding: 20px;
+  }
+
+  .article-modal .modal-footer {
+    padding: 16px 20px;
+  }
+
+  .article-modal .modal-source-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .article-modal .btn-view-full,
+  .article-modal .btn-open-feishu {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .article-modal .modal-container {
+    width: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .article-modal .modal-header {
+    padding: 16px;
+  }
+
+  .article-modal .modal-title,
+  .article-modal .modal-article-title {
+    font-size: 1.1rem;
+  }
+
+  .article-modal .modal-body {
+    padding: 16px;
+  }
+
+  .article-modal .modal-article-content {
+    font-size: 0.95rem;
+  }
+}
