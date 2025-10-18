@@ -15,7 +15,7 @@ const path = require('path');
 const CONFIG = {
   dataFile: path.join(__dirname, '../assets/data/community-articles-v3.json'),
   templateFile: path.join(__dirname, '../templates/article.html'),
-  outputDir: path.join(__dirname, '../pages/articles'),
+  outputDir: path.join(__dirname, '../articles'),  // 修改：直接输出到根目录的articles文件夹，避免_routes.json冲突
   sitemapFile: path.join(__dirname, '../sitemap.xml'),
   baseUrl: 'https://svtr.ai',
   testMode: process.argv.includes('--test'), // 测试模式，只生成前5篇

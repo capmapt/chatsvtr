@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>测试图片修复</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    .test-section {
+      margin: 30px 0;
+      padding: 20px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+    }
+    h2 {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>图片占位符修复测试</h1>
+
+  <div class="test-section">
+    <h2>测试1: 检查 RichContentRenderer 是否加载</h2>
+    <div id="test1-result"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>测试2: 渲染图片占位符</h2>
+    <div id="test2-result"></div>
+  </div>
+
+  <div class="test-section">
+    <h2>测试3: 检查是否有"加载中"文字</h2>
+    <div id="test3-result"></div>
+  </div>
+
+  <script src="assets/js/rich-content-renderer.js"></script>
+  <script>
+    // 测试1: 检查 RichContentRenderer 是否加载
+    const test1 = document.getElementById('test1-result');
+    if (typeof RichContentRenderer !== 'undefined') {
+      test1.innerHTML = '✅ <strong>成功</strong>: RichContentRenderer 已加载';
+      test1.style.color = 'green';
+    } else {
+      test1.innerHTML = '❌ <strong>失败</strong>: RichContentRenderer 未加载';
+      test1.style.color = 'red';
+    }
+
+    // 测试2: 渲染图片占位符
+    const test2 = document.getElementById('test2-result');
+    if (typeof RichContentRenderer !== 'undefined') {
+      const renderer = new RichContentRenderer();
+      const mockImageBlock = {
+        block_type: 27,
+        image: {
+          width: 800,
+          height: 600,
+          token: 'test-token-123'
+        }
+      };
+
+      const html = renderer.renderImagePlaceholder(mockImageBlock.image, 1);
+      test2.innerHTML = html;
+    } else {
+      test2.innerHTML = '❌ 无法测试: RichContentRenderer 未加载';
+      test2.style.color = 'red';
+    }
+
+    // 测试3: 检查是否有"加载中"文字
+    setTimeout(() => {
+      const test3 = document.getElementById('test3-result');
+      const test2Content = document.getElementById('test2-result').innerText;
+
+      if (test2Content.includes('加载中')) {
+        test3.innerHTML = '❌ <strong>问题未修复</strong>: 仍然显示"加载中"';
+        test3.style.color = 'red';
+      } else if (test2Content.includes('图片包含在完整版文章中')) {
+        test3.innerHTML = '✅ <strong>修复成功</strong>: 显示正确的占位符提示';
+        test3.style.color = 'green';
+      } else {
+        test3.innerHTML = '⚠️ <strong>未知状态</strong>: 请检查测试2的输出';
+        test3.style.color = 'orange';
+      }
+    }, 100);
+  </script>
+</body>
+</html>
