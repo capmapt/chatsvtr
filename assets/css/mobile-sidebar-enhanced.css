@@ -110,17 +110,18 @@
     right: 0 !important;
     width: 100% !important; /* 占满侧边栏宽度 */
     margin: 0 !important;
-    padding: 16px !important;
+    padding: 16px 16px 20px 16px !important; /* 增加底部padding确保社交图标不被裁剪 */
     border-radius: 0 !important; /* 移除圆角使其贴合底部 */
     box-shadow: 0 -4px 20px rgba(250, 140, 50, 0.2) !important; /* 改为向上的阴影 */
     z-index: 1060 !important; /* 确保在侧边栏内容之上 */
     background: linear-gradient(135deg, rgba(255, 248, 225, 0.98), rgba(255, 224, 178, 0.95)) !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
-    min-height: 160px !important; /* 增加高度确保社交图标完全显示: 16px padding + 48px button + 16px margin + 16px padding + 36px icons + 4px padding + 16px padding = 152px,设置160px留余量 */
+    min-height: 180px !important; /* 增加高度: 16px顶部padding + 48px button + 16px margin + 36px icons + 16px图标padding + 20px底部padding + 安全余量 */
     display: flex !important;
     flex-direction: column !important;
     justify-content: flex-start !important;
+    padding-bottom: max(20px, env(safe-area-inset-bottom)) !important; /* 兼容iPhone刘海屏 */
   }
 
   .sidebar-bottom-actions .btn-member-login {
@@ -138,11 +139,11 @@
     justify-content: center !important;
     align-items: center !important;
     gap: 12px !important;
-    padding: 16px 0 4px !important;
+    padding: 16px 0 8px !important; /* 增加底部padding防止被截断 */
     margin-top: 16px !important;
     border-top: 1px solid rgba(250, 140, 50, 0.3) !important;
     flex-shrink: 0 !important; /* 防止图标区域缩小 */
-    min-height: 50px !important; /* 确保图标区域有最小高度 */
+    min-height: 60px !important; /* 增加最小高度确保图标完全可见 */
   }
 
   /* 确保图标链接可见 */
