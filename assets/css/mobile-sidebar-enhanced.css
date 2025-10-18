@@ -101,14 +101,18 @@
     max-height: none !important;
   }
 
-  /* 移动端登录按钮优化 */
+  /* 移动端登录按钮优化 - 修复定位问题 */
   .sidebar-bottom-actions {
-    bottom: 16px;
-    left: 16px;
-    right: 16px;
-    padding: 14px 18px;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(250, 140, 50, 0.3);
+    position: fixed !important; /* 关键修复：必须设置position才能使用bottom/left/right */
+    bottom: 16px !important;
+    left: 16px !important;
+    right: auto !important; /* 避免宽度冲突 */
+    width: calc(95vw - 32px) !important; /* 与侧边栏宽度匹配 */
+    max-width: 368px !important; /* 95vw最大400px - 32px padding */
+    padding: 14px 18px !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 20px rgba(250, 140, 50, 0.3) !important;
+    z-index: 1060 !important; /* 确保在侧边栏内容之上 */
   }
 
   .sidebar-bottom-actions .btn-member-login {
