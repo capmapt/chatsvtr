@@ -329,7 +329,8 @@
   }
 
   .sidebar nav {
-    padding-bottom: 80px; /* 横屏时减少底部空间 */
+    padding-bottom: 8px !important; /* 横屏时也使用少量底部间距 */
+    margin-bottom: 0 !important; /* 移除margin */
   }
 }
 
