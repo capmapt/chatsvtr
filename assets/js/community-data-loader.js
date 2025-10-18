@@ -302,7 +302,7 @@ class CommunityDataLoader {
       <span class="modal-author">作者: ${this.escapeHtml(authorName)}</span>
     `;
 
-    // 文章正文 - 使用富文本渲染器
+    // 文章正文 - 默认显示摘要版本
     let formattedContent;
     if (article.richBlocks && article.richBlocks.length > 0) {
       // 使用富文本blocks渲染,传入documentId用于获取图片
@@ -313,6 +313,9 @@ class CommunityDataLoader {
       formattedContent = this.formatArticleContent(article.content || article.excerpt);
     }
     modalContent.innerHTML = formattedContent;
+
+    // 保存完整文章数据到模态框，供"查看完整版"功能使用
+    modal.dataset.articleData = JSON.stringify(article);
 
     // 初始化懒加载
     setTimeout(() => {
@@ -331,11 +334,11 @@ class CommunityDataLoader {
         <div class="modal-source-actions">
           ${richMediaHint}
           <a href="${article.source.url}" target="_blank" rel="noopener noreferrer" class="btn-view-full">
-            🔍 在新标签页查看完整版(含图片表格)
+            🔍 查看完整版(含图片和表格)
           </a>
-          <a href="${article.source.url}" target="_blank" rel="noopener noreferrer" class="btn-open-feishu">
-            📎 在飞书中打开
-          </a>
+        </div>
+        <div style="margin-top: 12px; padding: 12px; background: #f8f9fa; border-radius: 8px; font-size: 0.85rem; color: #666;">
+          💡 <strong>提示:</strong> 点击上方按钮在飞书中查看包含所有图片和表格的完整文章
         </div>
       `;
     } else {
@@ -450,29 +453,6 @@ class CommunityDataLoader {
     return paragraphs;
   }
 
-  /**
-   * 显示完整版文章(包含图片和表格)
-   * 由于飞书文档不允许iframe嵌入，直接在新标签页打开
-   */
-  showFullArticle(feishuUrl, title) {
-    // 直接在新标签页打开飞书文档
-    window.open(feishuUrl, '_blank', 'noopener,noreferrer');
-
-    console.log(`📎 在新标签页打开飞书文档: ${title}`);
-  }
-
-  /**
-   * 关闭完整版文章
-   */
-  closeFullArticle() {
-    const fullModal = document.getElementById('fullArticleModal');
-    if (fullModal) {
-      fullModal.classList.remove('show');
-      const iframe = fullModal.querySelector('.feishu-doc-frame');
-      iframe.src = 'about:blank'; // 清空iframe
-      document.body.style.overflow = '';
-    }
-  }
 
   /**
    * 创建文章模态框
