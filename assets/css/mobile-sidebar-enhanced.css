@@ -117,7 +117,7 @@
     background: linear-gradient(135deg, rgba(255, 248, 225, 0.98), rgba(255, 224, 178, 0.95)) !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
-    min-height: 140px !important; /* 确保有足够空间显示按钮和图标 */
+    min-height: 160px !important; /* 增加高度确保社交图标完全显示: 16px padding + 48px button + 16px margin + 16px padding + 36px icons + 4px padding + 16px padding = 152px,设置160px留余量 */
     display: flex !important;
     flex-direction: column !important;
     justify-content: flex-start !important;
