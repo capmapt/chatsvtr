@@ -116,24 +116,42 @@
     background: linear-gradient(135deg, rgba(255, 248, 225, 0.98), rgba(255, 224, 178, 0.95)) !important;
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
+    min-height: 140px !important; /* 确保有足够空间显示按钮和图标 */
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
   }
 
   .sidebar-bottom-actions .btn-member-login {
-    font-size: 15px;
-    padding: 14px 20px;
-    min-height: 48px; /* 符合移动端最小触摸目标 */
+    font-size: 15px !important;
+    padding: 14px 20px !important;
+    min-height: 48px !important; /* 符合移动端最小触摸目标 */
     width: 100% !important; /* 按钮占满宽度 */
-    margin-bottom: 12px !important; /* 按钮和社交图标之间的间距 */
+    margin-bottom: 0 !important; /* 移除margin,用flex gap代替 */
+    flex-shrink: 0 !important; /* 防止按钮缩小 */
   }
 
   /* 确保社交媒体图标显示 */
   .sidebar-bottom-actions .social-media-icons {
     display: flex !important;
     justify-content: center !important;
+    align-items: center !important;
     gap: 12px !important;
-    padding: 12px 0 0 !important;
-    margin-top: 12px !important;
+    padding: 16px 0 4px !important;
+    margin-top: 16px !important;
     border-top: 1px solid rgba(250, 140, 50, 0.3) !important;
+    flex-shrink: 0 !important; /* 防止图标区域缩小 */
+    min-height: 50px !important; /* 确保图标区域有最小高度 */
+  }
+
+  /* 确保图标链接可见 */
+  .sidebar-bottom-actions .social-media-icons a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    flex-shrink: 0 !important;
   }
 
   /* 移动端侧边栏头部专门处理 */
