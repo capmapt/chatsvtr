@@ -23,8 +23,8 @@
     -webkit-overflow-scrolling: touch !important; /* iOS流畅滚动 */
     scroll-behavior: smooth !important; /* 平滑滚动 */
     overscroll-behavior-y: contain !important; /* 防止滚动穿透 */
-    /* 确保内容可以正常显示 */
-    padding-bottom: 100px !important;
+    /* 移除底部padding，因为sticky定位会自动处理 */
+    padding-bottom: 0 !important;
   }
 
   /* 侧边栏打开时，主内容区层叠在下方（移除模糊效果） */
@@ -86,7 +86,7 @@
 
   /* 优化侧边栏内部布局 - 允许内容自然流动 */
   .sidebar nav {
-    padding-bottom: 100px; /* 为底部登录按钮预留更多空间 */
+    padding-bottom: 16px; /* 只需要少量底部间距 */
     overflow: visible !important; /* 允许内容自然溢出到父容器滚动区域 */
     height: auto !important; /* 自适应高度 */
     max-height: none !important; /* 移除最大高度限制 */
@@ -101,18 +101,21 @@
     max-height: none !important;
   }
 
-  /* 移动端登录按钮优化 - 修复定位问题 */
+  /* 移动端登录按钮优化 - 使用sticky定位粘在底部 */
   .sidebar-bottom-actions {
-    position: fixed !important; /* 关键修复：必须设置position才能使用bottom/left/right */
-    bottom: 16px !important;
-    left: 16px !important;
-    right: auto !important; /* 避免宽度冲突 */
-    width: calc(95vw - 32px) !important; /* 与侧边栏宽度匹配 */
-    max-width: 368px !important; /* 95vw最大400px - 32px padding */
-    padding: 14px 18px !important;
-    border-radius: 16px !important;
-    box-shadow: 0 4px 20px rgba(250, 140, 50, 0.3) !important;
+    position: sticky !important; /* 使用sticky让它粘在滚动容器底部 */
+    bottom: 0 !important; /* 粘在底部 */
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important; /* 占满侧边栏宽度 */
+    margin: 0 !important;
+    padding: 16px !important;
+    border-radius: 0 !important; /* 移除圆角使其贴合底部 */
+    box-shadow: 0 -4px 20px rgba(250, 140, 50, 0.2) !important; /* 改为向上的阴影 */
     z-index: 1060 !important; /* 确保在侧边栏内容之上 */
+    background: linear-gradient(135deg, rgba(255, 248, 225, 0.98), rgba(255, 224, 178, 0.95)) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
   }
 
   .sidebar-bottom-actions .btn-member-login {
