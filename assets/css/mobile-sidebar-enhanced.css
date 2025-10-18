@@ -122,6 +122,18 @@
     font-size: 15px;
     padding: 14px 20px;
     min-height: 48px; /* 符合移动端最小触摸目标 */
+    width: 100% !important; /* 按钮占满宽度 */
+    margin-bottom: 12px !important; /* 按钮和社交图标之间的间距 */
+  }
+
+  /* 确保社交媒体图标显示 */
+  .sidebar-bottom-actions .social-media-icons {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    padding: 12px 0 0 !important;
+    margin-top: 12px !important;
+    border-top: 1px solid rgba(250, 140, 50, 0.3) !important;
   }
 
   /* 移动端侧边栏头部专门处理 */
