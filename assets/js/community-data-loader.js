@@ -330,9 +330,9 @@ class CommunityDataLoader {
       modalSource.innerHTML = `
         <div class="modal-source-actions">
           ${richMediaHint}
-          <button class="btn-view-full" onclick="window.communityLoader.showFullArticle('${this.escapeHtml(article.source.url)}', '${this.escapeHtml(article.title)}')">
-            🔍 查看完整版(含图片表格)
-          </button>
+          <a href="${article.source.url}" target="_blank" rel="noopener noreferrer" class="btn-view-full">
+            🔍 在新标签页查看完整版(含图片表格)
+          </a>
           <a href="${article.source.url}" target="_blank" rel="noopener noreferrer" class="btn-open-feishu">
             📎 在飞书中打开
           </a>
@@ -452,55 +452,13 @@ class CommunityDataLoader {
 
   /**
    * 显示完整版文章(包含图片和表格)
+   * 由于飞书文档不允许iframe嵌入，直接在新标签页打开
    */
   showFullArticle(feishuUrl, title) {
-    // 获取或创建iframe模态框
-    let fullModal = document.getElementById('fullArticleModal');
-    if (!fullModal) {
-      fullModal = document.createElement('div');
-      fullModal.id = 'fullArticleModal';
-      fullModal.className = 'article-modal';
-      fullModal.innerHTML = `
-        <div class="modal-overlay"></div>
-        <div class="modal-container modal-full">
-          <div class="modal-header">
-            <h2 class="modal-title"></h2>
-            <button class="modal-close" onclick="window.communityLoader.closeFullArticle()">×</button>
-          </div>
-          <div class="modal-body" style="padding: 0; height: calc(100vh - 120px);">
-            <div class="iframe-loading">
-              <div class="loading-spinner"></div>
-              <p>正在加载完整文章...</p>
-            </div>
-            <iframe class="feishu-doc-frame" frameborder="0" style="width: 100%; height: 100%; display: none;"></iframe>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(fullModal);
+    // 直接在新标签页打开飞书文档
+    window.open(feishuUrl, '_blank', 'noopener,noreferrer');
 
-      // 点击遮罩层关闭
-      fullModal.querySelector('.modal-overlay').addEventListener('click', () => {
-        this.closeFullArticle();
-      });
-    }
-
-    // 设置标题
-    fullModal.querySelector('.modal-title').textContent = title;
-
-    // 加载iframe
-    const iframe = fullModal.querySelector('.feishu-doc-frame');
-    const loading = fullModal.querySelector('.iframe-loading');
-
-    iframe.onload = () => {
-      loading.style.display = 'none';
-      iframe.style.display = 'block';
-    };
-
-    iframe.src = feishuUrl;
-
-    // 显示模态框
-    fullModal.classList.add('show');
-    document.body.style.overflow = 'hidden';
+    console.log(`📎 在新标签页打开飞书文档: ${title}`);
   }
 
   /**
