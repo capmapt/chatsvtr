@@ -262,8 +262,37 @@ class CommunityDataLoader {
   handleArticleClick(article) {
     console.log('📖 打开文章:', article.title);
 
-    // 显示文章详情模态框
-    this.showArticleModal(article);
+    // 生成静态文章页面的slug
+    const slug = this.generateSlug(article.title, article.id);
+
+    // 跳转到静态HTML文章页面（SSG）
+    window.location.href = `/articles/${slug}.html`;
+  }
+
+  /**
+   * 生成文章URL slug（与构建脚本保持一致）
+   */
+  generateSlug(title, id) {
+    // 移除特殊字符，保留中英文、数字、空格
+    let slug = title
+      .replace(/[^\u4e00-\u9fa5a-zA-Z0-9\s\-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-')
+      .toLowerCase();
+
+    // 限制长度，保留前50个字符
+    if (slug.length > 50) {
+      slug = slug.substring(0, 50);
+    }
+
+    // 如果slug为空或过短，使用默认前缀
+    if (!slug || slug.length < 3) {
+      slug = 'article';
+    }
+
+    // 添加唯一ID后缀（8位）
+    const idSuffix = id.substring(0, 8);
+    return `${slug}-${idSuffix}`;
   }
 
   /**
