@@ -208,41 +208,22 @@ class RichContentRenderer {
 
     const width = imageInfo.width || 800;
     const height = imageInfo.height || 600;
-    const aspectRatio = ((height / width) * 100).toFixed(2);
+    const aspectRatio = Math.min(((height / width) * 100), 75).toFixed(2); // 最大高度75%避免太高
     const imageToken = imageInfo.token;
 
-    // 如果有documentId和imageToken,使用API获取真实图片
-    if (this.documentId && imageToken) {
-      const imageUrl = `/api/get-rich-media?type=image&documentId=${this.documentId}&token=${imageToken}`;
-
-      return `
-        <div class="rich-image-container" style="position: relative; padding-bottom: ${aspectRatio}%; overflow: hidden; border-radius: 8px;">
-          <img
-            class="rich-image lazy-load"
-            data-src="${imageUrl}"
-            alt="图片 ${index}"
-            loading="lazy"
-            onload="this.classList.add('loaded'); this.previousElementSibling?.remove();"
-            onerror="this.classList.add('error'); this.alt='图片加载失败'; this.src='/assets/images/image-error.svg';"
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity 0.3s;"
-          />
-          <div class="image-loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #999;">
-            <div class="loading-spinner"></div>
-            <p style="margin-top: 0.5rem; font-size: 0.875rem;">加载中...</p>
-          </div>
-        </div>
-      `;
-    }
-
-    // 回退到占位符
+    // 显示友好的图片占位符
+    // 注意: 飞书图片需要通过API认证访问,暂不直接加载
     return `
-      <div class="rich-image-placeholder" style="padding-bottom: ${aspectRatio}%;">
-        <div class="placeholder-content">
-          <div class="placeholder-icon">🖼️</div>
-          <div class="placeholder-text">
-            <strong>图片 ${index}</strong>
-            <span>${width} × ${height}</span>
+      <div class="rich-image-placeholder" style="position: relative; min-height: 200px; background: #f8f9fa; border-radius: 12px; padding: 30px; margin: 20px 0; border: 2px dashed #e0e0e0; text-align: center;">
+        <div class="placeholder-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;">
+          <div class="placeholder-icon" style="font-size: 3rem; opacity: 0.6;">🖼️</div>
+          <div class="placeholder-text" style="color: #666;">
+            <strong style="display: block; font-size: 1rem; margin-bottom: 4px;">图片 ${index}</strong>
+            <span style="font-size: 0.875rem; color: #999;">${width} × ${height}px</span>
           </div>
+          <p style="margin: 8px 0 0 0; font-size: 0.85rem; color: #888;">
+            📷 图片包含在完整版文章中，点击下方"查看完整版"按钮查看
+          </p>
         </div>
       </div>
     `;
