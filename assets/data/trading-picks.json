@@ -3,19 +3,53 @@
     "title": "交易精选",
     "description": "精选优质创业公司与投资机会分析",
     "totalCompanies": 20,
-    "lastUpdated": "2025-10-18T18:34:16.238Z",
+    "lastUpdated": "2025-10-19T18:26:22.733Z",
     "source": "SVTR飞书知识库",
     "dataVersion": "2.0"
   },
   "companies": [
     {
       "id": 1,
+      "name": "Suno",
+      "sector": "🎯 垂直模型",
+      "stage": "· 成长期",
+      "description": "Suno，2022年成立于美国马萨诸塞州剑桥，提供AI生成音乐平台。正在进行超1亿美元新一轮融资。本轮估值为20亿美元以上，此前完成1.25亿美元融资。 (彭博社)",
+      "fundingAmount": "1.3亿美元融资",
+      "lastFundingDate": "2025年10月",
+      "valuation": "",
+      "investors": [
+        "Lightspeed Venture Partners",
+        "Matrix",
+        "Founder Collective",
+        "Nat Friedman",
+        "Daniel Gross"
+      ],
+      "founder": "Mikey Shulman",
+      "website": "https://suno.com/",
+      "location": "美国马萨诸塞州剑桥",
+      "foundedYear": "2022",
+      "employees": "",
+      "arr": "",
+      "tags": [
+        "投资人",
+        "AI50",
+        "音频"
+      ],
+      "analysisPoints": [
+        "💎 单轮融资1.3亿美元，资本高度认可",
+        "🎓 团队拥有顶级院校背景，学术实力突出"
+      ],
+      "businessModel": "成为音乐创作领域的“ChatGPT”",
+      "deepResearch": ""
+    },
+    {
+      "id": 2,
       "name": "Poolside",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 初创期",
       "description": "Poolside，2023年成立于法国巴黎，打造面向开发者的生成式 AI 代码工具。正在以 140 亿美元投后估值进行 20 亿美元新一轮融资，投资方未完全披露（Nvidia 为投资方之一）；累计融资（已完成）5 亿美元，如本轮完成累计将达 25 亿美元。",
       "fundingAmount": "5.0亿美元融资 · 估值30亿美元",
-      "lastFundingDate": "2024年10月",
+      "lastFundingDate": "2025年10月",
       "valuation": "30亿美元",
       "investors": [
         "Bain Capital Ventures",
@@ -44,7 +78,7 @@
       "deepResearch": ""
     },
     {
-      "id": 2,
+      "id": 3,
       "name": "xAI",
       "sector": "🤖 大语言模型",
       "stage": "· 初创期",
@@ -74,7 +108,7 @@
       "deepResearch": ""
     },
     {
-      "id": 3,
+      "id": 4,
       "name": "Surge AI",
       "sector": "💾 数据服务",
       "stage": "超级独角兽 · 成长期",
@@ -102,7 +136,7 @@
       "deepResearch": ""
     },
     {
-      "id": 4,
+      "id": 5,
       "name": "Anysphere（Cursor）",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 成长期",
@@ -138,7 +172,7 @@
       "deepResearch": ""
     },
     {
-      "id": 5,
+      "id": 6,
       "name": "Crusoe",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -172,7 +206,7 @@
       "deepResearch": ""
     },
     {
-      "id": 6,
+      "id": 7,
       "name": "Lambda",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -207,7 +241,7 @@
       "deepResearch": ""
     },
     {
-      "id": 7,
+      "id": 8,
       "name": "Runway",
       "sector": "🎯 垂直模型",
       "stage": "· 成熟期",
@@ -239,7 +273,7 @@
       "deepResearch": ""
     },
     {
-      "id": 8,
+      "id": 9,
       "name": "Rivos",
       "sector": "⚙️ AI基础设施",
       "stage": "· 成长期",
@@ -272,7 +306,7 @@
       "deepResearch": ""
     },
     {
-      "id": 9,
+      "id": 10,
       "name": "Abridge",
       "sector": "🧬 生命科学",
       "stage": "独角兽 · 成熟期",
@@ -308,7 +342,7 @@
       "deepResearch": ""
     },
     {
-      "id": 10,
+      "id": 11,
       "name": "ElevenLabs",
       "sector": "🎯 垂直模型",
       "stage": "独角兽 · 成长期",
@@ -342,7 +376,7 @@
       "deepResearch": ""
     },
     {
-      "id": 11,
+      "id": 12,
       "name": "Lovable",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 初创期",
@@ -377,7 +411,7 @@
       "deepResearch": ""
     },
     {
-      "id": 12,
+      "id": 13,
       "name": "Vast Data",
       "sector": "💾 数据服务",
       "stage": "独角兽 · 成熟期",
@@ -408,7 +442,7 @@
       "deepResearch": ""
     },
     {
-      "id": 13,
+      "id": 14,
       "name": "Mercor",
       "sector": "🏢 企业服务",
       "stage": "独角兽 · 初创期",
@@ -445,7 +479,7 @@
       "deepResearch": "Mercor"
     },
     {
-      "id": 14,
+      "id": 15,
       "name": "Legora",
       "sector": "📱 AI应用",
       "stage": "· 初创期",
@@ -477,7 +511,7 @@
       "deepResearch": ""
     },
     {
-      "id": 15,
+      "id": 16,
       "name": "Physical Intelligence",
       "sector": "📱 AI应用",
       "stage": "独角兽 · 初创期",
@@ -514,7 +548,7 @@
       "deepResearch": ""
     },
     {
-      "id": 16,
+      "id": 17,
       "name": "Fireworks AI",
       "sector": "🤖 AI模型",
       "stage": "准独角兽 · 成长期",
@@ -548,7 +582,7 @@
       "deepResearch": ""
     },
     {
-      "id": 17,
+      "id": 18,
       "name": "LangChain",
       "sector": "🤖 AI模型",
       "stage": "· 初创期",
@@ -576,7 +610,7 @@
       "deepResearch": ""
     },
     {
-      "id": 18,
+      "id": 19,
       "name": "Substack",
       "sector": "🏢 企业服务",
       "stage": "· 成熟期",
@@ -600,11 +634,11 @@
       "deepResearch": ""
     },
     {
-      "id": 19,
+      "id": 20,
       "name": "Worktrace AI",
       "sector": "🤖 AI模型",
       "stage": "· 初创期",
-      "description": "Worktrace AI，2025年成立于美国旧金山，观测员工工作流以自动化大型企业重复性任务的AI平台。据报道正以5,000万美元估值筹备500万美元种子轮，投资方包括 OpenAI Startup Fund、8VC、Conviction 及个人投资者 Mira Murati、Nick Turley、Jason Kwon、Joanne Jang。累计融资未披露。 (Business Inside...",
+      "description": "Worktrace AI，2025年成立于美国旧金山，观测员工工作流以自动化大型企业重复性任务的AI平台。正以5,000万美元估值筹备500万美元种子轮，投资方包括 OpenAI Startup Fund、8VC、Conviction 及个人投资者 Mira Murati、Nick Turley、Jason Kwon、Joanne Jang。累计融资未披露。 (Business Insider)",
       "fundingAmount": "500万美元融资 · 估值0.5亿美元",
       "lastFundingDate": "2025年",
       "valuation": "0.5亿美元",
@@ -630,31 +664,6 @@
       ],
       "analysisPoints": [],
       "businessModel": "观测员工工作流以自动化大型企业重复性任务的AI平台",
-      "deepResearch": ""
-    },
-    {
-      "id": 25,
-      "name": "Canva",
-      "sector": "🎯 垂直模型",
-      "stage": "超级独角兽 · 初创期",
-      "description": "Canva 正以 370 亿美元的估值进行 400 至 5 亿美元的二级市场交易。 这将比 2024 年 10 月二次销售的 320 亿美元估值有所增加，但仍低于 2021 年 9 月融资轮融资的 400 亿美元峰值。根据AI创投库，Canva 在 2025 年第一季度的收入为 6.6 亿美元，EBITDA 为 1.5 亿美元。",
-      "fundingAmount": " · 估值370亿美元",
-      "lastFundingDate": "2025年6月",
-      "valuation": "370亿美元",
-      "investors": [],
-      "founder": "",
-      "website": "",
-      "location": "",
-      "foundedYear": "",
-      "employees": "5000",
-      "arr": "",
-      "tags": [
-        "ET30"
-      ],
-      "analysisPoints": [
-        "🏆 超级独角兽企业，估值370亿美元，行业领军地位"
-      ],
-      "businessModel": "",
       "deepResearch": ""
     }
   ]
