@@ -37,7 +37,7 @@
 }
 
 .chart-content {
-  min-height: 240px;
+  min-height: auto; /* 改为auto,根据内容自适应高度 */
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -76,8 +76,9 @@
   align-items: center;
   justify-content: flex-end;
   padding-right: 12px;
-  min-width: 40px;
+  min-width: 60px; /* 增加最小宽度以容纳文字 */
   box-shadow: 0 2px 4px rgba(250, 140, 50, 0.2);
+  position: relative;
 }
 
 .chart-bar-value {
@@ -86,6 +87,8 @@
   font-weight: 700;
   white-space: nowrap;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
 }
 
 /* 快捷筛选预设 */
@@ -483,7 +486,7 @@
   }
 
   .chart-content {
-    min-height: 200px;
+    min-height: auto; /* 自适应高度 */
     gap: 10px;
   }
 
@@ -556,7 +559,7 @@
   }
 
   .chart-content {
-    min-height: 180px;
+    min-height: auto; /* 自适应高度 */
     gap: 8px;
   }
 

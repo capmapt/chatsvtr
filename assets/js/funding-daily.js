@@ -1375,13 +1375,14 @@
         }
       });
 
-      // 按固定顺序排列分组
-      const sortedStages = Object.entries(groupCounts).filter(([, count]) => count > 0);
-      const maxCount = Math.max(...sortedStages.map(([, count]) => count));
+      // 按固定顺序显示所有分组（包括0数据的分组）
+      const stageGroupOrder = ['A轮及之前', 'B轮', 'C轮', 'D轮及之后'];
+      const sortedStages = stageGroupOrder.map(group => [group, groupCounts[group]]);
+      const maxCount = Math.max(...sortedStages.map(([, count]) => count), 1); // 至少为1避免除0
 
       const stageHTML = sortedStages.map(([stage, count]) => {
-        const percentage = Math.round((count / data.length) * 100);
-        const barWidth = (count / maxCount) * 100;
+        const percentage = data.length > 0 ? Math.round((count / data.length) * 100) : 0;
+        const barWidth = maxCount > 0 ? (count / maxCount) * 100 : 0;
         // 添加点击属性和样式类
         const isActive = activeFilters.stage === stage;
         return `
