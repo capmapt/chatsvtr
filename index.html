@@ -121,7 +121,7 @@
   <link rel="stylesheet" href="assets/css/mobile-widget-fix.css?v=20251002">
   <link rel="stylesheet" href="assets/css/funding-daily.css?v=20251004-071000">
   <link rel="stylesheet" href="assets/css/funding-cards.css?v=20251004-071000">
-  <link rel="stylesheet" href="assets/css/funding-filter.css?v=20251017">
+  <link rel="stylesheet" href="assets/css/funding-filter.css?v=20251018-v2">
   <link rel="stylesheet" href="assets/css/header-enhancements.css?v=20251004-071000">
   
   <!-- Preload critical images (WebP preferred) -->
@@ -442,46 +442,51 @@
     <!-- 🔥 创投日报 START -->
     <section class="funding-daily wrapper">
       <div class="funding-header">
-        <div class="funding-title-section">
-          <h2 class="funding-title">
-            <span class="funding-title-badge" data-i18n="funding_daily_title">AI创投日报</span>
-          </h2>
-        </div>
-        <div class="funding-actions-section">
+        <!-- 标题和更新时间行 -->
+        <div class="funding-title-row" style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 2px solid rgba(250, 140, 50, 0.15);">
+          <div class="funding-title-section">
+            <h2 class="funding-title">
+              <span class="funding-title-badge" data-i18n="funding_daily_title">AI创投日报</span>
+            </h2>
+          </div>
           <div class="funding-update-time" id="fundingUpdateTime">
-            ⏰ 更新时间：加载中...
-          </div>
-        </div>
-      </div>
-
-      <!-- 筛选栏 -->
-      <div class="funding-filter-bar" id="fundingFilterBar">
-        <div class="filter-group">
-          <label class="filter-label">融资轮次</label>
-          <div class="filter-options" id="stageFilter">
-            <!-- 动态生成筛选选项 -->
+            ⏰ 更新：加载中...
           </div>
         </div>
 
-        <div class="filter-group">
-          <label class="filter-label">融资金额</label>
-          <div class="filter-options" id="amountFilter">
-            <button class="filter-btn" data-filter="amount" data-value="all">全部</button>
-            <button class="filter-btn" data-filter="amount" data-value="<10M">&lt;$10M</button>
-            <button class="filter-btn" data-filter="amount" data-value="10M-50M">$10M-50M</button>
-            <button class="filter-btn" data-filter="amount" data-value="50M-100M">$50M-100M</button>
-            <button class="filter-btn" data-filter="amount" data-value=">100M">&gt;$100M</button>
-          </div>
-        </div>
+        <!-- 筛选栏 -->
+        <div class="funding-filter-bar" id="fundingFilterBar" style="margin-top: 16px;">
+          <!-- 筛选组容器 -->
+          <div class="filter-groups-container">
+            <div class="filter-group">
+              <label class="filter-label">融资轮次</label>
+              <div class="filter-options" id="stageFilter">
+                <!-- 动态生成筛选选项 -->
+              </div>
+            </div>
 
-        <div class="filter-group">
-          <label class="filter-label">标签</label>
-          <div class="filter-options" id="tagFilter">
-            <!-- 动态生成标签选项 -->
-          </div>
-        </div>
+            <div class="filter-group">
+              <label class="filter-label">融资金额</label>
+              <div class="filter-options" id="amountFilter">
+                <button class="filter-btn" data-filter="amount" data-value="all">全部</button>
+                <button class="filter-btn" data-filter="amount" data-value="<10M">&lt;$10M</button>
+                <button class="filter-btn" data-filter="amount" data-value="10M-50M">$10M-50M</button>
+                <button class="filter-btn" data-filter="amount" data-value="50M-100M">$50M-100M</button>
+                <button class="filter-btn" data-filter="amount" data-value=">100M">&gt;$100M</button>
+              </div>
+            </div>
 
-        <button class="filter-reset-btn" id="resetFilters">重置筛选</button>
+            <div class="filter-group">
+              <label class="filter-label">标签</label>
+              <div class="filter-options" id="tagFilter">
+                <!-- 动态生成标签选项 -->
+              </div>
+            </div>
+          </div>
+
+          <!-- 重置按钮 (右侧固定) -->
+          <button class="filter-reset-btn" id="resetFilters">重置筛选</button>
+        </div>
       </div>
 
       <div class="funding-highlights" id="fundingHighlights">

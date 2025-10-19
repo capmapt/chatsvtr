@@ -1501,8 +1501,55 @@
 
     console.log(`✅ 筛选完成: ${filteredData.length} / ${allData.length} 条数据`);
 
+    // 更新筛选状态显示
+    updateFilterSummary();
+
     // 显示筛选结果
     displayFilteredData(filteredData);
+  }
+
+  // 🎯 更新筛选状态汇总
+  function updateFilterSummary() {
+    // 检查是否有筛选容器插入点
+    let summaryEl = document.getElementById('activeFiltersSummary');
+
+    // 如果不存在,创建并插入到筛选栏后面
+    if (!summaryEl) {
+      const filterBar = document.getElementById('fundingFilterBar');
+      if (!filterBar) return;
+
+      summaryEl = document.createElement('div');
+      summaryEl.id = 'activeFiltersSummary';
+      summaryEl.className = 'active-filters-summary';
+      summaryEl.style.display = 'none';
+
+      // 插入到筛选栏之后
+      filterBar.parentNode.insertBefore(summaryEl, filterBar.nextSibling);
+    }
+
+    const activeTags = [];
+
+    // 添加轮次筛选
+    if (activeFilters.stage !== 'all') {
+      activeTags.push(`<span class="filter-tag-pill">${activeFilters.stage}</span>`);
+    }
+
+    // 添加金额筛选
+    if (activeFilters.amount !== 'all') {
+      activeTags.push(`<span class="filter-tag-pill">${activeFilters.amount}</span>`);
+    }
+
+    // 添加标签筛选
+    activeFilters.tags.forEach(tag => {
+      activeTags.push(`<span class="filter-tag-pill">${tag}</span>`);
+    });
+
+    if (activeTags.length > 0) {
+      summaryEl.innerHTML = '当前筛选: ' + activeTags.join('');
+      summaryEl.style.display = 'flex';
+    } else {
+      summaryEl.style.display = 'none';
+    }
   }
 
   // 显示筛选后的数据
@@ -1556,6 +1603,12 @@
         btn.classList.remove('active');
       }
     });
+
+    // 隐藏筛选状态汇总
+    const summaryEl = document.getElementById('activeFiltersSummary');
+    if (summaryEl) {
+      summaryEl.style.display = 'none';
+    }
 
     // 重新加载数据
     loadFundingData(false);

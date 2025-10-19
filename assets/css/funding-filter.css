@@ -1,17 +1,28 @@
 /**
- * 融资日报筛选栏样式
- * 为创投日报添加筛选功能的样式
+ * 融资日报筛选栏样式 - 优化版 v2.0
+ * 更好的视觉层次和交互体验
+ * 优化日期: 2025-10-18
  */
 
 .funding-filter-bar {
-  background: #fff;
-  border-radius: 8px;
+  background: linear-gradient(135deg, #fff 0%, #fffbf7 100%);
+  border: 1px solid rgba(250, 140, 50, 0.12);
+  border-radius: 12px;
   padding: 20px;
   margin: 0 0 20px 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  display: flex;
-  flex-direction: column;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04),
+              0 0 1px rgba(250, 140, 50, 0.15);
+  display: grid;
+  grid-template-columns: 1fr auto;
   gap: 16px;
+  align-items: start;
+}
+
+/* 筛选组容器 */
+.filter-groups-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
 }
 
 .filter-group {
@@ -21,83 +32,183 @@
 }
 
 .filter-label {
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: #333;
   margin: 0;
-  padding: 0;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 筛选标签左侧视觉指示器 */
+.filter-label::before {
+  content: '';
+  width: 3px;
+  height: 14px;
+  background: linear-gradient(180deg, var(--primary-color, #FA8C32), var(--secondary-color, #FFBB33));
+  border-radius: 2px;
 }
 
 .filter-options {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
+  align-items: center;
 }
 
 .filter-btn {
-  padding: 8px 16px;
-  border: 1px solid #ddd;
+  padding: 7px 14px;
+  border: 1.5px solid #e0e0e0;
   background: #fff;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  color: #666;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: #555;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 按钮悬停效果 */
+.filter-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(250, 140, 50, 0.1);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+}
+
+.filter-btn:hover::before {
+  width: 120%;
+  height: 120%;
 }
 
 .filter-btn:hover {
   border-color: var(--primary-color, #FA8C32);
   color: var(--primary-color, #FA8C32);
-  background: rgba(250, 140, 50, 0.05);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(250, 140, 50, 0.15);
 }
 
+/* 激活状态 */
 .filter-btn.active {
-  background: var(--primary-color, #FA8C32);
-  border-color: var(--primary-color, #FA8C32);
+  background: linear-gradient(135deg, var(--primary-color, #FA8C32) 0%, var(--secondary-color, #FFBB33) 100%);
+  border-color: transparent;
   color: #fff;
   font-weight: 600;
+  box-shadow: 0 2px 12px rgba(250, 140, 50, 0.3),
+              0 4px 8px rgba(250, 140, 50, 0.15);
+  transform: translateY(-1px);
+}
+
+.filter-btn.active::before {
+  display: none;
 }
 
 .filter-reset-btn {
-  align-self: flex-end;
-  padding: 10px 24px;
-  border: 1px solid #ddd;
+  align-self: flex-start;
+  padding: 10px 20px;
+  border: 1.5px solid #ddd;
   background: #fff;
-  border-radius: 6px;
-  font-size: 0.9rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
   color: #666;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-weight: 500;
+  transition: all 0.25s ease;
+  font-weight: 600;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-reset-btn::before {
+  content: '🔄';
+  margin-right: 4px;
+  font-size: 0.9rem;
 }
 
 .filter-reset-btn:hover {
-  background: #f5f5f5;
-  border-color: #bbb;
+  background: #f8f8f8;
+  border-color: #aaa;
   color: #333;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.filter-reset-btn:active {
+  transform: translateY(0);
 }
 
 /* 筛选结果提示 */
 .filter-result-info {
-  padding: 12px 16px;
-  background: rgba(250, 140, 50, 0.1);
-  border-radius: 6px;
+  padding: 12px 18px;
+  background: linear-gradient(90deg, rgba(250, 140, 50, 0.08) 0%, rgba(255, 187, 51, 0.08) 100%);
+  border-left: 3px solid var(--primary-color, #FA8C32);
+  border-radius: 8px;
   font-size: 0.9rem;
   color: #666;
-  text-align: center;
   margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: slideInDown 0.3s ease-out;
+}
+
+.filter-result-info::before {
+  content: '🔍';
+  font-size: 1.1rem;
 }
 
 .filter-result-info strong {
   color: var(--primary-color, #FA8C32);
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1.05em;
 }
 
-/* 移动端适配 */
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+  .filter-groups-container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .funding-filter-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-reset-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
 @media (max-width: 768px) {
   .funding-filter-bar {
     padding: 16px;
+    gap: 14px;
+  }
+
+  .filter-groups-container {
     gap: 14px;
   }
 
@@ -106,22 +217,21 @@
   }
 
   .filter-label {
-    font-size: 0.85rem;
-  }
-
-  .filter-options {
-    gap: 6px;
-  }
-
-  .filter-btn {
-    padding: 6px 12px;
     font-size: 0.8rem;
   }
 
+  .filter-options {
+    gap: 4px;
+  }
+
+  .filter-btn {
+    padding: 6px 11px;
+    font-size: 0.75rem;
+  }
+
   .filter-reset-btn {
-    padding: 8px 18px;
-    font-size: 0.85rem;
-    width: 100%;
+    padding: 8px 16px;
+    font-size: 0.8rem;
   }
 }
 
@@ -131,12 +241,77 @@
     gap: 12px;
   }
 
+  .filter-groups-container {
+    gap: 12px;
+  }
+
+  .filter-label {
+    font-size: 0.75rem;
+  }
+
   .filter-options {
-    gap: 4px;
+    gap: 3px;
   }
 
   .filter-btn {
-    padding: 5px 10px;
-    font-size: 0.75rem;
+    padding: 5px 9px;
+    font-size: 0.7rem;
+    border-radius: 14px;
   }
+
+  .filter-result-info {
+    font-size: 0.8rem;
+    padding: 10px 14px;
+  }
+}
+
+/* 当前筛选状态条 */
+.active-filters-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 10px 16px;
+  background: rgba(250, 140, 50, 0.05);
+  border-radius: 8px;
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: #666;
+  animation: slideInDown 0.3s ease-out;
+}
+
+.active-filters-summary::before {
+  content: '✓';
+  color: var(--primary-color, #FA8C32);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.filter-tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: #fff;
+  border: 1px solid rgba(250, 140, 50, 0.25);
+  border-radius: 12px;
+  color: var(--primary-color, #FA8C32);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.filter-tag-pill::before {
+  content: '#';
+  opacity: 0.6;
+}
+
+/* 无障碍优化 */
+.filter-btn:focus-visible {
+  outline: 2px solid var(--primary-color, #FA8C32);
+  outline-offset: 2px;
+}
+
+.filter-reset-btn:focus-visible {
+  outline: 2px solid #666;
+  outline-offset: 2px;
 }
