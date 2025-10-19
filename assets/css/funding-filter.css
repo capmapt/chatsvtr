@@ -4,82 +4,88 @@
  * 优化日期: 2025-10-18
  */
 
-/* 数据可视化图表 */
+/* 数据可视化图表 - 优化版 */
 .funding-charts {
-  padding: 16px;
+  padding: 20px;
   background: linear-gradient(135deg, #fff 0%, #fffbf7 100%);
   border-radius: 12px;
   border: 1px solid rgba(250, 140, 50, 0.12);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .chart-container {
   background: #fff;
   border-radius: 8px;
-  padding: 16px;
+  padding: 20px;
   border: 1px solid rgba(250, 140, 50, 0.1);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .chart-title {
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
   color: #333;
-  margin: 0 0 12px 0;
+  margin: 0 0 16px 0;
   display: flex;
   align-items: center;
-  gap: 6px;
-}
-
-.chart-title::before {
-  content: '📊';
-  font-size: 1rem;
+  gap: 8px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid rgba(250, 140, 50, 0.1);
 }
 
 .chart-content {
-  min-height: 200px;
+  min-height: 240px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .chart-bar {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
 .chart-bar-label {
-  min-width: 80px;
-  font-size: 0.75rem;
-  color: #666;
-  font-weight: 500;
+  min-width: 90px;
+  font-size: 0.9rem;
+  color: #555;
+  font-weight: 600;
+  text-align: left;
 }
 
 .chart-bar-track {
   flex: 1;
-  height: 24px;
+  height: 32px;
   background: #f5f5f5;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   position: relative;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .chart-bar-fill {
   height: 100%;
   background: linear-gradient(90deg, var(--primary-color, #FA8C32), var(--secondary-color, #FFBB33));
-  border-radius: 12px;
+  border-radius: 16px;
   transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding-right: 8px;
-  min-width: 30px;
+  padding-right: 12px;
+  min-width: 40px;
+  box-shadow: 0 2px 4px rgba(250, 140, 50, 0.2);
 }
 
 .chart-bar-value {
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
+  white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* 快捷筛选预设 */
@@ -399,6 +405,33 @@
     width: 100%;
     text-align: center;
   }
+
+  /* 图表在平板端开始堆叠 */
+  .funding-charts {
+    grid-template-columns: 1fr !important;
+    padding: 16px;
+  }
+
+  .chart-container {
+    padding: 16px;
+  }
+
+  .chart-title {
+    font-size: 1rem;
+  }
+
+  .chart-bar-label {
+    min-width: 80px;
+    font-size: 0.85rem;
+  }
+
+  .chart-bar-track {
+    height: 28px;
+  }
+
+  .chart-bar-value {
+    font-size: 0.8rem;
+  }
 }
 
 @media (max-width: 768px) {
@@ -432,6 +465,49 @@
     padding: 8px 16px;
     font-size: 0.8rem;
   }
+
+  /* 图表移动端优化 */
+  .funding-charts {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .chart-container {
+    padding: 14px;
+  }
+
+  .chart-title {
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+  }
+
+  .chart-content {
+    min-height: 200px;
+    gap: 10px;
+  }
+
+  .chart-bar {
+    gap: 10px;
+  }
+
+  .chart-bar-label {
+    min-width: 70px;
+    font-size: 0.8rem;
+  }
+
+  .chart-bar-track {
+    height: 26px;
+  }
+
+  .chart-bar-fill {
+    padding-right: 10px;
+    min-width: 35px;
+  }
+
+  .chart-bar-value {
+    font-size: 0.75rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -461,6 +537,51 @@
   .filter-result-info {
     font-size: 0.8rem;
     padding: 10px 14px;
+  }
+
+  /* 图表小屏幕优化 */
+  .funding-charts {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .chart-container {
+    padding: 12px;
+  }
+
+  .chart-title {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+  }
+
+  .chart-content {
+    min-height: 180px;
+    gap: 8px;
+  }
+
+  .chart-bar {
+    gap: 8px;
+  }
+
+  .chart-bar-label {
+    min-width: 60px;
+    font-size: 0.75rem;
+  }
+
+  .chart-bar-track {
+    height: 24px;
+    border-radius: 12px;
+  }
+
+  .chart-bar-fill {
+    padding-right: 8px;
+    min-width: 30px;
+    border-radius: 12px;
+  }
+
+  .chart-bar-value {
+    font-size: 0.7rem;
   }
 }
 
