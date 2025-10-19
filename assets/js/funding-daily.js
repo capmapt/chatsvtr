@@ -1354,9 +1354,11 @@
         }
       });
 
-      const sortedStages = Object.entries(stageCounts)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 6); // 显示前6个
+      // 按融资轮次的自然顺序排序
+      const stageOrder = ['种子前', '种子轮', 'Pre-A', 'A轮', 'B轮', 'C轮', 'D轮', 'E轮', 'F轮', 'IPO', '战略投资'];
+      const sortedStages = stageOrder
+        .filter(stage => stageCounts[stage] > 0)
+        .map(stage => [stage, stageCounts[stage]]);
       const maxCount = Math.max(...sortedStages.map(([, count]) => count));
 
       const stageHTML = sortedStages.map(([stage, count]) => {
