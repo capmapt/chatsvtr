@@ -1326,6 +1326,9 @@
     // 获取所有融资数据用于生成筛选选项
     const allData = window.currentFundingData || mockFundingData;
 
+    // 生成数据可视化图表
+    generateCharts(allData);
+
     // 生成融资轮次选项
     generateStageFilters(allData);
 
@@ -1336,6 +1339,86 @@
     bindFilterEvents();
 
     console.log('✅ 筛选功能初始化完成');
+  }
+
+  // 生成数据可视化图表
+  function generateCharts(data) {
+    // 生成轮次分布图
+    const stageChart = document.getElementById('stageChart');
+    if (stageChart) {
+      const stageCounts = {};
+      data.forEach(item => {
+        const stage = stageLabels[item.stage] || item.stage;
+        if (stage && stage !== '未知') {
+          stageCounts[stage] = (stageCounts[stage] || 0) + 1;
+        }
+      });
+
+      const sortedStages = Object.entries(stageCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 6); // 显示前6个
+      const maxCount = Math.max(...sortedStages.map(([, count]) => count));
+
+      const stageHTML = sortedStages.map(([stage, count]) => {
+        const percentage = Math.round((count / data.length) * 100);
+        const barWidth = (count / maxCount) * 100;
+        return `
+          <div class="chart-bar">
+            <div class="chart-bar-label">${stage}</div>
+            <div class="chart-bar-track">
+              <div class="chart-bar-fill" style="width: ${barWidth}%">
+                <span class="chart-bar-value">${count} (${percentage}%)</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      stageChart.innerHTML = stageHTML || '<p style="text-align: center; color: #999;">暂无数据</p>';
+    }
+
+    // 生成金额区间占比图
+    const amountChart = document.getElementById('amountChart');
+    if (amountChart) {
+      const amountRanges = {
+        '<$10M': 0,
+        '$10M-50M': 0,
+        '$50M-100M': 0,
+        '>$100M': 0
+      };
+
+      data.forEach(item => {
+        const amountInM = item.amount / 1000000;
+        if (amountInM < 10) {
+          amountRanges['<$10M']++;
+        } else if (amountInM < 50) {
+          amountRanges['$10M-50M']++;
+        } else if (amountInM < 100) {
+          amountRanges['$50M-100M']++;
+        } else {
+          amountRanges['>$100M']++;
+        }
+      });
+
+      const maxCount = Math.max(...Object.values(amountRanges));
+
+      const amountHTML = Object.entries(amountRanges).map(([range, count]) => {
+        const percentage = Math.round((count / data.length) * 100);
+        const barWidth = count > 0 ? (count / maxCount) * 100 : 0;
+        return `
+          <div class="chart-bar">
+            <div class="chart-bar-label">${range}</div>
+            <div class="chart-bar-track">
+              <div class="chart-bar-fill" style="width: ${barWidth}%">
+                <span class="chart-bar-value">${count} (${percentage}%)</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      amountChart.innerHTML = amountHTML || '<p style="text-align: center; color: #999;">暂无数据</p>';
+    }
   }
 
   // 生成融资轮次筛选选项
@@ -1388,17 +1471,23 @@
     });
 
     // 按出现次数排序，取前10个
-    const sortedTags = Object.entries(tagCounts)
+    const sortedTagsWithCounts = Object.entries(tagCounts)
       .sort((a, b) => b[1] - a[1])
-      .slice(0, 10)
-      .map(([tag]) => tag);
+      .slice(0, 10);
 
-    // 生成HTML
+    // 计算热门标签阈值（出现次数大于等于前3个标签的平均值）
+    const topThreeAverage = sortedTagsWithCounts.length >= 3
+      ? (sortedTagsWithCounts[0][1] + sortedTagsWithCounts[1][1] + sortedTagsWithCounts[2][1]) / 3
+      : sortedTagsWithCounts[0]?.[1] || 0;
+
+    // 生成HTML，为热门标签添加⭐标识
     const tagHTML = [
       '<button class="filter-btn active" data-filter="tag" data-value="all">全部</button>',
-      ...sortedTags.map(tag =>
-        `<button class="filter-btn" data-filter="tag" data-value="${tag}">${tag}</button>`
-      )
+      ...sortedTagsWithCounts.map(([tag, count]) => {
+        const isHot = count >= topThreeAverage;
+        const hotBadge = isHot ? '<span class="hot-tag-badge">⭐</span>' : '';
+        return `<button class="filter-btn ${isHot ? 'hot-tag' : ''}" data-filter="tag" data-value="${tag}" title="${count}个项目">${tag}${hotBadge}</button>`;
+      })
     ].join('');
 
     tagFilter.innerHTML = tagHTML;
@@ -1406,6 +1495,18 @@
 
   // 绑定筛选事件
   function bindFilterEvents() {
+    // 快捷预设按钮点击事件
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const preset = this.dataset.preset;
+        applyPreset(preset);
+
+        // 更新预设按钮状态
+        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+
     // 筛选按钮点击事件
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', function() {
@@ -1459,6 +1560,85 @@
     if (resetBtn) {
       resetBtn.addEventListener('click', resetFilters);
     }
+  }
+
+  // 应用预设筛选
+  function applyPreset(presetName) {
+    console.log('🎯 应用预设筛选:', presetName);
+
+    // 重置所有筛选
+    activeFilters = {
+      stage: 'all',
+      amount: 'all',
+      tags: []
+    };
+
+    // 根据预设设置筛选条件
+    switch(presetName) {
+      case 'early-stage':
+        // 早期项目: Seed + Pre-A + 小于$10M
+        activeFilters.amount = '<10M';
+        // 更新按钮状态
+        updateFilterButtonStates();
+        // 如果有这些轮次,也激活它们(可选,这里我们主要通过金额筛选)
+        break;
+
+      case 'large-funding':
+        // 大额融资: 大于$50M
+        activeFilters.amount = '>100M'; // 使用最大金额区间
+        updateFilterButtonStates();
+        break;
+
+      case 'healthcare-ai':
+        // 医疗AI: 查找医疗相关标签
+        const healthcareTags = ['医疗AI', '医疗', '健康', '诊断', '生物医药'];
+        // 从当前数据中找到存在的医疗标签
+        const allData = window.currentFundingData || mockFundingData;
+        const availableTags = new Set();
+        allData.forEach(item => {
+          item.tags?.forEach(tag => {
+            if (healthcareTags.some(ht => tag.includes(ht))) {
+              availableTags.add(tag);
+            }
+          });
+        });
+        activeFilters.tags = Array.from(availableTags).slice(0, 3); // 最多3个标签
+        updateFilterButtonStates();
+        break;
+    }
+
+    // 应用筛选
+    applyFilters();
+  }
+
+  // 更新筛选按钮状态
+  function updateFilterButtonStates() {
+    // 更新轮次按钮
+    document.querySelectorAll('[data-filter="stage"]').forEach(btn => {
+      if (btn.dataset.value === activeFilters.stage) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    // 更新金额按钮
+    document.querySelectorAll('[data-filter="amount"]').forEach(btn => {
+      if (btn.dataset.value === activeFilters.amount) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    // 更新标签按钮
+    document.querySelectorAll('[data-filter="tag"]').forEach(btn => {
+      if (btn.dataset.value === 'all') {
+        btn.classList.toggle('active', activeFilters.tags.length === 0);
+      } else {
+        btn.classList.toggle('active', activeFilters.tags.includes(btn.dataset.value));
+      }
+    });
   }
 
   // 应用筛选

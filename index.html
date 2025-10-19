@@ -454,8 +454,36 @@
           </div>
         </div>
 
+        <!-- 数据可视化图表 -->
+        <div class="funding-charts" id="fundingCharts" style="margin-top: 16px; display: flex; gap: 16px; flex-wrap: wrap;">
+          <div class="chart-container" style="flex: 1; min-width: 280px;">
+            <h3 class="chart-title">融资轮次分布</h3>
+            <div class="chart-content" id="stageChart"></div>
+          </div>
+          <div class="chart-container" style="flex: 1; min-width: 280px;">
+            <h3 class="chart-title">金额区间占比</h3>
+            <div class="chart-content" id="amountChart"></div>
+          </div>
+        </div>
+
+        <!-- 快捷筛选预设 -->
+        <div class="filter-presets" id="filterPresets" style="margin-top: 16px;">
+          <div class="presets-label">快捷筛选:</div>
+          <div class="presets-buttons">
+            <button class="preset-btn" data-preset="early-stage" title="Seed + Pre-A + 小于$10M">
+              💡 早期项目
+            </button>
+            <button class="preset-btn" data-preset="large-funding" title="大于$50M">
+              💰 大额融资
+            </button>
+            <button class="preset-btn" data-preset="healthcare-ai" title="医疗AI相关标签">
+              🏥 医疗AI
+            </button>
+          </div>
+        </div>
+
         <!-- 筛选栏 -->
-        <div class="funding-filter-bar" id="fundingFilterBar" style="margin-top: 16px;">
+        <div class="funding-filter-bar" id="fundingFilterBar" style="margin-top: 12px;">
           <!-- 筛选组容器 -->
           <div class="filter-groups-container">
             <div class="filter-group">
