@@ -1343,22 +1343,40 @@
 
   // 生成数据可视化图表(增强版 - 支持点击筛选)
   function generateCharts(data) {
-    // 生成轮次分布图
+    // 生成轮次分布图 - 使用分组聚合
     const stageChart = document.getElementById('stageChart');
     if (stageChart) {
-      const stageCounts = {};
+      // 定义轮次分组映射
+      const stageGroups = {
+        'A轮及之前': ['种子前', '种子轮', 'Pre-A', 'A轮', 'A+轮'],
+        'B轮': ['B轮', 'B+轮'],
+        'C轮': ['C轮', 'C+轮'],
+        'D轮及之后': ['D轮', 'D+轮', 'E轮', 'E+轮', 'F轮', 'F+轮', 'G轮', 'H轮', 'IPO', '战略投资']
+      };
+
+      // 统计每个分组的数量
+      const groupCounts = {
+        'A轮及之前': 0,
+        'B轮': 0,
+        'C轮': 0,
+        'D轮及之后': 0
+      };
+
       data.forEach(item => {
         const stage = stageLabels[item.stage] || item.stage;
         if (stage && stage !== '未知') {
-          stageCounts[stage] = (stageCounts[stage] || 0) + 1;
+          // 找到该轮次属于哪个分组
+          for (const [groupName, stages] of Object.entries(stageGroups)) {
+            if (stages.includes(stage)) {
+              groupCounts[groupName]++;
+              break;
+            }
+          }
         }
       });
 
-      // 按融资轮次的自然顺序排序
-      const stageOrder = ['种子前', '种子轮', 'Pre-A', 'A轮', 'B轮', 'C轮', 'D轮', 'E轮', 'F轮', 'IPO', '战略投资'];
-      const sortedStages = stageOrder
-        .filter(stage => stageCounts[stage] > 0)
-        .map(stage => [stage, stageCounts[stage]]);
+      // 按固定顺序排列分组
+      const sortedStages = Object.entries(groupCounts).filter(([, count]) => count > 0);
       const maxCount = Math.max(...sortedStages.map(([, count]) => count));
 
       const stageHTML = sortedStages.map(([stage, count]) => {
@@ -1703,12 +1721,22 @@
 
     const allData = window.currentFundingData || mockFundingData;
 
+    // 定义轮次分组映射(与图表一致)
+    const stageGroups = {
+      'A轮及之前': ['种子前', '种子轮', 'Pre-A', 'A轮', 'A+轮'],
+      'B轮': ['B轮', 'B+轮'],
+      'C轮': ['C轮', 'C+轮'],
+      'D轮及之后': ['D轮', 'D+轮', 'E轮', 'E+轮', 'F轮', 'F+轮', 'G轮', 'H轮', 'IPO', '战略投资']
+    };
+
     // 筛选数据
     let filteredData = allData.filter(item => {
-      // 轮次筛选
+      // 轮次筛选 - 支持分组
       if (activeFilters.stage !== 'all') {
         const itemStage = stageLabels[item.stage] || item.stage;
-        if (itemStage !== activeFilters.stage) {
+        // 检查该轮次是否属于选中的分组
+        const selectedGroupStages = stageGroups[activeFilters.stage] || [activeFilters.stage];
+        if (!selectedGroupStages.includes(itemStage)) {
           return false;
         }
       }
