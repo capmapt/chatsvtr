@@ -491,13 +491,24 @@
       { pattern: /完成[^。]*?天使轮|完成[^。]*?天使/, stage: 'Seed' },
       { pattern: /完成[^。]*?种子轮/, stage: 'Seed' },
 
-      // 标准轮次 (A-Z轮，支持+号)
-      { pattern: /完成[^。]*?([A-Z])\+?轮融资|完成[^。]*?([A-Z])\+?轮/i, stage: (match) => {
-        const letterMatch = match[0].match(/([A-Z])\+?轮/i);
+      // 标准轮次 (A-Z轮，支持+ ++号) - 增强版：支持"完成2,300万美元A轮融资"、"A++轮"、"B+ 轮"(带空格)
+      { pattern: /完成[^。]*?([A-Z])\s*\+{1,2}\s*轮\s*融资/i, stage: (matchedString) => {
+        const letterMatch = matchedString.match(/([A-Z])\s*(\+{1,2})\s*轮/i);
         if (letterMatch) {
           const letter = letterMatch[1];
-          const hasPlus = match[0].includes('+');
-          return hasPlus ? `${letter.toUpperCase()}+` : `${letter.toUpperCase()}轮`;
+          const plusCount = (letterMatch[2] || '').length;
+          if (plusCount === 2) return `${letter.toUpperCase()}++`;
+          if (plusCount === 1) return `${letter.toUpperCase()}+`;
+          return `${letter.toUpperCase()}轮`;
+        }
+        return 'Unknown';
+      }},
+
+      // 无加号的标准轮次 (支持"D 轮 融资"这种带空格的格式)
+      { pattern: /完成[^。]*?([A-Z])\s*轮\s*融资/i, stage: (matchedString) => {
+        const letterMatch = matchedString.match(/([A-Z])\s*轮/i);
+        if (letterMatch) {
+          return `${letterMatch[1].toUpperCase()}轮`;
         }
         return 'Unknown';
       }},
