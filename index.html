@@ -122,6 +122,7 @@
   <link rel="stylesheet" href="assets/css/funding-daily.css?v=20251004-071000">
   <link rel="stylesheet" href="assets/css/funding-cards.css?v=20251004-071000">
   <link rel="stylesheet" href="assets/css/funding-filter.css?v=20251018-v2">
+  <link rel="stylesheet" href="assets/css/funding-header-enhanced.css?v=20251019">
   <link rel="stylesheet" href="assets/css/header-enhancements.css?v=20251004-071000">
   
   <!-- Preload critical images (WebP preferred) -->
@@ -442,15 +443,36 @@
     <!-- 🔥 创投日报 START -->
     <section class="funding-daily wrapper">
       <div class="funding-header">
-        <!-- 标题和更新时间行 -->
-        <div class="funding-title-row" style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 2px solid rgba(250, 140, 50, 0.15);">
-          <div class="funding-title-section">
-            <h2 class="funding-title">
-              <span class="funding-title-badge" data-i18n="funding_daily_title">AI创投日报</span>
-            </h2>
-          </div>
-          <div class="funding-update-time" id="fundingUpdateTime">
-            ⏰ 更新：加载中...
+        <!-- 标题栏 - 美化版 -->
+        <div class="funding-header-enhanced">
+          <div class="funding-header-content">
+            <!-- 左侧：标题和副标题 -->
+            <div class="funding-header-left">
+              <h2 class="funding-main-title">
+                <span class="title-icon">🚀</span>
+                <span class="title-text" data-i18n="funding_daily_title">AI创投日报</span>
+                <span class="title-badge">LIVE</span>
+              </h2>
+              <p class="funding-subtitle" id="fundingSubtitle">
+                最近7天全球AI融资动态
+              </p>
+            </div>
+
+            <!-- 右侧：关键数据 -->
+            <div class="funding-header-right">
+              <div class="funding-stat-card">
+                <div class="stat-label">总融资额</div>
+                <div class="stat-value" id="totalFundingAmount">
+                  <span class="loading-dots">加载中</span>
+                </div>
+              </div>
+              <div class="funding-stat-card">
+                <div class="stat-label">融资事件</div>
+                <div class="stat-value" id="totalFundingCount">
+                  <span class="loading-dots">加载中</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 

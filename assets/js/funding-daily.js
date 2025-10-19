@@ -893,6 +893,34 @@
     `;
   }
 
+  // 📊 更新表头统计数据
+  function updateHeaderStats(data) {
+    // 计算总融资金额
+    const totalAmount = data.reduce((sum, item) => {
+      return sum + (item.amount || 0);
+    }, 0);
+
+    // 格式化总融资金额
+    const formattedAmount = formatAmount(totalAmount, 'USD');
+
+    // 计算融资事件数量
+    const totalCount = data.length;
+
+    // 更新DOM元素
+    const amountEl = document.getElementById('totalFundingAmount');
+    const countEl = document.getElementById('totalFundingCount');
+
+    if (amountEl) {
+      amountEl.textContent = formattedAmount;
+    }
+
+    if (countEl) {
+      countEl.textContent = `${totalCount}笔`;
+    }
+
+    console.log(`📊 表头统计数据更新完成: 总融资额=${formattedAmount}, 融资事件=${totalCount}笔`);
+  }
+
   // 📊 加载融资数据
   async function loadFundingData(reset = true) {
     const container = document.getElementById('fundingHighlights');
@@ -1085,6 +1113,9 @@
 
       // 将当前数据存储到全局变量，供loadMoreFunding使用
       window.currentFundingData = fundingData;
+
+      // 更新表头统计数据
+      updateHeaderStats(fundingData);
 
       // 保存当前翻转状态（在刷新数据时保持状态）
       const flippedCards = Array.from(container.querySelectorAll('.funding-card.flipped')).map(card => {

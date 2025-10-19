@@ -1,0 +1,310 @@
+/**
+ * AI创投日报 - 美化表头样式
+ * 版本: v1.0
+ * 日期: 2025-10-19
+ */
+
+/* 表头容器 */
+.funding-header-enhanced {
+  background: linear-gradient(135deg, #fff 0%, #fffbf7 100%);
+  border-radius: 16px;
+  padding: 24px 28px;
+  border: 1px solid rgba(250, 140, 50, 0.15);
+  box-shadow:
+    0 4px 16px rgba(250, 140, 50, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 装饰性渐变背景 */
+.funding-header-enhanced::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(250, 140, 50, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.funding-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* 左侧标题区域 */
+.funding-header-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.funding-main-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #333;
+  line-height: 1.2;
+}
+
+.title-icon {
+  font-size: 2.2rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.title-text {
+  background: linear-gradient(135deg, #FA8C32 0%, #FF6B35 50%, #FFBB33 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.title-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #FF4444, #FF6B6B);
+  color: #fff;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3);
+  animation: pulse 2s ease-in-out infinite;
+  position: relative;
+}
+
+.title-badge::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  animation: blink 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.funding-subtitle {
+  margin: 0;
+  font-size: 1rem;
+  color: #666;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.funding-subtitle::before {
+  content: '📅';
+  font-size: 1.1rem;
+}
+
+/* 右侧数据卡片 */
+.funding-header-right {
+  display: flex;
+  gap: 16px;
+}
+
+.funding-stat-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  border: 2px solid rgba(250, 140, 50, 0.15);
+  min-width: 140px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.funding-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 4px 12px rgba(250, 140, 50, 0.15),
+    0 2px 8px rgba(0, 0, 0, 0.08);
+  border-color: rgba(250, 140, 50, 0.3);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: #888;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FA8C32 0%, #FF6B35 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+/* 加载动画 */
+.loading-dots {
+  font-size: 0.9rem;
+  color: #999;
+  font-weight: 500;
+  animation: loading 1.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* 响应式设计 - 平板 */
+@media (max-width: 1024px) {
+  .funding-header-enhanced {
+    padding: 20px 24px;
+  }
+
+  .funding-header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .funding-header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .funding-stat-card {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+/* 响应式设计 - 手机 */
+@media (max-width: 768px) {
+  .funding-header-enhanced {
+    padding: 16px 20px;
+    border-radius: 12px;
+  }
+
+  .funding-main-title {
+    font-size: 1.6rem;
+    gap: 8px;
+  }
+
+  .title-icon {
+    font-size: 1.8rem;
+  }
+
+  .title-badge {
+    padding: 3px 10px;
+    font-size: 0.65rem;
+  }
+
+  .funding-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .funding-header-right {
+    gap: 12px;
+  }
+
+  .funding-stat-card {
+    padding: 12px 16px;
+    min-width: 0;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    margin-bottom: 6px;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+}
+
+/* 响应式设计 - 小屏手机 */
+@media (max-width: 480px) {
+  .funding-header-enhanced {
+    padding: 12px 16px;
+  }
+
+  .funding-main-title {
+    font-size: 1.4rem;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .title-icon {
+    font-size: 1.6rem;
+  }
+
+  .title-badge {
+    padding: 2px 8px;
+    font-size: 0.6rem;
+    margin-left: -6px;
+  }
+
+  .funding-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .funding-header-right {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .funding-stat-card {
+    padding: 10px 14px;
+  }
+
+  .stat-value {
+    font-size: 1.3rem;
+  }
+}
