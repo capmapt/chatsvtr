@@ -270,20 +270,37 @@
 
   // 🔗 为团队背景中的创始人姓名添加超链接
   function addLinksToTeamBackground(teamBackground, contactInfo) {
-    if (!teamBackground || !contactInfo) return teamBackground;
+    if (!teamBackground) return teamBackground;
 
     let enhancedText = teamBackground;
 
-    // 修复联系方式URL格式
-    let fixedContactInfo = contactInfo.trim();
+    // 默认跳转链接：SVTR官网
+    const defaultUrl = 'https://svtr.ai';
+    let fixedContactInfo = defaultUrl;
 
-    // 如果是LinkedIn URL但缺少协议,自动添加https://
-    if (fixedContactInfo.includes('linkedin.com') && !fixedContactInfo.startsWith('http')) {
-      fixedContactInfo = 'https://' + fixedContactInfo;
-    }
-    // 如果是其他URL但缺少协议,也添加https://
-    else if ((fixedContactInfo.includes('.com') || fixedContactInfo.includes('.cn') || fixedContactInfo.includes('.ai')) && !fixedContactInfo.startsWith('http') && !fixedContactInfo.startsWith('mailto:')) {
-      fixedContactInfo = 'https://' + fixedContactInfo;
+    // 如果有有效的联系方式，则使用联系方式
+    if (contactInfo && contactInfo.trim()) {
+      const trimmedContact = contactInfo.trim();
+
+      // 验证联系方式是否有效
+      const isValidUrl = trimmedContact.length > 3 &&
+                        (trimmedContact.includes('.') || trimmedContact.startsWith('http'));
+
+      if (isValidUrl) {
+        // 如果是LinkedIn URL但缺少协议,自动添加https://
+        if (trimmedContact.includes('linkedin.com') && !trimmedContact.startsWith('http')) {
+          fixedContactInfo = 'https://' + trimmedContact;
+        }
+        // 如果是其他URL但缺少协议,也添加https://
+        else if ((trimmedContact.includes('.com') || trimmedContact.includes('.cn') || trimmedContact.includes('.ai')) && !trimmedContact.startsWith('http') && !trimmedContact.startsWith('mailto:')) {
+          fixedContactInfo = 'https://' + trimmedContact;
+        }
+        // 如果已经有协议,直接使用
+        else if (trimmedContact.startsWith('http') || trimmedContact.startsWith('mailto:')) {
+          fixedContactInfo = trimmedContact;
+        }
+        // 其他情况使用默认SVTR官网
+      }
     }
 
     // 只为句首的人名（通常是创始人）添加超链接
@@ -293,8 +310,12 @@
 
     if (founderMatch) {
       const founderName = founderMatch[1].trim();
+      const linkTitle = fixedContactInfo === defaultUrl
+        ? `访问SVTR官网了解更多`
+        : `访问 ${founderName} 的联系方式`;
+
       enhancedText = enhancedText.replace(founderPattern,
-        `<a href="${fixedContactInfo}" target="_blank" class="founder-link" title="访问 ${founderName} 的联系方式">${founderName}</a>，`
+        `<a href="${fixedContactInfo}" target="_blank" class="founder-link" title="${linkTitle}">${founderName}</a>，`
       );
     }
 
