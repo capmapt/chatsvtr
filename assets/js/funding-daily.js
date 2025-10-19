@@ -1341,7 +1341,7 @@
     console.log('✅ 筛选功能初始化完成');
   }
 
-  // 生成数据可视化图表
+  // 生成数据可视化图表(增强版 - 支持点击筛选)
   function generateCharts(data) {
     // 生成轮次分布图
     const stageChart = document.getElementById('stageChart');
@@ -1362,8 +1362,14 @@
       const stageHTML = sortedStages.map(([stage, count]) => {
         const percentage = Math.round((count / data.length) * 100);
         const barWidth = (count / maxCount) * 100;
+        // 添加点击属性和样式类
+        const isActive = activeFilters.stage === stage;
         return `
-          <div class="chart-bar">
+          <div class="chart-bar clickable-chart-bar ${isActive ? 'chart-bar-active' : ''}"
+               data-filter-type="stage"
+               data-filter-value="${stage}"
+               onclick="window.fundingDaily.filterByChart('stage', '${stage}')"
+               title="点击筛选 ${stage}">
             <div class="chart-bar-label">${stage}</div>
             <div class="chart-bar-track">
               <div class="chart-bar-fill" style="width: ${barWidth}%">
@@ -1381,6 +1387,13 @@
     const amountChart = document.getElementById('amountChart');
     if (amountChart) {
       const amountRanges = {
+        '<$10M': '<10M',
+        '$10M-50M': '10M-50M',
+        '$50M-100M': '50M-100M',
+        '>$100M': '>100M'
+      };
+
+      const amountCounts = {
         '<$10M': 0,
         '$10M-50M': 0,
         '$50M-100M': 0,
@@ -1390,23 +1403,29 @@
       data.forEach(item => {
         const amountInM = item.amount / 1000000;
         if (amountInM < 10) {
-          amountRanges['<$10M']++;
+          amountCounts['<$10M']++;
         } else if (amountInM < 50) {
-          amountRanges['$10M-50M']++;
+          amountCounts['$10M-50M']++;
         } else if (amountInM < 100) {
-          amountRanges['$50M-100M']++;
+          amountCounts['$50M-100M']++;
         } else {
-          amountRanges['>$100M']++;
+          amountCounts['>$100M']++;
         }
       });
 
-      const maxCount = Math.max(...Object.values(amountRanges));
+      const maxCount = Math.max(...Object.values(amountCounts));
 
-      const amountHTML = Object.entries(amountRanges).map(([range, count]) => {
+      const amountHTML = Object.entries(amountCounts).map(([range, count]) => {
         const percentage = Math.round((count / data.length) * 100);
         const barWidth = count > 0 ? (count / maxCount) * 100 : 0;
+        const filterValue = amountRanges[range];
+        const isActive = activeFilters.amount === filterValue;
         return `
-          <div class="chart-bar">
+          <div class="chart-bar clickable-chart-bar ${isActive ? 'chart-bar-active' : ''}"
+               data-filter-type="amount"
+               data-filter-value="${filterValue}"
+               onclick="window.fundingDaily.filterByChart('amount', '${filterValue}')"
+               title="点击筛选 ${range}">
             <div class="chart-bar-label">${range}</div>
             <div class="chart-bar-track">
               <div class="chart-bar-fill" style="width: ${barWidth}%">
@@ -1419,6 +1438,41 @@
 
       amountChart.innerHTML = amountHTML || '<p style="text-align: center; color: #999;">暂无数据</p>';
     }
+  }
+
+  // 图表点击筛选函数
+  function filterByChart(filterType, filterValue) {
+    console.log('📊 图表筛选:', filterType, filterValue);
+
+    // 如果点击的是已激活的筛选,则重置该筛选
+    if (
+      (filterType === 'stage' && activeFilters.stage === filterValue) ||
+      (filterType === 'amount' && activeFilters.amount === filterValue)
+    ) {
+      // 重置为"全部"
+      if (filterType === 'stage') {
+        activeFilters.stage = 'all';
+      } else if (filterType === 'amount') {
+        activeFilters.amount = 'all';
+      }
+    } else {
+      // 应用新筛选
+      if (filterType === 'stage') {
+        activeFilters.stage = filterValue;
+      } else if (filterType === 'amount') {
+        activeFilters.amount = filterValue;
+      }
+    }
+
+    // 同步按钮状态
+    updateFilterButtonStates();
+
+    // 应用筛选
+    applyFilters();
+
+    // 重新生成图表以更新激活状态
+    const allData = window.currentFundingData || mockFundingData;
+    generateCharts(allData);
   }
 
   // 生成融资轮次筛选选项
@@ -1802,7 +1856,8 @@
     initialize: initializeFundingDaily,
     initializeFilters,
     applyFilters,
-    resetFilters
+    resetFilters,
+    filterByChart
   };
 
   // 🔄 暴露翻转函数到全局作用域（用于HTML onclick）

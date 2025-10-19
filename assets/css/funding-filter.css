@@ -649,6 +649,32 @@
   50% { opacity: 0.7; transform: scale(1.1); }
 }
 
+/* 可点击图表条样式 */
+.clickable-chart-bar {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clickable-chart-bar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.clickable-chart-bar:hover .chart-bar-fill {
+  filter: brightness(1.1);
+}
+
+/* 图表条激活状态 */
+.chart-bar-active .chart-bar-fill {
+  background: linear-gradient(90deg, #FF6B35, #FF8C42) !important;
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.4);
+}
+
+.chart-bar-active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(255, 107, 53, 0.2);
+}
+
 /* 无障碍优化 */
 .filter-btn:focus-visible {
   outline: 2px solid var(--primary-color, #FA8C32);
