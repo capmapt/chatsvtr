@@ -274,6 +274,18 @@
 
     let enhancedText = teamBackground;
 
+    // 修复联系方式URL格式
+    let fixedContactInfo = contactInfo.trim();
+
+    // 如果是LinkedIn URL但缺少协议,自动添加https://
+    if (fixedContactInfo.includes('linkedin.com') && !fixedContactInfo.startsWith('http')) {
+      fixedContactInfo = 'https://' + fixedContactInfo;
+    }
+    // 如果是其他URL但缺少协议,也添加https://
+    else if ((fixedContactInfo.includes('.com') || fixedContactInfo.includes('.cn') || fixedContactInfo.includes('.ai')) && !fixedContactInfo.startsWith('http') && !fixedContactInfo.startsWith('mailto:')) {
+      fixedContactInfo = 'https://' + fixedContactInfo;
+    }
+
     // 只为句首的人名（通常是创始人）添加超链接
     // 匹配句首的中英文姓名，后面跟着职位描述
     const founderPattern = /^([A-Za-z\u4e00-\u9fa5\s]{2,20})，(?=.{0,50}?(创始人|CEO|CTO|总裁|首席|联合创始人))/;
@@ -282,7 +294,7 @@
     if (founderMatch) {
       const founderName = founderMatch[1].trim();
       enhancedText = enhancedText.replace(founderPattern,
-        `<a href="${contactInfo}" target="_blank" class="founder-link" title="访问 ${founderName} 的联系方式">${founderName}</a>，`
+        `<a href="${fixedContactInfo}" target="_blank" class="founder-link" title="访问 ${founderName} 的联系方式">${founderName}</a>，`
       );
     }
 
