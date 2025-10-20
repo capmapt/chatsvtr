@@ -537,4 +537,204 @@
   .modal-backdrop {
     background: rgba(0, 0, 0, 0.7) !important;
   }
+
+  /* ========== SVTR原生聊天组件暗色主题 ========== */
+  /* SVTR Chat容器 */
+  .svtr-chat-container {
+    background: #1a202c !important;
+  }
+
+  /* SVTR 聊天消息区域 */
+  .svtr-chat-messages {
+    background: #2d3748 !important;
+  }
+
+  /* SVTR 聊天消息 */
+  .svtr-message {
+    background: #374151 !important;
+    color: #e2e8f0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .svtr-message.user {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
+    color: white !important;
+    border: none !important;
+  }
+
+  .svtr-message.assistant {
+    background: #374151 !important;
+    color: #e2e8f0 !important;
+  }
+
+  .svtr-message.loading {
+    background: #374151 !important;
+  }
+
+  /* SVTR 消息头部 */
+  .message-header {
+    color: #cbd5e0 !important;
+  }
+
+  .message-avatar {
+    background: #4a5568 !important;
+    color: #fa8c32 !important;
+  }
+
+  .svtr-message.user .message-avatar {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+  }
+
+  .message-name {
+    color: #cbd5e0 !important;
+  }
+
+  .svtr-message.user .message-name {
+    color: white !important;
+  }
+
+  .message-time {
+    color: #718096 !important;
+  }
+
+  .message-content {
+    color: #e2e8f0 !important;
+  }
+
+  .svtr-message.user .message-content {
+    color: white !important;
+  }
+
+  /* SVTR 加载状态 */
+  .loading-dots {
+    color: #cbd5e0 !important;
+  }
+
+  .thinking-emoji {
+    color: #fa8c32 !important;
+  }
+
+  .animated-dots span {
+    color: #cbd5e0 !important;
+  }
+
+  /* SVTR 输入区域 */
+  .svtr-chat-input-area {
+    background: #2d3748 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .svtr-chat-input-container {
+    background: #2d3748 !important;
+  }
+
+  /* SVTR 输入框 */
+  #svtr-chat-input,
+  textarea#svtr-chat-input {
+    background: #374151 !important;
+    color: #e2e8f0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  #svtr-chat-input:focus {
+    border-color: #fa8c32 !important;
+    box-shadow: 0 0 0 3px rgba(250, 140, 50, 0.2) !important;
+  }
+
+  #svtr-chat-input::placeholder {
+    color: #718096 !important;
+  }
+
+  /* SVTR 发送按钮 */
+  .svtr-chat-send-btn,
+  #svtr-chat-send {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
+    color: white !important;
+    border: none !important;
+  }
+
+  .svtr-chat-send-btn:hover {
+    background: linear-gradient(135deg, #ff9f40, #ffb366) !important;
+    box-shadow: 0 4px 12px rgba(250, 140, 50, 0.4) !important;
+  }
+
+  .svtr-chat-send-btn:disabled {
+    background: #4a5568 !important;
+    color: #718096 !important;
+  }
+
+  .send-icon,
+  .loading-spinner {
+    color: white !important;
+  }
+
+  /* SVTR 操作按钮 */
+  .svtr-chat-actions {
+    background: transparent !important;
+  }
+
+  .svtr-action-btn,
+  #svtr-share-btn,
+  #svtr-clear-btn {
+    background: #374151 !important;
+    color: #cbd5e0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .svtr-action-btn:hover {
+    background: #4a5568 !important;
+    color: #fa8c32 !important;
+  }
+
+  /* SVTR 分享对话框 */
+  .svtr-share-dialog {
+    background: rgba(0, 0, 0, 0.8) !important;
+  }
+
+  .share-dialog-content {
+    background: #2d3748 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .share-dialog-content h4 {
+    color: #e2e8f0 !important;
+  }
+
+  .share-dialog-content textarea {
+    background: #374151 !important;
+    color: #e2e8f0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .share-actions button {
+    background: #374151 !important;
+    color: #cbd5e0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .share-actions button:hover {
+    background: #4a5568 !important;
+  }
+
+  /* SVTR Toast提示 */
+  .svtr-toast {
+    background: #374151 !important;
+    color: #e2e8f0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+}
+
+/* ========== 全局字体设置(所有屏幕尺寸) ========== */
+/* 网站表头 - 硅谷科技评论标题使用黑体 */
+.banner-title {
+  font-family: "PingFang SC", "Microsoft YaHei", "STHeiti", "SimHei", "Heiti SC", sans-serif !important;
+  font-weight: 700 !important;
+}
+
+/* Silicon Valley Tech Review 英文标题也使用相应的黑体 */
+.banner-title[lang="en"],
+.banner-title:lang(en) {
+  font-family: "Arial Black", "Helvetica Neue", Arial, sans-serif !important;
+  font-weight: 900 !important;
 }
