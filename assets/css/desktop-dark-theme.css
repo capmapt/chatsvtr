@@ -1,0 +1,778 @@
+/**
+ * 桌面端暗色主题
+ * 适用于屏幕宽度 > 768px 的设备
+ */
+
+/* ========== 桌面端暗色主题 ========== */
+@media (min-width: 769px) {
+  /* 整体页面背景 - 强制应用 */
+  html,
+  body {
+    background: #2d3748 !important;
+    background-color: #2d3748 !important;
+  }
+
+  /* 主内容区域 */
+  main,
+  .content {
+    background: #2d3748 !important;
+  }
+
+  /* 所有wrapper模块基础背景 */
+  .wrapper {
+    background: #1a202c !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  /* Banner区域 */
+  .banner,
+  .banner-header {
+    background: #1a202c !important;
+    border-bottom: 3px solid #fa8c32 !important;
+  }
+
+  .banner-content {
+    background: transparent !important;
+  }
+
+  .banner-content h1,
+  .banner-content p {
+    color: #e2e8f0 !important;
+  }
+
+  /* Banner标题 - 硅谷科技评论 - 黑体字体 + 浅色文字 */
+  .banner-title {
+    font-family: "PingFang SC", "Microsoft YaHei", "STHeiti", "SimHei", "Heiti SC", sans-serif !important;
+    font-weight: 700 !important;
+    color: #e2e8f0 !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* 英文标题 - Silicon Valley Tech Review - 黑体字体 + 浅色文字 */
+  .banner-title[data-lang="en"],
+  .banner-title:lang(en) {
+    font-family: "Arial Black", "Helvetica Neue", Arial, sans-serif !important;
+    font-weight: 900 !important;
+    color: #e2e8f0 !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* Banner副标题 */
+  .banner-tagline,
+  .banner-tagline div {
+    color: #cbd5e0 !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  /* 业务标签(数据榜单、内容社区、投资孵化) */
+  .business-tags {
+    background: transparent !important;
+  }
+
+  .business-tag {
+    background: #374151 !important;
+    color: #ffffff !important;
+    border: 2px solid rgba(250, 140, 50, 0.3) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+    font-weight: 700 !important;
+  }
+
+  .business-tag:hover,
+  .business-tag:active {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
+    color: white !important;
+    border-color: transparent !important;
+    transform: scale(1.05) !important;
+  }
+
+  /* 统计卡片 */
+  .stats-wrapper {
+    background: #1a202c !important;
+  }
+
+  /* AI创投日报 - 统一容器 */
+  .funding-unified-container {
+    background: #1a202c !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* 表头区域 */
+  .funding-header-enhanced {
+    background: transparent !important;
+  }
+
+  .funding-main-title .title-text,
+  .funding-subtitle {
+    color: #e2e8f0 !important;
+  }
+
+  .funding-title-badge {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
+    color: white !important;
+  }
+
+  /* 统计卡片 */
+  .funding-stat-card {
+    background: #2d3748 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .stat-label {
+    color: #a0aec0 !important;
+  }
+
+  .stat-value {
+    color: #fa8c32 !important;
+  }
+
+  /* 图表区域 */
+  .funding-charts {
+    background: transparent !important;
+  }
+
+  .chart-container {
+    background: #2d3748 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .chart-title {
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .chart-bar-label {
+    color: #f3f4f6 !important;
+  }
+
+  .chart-bar-track {
+    background: #374151 !important;
+  }
+
+  /* 筛选栏区域 */
+  .funding-filter-bar {
+    background: transparent !important;
+  }
+
+  .filter-label {
+    color: #ffffff !important;
+  }
+
+  .filter-option {
+    background: #4b5563 !important;
+    color: #ffffff !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    font-weight: 600 !important;
+  }
+
+  .filter-option.active {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
+    color: white !important;
+    border-color: transparent !important;
+    font-weight: 700 !important;
+  }
+
+  .filter-reset-btn {
+    background: #4b5563 !important;
+    color: #ffffff !important;
+    border: 2px solid rgba(255, 255, 255, 0.3) !important;
+    font-weight: 600 !important;
+  }
+
+  /* 融资卡片列表 */
+  .funding-highlights {
+    background: transparent !important;
+  }
+
+  .funding-item {
+    background: #2d3748 !important;
+    border: none !important;
+  }
+
+  .company-name {
+    color: #e2e8f0 !important;
+  }
+
+  .company-stage {
+    background: rgba(250, 140, 50, 0.2) !important;
+    color: #ffa64d !important;
+  }
+
+  .funding-amount {
+    color: #48bb78 !important;
+  }
+
+  .funding-description {
+    color: #a0aec0 !important;
+  }
+
+  .funding-tag {
+    background: #374151 !important;
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  .funding-time {
+    color: #718096 !important;
+  }
+
+  /* 加载更多按钮 */
+  .load-more-btn {
+    background: #374151 !important;
+    color: #cbd5e0 !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  .load-more-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
+    color: white !important;
+  }
+
+  /* 聊天组件 */
+  .chatbox {
+    background: #1a202c !important;
+  }
+
+  .chat-header {
+    color: #ffffff !important;
+  }
+
+  .chat-messages {
+    background: #2d3748 !important;
+  }
+
+  /* 原生聊天容器 - 强制应用暗色背景 */
+  #svtr-chat-container {
+    background: #2d3748 !important;
+  }
+
+  .native-chat-container {
+    background: #2d3748 !important;
+  }
+
+  /* 聊天消息气泡 */
+  .message,
+  .chat-message {
+    background: #374151 !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  }
+
+  /* 用户消息 */
+  .message.user,
+  .chat-message.user,
+  .user-message {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
+    color: white !important;
+    border: none !important;
+  }
+
+  /* AI消息 */
+  .message.assistant,
+  .message.bot,
+  .chat-message.assistant,
+  .chat-message.bot,
+  .bot-message,
+  .assistant-message {
+    background: #374151 !important;
+    color: #ffffff !important;
+  }
+
+  /* 输入框容器 */
+  .chat-input-wrapper,
+  .input-container,
+  .chat-input-area {
+    background: #2d3748 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* 输入框 */
+  .chat-input,
+  .message-input,
+  textarea.chat-input {
+    background: #374151 !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  }
+
+  .chat-input:focus,
+  .message-input:focus {
+    border-color: #fa8c32 !important;
+    box-shadow: 0 0 0 3px rgba(250, 140, 50, 0.3) !important;
+  }
+
+  /* 发送按钮 */
+  .chat-send-btn,
+  .send-button,
+  .btn-send {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
+    color: white !important;
+    border: none !important;
+  }
+
+  .chat-send-btn:hover,
+  .send-button:hover {
+    background: linear-gradient(135deg, #ff9f40, #ffb366) !important;
+    box-shadow: 0 4px 12px rgba(250, 140, 50, 0.4) !important;
+  }
+
+  .chat-send-btn:disabled,
+  .send-button:disabled {
+    background: #4a5568 !important;
+    color: #718096 !important;
+  }
+
+  /* Header导航 */
+  header {
+    background: #1a202c !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .logo-text {
+    color: #e2e8f0 !important;
+  }
+
+  nav a {
+    color: #cbd5e0 !important;
+  }
+
+  nav a:hover,
+  nav a.active {
+    color: #fa8c32 !important;
+  }
+
+  /* Footer */
+  footer {
+    background: #1a202c !important;
+    color: #a0aec0 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  footer a {
+    color: #cbd5e0 !important;
+  }
+
+  footer a:hover {
+    color: #fa8c32 !important;
+  }
+
+  /* 通用文本颜色 */
+  h1, h2, h3, h4, h5, h6 {
+    color: #e2e8f0 !important;
+  }
+
+  p {
+    color: #cbd5e0 !important;
+  }
+
+  /* 卡片通用样式 */
+  .card {
+    background: #2d3748 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* 按钮通用样式 */
+  button {
+    color: #e2e8f0 !important;
+  }
+
+  /* 输入框通用样式 */
+  input,
+  textarea,
+  select {
+    background: #374151 !important;
+    color: #e2e8f0 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #718096 !important;
+  }
+
+  /* 分割线 */
+  hr,
+  .divider {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* Scrollbar样式 */
+  ::-webkit-scrollbar {
+    width: 12px;
+    background: #1a202c;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #4a5568;
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #718096;
+  }
+
+  /* 侧边栏底部区域 */
+  .sidebar-bottom-actions {
+    background: linear-gradient(135deg, rgba(26, 32, 44, 0.98), rgba(45, 55, 72, 0.95)) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  /* 登录/注册按钮 */
+  .btn-member-login {
+    background: rgba(59, 130, 246, 0.1) !important;
+    border: 2px solid #60A5FA !important;
+    color: #60A5FA !important;
+  }
+
+  .btn-member-login:hover {
+    background: rgba(59, 130, 246, 0.2) !important;
+    border-color: #3B82F6 !important;
+    color: #3B82F6 !important;
+  }
+
+  /* 社交媒体图标区域 */
+  .social-media-icons {
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .social-media-icons a {
+    color: #cbd5e0 !important;
+    background: rgba(55, 65, 81, 0.5) !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .social-media-icons a:hover {
+    color: #fa8c32 !important;
+    background: rgba(250, 140, 50, 0.2) !important;
+    transform: translateY(-2px) !important;
+  }
+
+  .social-media-icons svg {
+    filter: brightness(0.9) !important;
+  }
+
+  /* 遮罩层 */
+  .overlay,
+  .modal-backdrop {
+    background: rgba(0, 0, 0, 0.7) !important;
+  }
+
+  /* 语言切换按钮 */
+  .lang-toggle {
+    background: #374151 !important;
+    border: 2px solid rgba(250, 140, 50, 0.4) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .lang-toggle button {
+    background: transparent !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    min-height: 36px !important;
+  }
+
+  .lang-toggle button.active {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
+    color: white !important;
+    font-weight: 700 !important;
+    box-shadow: 0 0 8px rgba(250, 140, 50, 0.6) !important;
+  }
+
+  .lang-toggle button:not(.active):hover {
+    background: rgba(250, 140, 50, 0.3) !important;
+    color: #ffffff !important;
+  }
+
+  .lang-toggle .divider {
+    color: #9ca3af !important;
+    font-weight: 300 !important;
+  }
+
+  /* SVTR原生聊天组件暗色主题 */
+  .svtr-chat-container {
+    background: #1a202c !important;
+  }
+
+  .svtr-chat-messages,
+  #svtr-chat-messages {
+    background: #2d3748 !important;
+    background-color: #2d3748 !important;
+  }
+
+  .svtr-chat-container > div,
+  .svtr-chat-container > *,
+  .svtr-chat-wrapper,
+  .svtr-chat-messages > *:not(.svtr-message) {
+    background: #2d3748 !important;
+    background-color: #2d3748 !important;
+  }
+
+  .svtr-chat-container *:not(.svtr-message):not(.svtr-action-btn):not(button):not(textarea) {
+    background-color: transparent !important;
+  }
+
+  /* SVTR 聊天消息 */
+  .svtr-message {
+    background: #374151 !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  }
+
+  .svtr-message.user {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
+    color: white !important;
+    border: none !important;
+  }
+
+  .svtr-message.assistant {
+    background: #374151 !important;
+    color: #ffffff !important;
+  }
+
+  .svtr-message.loading {
+    background: #374151 !important;
+  }
+
+  /* SVTR 消息头部 */
+  .message-header {
+    color: #f3f4f6 !important;
+  }
+
+  .message-avatar {
+    background: #4a5568 !important;
+    color: #fbbf24 !important;
+    font-weight: 600 !important;
+  }
+
+  .svtr-message.user .message-avatar {
+    background: rgba(255, 255, 255, 0.25) !important;
+    color: white !important;
+  }
+
+  .message-name {
+    color: #f3f4f6 !important;
+    font-weight: 500 !important;
+  }
+
+  .svtr-message.user .message-name {
+    color: white !important;
+  }
+
+  .message-time {
+    color: #9ca3af !important;
+  }
+
+  .message-content {
+    color: #ffffff !important;
+    line-height: 1.6 !important;
+  }
+
+  .svtr-message.user .message-content {
+    color: white !important;
+  }
+
+  /* SVTR 加载状态 */
+  .loading-dots {
+    color: #f3f4f6 !important;
+  }
+
+  .thinking-emoji {
+    color: #fbbf24 !important;
+  }
+
+  .animated-dots span {
+    color: #f3f4f6 !important;
+  }
+
+  /* SVTR 输入区域 */
+  .svtr-chat-input-area {
+    background: #2d3748 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .svtr-chat-input-container {
+    background: #2d3748 !important;
+  }
+
+  /* SVTR 输入框 */
+  #svtr-chat-input,
+  textarea#svtr-chat-input {
+    background: #374151 !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  }
+
+  #svtr-chat-input:focus {
+    border-color: #fa8c32 !important;
+    box-shadow: 0 0 0 3px rgba(250, 140, 50, 0.3) !important;
+  }
+
+  #svtr-chat-input::placeholder {
+    color: #9ca3af !important;
+  }
+
+  /* SVTR 发送按钮 */
+  .svtr-chat-send-btn,
+  #svtr-chat-send {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
+    color: white !important;
+    border: none !important;
+  }
+
+  .svtr-chat-send-btn:hover {
+    background: linear-gradient(135deg, #ff9f40, #ffb366) !important;
+    box-shadow: 0 4px 12px rgba(250, 140, 50, 0.4) !important;
+  }
+
+  .svtr-chat-send-btn:disabled {
+    background: #4a5568 !important;
+    color: #718096 !important;
+  }
+
+  .send-icon,
+  .loading-spinner {
+    color: white !important;
+  }
+
+  /* SVTR 操作按钮 */
+  .svtr-chat-actions {
+    background: transparent !important;
+  }
+
+  .svtr-action-btn,
+  #svtr-share-btn,
+  #svtr-clear-btn {
+    background: #374151 !important;
+    color: #cbd5e0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .svtr-action-btn:hover {
+    background: #4a5568 !important;
+    color: #fa8c32 !important;
+  }
+
+  /* SVTR 分享对话框 */
+  .svtr-share-dialog {
+    background: rgba(0, 0, 0, 0.8) !important;
+  }
+
+  .share-dialog-content {
+    background: #2d3748 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .share-dialog-content h4 {
+    color: #e2e8f0 !important;
+  }
+
+  .share-dialog-content textarea {
+    background: #374151 !important;
+    color: #e2e8f0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .share-actions button {
+    background: #374151 !important;
+    color: #cbd5e0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .share-actions button:hover {
+    background: #4a5568 !important;
+  }
+
+  /* SVTR Toast提示 */
+  .svtr-toast {
+    background: #374151 !important;
+    color: #e2e8f0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* 用户操作区域 (侧边栏订阅) */
+  .user-actions {
+    background: linear-gradient(135deg, rgba(55, 65, 81, 0.9), rgba(75, 85, 99, 0.7)) !important;
+    border-color: rgba(156, 163, 175, 0.2) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .subscribe-trust {
+    color: #10b981 !important;
+  }
+
+  .subscribe-form-inline input {
+    background: #374151 !important;
+    color: #e2e8f0 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .subscribe-form-inline input:focus {
+    border-color: #10b981 !important;
+    background: #2d3748 !important;
+  }
+
+  .subscribe-form-inline input::placeholder {
+    color: #718096 !important;
+  }
+
+  .btn-subscribe-submit {
+    background: #059669 !important;
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25) !important;
+  }
+
+  .btn-subscribe-submit:hover {
+    background: #047857 !important;
+    box-shadow: 0 6px 16px rgba(5, 150, 105, 0.35) !important;
+  }
+
+  /* 侧边栏相关 */
+  .sidebar {
+    background: rgba(26, 32, 44, 0.95) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .sidebar-header {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .sidebar-logo img {
+    border-color: rgba(250, 140, 50, 0.3) !important;
+  }
+
+  .nav-list a {
+    color: #cbd5e0 !important;
+  }
+
+  .nav-list a:hover,
+  .nav-list a.active {
+    color: #fa8c32 !important;
+    background: rgba(250, 140, 50, 0.1) !important;
+  }
+
+  .group-header {
+    color: #e2e8f0 !important;
+  }
+
+  .group-header.collapsible {
+    background: rgba(55, 65, 81, 0.5) !important;
+  }
+
+  .group-header.collapsible:hover {
+    background: rgba(75, 85, 99, 0.5) !important;
+  }
+
+  .sub-list {
+    background: transparent !important;
+  }
+
+  .sub-list a {
+    color: #a0aec0 !important;
+  }
+
+  .sub-list a:hover {
+    color: #fa8c32 !important;
+    background: rgba(250, 140, 50, 0.1) !important;
+  }
+}
