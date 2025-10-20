@@ -1,0 +1,90 @@
+/**
+ * 模块间距统一规范
+ * 确保所有主要模块之间的间距一致，宽度一致
+ */
+
+/* ========== 统一的wrapper基础样式 ========== */
+.wrapper {
+  width: 100%;
+  max-width: 800px;
+  margin: 10px auto !important;  /* 统一间距：上下10px */
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* ========== 各模块特定调整 ========== */
+
+/* Banner模块 - 保持wrapper类的统一间距 */
+section.wrapper:first-of-type {
+  margin-top: 10px !important;
+}
+
+/* 统计卡片模块 - 无顶部间距,与widget紧密相连 */
+.stats-wrapper.wrapper {
+  margin: 10px auto !important;
+}
+
+/* AI创投日报模块 - 无顶部间距 */
+.funding-daily.wrapper {
+  margin: 0 auto 10px auto !important;
+}
+
+/* 聊天组件模块 - 统一间距 */
+.chatbox.wrapper {
+  margin: 10px auto !important;
+}
+
+/* ========== 移动端响应式调整 ========== */
+@media (max-width: 768px) {
+  .wrapper {
+    margin: 5px auto !important;  /* 移动端间距减半 */
+  }
+
+  section.wrapper:first-of-type {
+    margin-top: 5px !important;
+  }
+
+  .stats-wrapper.wrapper {
+    margin: 5px auto !important;
+  }
+
+  .funding-daily.wrapper {
+    margin: 0 auto 5px auto !important;
+  }
+
+  .chatbox.wrapper {
+    margin: 5px auto !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    margin: 3px auto !important;  /* 小屏幕更紧凑 */
+  }
+
+  section.wrapper:first-of-type {
+    margin-top: 3px !important;
+  }
+
+  .stats-wrapper.wrapper {
+    margin: 3px auto !important;
+  }
+
+  .funding-daily.wrapper {
+    margin: 0 auto 3px auto !important;
+  }
+
+  .chatbox.wrapper {
+    margin: 3px auto !important;
+  }
+}
+
+/* ========== 确保所有模块宽度一致 ========== */
+.wrapper,
+.stats-wrapper,
+.funding-daily,
+.chatbox {
+  max-width: 800px !important;
+  width: 100% !important;
+}
