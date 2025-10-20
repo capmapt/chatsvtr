@@ -5,10 +5,10 @@
 
 /* 强制整体布局在移动端垂直排列 */
 @media (max-width: 768px) {
-  /* AI创投日报整体容器 - 增加顶部边距 */
+  /* AI创投日报整体容器 - 移除顶部间距,与widget紧密相连 */
   .funding-daily {
-    margin-top: 2rem !important;
-    padding-top: 1rem !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
 
   /* 最外层容器 - 强制垂直布局（覆盖 funding-daily.css 的 row 设置） */

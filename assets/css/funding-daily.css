@@ -5,8 +5,8 @@
 
 /* 🔥 创投日报容器 */
 .funding-daily {
-  margin: 3rem 0;
-  padding-top: 1.5rem;
+  margin: 0 0 3rem 0;  /* 顶部无间距,与widget紧密相连 */
+  padding-top: 0;
 }
 
 /* 🎯 标题区域 */
