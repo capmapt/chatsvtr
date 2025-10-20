@@ -5,10 +5,17 @@
 
 /* ========== 移动端暗色主题 ========== */
 @media (max-width: 768px) {
-  /* 整体页面背景 */
+  /* 整体页面背景 - 强制应用 */
+  html,
   body {
     background: #2d3748 !important;
     background-color: #2d3748 !important;
+  }
+
+  /* 主内容区域 */
+  main,
+  .content {
+    background: #2d3748 !important;
   }
 
   /* 所有wrapper模块基础背景 */
@@ -617,12 +624,21 @@
   .svtr-chat-messages,
   #svtr-chat-messages {
     background: #2d3748 !important;
+    background-color: #2d3748 !important;
   }
 
-  /* 确保所有聊天消息容器都是暗色 */
+  /* 确保所有聊天消息容器都是暗色 - 使用通配符 */
   .svtr-chat-container > div,
-  .svtr-chat-wrapper {
+  .svtr-chat-container > *,
+  .svtr-chat-wrapper,
+  .svtr-chat-messages > *:not(.svtr-message) {
     background: #2d3748 !important;
+    background-color: #2d3748 !important;
+  }
+
+  /* 强制聊天区域所有子元素继承暗色背景 */
+  .svtr-chat-container *:not(.svtr-message):not(.svtr-action-btn):not(button):not(textarea) {
+    background-color: transparent !important;
   }
 
   /* SVTR 聊天消息 */
