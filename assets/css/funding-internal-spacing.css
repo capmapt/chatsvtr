@@ -1,52 +1,55 @@
 /**
- * AI创投日报 - 内部板块间距统一
- * 确保所有内部板块之间的间距一致 = 1rem (16px)
- * 与融资卡片之间的间距保持一致
+ * AI创投日报 - 内部板块间距优化
+ * 设计理念:
+ * - 控制区 (表头/图表/筛选栏) 无间距,紧密连接形成整体
+ * - 控制区与内容区 (融资卡片) 之间保持 1rem (16px) 间距分隔
  */
 
-/* ========== 内部板块间距统一 ========== */
+/* ========== 控制区内部无间距 ========== */
 
-/* 图表区域 - 统一顶部间距 */
+/* 图表区域 - 无顶部间距,与表头紧密连接 */
 .funding-charts {
-  margin-top: 1rem !important;
+  margin-top: 0 !important;
 }
 
-/* 筛选栏 - 统一顶部间距 */
+/* 筛选栏 - 无顶部间距,与图表紧密连接 */
 .funding-filter-bar {
-  margin-top: 1rem !important;
+  margin-top: 0 !important;
 }
 
-/* 融资卡片列表 - 统一顶部间距 */
+/* 融资卡片列表 - 与筛选栏保持间距,形成控制区/内容区分隔 */
 .funding-highlights {
   margin-top: 1rem !important;
 }
 
-/* ========== 移动端响应式调整 ========== */
+/* ========== 移动端保持相同逻辑 ========== */
 @media (max-width: 768px) {
-  /* 移动端保持相同间距 - 1rem (16px) */
+  /* 控制区内部无间距 */
   .funding-charts {
-    margin-top: 1rem !important;
+    margin-top: 0 !important;
   }
 
   .funding-filter-bar {
-    margin-top: 1rem !important;
+    margin-top: 0 !important;
   }
 
+  /* 内容区保持分隔 */
   .funding-highlights {
     margin-top: 1rem !important;
   }
 }
 
 @media (max-width: 480px) {
-  /* 小屏幕也保持相同间距 - 1rem (16px) */
+  /* 控制区内部无间距 */
   .funding-charts {
-    margin-top: 1rem !important;
+    margin-top: 0 !important;
   }
 
   .funding-filter-bar {
-    margin-top: 1rem !important;
+    margin-top: 0 !important;
   }
 
+  /* 内容区保持分隔 */
   .funding-highlights {
     margin-top: 1rem !important;
   }
