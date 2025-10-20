@@ -127,6 +127,8 @@
   <link rel="stylesheet" href="assets/css/header-enhancements.css?v=20251004-071000">
   <!-- 模块间距统一规范 - 最后加载以确保优先级 -->
   <link rel="stylesheet" href="assets/css/module-spacing-unified.css?v=20251019">
+  <!-- AI创投日报内部板块间距统一 -->
+  <link rel="stylesheet" href="assets/css/funding-internal-spacing.css?v=20251019">
 
   <!-- Preload critical images (WebP preferred) -->
   <link rel="preload" href="assets/images/banner.avif" as="image" type="image/avif">
@@ -479,7 +481,7 @@
         </div>
 
         <!-- 数据可视化图表 - 优化版 -->
-        <div class="funding-charts" id="fundingCharts" style="margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%;">
+        <div class="funding-charts" id="fundingCharts" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%;">
           <div class="chart-container" style="width: 100%;">
             <h3 class="chart-title" data-i18n="funding_stage_distribution">📊 融资轮次分布</h3>
             <div class="chart-content" id="stageChart"></div>
@@ -491,7 +493,7 @@
         </div>
 
         <!-- 筛选栏 - 简化版 (仅保留标签) -->
-        <div class="funding-filter-bar" id="fundingFilterBar" style="margin-top: 12px;">
+        <div class="funding-filter-bar" id="fundingFilterBar">
           <!-- 筛选组容器 -->
           <div class="filter-groups-container">
             <div class="filter-group">
