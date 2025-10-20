@@ -1,0 +1,299 @@
+/**
+ * 移动端暗色主题
+ * 在手机端强制应用暗色主题样式
+ */
+
+/* ========== 移动端暗色主题 ========== */
+@media (max-width: 768px) {
+  /* 整体页面背景 */
+  body {
+    background: #2d3748 !important;
+    background-color: #2d3748 !important;
+  }
+
+  /* 所有wrapper模块基础背景 */
+  .wrapper {
+    background: #1a202c !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  /* Banner区域 */
+  .banner {
+    background: #1a202c !important;
+  }
+
+  .banner-content h1,
+  .banner-content p {
+    color: #e2e8f0 !important;
+  }
+
+  /* 统计卡片 */
+  .stats-wrapper {
+    background: #1a202c !important;
+  }
+
+  /* AI创投日报 - 统一容器 */
+  .funding-unified-container {
+    background: #1a202c !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* 表头区域 */
+  .funding-header-enhanced {
+    background: transparent !important;
+  }
+
+  .funding-main-title .title-text,
+  .funding-subtitle {
+    color: #e2e8f0 !important;
+  }
+
+  .funding-title-badge {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
+    color: white !important;
+  }
+
+  /* 统计卡片 */
+  .funding-stat-card {
+    background: #2d3748 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .stat-label {
+    color: #a0aec0 !important;
+  }
+
+  .stat-value {
+    color: #fa8c32 !important;
+  }
+
+  /* 图表区域 */
+  .funding-charts {
+    background: transparent !important;
+  }
+
+  .chart-container {
+    background: #2d3748 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .chart-title {
+    color: #e2e8f0 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .chart-bar-label {
+    color: #cbd5e0 !important;
+  }
+
+  .chart-bar-track {
+    background: #374151 !important;
+  }
+
+  /* 筛选栏区域 */
+  .funding-filter-bar {
+    background: transparent !important;
+  }
+
+  .filter-label {
+    color: #e2e8f0 !important;
+  }
+
+  .filter-option {
+    background: #374151 !important;
+    color: #cbd5e0 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .filter-option.active {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
+    color: white !important;
+  }
+
+  .filter-reset-btn {
+    background: #374151 !important;
+    color: #cbd5e0 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* 融资卡片列表 */
+  .funding-highlights {
+    background: transparent !important;
+  }
+
+  .funding-item {
+    background: #2d3748 !important;
+    border: none !important;
+  }
+
+  .company-name {
+    color: #e2e8f0 !important;
+  }
+
+  .company-stage {
+    background: rgba(250, 140, 50, 0.2) !important;
+    color: #ffa64d !important;
+  }
+
+  .funding-amount {
+    color: #48bb78 !important;
+  }
+
+  .funding-description {
+    color: #a0aec0 !important;
+  }
+
+  .funding-tag {
+    background: #374151 !important;
+    color: #cbd5e0 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .funding-time {
+    color: #718096 !important;
+  }
+
+  /* 加载更多按钮 */
+  .load-more-btn {
+    background: #374151 !important;
+    color: #cbd5e0 !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  .load-more-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
+    color: white !important;
+  }
+
+  /* 聊天组件 */
+  .chatbox {
+    background: #1a202c !important;
+  }
+
+  .chat-header {
+    color: #e2e8f0 !important;
+  }
+
+  .chat-messages {
+    background: #2d3748 !important;
+  }
+
+  .message {
+    background: #374151 !important;
+    color: #e2e8f0 !important;
+  }
+
+  .message.user {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
+    color: white !important;
+  }
+
+  .chat-input-container {
+    background: #2d3748 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .chat-input {
+    background: #374151 !important;
+    color: #e2e8f0 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .chat-input::placeholder {
+    color: #718096 !important;
+  }
+
+  .chat-send-btn {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
+    color: white !important;
+  }
+
+  /* Header导航 */
+  header {
+    background: #1a202c !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .logo-text {
+    color: #e2e8f0 !important;
+  }
+
+  nav a {
+    color: #cbd5e0 !important;
+  }
+
+  nav a:hover,
+  nav a.active {
+    color: #fa8c32 !important;
+  }
+
+  /* Footer */
+  footer {
+    background: #1a202c !important;
+    color: #a0aec0 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  footer a {
+    color: #cbd5e0 !important;
+  }
+
+  footer a:hover {
+    color: #fa8c32 !important;
+  }
+
+  /* 通用文本颜色 */
+  h1, h2, h3, h4, h5, h6 {
+    color: #e2e8f0 !important;
+  }
+
+  p {
+    color: #cbd5e0 !important;
+  }
+
+  /* 卡片通用样式 */
+  .card {
+    background: #2d3748 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* 按钮通用样式 */
+  button {
+    color: #e2e8f0 !important;
+  }
+
+  /* 输入框通用样式 */
+  input,
+  textarea,
+  select {
+    background: #374151 !important;
+    color: #e2e8f0 !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #718096 !important;
+  }
+
+  /* 分割线 */
+  hr,
+  .divider {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  /* Scrollbar样式 */
+  ::-webkit-scrollbar {
+    width: 8px;
+    background: #1a202c;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #4a5568;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #718096;
+  }
+}
