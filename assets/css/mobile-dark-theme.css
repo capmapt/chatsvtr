@@ -66,6 +66,27 @@
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4) !important;
   }
 
+  /* 业务标签(数据榜单、内容社区、投资孵化) */
+  .business-tags {
+    background: transparent !important;
+  }
+
+  .business-tag {
+    background: #374151 !important; /* 深灰背景 */
+    color: #ffffff !important; /* 纯白色文字 */
+    border: 2px solid rgba(250, 140, 50, 0.3) !important; /* 橙色边框 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important; /* 暗色阴影 */
+    font-weight: 700 !important;
+  }
+
+  .business-tag:hover,
+  .business-tag:active {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important; /* hover橙色渐变 */
+    color: white !important;
+    border-color: transparent !important;
+    transform: scale(1.05) !important;
+  }
+
   /* 统计卡片 */
   .stats-wrapper {
     background: #1a202c !important;
@@ -139,20 +160,24 @@
   }
 
   .filter-option {
-    background: #374151 !important;
-    color: #ffffff !important; /* 改为纯白色,提高对比度 */
-    border-color: rgba(255, 255, 255, 0.2) !important; /* 增强边框可见度 */
+    background: #4b5563 !important; /* 改为更亮的灰色,提高对比度 */
+    color: #ffffff !important; /* 纯白色文字 */
+    border: 2px solid rgba(255, 255, 255, 0.3) !important; /* 更明显的边框 */
+    font-weight: 600 !important; /* 加粗文字 */
   }
 
   .filter-option.active {
     background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
     color: white !important;
+    border-color: transparent !important;
+    font-weight: 700 !important;
   }
 
   .filter-reset-btn {
-    background: #374151 !important;
-    color: #ffffff !important; /* 改为纯白色 */
-    border-color: rgba(255, 255, 255, 0.2) !important; /* 增强边框可见度 */
+    background: #4b5563 !important; /* 改为更亮的灰色 */
+    color: #ffffff !important; /* 纯白色 */
+    border: 2px solid rgba(255, 255, 255, 0.3) !important; /* 更明显的边框 */
+    font-weight: 600 !important; /* 加粗文字 */
   }
 
   /* 融资卡片列表 */
@@ -588,30 +613,33 @@
 
   /* ========== 语言切换按钮 ========== */
   .lang-toggle {
-    background: #2d3748 !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+    background: #374151 !important; /* 改为更深的灰色 */
+    border: 2px solid rgba(250, 140, 50, 0.4) !important; /* 橙色边框更明显 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
   }
 
   .lang-toggle button {
     background: transparent !important;
-    color: #f3f4f6 !important; /* 未激活按钮使用亮灰色 */
-    font-weight: 500 !important;
+    color: #ffffff !important; /* 改为纯白色 */
+    font-weight: 600 !important; /* 加粗 */
+    min-height: 36px !important; /* 增加最小高度 */
   }
 
   .lang-toggle button.active {
     background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
     color: white !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
+    box-shadow: 0 0 8px rgba(250, 140, 50, 0.6) !important; /* 发光效果 */
   }
 
   .lang-toggle button:not(.active):hover {
-    background: rgba(250, 140, 50, 0.2) !important;
-    color: #fbbf24 !important;
+    background: rgba(250, 140, 50, 0.3) !important; /* 增强hover背景 */
+    color: #ffffff !important;
   }
 
   .lang-toggle .divider {
-    color: #6b7280 !important; /* 分割线使用中等灰色 */
+    color: #9ca3af !important; /* 改为更亮的灰色 */
+    font-weight: 300 !important;
   }
 
   /* ========== SVTR原生聊天组件暗色主题 ========== */
