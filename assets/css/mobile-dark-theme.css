@@ -18,13 +18,45 @@
   }
 
   /* Banner区域 */
-  .banner {
+  .banner,
+  .banner-header {
     background: #1a202c !important;
+    border-bottom: 3px solid #fa8c32 !important;
+  }
+
+  .banner-content {
+    background: transparent !important;
   }
 
   .banner-content h1,
   .banner-content p {
     color: #e2e8f0 !important;
+  }
+
+  /* Banner标题 - 硅谷科技评论 - 黑体字体 + 浅色文字 */
+  .banner-title {
+    /* 中文黑体 */
+    font-family: "PingFang SC", "Microsoft YaHei", "STHeiti", "SimHei", "Heiti SC", sans-serif !important;
+    font-weight: 700 !important;
+    /* 暗色背景下使用浅色文字 */
+    color: #e2e8f0 !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* 英文标题 - Silicon Valley Tech Review - 黑体字体 + 浅色文字 */
+  .banner-title[data-lang="en"],
+  .banner-title:lang(en) {
+    font-family: "Arial Black", "Helvetica Neue", Arial, sans-serif !important;
+    font-weight: 900 !important;
+    color: #e2e8f0 !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* Banner副标题 */
+  .banner-tagline,
+  .banner-tagline div {
+    color: #cbd5e0 !important;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4) !important;
   }
 
   /* 统计卡片 */
