@@ -1,0 +1,101 @@
+/**
+ * AI创投日报 - 统一容器样式
+ * 将表头、图表、筛选栏、融资卡片融合在一个白色背景板块内
+ */
+
+/* 统一背景容器 - 包含所有内容 */
+.funding-unified-container {
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.08),
+    0 1px 4px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(250, 140, 50, 0.1);
+  margin-top: 1.5rem;
+}
+
+/* 移除各子模块的独立背景和阴影 */
+.funding-unified-container .funding-header-enhanced,
+.funding-unified-container .funding-charts,
+.funding-unified-container .funding-filter-bar,
+.funding-unified-container .funding-highlights {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+/* 恢复内边距 */
+.funding-unified-container .funding-header-enhanced {
+  padding: 0 0 1rem 0 !important;
+}
+
+.funding-unified-container .funding-charts {
+  padding: 1rem 0 !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.funding-unified-container .funding-filter-bar {
+  padding: 1rem 0 !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.funding-unified-container .funding-highlights {
+  padding: 1rem 0 0 0 !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* 移除顶部margin */
+.funding-unified-container .funding-header-enhanced {
+  margin-top: 0 !important;
+}
+
+/* 移动端响应式 */
+@media (max-width: 768px) {
+  .funding-unified-container {
+    padding: 1rem;
+    border-radius: 12px;
+    margin-top: 1rem;
+  }
+
+  .funding-unified-container .funding-header-enhanced {
+    padding: 0 0 0.75rem 0 !important;
+  }
+
+  .funding-unified-container .funding-charts {
+    padding: 0.75rem 0 !important;
+  }
+
+  .funding-unified-container .funding-filter-bar {
+    padding: 0.75rem 0 !important;
+  }
+
+  .funding-unified-container .funding-highlights {
+    padding: 0.75rem 0 0 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .funding-unified-container {
+    padding: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .funding-unified-container .funding-header-enhanced {
+    padding: 0 0 0.5rem 0 !important;
+  }
+
+  .funding-unified-container .funding-charts {
+    padding: 0.5rem 0 !important;
+  }
+
+  .funding-unified-container .funding-filter-bar {
+    padding: 0.5rem 0 !important;
+  }
+
+  .funding-unified-container .funding-highlights {
+    padding: 0.5rem 0 0 0 !important;
+  }
+}
