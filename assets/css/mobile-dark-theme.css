@@ -177,8 +177,8 @@
 
   .funding-tag {
     background: #374151 !important;
-    color: #cbd5e0 !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important; /* 改为纯白色,提高对比度 */
+    border-color: rgba(255, 255, 255, 0.2) !important; /* 增强边框可见度 */
   }
 
   .funding-time {
@@ -203,10 +203,19 @@
   }
 
   .chat-header {
-    color: #e2e8f0 !important;
+    color: #ffffff !important; /* 改为纯白色 */
   }
 
   .chat-messages {
+    background: #2d3748 !important;
+  }
+
+  /* 原生聊天容器 - 强制应用暗色背景 */
+  #svtr-chat-container {
+    background: #2d3748 !important;
+  }
+
+  .native-chat-container {
     background: #2d3748 !important;
   }
 
@@ -570,14 +579,49 @@
     background: rgba(0, 0, 0, 0.7) !important;
   }
 
+  /* ========== 语言切换按钮 ========== */
+  .lang-toggle {
+    background: #2d3748 !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  .lang-toggle button {
+    background: transparent !important;
+    color: #f3f4f6 !important; /* 未激活按钮使用亮灰色 */
+    font-weight: 500 !important;
+  }
+
+  .lang-toggle button.active {
+    background: linear-gradient(135deg, #fa8c32, #ff9f40) !important;
+    color: white !important;
+    font-weight: 600 !important;
+  }
+
+  .lang-toggle button:not(.active):hover {
+    background: rgba(250, 140, 50, 0.2) !important;
+    color: #fbbf24 !important;
+  }
+
+  .lang-toggle .divider {
+    color: #6b7280 !important; /* 分割线使用中等灰色 */
+  }
+
   /* ========== SVTR原生聊天组件暗色主题 ========== */
   /* SVTR Chat容器 */
   .svtr-chat-container {
     background: #1a202c !important;
   }
 
-  /* SVTR 聊天消息区域 */
-  .svtr-chat-messages {
+  /* SVTR 聊天消息区域 - 强制应用暗色背景 */
+  .svtr-chat-messages,
+  #svtr-chat-messages {
+    background: #2d3748 !important;
+  }
+
+  /* 确保所有聊天消息容器都是暗色 */
+  .svtr-chat-container > div,
+  .svtr-chat-wrapper {
     background: #2d3748 !important;
   }
 
