@@ -12,7 +12,6 @@
     0 4px 20px rgba(0, 0, 0, 0.08),
     0 1px 4px rgba(0, 0, 0, 0.04);
   border: 1px solid rgba(250, 140, 50, 0.1);
-  margin-top: 1.5rem;
 }
 
 /* 移除各子模块的独立背景和阴影 */
@@ -57,7 +56,6 @@
   .funding-unified-container {
     padding: 1rem;
     border-radius: 12px;
-    margin-top: 1rem;
   }
 
   .funding-unified-container .funding-header-enhanced {
@@ -80,7 +78,6 @@
 @media (max-width: 480px) {
   .funding-unified-container {
     padding: 0.75rem;
-    margin-top: 0.75rem;
   }
 
   .funding-unified-container .funding-header-enhanced {
