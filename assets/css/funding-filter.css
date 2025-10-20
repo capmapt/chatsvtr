@@ -6,11 +6,13 @@
 
 /* 数据可视化图表 - 优化版 */
 .funding-charts {
-  padding: 20px;
-  background: linear-gradient(135deg, #fff 0%, #fffbf7 100%);
-  border-radius: 12px;
-  border: 1px solid rgba(250, 140, 50, 0.12);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(250, 140, 50, 0.1);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.08),
+    0 1px 4px rgba(0, 0, 0, 0.04);
   width: 100%;
   box-sizing: border-box;
 }
@@ -169,13 +171,14 @@
 }
 
 .funding-filter-bar {
-  background: linear-gradient(135deg, #fff 0%, #fffbf7 100%);
-  border: 1px solid rgba(250, 140, 50, 0.12);
-  border-radius: 12px;
-  padding: 20px;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  border: 1px solid rgba(250, 140, 50, 0.1);
+  border-radius: 16px;
+  padding: 1.5rem;
   margin: 0 0 20px 0;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04),
-              0 0 1px rgba(250, 140, 50, 0.15);
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.08),
+    0 1px 4px rgba(0, 0, 0, 0.04);
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 16px;
@@ -439,8 +442,9 @@
 
 @media (max-width: 768px) {
   .funding-filter-bar {
-    padding: 16px;
+    padding: 1rem;
     gap: 14px;
+    border-radius: 12px;
   }
 
   .filter-groups-container {
@@ -471,8 +475,9 @@
 
   /* 图表移动端优化 */
   .funding-charts {
-    padding: 12px;
+    padding: 1rem;
     gap: 12px;
+    border-radius: 12px;
   }
 
   .chart-container {
@@ -515,7 +520,7 @@
 
 @media (max-width: 480px) {
   .funding-filter-bar {
-    padding: 12px;
+    padding: 0.75rem;
     gap: 12px;
   }
 
@@ -544,7 +549,7 @@
 
   /* 图表小屏幕优化 */
   .funding-charts {
-    padding: 10px;
+    padding: 0.75rem;
     gap: 10px;
   }
 
