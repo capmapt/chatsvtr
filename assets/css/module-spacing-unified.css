@@ -25,9 +25,9 @@ section.wrapper:first-of-type {
   margin: 10px auto !important;
 }
 
-/* AI创投日报模块 - 无顶部间距 */
+/* AI创投日报模块 - 统一间距 */
 .funding-daily.wrapper {
-  margin: 0 auto 10px auto !important;
+  margin: 10px auto !important;
 }
 
 /* 聊天组件模块 - 统一间距 */
@@ -50,7 +50,7 @@ section.wrapper:first-of-type {
   }
 
   .funding-daily.wrapper {
-    margin: 0 auto 5px auto !important;
+    margin: 5px auto !important;
   }
 
   .chatbox.wrapper {
@@ -72,7 +72,7 @@ section.wrapper:first-of-type {
   }
 
   .funding-daily.wrapper {
-    margin: 0 auto 3px auto !important;
+    margin: 3px auto !important;
   }
 
   .chatbox.wrapper {
