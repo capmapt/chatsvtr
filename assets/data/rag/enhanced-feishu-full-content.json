@@ -1,6 +1,6 @@
 {
   "summary": {
-    "lastUpdated": "2025-10-18T18:33:43.504Z",
+    "lastUpdated": "2025-10-20T18:39:00.597Z",
     "totalNodes": 263,
     "nodesByLevel": {
       "level_0": 3,
@@ -17,8 +17,8 @@
       "bitable": 2,
       "file": 1
     },
-    "avgContentLength": 2579,
-    "avgRagScore": 48.13,
+    "avgContentLength": 2580,
+    "avgRagScore": 48.14,
     "apiVersion": "v2_enhanced",
     "syncMethod": "recursive_full_content",
     "sourceInfo": {
@@ -38,7 +38,7 @@
       "level": 0,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "E7wbw3r5Mi0ctEk6Q3acXBzCntg",
         "objToken": "PERPsZO0ph5nZztjBTSctDAdnYg",
@@ -79,7 +79,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "StZ4wqMcsipGvikIy0PcV3xUnkS",
         "objToken": "JzoVdB3Gwo4MPJxgzEfcSjv3nIe",
@@ -125,7 +125,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "SYdxw5P8kiYOGzklwXCcBt7mnSe",
         "objToken": "WcXYdKxLLoALcexlJh1cCu6znsb",
@@ -168,7 +168,7 @@
       "level": 0,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "QZt5wuIvhigrTdkGdBjcFRsKnaf",
         "objToken": "CB2cdSdyzokFt7xi2wOchtP6nPb",
@@ -202,7 +202,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "BXxIwfJNgi4d6GkajoHcA4QYnOd",
         "objToken": "Fz9BszdbFh407stolmucmkISnfg",
@@ -245,7 +245,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "V38WwuAsFirFEnkXVrgclXsnnuh",
         "objToken": "QG51s3QrjhTnHztEBc5cvT9PnSb",
@@ -287,7 +287,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "EaEtwsOyqiROxYkwSfzcILPRnxc",
         "objToken": "IYOBsHnakh68uytzPxTcAkTvnyg",
@@ -329,7 +329,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Z4WewTXyMikHKPkiYkLcR08dnrh",
         "objToken": "YOmusYZgFhiQlNtauV2cX8Runjb",
@@ -369,7 +369,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "WCp2w16clio9yOk4jNAcHJPAnPg",
         "objToken": "Krvvs5kOWh18zMtiNU6c0SKdn9g",
@@ -411,7 +411,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "SlDew1aCaiOCxakhiCMcjVjNnZe",
         "objToken": "BBLPsF7LWhz4rztcyEic0fENnLx",
@@ -452,7 +452,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "VYnvwdfG2iVdM3keeaAcqAkInze",
         "objToken": "RyZusrnKlhH2AxtBKWmckPsonBc",
@@ -492,7 +492,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "S1bPwhuPTiTzYtk8HEocSXoJnZc",
         "objToken": "PTBFskYwghdYSEt8esuc2QuTnKf",
@@ -532,7 +532,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "RRHqwq3KSisN9rkEPAgcPekcnEe",
         "objToken": "TNxJsPUxDh4SxPtzJyecUMSIn2g",
@@ -572,7 +572,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Dhb9w3pFHibvxfkijLTckrpqnwe",
         "objToken": "UiZHsCq7nhpWLNtY98WcQjlSnZd",
@@ -613,7 +613,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "TUz3wkiD9igrDzkqGIBcZAkan8c",
         "objToken": "U5v2dhreaoIOL6xGE5BcIYdanFe",
@@ -647,7 +647,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "FOtNwOT9nigpVPkfPJ3cb5zJnpe",
         "objToken": "GIJfdDvPyoAqtUx16JEcMKSFnHb",
@@ -680,7 +680,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "D1J7wyBN3isW9CkSrIScbXTHn2h",
         "objToken": "PVCDsxV9XhcP0XtP2EgcGbpYnQg",
@@ -721,7 +721,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "TWlGweMHIiQkVMkjJfFcGcEQn7j",
         "objToken": "La2CslnkHhX6aRtf9JTci8sYnsb",
@@ -761,7 +761,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Fey9wCmJeiV7rWkNKcPcZtxwnhx",
         "objToken": "IuMrsESr7hbK8otBNLFcUL4Ensh",
@@ -803,7 +803,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Io0GwEPv3i5wAkkaAwwcTg4Tn90",
         "objToken": "DUIKsLBDJh7vEQt5PLtcjAc8nNh",
@@ -845,7 +845,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Q3UuwspBLiqESTkAUC4cwJd8nah",
         "objToken": "BeeUsBA8Th2wMCtjtgkc4uornWc",
@@ -885,7 +885,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "HgwTwPErzic7SxkxVb4chRi7nsd",
         "objToken": "SIhFsJGavhJlI3tUoTGcLSVFnad",
@@ -925,7 +925,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "NmuMwMNR3iCL6UkhwnScVFo1nXb",
         "objToken": "YPHEdDAKBoFd87xXruBcznjMnUa",
@@ -956,7 +956,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "ZuVDwgdqTikhvCki4qjcvaKgnpe",
         "objToken": "L8gfsawBlhLqRytD6SccCEElnve",
@@ -996,7 +996,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "LAVyw0Lk6iq1DPkuc3JcKJCNnZe",
         "objToken": "Xqvldo23vom9pZxcoUmcGLYcnIt",
@@ -1027,7 +1027,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "UtxTw9nqEi7MS3kylhDcRYx5nPb",
         "objToken": "BglFsoQXQh25cOtyztWcOdkznKc",
@@ -1067,7 +1067,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "HyOnwbLuLisk4EkLDMjcdMGfnKg",
         "objToken": "F0z5sLZSoh4whEtEKhQc0vZqn2b",
@@ -1107,7 +1107,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "WjfuwFWiyiK4v0kD469czzPxn8f",
         "objToken": "Gn4QsDfwUhwmrCtAcgtcf8TinWg",
@@ -1147,7 +1147,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Oi39wmbyaiXQIZkD9ALcZppOnEj",
         "objToken": "A5sOs2PS9hL61ct6ImxcFq59nrr",
@@ -1187,7 +1187,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "LfZew4ST7i9QPjk7rQYcxWyfnLc",
         "objToken": "CC6MskfCfhpR82tXEPYc6Fr1nHe",
@@ -1227,7 +1227,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "BYUMwaNdUinAy5kQNoCcvjMbnOb",
         "objToken": "X8M8sDLcohUa3ttGeuicfgvNnwc",
@@ -1267,7 +1267,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "W721wkvrEimjuqkgmCccsEmTn4b",
         "objToken": "LMxJsfhvVhC3BJtf6fycBpWYnTg",
@@ -1307,7 +1307,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "S9fawZ9Q8i27qKkbyC9cghJzngf",
         "objToken": "Z0ifsdGEMh9POrtJGQIc6Hl4nFd",
@@ -1347,7 +1347,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "KkL0wpCJOimSvrkQRYJczEfcnSh",
         "objToken": "XFdjsTeqQhl4iltWhVicsEQUnze",
@@ -1387,7 +1387,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "LpY8wglOaisoWqkhh3NcRCiNnac",
         "objToken": "XYY3s3WQ2hparbtchrmcu1BEnWf",
@@ -1427,7 +1427,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "C56lwQjjWiaHjSkj7b4c5jnbnmd",
         "objToken": "QmQ6dZ3UwoyhVJxw1BvcjZsKnRb",
@@ -1458,7 +1458,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "NPzCwKlbFikUMAkqUpecbWjWnsg",
         "objToken": "UYSfsAVvfhPyCAtTvJMcCSV0nve",
@@ -1499,7 +1499,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "U3SswbEYpiQ6jNkGdRIcquFCn4c",
         "objToken": "IO0osHFp3heMOytPdLgc8qZYnDf",
@@ -1539,7 +1539,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "CxjXwqcKNimB86kEX6AcZSAFn2d",
         "objToken": "QA24dWiTno3Nk4xKNOVcer7rnw6",
@@ -1570,7 +1570,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "VPZtwT6vliphIqkPdFJcopypnuf",
         "objToken": "FTGusMWlmhEixbtMoilc3PYFnwh",
@@ -1610,7 +1610,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "AoDpweiHZiXHl7kILmVcDyuQn7f",
         "objToken": "IdrSddsUPocK3xxX2rpcEwxInab",
@@ -1642,7 +1642,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "YfH4wEQuJihz6ak4pDgcVrhmnag",
         "objToken": "F8oGdJkUwo2KkUxnhQlcpWXrnkh",
@@ -1673,7 +1673,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "AgdnwpUF0iVf21kTEYmc8pNonDg",
         "objToken": "RbPosl9ZAhBDt5tqL9IcRYhhnof",
@@ -1713,7 +1713,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "XcppwIHUTiycV4kDnjucXxzTnUh",
         "objToken": "QdgKs1YPMhi6ditTIpacLPA7nVc",
@@ -1754,7 +1754,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Wpg8wagKki50oNk5OPncUkJUn2f",
         "objToken": "BfCJs8RFghjUxcto6bsc5CoYnFc",
@@ -1794,7 +1794,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Ow9KwzybAi2aXXkxvW8cBM4QnId",
         "objToken": "VC5tsPBxChYHWFtRW7kcBxD8nHc",
@@ -1834,7 +1834,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "QF8Vw1q30iY5vKkFsOtcM9NcnYf",
         "objToken": "LQEwsIJ19hQNh2teWmRcbD6znob",
@@ -1874,7 +1874,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "M3uXwwBTViVkBPkmNMtc71cwn5e",
         "objToken": "FDLvsYqQGhjJoitMWfUcStP6n2g",
@@ -1914,7 +1914,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "LAm0wQ0tnihxMJk53LRcMyaSnor",
         "objToken": "BUWYslLBthzjG9tOOvZcMfRRn8e",
@@ -1955,7 +1955,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "IDq0wmBHriqToLkYh2wcDHhSnwf",
         "objToken": "QDLtswdMDhH2GktZXXccRP5In4e",
@@ -1995,7 +1995,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "T0zKwHwkMiDcXikyp2wclON5nkh",
         "objToken": "WlXhsGvSchbBhPtXDRtcZo8Qnmf",
@@ -2035,7 +2035,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "EMBdwe86giqetrkuSGGc1eX0n6M",
         "objToken": "H7VIsAkuXhlac2tSt5acjwdbnNb",
@@ -2075,7 +2075,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "OrG5wae6ciPvQOkxdplcNNnWnhh",
         "objToken": "D0MBdVIqPoWyVZxjfE3cvxFVnXb",
@@ -2107,7 +2107,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "OAfuw81eviIynzk4nhrctaRtnrc",
         "objToken": "Ntaesb1uzhVXCqtnZ1ucMt25nTe",
@@ -2147,7 +2147,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "IGb5wbulaitLaSkeVtHcVH1pnBb",
         "objToken": "AMIbsNVwAhXhfmtX80BcktmBnOf",
@@ -2188,7 +2188,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Ps7Uwv4xKi05OHkUeRmcP0hOnsb",
         "objToken": "MYpss0yvqh1mC1tExbPcE3h2nDe",
@@ -2228,7 +2228,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "GceEwu3zCivMSTk5grUc5F3Nn1f",
         "objToken": "TM09slN5chxnhSthCiicMlQknjb",
@@ -2268,7 +2268,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "VezHwbLl0iigXik4wWqc0XqNnOb",
         "objToken": "UAu5sQmZzhMrDKt3GzHcZ4SqnBe",
@@ -2309,7 +2309,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "GUD4whbRfiAY1Yko1mpcnCybn9e",
         "objToken": "OJXLs1EMFhiyV5tuBeTcUOMrnxe",
@@ -2349,7 +2349,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Vhmqwzcvfirv9pkCzeXcZQjFnrd",
         "objToken": "JhtUsZR8bhOTPftdpjdcWEDdnNe",
@@ -2391,7 +2391,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "PjlrwOgwOirLCukoL1Hc5shSnYe",
         "objToken": "E6G5s6BF5h2FkptbP2GcHcqjn1d",
@@ -2431,7 +2431,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "K50owFdghi8SuJkXWMxc01nVnSc",
         "objToken": "VzQwsznnMhAGq9tkFo9cT1JTnYc",
@@ -2471,7 +2471,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "VEg2wOMTZimWGHk2iYRcC2vQnQe",
         "objToken": "KbZuskZz5h9nX7tDvN5cH3ZJnpc",
@@ -2512,7 +2512,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "ZBCcwJhD5iMbHBk1AUlceCGfnwf",
         "objToken": "AAGysU2a4hHDfXtFD5Ec5y8Knzd",
@@ -2554,7 +2554,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "V245ww6d7itD7kkMB6wcivbqnrf",
         "objToken": "Wyn4s36Tmh6zbgtfVzMcb0Eenf1",
@@ -2594,7 +2594,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Lq54wfwAfiUpDVkZQIaccPytnVg",
         "objToken": "GmU3scKqqhuzz9tcrzEcCcr4nwf",
@@ -2634,7 +2634,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "G21sww6sYifAqNkR6JpcgL8gngX",
         "objToken": "YOtxssoiihAoQkt9SpqcUghWnLe",
@@ -2674,7 +2674,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "CVlCwvUgVitVbik9NLtceNjknJE",
         "objToken": "AwFZsjOG8hg9ultgHYBcK0iunJe",
@@ -2714,7 +2714,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "TGrdwqZxsiWDe2kf4emcb2MfnKF",
         "objToken": "MOg4sEjp2hPaehtach6cTU3Wnrh",
@@ -2754,7 +2754,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "KgxiwgTRyiqyXBkFKp9cUVScnde",
         "objToken": "WEp0ddsPfo6pZKxAOUucPBR8nwf",
@@ -2787,7 +2787,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "OzWywSxFWikdyYk7v1DcJ9MCnQc",
         "objToken": "VoyXdxlNho9BZpxudjic7kgynDh",
@@ -2834,7 +2834,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "PkEiwTXKuiqRZHkFY1bcARTgnjg",
         "objToken": "Gku0dDf1JoZeYjxXUmJcw8tgn5f",
@@ -2878,7 +2878,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "ZlOuwUfOrixKvIkHpObcR1TKnJh",
         "objToken": "IfksdKvrsoHqK4xmgljcHTXCn0c",
@@ -2925,7 +2925,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "X1xFwdrwtiMqtKk7iZZcmTPunqc",
         "objToken": "XzKHdroWnoESEfxuRpLcOGiDnYf",
@@ -2969,7 +2969,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "LsPZwFt1qi4sNLk6wmHcLilSnXc",
         "objToken": "ODB4dMsbkolxdUxKGZncTju9nmQ",
@@ -3016,7 +3016,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "IilFwmPcjiM0thkd8lRcDbhcnNg",
         "objToken": "RGE3dJVSZoDYVwx5NficM4cDnWb",
@@ -3058,7 +3058,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "H9stw0YrSiFpY2kg6z1cWfB9n0f",
         "objToken": "IWrbd3M6coWN9MxWw8BcFagcnfB",
@@ -3099,7 +3099,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "HrmXwnSUbisUdZk8qxtc2HCynKd",
         "objToken": "EAxZddsCboagQhx6GWKcNACynvh",
@@ -3144,7 +3144,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "LAIywRXOxiAYGVkMsemcGy5UnDb",
         "objToken": "Xwg3dK3QPoaa4JxiOM8c6TCnnid",
@@ -3190,7 +3190,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Y4TcwhYBjiHD3NktJOvcZONrn8c",
         "objToken": "OBqNdvKPnowlvMxLH9Uc781fn4f",
@@ -3235,7 +3235,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Ct7GwPNCviRGmok1CkwctKEDnCe",
         "objToken": "JyVsdUpQOoseQLxKRETceGLEnqc",
@@ -3282,7 +3282,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "HRDawoyz3inylzkWWozcF72nnbd",
         "objToken": "WzGKdGzxfoHRvTxHP2Rcpzjsnag",
@@ -3328,7 +3328,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "NJxKwyhKxixj48kuxqgcO9CYnrc",
         "objToken": "CBEqdS95moa6OdxPnc9cWQCgnPf",
@@ -3375,7 +3375,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "JtJcwG4AAi5pEfkgM0Cci67qn4g",
         "objToken": "OOtEdO8TfonGlaxJsH4cPdCzned",
@@ -3420,7 +3420,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "LrHRwdIiliEOTikPGI3cWXHrnGc",
         "objToken": "K0KldhWVaoCo0rxJOD4cAJJdnst",
@@ -3464,7 +3464,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "QhGCwZfPCiEm4AkXchOc3mrEn5b",
         "objToken": "XH6EdLoitoy0BDxp3zBcxPaDn0e",
@@ -3507,7 +3507,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "LDalwQkQAi3ZlTk3JV8c90Rfnuf",
         "objToken": "TsrbdHGWCoqx2exMsbzcXPaQncb",
@@ -3550,7 +3550,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "AOMMwSjWNi85gXkVxF4cYwVynUE",
         "objToken": "HPredUWOnordKix6i5ic4uPOn0b",
@@ -3585,7 +3585,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "XPdzwCUZLirwWYkWE9ucBePgntb",
         "objToken": "RjLCdlOzfoVGV8xS2SicXHHSn2f",
@@ -3626,7 +3626,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Re4pwtQUqiPCnskC723c3CHPnmc",
         "objToken": "Zh4Ps2uJJhEuihtG1RYc4cXUnCe",
@@ -3666,7 +3666,7 @@
       "level": 0,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "TB4nwFKSjiZybRkoZx7c7mBXnxd",
         "objToken": "DEzTdMe8qoLE3gxtnUHcZP83nNb",
@@ -3712,7 +3712,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "G0oMwUeNbiZkQBkX9iXcfMllnpe",
         "objToken": "OuGkdg9naoKEGZx2ZiUcXlIjnOA",
@@ -3753,7 +3753,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "JRvmwgx95i545OkIABOclT8Znlc",
         "objToken": "MaJ1smQ25hMZ1ptMbtAcXpYrnHb",
@@ -3793,7 +3793,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "So63wQEFaiWOxUkJg8CcslBinhX",
         "objToken": "DrzydmI7woLH3txtgcVcYBKHnCb",
@@ -3826,7 +3826,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "IeCiwz0cxiGFNnkaGvvcnUXwn3d",
         "objToken": "PI7MsjRnYhQB2it2WfMcobwMnIe",
@@ -3867,7 +3867,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "AyQCwDoguiCTOTk03picD4cqnUc",
         "objToken": "HjZLsuWhFlNWIUdHbxfcozfDneb",
@@ -3900,7 +3900,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "QccYww9uairmypkzCLAcT8innAc",
         "objToken": "RPIyd3TuwoEeCkxTpFGcOpwinWe",
@@ -3933,7 +3933,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Q3dKwEtWai1t2gkwuPZcSfHUndi",
         "objToken": "Wr4HdUJvLodzSnxaGuqcVa9FnDh",
@@ -3976,7 +3976,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "KyWBwl9D7iaHbmkKxLbc1R6qnkb",
         "objToken": "SzIndAHuHovDnLxKgLZcAV5KnSg",
@@ -4020,7 +4020,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Xk3xwdkZMimJjokMbDdcouQinHb",
         "objToken": "Sl9Aduo21oBOnLxYaAecoHpqnce",
@@ -4061,7 +4061,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "NaucwLHs7izOzMkBm96cfy7KnJc",
         "objToken": "JLcFdQ0Apo9BHaxP41vcJYgVnLe",
@@ -4103,7 +4103,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "LUm1wsZZwiYzPukuEisclHN4nJh",
         "objToken": "C7TsdWL8TontFMx8zMdcA7g7nsf",
@@ -4142,7 +4142,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "VmbewrxZKibLCAkHyjtcsGQLnjf",
         "objToken": "Qh74d588iojGHYxzEs0c2J6cnPd",
@@ -4185,7 +4185,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "ToUowSvaUiccRckwpzKcvoAKn6e",
         "objToken": "W0p1drUTbodn7cxtSAEcAdVGnTg",
@@ -4228,7 +4228,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "EjTDwV7vgizpo2kav0tcksBdn3e",
         "objToken": "B6sZdqR7DoBVeuxCeNWcahS2nib",
@@ -4272,7 +4272,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Q8NMw9D0DiBZkhkPfJwcoNAPnpb",
         "objToken": "RaMYdYBAKoMsmTxBNVMctKItn0g",
@@ -4317,7 +4317,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "QLF8wFJB9irEZbkOE7zcVVojnVb",
         "objToken": "CxvJdBd7Zoov24xPXxNc6a5AnFe",
@@ -4360,7 +4360,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "TXsNwG4ZZiXkOKkQq9fcsWYsnSh",
         "objToken": "OOXkdbITYokPPsxngSicEZnXn7g",
@@ -4402,7 +4402,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Cv0YwWMd8in0hyk0DrAcCOyinyz",
         "objToken": "WETgd0AUbofXkAx8W1ZchCjTntA",
@@ -4442,7 +4442,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Hr0swR2pJiil35kVeIScCtgGnqd",
         "objToken": "ScikdaePwojmejxJwaGcl8cOnwf",
@@ -4485,7 +4485,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Q8nYwfAisiyw46khjfQcp0I9n1b",
         "objToken": "LZZldlgh0o37laxqwb6cywYWn3p",
@@ -4520,7 +4520,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Fr2rwSwQ2iYYz4kqOxic4Nomnud",
         "objToken": "Oon6dM5UboQQ9Hxw8DgcbDIcnzc",
@@ -4551,7 +4551,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "JXSRwQKxAiqQkVkV4eWcZzBtnfh",
         "objToken": "W7w1dieJsohPArxaKERcAzcHnIe",
@@ -4584,7 +4584,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "ADv6wXLc5iDslJkv9qjcvumNnTg",
         "objToken": "H10Qd0q5CoqJBYxQDObcVMZTnQd",
@@ -4629,7 +4629,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-19",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "CNRPwjCvBiElEgkP1EwcaIA5nJe",
         "objToken": "XCNeb9GjNaQaeYsm7WwcZRSJn1f",
@@ -4639,14 +4639,13 @@
         "parentToken": "TB4nwFKSjiZybRkoZx7c7mBXnxd",
         "level": 1
       },
-      "content": "# 交易精选\n\n**状态：** ✅ 成功获取完整数据\n\n**多维表格信息：**\n- 应用名称: 交易精选\n- 数据表: Deal\n- 字段数量: 31\n- 记录数量: 31\n- 更新时间: 2025-10-19T18:26:22.631Z\n\n**字段列表：**\n- NO. (数字)\n- 周报 (单行文本)\n- 细分领域 (单行文本)\n- 二级分类 (单行文本)\n- 公司名称 (单行文本)\n- 成立时间 (数字)\n- 成立地点 (单行文本)\n- 主要业务 (单行文本)\n- 金额\n（万美元） (数字)\n- 投资方 (单行文本)\n- 估值\n（亿美元） (数字)\n- 累计融资\n（万美元） (数字)\n- 创始人 (单行文本)\n- 工作经历 (单行文本)\n- 教育背景 (单行文本)\n- 好友联创 (单行文本)\n- 公司人数 (单行文本)\n- 用户数（万人） (单行文本)\n- ARR（万美元） (单行文本)\n- 净利润（万美元） (单行文本)\n- 深度研究 (单行文本)\n- 更新时间 (日期)\n- 官网 (单行文本)\n- 联系方式 (单行文本)\n- 企业介绍 (单行文本)\n- 团队背景 (单行文本)\n- 标签 (单行文本)\n- 未命名 (单行文本)\n- SourceID (单行文本)\n- logo (附件)\n- 项目详情 (超链接)\n\n## 交易记录详情\n\n### 记录 1\n\n**NO.**: 1\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxOjRlZTU1N2FiNGNiZmYzODQ4ODI3NDYxYzVkOWQ4ZTcxOjE=\n\n**logo**: image.png\n\n**主要业务**: 成为音乐创作领域的“ChatGPT”\n\n**二级分类**: 模型层-垂类模型\n\n**企业介绍**: Suno，2022年成立于美国马萨诸塞州剑桥，提供AI生成音乐平台。正在进行超1亿美元新一轮融资。本轮估值为20亿美元以上，此前完成1.25亿美元融资。 (彭博社)\n\n**公司名称**: Suno\n\n**创始人**: Mikey Shulman\n\n**周报**: Deal\n\n**团队背景**: Mikey Shulman，Suno联合创始人兼首席执行官。曾在人工智能公司Kensho担任机器学习主管，负责为机构投资者开发金融分析和机器学习平台。还曾担任MIT（麻省理工）学院斯隆管理学院的讲师,教授金融机器学习和自然语言处理相关课程。Shulman在物理学和量子计算方面有深入研究，对音乐创作和人工智能技术都有浓厚兴趣。他本科毕业于哥伦比亚大学应用物理专业，并获得哈佛（Harvard）大学物理学博士学位。\n\n**官网**: https://suno.com/\n\n**工作经历**: Suno、Kensho、MIT（麻省理工）（MIT）斯隆管理学院\n\n**成立地点**: 美国马萨诸塞州剑桥\n\n**成立时间**: 2022\n\n**投资方**: Lightspeed Venture Partners、Matrix、Founder Collective、Nat Friedman、Daniel Gross\n\n**教育背景**: 哥伦比亚大学、哈佛（Harvard）大学\n\n**更新时间**: 1760716800000\n\n**标签**: 投资人,AI50,音频\n\n**累计融资\n（万美元）**: 12500\n\n**细分领域**: 模型层\n\n**联系方式**: https://www.linkedin.com/in/mikeyshulman/\n\n**金额\n（万美元）**: 12500\n\n**项目详情**: xAI，1130亿美元估值杀入第二名！正在颠覆大模型的游戏规则\n\n---\n\n### 记录 2\n\n**NO.**: 2\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyOmNkZDAxZDc1MWI5NWMyMDVkNjg5MzU4ZGJhNjdiMjMwOjE=\n\n**主要业务**: 打造一个平台，让开发人员能够利用人工智能编写代码\n\n**二级分类**: 应用层-开发者\n\n**企业介绍**: Poolside，2023年成立于法国巴黎，打造面向开发者的生成式 AI 代码工具。正在以 140 亿美元投后估值进行 20 亿美元新一轮融资，投资方未完全披露（Nvidia 为投资方之一）；累计融资（已完成）5 亿美元，如本轮完成累计将达 25 亿美元。\n\n**估值\n（亿美元）**: 30\n\n**公司名称**: Poolside\n\n**创始人**: Jason Warner\n\n**周报**: Deal\n\n**团队背景**: Jason Warner，Poolside创始人。红点风险投资公司担任董事总经理，前GitHub首席技术官，他的团队负责创建GitHub Copilot。他曾在 Heroku 担任副总裁工程师三年。Jason Warner与连续创业者Eiso Kant共同创立公司 。\n\n**好友联创**: Eiso Kant\n\n**官网**: https://www.poolside.ai/\n\n**工作经历**: Poolside、红点风险投资、GitHub、Heroku\n\n**成立地点**: 法国巴黎\n\n**成立时间**: 2023\n\n**投资方**: Bain Capital Ventures、eBay Ventures、Nvidia、LG Technology Ventures等\n\n**更新时间**: 1760716800000\n\n**标签**: 投资人,编程,助手,AI100,Unicorn\n\n**累计融资\n（万美元）**: 62600\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/jcw148/\n\n**金额\n（万美元）**: 50000\n\n---\n\n### 记录 3\n\n**NO.**: 3\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDozOmJlZTg2YzIwODRhZTczMzk5NjY3MDVlOWQxN2I0OGJmOjE=\n\n**主要业务**: 扩展其基础设施和 Grok 聊天机器人\n\n**二级分类**: 模型层-大模型\n\n**企业介绍**: xAI（Elon Musk 的 AI 公司），正在筹资 100 亿美元，估值达到 2000 亿美元。\n\n**公司名称**: xAI\n\n**创始人**: Elon Musk\n\n**周报**: Deal\n\n**团队背景**: 马斯克（Elon Musk），特斯拉（Tesla, Inc.）和SpaceX的创始人兼CEO，同时也是Twitter（现已更名为X）的所有者和其他多家高科技公司的创始人或投资人。他以其在可持续能源、航天技术、人工智能和交通领域的创新和突破性成果而闻名。马斯克的主要成就包括：特斯拉、SpaceX、X（前身为Twitter）、The Boring Company、OpenAI的早期支持者之一。马斯克在皇后大学（Queen's University）完成了两年的本科学习，随后转学至宾夕法尼亚大学，获得了两个学位：物理学学士学位（来自文理学院）、经济学学士学位（来自沃顿商学院）。此外，他还短暂在斯坦福（Stanford）大学（Stanford University）攻读应用物理与材料科学的博士学位，但在仅仅两天后便选择辍学，投身于创业，创立了他第一家公司Zip2。Tony Wu（吴彤）：拥有多伦多大学博士学位，曾在 Google DeepMind 从事自然语言处理与推理方向的研究。在 xAI，他专注于语言模型开发，使其具备理解复杂概念的能力。Greg Yang：前微软研究院研究员，主攻 AI 理论与数学基础。他的研究有助于 xAI 打造更强健、可扩展的 AI 系统。Jimmy Ba：多伦多大学助理教授，并是著名优化算法 Adam 的联合作者之一。他为 xAI 提供机器学习方面的专业指导。\n\n**官网**: https://x.ai/\n\n**工作经历**: Tesla Inc.、SpaceX、X（前身Twitter）、The Boring Company、OpenAI、Zip2\n\n**成立地点**: 美国旧金山\n\n**成立时间**: 2023\n\n**教育背景**: 皇后大学、宾夕法尼亚大学、斯坦福大学\n\n**更新时间**: 1758384000000\n\n**标签**: 多模态,AI100,Unicorn,AI50\n\n**累计融资\n（万美元）**: 1700000\n\n**细分领域**: 模型层\n\n**金额\n（万美元）**: 1000000\n\n---\n\n### 记录 4\n\n**NO.**: 4\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDo0OjcwZDVmZTMwMzMwYjNjM2ZlNWNjNmZkZDM0YjhkZmRkOjE=\n\n**主要业务**: 为 AI 训练提供大规模高质量数据标注服务\n\n**二级分类**: 基础层-数据\n\n**企业介绍**: Surge AI，2021 年成立于 美国旧金山，为 AI 训练提供大规模高质量数据标注服务。正筹划 10 亿美元首轮融资，投资方未披露。本轮估值为 250 亿美元。Surge AI 去年的收入超过 10 亿美元，高于其更知名的竞争对手 Scale AI，后者同期报告的收入为 8.7 亿美元。Scale AI 在去年的一轮融资中估值为 140 亿美元，最近当 Meta 投资该公司 49% 的股份并挖走其首席执行官亚历山大·王 （Alexandr Wang） 担任其首席人工智能官来领导其新的超级智能实验室时，估值接近 290 亿美元。\n\n**估值\n（亿美元）**: 150\n\n**公司名称**: Surge AI\n\n**创始人**: Edwin C.\n\n**周报**: Deal\n\n**团队背景**: Edwin C.，Surge AI创始人兼CEO。曾任Facebook研究科学家，曾在Google从事核心科学研究，曾在Twitter负责广告质量，曾在Clarium Capital Management从事算法交易。2008年毕业于麻省理工学院，主修数学、计算机科学和语言学，并在MIT计算机科学与人工智能实验室（CSAIL）从事理论与自然语言处理研究。\n\n**官网**: https://www.surgehq.ai\n\n**工作经历**: Facebook、Google、Twitter、Clarium Capital Management\n\n**成立地点**: 美国旧金山\n\n**成立时间**: 2021\n\n**教育背景**: 麻省理工学院\n\n**更新时间**: 1751731200000\n\n**标签**: 华人\n\n**累计融资\n（万美元）**: 100000\n\n**细分领域**: 基础层\n\n**联系方式**: https://www.linkedin.com/in/edwinzchen/\n\n**金额\n（万美元）**: 100000\n\n---\n\n### 记录 5\n\n**ARR（万美元）**: 50000\n\n**NO.**: 5\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDo1OjFlZWE1YjJmOTYwNzE1NWQ4NzNkZWM2MzQyZjQxOWJhOjE=\n\n**主要业务**: 开发AI驱动的编程助手Cursor\n\n**二级分类**: 应用层-开发者\n\n**企业介绍**: Anysphere，2022年成立于美国加利福尼亚州旧金山，开发AI驱动的编程助手Cursor。正以约 $300 亿估值权衡新一轮投资报价；据称已有投资者在二级市场按相近价格成交老股。ARR 6 月已达 $5 亿、上一轮（2025 年 6 月）估值 $99 亿。\n\n**估值\n（亿美元）**: 99\n\n**公司人数**: 50\n\n**公司名称**: Anysphere（Cursor）\n\n**创始人**: Michael Truell\n\n**周报**: Deal\n\n**团队背景**: Michael Truell，创始人/CEO。专注统计数学研究、LLM驱动的推荐系统、高吞吐量药物管道和热门编程竞赛领域。2022年在MIT学习计算机科学和数学专业毕业。Truell 在MIT（麻省理工）学院认识了 Anysphere 的其他联合创始人 Sualeh Asif、Arvid Lunnemark 和 Aman Sanger，并成为了亲密的朋友。四人的共同目标是创建一个集成开发环境 (IDE)，以加快常见编程和软件构建任务（例如调试）的速度。\n\n**好友联创**: Sualeh Asif、Arvid Lunnemark、Aman Sanger\n\n**官网**: https://www.anysphere.co/\n\n**工作经历**: Anysphere\n\n**成立地点**: 美国加利福尼亚州旧金山\n\n**成立时间**: 2022\n\n**投资方**: Thrive Capital、Andreessen Horowitz、Accel、DST Global\n\n**教育背景**: 麻省理工学院\n\n**更新时间**: 1760198400000\n\n**标签**: 编程,AI100,AI Native,Unicorn,ET30,AI50\n\n**累计融资\n（万美元）**: 107300\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/michael-t-5b1bbb122/\n\n**金额\n（万美元）**: 90000\n\n---\n\n### 记录 6\n\n**NO.**: 6\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDo2OmQ5YjJiYWI4YzMzOGZiNWIxZjQ3YjdhZGI4NWY2YzZlOjE=\n\n**主要业务**: 人工智能开发商的数据中心\n\n**二级分类**: 基础层-算力\n\n**企业介绍**: Crusoe（Crusoe Energy Systems）正以约100亿美元估值洽谈至少10亿美元的新一轮融资（权益+债务混合），估值较其2024年约28亿美元的水平提升逾3倍；资金主要用于在美国推进 Stargate 相关超大算力园区与云业务扩张。公司披露收入由2024年的约2.5亿美元，预计在2026年达到约22亿美元；其“云租赁/云销售”业务向投资人给出的远期目标为2030年约180亿美元。\n\n**估值\n（亿美元）**: 28\n\n**公司名称**: Crusoe\n\n**创始人**: Chase Lochmiller\n\n**周报**: Deal\n\n**团队背景**: Chase Lochmiller，Crusoe联合创始人兼CEO。曾任Polychain Capital普通合伙人，曾任Jump Trading Group量化交易员，曾任KCG Holdings, Inc.算法交易董事总经理。曾就读于斯坦福（Stanford）大学，获得计算机科学（人工智能方向）硕士学位；同时获得MIT（麻省理工）学院物理学学士学位。\n\n**官网**: https://crusoe.ai/\n\n**工作经历**: Polychain Capital、Jump Trading Group、KCG Holdings\n\n**成立地点**: 美国丹佛\n\n**成立时间**: 2017\n\n**投资方**: Founders Fund、Nvidia、Fidelity、Long Journey Ventures、Valor Equity\n\n**教育背景**: 斯坦福（Stanford）大学、MIT（麻省理工）学院\n\n**更新时间**: 1756569600000\n\n**标签**: 投资人,AI50,Quant\n\n**累计融资\n（万美元）**: 60000\n\n**细分领域**: 基础层\n\n**联系方式**: https://www.linkedin.com/in/chase-lochmiller-604483341/\n\n**金额\n（万美元）**: 60000\n\n---\n\n### 记录 7\n\n**NO.**: 7\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDo3OjgwODY1MTg3ZjYxNzcyYWM1ZThhMDMwOGUwOTY5Y2U4OjE=\n\n**主要业务**: 提供基于云的GPU计算资源和硬件\n\n**二级分类**: 基础层-算力\n\n**企业介绍**: Lambda 正在洽谈新一轮股权融资，目标估值 40–50 亿美元，拟募资规模“数亿美元”；市场消息称该轮为 crossover/Pre-IPO 性质，公司 最快年内启动 IPO 进程\n\n**估值\n（亿美元）**: 25\n\n**公司名称**: Lambda\n\n**创始人**: Stephen Balaban\n\n**周报**: Deal\n\n**团队背景**: Stephen Balaban，Lambda联合创始人兼首席执行官。在创立Lambda之前，Stephen是Perceptio的首位雇员，开发了在iPhone GPU上本地运行的人脸识别深度神经网络。Perceptio被苹果公司收购。Stephen拥有密歇根大学计算机科学和经济学学士学位，精通中文和英语。\n\n**官网**: https://lambdalabs.com/\n\n**工作经历**: Lambda、Perceptio\n\n**成立地点**: 美国圣何塞\n\n**成立时间**: 2012\n\n**投资方**: Andra Capital、SGW、Nvidia、Super Micro Computer、Andrej Karpathy\n\n**教育背景**: 密歇根大学\n\n**更新时间**: 1755360000000\n\n**标签**: 云,AI100,Unicorn,AI50\n\n**累计融资\n（万美元）**: 86300\n\n**细分领域**: 基础层\n\n**联系方式**: https://www.linkedin.com/in/sbalaban/\n\n**金额\n（万美元）**: 48000\n\n---\n\n### 记录 8\n\n**NO.**: 8\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDo4OmU0MWQ0MDQ0ODFjMWM5MGMzZWQ0YmQ1MmI5MWM3NDk2OjE=\n\n**主要业务**: 开发用于媒体创作的生成式AI模型\n\n**二级分类**: 模型层-垂类模型\n\n**企业介绍**: Runway，正以50亿美元估值进行5亿美元融资谈判，较上一轮估值上涨67%。本轮由General Atlantic和卡塔尔投资局(QIA)主导。此次交易看点在于 Runway 年化收入已达9000万美元，并计划于2025年底冲击2.65亿美元收入，已与 Lionsgate、AMC Networks 达成合作协议，在 AI 视频生成赛道中具备先发优势。资金将用于产品研发与全球扩张。\n\n**公司名称**: Runway\n\n**创始人**: Cristóbal Valenzuela\n\n**周报**: Deal\n\n**团队背景**: Cristóbal Valenzuela，Runway联合创始人兼CEO。曾是纽约大学的研究员。曾就读于纽约大学交互电信项目（ITP），并于Adolfo Ibáñez大学完成本科学业。Valenzuela、Alejandro Matamala和Anastasis Germanidis联合创立公司。Valenzuela在纽约大学艺术学院期间遇到了Matamala和Germanidis，他们三人共同意识到对人工智能创造潜力的好奇心，开始构建一套面向电影制片人、摄影师和摄影师的AI动力工具。\n\n**好友联创**: Alejandro Matamala、Anastasis Germanidis\n\n**官网**: https://www.runwayml.com/\n\n**工作经历**: Runway、纽约大学\n\n**成立地点**: 美国纽约\n\n**成立时间**: 2018\n\n**投资方**: General Atlantic、Fidelity、Baillie Gifford、Nvidia、SoftBank\n\n**教育背景**: 纽约大学、Adolfo Ibáñez大学\n\n**更新时间**: 1743868800000\n\n**标签**: AI50,视频\n\n**累计融资\n（万美元）**: 53650\n\n**细分领域**: 模型层\n\n**联系方式**: https://www.linkedin.com/in/cvalenzuelab/\n\n**金额\n（万美元）**: 30800\n\n---\n\n### 记录 9\n\n**NO.**: 9\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDo5OjJkOTk1Mjk0MjEyZWNlZGZlMzU3MTNjNmM3NjJiNTcyOjE=\n\n**主要业务**: 基于RISC-V架构开发服务器技术,旨在增强数据分析和生成式人工智能应用\n\n**二级分类**: 基础层-算力\n\n**企业介绍**: Rivos，2021年成立于美国圣克拉拉，研发基于RISC-V的AI芯片以对标Nvidia的GPU。据报道拟募资4–5亿美元，投资方未披露。本轮估值约20亿美元（传闻），累计融资约3.7亿美元。 (数据中心动态, Reuters)\n\n**公司名称**: Rivos\n\n**创始人**: Puneet Kumar\n\n**周报**: Deal\n\n**团队背景**: Puneet Kumar，联合创始人/CEO。曾任职Google，担任高级总监，并负责ChromeOS平台。此前，在Agnilux担任工程副总裁，以及在Apple Inc及Apple Computer担任平台架构总监。曾就读卡内基梅隆大学，获得计算机科学博士学位。\n\n**官网**: https://www.rivosinc.com\n\n**工作经历**: Google、Agnilux、Apple Inc、Apple Computer\n\n**成立地点**: 美国圣克拉拉\n\n**成立时间**: 2021\n\n**投资方**: Matrix Capital Management、Intel Capital、MediaTek、Cambium Capital、CIDC、Capital TEN、Hotung Venture Group、之前的投资方Walden Catalyst、Dell Technologies Capital、Koch Disruptive Technologies、VentureTech Alliance\n\n**教育背景**: 卡内基梅隆大学\n\n**更新时间**: 1755360000000\n\n**标签**: 芯片\n\n**累计融资\n（万美元）**: 25000\n\n**细分领域**: 基础层\n\n**联系方式**: https://www.linkedin.com/in/puneet-kumar-6470201/\n\n**金额\n（万美元）**: 25000\n\n---\n\n### 记录 10\n\n**NO.**: 10\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxMDo4ODMwNjg4YmE1Y2YyYjg2MDkyNDU3YmQ2ZTJjZmZkMjox\n\n**logo**: image.png\n\n**主要业务**: 利用人工智能自动生成临床记录和医疗文档\n\n**二级分类**: 应用层-生命科学\n\n**企业介绍**: Abridge，正以 53 亿美元估值，寻求 3亿美元融资，投资方为 Andreessen Horowitz。\n\n**估值\n（亿美元）**: 25\n\n**公司名称**: Abridge\n\n**创始人**: Shiv Rao\n\n**周报**: Deal\n\n**团队背景**: Shiv Rao，联合创始人/CEO。曾任职UPMC Enterprises的EVP，并在Kauffman Foundation的Health Data Consortium担任Pittsburgh \"Energizing Health\" Healthcare Innovation的共同策划人。他还在UPMC Enterprises' Technology Development Center担任过Physician Advisor in Residence，并目前在University of Pittsburgh Medical Center的Heart and Vascular Institute担任教职。曾创办或共同创办了多家创业公司，包括DocDok和Litcall。曾就读Carnegie Mellon University，获得本科学位。在University of Michigan完成了内科医学住院医师培训。在University of Pittsburgh Medical Center (UPMC)继续学习，获得了成人心血管医学的专业资格。\n\n**官网**: https://www.abridge.com/\n\n**工作经历**: UPMC Enterprises、Kauffman Foundation、UPMC\n\n**成立地点**: 美国匹兹堡\n\n**成立时间**: 2018\n\n**投资方**: Elad Gil、IVP、Lightspeed Venture Partners、CVS Health Ventures、Redpoint Ventures、NVentures\n\n**教育背景**: 卡内基梅隆大学、密歇根大学、匹兹堡大学医疗中心\n\n**更新时间**: 1740240000000\n\n**标签**: 医疗服务,AI100,Unicorn,AI50\n\n**累计融资\n（万美元）**: 46250\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/shivdevrao/\n\n**金额\n（万美元）**: 25000\n\n**项目详情**: Lovable：欧洲增长最快的初创公司\n\n---\n\n### 记录 11\n\n**ARR（万美元）**: 10000\n\n**NO.**: 11\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxMTozZGYzMWEyYmQyZTMyMDhmZDFhZjI0NjYxZTkyNjQzZjox\n\n**主要业务**: 开发可以生成多种语言、口音和情感的语音软件\n\n**二级分类**: 模型层-垂类模型\n\n**企业介绍**: ElevenLabs，2022年成立于美国纽约，提供生成逼真 AI 音色与语音的技术。正在进行最高1亿美元的员工股权要约收购（Secondary），投资方为 Sequoia、Iconiq。本轮估值为66亿美元，累计融资2.81亿美元。(Reuters, ElevenLabs)\n\n**估值\n（亿美元）**: 33\n\n**公司人数**: 130\n\n**公司名称**: ElevenLabs\n\n**创始人**: Mati Staniszewski\n\n**周报**: Deal\n\n**团队背景**: Mati Staniszewski，ElevenLabs联合创始人。曾任Palantir Technologies部署策略师，曾任BlackRock产品开发负责人，曾任Opera Software商业智能分析师。毕业于帝国理工学院，获得数学专业一等荣誉学位（前10%）。Mati Staniszewski，联合他的童年朋友，前Google员工Piotr Dabkowski共同创立公司。\n\n**好友联创**: Piotr Dabkowski\n\n**官网**: https://elevenlabs.io/\n\n**工作经历**: Palantir Technologies、BlackRock、Opera Software\n\n**成立地点**: 美国布鲁克林\n\n**成立时间**: 2022\n\n**投资方**: ICONIQ Growth、Andreessen Horowitz\n\n**教育背景**: 帝国理工学院\n\n**更新时间**: 1757779200000\n\n**标签**: 音频,AI100,AI Native,Unicorn,ET30,AI50\n\n**累计融资\n（万美元）**: 28100\n\n**细分领域**: 模型层\n\n**联系方式**: https://www.linkedin.com/in/matiii/\n\n**金额\n（万美元）**: 18000\n\n---\n\n### 记录 12\n\n**ARR（万美元）**: 10000\n\n**NO.**: 12\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxMjpjZmU1ZDM2NWQwMzEwOTU4OTE0NTdmMTgyYjljMTljYTox\n\n**主要业务**: 构建可通过文本提示生成完整 Web 应用的 AI 工具\n\n**二级分类**: 应用层-开发者\n\n**企业介绍**: Lovable，正接到估值超40亿美元的入场报价；而在7月中旬其刚以18亿美元估值完成2亿美元A轮（Accel 领投）。今年2月曾获1500万美元融资（Creandum 领投）。公司对外称目前并未主动寻求新融资。本次交易亮点：年化收入快速攀升、产品把“用自然语言写几句话=生成上线应用”降维打击、欧洲少见的AI独角兽、明星机构与大厂客户（如 Klarna、HubSpot），估值在数周内翻倍带来窗口期。\n\n**估值\n（亿美元）**: 20\n\n**公司人数**: 20\n\n**公司名称**: Lovable\n\n**创始人**: Anton Osika\n\n**周报**: Deal\n\n**团队背景**: Anton Osika，Lovable联合创始人兼CEO。曾是Depict.ai的CTO及联合创始人，该公司两次入选Y Combinator的顶级公司。此前，他是Sana的创始工程师，以及Ampfield Aktiebolag的研究与数据工程师。Anton毕业于KTH皇家理工学院，获得工程物理与应用数学硕士学位。 Anton Osika 和 Fabian Hedin 联合创立公司。\n\n**好友联创**: Fabian Hedin\n\n**官网**: https://lovable.dev/\n\n**工作经历**: Depict.ai、Sana、Ampfield Aktiebolag、Lovable\n\n**成立地点**: 瑞典斯德哥尔摩\n\n**成立时间**: 2023\n\n**投资方**: Accel、Creandum、20VC\n\n**教育背景**: KTH皇家理工学院\n\n**更新时间**: 1756569600000\n\n**标签**: 连续创业,AI100,编程,ET30,AI Native,IA40\n\n**累计融资\n（万美元）**: 22300\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/antonosika/\n\n**金额\n（万美元）**: 15000\n\n---\n\n### 记录 13\n\n**NO.**: 13\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxMzowOTE3YmU4NjRhYzI1YTcwYmY2MmJiNmQ3MDMyN2RkNDox\n\n**主要业务**: 其平台简化数据存储、组织、处理和分析，以加速AI模型的性能\n\n**二级分类**: 基础层-数据\n\n**企业介绍**: Vast Data，正以约 250 亿美元估值进行融资。\n\n**估值\n（亿美元）**: 90\n\n**公司名称**: Vast Data\n\n**创始人**: Renen Hallak\n\n**周报**: Deal\n\n**团队背景**: Renen Hallak，联合创始人兼CEO。曾任职于全球领先的全闪存阵列品牌XtremIO，担任VP R&D。曾在Intercast担任首席架构师，还曾是Time to Know的CTO团队成员。他拥有计算机科学的学士和硕士学位\n\n**官网**: https://www.vastdata.com/\n\n**工作经历**: XtremIO、Intercast、Time to Know\n\n**成立地点**: 美国纽约、以色列\n\n**成立时间**: 2016\n\n**投资方**: Fidelity、NEA、Drive Capital、Bond Capital\n\n**教育背景**: NA\n\n**更新时间**: 1702137600000\n\n**标签**: AI50\n\n**累计融资\n（万美元）**: 11800\n\n**细分领域**: 基础层\n\n**联系方式**: https://www.linkedin.com/in/renenh/\n\n**金额\n（万美元）**: 11800\n\n---\n\n### 记录 14\n\n**ARR（万美元）**: 10000\n\n**NO.**: 14\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxNDpmMzMyYmNkMjM5MTYwYzdiZDBmOTY0OTVmMTMwYjg4Yjox\n\n**主要业务**: 构建人工智能驱动的招聘平台\n\n**二级分类**: 应用层-企业服务\n\n**企业介绍**: Mercor，正以高达 100 亿美元估值接收多家机的投资要约；公司正酝酿于 2025 年秋季启动新一轮融资，金额与条款未定。六个月前（2025 年 2 月），Mercor 完成 1 亿美元融资，彼时估值 20 亿美元。亮点：6 个月估值跃升 5 倍；业务对齐 AI 大模型训练与评测的刚需订单；头部基金与顶级个人投资者高度参与，资本热度持续攀升。\n\n**估值\n（亿美元）**: 20\n\n**公司人数**: 30\n\n**公司名称**: Mercor\n\n**创始人**: Brendan Foody\n\n**周报**: Deal\n\n**团队背景**: Brendan Foody（首席执行官），Mercor联合创始人/CEO。曾在Seros担任CEO，他将个人计算机集中化，实现了第三世界国家计算机性能的10倍提升，并获得了多个社会影响奖项。在Stealth担任CEO和创始人期间，他建立了一个云咨询业务，通过AWS促销来为数百家企业客户节省了数百万美元。还曾在Interos Inc担任顾问，并在Georgetown University攻读了商业管理和经济学学位。他和Adarsh Hiremath（首席技术官）和Surya Midha（首席运营官）联合创立公司，三人都是大学辍学生。他们是数十亿美元初创公司中最年轻的创始人之一。Mercor平均团队年龄为 22 岁，最近聘请了前 OpenAI 人类数据运营负责人和前规模增长负责人。其年度经常性收入（ARR）达到 7500 万美元，其中大部分来自人工智能实验室。Mercor 表示，它现在与世界前五大人工智能实验室合作，包括 OpenAI。\n\n**好友联创**: Adarsh Hiremath、Surya Midha\n\n**官网**: https://mercor.com/\n\n**工作经历**: Mercor、Seros、Stealth、Interos Inc.\n\n**成立地点**: 美国\n\n**成立时间**: 2023\n\n**投资方**: Felicis、DST Global、Menlo Ventures、Benchmark、General Catalyst\n\n**教育背景**: Georgetown University\n\n**更新时间**: 1757174400000\n\n**标签**: AI100,AI50,ET30,HR,Unicorn,AI Native,IA40\n\n**深度研究**: Mercor \n\n**累计融资\n（万美元）**: 13560\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/brendan-foody-2995ab10b/\n\n**金额\n（万美元）**: 10000\n\n---\n\n### 记录 15\n\n**NO.**: 15\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxNToyNTI0ZWE2YWQyZTZkMzBmMDc0YjhkMzQ3ZDZjZWNmZDox\n\n**主要业务**: 开发AI驱动软件协助法律专业人士起草和审阅文件\n\n**二级分类**: 应用层-法律服务\n\n**企业介绍**: Legora，2023年成立于瑞典斯德哥尔摩，用AI为律所提供合同审阅、摘要与法律检索自动化，正洽谈超1亿美元新一轮融资，预计由Bessemer Venture Partners领投，既有投资方ICONIQ、General Catalyst、Redpoint Ventures、Benchmark等参投。本轮估值为约17亿美元，累计融资超1亿美元。(sifted.eu)\n\n**公司名称**: Legora\n\n**创始人**: Max Junestrand\n\n**周报**: Deal\n\n**团队背景**: Max Junestrand，联合创始人/CEO。曾在 Norrsken VC 担任访问分析师，并在 Norrsken Impact Accelerator and Foundation 工作。也曾在 Bemlo（YC W22）担任增长职位，并在麦肯锡公司担任商业分析师实习生。曾就读于皇家理工学院，获得计算机科学与机器学习硕士学位。\n\n**官网**: https://www.leya.law/\n\n**工作经历**: 联合创始公司、Norrsken VC、Bemlo、麦肯锡\n\n**成立地点**: 瑞典Stockholm\n\n**成立时间**: 2023\n\n**投资方**: Iconiq Growth、General Catalyst、Redpoint Ventures、Benchmark、Y Combinator\n\n**教育背景**: 皇家理工学院\n\n**更新时间**: 1759593600000\n\n**标签**: AI100,关注,IA40\n\n**累计融资\n（万美元）**: 9050\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/maxjunestrand/\n\n**金额\n（万美元）**: 8000\n\n---\n\n### 记录 16\n\n**NO.**: 16\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxNjo3MDg0OTM4YTIwOTdjMWFkNTRiYjE5YzEyNTFhZjA1Nzox\n\n**主要业务**: 为机器人开发AI软件，构建机器人的大脑\n\n**二级分类**: 应用层-机器人\n\n**企业介绍**: Physical Intelligence (Pi)，2024年成立于美国，为机器人开发AI软件，构建机器人的大脑。正在与投资者谈判，希望以 约 50 亿美元估值 进行新一轮融资。\n\n**估值\n（亿美元）**: 20\n\n**公司名称**: Physical Intelligence\n\n**创始人**: Karol Hausman\n\n**周报**: Deal\n\n**团队背景**: Karol Hausman，Physical Intelligence创始人。谷歌大脑的高级研究科学家，同时在斯坦福（Stanford）大学担任兼职教授。他在机器人操控团队担任领导角色，并共同教授CS224r课程。曾就读于南加州大学，获得计算机科学博士学位；以及在慕尼黑技术大学获得机器人学、认知和智能硕士学位。他的联合创始人包括谢尔盖·莱文 (Sergey Levine)，他在加州大学伯克利分校担任教授，从事机器人技术的开创性工作；Chelsea Finn，斯坦福（Stanford）大学教授； Brian Ichter，前谷歌研究科学家； Lachy Groom 是支付公司 Stripe 的前高管，也是著名的科技投资者。创始人包括Adnan Esmail、Chelsea Finn、Lachy Groom、Karol Hausman、Brian Ichter、Sergey Levine 和 Quan Vuong。\n\n**好友联创**: Sergey Levine、Chelsea Finn、Brian Ichter、Lachy Groom\n\n**官网**: https://www.xn--1xa.com/\n\n**工作经历**: Google Brain、斯坦福（Stanford）（Stanford）大学\n\n**成立地点**: 美国\n\n**成立时间**: 2024\n\n**投资方**: Jeff Bezos、Thrive Capital、Khosla Ventures、Lux Capital、OpenAI、Sequoia Capital\n\n**教育背景**: 南加州大学、慕尼黑技术大学\n\n**更新时间**: 1758384000000\n\n**标签**: 投资人,AI100,Unicorn\n\n**累计融资\n（万美元）**: 47000\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/karolhausman/\n\n**金额\n（万美元）**: 7000\n\n---\n\n### 记录 17\n\n**NO.**: 17\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxNzoyNGQxZDRhNGY4MjcxYTdhYzFjMGNmNjZjNjFkYjZkZTox\n\n**主要业务**: 其开源API使开发者能够利用生成式人工智能功能创建应用程序\n\n**二级分类**: 模型层-优化测评\n\n**企业介绍**: Fireworks AI，正以 40亿美元估值，寻求 C 轮融资。\n\n**估值\n（亿美元）**: 5.52\n\n**公司人数**: 50\n\n**公司名称**: Fireworks AI\n\n**创始人**: Lin Qiao\n\n**周报**: Deal\n\n**团队背景**: Lin Qiao，Fireworks AI联合创始人兼CEO。曾任职于Meta，担任工程高级总监，并在LinkedIn和IBM担任技术领导和研究员。曾就读于加州大学圣巴巴拉分校，获得计算机科学博士学位。此外，还在复旦大学获得计算机科学的学士和硕士学位。\n\n**官网**: https://fireworks.ai/\n\n**工作经历**: Fireworks AI、Meta（Facebook）、LinkedIn、IBM\n\n**成立地点**: 美国红木城\n\n**成立时间**: 2022\n\n**投资方**: Sequoia、NVIDIA、AMD、MongoDB Ventures\n\n**教育背景**: 加州大学圣巴巴拉分校、复旦大学\n\n**更新时间**: 1720886400000\n\n**标签**: 关注,华人,AI50,开源,ET30\n\n**累计融资\n（万美元）**: 5200\n\n**细分领域**: 模型层\n\n**联系方式**: https://www.linkedin.com/in/lin-qiao-22248b4/\n\n**金额\n（万美元）**: 5200\n\n---\n\n### 记录 18\n\n**NO.**: 18\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxODplMGZkYWFiODhjNWQ4ZDA2YjdlNGM1NmRiNGQyNzk0MTox\n\n**主要业务**: 为开发人员提供工具用于创建和部署利用大型语言模型的应用程序\n\n**二级分类**: 模型层-智能体\n\n**企业介绍**: LangChain，2022 年成立于美国旧金山，提供构建、评估与监控大语言模型应用的开发/运维一体化基础设施。正以约 10 亿美元估值，进行由 IVP 领投的新一轮股权融资（具体金额未披露）。今年公司的收入约 0.14 亿美元，净利润未披露。历史股东包括 Benchmark、Sequoia Capital、IVP（本轮）、Lux Capital、Conviction Partners 等，累计融资约 0.35 亿美元。#硅谷科技评论 AI 创投榜排名暂未公布。公司产品包括 LangSmith，这是一个独立的闭源产品，用于 LLM 应用程序的可观察性、评估和监控，特别是代理。其竞品包括开源 Langfuse 和 Helicone 等。\n\n**公司人数**: 43\n\n**公司名称**: LangChain\n\n**创始人**: Harrison Chase\n\n**周报**: Deal\n\n**团队背景**: Harrison Chase，联合创始人兼CEO于LangChain。曾在Robust Intelligence担任机器学习工程师，负责开发和优化机器学习模型，并在Kensho Technologies同样担任机器学习工程师，金融领域的数据分析和算法开发。曾就读哈佛（Harvard）大学。\n\n**官网**: https://www.langchain.com/\n\n**工作经历**: Robust Intelligence、Kensho Technologies\n\n**成立地点**: 美国旧金山\n\n**成立时间**: 2023\n\n**投资方**: Sequoia Capital\n\n**教育背景**: 哈佛（Harvard）大学\n\n**更新时间**: 1708099200000\n\n**标签**: AI50,智能体,ET30\n\n**累计融资\n（万美元）**: 3500\n\n**细分领域**: 模型层\n\n**联系方式**: https://www.linkedin.com/in/harrison-chase-961287118/\n\n**金额\n（万美元）**: 2500\n\n---\n\n### 记录 19\n\n**NO.**: 19\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxOToxYTVjNmE4NWU5YzI3M2U1YTNmMGMyZjZkNTFlZWFjNjox\n\n**主要业务**: 为创作者提供发布和盈利的新闻通讯平台\n\n**二级分类**: 应用层-企业服务\n\n**企业介绍**: Substack，正以 7亿+美元估值， 寻求 5000 万至 1 亿美元融资。ARR为~4500 万美元。\n\n**公司名称**: Substack\n\n**创始人**: Chris Best\n\n**周报**: Deal\n\n**团队背景**: Chris Best，Substack公司联合创始人兼CEO。曾是Kik Interactive公司联合创始人兼CTO。曾在Airline Intelligence Systems担任软件开发实习生，在iAnywhere担任应用开发员（合作项目），并在Sandvine从事软件工程QA（合作项目）。曾就读于滑铁卢大学，获得系统设计工程应用科学学士学位。Chris Best（CEO）、Jairaj Sethi（CTO）和Hamish McKenzie（首席写作官）共同创立公司。\n\n**好友联创**: Jairaj Sethi、Hamish McKenzie\n\n**官网**: https://substack.com/\n\n**工作经历**: Kik Interactive、Airline Intelligence Systems、iAnywhere、Sandvine\n\n**成立地点**: 美国加州\n\n**成立时间**: 2017\n\n**投资方**: Omeed Malik、Nate Silver\n\n**教育背景**: 滑铁卢大学\n\n**更新时间**: 1731772800000\n\n**累计融资\n（万美元）**: 9620\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/cjgbest/\n\n**金额\n（万美元）**: 1000\n\n---\n\n### 记录 20\n\n**ARR（万美元）**: 西北大学、卡内基梅隆大学\n\n**NO.**: 20\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyMDozNzBhYzUxNWU2NTM0Y2UyYTc5NzVlYzZlOWQxZTM1MTox\n\n**主要业务**: 观测员工工作流以自动化大型企业重复性任务的AI平台\n\n**二级分类**: 模型层-智能体\n\n**企业介绍**: Worktrace AI，2025年成立于美国旧金山，观测员工工作流以自动化大型企业重复性任务的AI平台。正以5,000万美元估值筹备500万美元种子轮，投资方包括 OpenAI Startup Fund、8VC、Conviction 及个人投资者 Mira Murati、Nick Turley、Jason Kwon、Joanne Jang。累计融资未披露。 (Business Insider)\n\n**估值\n（亿美元）**: 0.5\n\n**公司人数**: Angela Jiang\n\n**公司名称**: Worktrace AI\n\n**周报**: Deal\n\n**团队背景**: Angela Jiang，Worktrace AI联合创始人。曾在OpenAI任职，先后负责GPT-3.5、GPT-4等模型的产品管理，并领导公共政策团队，推动AI安全、深度伪造治理与数据政策的制定；曾是Determined AI（后被HPE收购）产品经理；也曾在Google Brain与微软担任研究实习生。2014年毕业于西北大学，获得计算机科学学士学位；2020年毕业于卡内基梅隆大学，获得机器学习软件系统方向博士学位。\n\n**官网**: https://www.worktrace.ai\n\n**成立地点**: 美国旧金山\n\n**成立时间**: 2025\n\n**投资方**: OpenAI Startup Fund、8VC、Conviction、Mira Murati、Nick Turley、Jason Kwon、Joanne Jang\n\n**标签**: 华人,女性,关注\n\n**用户数（万人）**: Worktrace AI、OpenAI、Determined AI、Google Brain、微软\n\n**累计融资\n（万美元）**: 500\n\n**细分领域**: 模型层\n\n**联系方式**: https://www.linkedin.com/in/jiangangela\n\n**金额\n（万美元）**: 500\n\n---\n\n### 记录 21\n\n**NO.**: 21\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyMToxMjZiZWQ4Nzc0NzhiNzJkZGQ0NjQyYzFlNmNlMzA5ODox\n\n**二级分类**: 模型层-大模型\n\n**企业介绍**: General Intuition（由 Medal 团队分拆的全新研究实验室），正在以未披露估值，筹备1 亿美元以上的新一轮融资，拟以大规模电子游戏数据训练“世界模型”（World Models）及面向游戏与多模态视频的前沿模型。该交易的背景是：OpenAI 在 2024 年底曾出价 5 亿美元收购 Medal，用其视频数据训练模型（约相当于 OpenAI 去年收入的 14%），但交易最终未成；随后 Medal 推进分拆并孵化 General Intuition 以自研模型并独立融资。\n\n**周报**: Deal\n\n**更新时间**: 1760198400000\n\n**细分领域**: 模型层\n\n---\n\n### 记录 22\n\n**NO.**: 22\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyMjo4OGRmMjUxZjIzM2RiYzhjMDM5Y2JkZGJkZTM2YTU4ODox\n\n**二级分类**: 基础层-算力\n\n**企业介绍**: Unconventional, Inc.（由前 Databricks AI 负责人 Naveen Rao 创立）正以约 50 亿美元估值，筹集 10 亿美元新股融资；Andreessen Horowitz（a16z）拟领投，Lightspeed 与 Lux Capital参与；Databricks亦被传将出资参投。本轮已先行募集“数亿美元”，余下资金将按分批（tranched）方式到位；公司将“重新构想计算机底层”以打造面向通用智能的新型 AI 计算机（含定制芯片与整机/服务器基础设施），对标英伟达生态。\n\n**周报**: Deal\n\n**更新时间**: 1759593600000\n\n**细分领域**: 基础层\n\n---\n\n### 记录 23\n\n**NO.**: 23\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyMzpiYTVjYThkYjU0MTYzMGVjYWEwYWEzNWE5MGFmNjEyYjox\n\n**二级分类**: 应用层-金融服务\n\n**企业介绍**: Tether Holdings，2012年成立于萨尔瓦多圣萨尔瓦多，发行全球最大稳定币USDT。拟通过私募方式融资150亿至200亿美元，目标估值约5,000亿美元。累计融资未披露。 (Reuters)\n\n**周报**: Deal\n\n**团队背景**: Paolo A.，Tether和Bitfinex首席技术官，曾担任Tether首席执行官。他是去中心化通信平台Holepunch的联合创始人兼首席战略官，曾在Fincluster担任合伙人及CTO，并在Frame Asset Management担任高级全栈开发工程师。Paolo长期致力于区块链、加密货币、金融科技及分布式系统的开发与架构，具备深厚的系统开发与金融系统集成经验。2008年毕业于意大利热那亚大学（Università degli Studi di Genova），获得计算机科学学士学位。\n\n**官网**: https://tether.to\n\n**更新时间**: 1758988800000\n\n**标签**: 连续创业,Web3\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/prdn/\n\n---\n\n### 记录 24\n\n**NO.**: 24\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyNDowMjdkYWM1YzMzOTA3YjUyMmUxZGYzOGEyYTA0YWE3Njox\n\n**二级分类**: 模型层-大模型\n\n**企业介绍**: 字节跳动（ByteDance）拟启动员工持股回购，按每股 200.41 美元回购、对公司估值逾 3,300 亿美元，较约 6 个月前的 3150 亿美元估值提升约 5.5%；回购预计在今年秋季启动。亮点在于：公司仍以自有资产负债表而非外部资金支持双年回购，反映较强的现金流与利润率；同时，2025 年 Q2 营收约 480 亿美元（同比 +25%）；此前Q1 营收超 430 亿美元，单季规模已超 Meta同期（约 423 亿美元）。若简单相加，上半年营收>910 亿美元。\n\n**周报**: Deal\n\n**更新时间**: 1756569600000\n\n**细分领域**: 模型层\n\n---\n\n### 记录 25\n\n**NO.**: 25\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyNTowM2FjMmVkYWY2NWQyZmU2NTk1ZGExODAxZmIyYjA1ZTox\n\n**二级分类**: 基础层-算力\n\n**企业介绍**: Merge Labs，正在以8.5 亿美元估值进行融资，目标募集资金为 2.5 亿美元，主要由 OpenAI Ventures 出资支持。这是一家由 OpenAI 联合创始人 Sam Altman 联合创办的脑机接口（BCI）初创企业，意图正面挑战埃隆·马斯克（Elon Musk）旗下的 Neuralink。\n\n**周报**: Deal\n\n**团队背景**: Alex Blania，Merge Labs 联合创始人兼运营负责人，Worldcoin 项目联合创始人，曾在物理与机器学习领域深耕。德国出生，居住于湾区。Altman 不会亲自投资，也不会参与公司日常运营，但将提供战略支持并与 Worldcoin 联合创始人 Alex Blania 一同推进项目启动。\n\n**更新时间**: 1755360000000\n\n**标签**: BCI\n\n**细分领域**: 基础层\n\n---\n\n### 记录 26\n\n**NO.**: 26\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyNjowOGU4YjJlM2YzMTIwOGFlMWY0ZWI4NGFmN2I5ZDllOTox\n\n**二级分类**: 模型层-垂类模型\n\n**企业介绍**: Canva 正以 370 亿美元的估值进行 400 至 5 亿美元的二级市场交易。 这将比 2024 年 10 月二次销售的 320 亿美元估值有所增加，但仍低于 2021 年 9 月融资轮融资的 400 亿美元峰值。根据AI创投库，Canva 在 2025 年第一季度的收入为 6.6 亿美元，EBITDA 为 1.5 亿美元。\n\n**估值\n（亿美元）**: 370\n\n**公司人数**: 5000\n\n**公司名称**: Canva\n\n**周报**: Deal\n\n**更新时间**: 1751126400000\n\n**标签**: ET30\n\n**细分领域**: 模型层\n\n---\n\n### 记录 27\n\n**NO.**: 27\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyNzpjMGQyMzkyNTA1YjBkNTY4YTQxNDljY2JmYmNkOThkMzox\n\n**二级分类**: 应用层-工业制造\n\n**企业介绍**: DJ（大疆无人机），正以200亿美元估值，寻求老股交易。\n\n**周报**: Deal\n\n**标签**: 无人机\n\n**细分领域**: 应用层\n\n---\n\n### 记录 28\n\n**NO.**: 28\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyODowZjdlNjRjOTQ3MzI0YTdkMzJmMzIzZTY4M2UyMjFmNTox\n\n**二级分类**: 应用层-机器人\n\n**企业介绍**: Impossible Metals，2020年成立于美国加州圣何塞，利用AI驱动的水下机器人从海底采集电池级矿物。正在进行超过 10 亿美元融资，此前总共完成了 1500 万美元的融资。\n\n**周报**: Deal\n\n**团队背景**: Oliver Gunasekara，Impossible Metals联合创始人兼CEO。曾是NGCodec联合创始人兼CEO，领导公司7年直至2019年以5倍回报被Xilinx（现为AMD）收购。曾是Arm公司企业发展副总裁，主导2006年对Falanx（Mali GPU）的收购，并曾负责Arm的移动业务超过10年，将其移动市场份额从0%提升至95%。2003年还是非营利组织MIPI Alliance的联合创始人，目前几乎每部智能手机都采用其技术规范。2007年至2012年，他担任独立顾问，服务于多家半导体及移动科技公司。2020年联合创办Impossible Metals，并于2024年推动其技术子公司Viridian Biometals独立拆分。1991年毕业于英国格林威治大学，获得电气与电子工程学士学位。曾参与斯坦福大学、MIT等多所顶尖商学院的高管课程学习。\n\n**官网**: impossiblemetals.com\n\n**细分领域**: 应用层\n\n**联系方式**: Oliver Gunasekara\n\n---\n\n### 记录 29\n\n**NO.**: 29\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyOTo1Njc5MGQ2ZDRlY2NmZWQyYzRkMTk0ZWQ1ZDRiZmMwZTox\n\n**二级分类**: 应用层-工业制造\n\n**企业介绍**: SpaceX，2002年成立于美国加州霍桑，可重复使用火箭与卫星互联网 Starlink 制造与发射服务商。正以 4000 亿美元估值，进行约 10 亿美元的新股及员工老股转让（含 SPV）融资。去年公司收入约 131 亿美元，净利润约 45 亿美元。历史股东包括 Google、Fidelity、Sequoia Capital、Founders Fund、Andreessen Horowitz 等，累计融资 119 亿美元，#硅谷科技评论AI创投太空赛道排名第一\n\n**周报**: Deal\n\n**细分领域**: 应用层\n\n---\n\n### 记录 30\n\n**NO.**: 30\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDozMDo0NWYxYjMzMTkxOWEyOTZmMGYxYzcxYzgwYTUxZmFlMDox\n\n**二级分类**: 应用层-金融服务\n\n**企业介绍**: Revolut，2016年成立于英国伦敦，提供数字银行服务。正洽谈10 亿美元新一轮融资，投资方为Greenoaks。本轮估值约650 亿美元，累计融资约20 亿美元。\n\n**公司人数**: revolut.com\n\n**周报**: Deal\n\n**团队背景**: Nik Storonsky，Revolut联合创始人兼CEO。曾是Credit Suisse的股票衍生品交易员，曾是Lehman Brothers的股票衍生品交易员。2007年毕业于New Economic School，获得应用经济与金融硕士学位；2007年毕业于莫斯科物理技术学院，获得一般与应用物理硕士学位。\n\n**官网**: revolut.com\n\n**用户数（万人）**: Nikolay (Nik) Storonsky\n\n**细分领域**: 应用层\n\n**联系方式**: Nikolay (Nik) Storonsky\n\n---\n\n### 记录 31\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDo6ZGM4OWIzMDZjMjAyNGQ0YzRhMDQ3NGRiMzFkOGRkNjY6MQ==\n\n**二级分类**: 模型层-大模型\n\n**企业介绍**: OpenAI，正在以5000亿美元估值进行约60亿美元的员工老股转让，由软银（SoftBank）、Dragoneer和Thrive Capital等投资机构通过SPV方式收购，主要参与对象为现任及前任员工（在职超过两年）。此次交易仍处于早期阶段，是继软银主导OpenAI即将到来的400亿美元融资轮（估值3000亿美元）之后的又一重大布局。二级交易将使OpenAI的估值跃升至全球初创企业之首，超过SpaceX，充分体现出投资者对其未来AI主导地位的信心。ChatGPT 移动应用程序自 2023 年 5 月推出以来收入达到 $2B。\n\n**周报**: Deal\n\n**细分领域**: 模型层\n\n---\n\n",
-      "contentLength": 26677,
+      "content": "# 交易精选\n\n**状态：** ✅ 成功获取完整数据\n\n**多维表格信息：**\n- 应用名称: 交易精选\n- 数据表: Deal\n- 字段数量: 31\n- 记录数量: 31\n- 更新时间: 2025-10-20T18:39:33.911Z\n\n**字段列表：**\n- NO. (数字)\n- 周报 (单行文本)\n- 细分领域 (单行文本)\n- 二级分类 (单行文本)\n- 公司名称 (单行文本)\n- 成立时间 (数字)\n- 成立地点 (单行文本)\n- 主要业务 (单行文本)\n- 金额\n（万美元） (数字)\n- 投资方 (单行文本)\n- 估值\n（亿美元） (数字)\n- 累计融资\n（万美元） (数字)\n- 创始人 (单行文本)\n- 工作经历 (单行文本)\n- 教育背景 (单行文本)\n- 好友联创 (单行文本)\n- 公司人数 (单行文本)\n- 用户数（万人） (单行文本)\n- ARR（万美元） (单行文本)\n- 净利润（万美元） (单行文本)\n- 深度研究 (单行文本)\n- 更新时间 (日期)\n- 官网 (单行文本)\n- 联系方式 (单行文本)\n- 企业介绍 (单行文本)\n- 团队背景 (单行文本)\n- 标签 (单行文本)\n- 未命名 (单行文本)\n- SourceID (单行文本)\n- logo (附件)\n- 项目详情 (超链接)\n\n## 交易记录详情\n\n### 记录 1\n\n**NO.**: 1\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxOjE1MjBjYTFkNjM1NGYxMGZiMWNmMWRjNzkwOTliNzUyOjE=\n\n**logo**: image.png\n\n**主要业务**: 扩展其基础设施和 Grok 聊天机器人\n\n**二级分类**: 模型层-大模型\n\n**企业介绍**: xAI（Elon Musk 的 AI 公司），正通过特殊目的公司 （SPV） 通过债务和股权寻求 200 亿美元的融资 ， 该公司将在五年内将 Nvidia GPU 租赁给 xAI，用于 Colossus 2 项目。这些资金将 由 SpaceX 的投资者 Valor Equity Partners 筹集 ，20 亿美元的股权资金将直接来自英伟达。\n\n**公司名称**: xAI\n\n**创始人**: Elon Musk\n\n**周报**: Deal\n\n**团队背景**: 马斯克（Elon Musk），特斯拉（Tesla, Inc.）和SpaceX的创始人兼CEO，同时也是Twitter（现已更名为X）的所有者和其他多家高科技公司的创始人或投资人。他以其在可持续能源、航天技术、人工智能和交通领域的创新和突破性成果而闻名。马斯克的主要成就包括：特斯拉、SpaceX、X（前身为Twitter）、The Boring Company、OpenAI的早期支持者之一。马斯克在皇后大学（Queen's University）完成了两年的本科学习，随后转学至宾夕法尼亚大学，获得了两个学位：物理学学士学位（来自文理学院）、经济学学士学位（来自沃顿商学院）。此外，他还短暂在斯坦福（Stanford）大学（Stanford University）攻读应用物理与材料科学的博士学位，但在仅仅两天后便选择辍学，投身于创业，创立了他第一家公司Zip2。Tony Wu（吴彤）：拥有多伦多大学博士学位，曾在 Google DeepMind 从事自然语言处理与推理方向的研究。在 xAI，他专注于语言模型开发，使其具备理解复杂概念的能力。Greg Yang：前微软研究院研究员，主攻 AI 理论与数学基础。他的研究有助于 xAI 打造更强健、可扩展的 AI 系统。Jimmy Ba：多伦多大学助理教授，并是著名优化算法 Adam 的联合作者之一。他为 xAI 提供机器学习方面的专业指导。\n\n**官网**: https://x.ai/\n\n**工作经历**: Tesla Inc.、SpaceX、X（前身Twitter）、The Boring Company、OpenAI、Zip2\n\n**成立地点**: 美国旧金山\n\n**成立时间**: 2023\n\n**教育背景**: 皇后大学、宾夕法尼亚大学、斯坦福大学\n\n**更新时间**: 1760716800000\n\n**标签**: 多模态,AI100,Unicorn,AI50\n\n**累计融资\n（万美元）**: 1700000\n\n**细分领域**: 模型层\n\n**金额\n（万美元）**: 1000000\n\n**项目详情**: xAI，1130亿美元估值杀入第二名！正在颠覆大模型的游戏规则\n\n---\n\n### 记录 2\n\n**NO.**: 2\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyOjJiNDE0NTEyMGM5NTBhYzFjYTJjNzI0ZWQzYTA0NjY0OjE=\n\n**主要业务**: 为 AI 训练提供大规模高质量数据标注服务\n\n**二级分类**: 基础层-数据\n\n**企业介绍**: Surge AI，2021 年成立于 美国旧金山，为 AI 训练提供大规模高质量数据标注服务。正筹划 10 亿美元首轮融资，投资方未披露。本轮估值为 250 亿美元。Surge AI 去年的收入超过 10 亿美元，高于其更知名的竞争对手 Scale AI，后者同期报告的收入为 8.7 亿美元。Scale AI 在去年的一轮融资中估值为 140 亿美元，最近当 Meta 投资该公司 49% 的股份并挖走其首席执行官亚历山大·王 （Alexandr Wang） 担任其首席人工智能官来领导其新的超级智能实验室时，估值接近 290 亿美元。\n\n**估值\n（亿美元）**: 150\n\n**公司名称**: Surge AI\n\n**创始人**: Edwin C.\n\n**周报**: Deal\n\n**团队背景**: Edwin C.，Surge AI创始人兼CEO。曾任Facebook研究科学家，曾在Google从事核心科学研究，曾在Twitter负责广告质量，曾在Clarium Capital Management从事算法交易。2008年毕业于麻省理工学院，主修数学、计算机科学和语言学，并在MIT计算机科学与人工智能实验室（CSAIL）从事理论与自然语言处理研究。\n\n**官网**: https://www.surgehq.ai\n\n**工作经历**: Facebook、Google、Twitter、Clarium Capital Management\n\n**成立地点**: 美国旧金山\n\n**成立时间**: 2021\n\n**教育背景**: 麻省理工学院\n\n**更新时间**: 1751731200000\n\n**标签**: 华人\n\n**累计融资\n（万美元）**: 100000\n\n**细分领域**: 基础层\n\n**联系方式**: https://www.linkedin.com/in/edwinzchen/\n\n**金额\n（万美元）**: 100000\n\n---\n\n### 记录 3\n\n**ARR（万美元）**: 50000\n\n**NO.**: 3\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDozOjVmNDIyNDViYTBlMjA2MDk2ZmMxZDM4OTM2NzEzMDEzOjE=\n\n**主要业务**: 开发AI驱动的编程助手Cursor\n\n**二级分类**: 应用层-开发者\n\n**企业介绍**: Anysphere，2022年成立于美国加利福尼亚州旧金山，开发AI驱动的编程助手Cursor。正以约 $300 亿估值权衡新一轮投资报价；据称已有投资者在二级市场按相近价格成交老股。ARR 6 月已达 $5 亿、上一轮（2025 年 6 月）估值 $99 亿。\n\n**估值\n（亿美元）**: 99\n\n**公司人数**: 50\n\n**公司名称**: Anysphere（Cursor）\n\n**创始人**: Michael Truell\n\n**周报**: Deal\n\n**团队背景**: Michael Truell，创始人/CEO。专注统计数学研究、LLM驱动的推荐系统、高吞吐量药物管道和热门编程竞赛领域。2022年在MIT学习计算机科学和数学专业毕业。Truell 在MIT（麻省理工）学院认识了 Anysphere 的其他联合创始人 Sualeh Asif、Arvid Lunnemark 和 Aman Sanger，并成为了亲密的朋友。四人的共同目标是创建一个集成开发环境 (IDE)，以加快常见编程和软件构建任务（例如调试）的速度。\n\n**好友联创**: Sualeh Asif、Arvid Lunnemark、Aman Sanger\n\n**官网**: https://www.anysphere.co/\n\n**工作经历**: Anysphere\n\n**成立地点**: 美国加利福尼亚州旧金山\n\n**成立时间**: 2022\n\n**投资方**: Thrive Capital、Andreessen Horowitz、Accel、DST Global\n\n**教育背景**: 麻省理工学院\n\n**更新时间**: 1760198400000\n\n**标签**: 编程,AI100,AI Native,Unicorn,ET30,AI50\n\n**累计融资\n（万美元）**: 107300\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/michael-t-5b1bbb122/\n\n**金额\n（万美元）**: 90000\n\n---\n\n### 记录 4\n\n**NO.**: 4\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDo0OmRmNWNhOWUwMzk0ZjQwNTU0YzY1NjA5Zjk5NTY1Y2I4OjE=\n\n**主要业务**: 人工智能开发商的数据中心\n\n**二级分类**: 基础层-算力\n\n**企业介绍**: Crusoe（Crusoe Energy Systems）正以约100亿美元估值洽谈至少10亿美元的新一轮融资（权益+债务混合），估值较其2024年约28亿美元的水平提升逾3倍；资金主要用于在美国推进 Stargate 相关超大算力园区与云业务扩张。公司披露收入由2024年的约2.5亿美元，预计在2026年达到约22亿美元；其“云租赁/云销售”业务向投资人给出的远期目标为2030年约180亿美元。\n\n**估值\n（亿美元）**: 28\n\n**公司名称**: Crusoe\n\n**创始人**: Chase Lochmiller\n\n**周报**: Deal\n\n**团队背景**: Chase Lochmiller，Crusoe联合创始人兼CEO。曾任Polychain Capital普通合伙人，曾任Jump Trading Group量化交易员，曾任KCG Holdings, Inc.算法交易董事总经理。曾就读于斯坦福（Stanford）大学，获得计算机科学（人工智能方向）硕士学位；同时获得MIT（麻省理工）学院物理学学士学位。\n\n**官网**: https://crusoe.ai/\n\n**工作经历**: Polychain Capital、Jump Trading Group、KCG Holdings\n\n**成立地点**: 美国丹佛\n\n**成立时间**: 2017\n\n**投资方**: Founders Fund、Nvidia、Fidelity、Long Journey Ventures、Valor Equity\n\n**教育背景**: 斯坦福（Stanford）大学、MIT（麻省理工）学院\n\n**更新时间**: 1756569600000\n\n**标签**: 投资人,AI50,Quant\n\n**累计融资\n（万美元）**: 60000\n\n**细分领域**: 基础层\n\n**联系方式**: https://www.linkedin.com/in/chase-lochmiller-604483341/\n\n**金额\n（万美元）**: 60000\n\n---\n\n### 记录 5\n\n**NO.**: 5\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDo1OmUwMTNmMzliYjhlMTg3NWIyYmE3Yzc0YzM3NmYyODU5OjE=\n\n**主要业务**: 打造一个平台，让开发人员能够利用人工智能编写代码\n\n**二级分类**: 应用层-开发者\n\n**企业介绍**: Poolside，2023年成立于法国巴黎，打造面向开发者的生成式 AI 代码工具。正在以 140 亿美元投后估值进行 20 亿美元新一轮融资，投资方未完全披露（Nvidia 为投资方之一）；累计融资（已完成）5 亿美元，如本轮完成累计将达 25 亿美元。\n\n**估值\n（亿美元）**: 30\n\n**公司名称**: Poolside\n\n**创始人**: Jason Warner\n\n**周报**: Deal\n\n**团队背景**: Jason Warner，Poolside创始人。红点风险投资公司担任董事总经理，前GitHub首席技术官，他的团队负责创建GitHub Copilot。他曾在 Heroku 担任副总裁工程师三年。Jason Warner与连续创业者Eiso Kant共同创立公司 。\n\n**好友联创**: Eiso Kant\n\n**官网**: https://www.poolside.ai/\n\n**工作经历**: Poolside、红点风险投资、GitHub、Heroku\n\n**成立地点**: 法国巴黎\n\n**成立时间**: 2023\n\n**投资方**: Bain Capital Ventures、eBay Ventures、Nvidia、LG Technology Ventures等\n\n**更新时间**: 1760716800000\n\n**标签**: 投资人,编程,助手,AI100,Unicorn\n\n**累计融资\n（万美元）**: 62600\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/jcw148/\n\n**金额\n（万美元）**: 50000\n\n---\n\n### 记录 6\n\n**NO.**: 6\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDo2OmNjNmI4ZjQyNDc0MGY2OTFhYzdhYWI3MGU0ODM3NzI3OjE=\n\n**主要业务**: 提供基于云的GPU计算资源和硬件\n\n**二级分类**: 基础层-算力\n\n**企业介绍**: Lambda 正在洽谈新一轮股权融资，目标估值 40–50 亿美元，拟募资规模“数亿美元”；市场消息称该轮为 crossover/Pre-IPO 性质，公司 最快年内启动 IPO 进程\n\n**估值\n（亿美元）**: 25\n\n**公司名称**: Lambda\n\n**创始人**: Stephen Balaban\n\n**周报**: Deal\n\n**团队背景**: Stephen Balaban，Lambda联合创始人兼首席执行官。在创立Lambda之前，Stephen是Perceptio的首位雇员，开发了在iPhone GPU上本地运行的人脸识别深度神经网络。Perceptio被苹果公司收购。Stephen拥有密歇根大学计算机科学和经济学学士学位，精通中文和英语。\n\n**官网**: https://lambdalabs.com/\n\n**工作经历**: Lambda、Perceptio\n\n**成立地点**: 美国圣何塞\n\n**成立时间**: 2012\n\n**投资方**: Andra Capital、SGW、Nvidia、Super Micro Computer、Andrej Karpathy\n\n**教育背景**: 密歇根大学\n\n**更新时间**: 1755360000000\n\n**标签**: 云,AI100,Unicorn,AI50\n\n**累计融资\n（万美元）**: 86300\n\n**细分领域**: 基础层\n\n**联系方式**: https://www.linkedin.com/in/sbalaban/\n\n**金额\n（万美元）**: 48000\n\n---\n\n### 记录 7\n\n**NO.**: 7\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDo3OjNiZDk3YWY1YTBiZTk5MWIwMDI0OGU2OGU1Y2RhYzZkOjE=\n\n**主要业务**: 开发用于媒体创作的生成式AI模型\n\n**二级分类**: 模型层-垂类模型\n\n**企业介绍**: Runway，正以50亿美元估值进行5亿美元融资谈判，较上一轮估值上涨67%。本轮由General Atlantic和卡塔尔投资局(QIA)主导。此次交易看点在于 Runway 年化收入已达9000万美元，并计划于2025年底冲击2.65亿美元收入，已与 Lionsgate、AMC Networks 达成合作协议，在 AI 视频生成赛道中具备先发优势。资金将用于产品研发与全球扩张。\n\n**公司名称**: Runway\n\n**创始人**: Cristóbal Valenzuela\n\n**周报**: Deal\n\n**团队背景**: Cristóbal Valenzuela，Runway联合创始人兼CEO。曾是纽约大学的研究员。曾就读于纽约大学交互电信项目（ITP），并于Adolfo Ibáñez大学完成本科学业。Valenzuela、Alejandro Matamala和Anastasis Germanidis联合创立公司。Valenzuela在纽约大学艺术学院期间遇到了Matamala和Germanidis，他们三人共同意识到对人工智能创造潜力的好奇心，开始构建一套面向电影制片人、摄影师和摄影师的AI动力工具。\n\n**好友联创**: Alejandro Matamala、Anastasis Germanidis\n\n**官网**: https://www.runwayml.com/\n\n**工作经历**: Runway、纽约大学\n\n**成立地点**: 美国纽约\n\n**成立时间**: 2018\n\n**投资方**: General Atlantic、Fidelity、Baillie Gifford、Nvidia、SoftBank\n\n**教育背景**: 纽约大学、Adolfo Ibáñez大学\n\n**更新时间**: 1743868800000\n\n**标签**: AI50,视频\n\n**累计融资\n（万美元）**: 53650\n\n**细分领域**: 模型层\n\n**联系方式**: https://www.linkedin.com/in/cvalenzuelab/\n\n**金额\n（万美元）**: 30800\n\n---\n\n### 记录 8\n\n**NO.**: 8\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDo4OjZhOTRiZGRjYjE3ZTA5ODA0MGU4NmY3OTJkOGRhOTZlOjE=\n\n**主要业务**: 基于RISC-V架构开发服务器技术,旨在增强数据分析和生成式人工智能应用\n\n**二级分类**: 基础层-算力\n\n**企业介绍**: Rivos，2021年成立于美国圣克拉拉，研发基于RISC-V的AI芯片以对标Nvidia的GPU。据报道拟募资4–5亿美元，投资方未披露。本轮估值约20亿美元（传闻），累计融资约3.7亿美元。 (数据中心动态, Reuters)\n\n**公司名称**: Rivos\n\n**创始人**: Puneet Kumar\n\n**周报**: Deal\n\n**团队背景**: Puneet Kumar，联合创始人/CEO。曾任职Google，担任高级总监，并负责ChromeOS平台。此前，在Agnilux担任工程副总裁，以及在Apple Inc及Apple Computer担任平台架构总监。曾就读卡内基梅隆大学，获得计算机科学博士学位。\n\n**官网**: https://www.rivosinc.com\n\n**工作经历**: Google、Agnilux、Apple Inc、Apple Computer\n\n**成立地点**: 美国圣克拉拉\n\n**成立时间**: 2021\n\n**投资方**: Matrix Capital Management、Intel Capital、MediaTek、Cambium Capital、CIDC、Capital TEN、Hotung Venture Group、之前的投资方Walden Catalyst、Dell Technologies Capital、Koch Disruptive Technologies、VentureTech Alliance\n\n**教育背景**: 卡内基梅隆大学\n\n**更新时间**: 1755360000000\n\n**标签**: 芯片\n\n**累计融资\n（万美元）**: 25000\n\n**细分领域**: 基础层\n\n**联系方式**: https://www.linkedin.com/in/puneet-kumar-6470201/\n\n**金额\n（万美元）**: 25000\n\n---\n\n### 记录 9\n\n**NO.**: 9\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDo5OjcyZmQ1NGM5YmFmZjI0OTUyNzg4NTE3NDgwYzU0YWI4OjE=\n\n**主要业务**: 利用人工智能自动生成临床记录和医疗文档\n\n**二级分类**: 应用层-生命科学\n\n**企业介绍**: Abridge，正以 53 亿美元估值，寻求 3亿美元融资，投资方为 Andreessen Horowitz。\n\n**估值\n（亿美元）**: 25\n\n**公司名称**: Abridge\n\n**创始人**: Shiv Rao\n\n**周报**: Deal\n\n**团队背景**: Shiv Rao，联合创始人/CEO。曾任职UPMC Enterprises的EVP，并在Kauffman Foundation的Health Data Consortium担任Pittsburgh \"Energizing Health\" Healthcare Innovation的共同策划人。他还在UPMC Enterprises' Technology Development Center担任过Physician Advisor in Residence，并目前在University of Pittsburgh Medical Center的Heart and Vascular Institute担任教职。曾创办或共同创办了多家创业公司，包括DocDok和Litcall。曾就读Carnegie Mellon University，获得本科学位。在University of Michigan完成了内科医学住院医师培训。在University of Pittsburgh Medical Center (UPMC)继续学习，获得了成人心血管医学的专业资格。\n\n**官网**: https://www.abridge.com/\n\n**工作经历**: UPMC Enterprises、Kauffman Foundation、UPMC\n\n**成立地点**: 美国匹兹堡\n\n**成立时间**: 2018\n\n**投资方**: Elad Gil、IVP、Lightspeed Venture Partners、CVS Health Ventures、Redpoint Ventures、NVentures\n\n**教育背景**: 卡内基梅隆大学、密歇根大学、匹兹堡大学医疗中心\n\n**更新时间**: 1740240000000\n\n**标签**: 医疗服务,AI100,Unicorn,AI50\n\n**累计融资\n（万美元）**: 46250\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/shivdevrao/\n\n**金额\n（万美元）**: 25000\n\n---\n\n### 记录 10\n\n**ARR（万美元）**: 10000\n\n**NO.**: 10\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxMDo2MjZmYzRjM2ZkN2ZkMTc1ZDFkYWFiNTIyMWZhNzBjYTox\n\n**logo**: image.png\n\n**主要业务**: 开发可以生成多种语言、口音和情感的语音软件\n\n**二级分类**: 模型层-垂类模型\n\n**企业介绍**: ElevenLabs，2022年成立于美国纽约，提供生成逼真 AI 音色与语音的技术。正在进行最高1亿美元的员工股权要约收购（Secondary），投资方为 Sequoia、Iconiq。本轮估值为66亿美元，累计融资2.81亿美元。(Reuters, ElevenLabs)\n\n**估值\n（亿美元）**: 33\n\n**公司人数**: 130\n\n**公司名称**: ElevenLabs\n\n**创始人**: Mati Staniszewski\n\n**周报**: Deal\n\n**团队背景**: Mati Staniszewski，ElevenLabs联合创始人。曾任Palantir Technologies部署策略师，曾任BlackRock产品开发负责人，曾任Opera Software商业智能分析师。毕业于帝国理工学院，获得数学专业一等荣誉学位（前10%）。Mati Staniszewski，联合他的童年朋友，前Google员工Piotr Dabkowski共同创立公司。\n\n**好友联创**: Piotr Dabkowski\n\n**官网**: https://elevenlabs.io/\n\n**工作经历**: Palantir Technologies、BlackRock、Opera Software\n\n**成立地点**: 美国布鲁克林\n\n**成立时间**: 2022\n\n**投资方**: ICONIQ Growth、Andreessen Horowitz\n\n**教育背景**: 帝国理工学院\n\n**更新时间**: 1757779200000\n\n**标签**: 音频,AI100,AI Native,Unicorn,ET30,AI50\n\n**累计融资\n（万美元）**: 28100\n\n**细分领域**: 模型层\n\n**联系方式**: https://www.linkedin.com/in/matiii/\n\n**金额\n（万美元）**: 18000\n\n**项目详情**: Lovable：欧洲增长最快的初创公司\n\n---\n\n### 记录 11\n\n**ARR（万美元）**: 10000\n\n**NO.**: 11\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxMTpiOGIxZTAyNTgzNjcxMmRjYmJkOTFmODU3ZWVkNzY1Nzox\n\n**主要业务**: 构建可通过文本提示生成完整 Web 应用的 AI 工具\n\n**二级分类**: 应用层-开发者\n\n**企业介绍**: Lovable，正接到估值超40亿美元的入场报价；而在7月中旬其刚以18亿美元估值完成2亿美元A轮（Accel 领投）。今年2月曾获1500万美元融资（Creandum 领投）。公司对外称目前并未主动寻求新融资。本次交易亮点：年化收入快速攀升、产品把“用自然语言写几句话=生成上线应用”降维打击、欧洲少见的AI独角兽、明星机构与大厂客户（如 Klarna、HubSpot），估值在数周内翻倍带来窗口期。\n\n**估值\n（亿美元）**: 20\n\n**公司人数**: 20\n\n**公司名称**: Lovable\n\n**创始人**: Anton Osika\n\n**周报**: Deal\n\n**团队背景**: Anton Osika，Lovable联合创始人兼CEO。曾是Depict.ai的CTO及联合创始人，该公司两次入选Y Combinator的顶级公司。此前，他是Sana的创始工程师，以及Ampfield Aktiebolag的研究与数据工程师。Anton毕业于KTH皇家理工学院，获得工程物理与应用数学硕士学位。 Anton Osika 和 Fabian Hedin 联合创立公司。\n\n**好友联创**: Fabian Hedin\n\n**官网**: https://lovable.dev/\n\n**工作经历**: Depict.ai、Sana、Ampfield Aktiebolag、Lovable\n\n**成立地点**: 瑞典斯德哥尔摩\n\n**成立时间**: 2023\n\n**投资方**: Accel、Creandum、20VC\n\n**教育背景**: KTH皇家理工学院\n\n**更新时间**: 1756569600000\n\n**标签**: 连续创业,AI100,编程,ET30,AI Native,IA40\n\n**累计融资\n（万美元）**: 22300\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/antonosika/\n\n**金额\n（万美元）**: 15000\n\n---\n\n### 记录 12\n\n**NO.**: 12\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxMjo0OWRkYzE0YzRhNjU5NWNjOGU1MWZlY2FhZDUyMzYxODox\n\n**主要业务**: 成为音乐创作领域的“ChatGPT”\n\n**二级分类**: 模型层-垂类模型\n\n**企业介绍**: Suno，2022年成立于美国马萨诸塞州剑桥，提供AI生成音乐平台。正在进行超1亿美元新一轮融资。本轮估值为20亿美元以上，此前完成1.25亿美元融资。 (彭博社)\n\n**公司名称**: Suno\n\n**创始人**: Mikey Shulman\n\n**周报**: Deal\n\n**团队背景**: Mikey Shulman，Suno联合创始人兼首席执行官。曾在人工智能公司Kensho担任机器学习主管，负责为机构投资者开发金融分析和机器学习平台。还曾担任MIT（麻省理工）学院斯隆管理学院的讲师,教授金融机器学习和自然语言处理相关课程。Shulman在物理学和量子计算方面有深入研究，对音乐创作和人工智能技术都有浓厚兴趣。他本科毕业于哥伦比亚大学应用物理专业，并获得哈佛（Harvard）大学物理学博士学位。\n\n**官网**: https://suno.com/\n\n**工作经历**: Suno、Kensho、MIT（麻省理工）（MIT）斯隆管理学院\n\n**成立地点**: 美国马萨诸塞州剑桥\n\n**成立时间**: 2022\n\n**投资方**: Lightspeed Venture Partners、Matrix、Founder Collective、Nat Friedman、Daniel Gross\n\n**教育背景**: 哥伦比亚大学、哈佛（Harvard）大学\n\n**更新时间**: 1760716800000\n\n**标签**: 投资人,AI50,音频\n\n**累计融资\n（万美元）**: 12500\n\n**细分领域**: 模型层\n\n**联系方式**: https://www.linkedin.com/in/mikeyshulman/\n\n**金额\n（万美元）**: 12500\n\n---\n\n### 记录 13\n\n**NO.**: 13\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxMzowOTE3YmU4NjRhYzI1YTcwYmY2MmJiNmQ3MDMyN2RkNDox\n\n**主要业务**: 其平台简化数据存储、组织、处理和分析，以加速AI模型的性能\n\n**二级分类**: 基础层-数据\n\n**企业介绍**: Vast Data，正以约 250 亿美元估值进行融资。\n\n**估值\n（亿美元）**: 90\n\n**公司名称**: Vast Data\n\n**创始人**: Renen Hallak\n\n**周报**: Deal\n\n**团队背景**: Renen Hallak，联合创始人兼CEO。曾任职于全球领先的全闪存阵列品牌XtremIO，担任VP R&D。曾在Intercast担任首席架构师，还曾是Time to Know的CTO团队成员。他拥有计算机科学的学士和硕士学位\n\n**官网**: https://www.vastdata.com/\n\n**工作经历**: XtremIO、Intercast、Time to Know\n\n**成立地点**: 美国纽约、以色列\n\n**成立时间**: 2016\n\n**投资方**: Fidelity、NEA、Drive Capital、Bond Capital\n\n**教育背景**: NA\n\n**更新时间**: 1702137600000\n\n**标签**: AI50\n\n**累计融资\n（万美元）**: 11800\n\n**细分领域**: 基础层\n\n**联系方式**: https://www.linkedin.com/in/renenh/\n\n**金额\n（万美元）**: 11800\n\n---\n\n### 记录 14\n\n**ARR（万美元）**: 10000\n\n**NO.**: 14\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxNDpmMzMyYmNkMjM5MTYwYzdiZDBmOTY0OTVmMTMwYjg4Yjox\n\n**主要业务**: 构建人工智能驱动的招聘平台\n\n**二级分类**: 应用层-企业服务\n\n**企业介绍**: Mercor，正以高达 100 亿美元估值接收多家机的投资要约；公司正酝酿于 2025 年秋季启动新一轮融资，金额与条款未定。六个月前（2025 年 2 月），Mercor 完成 1 亿美元融资，彼时估值 20 亿美元。亮点：6 个月估值跃升 5 倍；业务对齐 AI 大模型训练与评测的刚需订单；头部基金与顶级个人投资者高度参与，资本热度持续攀升。\n\n**估值\n（亿美元）**: 20\n\n**公司人数**: 30\n\n**公司名称**: Mercor\n\n**创始人**: Brendan Foody\n\n**周报**: Deal\n\n**团队背景**: Brendan Foody（首席执行官），Mercor联合创始人/CEO。曾在Seros担任CEO，他将个人计算机集中化，实现了第三世界国家计算机性能的10倍提升，并获得了多个社会影响奖项。在Stealth担任CEO和创始人期间，他建立了一个云咨询业务，通过AWS促销来为数百家企业客户节省了数百万美元。还曾在Interos Inc担任顾问，并在Georgetown University攻读了商业管理和经济学学位。他和Adarsh Hiremath（首席技术官）和Surya Midha（首席运营官）联合创立公司，三人都是大学辍学生。他们是数十亿美元初创公司中最年轻的创始人之一。Mercor平均团队年龄为 22 岁，最近聘请了前 OpenAI 人类数据运营负责人和前规模增长负责人。其年度经常性收入（ARR）达到 7500 万美元，其中大部分来自人工智能实验室。Mercor 表示，它现在与世界前五大人工智能实验室合作，包括 OpenAI。\n\n**好友联创**: Adarsh Hiremath、Surya Midha\n\n**官网**: https://mercor.com/\n\n**工作经历**: Mercor、Seros、Stealth、Interos Inc.\n\n**成立地点**: 美国\n\n**成立时间**: 2023\n\n**投资方**: Felicis、DST Global、Menlo Ventures、Benchmark、General Catalyst\n\n**教育背景**: Georgetown University\n\n**更新时间**: 1757174400000\n\n**标签**: AI100,AI50,ET30,HR,Unicorn,AI Native,IA40\n\n**深度研究**: Mercor \n\n**累计融资\n（万美元）**: 13560\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/brendan-foody-2995ab10b/\n\n**金额\n（万美元）**: 10000\n\n---\n\n### 记录 15\n\n**NO.**: 15\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxNToyNTI0ZWE2YWQyZTZkMzBmMDc0YjhkMzQ3ZDZjZWNmZDox\n\n**主要业务**: 开发AI驱动软件协助法律专业人士起草和审阅文件\n\n**二级分类**: 应用层-法律服务\n\n**企业介绍**: Legora，2023年成立于瑞典斯德哥尔摩，用AI为律所提供合同审阅、摘要与法律检索自动化，正洽谈超1亿美元新一轮融资，预计由Bessemer Venture Partners领投，既有投资方ICONIQ、General Catalyst、Redpoint Ventures、Benchmark等参投。本轮估值为约17亿美元，累计融资超1亿美元。(sifted.eu)\n\n**公司名称**: Legora\n\n**创始人**: Max Junestrand\n\n**周报**: Deal\n\n**团队背景**: Max Junestrand，联合创始人/CEO。曾在 Norrsken VC 担任访问分析师，并在 Norrsken Impact Accelerator and Foundation 工作。也曾在 Bemlo（YC W22）担任增长职位，并在麦肯锡公司担任商业分析师实习生。曾就读于皇家理工学院，获得计算机科学与机器学习硕士学位。\n\n**官网**: https://www.leya.law/\n\n**工作经历**: 联合创始公司、Norrsken VC、Bemlo、麦肯锡\n\n**成立地点**: 瑞典Stockholm\n\n**成立时间**: 2023\n\n**投资方**: Iconiq Growth、General Catalyst、Redpoint Ventures、Benchmark、Y Combinator\n\n**教育背景**: 皇家理工学院\n\n**更新时间**: 1759593600000\n\n**标签**: AI100,关注,IA40\n\n**累计融资\n（万美元）**: 9050\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/maxjunestrand/\n\n**金额\n（万美元）**: 8000\n\n---\n\n### 记录 16\n\n**NO.**: 16\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxNjo3MDg0OTM4YTIwOTdjMWFkNTRiYjE5YzEyNTFhZjA1Nzox\n\n**主要业务**: 为机器人开发AI软件，构建机器人的大脑\n\n**二级分类**: 应用层-机器人\n\n**企业介绍**: Physical Intelligence (Pi)，2024年成立于美国，为机器人开发AI软件，构建机器人的大脑。正在与投资者谈判，希望以 约 50 亿美元估值 进行新一轮融资。\n\n**估值\n（亿美元）**: 20\n\n**公司名称**: Physical Intelligence\n\n**创始人**: Karol Hausman\n\n**周报**: Deal\n\n**团队背景**: Karol Hausman，Physical Intelligence创始人。谷歌大脑的高级研究科学家，同时在斯坦福（Stanford）大学担任兼职教授。他在机器人操控团队担任领导角色，并共同教授CS224r课程。曾就读于南加州大学，获得计算机科学博士学位；以及在慕尼黑技术大学获得机器人学、认知和智能硕士学位。他的联合创始人包括谢尔盖·莱文 (Sergey Levine)，他在加州大学伯克利分校担任教授，从事机器人技术的开创性工作；Chelsea Finn，斯坦福（Stanford）大学教授； Brian Ichter，前谷歌研究科学家； Lachy Groom 是支付公司 Stripe 的前高管，也是著名的科技投资者。创始人包括Adnan Esmail、Chelsea Finn、Lachy Groom、Karol Hausman、Brian Ichter、Sergey Levine 和 Quan Vuong。\n\n**好友联创**: Sergey Levine、Chelsea Finn、Brian Ichter、Lachy Groom\n\n**官网**: https://www.xn--1xa.com/\n\n**工作经历**: Google Brain、斯坦福（Stanford）（Stanford）大学\n\n**成立地点**: 美国\n\n**成立时间**: 2024\n\n**投资方**: Jeff Bezos、Thrive Capital、Khosla Ventures、Lux Capital、OpenAI、Sequoia Capital\n\n**教育背景**: 南加州大学、慕尼黑技术大学\n\n**更新时间**: 1758384000000\n\n**标签**: 投资人,AI100,Unicorn\n\n**累计融资\n（万美元）**: 47000\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/karolhausman/\n\n**金额\n（万美元）**: 7000\n\n---\n\n### 记录 17\n\n**NO.**: 17\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxNzoyNGQxZDRhNGY4MjcxYTdhYzFjMGNmNjZjNjFkYjZkZTox\n\n**主要业务**: 其开源API使开发者能够利用生成式人工智能功能创建应用程序\n\n**二级分类**: 模型层-优化测评\n\n**企业介绍**: Fireworks AI，正以 40亿美元估值，寻求 C 轮融资。\n\n**估值\n（亿美元）**: 5.52\n\n**公司人数**: 50\n\n**公司名称**: Fireworks AI\n\n**创始人**: Lin Qiao\n\n**周报**: Deal\n\n**团队背景**: Lin Qiao，Fireworks AI联合创始人兼CEO。曾任职于Meta，担任工程高级总监，并在LinkedIn和IBM担任技术领导和研究员。曾就读于加州大学圣巴巴拉分校，获得计算机科学博士学位。此外，还在复旦大学获得计算机科学的学士和硕士学位。\n\n**官网**: https://fireworks.ai/\n\n**工作经历**: Fireworks AI、Meta（Facebook）、LinkedIn、IBM\n\n**成立地点**: 美国红木城\n\n**成立时间**: 2022\n\n**投资方**: Sequoia、NVIDIA、AMD、MongoDB Ventures\n\n**教育背景**: 加州大学圣巴巴拉分校、复旦大学\n\n**更新时间**: 1720886400000\n\n**标签**: 关注,华人,AI50,开源,ET30\n\n**累计融资\n（万美元）**: 5200\n\n**细分领域**: 模型层\n\n**联系方式**: https://www.linkedin.com/in/lin-qiao-22248b4/\n\n**金额\n（万美元）**: 5200\n\n---\n\n### 记录 18\n\n**NO.**: 18\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxODplMGZkYWFiODhjNWQ4ZDA2YjdlNGM1NmRiNGQyNzk0MTox\n\n**主要业务**: 为开发人员提供工具用于创建和部署利用大型语言模型的应用程序\n\n**二级分类**: 模型层-智能体\n\n**企业介绍**: LangChain，2022 年成立于美国旧金山，提供构建、评估与监控大语言模型应用的开发/运维一体化基础设施。正以约 10 亿美元估值，进行由 IVP 领投的新一轮股权融资（具体金额未披露）。今年公司的收入约 0.14 亿美元，净利润未披露。历史股东包括 Benchmark、Sequoia Capital、IVP（本轮）、Lux Capital、Conviction Partners 等，累计融资约 0.35 亿美元。#硅谷科技评论 AI 创投榜排名暂未公布。公司产品包括 LangSmith，这是一个独立的闭源产品，用于 LLM 应用程序的可观察性、评估和监控，特别是代理。其竞品包括开源 Langfuse 和 Helicone 等。\n\n**公司人数**: 43\n\n**公司名称**: LangChain\n\n**创始人**: Harrison Chase\n\n**周报**: Deal\n\n**团队背景**: Harrison Chase，联合创始人兼CEO于LangChain。曾在Robust Intelligence担任机器学习工程师，负责开发和优化机器学习模型，并在Kensho Technologies同样担任机器学习工程师，金融领域的数据分析和算法开发。曾就读哈佛（Harvard）大学。\n\n**官网**: https://www.langchain.com/\n\n**工作经历**: Robust Intelligence、Kensho Technologies\n\n**成立地点**: 美国旧金山\n\n**成立时间**: 2023\n\n**投资方**: Sequoia Capital\n\n**教育背景**: 哈佛（Harvard）大学\n\n**更新时间**: 1708099200000\n\n**标签**: AI50,智能体,ET30\n\n**累计融资\n（万美元）**: 3500\n\n**细分领域**: 模型层\n\n**联系方式**: https://www.linkedin.com/in/harrison-chase-961287118/\n\n**金额\n（万美元）**: 2500\n\n---\n\n### 记录 19\n\n**NO.**: 19\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoxOToxYTVjNmE4NWU5YzI3M2U1YTNmMGMyZjZkNTFlZWFjNjox\n\n**主要业务**: 为创作者提供发布和盈利的新闻通讯平台\n\n**二级分类**: 应用层-企业服务\n\n**企业介绍**: Substack，正以 7亿+美元估值， 寻求 5000 万至 1 亿美元融资。ARR为~4500 万美元。\n\n**公司名称**: Substack\n\n**创始人**: Chris Best\n\n**周报**: Deal\n\n**团队背景**: Chris Best，Substack公司联合创始人兼CEO。曾是Kik Interactive公司联合创始人兼CTO。曾在Airline Intelligence Systems担任软件开发实习生，在iAnywhere担任应用开发员（合作项目），并在Sandvine从事软件工程QA（合作项目）。曾就读于滑铁卢大学，获得系统设计工程应用科学学士学位。Chris Best（CEO）、Jairaj Sethi（CTO）和Hamish McKenzie（首席写作官）共同创立公司。\n\n**好友联创**: Jairaj Sethi、Hamish McKenzie\n\n**官网**: https://substack.com/\n\n**工作经历**: Kik Interactive、Airline Intelligence Systems、iAnywhere、Sandvine\n\n**成立地点**: 美国加州\n\n**成立时间**: 2017\n\n**投资方**: Omeed Malik、Nate Silver\n\n**教育背景**: 滑铁卢大学\n\n**更新时间**: 1731772800000\n\n**累计融资\n（万美元）**: 9620\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/cjgbest/\n\n**金额\n（万美元）**: 1000\n\n---\n\n### 记录 20\n\n**ARR（万美元）**: 西北大学、卡内基梅隆大学\n\n**NO.**: 20\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyMDozNzBhYzUxNWU2NTM0Y2UyYTc5NzVlYzZlOWQxZTM1MTox\n\n**主要业务**: 观测员工工作流以自动化大型企业重复性任务的AI平台\n\n**二级分类**: 模型层-智能体\n\n**企业介绍**: Worktrace AI，2025年成立于美国旧金山，观测员工工作流以自动化大型企业重复性任务的AI平台。正以5,000万美元估值筹备500万美元种子轮，投资方包括 OpenAI Startup Fund、8VC、Conviction 及个人投资者 Mira Murati、Nick Turley、Jason Kwon、Joanne Jang。累计融资未披露。 (Business Insider)\n\n**估值\n（亿美元）**: 0.5\n\n**公司人数**: Angela Jiang\n\n**公司名称**: Worktrace AI\n\n**周报**: Deal\n\n**团队背景**: Angela Jiang，Worktrace AI联合创始人。曾在OpenAI任职，先后负责GPT-3.5、GPT-4等模型的产品管理，并领导公共政策团队，推动AI安全、深度伪造治理与数据政策的制定；曾是Determined AI（后被HPE收购）产品经理；也曾在Google Brain与微软担任研究实习生。2014年毕业于西北大学，获得计算机科学学士学位；2020年毕业于卡内基梅隆大学，获得机器学习软件系统方向博士学位。\n\n**官网**: https://www.worktrace.ai\n\n**成立地点**: 美国旧金山\n\n**成立时间**: 2025\n\n**投资方**: OpenAI Startup Fund、8VC、Conviction、Mira Murati、Nick Turley、Jason Kwon、Joanne Jang\n\n**标签**: 华人,女性,关注\n\n**用户数（万人）**: Worktrace AI、OpenAI、Determined AI、Google Brain、微软\n\n**累计融资\n（万美元）**: 500\n\n**细分领域**: 模型层\n\n**联系方式**: https://www.linkedin.com/in/jiangangela\n\n**金额\n（万美元）**: 500\n\n---\n\n### 记录 21\n\n**NO.**: 21\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyMToxMjZiZWQ4Nzc0NzhiNzJkZGQ0NjQyYzFlNmNlMzA5ODox\n\n**二级分类**: 模型层-大模型\n\n**企业介绍**: General Intuition（由 Medal 团队分拆的全新研究实验室），正在以未披露估值，筹备1 亿美元以上的新一轮融资，拟以大规模电子游戏数据训练“世界模型”（World Models）及面向游戏与多模态视频的前沿模型。该交易的背景是：OpenAI 在 2024 年底曾出价 5 亿美元收购 Medal，用其视频数据训练模型（约相当于 OpenAI 去年收入的 14%），但交易最终未成；随后 Medal 推进分拆并孵化 General Intuition 以自研模型并独立融资。\n\n**周报**: Deal\n\n**更新时间**: 1760198400000\n\n**细分领域**: 模型层\n\n---\n\n### 记录 22\n\n**NO.**: 22\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyMjo4OGRmMjUxZjIzM2RiYzhjMDM5Y2JkZGJkZTM2YTU4ODox\n\n**二级分类**: 基础层-算力\n\n**企业介绍**: Unconventional, Inc.（由前 Databricks AI 负责人 Naveen Rao 创立）正以约 50 亿美元估值，筹集 10 亿美元新股融资；Andreessen Horowitz（a16z）拟领投，Lightspeed 与 Lux Capital参与；Databricks亦被传将出资参投。本轮已先行募集“数亿美元”，余下资金将按分批（tranched）方式到位；公司将“重新构想计算机底层”以打造面向通用智能的新型 AI 计算机（含定制芯片与整机/服务器基础设施），对标英伟达生态。\n\n**周报**: Deal\n\n**更新时间**: 1759593600000\n\n**细分领域**: 基础层\n\n---\n\n### 记录 23\n\n**NO.**: 23\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyMzpiYTVjYThkYjU0MTYzMGVjYWEwYWEzNWE5MGFmNjEyYjox\n\n**二级分类**: 应用层-金融服务\n\n**企业介绍**: Tether Holdings，2012年成立于萨尔瓦多圣萨尔瓦多，发行全球最大稳定币USDT。拟通过私募方式融资150亿至200亿美元，目标估值约5,000亿美元。累计融资未披露。 (Reuters)\n\n**周报**: Deal\n\n**团队背景**: Paolo A.，Tether和Bitfinex首席技术官，曾担任Tether首席执行官。他是去中心化通信平台Holepunch的联合创始人兼首席战略官，曾在Fincluster担任合伙人及CTO，并在Frame Asset Management担任高级全栈开发工程师。Paolo长期致力于区块链、加密货币、金融科技及分布式系统的开发与架构，具备深厚的系统开发与金融系统集成经验。2008年毕业于意大利热那亚大学（Università degli Studi di Genova），获得计算机科学学士学位。\n\n**官网**: https://tether.to\n\n**更新时间**: 1758988800000\n\n**标签**: 连续创业,Web3\n\n**细分领域**: 应用层\n\n**联系方式**: https://www.linkedin.com/in/prdn/\n\n---\n\n### 记录 24\n\n**NO.**: 24\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyNDowMjdkYWM1YzMzOTA3YjUyMmUxZGYzOGEyYTA0YWE3Njox\n\n**二级分类**: 模型层-大模型\n\n**企业介绍**: 字节跳动（ByteDance）拟启动员工持股回购，按每股 200.41 美元回购、对公司估值逾 3,300 亿美元，较约 6 个月前的 3150 亿美元估值提升约 5.5%；回购预计在今年秋季启动。亮点在于：公司仍以自有资产负债表而非外部资金支持双年回购，反映较强的现金流与利润率；同时，2025 年 Q2 营收约 480 亿美元（同比 +25%）；此前Q1 营收超 430 亿美元，单季规模已超 Meta同期（约 423 亿美元）。若简单相加，上半年营收>910 亿美元。\n\n**周报**: Deal\n\n**更新时间**: 1756569600000\n\n**细分领域**: 模型层\n\n---\n\n### 记录 25\n\n**NO.**: 25\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyNTowM2FjMmVkYWY2NWQyZmU2NTk1ZGExODAxZmIyYjA1ZTox\n\n**二级分类**: 基础层-算力\n\n**企业介绍**: Merge Labs，正在以8.5 亿美元估值进行融资，目标募集资金为 2.5 亿美元，主要由 OpenAI Ventures 出资支持。这是一家由 OpenAI 联合创始人 Sam Altman 联合创办的脑机接口（BCI）初创企业，意图正面挑战埃隆·马斯克（Elon Musk）旗下的 Neuralink。\n\n**周报**: Deal\n\n**团队背景**: Alex Blania，Merge Labs 联合创始人兼运营负责人，Worldcoin 项目联合创始人，曾在物理与机器学习领域深耕。德国出生，居住于湾区。Altman 不会亲自投资，也不会参与公司日常运营，但将提供战略支持并与 Worldcoin 联合创始人 Alex Blania 一同推进项目启动。\n\n**更新时间**: 1755360000000\n\n**标签**: BCI\n\n**细分领域**: 基础层\n\n---\n\n### 记录 26\n\n**NO.**: 26\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyNjowOGU4YjJlM2YzMTIwOGFlMWY0ZWI4NGFmN2I5ZDllOTox\n\n**二级分类**: 模型层-垂类模型\n\n**企业介绍**: Canva 正以 370 亿美元的估值进行 400 至 5 亿美元的二级市场交易。 这将比 2024 年 10 月二次销售的 320 亿美元估值有所增加，但仍低于 2021 年 9 月融资轮融资的 400 亿美元峰值。根据AI创投库，Canva 在 2025 年第一季度的收入为 6.6 亿美元，EBITDA 为 1.5 亿美元。\n\n**估值\n（亿美元）**: 370\n\n**公司人数**: 5000\n\n**公司名称**: Canva\n\n**周报**: Deal\n\n**更新时间**: 1751126400000\n\n**标签**: ET30\n\n**细分领域**: 模型层\n\n---\n\n### 记录 27\n\n**NO.**: 27\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyNzpjMGQyMzkyNTA1YjBkNTY4YTQxNDljY2JmYmNkOThkMzox\n\n**二级分类**: 应用层-工业制造\n\n**企业介绍**: DJ（大疆无人机），正以200亿美元估值，寻求老股交易。\n\n**周报**: Deal\n\n**标签**: 无人机\n\n**细分领域**: 应用层\n\n---\n\n### 记录 28\n\n**NO.**: 28\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyODowZjdlNjRjOTQ3MzI0YTdkMzJmMzIzZTY4M2UyMjFmNTox\n\n**二级分类**: 应用层-机器人\n\n**企业介绍**: Impossible Metals，2020年成立于美国加州圣何塞，利用AI驱动的水下机器人从海底采集电池级矿物。正在进行超过 10 亿美元融资，此前总共完成了 1500 万美元的融资。\n\n**周报**: Deal\n\n**团队背景**: Oliver Gunasekara，Impossible Metals联合创始人兼CEO。曾是NGCodec联合创始人兼CEO，领导公司7年直至2019年以5倍回报被Xilinx（现为AMD）收购。曾是Arm公司企业发展副总裁，主导2006年对Falanx（Mali GPU）的收购，并曾负责Arm的移动业务超过10年，将其移动市场份额从0%提升至95%。2003年还是非营利组织MIPI Alliance的联合创始人，目前几乎每部智能手机都采用其技术规范。2007年至2012年，他担任独立顾问，服务于多家半导体及移动科技公司。2020年联合创办Impossible Metals，并于2024年推动其技术子公司Viridian Biometals独立拆分。1991年毕业于英国格林威治大学，获得电气与电子工程学士学位。曾参与斯坦福大学、MIT等多所顶尖商学院的高管课程学习。\n\n**官网**: impossiblemetals.com\n\n**细分领域**: 应用层\n\n**联系方式**: Oliver Gunasekara\n\n---\n\n### 记录 29\n\n**NO.**: 29\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDoyOTo1Njc5MGQ2ZDRlY2NmZWQyYzRkMTk0ZWQ1ZDRiZmMwZTox\n\n**二级分类**: 应用层-工业制造\n\n**企业介绍**: SpaceX，2002年成立于美国加州霍桑，可重复使用火箭与卫星互联网 Starlink 制造与发射服务商。正以 4000 亿美元估值，进行约 10 亿美元的新股及员工老股转让（含 SPV）融资。去年公司收入约 131 亿美元，净利润约 45 亿美元。历史股东包括 Google、Fidelity、Sequoia Capital、Founders Fund、Andreessen Horowitz 等，累计融资 119 亿美元，#硅谷科技评论AI创投太空赛道排名第一\n\n**周报**: Deal\n\n**细分领域**: 应用层\n\n---\n\n### 记录 30\n\n**NO.**: 30\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDozMDo0NWYxYjMzMTkxOWEyOTZmMGYxYzcxYzgwYTUxZmFlMDox\n\n**二级分类**: 应用层-金融服务\n\n**企业介绍**: Revolut，2016年成立于英国伦敦，提供数字银行服务。正洽谈10 亿美元新一轮融资，投资方为Greenoaks。本轮估值约650 亿美元，累计融资约20 亿美元。\n\n**公司人数**: revolut.com\n\n**周报**: Deal\n\n**团队背景**: Nik Storonsky，Revolut联合创始人兼CEO。曾是Credit Suisse的股票衍生品交易员，曾是Lehman Brothers的股票衍生品交易员。2007年毕业于New Economic School，获得应用经济与金融硕士学位；2007年毕业于莫斯科物理技术学院，获得一般与应用物理硕士学位。\n\n**官网**: revolut.com\n\n**用户数（万人）**: Nikolay (Nik) Storonsky\n\n**细分领域**: 应用层\n\n**联系方式**: Nikolay (Nik) Storonsky\n\n---\n\n### 记录 31\n\n**SourceID**: NzUxNzI5MDIzOTc3NDUyMzM5NDo6ZGM4OWIzMDZjMjAyNGQ0YzRhMDQ3NGRiMzFkOGRkNjY6MQ==\n\n**二级分类**: 模型层-大模型\n\n**企业介绍**: OpenAI，正在以5000亿美元估值进行约60亿美元的员工老股转让，由软银（SoftBank）、Dragoneer和Thrive Capital等投资机构通过SPV方式收购，主要参与对象为现任及前任员工（在职超过两年）。此次交易仍处于早期阶段，是继软银主导OpenAI即将到来的400亿美元融资轮（估值3000亿美元）之后的又一重大布局。二级交易将使OpenAI的估值跃升至全球初创企业之首，超过SpaceX，充分体现出投资者对其未来AI主导地位的信心。ChatGPT 移动应用程序自 2023 年 5 月推出以来收入达到 $2B。\n\n**周报**: Deal\n\n**细分领域**: 模型层\n\n---\n\n",
+      "contentLength": 26801,
       "docType": "bitable",
       "searchKeywords": [
         "ai",
         "投资",
         "融资",
-        "venture",
         "capital",
         "估值",
         "公司",
@@ -4654,18 +4653,18 @@
         "交易精选"
       ],
       "semanticTags": [
-        "svtr_platform",
         "investment_funding",
         "artificial_intelligence",
+        "market_analysis",
         "company_database",
         "member_services"
       ],
-      "ragScore": 78.33,
+      "ragScore": 79.61,
       "bitableData": {
         "recordCount": 31,
         "fieldCount": 31,
         "dataType": "complete",
-        "lastSync": "2025-10-19T18:26:22.650Z"
+        "lastSync": "2025-10-20T18:39:33.929Z"
       }
     },
     {
@@ -4677,7 +4676,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "V2JnwfmvtiBUTdkc32rcQrXWn4g",
         "objToken": "KzDUsnIlNhYMBQtQWgTcoQwQn1e",
@@ -4710,14 +4709,14 @@
     },
     {
       "id": "node_MrnbwIzySiJNiDkPdM0csElXnE4",
-      "title": "SVTR.AI周报 #126",
+      "title": "SVTR.AI周报 #127",
       "nodeToken": "MrnbwIzySiJNiDkPdM0csElXnE4",
       "objToken": "HRuBdh9dZouaRjxOUkpcCMzJnl0",
       "objType": "docx",
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "MrnbwIzySiJNiDkPdM0csElXnE4",
         "objToken": "HRuBdh9dZouaRjxOUkpcCMzJnl0",
@@ -4727,8 +4726,8 @@
         "parentToken": "V2JnwfmvtiBUTdkc32rcQrXWn4g",
         "level": 2
       },
-      "content": "SVTR.AI周报 #126\n同步块\n\nSVTR.AI周报 是由硅谷科技评论（SVTR.AI）出品的一份人工智能行业观察周刊，依托AI创投库和专业社区资源，聚焦全球AI领域的投融资动态、技术突破和创业趋势。内容由社区成员共同策划，每周精选重点融资案例、创新企业、前沿研究成果以及行业战略分析，致力于以一线视角为AI创业者和投资人提供真实、有价值、具前瞻性的行业洞察，帮助读者及时把握行业风向和潜在机遇。\n\nSVTR.AI Weekly is a publication by Silicon Valley Technology Review (SVTR), grounded in a robust AI investment database and an active startup community. It focuses on global developments in AI funding, cutting-edge technologies, and entrepreneurial trends. Curated collaboratively by community members, each issue highlights key funding events, innovative companies, breakthrough research, and strategic insights. With a front-line perspective, the newsletter aims to deliver timely, practical, and forward-looking intelligence to AI founders and investors—helping readers quickly grasp industry trends and seize emerging opportunities.\n1、AI融资事件 Top 10\n\n2、AI初创公司\n\n\n\n\n\n\n\n3、AI投资人\n\n4、AI创始人\n\n\n5、附录\nbb280933e9740490bf30fea56980d9e.png\n\n\n",
-      "contentLength": 935,
+      "content": "SVTR.AI周报 #127\n同步块\n\nSVTR.AI周报 是由硅谷科技评论（SVTR.AI）出品的一份人工智能行业观察周刊，依托AI创投库和专业社区资源，聚焦全球AI领域的投融资动态、技术突破和创业趋势。内容由社区成员共同策划，每周精选重点融资案例、创新企业、前沿研究成果以及行业战略分析，致力于以一线视角为AI创业者和投资人提供真实、有价值、具前瞻性的行业洞察，帮助读者及时把握行业风向和潜在机遇。\n\nSVTR.AI Weekly is a publication by Silicon Valley Technology Review (SVTR), grounded in a robust AI investment database and an active startup community. It focuses on global developments in AI funding, cutting-edge technologies, and entrepreneurial trends. Curated collaboratively by community members, each issue highlights key funding events, innovative companies, breakthrough research, and strategic insights. With a front-line perspective, the newsletter aims to deliver timely, practical, and forward-looking intelligence to AI founders and investors—helping readers quickly grasp industry trends and seize emerging opportunities.\n1、AI融资事件 Top 10\n\n2、AI初创公司\n\n\n\n\n\n\n\n3、AI投资人\n\n4、AI创始人\n\n\n5、附录\nimage.png\n\n\n",
+      "contentLength": 909,
       "docType": "docx",
       "searchKeywords": [
         "ai",
@@ -4740,7 +4739,7 @@
         "startup",
         "公司",
         "创始人",
-        "svtr.ai周报 #126"
+        "svtr.ai周报 #127"
       ],
       "semanticTags": [
         "svtr_platform",
@@ -4750,18 +4749,18 @@
         "company_database",
         "member_services"
       ],
-      "ragScore": 49.5
+      "ragScore": 49.24
     },
     {
       "id": "node_ErjSwcOOkiDomjkM5lscDe0tnhc",
-      "title": "SVTR.AI Weekly #126",
+      "title": "SVTR.AI Weekly #127",
       "nodeToken": "ErjSwcOOkiDomjkM5lscDe0tnhc",
       "objToken": "SPXwduQQIo4dH5xEj98cMOYynTd",
       "objType": "docx",
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "ErjSwcOOkiDomjkM5lscDe0tnhc",
         "objToken": "SPXwduQQIo4dH5xEj98cMOYynTd",
@@ -4771,8 +4770,8 @@
         "parentToken": "V2JnwfmvtiBUTdkc32rcQrXWn4g",
         "level": 2
       },
-      "content": "SVTR.AI Weekly #126\n同步块\n\nSVTR.AI周报 是由硅谷科技评论（SVTR.AI）出品的一份人工智能行业观察周刊，依托AI创投库和专业社区资源，聚焦全球AI领域的投融资动态、技术突破和创业趋势。内容由社区成员共同策划，每周精选重点融资案例、创新企业、前沿研究成果以及行业战略分析，致力于以一线视角为AI创业者和投资人提供真实、有价值、具前瞻性的行业洞察，帮助读者及时把握行业风向和潜在机遇。\n\nSVTR.AI Weekly is a publication by Silicon Valley Technology Review (SVTR), grounded in a robust AI investment database and an active startup community. It focuses on global developments in AI funding, cutting-edge technologies, and entrepreneurial trends. Curated collaboratively by community members, each issue highlights key funding events, innovative companies, breakthrough research, and strategic insights. With a front-line perspective, the newsletter aims to deliver timely, practical, and forward-looking intelligence to AI founders and investors—helping readers quickly grasp industry trends and seize emerging opportunities.\n1、AI Deals Top 10 \n\n2、AI Startups\n\n\n\n\n\n\n\n3、AI Investors \n\n4、AI Founders\n\n\n5、Appendix\nbb280933e9740490bf30fea56980d9e.png\n\n\n",
-      "contentLength": 968,
+      "content": "SVTR.AI Weekly #127\n同步块\n\nSVTR.AI周报 是由硅谷科技评论（SVTR.AI）出品的一份人工智能行业观察周刊，依托AI创投库和专业社区资源，聚焦全球AI领域的投融资动态、技术突破和创业趋势。内容由社区成员共同策划，每周精选重点融资案例、创新企业、前沿研究成果以及行业战略分析，致力于以一线视角为AI创业者和投资人提供真实、有价值、具前瞻性的行业洞察，帮助读者及时把握行业风向和潜在机遇。\n\nSVTR.AI Weekly is a publication by Silicon Valley Technology Review (SVTR), grounded in a robust AI investment database and an active startup community. It focuses on global developments in AI funding, cutting-edge technologies, and entrepreneurial trends. Curated collaboratively by community members, each issue highlights key funding events, innovative companies, breakthrough research, and strategic insights. With a front-line perspective, the newsletter aims to deliver timely, practical, and forward-looking intelligence to AI founders and investors—helping readers quickly grasp industry trends and seize emerging opportunities.\n1、AI Deals Top 10 \n\n2、AI Startups\n\n\n\n\n\n\n\n3、AI Investors \n\n4、AI Founders\n\n\n5、Appendix\nimage.png\n\n\n",
+      "contentLength": 942,
       "docType": "docx",
       "searchKeywords": [
         "ai",
@@ -4782,7 +4781,7 @@
         "融资",
         "硅谷科技评论",
         "startup",
-        "svtr.ai weekly #126"
+        "svtr.ai weekly #127"
       ],
       "semanticTags": [
         "svtr_platform",
@@ -4792,7 +4791,7 @@
         "company_database",
         "member_services"
       ],
-      "ragScore": 49.88
+      "ragScore": 49.62
     },
     {
       "id": "node_LhJ0wLlRRi6Oh3kc6XEcqhSHndc",
@@ -4803,7 +4802,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "LhJ0wLlRRi6Oh3kc6XEcqhSHndc",
         "objToken": "IOUNdGWwYoNM7ixH08ycee79nKc",
@@ -4842,7 +4841,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "ZVIRw9ZSnirpv3kmRLWc6kOVn7b",
         "objToken": "GSsMsFfQ4lKfG1dJ7LIcIBCmnnb",
@@ -4872,7 +4871,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "I4gjwsKhNil4LEkKQSYcyJsVn9g",
         "objToken": "LqgGdbqFOo4zEax05ZrcboBQn1b",
@@ -4903,7 +4902,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "DI9Hw8v8tiZF2Xk13KDcDI8Bn1b",
         "objToken": "Y8vpdFRzooS0jfx95Zkcb0FJn6c",
@@ -4940,7 +4939,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "BxOLwsEciiMkBMkJj7Hc6vqCn1c",
         "objToken": "LeWBsMjWNhh8BttcpalclTKOn0g",
@@ -4982,7 +4981,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "LvTbwkBLIidV8ckRRVKccg5Enze",
         "objToken": "KaMjsqHMnh5MkIth1DOc33X0nbd",
@@ -5024,7 +5023,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "ILRbwZA87iK2QRkNUIPc5A02nTh",
         "objToken": "GbmUdBjYpoZTrix2DRvci94Cnte",
@@ -5059,7 +5058,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "VZ7xwj1vZiYrJGkZxjcclZXtnAc",
         "objToken": "H4grdCCVOoU3O7xqVKGcLGHDn8w",
@@ -5092,7 +5091,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "JPZDwW7briB00ukxwSac1vTBnZd",
         "objToken": "GXK1dBGmgoTYcUx9ogwcmEbHntb",
@@ -5125,7 +5124,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "M2qvwzXYliY6f2kqKHkcnA8vnXg",
         "objToken": "EPlTdz6lpoq4j6xRc6jct6ABnIh",
@@ -5158,7 +5157,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "RU7twbh7fiHgk6k9pjBc5GsEnsh",
         "objToken": "OgoUdGF8zoRANEx8JsKcE2GonKd",
@@ -5191,7 +5190,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "HTemw2pxXiu29ck0PjjcKBoKnHe",
         "objToken": "DomWdQDpTocV9qx5GezcecXynM1",
@@ -5224,7 +5223,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "HJn7wIZhHi0sWSkL8pachTYEnSf",
         "objToken": "SWHIdKgvlo4x9vxn2mscR0RYn2d",
@@ -5257,7 +5256,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Q9pywUeaMifgd1kwJRpcQtAun3c",
         "objToken": "VmQ5d7ejToigJ3xgFvBcdP2cnjc",
@@ -5290,7 +5289,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Hi9RwqNPhiDQoZkdIBtcYprxnRb",
         "objToken": "BofddArcToH080xvEOZcjYHKnYg",
@@ -5323,7 +5322,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "GfdMwsPfMiw1JSkD0z0cqzuanMb",
         "objToken": "KDPPdjcEMoQnfJxdSldcWzNxnag",
@@ -5356,7 +5355,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "OhoawztoAiLQLakoIs3cQpZ3nKe",
         "objToken": "OU2BdCukPoP08Axm0yPcNW19n8d",
@@ -5389,7 +5388,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "VQ6cwWhAbi2mLckPbQ9cAEbKnJd",
         "objToken": "Ohf7dCe4Goi3eGxri7JcSpOCn6c",
@@ -5422,7 +5421,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "M1avwdeVIifOimk4boHcVqXCnag",
         "objToken": "DEvqdfxito31aSxm8SkcN7kpnRe",
@@ -5455,7 +5454,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "MqE5wDb0XinlPwkc5Igc5D2gnsg",
         "objToken": "ZpeldYjP6orUzZxii7icQLMWnsf",
@@ -5488,7 +5487,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "HnblwYDOgiEcHbk3YL6c9wTPnvb",
         "objToken": "Q45fdRJMdoMHuBxxWfRc4I82nhf",
@@ -5521,7 +5520,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Dm2twk7jkiw2xQkDs6sc8q0Lnzh",
         "objToken": "KMkMdcoPFo7UpjxK7wfc0C9Pnoe",
@@ -5554,7 +5553,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "OX9QwiIOoiw6XUkWOVicaAZTnab",
         "objToken": "CXybdB9pXoNxuxxUpBwckud7ndZ",
@@ -5587,7 +5586,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "CiPFwTQKQiJpbukEE1EcLGV2nQc",
         "objToken": "J2MndV8VsogLFPxUxZacbTILnxg",
@@ -5620,7 +5619,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "RnFrwGXqWi4kN2kHjm0cgqpLnQc",
         "objToken": "H0QQdKxUGohJIGxB7RjcEDPjnwc",
@@ -5653,7 +5652,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "HCh6wDwQTiCOsMkPQAgctbLwn04",
         "objToken": "Rgm6dQYxjoOpT4xzx00cOApDnpd",
@@ -5686,7 +5685,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "PTEvwQy4uiYbV7kAXVqcIUOenCh",
         "objToken": "Sa3jdS2mKo246KxlTA1coYj5nSh",
@@ -5719,7 +5718,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "BibXwtZCmipryukUMDtcqJtUnqg",
         "objToken": "S3oSdDcx9o2rU9xtSdDcq59in7e",
@@ -5754,7 +5753,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "BpXQw5zxYiVnBLkyHYDcfAernHd",
         "objToken": "D72Wdqtmlo8tZkxiIs7cFARxnIb",
@@ -5788,7 +5787,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "GiamwlL0EiWFx3kfxh7cJTG0n3g",
         "objToken": "TPEbdhXwDoYRDTxVKh4cnGO0nrg",
@@ -5821,7 +5820,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "OfGNwYm73i8eoxkcz73cAVFjntc",
         "objToken": "VwBrdb0tYoLLeaxPBEkc2VhGn1g",
@@ -5854,7 +5853,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "PrShwOdJvi9hjOkyBCicrCY7nqb",
         "objToken": "EqiYd5RYQoElFSxDYyScsl3qnYg",
@@ -5886,7 +5885,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "FeE4wE5kwi2BvlksekTcJvN6n1e",
         "objToken": "I8QcduMPXoeKI0xEJV4cJSznnkh",
@@ -5932,7 +5931,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "XD3JwKvdDikxfnkipwZcGmn0nVd",
         "objToken": "FSBmsRVfLl0mdUdzz9EceYAAntc",
@@ -5963,7 +5962,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "O72Tw0SQpikTihknz70c3gNTnag",
         "objToken": "UjrQdVosxorIE6x7hXRc4SdQnSe",
@@ -6006,7 +6005,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Z90cwHqu1iij1ZkJ8rsceSDJnbc",
         "objToken": "ECZPdx5uwoV3SMxhamkcDHDqnjg",
@@ -6039,7 +6038,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Q0BAwFT3JiDPELkp0YDcXnWfniv",
         "objToken": "DG1SdGpc4orZrixDTJscXm1MnQh",
@@ -6082,7 +6081,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "CBQNwWkZHiEHj7k9e1ScTo57nkg",
         "objToken": "KwbHdJaJdoPC9GxQQ72cjaavnGg",
@@ -6116,7 +6115,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "BKwFwMqR4iXIBok07dzcvuz7nLd",
         "objToken": "FF07dCnDloCsErxORzjcM8S8nSb",
@@ -6147,7 +6146,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "QPepw9H3PiTsdQkWIc9cw5GJnDb",
         "objToken": "LmCxdLqNGoMmVfx37dvcUGU3n7f",
@@ -6194,7 +6193,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "ZphSwEnq1iRMZWkYntQcr1dfnOe",
         "objToken": "KlPldr5pxobgTtxyMgEc416jn4g",
@@ -6243,7 +6242,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "C4pwwThPJiCLnakGn41cfb4annb",
         "objToken": "Ak8QdS9yio1iOWxtwOjcXcKInWf",
@@ -6292,7 +6291,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "ClvWwoD2siN1BskPXGZcrCjInFf",
         "objToken": "CzDbdIhdeo62Wdxc5jbcjQNjnyg",
@@ -6302,8 +6301,8 @@
         "parentToken": "CBQNwWkZHiEHj7k9e1ScTo57nkg",
         "level": 3
       },
-      "content": "Anthropic，OpenAI宫斗背后的公司\nimage.png\n\nimage.png\n\n2023年11月，OpenAI 的 CEO Sam Altman和首席科学家 Ilya Sutskever 关于AI的发展和安全之争，引发了全球关注，在这场举世瞩目的“宫斗剧”中，屡次出现一家公司的身影，那就是Anthropic。\n\nOpenAI首席执行官Sam Altman在上周被解职之前，与公司董事会长达一年多的时间一直陷入争吵之中。Altman试图排除一位董事会成员Toner，因为他认为她合著的一篇研究论文批评了OpenAI在保持其人工智能技术安全方面的努力，同时赞扬了Anthropic采取的方法。\n\nOpenAI董事会成员，问答网站Quora联合创始人亚当·德安杰洛（Adam D’Angelo）在Sam Altman被免职后，上周末曾游说多位科技领袖--包括Anthropic的创始人达里奥·阿莫代伊（Dario Amodei）--担任OpenAI的新负责人，导致奥特曼回归的意图未能立即实现。（链接）\n\n根据硅谷科技评论（SVTR）AI创投库，Anthropic在所有大模型初创公司中融资额仅次于OpenAI，而且是唯一同时得到谷歌和亚马逊两大巨头力捧的公司，Anthropic到底有何与众不同？\n\n\n\n历史上，有两次重大的技术驱动变革：农业革命和工业革命。这些“通用”技术从根本上改变了经济运作的方式。在计算机存在的短时间内，机器在某些方面已经超越了人类的智能，这导致一些人认为人工智能（AI）将是下一个通用技术革命。\nimage1.jpeg\n\nSource: Our World In Data\n\n\n与狩猎采集者转向农耕或机器制造业的崛起一样，预计人工智将在经济的各个领域产生重大影响。特别是生成式人工智能的兴起，已经在任务自动化领域取得巨大突破。像OpenAI和Anthropic这样资金充足的研究机构已经利用专有的自然语言处理（NLP）模型，为企业提供服务。这些“基础模型”为数百甚至数千个个人开发者和机构构建新的人工智能应用提供了基础。据估计，生成式人工智能（AGI）将在接下来的十年内将全球GDP提高7%。\n\n在基础模型开发者中，Anthropic将自己定位为一家特别关注人工智能安全的公司，并描述自己正在构建“将安全置于前沿的人工智能研究和产品”。该公司由对伦理和安全问题感到担忧而辞去OpenAI职位的工程师创立，Anthropic已经开发了自己的方法来训练和部署“宪法人工智能”（ “Constitutional AI”），即具有嵌入式价值观且可由人类控制的大型语言模型（LLM）。自成立以来，其目标一直是部署“可操控、可解释和稳健的大规模人工智能系统”。\n\nFounding Story 创立故事\n\nAnthropic 由前 OpenAI 副总裁和兄弟姐妹 Dario Amodei（首席执行官）和 Daniela Amodei（总裁）于 2021 年创立。在推出 Anthropic 之前，Dario Amodei 是 OpenAI 的研究副总裁，而 Daniela 是 OpenAI 的安全与政策副总裁。\nimage2.png\n\nDario Amodei于1983年出生于意大利，并在美国长大，他是意大利和美国混血儿。他在斯坦福大学完成了本科学习，2006年获得物理学学士学位。随后，在2006年至2011年间，在普林斯顿大学完成了物理学和生物物理学的博士学位，他的博士论文题目是“网络规模电生理学：测量和理解神经电路的集体行为。博士毕业后，他再次回到斯坦福大学从事博士后研究， 主要研究方向就是现在创投领域火热的蛋白质组学。4年后，他终于离开校园，找到业界的第一份工作，是在百度担任研究员。\n\n2014年，全球人工智能领域的顶级大牛吴恩达出任百度首席科学家，同时负责百度研究院的领导工作，其下属的硅谷AI实验室（SVAIL）也于此时正式成立。刚从高校走出的Dario Amodei也正是在这个时候加入了百度的SVAIL实验室，但其在百度仅仅工作了不到一年时间便离开，前往谷歌担任高级研究员。\n\n2016年，Dario Amodei与Google的其他同事共同撰写了《AI安全中的具体问题》一文，讨论了神经网络的内在不可预测性。这篇论文引入了副作用和对不同模型能力的不安全探索的概念。它讨论的许多问题可能源于“机械可解释性”（mechanistic interpretability），或者对复杂模型内部运作机制的不理解。这些共同作者中的许多人，2016年与Dario一起加入OpenAI，他们试图传达快速扩展模型的安全风险，并最终成为Anthropic的基础。\n\n2019年，OpenAI宣布将从非营利组织重组为“有限盈利”组织，这一举措被归因于其提高了为投资者提供回报的能力。当年晚些时候，微软投资了10亿美元，以继续开发向善的人工智能，并为微软Azure云平台上的AI超级计算服务提供支持。 AI institute 首席执行官奥伦·埃茨尼(Oren Etzioni)在谈到这一转变时说：\n\n\n“[OpenAI] 最初是一个非营利组织，旨在使人工智能民主化。显然，当你获得[10亿美元]时，你必须产生回报。我认为他们的发展轨迹已经变得更加企业化。”\n\nOpenAI的重组最终引发了关于组织方向的内部紧张局势，该组织的目标是“构建安全的通用人工智能并与世界分享其好处”。有报道称，“分裂是在2019年微软投资10亿美元后，团队在方向上产生分歧后发生的。”特别是，对于OpenAI是否会垄断人工智能领域的“产业困扰”引发了OpenAI内部许多人的担忧，包括前政策总监Jack Clark和机械解释工程师Chris Olah。同样，这也为OpenAI几天前的动乱埋下了伏笔。\n\n\nAnthropic 首席执行官达里奥·阿莫德 (Dario Amode) 将 Anthropic 最终从 OpenAI 分裂的原因归因于对 AI 安全的担忧，并将离开 OpenAI 并创立 Anthropic 的决定描述如下：\n\n\"在OpenAI内部有一群人，当我们创造GPT-2和GPT-3后，对两件事有非常强烈的信念。我认为比大多数人更加坚信这两点。一是认为这些模型中投入的计算资源越多，它们会变得越好，几乎没有尽头。我认为现在这个观点得到了更广泛的认可，但我们是最早的信仰者。第二点是认为需要除了仅仅扩大模型规模之外的东西，那就是对齐或安全性。仅仅通过增加计算资源并不能告诉模型它们的价值观。所以我们秉持着这个想法，成立了自己的公司。\"\n\nDario Amodei的妹妹 Daniela Amodei 在加州大学圣克鲁兹分校获得了英语文学、政治和音乐的文学学士学位，并以最高荣誉毕业。\n\n2010年，Daniela开始了她的职业生涯，先是在马里兰大学学园中心的国际发展项目工作，然后在Conservation Through Public Health担任研究员，接着在Matt Cartwright竞选国会工作，并在2013年为美国众议院工作。\n\n随后她开始跳入企业界，她在2013年加入了Stripe，最初担任招聘人员，随后成为核心运营、用户政策和核保的风险经理。她的职业生涯得到了飞速发展，最终在Stripe担任风险项目经理。2018年她加入了OpenAI，先是担任工程经理和人力资源副总裁，随后成为安全和政策副总裁，负责监督技术安全和政策职能，并管理业务运营团队。\n\nDario Amodei 于 2020 年 12 月离开 OpenAI开始创业，其他 14 名研究人员最终也离开OpenAI 加入 Anthropic，其中包括他的妹妹 Daniela Amodei。\n\n值得一提的是Daniela Amodei的丈夫Holden Karnofsky是Open Philanthropy的CEO，这是一个由科技亿万富翁支持的基金会。这家基金会致力于防止人工智能对人类造成灾难性风险，支持了包括乔治城大学安全与新兴技术中心、兰德公司等智库，投票罢免Sam Altman的 OpenAI 前董事海伦·托纳（Helen Toner）和塔莎·麦考利（Tasha McCauley）分别在这两家机构任职。\nProduct 产品\nFoundational Model Research\n基础模型研究\n\n自成立以来，Anthropic 将其资源投入到“可操纵、可解释和稳健的大规模人工智能系统”，强调其与“乐于助人、诚实且无害”（helpful, honest, and harmless）的人类价值观相一致。\n\nAnthropic 成立后不久，发布了一系列研究大规模生成模型的不可预测性的论文。 2022年2月，它发表了一篇论文《大型生成模型中的可预测性和惊喜》（Predictability and Surprise in Large Generative Models），分析不可预测的损失。研究发现，尽管模型的准确性随着模型参数数量的增加而不断增加，但某些任务（例如三位数加法）的准确性在达到某些参数计数阈值时似乎会飙升。作者写道：“开发人员无法准确地告诉你，随着模型规模的扩大，将会出现哪些新行为。” “例如，当开发人员增加模型的大小时，完成特定任务的能力有时会突然出现。”\nimage3.jpeg\n\nSource: Anthropic \n\n这种不可预测性可能会导致意想不到的后果，文章指出，特别是如果仅仅为了经济利益或在缺乏政策干预的情况下使用。\n\n2022年4月，Anthropic推出了一种使用偏好建模和来自人类反馈的强化学习（RLHF）方法来训练“有用且无害”（helpful and harmless）的人工智能助手的方法。模型与人工助手进行开放性对话，为每个输入提示生成多个响应。然后人类会选择他们认为最有帮助和/或无害的响应，随着时间的推移奖励模型。\nimage4.jpeg\n\nSource: Anthropic \n\n\n最终，这种对齐工作使得 RLHF 模型在零样本和少样本任务（即完全没有示例或先前示例有限的任务）中比普通语言模型可能更为强大。\n\n此后，Anthropic 能够利用其发现将语言模型推向预期的结果，例如避免社会偏见、遵守道德原则和自我纠正。 2023 年 8 月，Anthropic 发布了一篇题为“利用影响函数研究大型语言模型泛化”（Studying Large Language Model Generalization with Influence Functions）的论文，其中对训练数据对模型输出的影响进行了功能逆向工程。\n\nConstitutional AI 宪法人工智能\n\n2022 年 12 月，Anthropic 发布了一种新颖的方法来训练有用且无害的人工智能助手。被标记为“宪法人工智能”（Constitutional AI）的过程涉及（1）通过监督学习来训练模型，以遵守来自各种来源（包括联合国人权宣言）的某些道德原则，（2）创建一个类似的偏好模型，以及（3）使用偏好模型作为初始模型的判断器，通过强化学习逐步提高其输出。\nimage5.jpeg\n\nSource: TechCrunch \n\n首席执行官达里奥·阿莫迪 (Dario Amodei) 指出，这种宪法人工智能模型可以按照任何选定的原则进行训练，他说：\n\n“我将撰写一份我们称之为宪法的文件。[...]我们首先告诉模型，将按照宪法行事。我们有一个模型按照宪法行事，然后另一个模型看宪法，看任务和回应。所以如果模型说，要保持政治中立，而模型回答说，我喜欢唐纳德·特朗普，那么第二个模型，也就是批评者，应该说，你表达了对一位政治候选人的偏好，你应该保持政治中立。[...]AI评估AI。AI取代了人类承包商过去的工作。如果运作良好，我们得到的结果将符合所有这些宪法原则。”\n\n这个过程被称为“从AI反馈中进行强化学习”（RLAIF），实际上自动化了RLHF中人类的角色，使其成为可扩展的安全措施。同时，宪法人工智能增加了这些模型的透明度，因为这些人工智能系统的目标和目的变得更容易解读。\n\n\n\n然而，尽管 Anthropic 经过 RLAIF 训练的输出在其响应中表现出更高的无害性，但其有用性的增加并不那么明显。 Anthropic 将其宪法人工智能描述为“无害但不会有攻击（harmless but non-evasive）”，因为它现在不仅反对有害的查询，而且还可以向用户解释其反对意见，从而略微提高其帮助性并提高其透明度。 “当谈到两者之间的权衡时，我当然宁愿 Claude无聊，也不愿 Claude 变得危险……最终，我们将两全其美”，达里奥·阿莫迪在接受采访时说道。\nimage6.jpeg\n\nSource: Anthropic \n\nAnthropic 对宪法人工智能的开发是一项充满希望的突破，使其商业产品（例如 Claude）能够遵循具体和透明的道德准则。正如公司所言：\n\n\n“无论是有意还是无意，人工智能模型都会有价值系统。我们宪法人工智能的目标之一是使这些目标变得明确并且易于根据需要进行更改。”\nClaude AI\n\nClaude 于 2022 年 4 月在封闭 Alpha 版中推出，是 Anthropic 的旗舰人工智能助手。尽管 Claude 1 的 4.3 亿个参数数量少于 GPT-3 的 1750 亿个参数，但其 9K 个 token 的上下文窗口甚至比 GPT-4（8K 个 token，或大约 6K 个单词）还要多。 Claude 的能力涵盖文本创建和摘要、搜索、编程等。在封闭 alpha 版本阶段，Claude 限制了对 Notion、Quora 和 DuckDuckGo 等主要合作伙伴的访问。\n\n2023 年 3 月，Claude 在英国和美国向大众发布。 Anthropic 指出，Claude的答案据称比其他聊天机器人更有帮助且无害。它还具有解析 PDF 文档的能力。\n\n2023年7月，Claude2 发布。该版本旨在提供更好的对话能力、更深入的上下文理解以及比其前身更好的道德行为。 Claude 2 的参数数量比上一次迭代翻了一番，达到 8.6 亿个，而其上下文窗口显着增加到 100K 个标记（大约 75K 个单词），理论上限为 200K。\n\n就在OpenAI宫斗的那一周，Claude 2.1发布，具有20万上下文窗口，API比GPT-4 Turbo便宜20%。根据初步测试，还没有迹象显示 Claude 2.1在质量方面足以超越GPT-4 Turbo，但其在危害性领域表现出了优势。\nimage7.jpeg\n\nSource: Anthropic \nClaude Instant \n\nClaude Instant 于 2023 年 3 月与 Claude 本身一起发布，Anthropic 将其描述为“更轻、更便宜、更快的选择”。 Claude Instant 最初发布时带有 9K token 的上下文窗口，与 Claude 的上下文窗口相同。\n\n2023 年 8 月， Claude Instant 1.2 的 API发布。利用 Claude 2 的优势，其上下文窗口扩展到 100K 个token，足以在几秒钟内分析整个《了不起的盖茨比》。 Claude Instant 1.2 还表现出了对各种科目的较高熟练程度，包括数学、编程和阅读等科目，并且出现幻觉和胡言乱语（hallucinations & jailbreaks）的风险较低。\nimage8.jpeg\n\nSource: Anthropic \nMarket 市场\nCustomer 顾客\n\nAnthropic 的 Claude 已用于各种不同的行业，包括：\n客户服务和销售：Claude 为客户服务请求提供快速、友好的建议，据说比其他选择更快。早期用户似乎选择Claude 是因为与其他选择相比，它的对话更自然。 2023 年 8 月，韩国领先的电信运营商 SK Telecom 宣布与公司建立合作伙伴关系，在广泛的电信应用中使用 Claude，尤其是客户服务。\n法律：Claude 扩展的上下文窗口允许其读取和写入更长的文档，这可用于解析法律文档。Claude 在律师考试中取得了76.5%的成绩，也可以为律师提供支持。\n指导：Claude 可以作为用户的个人成长伴侣，提供有用的建议。\n搜索：虽然 Claude 无法实时访问互联网，但其 API 可以集成到私人和公共知识库中。 DuckDuckGo 是 Claude 的早期采用者，利用 Claude 在维基百科上的摘要功能开发了 DuckAssist，为用户查询提供即时答案。\n后台：Claude 还可以集成到各种办公工作流程中，例如从工作文档或电子邮件中提取信息。例如，Claude App for Slack 就是在 Slack 平台上构建的。经用户许可，它可以访问即时消息并可以作出响应。\n\n作为一名通用人工智能助理，Claude 的服务并不局限于上述行业和用例。例如，Claude 凭借其独特的写作和总结特征，为 Notion AI 提供了支撑。 Claude 还被用来支持代码完成和生成产品，例如 Sourcegraph。\n\n业务合作伙伴和客户可以在各个领域使用Claude的服务，包括客户服务、法律、辅导、搜索、后台和销售。 Claude 已被用于为人工智能产品提供支持，例如 Notion AI、Quora 的实验性聊天应用程序 Poe 和 DuckDuckGo 的人工智能搜索工具 DuckAssist 等。其他著名客户包括 Slack、Zoom 和 AssemblyAI。\nimage9.jpeg\n\nSource: Anthropic \n\n2023 年 7 月，Anthropic 声称正在为“数千”名客户和业务合作伙伴提供服务。截至 2023 年 8 月，Claude for Enterprises 仍处于封闭测试阶段，其聊天机器人面向公众，并对感兴趣的客户开放申请。\nMarket Size 市场规模\n\n生成式人工智能预计将对各个行业产生重大影响。据报道，2023 年 6 月，生成式 AI 能够将占员工时间 60%-70% 的活动自动化，预计到 2040 年，生产力每年将增长 0.1%-0.6%。2023 年 4 月的一份报告声称，近三分之二的职业可以通过人工智能实现部分自动化。\nimage10.jpeg\n\nSource: Goldman Sachs \n\n\n2022 年，生成式 AI 产品市场规模为 400 亿美元，预计到 2032 年将增长至 1.3 万亿美元。自 2022 年底发布 ChatGPT 以来，该行业飞速发展，2023 年上半年的私人融资与 2022 年全年相比增长了5倍。\nimage11.jpeg\n\nSource: CBInsights \n任务自动化是行业增长的强大推动力，其中客户运营、营销和销售、软件和研发占比达到 75%。麦肯锡估计，生成式人工智能每年有可能增加 4.4 万亿美元的价值。据估计，到 2045 年，一半的工作活动将实现自动化。\n\n另一个快速增长的关键指标是商业 NLP 模型中的参数数量。 Google 的 BERT-Large 是第一个 Transformer 模型，它用了 3.4 亿个参数。五年后，2023 年 3 月发布的 GPT-4 估计拥有近 18 亿个参数。\nimage12.jpeg\n\nSource: Our World In Data\n\n\n模型中使用的参数数量与其准确性密切相关。虽然大多数模型在分类、编辑、总结文本和图像方面表现出色，但它们成功执行任务的能力差异很大。正如首席执行官Daria Amodei所言：“它们在某些领域感觉像实习生，然后在某些领域表现出色，真的是天才。”\n\nimage13.jpeg\n\nSource: The Next Platform\n\n\n随着模型参数增加，其影响的程度力也会增加，这种影响可能是积极的，也可能是有害的。首席执行官 Dario Amodei 表达了他对模型的长期潜在影响的担忧，他表示：\n\n\"没有人在乎你能否让模型操控[一辆汽车] — 你可以在谷歌上找到这方面的信息。我实际上非常担忧在两三年内，我们会达到这样一个程度，模型可以…在科学、工程、生物学等领域做出非常危险的事情，然后jailbreak可能关系到生死存亡。\"\nCompetition 竞赛\nOpenAI （链接）\n\nOpenAI 成立于 2015 年，因其开发生成式预训练 Transformer (GPT) 而闻名。自 2018 年发布首款模型以来，其公共模型 ChatGPT（由 GPT-3.5 提供支持）在推出两个月内就积累了超过 1 亿的月活跃用户。截至 2023 年 10 月，OpenAI 已筹集 113 亿美元资金，其中包括微软在 2023 年初投资的 100 亿美元。2023 年 8 月，OpenAI正与Thrive Capital商谈老股交易，后者将从OpenAI员工手中购买老股。该交易将使OpenAI的估值至少达到800亿美元。024\n\n与 Anthropic 一样，OpenAI 为其基础模型提供 API，包括自然语言模型 GPT、图像生成器 DALL-E 以及语音转文本和翻译模型 Whisper。尽管其模型对每个token的平均收费较高，但 Claude 在即时完成、文本创建、代码生成和其他任务方面的能力往往不如 OpenAI 的 ChatGPT。尽管表现有所不同，Claude 仍被认为表现出更好的写作能力，特别是在创意写作方面。\n自 2018 年以来，OpenAI 从非营利组织转变为上限盈利组织，这一行为最终引发了分歧，最终导致了 Anthropic 的诞生。尽管价值观存在分歧，它将继续与 Anthropic 竞争，打造下一代最先进的模型。\nCohere \n\nCohere 由前 Google Brain AI 研究员和 Transformer 模型的突破性论文作者之一 Aidan Gomez 所创立，是另一家领先的 NLP 模型提供商。它通过其 API 向其业务合作伙伴提供可用于摘要、文本生成和分类目的的内部大型语言模型。这些模型可用于简化内部流程，还提供定制和超本地化微调功能。\n\n尽管其每个生成或解释的token的成本低于其他公司，但Cohere可能会对寻求定制建造的LLM的企业收取高昂的前期费用。与Anthropic和OpenAI一样，Cohere还提供了一个名为Coral的知识助手，以简化企业内部运营。与OpenAI和Anthropic相比，Cohere的使命似乎更注重LLM的可访问性，而不是其基础模型的强度。\n\n2023 年 6 月，Cohere 筹集了 2.7 亿美元的 C 轮融资（005），该轮融资的估值为 21 亿美元。尽管如此，Cohere 得到了 Salesforce 和 Nvidia 等领先科技机构的支持。今年9月，Cohere 聘请JPM和高盛为其筹集可能超过30亿美元的估值轮次。017\nHugging Face \n\nHugging Face 被称为“机器学习的 GitHub”，是所有人工智能领域的唯一开源平台。截至 2023 年 8 月，它拥有近 30 万个免费公开模型，涵盖 NLP、计算机视觉、图像生成和音频处理。该平台上的任何用户都可以发布和下载模型和数据集，其最流行的模型包括 Stable Diffusion、GPT-2、BERT 和 LLaMA 2。尽管大多数 Transformer 模型通常太大而无法在没有超级计算机的情况下进行训练，但用户可以轻松访问和部署此类模型。\n\nHugging Face 采用开源的商业模式，这意味着所有用户都可以访问其公共模型。付费用户可以获得额外的功能，例如模型托管、推理 API 集成、额外的安全性等等。相对于Anthropic，其核心产品更加以社区为中心。\n公司累计筹集了 3.952 亿美元，其中 2023 年 8 月的 2.35 亿美元 D 轮融资使该公司估值达到 45 亿美元，是 2023 年 5 月上一轮估值的两倍，也是其报告的 ARR 的 100 倍以上。016 \n作为向公众传播大型基础模型的平台（尽管模型比 Anthropic 和 OpenAI 开发的模型等最先进模型落后 1-2 代），Hugging Face 代表了人工智能领域的重要参与者。\n\n其他研究机构\n\nAnthropic 还与科技巨头支持的人工智能研究实验室竞争。最引人注目的是谷歌的 DeepMind、Meta AI 和微软 Azure AI。\nDeepmind: \n成立于2010年，2014年被谷歌收购。被称为谷歌DeepMind，后来在谷歌“加速人工智能进步”的努力中与谷歌大脑合并。 DeepMind 的 Gemini 提供了与 GPT-4 类似的功能，是 Google DeepMind 研究工作的关键。作为谷歌的人工智能研究分支，DeepMind 由于开发了可扩展的大型语言模型，间接成为 Anthropic 的竞争对手，这些LLM很可能用于为谷歌的人工智能搜索和谷歌云 NLP 服务提供服务。\n\nMeta: \nLLaMA 2 是 Meta 的大型语言模型，可用于研究和商业目的。 2023 年 7 月，Meta 宣布将使 LLaMA 开源。 “开源推动创新，因为它使更多的开发人员能够使用新技术进行构建”，马克·扎克伯格表示。 “它还提高了安全性，因为当软件开放时，更多的人可以仔细检查它以识别和修复潜在问题。”尽管与 GPT-4 和 Claude 2 相比更容易产生幻觉，但它是可用的最大的开源模型之一，因此很可能会被独立开发人员广泛使用。\nimage14.jpeg\n\nSource: Arthur AI\nMicrosoft Azure:\n微软Azure的AI平台提供了数百种服务，其中包括工具和框架，供用户构建人工智能解决方案使用。尽管其主要服务涉及人工智能架构，而不是基础模型本身，但其平台上提供的产品包括GPT-4和LLaMA 2，可以用于从内部认知搜索到视频和图像分析等服务。与Claude不同，后者是低代码的，适用于各种规模的团队，而Azure主要面向能够在现有模型之上编码的开发人员和数据科学家。因此，微软Azure AI作为Anthropic的间接竞争对手，增加了基础人工智能模型的可访问性和可定制性。\nBusiness Model 商业模式\n\nAnthropic 采用基于使用情况的定价模型向用户收费。 Claude Instant 处理的每百万个令牌（大约 75 万个单词）的提示成本（prompts ）为 1.63 美元，完成成本（completions）为 5.51 美元。对于 Claude 2，价格上涨至 11.02 美元/百万提示代币和 32.68 美元/百万完成代币。作为参考，OpenAI 对 GPT-4 的提示代币收费为 60 美元/百万美元，完成代币收费为 120 美元/百万美元。截至 2023 年 10 月，只有部分业务合作伙伴可以访问 Claude。尽管它目前不为其客户提供特定于行业或公司的功能，但会针对某些重要客户（包括韩国主要移动运营商 SK Telecom）微调其模型。\nTraction 牵引力\nAnthropic 声称拥有“数千”名客户。其精选的业务合作伙伴包括 Quora、Notion、Zoom、DuckDuckGo 和 SK Telecom。其服务范围从增强搜索到交互式消费者解决方案再到代码帮助。\n 2023 年 2 月，Anthropic 宣布谷歌为其“首选云提供商”，以扩展其云基础设施。此次合作之后，谷歌向 Anthropic 投资了 3 亿美元，获得其 10% 的股份。\n\n2023 年 4 月，Anthropic 宣布与 Scale AI 建立合作伙伴关系，允许两家公司为其客户提供全栈生成式 AI 解决方案。 Scale 的 AI 实验工具（例如模型验证、数据连接器和提示模板）使其客户能够充分利用 Claude 的功能。\n 2023 年 9 月，亚马逊宣布将向该公司投资 12 亿美元（最多 40 亿美元），使其能够使用亚马逊专有的 Trainium 和 Inferentia 芯片。亚马逊和 Anthropic 还于 2023 年 9 月宣布建立战略合作伙伴关系，使 AWS 成为主要云提供商。Anthropic 表达了对谷歌和亚马逊作为战略合作伙伴的持续兴趣。\n\n此外，到 2023 年底，Anthropic 的收入预计将达到 2 亿美元。\nValuation 估值\n\nAnthropic 将自己定位为人工智能安全研究实验室。然而，为了进行这项研究，Amodei 兄弟姐妹计算出他们需要构建自己最先进的人工智能模型。为此，他们需要大量的计算能力，这反过来意味着他们需要大量的资金。这意味着他们需要作为一家企业来运营，向其他企业出售其人工智能模型的使用权并从投资者那里筹集资金，而不是作为非营利组织。\n2023年5月之前，Anthropic 获得超过10亿的投资，投资方包括Emerging Risk、谷歌、 Spark Capital ，还有现已破产的 FTX 加密货币交易所。\n2023 年 5 月，Anthropic 获得谷歌和 Spark Capital 再次领投的 4.5 亿美元 C 轮融资，估值达到 41 亿美元。\n2023 年 8 月，SK Telecom 宣布与 Anthropic 合作后，又投资了 1 亿美元。015\n\n2023 年 9 月，亚马逊宣布计划向 Anthropic 投资最多 40 亿美元，并表示最初将投资约 13 亿美元购买少数股权，并就将投资总额增加至 40 亿美元的选择权以及对 Anthropic 的承诺进行了谈判。 021\n2023年10月，Anthropic 从包括谷歌在内的投资者筹集 20 亿美元，估值为 200 至 300 亿美元。025\n\n\n\nKey Opportunities 关键机会\nPractical AI 实用人工智能\n\nClaude 具有天生的竞争优势，使其成为最适合企业的产品。 ChatGPT、Bard 和 Bing 这三个由老牌科技巨头支持的最大的公开聊天机器人之间，Claude 的道德关注使其最容易与企业价值观保持一致。 2023 年 6 月的一项调查显示，目前只有 29% 的企业领导人对商业人工智能的道德抱有信心。  Claude 将无害性降到最低、同时将有益性的能力进行了广泛开发，使其在商业任务自动化领域处于领先地位。\n\nClaude 的上下文窗口也比 GPT-4 的上下文窗口大一个数量级。在 100K 个标记（大约 75K 个单词）下，它能够在 30 秒内找到整部《了不起的盖茨比》中单个被修改的句子。特别是，其极大的上下文窗口使其能够处理某些行业大型文档的要求。\n\nimage15.jpeg\n\nSource: LMSys Leaderboard; Contrary Research\n\n\nAnthropic 还表示计划打造“Claude-Next”，这是一个比现有人工智能好 10 倍的“前沿模型”。该模型的开发在未来两年内需要高达 50 亿美元，被描述为“下一代人工智能自学算法”（next-gen algorithm for AI self-teaching），类似于人类水平的 AGI。如果 Anthropic 成为第一个实现这一目标的公司，它很可能会引领市场。\nSupport from Policymakers\n政策制定者的支持\n\n2023 年 5 月，副总统卡玛拉·哈里斯 (Kamala Harris) 邀请达里奥·阿莫迪 (Dario Amodei) 以及谷歌、微软和 OpenAI 的首席执行官讨论防范人工智能潜在风险的保障措施。 “必须减轻人工智能对个人、社会和国家安全造成的当前和潜在风险。这些包括对安全、安保、人权和公民权利、隐私、就业和民主价值观的风险”，白宫在一份新闻稿中指出。随后，美国通过国家电信和信息管理局（NTIA）公开呼吁安全可信的人工智能。政府关于开发负责任的人工智能的许多建议与 Anthropic 的建议一致，强调了与竞争对手相比，它对安全的关注。对于未能达到这些标准的竞争对手来说，可能存在的制度障碍可能最终有利于 Anthropic 开发更强大的基础模型的努力。\nKey Risks 主要风险\nUnethical Data Practices 不道德的数据实践\n\n2023 年 7 月，OpenAI 和 Meta 均被喜剧演员兼作家 Sarah Silverman 以及作家 Christopher Golden 和 Richard Kadrey 起诉，理由是未经许可使用受版权保护的材料作为训练数据。Anthropic 的研究涉及其基础模型的伦理性，这意味着该模型也会和同行一样面临训练数据的困扰。\n\n人工智能领域的保密性\n\n尽管 Anthropic 专注于人工智能安全，但它也难以满足某些要求。 2023 年 6 月的一份报告使用欧盟人工智能法案草案作为评估人工智能公司披露实践的标准，将 Claude排名倒数第二。值得注意的是，Anthropic 尚未完全披露用于训练 Claude 的数据来源，并且对于用于评估其宪法人工智能危害性的提示也仍然含糊其辞。随着 Anthropic 继续开发基础模型，它必须在安全的人工智能披露实践与失去竞争优势的总体风险之间取得平衡。\nimage16.jpeg\n\nSource: Stanford CRFM \n\nSummary 概括\n\n作为大模型的领先玩家之一，Anthropic 凭借其注重安全的替代方案 Claude，在与 ChatGPT 的竞争中取得了重大进展。自从与 OpenAI 分道扬镳以来，Anthropic 团队进行了大量研究，扩大了大型模型的规模和能力，并在人工智能系统的可解释性和方向方面取得了关键突破。\n\n尽管如此，随着越来越多的资金投向AI研究组织，加速人工智能研究的发展，像 Anthropic 这样的公司可能会遭受与2019年OpenAI一样的文化转变的所带来的困扰。\n",
-      "contentLength": 14152,
+      "content": "Anthropic，OpenAI宫斗背后的公司\nimage.png\n\nimage.png\n\nimage.png\n\n2023年11月，OpenAI 的 CEO Sam Altman和首席科学家 Ilya Sutskever 关于AI的发展和安全之争，引发了全球关注，在这场举世瞩目的“宫斗剧”中，屡次出现一家公司的身影，那就是Anthropic。\n\nOpenAI首席执行官Sam Altman在上周被解职之前，与公司董事会长达一年多的时间一直陷入争吵之中。Altman试图排除一位董事会成员Toner，因为他认为她合著的一篇研究论文批评了OpenAI在保持其人工智能技术安全方面的努力，同时赞扬了Anthropic采取的方法。\n\nOpenAI董事会成员，问答网站Quora联合创始人亚当·德安杰洛（Adam D’Angelo）在Sam Altman被免职后，上周末曾游说多位科技领袖--包括Anthropic的创始人达里奥·阿莫代伊（Dario Amodei）--担任OpenAI的新负责人，导致奥特曼回归的意图未能立即实现。（链接）\n\n根据硅谷科技评论（SVTR）AI创投库，Anthropic在所有大模型初创公司中融资额仅次于OpenAI，而且是唯一同时得到谷歌和亚马逊两大巨头力捧的公司，Anthropic到底有何与众不同？\n\n\n\n历史上，有两次重大的技术驱动变革：农业革命和工业革命。这些“通用”技术从根本上改变了经济运作的方式。在计算机存在的短时间内，机器在某些方面已经超越了人类的智能，这导致一些人认为人工智能（AI）将是下一个通用技术革命。\nimage1.jpeg\n\nSource: Our World In Data\n\n\n与狩猎采集者转向农耕或机器制造业的崛起一样，预计人工智将在经济的各个领域产生重大影响。特别是生成式人工智能的兴起，已经在任务自动化领域取得巨大突破。像OpenAI和Anthropic这样资金充足的研究机构已经利用专有的自然语言处理（NLP）模型，为企业提供服务。这些“基础模型”为数百甚至数千个个人开发者和机构构建新的人工智能应用提供了基础。据估计，生成式人工智能（AGI）将在接下来的十年内将全球GDP提高7%。\n\n在基础模型开发者中，Anthropic将自己定位为一家特别关注人工智能安全的公司，并描述自己正在构建“将安全置于前沿的人工智能研究和产品”。该公司由对伦理和安全问题感到担忧而辞去OpenAI职位的工程师创立，Anthropic已经开发了自己的方法来训练和部署“宪法人工智能”（ “Constitutional AI”），即具有嵌入式价值观且可由人类控制的大型语言模型（LLM）。自成立以来，其目标一直是部署“可操控、可解释和稳健的大规模人工智能系统”。\n\nFounding Story 创立故事\n\nAnthropic 由前 OpenAI 副总裁和兄弟姐妹 Dario Amodei（首席执行官）和 Daniela Amodei（总裁）于 2021 年创立。在推出 Anthropic 之前，Dario Amodei 是 OpenAI 的研究副总裁，而 Daniela 是 OpenAI 的安全与政策副总裁。\nimage2.png\n\nDario Amodei于1983年出生于意大利，并在美国长大，他是意大利和美国混血儿。他在斯坦福大学完成了本科学习，2006年获得物理学学士学位。随后，在2006年至2011年间，在普林斯顿大学完成了物理学和生物物理学的博士学位，他的博士论文题目是“网络规模电生理学：测量和理解神经电路的集体行为。博士毕业后，他再次回到斯坦福大学从事博士后研究， 主要研究方向就是现在创投领域火热的蛋白质组学。4年后，他终于离开校园，找到业界的第一份工作，是在百度担任研究员。\n\n2014年，全球人工智能领域的顶级大牛吴恩达出任百度首席科学家，同时负责百度研究院的领导工作，其下属的硅谷AI实验室（SVAIL）也于此时正式成立。刚从高校走出的Dario Amodei也正是在这个时候加入了百度的SVAIL实验室，但其在百度仅仅工作了不到一年时间便离开，前往谷歌担任高级研究员。\n\n2016年，Dario Amodei与Google的其他同事共同撰写了《AI安全中的具体问题》一文，讨论了神经网络的内在不可预测性。这篇论文引入了副作用和对不同模型能力的不安全探索的概念。它讨论的许多问题可能源于“机械可解释性”（mechanistic interpretability），或者对复杂模型内部运作机制的不理解。这些共同作者中的许多人，2016年与Dario一起加入OpenAI，他们试图传达快速扩展模型的安全风险，并最终成为Anthropic的基础。\n\n2019年，OpenAI宣布将从非营利组织重组为“有限盈利”组织，这一举措被归因于其提高了为投资者提供回报的能力。当年晚些时候，微软投资了10亿美元，以继续开发向善的人工智能，并为微软Azure云平台上的AI超级计算服务提供支持。 AI institute 首席执行官奥伦·埃茨尼(Oren Etzioni)在谈到这一转变时说：\n\n\n“[OpenAI] 最初是一个非营利组织，旨在使人工智能民主化。显然，当你获得[10亿美元]时，你必须产生回报。我认为他们的发展轨迹已经变得更加企业化。”\n\nOpenAI的重组最终引发了关于组织方向的内部紧张局势，该组织的目标是“构建安全的通用人工智能并与世界分享其好处”。有报道称，“分裂是在2019年微软投资10亿美元后，团队在方向上产生分歧后发生的。”特别是，对于OpenAI是否会垄断人工智能领域的“产业困扰”引发了OpenAI内部许多人的担忧，包括前政策总监Jack Clark和机械解释工程师Chris Olah。同样，这也为OpenAI几天前的动乱埋下了伏笔。\n\n\nAnthropic 首席执行官达里奥·阿莫德 (Dario Amode) 将 Anthropic 最终从 OpenAI 分裂的原因归因于对 AI 安全的担忧，并将离开 OpenAI 并创立 Anthropic 的决定描述如下：\n\n\"在OpenAI内部有一群人，当我们创造GPT-2和GPT-3后，对两件事有非常强烈的信念。我认为比大多数人更加坚信这两点。一是认为这些模型中投入的计算资源越多，它们会变得越好，几乎没有尽头。我认为现在这个观点得到了更广泛的认可，但我们是最早的信仰者。第二点是认为需要除了仅仅扩大模型规模之外的东西，那就是对齐或安全性。仅仅通过增加计算资源并不能告诉模型它们的价值观。所以我们秉持着这个想法，成立了自己的公司。\"\n\nDario Amodei的妹妹 Daniela Amodei 在加州大学圣克鲁兹分校获得了英语文学、政治和音乐的文学学士学位，并以最高荣誉毕业。\n\n2010年，Daniela开始了她的职业生涯，先是在马里兰大学学园中心的国际发展项目工作，然后在Conservation Through Public Health担任研究员，接着在Matt Cartwright竞选国会工作，并在2013年为美国众议院工作。\n\n随后她开始跳入企业界，她在2013年加入了Stripe，最初担任招聘人员，随后成为核心运营、用户政策和核保的风险经理。她的职业生涯得到了飞速发展，最终在Stripe担任风险项目经理。2018年她加入了OpenAI，先是担任工程经理和人力资源副总裁，随后成为安全和政策副总裁，负责监督技术安全和政策职能，并管理业务运营团队。\n\nDario Amodei 于 2020 年 12 月离开 OpenAI开始创业，其他 14 名研究人员最终也离开OpenAI 加入 Anthropic，其中包括他的妹妹 Daniela Amodei。\n\n值得一提的是Daniela Amodei的丈夫Holden Karnofsky是Open Philanthropy的CEO，这是一个由科技亿万富翁支持的基金会。这家基金会致力于防止人工智能对人类造成灾难性风险，支持了包括乔治城大学安全与新兴技术中心、兰德公司等智库，投票罢免Sam Altman的 OpenAI 前董事海伦·托纳（Helen Toner）和塔莎·麦考利（Tasha McCauley）分别在这两家机构任职。\nProduct 产品\nFoundational Model Research\n基础模型研究\n\n自成立以来，Anthropic 将其资源投入到“可操纵、可解释和稳健的大规模人工智能系统”，强调其与“乐于助人、诚实且无害”（helpful, honest, and harmless）的人类价值观相一致。\n\nAnthropic 成立后不久，发布了一系列研究大规模生成模型的不可预测性的论文。 2022年2月，它发表了一篇论文《大型生成模型中的可预测性和惊喜》（Predictability and Surprise in Large Generative Models），分析不可预测的损失。研究发现，尽管模型的准确性随着模型参数数量的增加而不断增加，但某些任务（例如三位数加法）的准确性在达到某些参数计数阈值时似乎会飙升。作者写道：“开发人员无法准确地告诉你，随着模型规模的扩大，将会出现哪些新行为。” “例如，当开发人员增加模型的大小时，完成特定任务的能力有时会突然出现。”\nimage3.jpeg\n\nSource: Anthropic \n\n这种不可预测性可能会导致意想不到的后果，文章指出，特别是如果仅仅为了经济利益或在缺乏政策干预的情况下使用。\n\n2022年4月，Anthropic推出了一种使用偏好建模和来自人类反馈的强化学习（RLHF）方法来训练“有用且无害”（helpful and harmless）的人工智能助手的方法。模型与人工助手进行开放性对话，为每个输入提示生成多个响应。然后人类会选择他们认为最有帮助和/或无害的响应，随着时间的推移奖励模型。\nimage4.jpeg\n\nSource: Anthropic \n\n\n最终，这种对齐工作使得 RLHF 模型在零样本和少样本任务（即完全没有示例或先前示例有限的任务）中比普通语言模型可能更为强大。\n\n此后，Anthropic 能够利用其发现将语言模型推向预期的结果，例如避免社会偏见、遵守道德原则和自我纠正。 2023 年 8 月，Anthropic 发布了一篇题为“利用影响函数研究大型语言模型泛化”（Studying Large Language Model Generalization with Influence Functions）的论文，其中对训练数据对模型输出的影响进行了功能逆向工程。\n\nConstitutional AI 宪法人工智能\n\n2022 年 12 月，Anthropic 发布了一种新颖的方法来训练有用且无害的人工智能助手。被标记为“宪法人工智能”（Constitutional AI）的过程涉及（1）通过监督学习来训练模型，以遵守来自各种来源（包括联合国人权宣言）的某些道德原则，（2）创建一个类似的偏好模型，以及（3）使用偏好模型作为初始模型的判断器，通过强化学习逐步提高其输出。\nimage5.jpeg\n\nSource: TechCrunch \n\n首席执行官达里奥·阿莫迪 (Dario Amodei) 指出，这种宪法人工智能模型可以按照任何选定的原则进行训练，他说：\n\n“我将撰写一份我们称之为宪法的文件。[...]我们首先告诉模型，将按照宪法行事。我们有一个模型按照宪法行事，然后另一个模型看宪法，看任务和回应。所以如果模型说，要保持政治中立，而模型回答说，我喜欢唐纳德·特朗普，那么第二个模型，也就是批评者，应该说，你表达了对一位政治候选人的偏好，你应该保持政治中立。[...]AI评估AI。AI取代了人类承包商过去的工作。如果运作良好，我们得到的结果将符合所有这些宪法原则。”\n\n这个过程被称为“从AI反馈中进行强化学习”（RLAIF），实际上自动化了RLHF中人类的角色，使其成为可扩展的安全措施。同时，宪法人工智能增加了这些模型的透明度，因为这些人工智能系统的目标和目的变得更容易解读。\n\n\n\n然而，尽管 Anthropic 经过 RLAIF 训练的输出在其响应中表现出更高的无害性，但其有用性的增加并不那么明显。 Anthropic 将其宪法人工智能描述为“无害但不会有攻击（harmless but non-evasive）”，因为它现在不仅反对有害的查询，而且还可以向用户解释其反对意见，从而略微提高其帮助性并提高其透明度。 “当谈到两者之间的权衡时，我当然宁愿 Claude无聊，也不愿 Claude 变得危险……最终，我们将两全其美”，达里奥·阿莫迪在接受采访时说道。\nimage6.jpeg\n\nSource: Anthropic \n\nAnthropic 对宪法人工智能的开发是一项充满希望的突破，使其商业产品（例如 Claude）能够遵循具体和透明的道德准则。正如公司所言：\n\n\n“无论是有意还是无意，人工智能模型都会有价值系统。我们宪法人工智能的目标之一是使这些目标变得明确并且易于根据需要进行更改。”\nClaude AI\n\nClaude 于 2022 年 4 月在封闭 Alpha 版中推出，是 Anthropic 的旗舰人工智能助手。尽管 Claude 1 的 4.3 亿个参数数量少于 GPT-3 的 1750 亿个参数，但其 9K 个 token 的上下文窗口甚至比 GPT-4（8K 个 token，或大约 6K 个单词）还要多。 Claude 的能力涵盖文本创建和摘要、搜索、编程等。在封闭 alpha 版本阶段，Claude 限制了对 Notion、Quora 和 DuckDuckGo 等主要合作伙伴的访问。\n\n2023 年 3 月，Claude 在英国和美国向大众发布。 Anthropic 指出，Claude的答案据称比其他聊天机器人更有帮助且无害。它还具有解析 PDF 文档的能力。\n\n2023年7月，Claude2 发布。该版本旨在提供更好的对话能力、更深入的上下文理解以及比其前身更好的道德行为。 Claude 2 的参数数量比上一次迭代翻了一番，达到 8.6 亿个，而其上下文窗口显着增加到 100K 个标记（大约 75K 个单词），理论上限为 200K。\n\n就在OpenAI宫斗的那一周，Claude 2.1发布，具有20万上下文窗口，API比GPT-4 Turbo便宜20%。根据初步测试，还没有迹象显示 Claude 2.1在质量方面足以超越GPT-4 Turbo，但其在危害性领域表现出了优势。\nimage7.jpeg\n\nSource: Anthropic \nClaude Instant \n\nClaude Instant 于 2023 年 3 月与 Claude 本身一起发布，Anthropic 将其描述为“更轻、更便宜、更快的选择”。 Claude Instant 最初发布时带有 9K token 的上下文窗口，与 Claude 的上下文窗口相同。\n\n2023 年 8 月， Claude Instant 1.2 的 API发布。利用 Claude 2 的优势，其上下文窗口扩展到 100K 个token，足以在几秒钟内分析整个《了不起的盖茨比》。 Claude Instant 1.2 还表现出了对各种科目的较高熟练程度，包括数学、编程和阅读等科目，并且出现幻觉和胡言乱语（hallucinations & jailbreaks）的风险较低。\nimage8.jpeg\n\nSource: Anthropic \nMarket 市场\nCustomer 顾客\n\nAnthropic 的 Claude 已用于各种不同的行业，包括：\n客户服务和销售：Claude 为客户服务请求提供快速、友好的建议，据说比其他选择更快。早期用户似乎选择Claude 是因为与其他选择相比，它的对话更自然。 2023 年 8 月，韩国领先的电信运营商 SK Telecom 宣布与公司建立合作伙伴关系，在广泛的电信应用中使用 Claude，尤其是客户服务。\n法律：Claude 扩展的上下文窗口允许其读取和写入更长的文档，这可用于解析法律文档。Claude 在律师考试中取得了76.5%的成绩，也可以为律师提供支持。\n指导：Claude 可以作为用户的个人成长伴侣，提供有用的建议。\n搜索：虽然 Claude 无法实时访问互联网，但其 API 可以集成到私人和公共知识库中。 DuckDuckGo 是 Claude 的早期采用者，利用 Claude 在维基百科上的摘要功能开发了 DuckAssist，为用户查询提供即时答案。\n后台：Claude 还可以集成到各种办公工作流程中，例如从工作文档或电子邮件中提取信息。例如，Claude App for Slack 就是在 Slack 平台上构建的。经用户许可，它可以访问即时消息并可以作出响应。\n\n作为一名通用人工智能助理，Claude 的服务并不局限于上述行业和用例。例如，Claude 凭借其独特的写作和总结特征，为 Notion AI 提供了支撑。 Claude 还被用来支持代码完成和生成产品，例如 Sourcegraph。\n\n业务合作伙伴和客户可以在各个领域使用Claude的服务，包括客户服务、法律、辅导、搜索、后台和销售。 Claude 已被用于为人工智能产品提供支持，例如 Notion AI、Quora 的实验性聊天应用程序 Poe 和 DuckDuckGo 的人工智能搜索工具 DuckAssist 等。其他著名客户包括 Slack、Zoom 和 AssemblyAI。\nimage9.jpeg\n\nSource: Anthropic \n\n2023 年 7 月，Anthropic 声称正在为“数千”名客户和业务合作伙伴提供服务。截至 2023 年 8 月，Claude for Enterprises 仍处于封闭测试阶段，其聊天机器人面向公众，并对感兴趣的客户开放申请。\nMarket Size 市场规模\n\n生成式人工智能预计将对各个行业产生重大影响。据报道，2023 年 6 月，生成式 AI 能够将占员工时间 60%-70% 的活动自动化，预计到 2040 年，生产力每年将增长 0.1%-0.6%。2023 年 4 月的一份报告声称，近三分之二的职业可以通过人工智能实现部分自动化。\nimage10.jpeg\n\nSource: Goldman Sachs \n\n\n2022 年，生成式 AI 产品市场规模为 400 亿美元，预计到 2032 年将增长至 1.3 万亿美元。自 2022 年底发布 ChatGPT 以来，该行业飞速发展，2023 年上半年的私人融资与 2022 年全年相比增长了5倍。\nimage11.jpeg\n\nSource: CBInsights \n任务自动化是行业增长的强大推动力，其中客户运营、营销和销售、软件和研发占比达到 75%。麦肯锡估计，生成式人工智能每年有可能增加 4.4 万亿美元的价值。据估计，到 2045 年，一半的工作活动将实现自动化。\n\n另一个快速增长的关键指标是商业 NLP 模型中的参数数量。 Google 的 BERT-Large 是第一个 Transformer 模型，它用了 3.4 亿个参数。五年后，2023 年 3 月发布的 GPT-4 估计拥有近 18 亿个参数。\nimage12.jpeg\n\nSource: Our World In Data\n\n\n模型中使用的参数数量与其准确性密切相关。虽然大多数模型在分类、编辑、总结文本和图像方面表现出色，但它们成功执行任务的能力差异很大。正如首席执行官Daria Amodei所言：“它们在某些领域感觉像实习生，然后在某些领域表现出色，真的是天才。”\n\nimage13.jpeg\n\nSource: The Next Platform\n\n\n随着模型参数增加，其影响的程度力也会增加，这种影响可能是积极的，也可能是有害的。首席执行官 Dario Amodei 表达了他对模型的长期潜在影响的担忧，他表示：\n\n\"没有人在乎你能否让模型操控[一辆汽车] — 你可以在谷歌上找到这方面的信息。我实际上非常担忧在两三年内，我们会达到这样一个程度，模型可以…在科学、工程、生物学等领域做出非常危险的事情，然后jailbreak可能关系到生死存亡。\"\nCompetition 竞赛\nOpenAI （链接）\n\nOpenAI 成立于 2015 年，因其开发生成式预训练 Transformer (GPT) 而闻名。自 2018 年发布首款模型以来，其公共模型 ChatGPT（由 GPT-3.5 提供支持）在推出两个月内就积累了超过 1 亿的月活跃用户。截至 2023 年 10 月，OpenAI 已筹集 113 亿美元资金，其中包括微软在 2023 年初投资的 100 亿美元。2023 年 8 月，OpenAI正与Thrive Capital商谈老股交易，后者将从OpenAI员工手中购买老股。该交易将使OpenAI的估值至少达到800亿美元。024\n\n与 Anthropic 一样，OpenAI 为其基础模型提供 API，包括自然语言模型 GPT、图像生成器 DALL-E 以及语音转文本和翻译模型 Whisper。尽管其模型对每个token的平均收费较高，但 Claude 在即时完成、文本创建、代码生成和其他任务方面的能力往往不如 OpenAI 的 ChatGPT。尽管表现有所不同，Claude 仍被认为表现出更好的写作能力，特别是在创意写作方面。\n自 2018 年以来，OpenAI 从非营利组织转变为上限盈利组织，这一行为最终引发了分歧，最终导致了 Anthropic 的诞生。尽管价值观存在分歧，它将继续与 Anthropic 竞争，打造下一代最先进的模型。\nCohere \n\nCohere 由前 Google Brain AI 研究员和 Transformer 模型的突破性论文作者之一 Aidan Gomez 所创立，是另一家领先的 NLP 模型提供商。它通过其 API 向其业务合作伙伴提供可用于摘要、文本生成和分类目的的内部大型语言模型。这些模型可用于简化内部流程，还提供定制和超本地化微调功能。\n\n尽管其每个生成或解释的token的成本低于其他公司，但Cohere可能会对寻求定制建造的LLM的企业收取高昂的前期费用。与Anthropic和OpenAI一样，Cohere还提供了一个名为Coral的知识助手，以简化企业内部运营。与OpenAI和Anthropic相比，Cohere的使命似乎更注重LLM的可访问性，而不是其基础模型的强度。\n\n2023 年 6 月，Cohere 筹集了 2.7 亿美元的 C 轮融资（005），该轮融资的估值为 21 亿美元。尽管如此，Cohere 得到了 Salesforce 和 Nvidia 等领先科技机构的支持。今年9月，Cohere 聘请JPM和高盛为其筹集可能超过30亿美元的估值轮次。017\nHugging Face \n\nHugging Face 被称为“机器学习的 GitHub”，是所有人工智能领域的唯一开源平台。截至 2023 年 8 月，它拥有近 30 万个免费公开模型，涵盖 NLP、计算机视觉、图像生成和音频处理。该平台上的任何用户都可以发布和下载模型和数据集，其最流行的模型包括 Stable Diffusion、GPT-2、BERT 和 LLaMA 2。尽管大多数 Transformer 模型通常太大而无法在没有超级计算机的情况下进行训练，但用户可以轻松访问和部署此类模型。\n\nHugging Face 采用开源的商业模式，这意味着所有用户都可以访问其公共模型。付费用户可以获得额外的功能，例如模型托管、推理 API 集成、额外的安全性等等。相对于Anthropic，其核心产品更加以社区为中心。\n公司累计筹集了 3.952 亿美元，其中 2023 年 8 月的 2.35 亿美元 D 轮融资使该公司估值达到 45 亿美元，是 2023 年 5 月上一轮估值的两倍，也是其报告的 ARR 的 100 倍以上。016 \n作为向公众传播大型基础模型的平台（尽管模型比 Anthropic 和 OpenAI 开发的模型等最先进模型落后 1-2 代），Hugging Face 代表了人工智能领域的重要参与者。\n\n其他研究机构\n\nAnthropic 还与科技巨头支持的人工智能研究实验室竞争。最引人注目的是谷歌的 DeepMind、Meta AI 和微软 Azure AI。\nDeepmind: \n成立于2010年，2014年被谷歌收购。被称为谷歌DeepMind，后来在谷歌“加速人工智能进步”的努力中与谷歌大脑合并。 DeepMind 的 Gemini 提供了与 GPT-4 类似的功能，是 Google DeepMind 研究工作的关键。作为谷歌的人工智能研究分支，DeepMind 由于开发了可扩展的大型语言模型，间接成为 Anthropic 的竞争对手，这些LLM很可能用于为谷歌的人工智能搜索和谷歌云 NLP 服务提供服务。\n\nMeta: \nLLaMA 2 是 Meta 的大型语言模型，可用于研究和商业目的。 2023 年 7 月，Meta 宣布将使 LLaMA 开源。 “开源推动创新，因为它使更多的开发人员能够使用新技术进行构建”，马克·扎克伯格表示。 “它还提高了安全性，因为当软件开放时，更多的人可以仔细检查它以识别和修复潜在问题。”尽管与 GPT-4 和 Claude 2 相比更容易产生幻觉，但它是可用的最大的开源模型之一，因此很可能会被独立开发人员广泛使用。\nimage14.jpeg\n\nSource: Arthur AI\nMicrosoft Azure:\n微软Azure的AI平台提供了数百种服务，其中包括工具和框架，供用户构建人工智能解决方案使用。尽管其主要服务涉及人工智能架构，而不是基础模型本身，但其平台上提供的产品包括GPT-4和LLaMA 2，可以用于从内部认知搜索到视频和图像分析等服务。与Claude不同，后者是低代码的，适用于各种规模的团队，而Azure主要面向能够在现有模型之上编码的开发人员和数据科学家。因此，微软Azure AI作为Anthropic的间接竞争对手，增加了基础人工智能模型的可访问性和可定制性。\nBusiness Model 商业模式\n\nAnthropic 采用基于使用情况的定价模型向用户收费。 Claude Instant 处理的每百万个令牌（大约 75 万个单词）的提示成本（prompts ）为 1.63 美元，完成成本（completions）为 5.51 美元。对于 Claude 2，价格上涨至 11.02 美元/百万提示代币和 32.68 美元/百万完成代币。作为参考，OpenAI 对 GPT-4 的提示代币收费为 60 美元/百万美元，完成代币收费为 120 美元/百万美元。截至 2023 年 10 月，只有部分业务合作伙伴可以访问 Claude。尽管它目前不为其客户提供特定于行业或公司的功能，但会针对某些重要客户（包括韩国主要移动运营商 SK Telecom）微调其模型。\nTraction 牵引力\nAnthropic 声称拥有“数千”名客户。其精选的业务合作伙伴包括 Quora、Notion、Zoom、DuckDuckGo 和 SK Telecom。其服务范围从增强搜索到交互式消费者解决方案再到代码帮助。\n 2023 年 2 月，Anthropic 宣布谷歌为其“首选云提供商”，以扩展其云基础设施。此次合作之后，谷歌向 Anthropic 投资了 3 亿美元，获得其 10% 的股份。\n\n2023 年 4 月，Anthropic 宣布与 Scale AI 建立合作伙伴关系，允许两家公司为其客户提供全栈生成式 AI 解决方案。 Scale 的 AI 实验工具（例如模型验证、数据连接器和提示模板）使其客户能够充分利用 Claude 的功能。\n 2023 年 9 月，亚马逊宣布将向该公司投资 12 亿美元（最多 40 亿美元），使其能够使用亚马逊专有的 Trainium 和 Inferentia 芯片。亚马逊和 Anthropic 还于 2023 年 9 月宣布建立战略合作伙伴关系，使 AWS 成为主要云提供商。Anthropic 表达了对谷歌和亚马逊作为战略合作伙伴的持续兴趣。\n\n此外，到 2023 年底，Anthropic 的收入预计将达到 2 亿美元。\nValuation 估值\n\nAnthropic 将自己定位为人工智能安全研究实验室。然而，为了进行这项研究，Amodei 兄弟姐妹计算出他们需要构建自己最先进的人工智能模型。为此，他们需要大量的计算能力，这反过来意味着他们需要大量的资金。这意味着他们需要作为一家企业来运营，向其他企业出售其人工智能模型的使用权并从投资者那里筹集资金，而不是作为非营利组织。\n2023年5月之前，Anthropic 获得超过10亿的投资，投资方包括Emerging Risk、谷歌、 Spark Capital ，还有现已破产的 FTX 加密货币交易所。\n2023 年 5 月，Anthropic 获得谷歌和 Spark Capital 再次领投的 4.5 亿美元 C 轮融资，估值达到 41 亿美元。\n2023 年 8 月，SK Telecom 宣布与 Anthropic 合作后，又投资了 1 亿美元。015\n\n2023 年 9 月，亚马逊宣布计划向 Anthropic 投资最多 40 亿美元，并表示最初将投资约 13 亿美元购买少数股权，并就将投资总额增加至 40 亿美元的选择权以及对 Anthropic 的承诺进行了谈判。 021\n2023年10月，Anthropic 从包括谷歌在内的投资者筹集 20 亿美元，估值为 200 至 300 亿美元。025\n\n\n\nKey Opportunities 关键机会\nPractical AI 实用人工智能\n\nClaude 具有天生的竞争优势，使其成为最适合企业的产品。 ChatGPT、Bard 和 Bing 这三个由老牌科技巨头支持的最大的公开聊天机器人之间，Claude 的道德关注使其最容易与企业价值观保持一致。 2023 年 6 月的一项调查显示，目前只有 29% 的企业领导人对商业人工智能的道德抱有信心。  Claude 将无害性降到最低、同时将有益性的能力进行了广泛开发，使其在商业任务自动化领域处于领先地位。\n\nClaude 的上下文窗口也比 GPT-4 的上下文窗口大一个数量级。在 100K 个标记（大约 75K 个单词）下，它能够在 30 秒内找到整部《了不起的盖茨比》中单个被修改的句子。特别是，其极大的上下文窗口使其能够处理某些行业大型文档的要求。\n\nimage15.jpeg\n\nSource: LMSys Leaderboard; Contrary Research\n\n\nAnthropic 还表示计划打造“Claude-Next”，这是一个比现有人工智能好 10 倍的“前沿模型”。该模型的开发在未来两年内需要高达 50 亿美元，被描述为“下一代人工智能自学算法”（next-gen algorithm for AI self-teaching），类似于人类水平的 AGI。如果 Anthropic 成为第一个实现这一目标的公司，它很可能会引领市场。\nSupport from Policymakers\n政策制定者的支持\n\n2023 年 5 月，副总统卡玛拉·哈里斯 (Kamala Harris) 邀请达里奥·阿莫迪 (Dario Amodei) 以及谷歌、微软和 OpenAI 的首席执行官讨论防范人工智能潜在风险的保障措施。 “必须减轻人工智能对个人、社会和国家安全造成的当前和潜在风险。这些包括对安全、安保、人权和公民权利、隐私、就业和民主价值观的风险”，白宫在一份新闻稿中指出。随后，美国通过国家电信和信息管理局（NTIA）公开呼吁安全可信的人工智能。政府关于开发负责任的人工智能的许多建议与 Anthropic 的建议一致，强调了与竞争对手相比，它对安全的关注。对于未能达到这些标准的竞争对手来说，可能存在的制度障碍可能最终有利于 Anthropic 开发更强大的基础模型的努力。\nKey Risks 主要风险\nUnethical Data Practices 不道德的数据实践\n\n2023 年 7 月，OpenAI 和 Meta 均被喜剧演员兼作家 Sarah Silverman 以及作家 Christopher Golden 和 Richard Kadrey 起诉，理由是未经许可使用受版权保护的材料作为训练数据。Anthropic 的研究涉及其基础模型的伦理性，这意味着该模型也会和同行一样面临训练数据的困扰。\n\n人工智能领域的保密性\n\n尽管 Anthropic 专注于人工智能安全，但它也难以满足某些要求。 2023 年 6 月的一份报告使用欧盟人工智能法案草案作为评估人工智能公司披露实践的标准，将 Claude排名倒数第二。值得注意的是，Anthropic 尚未完全披露用于训练 Claude 的数据来源，并且对于用于评估其宪法人工智能危害性的提示也仍然含糊其辞。随着 Anthropic 继续开发基础模型，它必须在安全的人工智能披露实践与失去竞争优势的总体风险之间取得平衡。\nimage16.jpeg\n\nSource: Stanford CRFM \n\nSummary 概括\n\n作为大模型的领先玩家之一，Anthropic 凭借其注重安全的替代方案 Claude，在与 ChatGPT 的竞争中取得了重大进展。自从与 OpenAI 分道扬镳以来，Anthropic 团队进行了大量研究，扩大了大型模型的规模和能力，并在人工智能系统的可解释性和方向方面取得了关键突破。\n\n尽管如此，随着越来越多的资金投向AI研究组织，加速人工智能研究的发展，像 Anthropic 这样的公司可能会遭受与2019年OpenAI一样的文化转变的所带来的困扰。\n",
+      "contentLength": 14163,
       "docType": "docx",
       "searchKeywords": [
         "ai",
@@ -6340,7 +6339,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "NjhwwNKCYizE1pk6EUBcfjBDnAd",
         "objToken": "Ji68d8icCoxo78xiElGcP5jTnud",
@@ -6383,7 +6382,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Yg2jwux3yik3hwkT1iWcxIePnOe",
         "objToken": "KfrSdYBVeogHeGxJZwQcL9Whnvd",
@@ -6423,7 +6422,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "NfRYwPmxJi4zrRksR5QchfBTnCg",
         "objToken": "MgERdc3ylo12raxyyfTcFsTwnlg",
@@ -6472,7 +6471,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "CIGYw6tGZi5H04k8PU1c2T0xnHa",
         "objToken": "OmApdkYjvoamYsxuiYEccuU7nfd",
@@ -6516,7 +6515,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "RTkTwZ89RiWU70k5bC6cCUB4neg",
         "objToken": "FZVYdOPAeoEIBHx4YRjc5Yubnih",
@@ -6564,7 +6563,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "K3ogwzifOi72DdkEaHqcJHKNnxf",
         "objToken": "XixUdOG3No0WI2xlod8cc6bTnxr",
@@ -6610,7 +6609,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "EIPlwWSMni4Uf5kvdmwclxcmnxl",
         "objToken": "JBAgddlB7oMTfTxSaMUc4KInnOR",
@@ -6639,7 +6638,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "IHwKw1bQkizrpwkOeLVcRuIwnsf",
         "objToken": "HPUHdjfH9oxSiFxcbjqcW1mmnRc",
@@ -6676,7 +6675,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "S0IKwH8ypiNehakH8wyczqhZnsc",
         "objToken": "UBhUdcZgJoOJelx4UV6c8s9OnRc",
@@ -6715,7 +6714,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "XlWTw4ufoijht9k2lHDctOxKnJe",
         "objToken": "KD0GdjwVZowGTjxK1gYcAdnSnIc",
@@ -6765,7 +6764,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "FqSawINO9i7k2gkRhSvciWi2nCe",
         "objToken": "Qq3mdtSefoueGSx1qYScQ85CnPd",
@@ -6814,7 +6813,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "FbV8wPf7ri8RbpkMtqwcM2ldnVd",
         "objToken": "ZnnsdcItnotAumxsE9Ocfyv8nzb",
@@ -6860,7 +6859,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "AmCNwcG41iiw6ekElSscgNmPnbc",
         "objToken": "JoqTdaFl5omU9DxeUE6c3CCPntR",
@@ -6908,7 +6907,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "WP4Xwt1QkiknNCkFdrNcCR5SnXf",
         "objToken": "RSMJdjxqAofn2FxbDKacvQUvnad",
@@ -6956,7 +6955,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "MjlCwCsoHiCrrYkvS4bc3u4InDf",
         "objToken": "DJ4sdT8yOovJL7xNM6BccT3Enng",
@@ -6984,7 +6983,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "UV53w0AvViJyxVk8DamcfT6AnUf",
         "objToken": "IZgudZ5OWoZIk6xkfWkctvT9nFg",
@@ -7028,7 +7027,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "DwHKwg7DGiNq6Bk2QH3cf8ojn7c",
         "objToken": "Lh99dUCJAoxmtAxrbVvcM2s7n0c",
@@ -7079,7 +7078,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Ijepw82ntiW3L6k0BHYcKnrOn2b",
         "objToken": "ID8MdfykdoMauRxZq5IcYW2knge",
@@ -7114,7 +7113,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "RfSqwJlyeiyqyZkvSZscPjxLn2d",
         "objToken": "RCeed34nko3DMzx8GftcZ8VMnQe",
@@ -7145,7 +7144,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "UfnMwrNVCi9xMxkWv0bcFaFqntc",
         "objToken": "EeULddU5noEaK4x2hP7cs9txnLh",
@@ -7191,7 +7190,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "IHyvwuN8UiJcWGkiXYocUnBMntg",
         "objToken": "JdUqdRWtooevdyxQ49bcfBXrnXe",
@@ -7224,7 +7223,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "ZbjwwVpLnirjlLkku0QcGFOln2g",
         "objToken": "Xs6YdUSQGoxjrDx7pYkcu67an5f",
@@ -7263,7 +7262,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "MErLwJbfDiHmAJkeCWZcY011nWh",
         "objToken": "YXABdrNSUo0mLHxFOQwcV9YGnee",
@@ -7292,7 +7291,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "VManwjtlQixUJfkJPqXcxqZ9n3g",
         "objToken": "WlnFdFrScotG4dxp4P7cwjgGnah",
@@ -7325,7 +7324,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "ON4xwcnSviIZ8ukV640cL0C4nGf",
         "objToken": "AjlBdHBj5or10JxpXIhcJcmtnFg",
@@ -7371,7 +7370,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "QH9gwH9qTiRTDskerzwcqiNfnRc",
         "objToken": "MLgmdontrozfmbxcuKzcJFSFnPd",
@@ -7410,7 +7409,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "XJ2CweiVZiWOgkk4NV8cbyo9nqh",
         "objToken": "MewYduUF3o7SFWxhk9Acdaj9nDZ",
@@ -7447,7 +7446,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "JWfHwo9qiiMfYpkVGcWcDq7mnYc",
         "objToken": "TLmedTnkLowrbNxBkTHcyE1cnwe",
@@ -7485,7 +7484,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "LcmfwaY7SizO7pkVPbVclmiTnDK",
         "objToken": "Wpl3dHJ2iody4txK438cjPqYn3d",
@@ -7524,7 +7523,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "VV9xwBHurim8ztkAZ8Lcm5asnah",
         "objToken": "Nr4EdH0qLovnPCxryaDccNcSnjg",
@@ -7568,7 +7567,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "YX4Yw3oi4icRTikAEqvcqrwJnyb",
         "objToken": "IcYjdlOjZocr4Ex1yzNcsqqXnfd",
@@ -7612,7 +7611,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "OGuvwIMD2icJ5jkpw4Vcw2K5ntd",
         "objToken": "XaFXdlPyEooC7xxF68fcKIHynhh",
@@ -7656,7 +7655,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "VMG3w1uT5iqHKVkCeBKcQyd3nad",
         "objToken": "ZcyEdTK6DokxbLxSeyWcw3ZFnOg",
@@ -7697,7 +7696,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "IYKNwFYReiFL12kBmITcgQEhngw",
         "objToken": "I9r2dQbSLofCYKxQZFUcLnjOnNo",
@@ -7740,7 +7739,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "FDw6wAlHLiSmKekXWUacUZgznbb",
         "objToken": "HU3ydfyQroJXK1xwTuMcDvS8ng1",
@@ -7778,7 +7777,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "LYS0w2nb6iB1b3kdyQqcBzXhnKe",
         "objToken": "M8agdcxYqo6EZ2xdkvBcR2t1nRd",
@@ -7818,7 +7817,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "RLKEwtsvLiYfG1khB6cciILlnyc",
         "objToken": "Wx47dMNCQoo9GDxKM60cAySjn3e",
@@ -7863,7 +7862,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "L0LWwvHvNiLBj2kD01Zcbzirnpd",
         "objToken": "BZHMdcdSLorNJ7xSng3cGdrzn0c",
@@ -7904,7 +7903,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "BwYUwNMani5Z9mk0MV4c2Pz4nag",
         "objToken": "MAOxdcRHpo0qruxiYy3ciFK4nQf",
@@ -7950,7 +7949,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "PwC0wXec5itDwKkUhjrcdnzln7b",
         "objToken": "EekKdBxJuo6EH6xb5jbcrQ7SnIf",
@@ -7995,7 +7994,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "KAWHwiwnsiEEdXkK7EYcLkP3nef",
         "objToken": "OeDpdb5dQoRSzYxxE8Lc1byUn0g",
@@ -8043,7 +8042,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "G9K1wPoEtiMhHekUStQceFEvnSg",
         "objToken": "CfdidX0a2o1UAaxerzBcKWWWnah",
@@ -8085,7 +8084,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Ee1wwDTfwipwZCkIVwqcYCNLnLe",
         "objToken": "DlrzdF55DoRdklxxC18cN3dxnrc",
@@ -8126,7 +8125,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "LVJSwydEOieKFzktDUacKUbcnFd",
         "objToken": "JLWFdSdktovxnyxfl01c8NP9nXc",
@@ -8165,7 +8164,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "RHVxwVyciiqtHKk9qI2cAUDTn0e",
         "objToken": "VN9JdOw0qoa8s8xaKlLc7GhSnFf",
@@ -8205,7 +8204,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "QQjfwFQG4ir7emkwkvlcHHM2njg",
         "objToken": "YqFZdG6QFoP6lixtPrbcSJ2unyc",
@@ -8246,7 +8245,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Sn5SwxaoGijOaoko5Yxcl3Iinfh",
         "objToken": "RX7odCwIYo0mo1xZJiqc8o0EnNb",
@@ -8291,7 +8290,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Jlssw4bkJiIWRRkJT7KcNyjcn3c",
         "objToken": "IO4ssH7JKhPo3VtecencuiYpnHh",
@@ -8331,7 +8330,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "K5Saw55GHisYiIkkViwc9xYknmc",
         "objToken": "TY4ks5bMchRMAUtE1vMcmXjKnKg",
@@ -8371,7 +8370,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "JPqAwMn2Ri6F02kqIp5ci7JqnZb",
         "objToken": "Gc0HbgSQXoJIMVxgJ01c1QsynBb",
@@ -8398,7 +8397,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "CS7Jwo361iNpqYkQLHQcFd7FnNh",
         "objToken": "LpBGd3xjfoKNynxsxracSKHinDb",
@@ -8443,7 +8442,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "H2T1weKwpi229kkmzVeczqdrnge",
         "objToken": "DDe8duwjEo2nsLxYV26cQA9dnlh",
@@ -8489,7 +8488,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "HCTDw1JR0i4Uz2kGyEicG58ynsh",
         "objToken": "PHrudr9dCo7y5dxmd4Pcjg8knYk",
@@ -8527,7 +8526,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "ASsBwEBmqiIjIBkOiDTcqIMpnHf",
         "objToken": "QjfjdwNico3ij7xrstGcknQanE0",
@@ -8560,7 +8559,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "AiPqwfvn8ix6MDkTCx5cibpBn0b",
         "objToken": "RhFOdQtDFo2XGmxvJhrcVIKEnhb",
@@ -8600,7 +8599,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "G8ttwGJegiRfpBkm93OcQSxrnbe",
         "objToken": "Kz39d2ecno6XJRxxHEfchKfTncg",
@@ -8640,7 +8639,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "FXG7wRk90i00ZgkoJt2cuKgTnfJ",
         "objToken": "KY1Zdmzewo3f5Cx7bUNc3QYcn7A",
@@ -8668,7 +8667,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "EjsfwJINbiTZLlkk5iFcHLFqnOg",
         "objToken": "GtVRdrzhCoTl6txQZvIcsnctndc",
@@ -8712,7 +8711,7 @@
       "level": 5,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "RievwTYt4i6VbCkRxOtcPM4Mndf",
         "objToken": "T35Zdsglno6VGLx4snocDwn4nyh",
@@ -8740,7 +8739,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "DNmfwXHoqiQQEYkRKdscoKWunue",
         "objToken": "RRa4dqCZAomug1xn1ZfcTgoTnWg",
@@ -8783,7 +8782,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "I9SkwEEc2iVokxkbDrscLOkznqd",
         "objToken": "KwCQdjxLio662Txvn0lcWTJ6nHK",
@@ -8815,7 +8814,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "MlsJwCZ25ioroKkWG2Yc3h3nndg",
         "objToken": "JfgqbMPWhakeNpsvP6wcjHIcnml",
@@ -8851,7 +8850,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "KvTYwGl7BiNT2ckemnacIvKinKc",
         "objToken": "VgI3daqC1oLjYnx0iQGciw7hn5b",
@@ -8892,7 +8891,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "C8Wkwa8HiiNQrqkyhaacWZlYnKf",
         "objToken": "MAscd0sUloUXLyxKFEccf1Lwnkg",
@@ -8934,7 +8933,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "O96GwwfmiiuBeukSekecGVp7nLb",
         "objToken": "MtOBdN5H5o1OQvxnaW6cpQUQnWb",
@@ -8970,7 +8969,7 @@
       "level": 5,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "D5ApwsGgfiRGhckfsU2cCoI6nEb",
         "objToken": "DRtddg1ajoIt7ZxKb9rcT6yHn2c",
@@ -9011,7 +9010,7 @@
       "level": 5,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "LQA7w3Ykfi6JVJkM5gsc54PxnAc",
         "objToken": "HvqidAOyaoZuuIxtUcmcJWCjnGh",
@@ -9052,7 +9051,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "FGKPwLYtHinUxlkb9VmcQhMVni0",
         "objToken": "VC4JdG4OAoOdjwxuuSVc6azanYe",
@@ -9083,7 +9082,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "DP4wwygTvitaKrkexvsczc8Unwc",
         "objToken": "PtH1dr2elotDepxvIHvc2GqjnPc",
@@ -9114,7 +9113,7 @@
       "level": 5,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "PNWuwSt4ri1Q7qkxHYkcLRefnhg",
         "objToken": "TPd7dkCdEoXYLLxstxMcVZfJnth",
@@ -9162,7 +9161,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "KqB8wo9EUiyFujkUAOkc8sI8nZ7",
         "objToken": "UbbtdujfGosqwTxy2E8cRTV4nlc",
@@ -9193,7 +9192,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Dy8DwYzYVidFQWkDibQcQhi8nzd",
         "objToken": "GSGMd0NZZoZ1wFxduEkcxOmQnjg",
@@ -9236,7 +9235,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "PSuaw7MteiHEvtkBMSTcKbYJnzd",
         "objToken": "OJtadDDrLoKXEVxQRQvcMSRSn5g",
@@ -9278,7 +9277,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "CXdFwSJ5pimZ3QkvdAHcqK9snSc",
         "objToken": "YqALdOjecoqe0xxAlJScGv7wn2l",
@@ -9310,7 +9309,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "CwA1wC1builCSCkL31cc3vF5nnf",
         "objToken": "ZBB5dk9iKo3JQbxh8zMcJE60nHd",
@@ -9345,7 +9344,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "BZVBwQOP3iU6ZPkat6PczvwfnAd",
         "objToken": "SewUdGKPXoceKyxFQ6AcYzlUnn1",
@@ -9391,7 +9390,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "C81bw8VzTiduZxklDVEc7xC8ngb",
         "objToken": "GoaxdzH7Ho9X2Oxw1H8cuM0Anbd",
@@ -9428,7 +9427,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "KuouwnejyiX2irkUgVTc9VxFnEd",
         "objToken": "CIBZdoaBDoF7lTxb5G1cvFaZnqe",
@@ -9458,7 +9457,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Pji0wcmEaiL4sSk4KQYcDM7unnd",
         "objToken": "RNDUdgLVOoZZZBxbLHucbzIcnih",
@@ -9501,7 +9500,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "WatPwHzCWinjXVkb5SrcF4Runge",
         "objToken": "MIlxdNawZojTigxvQC2c1uiFnhb",
@@ -9539,7 +9538,7 @@
       "level": 4,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Jd9nwa9g3i7yCVkaPYPcO0hYnxc",
         "objToken": "V0y4dvP6To8uI7xgZuTc0unwnEd",
@@ -9571,7 +9570,7 @@
       "level": 5,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "IeoNwTHrRicFGUkiHArc5G6JnDg",
         "objToken": "CGhAdMeB5opnPOx9BI2cKNSmnlI",
@@ -9608,7 +9607,7 @@
       "level": 5,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "YOcQwYZq7i09nRkjSUdcOC1Nnse",
         "objToken": "XUOkd2YJsorY6xxmFhPc1hlfnaf",
@@ -9644,7 +9643,7 @@
       "level": 5,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "YYeVwLKF6iHlBukclEKcXSRNnHd",
         "objToken": "FqJddvudnodN7lxoxkRcXofqn6d",
@@ -9678,7 +9677,7 @@
       "level": 5,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "SOlWw8JlPiaFJjkfxROcqANEn7f",
         "objToken": "F3RNd2rTPoEDUPxZwTVc6RNpn9d",
@@ -9717,7 +9716,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Ac3HwsjWlimaPgkNRwEcJYfDn1c",
         "objToken": "RwaXdLNjJosCknxkQzgcqagKnre",
@@ -9760,7 +9759,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "I2LPwkS0ti4chekdpACcuuA6nzc",
         "objToken": "UkBXdilA0o3Fh8xLx4RcHV16n8e",
@@ -9807,7 +9806,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "ZPjNwvR4Gi01qokXm4tcLYjRnGh",
         "objToken": "NE3ddQAUloYcv1x40hscx8Lrn1e",
@@ -9847,7 +9846,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "WbxFweBOFiAxWik6lpFcCuGHnYe",
         "objToken": "LO4WdrIFLoR1k9xdDRxcSXF1n3d",
@@ -9891,7 +9890,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "FZdQwsI45i9slYkcPj0cG2e5nBd",
         "objToken": "DUlDdMabFoW5Zwxjl1Kc4773n6b",
@@ -9931,7 +9930,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "N2MIwXwClitUy4k1JtvcYqfjnoe",
         "objToken": "QL9kd6GrdoeH1nxQoldcy4W9nGc",
@@ -9969,7 +9968,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "CcJ4wIAtuiipCgkrYD2cWbOOnhg",
         "objToken": "MCAodAfXaouvAix7W9rcgQRmnEg",
@@ -10004,7 +10003,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "Y3QEwX18ximgj8karwjc62DZnAc",
         "objToken": "IZfSdbwjEoIVmvxOHzNcavJSnJd",
@@ -10044,7 +10043,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "TSPcwb6udi7Qh9kYhFgcpvN7nrd",
         "objToken": "PfZUdS9KAoW18sxFFVvcHwRmnid",
@@ -10085,7 +10084,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "F29Cw8Ri5iJvlWkLFMNcGfwPnix",
         "objToken": "BCo5dova9oO9ftxVloHcrupLnob",
@@ -10129,7 +10128,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "SN8BwjWSAiH7q9kgj2Xc7Yzanhh",
         "objToken": "LaDzdv4KNoh6m3xaXWccVZf5nyh",
@@ -10173,7 +10172,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "LZviw9PiJiP778kio3mctMW9nVc",
         "objToken": "Io3odJgb4oerX3xmzDFcOV5cnPb",
@@ -10217,7 +10216,7 @@
       "level": 1,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "J3v0wuQyZicsIfkki94cSAC0njf",
         "objToken": "AuYZdvML1o546MxtWc8cWWV2nzf",
@@ -10257,7 +10256,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "KhNfwDN8piN2GWkJygtcRfVlnag",
         "objToken": "C7zxd8OCgo4R4HxUET4cg6y1nih",
@@ -10303,7 +10302,7 @@
       "level": 3,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "KuaIwYPGIikNIEkM47DcAtp6ndd",
         "objToken": "YtfNduHsBoUgF3xkjzCcl4Z2nbe",
@@ -10345,7 +10344,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "MSIUwt9b1ivbsGkwbbGcYfyFn9Z",
         "objToken": "HGPydaDTAoaL5MxYYhsc5ne5nnd",
@@ -10390,7 +10389,7 @@
       "level": 2,
       "type": "wiki_node",
       "source": "SVTR飞书知识库",
-      "lastUpdated": "2025-10-18",
+      "lastUpdated": "2025-10-20",
       "metadata": {
         "nodeToken": "O98vwU29si7v7Sk3UtgceAZpnTj",
         "objToken": "DFnidXsnhonKrbxwl1JczlYqnJb",
