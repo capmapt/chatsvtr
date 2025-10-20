@@ -110,12 +110,12 @@
   }
 
   .chart-title {
-    color: #e2e8f0 !important;
+    color: #ffffff !important; /* 改为纯白色,提高对比度 */
     border-color: rgba(255, 255, 255, 0.1) !important;
   }
 
   .chart-bar-label {
-    color: #cbd5e0 !important;
+    color: #f3f4f6 !important; /* 改为更亮的灰白色 */
   }
 
   .chart-bar-track {
@@ -128,13 +128,13 @@
   }
 
   .filter-label {
-    color: #e2e8f0 !important;
+    color: #ffffff !important; /* 改为纯白色 */
   }
 
   .filter-option {
     background: #374151 !important;
-    color: #cbd5e0 !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important; /* 改为纯白色,提高对比度 */
+    border-color: rgba(255, 255, 255, 0.2) !important; /* 增强边框可见度 */
   }
 
   .filter-option.active {
@@ -144,8 +144,8 @@
 
   .filter-reset-btn {
     background: #374151 !important;
-    color: #cbd5e0 !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important; /* 改为纯白色 */
+    border-color: rgba(255, 255, 255, 0.2) !important; /* 增强边框可见度 */
   }
 
   /* 融资卡片列表 */
@@ -389,8 +389,8 @@
   .message,
   .chat-message {
     background: #374151 !important;
-    color: #e2e8f0 !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important; /* 改为纯白色,提高对比度 */
+    border: 1px solid rgba(255, 255, 255, 0.15) !important; /* 增强边框可见度 */
   }
 
   /* 用户消息 */
@@ -410,7 +410,7 @@
   .bot-message,
   .assistant-message {
     background: #374151 !important;
-    color: #e2e8f0 !important;
+    color: #ffffff !important; /* 改为纯白色 */
   }
 
   /* 输入框容器 */
@@ -426,14 +426,14 @@
   .message-input,
   textarea.chat-input {
     background: #374151 !important;
-    color: #e2e8f0 !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important; /* 改为纯白色 */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important; /* 增强边框可见度 */
   }
 
   .chat-input:focus,
   .message-input:focus {
     border-color: #fa8c32 !important;
-    box-shadow: 0 0 0 3px rgba(250, 140, 50, 0.2) !important;
+    box-shadow: 0 0 0 3px rgba(250, 140, 50, 0.3) !important; /* 增强焦点效果 */
   }
 
   /* 发送按钮 */
@@ -584,8 +584,8 @@
   /* SVTR 聊天消息 */
   .svtr-message {
     background: #374151 !important;
-    color: #e2e8f0 !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important; /* 改为纯白色,提高对比度 */
+    border: 1px solid rgba(255, 255, 255, 0.15) !important; /* 增强边框可见度 */
   }
 
   .svtr-message.user {
@@ -596,7 +596,7 @@
 
   .svtr-message.assistant {
     background: #374151 !important;
-    color: #e2e8f0 !important;
+    color: #ffffff !important; /* 改为纯白色 */
   }
 
   .svtr-message.loading {
@@ -605,21 +605,23 @@
 
   /* SVTR 消息头部 */
   .message-header {
-    color: #cbd5e0 !important;
+    color: #f3f4f6 !important; /* 改为更亮的灰白色 */
   }
 
   .message-avatar {
     background: #4a5568 !important;
-    color: #fa8c32 !important;
+    color: #fbbf24 !important; /* 使用更亮的橙黄色 */
+    font-weight: 600 !important;
   }
 
   .svtr-message.user .message-avatar {
-    background: rgba(255, 255, 255, 0.2) !important;
+    background: rgba(255, 255, 255, 0.25) !important; /* 增加不透明度 */
     color: white !important;
   }
 
   .message-name {
-    color: #cbd5e0 !important;
+    color: #f3f4f6 !important; /* 改为更亮的灰白色 */
+    font-weight: 500 !important;
   }
 
   .svtr-message.user .message-name {
@@ -627,11 +629,12 @@
   }
 
   .message-time {
-    color: #718096 !important;
+    color: #9ca3af !important; /* 改为更亮的灰色 */
   }
 
   .message-content {
-    color: #e2e8f0 !important;
+    color: #ffffff !important; /* 改为纯白色 */
+    line-height: 1.6 !important; /* 增加行高提高可读性 */
   }
 
   .svtr-message.user .message-content {
@@ -640,15 +643,15 @@
 
   /* SVTR 加载状态 */
   .loading-dots {
-    color: #cbd5e0 !important;
+    color: #f3f4f6 !important; /* 改为更亮的灰白色 */
   }
 
   .thinking-emoji {
-    color: #fa8c32 !important;
+    color: #fbbf24 !important; /* 使用更亮的橙黄色 */
   }
 
   .animated-dots span {
-    color: #cbd5e0 !important;
+    color: #f3f4f6 !important; /* 改为更亮的灰白色 */
   }
 
   /* SVTR 输入区域 */
@@ -665,17 +668,17 @@
   #svtr-chat-input,
   textarea#svtr-chat-input {
     background: #374151 !important;
-    color: #e2e8f0 !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important; /* 改为纯白色 */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important; /* 增强边框可见度 */
   }
 
   #svtr-chat-input:focus {
     border-color: #fa8c32 !important;
-    box-shadow: 0 0 0 3px rgba(250, 140, 50, 0.2) !important;
+    box-shadow: 0 0 0 3px rgba(250, 140, 50, 0.3) !important; /* 增强焦点效果 */
   }
 
   #svtr-chat-input::placeholder {
-    color: #718096 !important;
+    color: #9ca3af !important; /* 改为更亮的灰色 */
   }
 
   /* SVTR 发送按钮 */
