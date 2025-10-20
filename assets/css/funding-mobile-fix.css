@@ -1,23 +1,24 @@
 /**
  * AI创投日报移动端修复
- * 确保统计卡片和图表在移动端正确显示
+ * 确保表头、图表和标签在移动端上下排列
  */
 
-/* 强制图表在移动端显示并堆叠 */
+/* 强制整体布局在移动端垂直排列 */
 @media (max-width: 768px) {
-  .funding-charts {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 12px !important;
-    margin-top: 12px !important;
-  }
-
-  .chart-container {
-    display: block !important;
+  /* 表头区域 - 强制垂直布局 */
+  .funding-header-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
     width: 100% !important;
   }
 
-  /* 确保统计卡片在移动端垂直堆叠 */
+  .funding-header-left {
+    width: 100% !important;
+  }
+
+  /* 统计卡片区域 - 垂直堆叠 */
   .funding-header-right {
     display: flex !important;
     flex-direction: column !important;
@@ -29,15 +30,62 @@
     display: block !important;
     width: 100% !important;
   }
+
+  /* 图表区域 - 垂直堆叠 */
+  .funding-charts {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    margin-top: 16px !important;
+    width: 100% !important;
+  }
+
+  .chart-container {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  /* 筛选栏 - 垂直布局 */
+  .funding-filter-bar {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin-top: 16px !important;
+    width: 100% !important;
+  }
+
+  .filter-groups-container {
+    width: 100% !important;
+  }
+
+  .filter-group {
+    width: 100% !important;
+  }
+
+  /* 重置按钮移到下方 */
+  .filter-reset-btn {
+    width: 100% !important;
+    margin-top: 8px !important;
+  }
 }
 
 @media (max-width: 480px) {
-  .funding-charts {
-    gap: 10px !important;
-    margin-top: 10px !important;
+  /* 更紧凑的间距 */
+  .funding-header-content {
+    gap: 12px !important;
   }
 
   .funding-header-right {
     gap: 8px !important;
+  }
+
+  .funding-charts {
+    gap: 10px !important;
+    margin-top: 12px !important;
+  }
+
+  .funding-filter-bar {
+    gap: 10px !important;
+    margin-top: 12px !important;
   }
 }
