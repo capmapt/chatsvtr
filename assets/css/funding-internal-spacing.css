@@ -1,54 +1,53 @@
 /**
  * AI创投日报 - 内部板块间距统一
- * 确保所有内部板块之间的间距一致
+ * 确保所有内部板块之间的间距一致 = 1rem (16px)
+ * 与融资卡片之间的间距保持一致
  */
 
 /* ========== 内部板块间距统一 ========== */
 
 /* 图表区域 - 统一顶部间距 */
 .funding-charts {
-  margin-top: 16px !important;
+  margin-top: 1rem !important;
 }
 
 /* 筛选栏 - 统一顶部间距 */
 .funding-filter-bar {
-  margin-top: 16px !important;
+  margin-top: 1rem !important;
 }
 
 /* 融资卡片列表 - 统一顶部间距 */
 .funding-highlights {
-  margin-top: 16px !important;
+  margin-top: 1rem !important;
 }
 
 /* ========== 移动端响应式调整 ========== */
 @media (max-width: 768px) {
-  /* 图表区域 - 移动端间距 */
+  /* 移动端保持相同间距 - 1rem (16px) */
   .funding-charts {
-    margin-top: 12px !important;
+    margin-top: 1rem !important;
   }
 
-  /* 筛选栏 - 移动端间距 */
   .funding-filter-bar {
-    margin-top: 12px !important;
+    margin-top: 1rem !important;
   }
 
-  /* 融资卡片列表 - 移动端间距 */
   .funding-highlights {
-    margin-top: 12px !important;
+    margin-top: 1rem !important;
   }
 }
 
 @media (max-width: 480px) {
-  /* 更紧凑的间距 */
+  /* 小屏幕也保持相同间距 - 1rem (16px) */
   .funding-charts {
-    margin-top: 10px !important;
+    margin-top: 1rem !important;
   }
 
   .funding-filter-bar {
-    margin-top: 10px !important;
+    margin-top: 1rem !important;
   }
 
   .funding-highlights {
-    margin-top: 10px !important;
+    margin-top: 1rem !important;
   }
 }
