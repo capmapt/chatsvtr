@@ -478,11 +478,11 @@
         <!-- 数据可视化图表 - 优化版 -->
         <div class="funding-charts" id="fundingCharts" style="margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%;">
           <div class="chart-container" style="width: 100%;">
-            <h3 class="chart-title">📊 融资轮次分布</h3>
+            <h3 class="chart-title" data-i18n="funding_stage_distribution">📊 融资轮次分布</h3>
             <div class="chart-content" id="stageChart"></div>
           </div>
           <div class="chart-container" style="width: 100%;">
-            <h3 class="chart-title">💰 金额区间占比</h3>
+            <h3 class="chart-title" data-i18n="funding_amount_distribution">💰 金额区间占比</h3>
             <div class="chart-content" id="amountChart"></div>
           </div>
         </div>
@@ -492,7 +492,7 @@
           <!-- 筛选组容器 -->
           <div class="filter-groups-container">
             <div class="filter-group">
-              <label class="filter-label">标签</label>
+              <label class="filter-label" data-i18n="funding_filter_tags">标签</label>
               <div class="filter-options" id="tagFilter">
                 <!-- 动态生成标签选项 -->
               </div>
@@ -500,7 +500,7 @@
           </div>
 
           <!-- 重置按钮 (右侧固定) -->
-          <button class="filter-reset-btn" id="resetFilters">重置筛选</button>
+          <button class="filter-reset-btn" id="resetFilters" data-i18n="funding_reset_filters">重置筛选</button>
         </div>
       </div>
 
