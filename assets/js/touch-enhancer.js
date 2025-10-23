@@ -188,8 +188,12 @@ class TouchEnhancer {
         const now = Date.now();
         const timeSince = now - this.lastTap;
 
+        // 只在双击时阻止默认行为，且不要阻止链接的导航
         if (timeSince < 300 && timeSince > 0) {
-          e.preventDefault();
+          // 如果是链接元素，不阻止默认行为（允许导航）
+          if (!element.tagName || element.tagName.toLowerCase() !== 'a') {
+            e.preventDefault();
+          }
         }
 
         this.lastTap = now;
@@ -254,8 +258,8 @@ class TouchEnhancer {
         element.style.justifyContent = 'center';
       }
 
-      // 添加触摸反馈的ARIA属性
-      if (!element.getAttribute('role')) {
+      // 添加触摸反馈的ARIA属性（但不要改变链接元素的role）
+      if (!element.getAttribute('role') && element.tagName.toLowerCase() !== 'a') {
         element.setAttribute('role', 'button');
       }
 
