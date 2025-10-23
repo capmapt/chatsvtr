@@ -1,0 +1,406 @@
+/**
+ * 首页V2附加样式
+ * 包含融资预览、订阅CTA、浮动聊天按钮等组件
+ */
+
+/* ==================== 融资预览区 ==================== */
+
+.funding-preview-section {
+  padding: var(--space-16) var(--space-4);
+  background: var(--bg-primary);
+  max-width: var(--container-xl);
+  margin: 0 auto;
+}
+
+.funding-preview-header {
+  text-align: center;
+  margin-bottom: var(--space-10);
+}
+
+.funding-preview-header h2 {
+  font-size: var(--text-4xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-3);
+}
+
+.funding-preview-header p {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+}
+
+.funding-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.funding-preview-card {
+  background: var(--bg-secondary);
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+  border: var(--border-width-1) solid var(--border-light);
+  transition: all var(--duration-medium);
+  cursor: pointer;
+}
+
+.funding-preview-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-300);
+}
+
+.funding-preview-card h4 {
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.funding-amount {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--primary-600);
+  margin-bottom: var(--space-3);
+}
+
+.funding-desc {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.funding-preview-cta {
+  text-align: center;
+}
+
+.btn-view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-8);
+  background: var(--bg-primary);
+  color: var(--primary-600);
+  border: var(--border-width-2) solid var(--primary-500);
+  border-radius: var(--radius-full);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  text-decoration: none;
+  transition: all var(--duration-medium);
+}
+
+.btn-view-all:hover {
+  background: var(--primary-500);
+  color: var(--text-inverse);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-primary-lg);
+}
+
+/* ==================== 订阅CTA区 ==================== */
+
+.subscribe-cta-section {
+  position: relative;
+  background: var(--bg-gradient-warm);
+  padding: var(--space-20) var(--space-4);
+  text-align: center;
+  overflow: hidden;
+}
+
+.subscribe-cta-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 50%, rgba(250, 140, 50, 0.15), transparent 60%);
+  pointer-events: none;
+}
+
+.subscribe-cta-content {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+  z-index: 1;
+}
+
+.subscribe-cta-content h2 {
+  font-size: var(--text-4xl);
+  font-weight: var(--font-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.subscribe-cta-content > p {
+  font-size: var(--text-xl);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-8);
+  line-height: var(--leading-relaxed);
+}
+
+/* 增强订阅表单 */
+.subscribe-form-enhanced {
+  display: flex;
+  gap: var(--space-3);
+  max-width: 500px;
+  margin: 0 auto var(--space-6);
+  background: var(--bg-primary);
+  padding: var(--space-2);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-lg);
+}
+
+.subscribe-form-enhanced input {
+  flex: 1;
+  height: var(--input-height);
+  padding: 0 var(--space-5);
+  border: none;
+  background: transparent;
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  outline: none;
+}
+
+.subscribe-form-enhanced input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.subscribe-form-enhanced button {
+  height: calc(var(--input-height) - 4px);
+  padding: 0 var(--space-6);
+  background: var(--primary-500);
+  color: var(--text-inverse);
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  transition: all var(--duration-medium);
+  white-space: nowrap;
+}
+
+.subscribe-form-enhanced button:hover {
+  background: var(--primary-600);
+  transform: scale(1.05);
+}
+
+.subscribe-trust {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.subscribe-trust::before {
+  content: '✓';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: var(--success-light);
+  color: var(--success);
+  border-radius: var(--radius-full);
+  font-weight: var(--font-bold);
+}
+
+/* ==================== 浮动聊天按钮 ==================== */
+
+.chat-fab {
+  position: fixed;
+  bottom: var(--space-8);
+  right: var(--space-8);
+  width: 64px;
+  height: 64px;
+  background: var(--primary-500);
+  color: var(--text-inverse);
+  border: none;
+  border-radius: var(--radius-full);
+  box-shadow:
+    0 8px 24px rgba(250, 140, 50, 0.4),
+    0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-fixed);
+  transition: all var(--duration-medium) var(--ease-bounce);
+  animation: pulse 2s infinite;
+}
+
+.chat-fab:hover {
+  transform: scale(1.1);
+  box-shadow:
+    0 12px 32px rgba(250, 140, 50, 0.5),
+    0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.chat-fab:active {
+  transform: scale(0.95);
+}
+
+/* 脉冲动画吸引注意 */
+@keyframes pulse {
+  0%, 100% {
+    box-shadow:
+      0 8px 24px rgba(250, 140, 50, 0.4),
+      0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 8px 24px rgba(250, 140, 50, 0.4),
+      0 4px 8px rgba(0, 0, 0, 0.1),
+      0 0 0 12px rgba(250, 140, 50, 0.2);
+  }
+}
+
+/* 未读消息提示 */
+.chat-fab::after {
+  content: attr(data-unread);
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  background: var(--danger);
+  color: var(--text-inverse);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--bg-primary);
+  opacity: 0;
+  transform: scale(0);
+  transition: all var(--duration-medium);
+}
+
+.chat-fab[data-unread]:not([data-unread="0"])::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ==================== 页脚样式 ==================== */
+
+footer {
+  background: var(--neutral-900);
+  color: var(--neutral-400);
+  padding: var(--space-8) var(--space-4);
+  text-align: center;
+}
+
+.footer-text-container {
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+/* ==================== 响应式设计 ==================== */
+
+@media (max-width: 768px) {
+  .funding-preview-section {
+    padding: var(--space-12) var(--space-4);
+  }
+
+  .funding-preview-header h2 {
+    font-size: var(--text-3xl);
+  }
+
+  .funding-preview-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .subscribe-cta-section {
+    padding: var(--space-16) var(--space-4);
+  }
+
+  .subscribe-cta-content h2 {
+    font-size: var(--text-3xl);
+  }
+
+  .subscribe-cta-content > p {
+    font-size: var(--text-lg);
+  }
+
+  .subscribe-form-enhanced {
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border-radius: var(--radius-xl);
+  }
+
+  .subscribe-form-enhanced button {
+    height: var(--btn-height-md);
+    width: 100%;
+  }
+
+  .chat-fab {
+    width: 56px;
+    height: 56px;
+    bottom: var(--space-6);
+    right: var(--space-6);
+  }
+}
+
+@media (max-width: 480px) {
+  .funding-preview-card h4 {
+    font-size: var(--text-lg);
+  }
+
+  .funding-amount {
+    font-size: var(--text-xl);
+  }
+
+  .subscribe-cta-content h2 {
+    font-size: var(--text-2xl);
+  }
+
+  .chat-fab {
+    width: 48px;
+    height: 48px;
+    bottom: var(--space-4);
+    right: var(--space-4);
+  }
+
+  .chat-fab svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* ==================== 打印样式 ==================== */
+
+@media print {
+  .chat-fab {
+    display: none;
+  }
+
+  .subscribe-cta-section {
+    background: var(--bg-secondary);
+  }
+
+  .funding-preview-card {
+    break-inside: avoid;
+  }
+}
+
+/* ==================== 减少动画模式 ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-fab {
+    animation: none;
+  }
+
+  .funding-preview-card:hover,
+  .btn-view-all:hover,
+  .subscribe-form-enhanced button:hover {
+    transform: none;
+  }
+}

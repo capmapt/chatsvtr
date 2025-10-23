@@ -149,22 +149,203 @@ class EnhancedFeishuSyncV2 {
       if (infoResponse.ok) {
         const infoData = await infoResponse.json();
         console.log(`✅ 成功获取表格信息: ${title}`);
-        
+
+        // 🔧 FIX: 先获取工作表列表和sheetId
+        console.log(`📋 获取工作表列表...`);
+        const sheetsListUrl = `${this.config.baseUrl}/sheets/v3/spreadsheets/${objToken}/sheets/query`;
+        const sheetsListResponse = await fetch(sheetsListUrl, {
+          headers: {
+            'Authorization': `Bearer ${this.accessToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        let sheetIdList = [];
+        if (sheetsListResponse.ok) {
+          const sheetsListData = await sheetsListResponse.json();
+          if (sheetsListData.code === 0 && sheetsListData.data?.sheets) {
+            sheetIdList = sheetsListData.data.sheets;
+            console.log(`✅ 找到 ${sheetIdList.length} 个工作表:`, sheetIdList.map(s => s.title).join(', '));
+          }
+        }
+
         // 尝试获取实际数据 - 使用多种策略
         const allSheetsData = [];
         let totalProcessedCells = 0;
-        
+
         console.log(`📊 开始尝试获取表格数据...`);
-        
-        // 策略1: 尝试不同的范围大小，从小到大
-        const rangeSizes = [
-          { range: 'A1:Z100', desc: '标准范围' },
-          { range: 'A1:AB200', desc: '扩展范围' },
-          { range: 'A1:AZ500', desc: '大范围' },
-          { range: 'A1:CV1000', desc: '超大范围' }
-        ];
-        
-        for (const {range, desc} of rangeSizes) {
+
+        // 策略0: 使用sheetId查询（最可靠的方法）
+        if (sheetIdList.length > 0) {
+          console.log(`🎯 策略0: 使用sheetId查询所有工作表（包括隐藏的）`);
+
+          for (const sheet of sheetIdList) {  // 🔧 FIX: 处理所有工作表，包括隐藏的
+            try {
+              const range = 'A1:AZ500';  // 使用大范围
+              const dataUrl = `${this.config.baseUrl}/sheets/v2/spreadsheets/${objToken}/values/${sheet.sheet_id}!${range}`;
+
+              console.log(`🔍 查询工作表: ${sheet.title} (ID: ${sheet.sheet_id})`);
+
+              const dataResponse = await fetch(dataUrl, {
+                headers: {
+                  'Authorization': `Bearer ${this.accessToken}`,
+                  'Content-Type': 'application/json'
+                }
+              });
+
+              if (dataResponse.ok) {
+                const data = await dataResponse.json();
+                if (data.code === 0) {
+                  const values = data.data?.valueRange?.values || [];
+
+                  // 🔍 检查第一个单元格是否是IMPORTRANGE公式
+                  const firstCell = values[0]?.[0];
+                  if (firstCell && typeof firstCell === 'string' && firstCell.startsWith('IMPORTRANGE')) {
+                    console.log(`🔗 检测到IMPORTRANGE公式，追踪源数据...`);
+
+                    // 解析IMPORTRANGE公式
+                    const importRangeRegex = /IMPORTRANGE\("([^"]+)","([^"]+)"\)/;
+                    const match = firstCell.match(importRangeRegex);
+
+                    if (match) {
+                      const sourceUrl = match[1];
+                      const sourceRange = match[2];
+
+                      // 从URL提取Token
+                      const urlMatch = sourceUrl.match(/\/wiki\/([a-zA-Z0-9]+)/);
+
+                      if (urlMatch) {
+                        const sourceWikiToken = urlMatch[1];
+
+                        try {
+                          // 查询源Wiki节点
+                          const wikiNodeRes = await fetch(`${this.config.baseUrl}/wiki/v2/spaces/get_node?token=${sourceWikiToken}`, {
+                            headers: {
+                              'Authorization': `Bearer ${this.accessToken}`,
+                              'Content-Type': 'application/json'
+                            }
+                          });
+
+                          const wikiNodeData = await wikiNodeRes.json();
+
+                          if (wikiNodeData.code === 0 && wikiNodeData.data?.node?.obj_type === 'sheet') {
+                            const sourceSheetToken = wikiNodeData.data.node.obj_token;
+
+                            // 从sourceRange中提取表名和范围
+                            const rangeMatch = sourceRange.match(/^([^!]+)!(.+)$/);
+                            if (rangeMatch) {
+                              const targetSheetName = rangeMatch[1];
+                              let targetRange = rangeMatch[2];
+
+                              // 转换A:AC格式为A1:AC500
+                              if (targetRange.match(/^[A-Z]+:[A-Z]+$/)) {
+                                targetRange = targetRange.replace(':', '1:') + '500';
+                              }
+
+                              // 获取源Sheet的工作表列表
+                              const sourceSheetsRes = await fetch(`${this.config.baseUrl}/sheets/v3/spreadsheets/${sourceSheetToken}/sheets/query`, {
+                                headers: {
+                                  'Authorization': `Bearer ${this.accessToken}`,
+                                  'Content-Type': 'application/json'
+                                }
+                              });
+
+                              const sourceSheetsData = await sourceSheetsRes.json();
+
+                              if (sourceSheetsData.code === 0) {
+                                const sourceSheets = sourceSheetsData.data?.sheets || [];
+                                const targetSheet = sourceSheets.find(s => s.title === targetSheetName);
+
+                                if (targetSheet) {
+                                  console.log(`   ↳ 源工作表: ${targetSheet.title}`);
+
+                                  // 获取源数据
+                                  const sourceDataUrl = `${this.config.baseUrl}/sheets/v2/spreadsheets/${sourceSheetToken}/values/${targetSheet.sheet_id}!${targetRange}`;
+
+                                  const sourceDataRes = await fetch(sourceDataUrl, {
+                                    headers: {
+                                      'Authorization': `Bearer ${this.accessToken}`,
+                                      'Content-Type': 'application/json'
+                                    }
+                                  });
+
+                                  const sourceData = await sourceDataRes.json();
+
+                                  if (sourceData.code === 0) {
+                                    const sourceValues = sourceData.data?.valueRange?.values || [];
+
+                                    if (sourceValues.length > 0) {
+                                      const cellCount = sourceValues.reduce((sum, row) => sum + row.length, 0);
+                                      totalProcessedCells += cellCount;
+
+                                      allSheetsData.push({
+                                        sheetName: sheet.title,
+                                        sheetId: sheet.sheet_id,
+                                        data: sourceValues,
+                                        rowCount: sourceValues.length,
+                                        cellCount: cellCount,
+                                        range: targetRange,
+                                        method: 'IMPORTRANGE追踪',
+                                        sourceSheet: targetSheet.title,
+                                        sourceToken: sourceSheetToken
+                                      });
+
+                                      console.log(`   ✅ 从源获取 ${sourceValues.length}行, ${cellCount}个单元格`);
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        } catch (importError) {
+                          console.log(`   ⚠️ IMPORTRANGE追踪失败: ${importError.message}`);
+                        }
+                      }
+                    }
+                  } else if (values.length > 0) {
+                    // 正常数据（非IMPORTRANGE）
+                    const cellCount = values.reduce((sum, row) => sum + row.length, 0);
+                    totalProcessedCells += cellCount;
+
+                    allSheetsData.push({
+                      sheetName: sheet.title,
+                      sheetId: sheet.sheet_id,
+                      data: values,
+                      rowCount: values.length,
+                      cellCount: cellCount,
+                      range: range,
+                      method: 'sheetId查询'
+                    });
+
+                    console.log(`✅ 工作表 "${sheet.title}" 成功: ${values.length}行, ${cellCount}个单元格`);
+                  } else {
+                    console.log(`⚠️ 工作表 "${sheet.title}" 无数据`);
+                  }
+                } else {
+                  console.log(`⚠️ 工作表 "${sheet.title}" API错误: ${data.msg}`);
+                }
+              }
+            } catch (error) {
+              console.log(`⚠️ 工作表 "${sheet.title}" 请求失败: ${error.message}`);
+            }
+          }
+        }
+
+        // 如果已经通过sheetId获取到数据，跳过后续策略
+        if (totalProcessedCells > 100) {
+          console.log(`✅ 通过sheetId成功获取数据，跳过其他策略`);
+        } else {
+          console.log(`⚠️ sheetId方法未获取足够数据，尝试其他策略...`);
+
+          // 策略1: 尝试不同的范围大小，从小到大
+          const rangeSizes = [
+            { range: 'A1:Z100', desc: '标准范围' },
+            { range: 'A1:AB200', desc: '扩展范围' },
+            { range: 'A1:AZ500', desc: '大范围' },
+            { range: 'A1:CV1000', desc: '超大范围' }
+          ];
+
+          for (const {range, desc} of rangeSizes) {
           try {
             console.log(`🔍 尝试 ${desc}: ${range}`);
             
@@ -264,7 +445,8 @@ class EnhancedFeishuSyncV2 {
             }
           }
         }
-        
+        } // 结束 else 分支（策略1和策略2）
+
         if (allSheetsData.length > 0 && totalProcessedCells > 0) {
           // 构建结构化的表格内容
           const structuredContent = this.buildStructuredSheetContent(title, allSheetsData, infoData.data?.spreadsheet);

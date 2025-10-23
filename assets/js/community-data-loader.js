@@ -6,6 +6,7 @@
 class CommunityDataLoader {
   constructor() {
     this.articles = [];
+    // 回退到原始JSON数据源 - D1数据不完整(full_content为空)
     this.dataUrl = '/assets/data/community-articles-v3.json';
     this.currentPage = 1;
     this.itemsPerPage = 20;
@@ -61,10 +62,18 @@ class CommunityDataLoader {
       }
 
       const data = await response.json();
+
+      // 直接使用JSON中的articles数组
       this.articles = data.articles || [];
 
       console.log(`✅ 成功加载 ${this.articles.length} 篇文章`);
-      console.log('📈 分类统计:', data.categories);
+
+      // 统计分类
+      const categories = this.articles.reduce((acc, article) => {
+        acc[article.category] = (acc[article.category] || 0) + 1;
+        return acc;
+      }, {});
+      console.log('📈 分类统计:', categories);
 
       return true;
     } catch (error) {
@@ -262,11 +271,13 @@ class CommunityDataLoader {
   handleArticleClick(article) {
     console.log('📖 打开文章:', article.title);
 
-    // 生成静态文章页面的slug
-    const slug = this.generateSlug(article.title, article.id);
-
-    // 跳转到静态HTML文章页面（SSG）
-    window.location.href = `/articles/${slug}.html`;
+    // 使用飞书文档URL（直接跳转到飞书）
+    if (article.source && article.source.url) {
+      console.log('🔗 跳转到飞书文档:', article.source.url);
+      window.open(article.source.url, '_blank');
+    } else {
+      console.error('❌ 文章缺少source.url:', article);
+    }
   }
 
   /**
@@ -674,6 +685,109 @@ class CommunityDataLoader {
         public: this.articles.filter(a => a.stage === 'public').length
       }
     };
+  }
+
+  /**
+   * 转换D1文章数据为前端格式
+   */
+  transformD1Article(d1Article) {
+    return {
+      id: d1Article.node_token,
+      title: d1Article.meta_title || d1Article.title || '未命名',
+      excerpt: d1Article.meta_description || d1Article.content_summary || '',
+      category: this.mapCategory(d1Article.category),
+      contentType: this.guessContentType(d1Article.meta_title || d1Article.title || ''),
+      tags: this.parseTags(d1Article.tags),
+      date: d1Article.publish_date || d1Article.updated_at?.split('T')[0] || new Date().toISOString().split('T')[0],
+      readingTime: this.estimateReadingTime(d1Article.meta_description),
+      author: {
+        name: this.generateAuthorName({
+          contentType: this.guessContentType(d1Article.meta_title || d1Article.title || ''),
+          title: d1Article.meta_title || d1Article.title
+        }),
+        avatar: '📝'
+      },
+      source: {
+        platform: 'svtr',
+        // 优先使用wiki路径，因为published_url中的静态HTML文件可能不存在
+        url: `/wiki/${d1Article.node_token}`
+      },
+      fundingInfo: null,
+      stage: null,
+      layer: null,
+      verticalTags: this.parseTags(d1Article.tags).slice(0, 3)
+    };
+  }
+
+  /**
+   * 映射分类
+   */
+  mapCategory(category) {
+    if (!category) return 'analysis';
+
+    const categoryMap = {
+      '综合分析': 'analysis',
+      '融资新闻': 'startups',
+      '公司简介': 'startups',
+      '行业分析': 'analysis',
+      '投资机构': 'investors',
+      '上市公司': 'public',
+      'AI创投观察': 'analysis',
+      'AI初创公司': 'startups'
+    };
+
+    return categoryMap[category] || 'analysis';
+  }
+
+  /**
+   * 猜测内容类型
+   */
+  guessContentType(title) {
+    if (!title) return 'analysis';
+
+    if (title.includes('融资') || title.includes('获投') || title.includes('轮')) {
+      return 'funding_news';
+    }
+    if (title.includes('榜单') || title.includes('排行') || title.includes('Top')) {
+      return 'ranking';
+    }
+    if (title.includes('周报') || title.includes('月报') || title.includes('季报')) {
+      return 'weekly';
+    }
+    if (title.match(/[A-Z][a-z]+/) && !title.includes('分析')) {
+      return 'company_profile';
+    }
+
+    return 'analysis';
+  }
+
+  /**
+   * 解析标签
+   */
+  parseTags(tagsJson) {
+    if (!tagsJson) return [];
+
+    try {
+      const tags = JSON.parse(tagsJson);
+      return Array.isArray(tags) ? tags : [];
+    } catch (error) {
+      // 如果不是JSON，尝试按逗号分割
+      if (typeof tagsJson === 'string') {
+        return tagsJson.split(',').map(t => t.trim()).filter(t => t.length > 0);
+      }
+      return [];
+    }
+  }
+
+  /**
+   * 估算阅读时间
+   */
+  estimateReadingTime(text) {
+    if (!text) return 5;
+
+    const wordsPerMinute = 200;
+    const wordCount = text.length;
+    return Math.max(1, Math.ceil(wordCount / wordsPerMinute));
   }
 }
 

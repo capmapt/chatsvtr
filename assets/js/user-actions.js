@@ -7,14 +7,30 @@ class SVTRUserActions {
   constructor() {
     this.emailSubscribeBtn = null;
     this.memberLoginBtn = null;
-    this.init();
+    this.isInitialized = false;
+
+    // 如果 DOM 已经准备好，立即初始化；否则等待 DOMContentLoaded
+    if (document.readyState === 'loading') {
+      // DOM 还在加载中，等待 DOMContentLoaded
+      document.addEventListener('DOMContentLoaded', () => this.init());
+    } else {
+      // DOM 已经加载完成，立即初始化
+      this.init();
+    }
   }
 
   init() {
+    if (this.isInitialized) {
+      console.log('⚠️ SVTRUserActions already initialized, skipping...');
+      return;
+    }
+
     this.bindElements();
     this.bindEvents();
     this.checkAuthCallback();
     this.checkExistingLogin();
+    this.isInitialized = true;
+    console.log('✅ SVTRUserActions initialized successfully');
   }
 
   bindElements() {
@@ -1144,7 +1160,16 @@ class SVTRUserActions {
   }
 }
 
-// 初始化用户操作管理器
+// 立即初始化用户操作管理器（确保其他脚本可以立即访问）
+// 注意：不再等待 DOMContentLoaded，因为这个类不需要在初始化时访问 DOM
+window.svtrUserActions = new SVTRUserActions();
+
+console.log('✅ SVTRUserActions initialized immediately');
+
+// 兼容旧代码：在 DOMContentLoaded 时再次确认初始化（如果未初始化则初始化）
 document.addEventListener('DOMContentLoaded', () => {
-  window.svtrUserActions = new SVTRUserActions();
+  if (!window.svtrUserActions) {
+    window.svtrUserActions = new SVTRUserActions();
+    console.log('✅ SVTRUserActions initialized on DOMContentLoaded');
+  }
 });

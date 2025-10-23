@@ -1,0 +1,321 @@
+/*
+ * 业务标签卡片化 - 参考设计图
+ * 特点: 彩色图标 + 数据展示 + 功能亮点 + 行动号召
+ */
+
+.business-tags {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin: 32px auto;
+  width: calc(100% - 40px);
+  max-width: 1000px;
+  padding: 0 20px;
+}
+
+/* 卡片基础样式 */
+.business-tag {
+  /* 重置原有样式 */
+  all: unset;
+  box-sizing: border-box;
+
+  /* 卡片容器 */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 32px 24px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 2px solid #E5E7EB;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  text-align: left;
+}
+
+.business-tag:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  border-color: transparent;
+}
+
+/* 卡片顶部图标 */
+.business-tag::before {
+  content: '';
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* 数据榜单 - 蓝紫色渐变 */
+.tag-data-products::before {
+  background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+  content: '📊';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+}
+
+.tag-data-products:hover {
+  border-color: #667EEA;
+  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.25);
+}
+
+/* 内容社区 - 橙色渐变 */
+.tag-vc-community::before {
+  background: linear-gradient(135deg, #F59E0B 0%, #F97316 100%);
+  content: '📰';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+}
+
+.tag-vc-community:hover {
+  border-color: #F59E0B;
+  box-shadow: 0 12px 32px rgba(245, 158, 11, 0.25);
+}
+
+/* 投资孵化 - 绿色渐变 */
+.tag-professional-services::before {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  content: '🚀';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+}
+
+.tag-professional-services:hover {
+  border-color: #10B981;
+  box-shadow: 0 12px 32px rgba(16, 185, 129, 0.25);
+}
+
+/* 卡片标题 */
+.business-tag-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+/* 卡片描述 */
+.business-tag-desc {
+  font-size: 0.95rem;
+  color: #6B7280;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 数据统计 - 两列布局 */
+.business-tag-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 16px;
+  background: #F9FAFB;
+  border-radius: 12px;
+  margin: 8px 0;
+}
+
+.tag-stat-item {
+  text-align: center;
+}
+
+.tag-stat-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #111827;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.tag-stat-label {
+  font-size: 0.85rem;
+  color: #6B7280;
+  display: block;
+}
+
+/* 数据榜单特定颜色 */
+.tag-data-products .tag-stat-value {
+  color: #667EEA;
+}
+
+/* 内容社区特定颜色 */
+.tag-vc-community .tag-stat-value {
+  color: #F59E0B;
+}
+
+/* 投资孵化特定颜色 */
+.tag-professional-services .tag-stat-value {
+  color: #10B981;
+}
+
+/* 功能亮点列表 */
+.business-tag-highlights {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.business-tag-highlights li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.business-tag-highlights li::before {
+  content: '✓';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: #10B981;
+  color: #FFFFFF;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+}
+
+/* 行动号召 */
+.business-tag-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid #E5E7EB;
+}
+
+.tag-data-products .business-tag-cta {
+  color: #667EEA;
+}
+
+.tag-vc-community .business-tag-cta {
+  color: #F59E0B;
+}
+
+.tag-professional-services .business-tag-cta {
+  color: #10B981;
+}
+
+.business-tag-cta svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s;
+}
+
+.business-tag:hover .business-tag-cta svg {
+  transform: translateX(4px);
+}
+
+/* ========== 响应式设计 ========== */
+@media (max-width: 768px) {
+  .business-tags {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 24px auto;
+  }
+
+  .business-tag {
+    padding: 24px 20px;
+  }
+
+  .business-tag::before {
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+  }
+
+  .business-tag-title {
+    font-size: 1.3rem;
+  }
+
+  .business-tag-desc {
+    font-size: 0.9rem;
+  }
+
+  .tag-stat-value {
+    font-size: 1.3rem;
+  }
+
+  .tag-stat-label {
+    font-size: 0.8rem;
+  }
+
+  .business-tag-highlights li {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .business-tags {
+    width: 100%;
+    padding: 0 12px;
+    gap: 12px;
+  }
+
+  .business-tag {
+    padding: 20px 16px;
+    gap: 12px;
+  }
+
+  .business-tag::before {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+
+  .business-tag-title {
+    font-size: 1.2rem;
+  }
+
+  .business-tag-desc {
+    font-size: 0.85rem;
+  }
+
+  .business-tag-stats {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .tag-stat-value {
+    font-size: 1.1rem;
+  }
+
+  .tag-stat-label {
+    font-size: 0.75rem;
+  }
+
+  .business-tag-highlights {
+    gap: 6px;
+  }
+
+  .business-tag-highlights li {
+    font-size: 0.8rem;
+  }
+
+  .business-tag-highlights li::before {
+    width: 18px;
+    height: 18px;
+    font-size: 0.7rem;
+  }
+
+  .business-tag-cta {
+    font-size: 0.95rem;
+  }
+}

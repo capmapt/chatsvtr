@@ -1,0 +1,411 @@
+/**
+ * Hero Section (英雄区) 样式
+ * 首页最重要的第一屏内容
+ */
+
+/* ==================== Hero Container ==================== */
+
+.hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 85vh;
+  background: var(--bg-gradient-hero);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: var(--space-8) var(--space-4);
+}
+
+/* 背景装饰 */
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(250, 140, 50, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  max-width: var(--container-xl);
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  z-index: 1;
+}
+
+/* ==================== Hero Typography ==================== */
+
+.hero-title {
+  font-size: var(--text-5xl);
+  font-weight: var(--font-bold);
+  color: var(--text-inverse);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-4);
+  letter-spacing: var(--tracking-tight);
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-subtitle {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-medium);
+  color: rgba(255, 255, 255, 0.95);
+  line-height: var(--leading-relaxed);
+  margin-bottom: var(--space-8);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+/* 英文版本字体调整 */
+html[lang="en"] .hero-title {
+  font-size: var(--text-4xl);
+  letter-spacing: var(--tracking-wide);
+}
+
+html[lang="en"] .hero-subtitle {
+  font-size: var(--text-xl);
+}
+
+/* ==================== Hero Stats (关键数据展示) ==================== */
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-12);
+  margin-bottom: var(--space-10);
+  animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.hero-stat-item {
+  text-align: center;
+  position: relative;
+}
+
+.hero-stat-item::after {
+  content: '';
+  position: absolute;
+  right: calc(-1 * var(--space-6));
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 60%;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.hero-stat-item:last-child::after {
+  display: none;
+}
+
+.hero-stat-value {
+  display: block;
+  font-size: var(--text-4xl);
+  font-weight: var(--font-extrabold);
+  color: var(--primary-200);
+  line-height: 1;
+  margin-bottom: var(--space-2);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.hero-stat-label {
+  display: block;
+  font-size: var(--text-base);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: var(--font-medium);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+
+/* ==================== Hero Actions (CTA按钮组) ==================== */
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-12);
+  animation: fadeInUp 0.8s ease-out 0.6s both;
+  flex-wrap: wrap;
+}
+
+/* 主要CTA按钮 */
+.hero-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: var(--btn-height-lg);
+  padding: 0 var(--space-8);
+  background: var(--primary-500);
+  color: var(--text-inverse);
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  transition: all var(--duration-medium) var(--ease-out);
+  box-shadow:
+    0 4px 14px rgba(250, 140, 50, 0.4),
+    0 0 0 0 rgba(250, 140, 50, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.2));
+  opacity: 0;
+  transition: opacity var(--duration-medium);
+}
+
+.hero-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 20px rgba(250, 140, 50, 0.5),
+    0 0 0 4px rgba(250, 140, 50, 0.2);
+}
+
+.hero-btn-primary:hover::before {
+  opacity: 1;
+}
+
+.hero-btn-primary:active {
+  transform: translateY(0);
+}
+
+/* 次要CTA按钮 */
+.hero-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: var(--btn-height-lg);
+  padding: 0 var(--space-8);
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  color: var(--text-inverse);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-full);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  transition: all var(--duration-medium) var(--ease-out);
+}
+
+.hero-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+.hero-btn-secondary:active {
+  transform: translateY(0);
+}
+
+/* 按钮图标 */
+.hero-btn-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform var(--duration-medium);
+}
+
+.hero-btn-primary:hover .hero-btn-icon,
+.hero-btn-secondary:hover .hero-btn-icon {
+  transform: translateX(4px);
+}
+
+/* ==================== Hero Trust Signals (信任信号) ==================== */
+
+.hero-trust {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-8);
+  flex-wrap: wrap;
+  animation: fadeInUp 0.8s ease-out 0.8s both;
+}
+
+.hero-trust-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: var(--text-sm);
+}
+
+.hero-trust-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--primary-200);
+}
+
+.hero-trust-text strong {
+  font-weight: var(--font-semibold);
+  color: var(--text-inverse);
+}
+
+/* ==================== 动画定义 ==================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* ==================== 响应式设计 ==================== */
+
+/* 平板设备 */
+@media (max-width: 1024px) {
+  .hero-section {
+    min-height: 75vh;
+    padding: var(--space-6) var(--space-4);
+  }
+
+  .hero-title {
+    font-size: var(--text-4xl);
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-xl);
+  }
+
+  .hero-stats {
+    gap: var(--space-8);
+  }
+
+  .hero-stat-value {
+    font-size: var(--text-3xl);
+  }
+}
+
+/* 移动设备 */
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: auto;
+    padding: var(--space-8) var(--space-4);
+  }
+
+  .hero-title {
+    font-size: var(--text-3xl);
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-lg);
+    margin-bottom: var(--space-6);
+  }
+
+  .hero-stats {
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  .hero-stat-item::after {
+    display: none;
+  }
+
+  .hero-stat-value {
+    font-size: var(--text-2xl);
+  }
+
+  .hero-stat-label {
+    font-size: var(--text-sm);
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
+  }
+
+  .hero-btn-primary,
+  .hero-btn-secondary {
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+    height: var(--btn-height-md);
+    font-size: var(--text-base);
+  }
+
+  .hero-trust {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+}
+
+/* 小屏移动设备 */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: var(--text-2xl);
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-base);
+  }
+
+  .hero-stats {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .hero-stat-value {
+    font-size: var(--text-xl);
+  }
+}
+
+/* ==================== 暗色模式支持 ==================== */
+
+@media (prefers-color-scheme: dark) {
+  .hero-section {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  }
+
+  .hero-trust-item {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+/* ==================== 高对比度模式 ==================== */
+
+@media (prefers-contrast: high) {
+  .hero-btn-primary {
+    border: 2px solid var(--text-inverse);
+  }
+
+  .hero-btn-secondary {
+    border-width: 3px;
+  }
+}
+
+/* ==================== 减少动画模式 ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-title,
+  .hero-subtitle,
+  .hero-stats,
+  .hero-actions,
+  .hero-trust {
+    animation: none;
+  }
+
+  .hero-btn-primary:hover,
+  .hero-btn-secondary:hover {
+    transform: none;
+  }
+}

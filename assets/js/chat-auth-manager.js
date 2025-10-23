@@ -16,7 +16,11 @@ class ChatAuthManager {
 
   init() {
     console.log('🔐 初始化聊天认证管理器');
-    
+
+    // 重试计数器
+    this.setupRetryCount = 0;
+    this.maxRetries = 5;
+
     // 等待DOM就绪
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => this.setupAuth());
@@ -29,8 +33,13 @@ class ChatAuthManager {
     // 获取聊天容器
     this.chatContainer = document.getElementById('svtr-chat-container');
     if (!this.chatContainer) {
-      console.warn('⚠️ 未找到聊天容器，等待重试...');
-      setTimeout(() => this.setupAuth(), 1000);
+      this.setupRetryCount++;
+      if (this.setupRetryCount <= this.maxRetries) {
+        console.warn(`⚠️ 未找到聊天容器，等待重试... (${this.setupRetryCount}/${this.maxRetries})`);
+        setTimeout(() => this.setupAuth(), 1000);
+      } else {
+        console.log('ℹ️ 当前页面无需聊天容器（非聊天页面）');
+      }
       return;
     }
 

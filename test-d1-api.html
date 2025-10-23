@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D1 API测试 - SVTR</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+      border-bottom: 3px solid #188df0;
+      padding-bottom: 10px;
+    }
+    .section {
+      background: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    button {
+      background: #188df0;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-right: 10px;
+    }
+    button:hover {
+      background: #1570c4;
+    }
+    .results {
+      margin-top: 15px;
+      padding: 15px;
+      background: #f9f9f9;
+      border-left: 4px solid #188df0;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    .article-card {
+      background: white;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: 1px solid #e0e0e0;
+    }
+    .article-card h3 {
+      margin: 0 0 10px 0;
+      color: #188df0;
+    }
+    .article-card .meta {
+      color: #666;
+      font-size: 13px;
+      margin-top: 10px;
+    }
+    .meta span {
+      margin-right: 15px;
+    }
+    pre {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    .error {
+      color: #d32f2f;
+      padding: 10px;
+      background: #ffebee;
+      border-radius: 4px;
+    }
+    .success {
+      color: #388e3c;
+      padding: 10px;
+      background: #e8f5e9;
+      border-radius: 4px;
+    }
+    .loading {
+      color: #1976d2;
+      padding: 10px;
+    }
+    input, select {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 D1数据库API测试工具</h1>
+
+  <!-- 新增: 通用查询API测试 -->
+  <div class="section">
+    <h2>🆕 通用D1查询API</h2>
+    <p>GET /api/d1/query</p>
+
+    <div>
+      <label>表名: </label>
+      <select id="queryTable">
+        <option value="knowledge_base_nodes">knowledge_base_nodes</option>
+        <option value="companies">companies</option>
+        <option value="investors">investors</option>
+        <option value="published_articles">published_articles</option>
+      </select>
+
+      <label>数量: </label>
+      <input type="number" id="queryLimit" value="10" min="1" max="100" style="width: 60px;">
+
+      <label>排序字段: </label>
+      <input type="text" id="queryOrderBy" placeholder="id" style="width: 120px;">
+
+      <button onclick="testUniversalQuery()">测试通用查询</button>
+      <button onclick="testPopularArticles()">热门文章视图</button>
+      <button onclick="testFundingRanking()">融资排行榜</button>
+    </div>
+
+    <div id="queryResults" class="results"></div>
+  </div>
+
+  <!-- 测试1: 文章列表 -->
+  <div class="section">
+    <h2>1. 测试文章列表API</h2>
+    <p>GET /api/articles</p>
+
+    <div>
+      <label>分类: </label>
+      <select id="categoryFilter">
+        <option value="">全部</option>
+        <option value="AI创投观察">AI创投观察</option>
+        <option value="技术深度">技术深度</option>
+        <option value="行业报告">行业报告</option>
+        <option value="综合分析">综合分析</option>
+      </select>
+
+      <label>每页: </label>
+      <input type="number" id="limitInput" value="10" min="1" max="100" style="width: 60px;">
+
+      <label>排序: </label>
+      <select id="sortFilter">
+        <option value="date">最新发布</option>
+        <option value="views">最多浏览</option>
+        <option value="featured">精选优先</option>
+      </select>
+
+      <button onclick="testArticleList()">测试文章列表</button>
+      <button onclick="testArticleListJSON()">查看JSON响应</button>
+    </div>
+
+    <div id="articleListResults" class="results"></div>
+  </div>
+
+  <!-- 测试2: 文章详情 -->
+  <div class="section">
+    <h2>2. 测试文章详情API</h2>
+    <p>GET /api/articles/:slug</p>
+
+    <div>
+      <label>文章Slug: </label>
+      <input type="text" id="slugInput" placeholder="例如: ai创投观察丨2025-q3-StZ4wqMc" style="width: 300px;">
+      <button onclick="testArticleDetail()">测试文章详情</button>
+      <button onclick="testArticleDetailJSON()">查看JSON响应</button>
+    </div>
+
+    <div id="articleDetailResults" class="results"></div>
+  </div>
+
+  <!-- 测试3: 数据库状态 -->
+  <div class="section">
+    <h2>3. 数据库状态检查</h2>
+    <button onclick="checkDatabaseStatus()">检查数据库连接</button>
+    <button onclick="checkTableCounts()">查看数据统计</button>
+
+    <div id="statusResults" class="results"></div>
+  </div>
+
+  <script>
+    // 基础URL（根据环境自动选择）
+    const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? 'http://localhost:3000'
+      : 'https://svtr.ai';
+
+    /**
+     * 测试文章列表（渲染HTML）
+     */
+    async function testArticleList() {
+      const results = document.getElementById('articleListResults');
+      results.innerHTML = '<div class="loading">加载中...</div>';
+
+      const category = document.getElementById('categoryFilter').value;
+      const limit = document.getElementById('limitInput').value;
+      const sort = document.getElementById('sortFilter').value;
+
+      const params = new URLSearchParams({
+        ...(category && { category }),
+        limit,
+        sort
+      });
+
+      try {
+        const response = await fetch(`${API_BASE}/api/articles?${params}`);
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error(data.error || '请求失败');
+        }
+
+        const { articles, pagination } = data.data;
+
+        let html = `<div class="success">成功获取 ${articles.length} 篇文章（共 ${pagination.total} 篇）</div>`;
+
+        articles.forEach(article => {
+          html += `
+            <div class="article-card">
+              <h3>${article.meta_title}</h3>
+              <p>${article.content_summary || article.meta_description || '暂无摘要'}</p>
+              <div class="meta">
+                <span>📁 ${article.category}</span>
+                <span>📅 ${article.publish_date}</span>
+                <span>👁 ${article.view_count} 阅读</span>
+                <span>🔗 <code>${article.slug}</code></span>
+              </div>
+            </div>
+          `;
+        });
+
+        html += `
+          <div class="meta" style="margin-top: 15px;">
+            分页: 第 ${pagination.currentPage} / ${pagination.totalPages} 页
+            ${pagination.hasMore ? '<span>（还有更多）</span>' : '<span>（已全部加载）</span>'}
+          </div>
+        `;
+
+        results.innerHTML = html;
+
+        // 自动填充第一篇文章的slug到详情测试
+        if (articles.length > 0) {
+          document.getElementById('slugInput').value = articles[0].slug;
+        }
+
+      } catch (error) {
+        results.innerHTML = `<div class="error">错误: ${error.message}</div>`;
+      }
+    }
+
+    /**
+     * 测试文章列表（查看JSON）
+     */
+    async function testArticleListJSON() {
+      const results = document.getElementById('articleListResults');
+      results.innerHTML = '<div class="loading">加载中...</div>';
+
+      const category = document.getElementById('categoryFilter').value;
+      const limit = document.getElementById('limitInput').value;
+      const sort = document.getElementById('sortFilter').value;
+
+      const params = new URLSearchParams({
+        ...(category && { category }),
+        limit,
+        sort
+      });
+
+      try {
+        const response = await fetch(`${API_BASE}/api/articles?${params}`);
+        const data = await response.json();
+
+        results.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+
+      } catch (error) {
+        results.innerHTML = `<div class="error">错误: ${error.message}</div>`;
+      }
+    }
+
+    /**
+     * 测试文章详情（渲染HTML）
+     */
+    async function testArticleDetail() {
+      const results = document.getElementById('articleDetailResults');
+      const slug = document.getElementById('slugInput').value.trim();
+
+      if (!slug) {
+        results.innerHTML = '<div class="error">请输入文章slug</div>';
+        return;
+      }
+
+      results.innerHTML = '<div class="loading">加载中...</div>';
+
+      try {
+        const response = await fetch(`${API_BASE}/api/articles/${slug}`);
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error(data.error || '文章未找到');
+        }
+
+        const { article, related } = data.data;
+
+        let html = `
+          <div class="success">成功获取文章详情</div>
+          <div class="article-card">
+            <h3>${article.meta_title || article.title}</h3>
+            <div class="meta">
+              <span>📁 ${article.category}</span>
+              <span>📅 ${article.publish_date}</span>
+              <span>👁 ${article.view_count} 阅读</span>
+              <span>❤️ ${article.like_count} 点赞</span>
+              <span>📊 RAG分数: ${article.rag_score.toFixed(2)}</span>
+            </div>
+            <h4>标签:</h4>
+            <p>${article.tags.map(tag => `<span style="background:#e3f2fd;padding:4px 8px;margin:0 4px;border-radius:4px;">${tag}</span>`).join('')}</p>
+            <h4>内容预览:</h4>
+            <div style="max-height:300px;overflow-y:auto;padding:10px;background:#fafafa;border:1px solid #eee;">
+              ${article.full_content.substring(0, 1000)}...
+            </div>
+          </div>
+        `;
+
+        if (related.length > 0) {
+          html += `<h4>相关文章 (${related.length}):</h4>`;
+          related.forEach(rel => {
+            html += `
+              <div style="padding:8px;background:#f9f9f9;margin:5px 0;border-radius:4px;">
+                <strong>${rel.meta_title}</strong>
+                <span style="color:#666;margin-left:10px;">${rel.publish_date}</span>
+              </div>
+            `;
+          });
+        }
+
+        results.innerHTML = html;
+
+      } catch (error) {
+        results.innerHTML = `<div class="error">错误: ${error.message}</div>`;
+      }
+    }
+
+    /**
+     * 测试文章详情（查看JSON）
+     */
+    async function testArticleDetailJSON() {
+      const results = document.getElementById('articleDetailResults');
+      const slug = document.getElementById('slugInput').value.trim();
+
+      if (!slug) {
+        results.innerHTML = '<div class="error">请输入文章slug</div>';
+        return;
+      }
+
+      results.innerHTML = '<div class="loading">加载中...</div>';
+
+      try {
+        const response = await fetch(`${API_BASE}/api/articles/${slug}`);
+        const data = await response.json();
+
+        results.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+
+      } catch (error) {
+        results.innerHTML = `<div class="error">错误: ${error.message}</div>`;
+      }
+    }
+
+    /**
+     * 检查数据库连接状态
+     */
+    async function checkDatabaseStatus() {
+      const results = document.getElementById('statusResults');
+      results.innerHTML = '<div class="loading">检查中...</div>';
+
+      try {
+        // 尝试调用API
+        const response = await fetch(`${API_BASE}/api/articles?limit=1`);
+        const data = await response.json();
+
+        if (data.success) {
+          results.innerHTML = `
+            <div class="success">✅ D1数据库连接正常</div>
+            <p>API基础URL: <code>${API_BASE}</code></p>
+            <p>响应时间: <span id="responseTime"></span></p>
+          `;
+        } else {
+          throw new Error('API返回失败');
+        }
+
+      } catch (error) {
+        results.innerHTML = `
+          <div class="error">
+            ❌ 数据库连接失败<br>
+            ${error.message}<br><br>
+            可能原因:<br>
+            1. D1数据库尚未创建<br>
+            2. Schema尚未执行<br>
+            3. wrangler.toml配置未更新<br>
+            4. Workers未部署<br>
+          </div>
+        `;
+      }
+    }
+
+    /**
+     * 查看数据统计
+     */
+    async function checkTableCounts() {
+      const results = document.getElementById('statusResults');
+      results.innerHTML = '<div class="loading">统计中...</div>';
+
+      // 注意：这需要专门的统计API endpoint
+      // 目前作为示例显示预期数据
+      results.innerHTML = `
+        <div class="success">预期数据统计</div>
+        <table style="width:100%;border-collapse:collapse;margin-top:10px;">
+          <tr style="background:#f5f5f5;">
+            <th style="padding:8px;border:1px solid #ddd;text-align:left;">表名</th>
+            <th style="padding:8px;border:1px solid #ddd;text-align:right;">预期记录数</th>
+          </tr>
+          <tr>
+            <td style="padding:8px;border:1px solid #ddd;">knowledge_base_nodes</td>
+            <td style="padding:8px;border:1px solid #ddd;text-align:right;">263</td>
+          </tr>
+          <tr>
+            <td style="padding:8px;border:1px solid #ddd;">knowledge_base_content</td>
+            <td style="padding:8px;border:1px solid #ddd;text-align:right;">263</td>
+          </tr>
+          <tr>
+            <td style="padding:8px;border:1px solid #ddd;">published_articles</td>
+            <td style="padding:8px;border:1px solid #ddd;text-align:right;">180-200</td>
+          </tr>
+          <tr>
+            <td style="padding:8px;border:1px solid #ddd;">knowledge_base_relations</td>
+            <td style="padding:8px;border:1px solid #ddd;text-align:right;">~100</td>
+          </tr>
+        </table>
+        <p style="margin-top:15px;color:#666;">
+          💡 要查看实际数据，请使用 Wrangler CLI:<br>
+          <code>npx wrangler d1 execute svtr-production --remote --command="SELECT COUNT(*) FROM knowledge_base_nodes"</code>
+        </p>
+      `;
+    }
+
+    /**
+     * 测试通用查询API
+     */
+    async function testUniversalQuery() {
+      const results = document.getElementById('queryResults');
+      results.innerHTML = '<div class="loading">加载中...</div>';
+
+      const table = document.getElementById('queryTable').value;
+      const limit = document.getElementById('queryLimit').value;
+      const orderBy = document.getElementById('queryOrderBy').value;
+
+      const params = new URLSearchParams({
+        table,
+        limit,
+        ...(orderBy && { order_by: orderBy })
+      });
+
+      try {
+        const response = await fetch(`${API_BASE}/api/d1/query?${params}`);
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error(data.error || '请求失败');
+        }
+
+        let html = `<div class="success">成功获取 ${data.data.length} 条记录</div>`;
+
+        if (data.data.length > 0) {
+          // 显示表格
+          const fields = Object.keys(data.data[0]).slice(0, 8); // 前8个字段
+          html += `
+            <table style="width:100%;border-collapse:collapse;margin-top:10px;">
+              <thead>
+                <tr style="background:#f5f5f5;">
+                  ${fields.map(f => `<th style="padding:8px;border:1px solid #ddd;text-align:left;">${f}</th>`).join('')}
+                </tr>
+              </thead>
+              <tbody>
+                ${data.data.map(row => `
+                  <tr>
+                    ${fields.map(f => `<td style="padding:8px;border:1px solid #ddd;">${row[f] || '-'}</td>`).join('')}
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          `;
+        }
+
+        if (data.pagination) {
+          html += `
+            <div class="meta" style="margin-top:15px;">
+              分页: offset=${data.pagination.offset}, limit=${data.pagination.limit}, hasMore=${data.pagination.hasMore}
+            </div>
+          `;
+        }
+
+        results.innerHTML = html;
+
+      } catch (error) {
+        results.innerHTML = `<div class="error">错误: ${error.message}</div>`;
+      }
+    }
+
+    /**
+     * 测试热门文章视图
+     */
+    async function testPopularArticles() {
+      const results = document.getElementById('queryResults');
+      results.innerHTML = '<div class="loading">加载中...</div>';
+
+      try {
+        const response = await fetch(`${API_BASE}/api/d1/query?view=popular_articles&limit=5`);
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error(data.error || '请求失败');
+        }
+
+        let html = `<div class="success">热门文章视图: ${data.data.length} 条记录</div>`;
+
+        data.data.forEach(article => {
+          html += `
+            <div class="article-card">
+              <h3>${article.meta_title || article.title}</h3>
+              <p>${article.content_summary || '暂无摘要'}</p>
+              <div class="meta">
+                <span>👁 ${article.view_count} 阅读</span>
+                <span>📅 ${article.publish_date}</span>
+              </div>
+            </div>
+          `;
+        });
+
+        results.innerHTML = html;
+
+      } catch (error) {
+        results.innerHTML = `<div class="error">错误: ${error.message}</div>`;
+      }
+    }
+
+    /**
+     * 测试融资排行榜视图
+     */
+    async function testFundingRanking() {
+      const results = document.getElementById('queryResults');
+      results.innerHTML = '<div class="loading">加载中...</div>';
+
+      try {
+        const response = await fetch(`${API_BASE}/api/d1/query?view=funding_ranking&metric=valuation&limit=10`);
+        const data = await response.json();
+
+        if (!data.success) {
+          throw new Error(data.error || '请求失败');
+        }
+
+        let html = `<div class="success">融资排行榜: ${data.data.length} 条记录</div>`;
+
+        if (data.data.length === 0) {
+          html += `<p>⚠️ companies表暂无数据，请先运行数据同步脚本</p>`;
+        } else {
+          data.data.forEach((company, i) => {
+            html += `
+              <div style="padding:10px;background:#f9f9f9;margin:5px 0;border-radius:4px;">
+                <strong>${i + 1}. ${company.company_name}</strong>
+                <span style="margin-left:10px;">估值: $${(company.latest_valuation_usd / 1000000).toFixed(0)}M</span>
+                <span style="margin-left:10px;">阶段: ${company.latest_stage}</span>
+              </div>
+            `;
+          });
+        }
+
+        results.innerHTML = html;
+
+      } catch (error) {
+        results.innerHTML = `<div class="error">错误: ${error.message}</div>`;
+      }
+    }
+
+    // 页面加载时显示说明
+    window.addEventListener('DOMContentLoaded', () => {
+      console.log('D1 API测试工具已加载');
+      console.log('API基础URL:', API_BASE);
+    });
+  </script>
+</body>
+</html>

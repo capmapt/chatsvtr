@@ -9,6 +9,12 @@ index_name = "autorag-svtr-knowledge-base-ai"
 [ai]
 binding = "AI"
 
+# D1数据库绑定 - 知识库和文章内容存储
+[[d1_databases]]
+binding = "DB"
+database_name = "svtr-production"
+database_id = "580162c1-6fd6-4791-9e83-4b9500616e68"
+
 # AI Gateway配置 - 已创建并启用  
 # 注意：AI Gateway通过env.AI绑定自动使用，无需额外配置
 

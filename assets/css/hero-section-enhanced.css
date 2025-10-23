@@ -1,0 +1,293 @@
+/*
+ * 英雄栏增强样式 - 基于参考设计图
+ * 特点: 紫色渐变背景 + 居中数据展示 + 双CTA按钮
+ */
+
+.banner-header {
+  /* 渐变背景 - 从深紫到浅紫 */
+  background: linear-gradient(135deg, #6B46C1 0%, #8B5CF6 50%, #9333EA 100%);
+  border-bottom: none;
+  box-shadow: 0 4px 20px rgba(107, 70, 193, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 添加装饰性背景图案 */
+.banner-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.banner-content {
+  position: relative;
+  z-index: 1;
+  flex-direction: column;
+  gap: 24px;
+  padding: 48px 24px;
+}
+
+/* Logo样式优化 */
+.banner-logo img {
+  width: 80px;
+  height: 80px;
+  border: 4px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* 标题样式 - 白色高对比 */
+.banner-title {
+  color: #FFFFFF;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 0 8px;
+}
+
+/* 副标题 */
+.banner-tagline {
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+/* ========== 核心数据展示区 ========== */
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 0;
+}
+
+.hero-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.hero-stat-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #FCD34D; /* 黄色高亮 */
+  text-shadow: 0 2px 8px rgba(252, 211, 77, 0.4);
+  letter-spacing: -0.5px;
+}
+
+.hero-stat-label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ========== CTA按钮组 ========== */
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.hero-btn-primary,
+.hero-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  border-radius: 9999px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 主按钮 - 橙色渐变 */
+.hero-btn-primary {
+  background: linear-gradient(90deg, #FFA726 0%, #FF6F00 100%);
+  color: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.hero-btn-primary:hover::before {
+  left: 100%;
+}
+
+.hero-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 167, 38, 0.4);
+}
+
+/* 次要按钮 - 紫色轮廓 */
+.hero-btn-secondary {
+  background: transparent;
+  color: #FFFFFF;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.hero-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.hero-btn-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s;
+}
+
+.hero-btn-primary:hover .hero-btn-icon {
+  transform: translateY(2px);
+}
+
+.hero-btn-secondary:hover .hero-btn-icon {
+  transform: scale(1.1);
+}
+
+/* ========== 信任标记 ========== */
+.hero-trust {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.hero-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+}
+
+.hero-trust-icon {
+  width: 20px;
+  height: 20px;
+  color: #FCD34D;
+}
+
+.hero-trust-text strong {
+  color: #FCD34D;
+  font-weight: 700;
+}
+
+/* ========== 响应式设计 ========== */
+@media (max-width: 768px) {
+  .banner-content {
+    padding: 32px 16px;
+    gap: 20px;
+  }
+
+  .banner-title {
+    font-size: 1.8rem;
+  }
+
+  .banner-tagline {
+    font-size: 1rem;
+  }
+
+  .hero-stats {
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .hero-stat-value {
+    font-size: 2rem;
+  }
+
+  .hero-stat-label {
+    font-size: 0.85rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .hero-btn-primary,
+  .hero-btn-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+
+  .hero-trust {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .hero-trust-item {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner-content {
+    padding: 24px 12px;
+    gap: 16px;
+  }
+
+  .banner-logo img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .banner-title {
+    font-size: 1.5rem;
+  }
+
+  .banner-tagline {
+    font-size: 0.9rem;
+  }
+
+  .hero-stats {
+    gap: 16px;
+  }
+
+  .hero-stat-value {
+    font-size: 1.6rem;
+  }
+
+  .hero-stat-label {
+    font-size: 0.75rem;
+  }
+
+  .hero-btn-primary,
+  .hero-btn-secondary {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+}
