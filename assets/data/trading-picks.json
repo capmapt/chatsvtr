@@ -3,13 +3,46 @@
     "title": "交易精选",
     "description": "精选优质创业公司与投资机会分析",
     "totalCompanies": 20,
-    "lastUpdated": "2025-10-22T18:40:13.138Z",
+    "lastUpdated": "2025-10-23T18:30:12.484Z",
     "source": "SVTR飞书知识库",
     "dataVersion": "2.0"
   },
   "companies": [
     {
       "id": 1,
+      "name": "Kalshi",
+      "sector": "💰 金融科技",
+      "stage": "独角兽 · 成熟期",
+      "description": "Kalshi 正以超过 100 亿美元 的估值开展下一轮融资。在此前几周，Kalshi 刚刚宣布一轮 3 亿美元融资，估值为约 50 亿美元。",
+      "fundingAmount": "3.0亿美元融资 · 估值50亿美元",
+      "lastFundingDate": "2025年10月",
+      "valuation": "50亿美元",
+      "investors": [
+        "Sequoia Capital",
+        "Andreessen Horowitz",
+        "Paradigm",
+        "CapitalG",
+        "Coinbase Ventures"
+      ],
+      "founder": "Tarek Mansour",
+      "website": "kalshi.com",
+      "location": "美国纽约",
+      "foundedYear": "2019",
+      "employees": "Tarek Mansour",
+      "arr": "NaN亿美元",
+      "tags": [
+        "Web3"
+      ],
+      "analysisPoints": [
+        "🦄 独角兽企业，市场估值50亿美元",
+        "💎 单轮融资3.0亿美元，资本高度认可",
+        "🎓 团队拥有顶级院校背景，学术实力突出"
+      ],
+      "businessModel": "在线预测市场平台",
+      "deepResearch": ""
+    },
+    {
+      "id": 2,
       "name": "xAI",
       "sector": "🤖 大语言模型",
       "stage": "· 初创期",
@@ -39,7 +72,7 @@
       "deepResearch": ""
     },
     {
-      "id": 2,
+      "id": 3,
       "name": "Surge AI",
       "sector": "💾 数据服务",
       "stage": "超级独角兽 · 成长期",
@@ -67,7 +100,7 @@
       "deepResearch": ""
     },
     {
-      "id": 3,
+      "id": 4,
       "name": "Anysphere（Cursor）",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 成长期",
@@ -103,7 +136,7 @@
       "deepResearch": ""
     },
     {
-      "id": 4,
+      "id": 5,
       "name": "Crusoe",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -137,7 +170,7 @@
       "deepResearch": ""
     },
     {
-      "id": 5,
+      "id": 6,
       "name": "Poolside",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 初创期",
@@ -172,7 +205,7 @@
       "deepResearch": ""
     },
     {
-      "id": 6,
+      "id": 7,
       "name": "Lambda",
       "sector": "⚙️ AI基础设施",
       "stage": "独角兽 · 成熟期",
@@ -207,7 +240,7 @@
       "deepResearch": ""
     },
     {
-      "id": 7,
+      "id": 8,
       "name": "Runway",
       "sector": "🎯 垂直模型",
       "stage": "· 成熟期",
@@ -239,7 +272,7 @@
       "deepResearch": ""
     },
     {
-      "id": 8,
+      "id": 9,
       "name": "Rivos",
       "sector": "⚙️ AI基础设施",
       "stage": "· 成长期",
@@ -272,7 +305,7 @@
       "deepResearch": ""
     },
     {
-      "id": 9,
+      "id": 10,
       "name": "Abridge",
       "sector": "🧬 生命科学",
       "stage": "独角兽 · 成熟期",
@@ -308,7 +341,7 @@
       "deepResearch": ""
     },
     {
-      "id": 10,
+      "id": 11,
       "name": "ElevenLabs",
       "sector": "🎯 垂直模型",
       "stage": "独角兽 · 成长期",
@@ -342,7 +375,7 @@
       "deepResearch": ""
     },
     {
-      "id": 11,
+      "id": 12,
       "name": "Lovable",
       "sector": "👨‍💻 开发者工具",
       "stage": "独角兽 · 初创期",
@@ -377,7 +410,7 @@
       "deepResearch": ""
     },
     {
-      "id": 12,
+      "id": 13,
       "name": "Suno",
       "sector": "🎯 垂直模型",
       "stage": "· 成长期",
@@ -411,7 +444,7 @@
       "deepResearch": ""
     },
     {
-      "id": 13,
+      "id": 14,
       "name": "Vast Data",
       "sector": "💾 数据服务",
       "stage": "独角兽 · 成熟期",
@@ -442,7 +475,7 @@
       "deepResearch": ""
     },
     {
-      "id": 14,
+      "id": 15,
       "name": "Mercor",
       "sector": "🏢 企业服务",
       "stage": "独角兽 · 初创期",
@@ -479,7 +512,7 @@
       "deepResearch": "Mercor"
     },
     {
-      "id": 15,
+      "id": 16,
       "name": "Legora",
       "sector": "📱 AI应用",
       "stage": "· 初创期",
@@ -511,7 +544,7 @@
       "deepResearch": ""
     },
     {
-      "id": 16,
+      "id": 17,
       "name": "Physical Intelligence",
       "sector": "📱 AI应用",
       "stage": "独角兽 · 初创期",
@@ -548,7 +581,7 @@
       "deepResearch": ""
     },
     {
-      "id": 17,
+      "id": 18,
       "name": "Fireworks AI",
       "sector": "🤖 AI模型",
       "stage": "准独角兽 · 成长期",
@@ -582,7 +615,7 @@
       "deepResearch": ""
     },
     {
-      "id": 18,
+      "id": 19,
       "name": "Substack",
       "sector": "🏢 企业服务",
       "stage": "· 成熟期",
@@ -606,7 +639,7 @@
       "deepResearch": ""
     },
     {
-      "id": 19,
+      "id": 20,
       "name": "Worktrace AI",
       "sector": "🤖 AI模型",
       "stage": "· 初创期",
@@ -636,31 +669,6 @@
       ],
       "analysisPoints": [],
       "businessModel": "观测员工工作流以自动化大型企业重复性任务的AI平台",
-      "deepResearch": ""
-    },
-    {
-      "id": 25,
-      "name": "Canva",
-      "sector": "🎯 垂直模型",
-      "stage": "超级独角兽 · 初创期",
-      "description": "Canva 正以 370 亿美元的估值进行 400 至 5 亿美元的二级市场交易。 这将比 2024 年 10 月二次销售的 320 亿美元估值有所增加，但仍低于 2021 年 9 月融资轮融资的 400 亿美元峰值。根据AI创投库，Canva 在 2025 年第一季度的收入为 6.6 亿美元，EBITDA 为 1.5 亿美元。",
-      "fundingAmount": " · 估值370亿美元",
-      "lastFundingDate": "2025年6月",
-      "valuation": "370亿美元",
-      "investors": [],
-      "founder": "",
-      "website": "",
-      "location": "",
-      "foundedYear": "",
-      "employees": "5000",
-      "arr": "",
-      "tags": [
-        "ET30"
-      ],
-      "analysisPoints": [
-        "🏆 超级独角兽企业，估值370亿美元，行业领军地位"
-      ],
-      "businessModel": "",
       "deepResearch": ""
     }
   ]
