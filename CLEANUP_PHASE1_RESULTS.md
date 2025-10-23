@@ -206,6 +206,32 @@ b01b2acc Revert "feat: implement desktop dark theme matching mobile"
 
 ---
 
+## ⚠️ 重要修复 (2025-10-23)
+
+在第一阶段清理后发现问题并已修复:
+
+### 问题
+删除了 `funding-data.json`、`funding-data-live.json`、`funding-data-temp.json`,导致:
+- ❌ AI创投日报可视化无法显示
+- ❌ 融资卡片右上角的融资轮次信息丢失
+
+### 原因分析
+这些文件**不是临时调试文件**,而是**Feishu API的缓存数据**,被 `assets/js/funding-daily.js` 使用。
+
+### 解决方案
+```bash
+# 已从备份恢复这3个文件
+git checkout cleanup-backup-2025-10-23 -- funding-data*.json
+git commit -m "fix: restore funding-data.json files"
+```
+
+### 最终删除统计
+- **原计划删除**: 49个文件
+- **实际删除**: 46个文件 (恢复了3个funding-data文件)
+- **释放空间**: 约22.4MB (减少了231KB)
+
+---
+
 ## 📝 下一步建议
 
 根据 [CODE_CLEANUP_ANALYSIS_REPORT.md](CODE_CLEANUP_ANALYSIS_REPORT.md),还可以继续执行:
